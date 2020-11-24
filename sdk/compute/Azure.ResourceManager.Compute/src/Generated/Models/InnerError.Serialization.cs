@@ -10,50 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class InnerError : IUtf8JsonSerializable
+    public partial class InnerError
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Exceptiontype != null)
-            {
-                writer.WritePropertyName("exceptiontype");
-                writer.WriteStringValue(Exceptiontype);
-            }
-            if (Errordetail != null)
-            {
-                writer.WritePropertyName("errordetail");
-                writer.WriteStringValue(Errordetail);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static InnerError DeserializeInnerError(JsonElement element)
         {
-            string exceptiontype = default;
-            string errordetail = default;
+            Optional<string> exceptiontype = default;
+            Optional<string> errordetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exceptiontype"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     exceptiontype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("errordetail"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     errordetail = property.Value.GetString();
                     continue;
                 }
             }
-            return new InnerError(exceptiontype, errordetail);
+            return new InnerError(exceptiontype.Value, errordetail.Value);
         }
     }
 }

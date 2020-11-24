@@ -1,12 +1,38 @@
 # Release History
 
-## 4.1.0-preview.2 (Unreleased)
+## 4.2.0-beta.4 (Unreleased)
 
-## 4.1.0-preview.1 (2020-03-09)
+
+## 4.2.0-beta.3 (2020-11-12)
 
 ### Added
 
-- Add `RecoverableDays` property to `CertificateProperties`.
+- Added `DownloadCertificate` and `DownloadCertificateAsync` methods to get `X509Certificate2` with private key if permitted ([#12083](https://github.com/Azure/azure-sdk-for-net/issues/12083))
+
+### Changed
+
+- Clarified in documentation that `LifetimeActions` requires a single value at this time.
+
+## 4.2.0-beta.2 (2020-10-06)
+
+- Bug fixes and performance improvements.
+
+## 4.2.0-beta.1 (2020-09-08)
+
+### Added
+
+- Added `KeyVaultCertificateIdentifier` to parse certificate URIs.
+- Added link to sample on `KeyVaultCertificate.Cer` to the private key.
+
+## 4.1.0 (2020-08-11)
+
+### Added
+
+- Added `RecoverableDays` property to `CertificateProperties`.
+
+### Changed
+
+- Default service version is now 7.1.
 
 ## 4.0.3 (2020-07-09)
 
@@ -21,6 +47,12 @@
 ### Fixed
 
 - Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
+
+## 4.1.0-preview.1 (2020-03-09)
+
+### Added
+
+- Add `RecoverableDays` property to `CertificateProperties`.
 
 ## 4.0.1 (2020-03-03)
 

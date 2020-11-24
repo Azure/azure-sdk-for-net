@@ -155,7 +155,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
             if (hasManagedDisks && inputVMScaleSet.VirtualMachineProfile.StorageProfile.DataDisks != null)
             {
-                expectedVirtualMachineScaleSetVM.StorageProfile.DataDisks = new List<DataDisk>();
                 foreach (var dataDisk in inputVMScaleSet.VirtualMachineProfile.StorageProfile.DataDisks)
                 {
                     expectedVirtualMachineScaleSetVM.StorageProfile.DataDisks.Add(new DataDisk(dataDisk.Lun, null, null, null, null, null, dataDisk.CreateOption, dataDisk.DiskSizeGB, null, null, null, null));

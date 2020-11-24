@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public DefaultSecurityRulesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/defaultSecurityRules", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is null. </exception>
         public async Task<Response<SecurityRuleListResult>> ListAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -85,14 +87,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityRuleListResult.DeserializeSecurityRuleListResult(document.RootElement);
-                        }
+                        value = SecurityRuleListResult.DeserializeSecurityRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -104,6 +99,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is null. </exception>
         public Response<SecurityRuleListResult> List(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -123,14 +119,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityRuleListResult.DeserializeSecurityRuleListResult(document.RootElement);
-                        }
+                        value = SecurityRuleListResult.DeserializeSecurityRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -155,6 +144,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(defaultSecurityRuleName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -163,6 +153,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="defaultSecurityRuleName"> The name of the default security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkSecurityGroupName"/>, or <paramref name="defaultSecurityRuleName"/> is null. </exception>
         public async Task<Response<SecurityRule>> GetAsync(string resourceGroupName, string networkSecurityGroupName, string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -186,14 +177,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityRule.DeserializeSecurityRule(document.RootElement);
-                        }
+                        value = SecurityRule.DeserializeSecurityRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -206,6 +190,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="defaultSecurityRuleName"> The name of the default security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkSecurityGroupName"/>, or <paramref name="defaultSecurityRuleName"/> is null. </exception>
         public Response<SecurityRule> Get(string resourceGroupName, string networkSecurityGroupName, string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -229,14 +214,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityRule.DeserializeSecurityRule(document.RootElement);
-                        }
+                        value = SecurityRule.DeserializeSecurityRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -253,6 +231,7 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -261,6 +240,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkSecurityGroupName"/> is null. </exception>
         public async Task<Response<SecurityRuleListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -284,14 +264,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityRuleListResult.DeserializeSecurityRuleListResult(document.RootElement);
-                        }
+                        value = SecurityRuleListResult.DeserializeSecurityRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -304,6 +277,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkSecurityGroupName"/> is null. </exception>
         public Response<SecurityRuleListResult> ListNextPage(string nextLink, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -327,14 +301,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityRuleListResult.DeserializeSecurityRuleListResult(document.RootElement);
-                        }
+                        value = SecurityRuleListResult.DeserializeSecurityRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

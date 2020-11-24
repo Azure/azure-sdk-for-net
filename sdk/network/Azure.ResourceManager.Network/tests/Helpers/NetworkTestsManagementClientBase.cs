@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Compute;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
-using Azure.Management.Storage;
+using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Tests;
 using Azure.ResourceManager.TestFramework;
@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
     [RunFrequency(RunTestFrequency.Manually)]
     public class NetworkTestsManagementClientBase : ManagementRecordedTestBase<NetworkManagementTestEnvironment>
     {
+        public NetworkTestsManagementClientBase(bool isAsync) : base(isAsync)
+        {
+        }
+
         public bool IsTestTenant = false;
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
         public Dictionary<string, string> Tags { get; internal set; }
@@ -35,11 +39,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public ProvidersOperations ProvidersOperations { get; set; }
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
         public ResourcesOperations ResourcesOperations { get; set; }
-        public ServiceOperations ServiceOperations { get; set; }
+        public NetworkManagementOperations ServiceOperations { get; set; }
         public PrivateLinkServicesOperations PrivateLinkServicesOperations { get; set; }
-        protected NetworkTestsManagementClientBase(bool isAsync) : base(isAsync)
-        {
-        }
+
 
         protected void Initialize()
         {
@@ -52,7 +54,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             ProvidersOperations = ResourceManagementClient.Providers;
             ResourceGroupsOperations = ResourceManagementClient.ResourceGroups;
             ResourcesOperations = ResourceManagementClient.Resources;
-            ServiceOperations = NetworkManagementClient.Service;
+            ServiceOperations = NetworkManagementClient.NetworkManagement;
             PrivateLinkServicesOperations = NetworkManagementClient.PrivateLinkServices;
         }
 
@@ -60,21 +62,21 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             return InstrumentClient(new StorageManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new StorageManagementClientOptions())));
+                 InstrumentClientOptions(new StorageManagementClientOptions())));
         }
 
         private ComputeManagementClient GetComputeManagementClient()
         {
             return InstrumentClient(new ComputeManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new ComputeManagementClientOptions())));
+                 InstrumentClientOptions(new ComputeManagementClientOptions())));
         }
 
         private NetworkManagementClient GetNetworkManagementClient()
         {
             return InstrumentClient(new NetworkManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new NetworkManagementClientOptions())));
+                 InstrumentClientOptions(new NetworkManagementClientOptions())));
         }
 
         public async Task CreateVm(
@@ -156,7 +158,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             ExpressRouteCircuit circuit = new ExpressRouteCircuit()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 Sku = sku,
                 ServiceProviderProperties = provider
             };
@@ -183,8 +185,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix,
                 MicrosoftPeeringConfig = new ExpressRouteCircuitPeeringConfig()
                 {
-                    AdvertisedPublicPrefixes = new List<string>
-                    {
+                    AdvertisedPublicPrefixes = {
                         ExpressRouteTests.MS_PublicPrefix
                     },
                     LegacyMode = Convert.ToInt32(true)
@@ -208,8 +209,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix_V6,
                 MicrosoftPeeringConfig = new ExpressRouteCircuitPeeringConfig()
                 {
-                    AdvertisedPublicPrefixes = new List<string>
-                    {
+                    AdvertisedPublicPrefixes = {
                         ExpressRouteTests.MS_PublicPrefix_V6
                     },
                     LegacyMode = Convert.ToInt32(true)
@@ -247,8 +247,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
                 MicrosoftPeeringConfig = new ExpressRouteCircuitPeeringConfig()
                 {
-                    AdvertisedPublicPrefixes = new List<string>
-                    {
+                    AdvertisedPublicPrefixes = {
                         ExpressRouteTests.MS_PublicPrefix
                     },
                     LegacyMode = Convert.ToInt32(true)
@@ -271,7 +270,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var filter = new RouteFilter()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } }
+                Tags = { { "key", "value" } }
             };
 
             if (containsRule)
@@ -280,12 +279,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 {
                     Name = "test",
                     Access = ExpressRouteTests.Filter_Access,
-                    Communities = new List<string> { ExpressRouteTests.Filter_Commmunity },
+                    Communities = { ExpressRouteTests.Filter_Commmunity },
                     Location = location
                 };
 
-                List<RouteFilterRule> rules = new List<RouteFilterRule> { rule };
-                filter.Rules = rules;
+                filter.Rules.Add(rule);
             }
 
             // Put route filter
@@ -303,7 +301,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             RouteFilterRule rule = new RouteFilterRule()
             {
                 Access = ExpressRouteTests.Filter_Access,
-                Communities = new List<string> { ExpressRouteTests.Filter_Commmunity },
+                Communities = { ExpressRouteTests.Filter_Commmunity },
                 Location = location
             };
 
@@ -322,7 +320,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             PublicIPAddress publicIp = new PublicIPAddress()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
             };
@@ -342,9 +340,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                          Name = ipConfigName,
@@ -381,13 +378,13 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
             await client.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (VpnClientAddressPool != null)
+            if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool");
                 writer.WriteObjectValue(VpnClientAddressPool);
             }
-            if (VpnClientRootCertificates != null)
+            if (Optional.IsCollectionDefined(VpnClientRootCertificates))
             {
                 writer.WritePropertyName("vpnClientRootCertificates");
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VpnClientRevokedCertificates != null)
+            if (Optional.IsCollectionDefined(VpnClientRevokedCertificates))
             {
                 writer.WritePropertyName("vpnClientRevokedCertificates");
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VpnClientProtocols != null)
+            if (Optional.IsCollectionDefined(VpnClientProtocols))
             {
                 writer.WritePropertyName("vpnClientProtocols");
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VpnClientIpsecPolicies != null)
+            if (Optional.IsCollectionDefined(VpnClientIpsecPolicies))
             {
                 writer.WritePropertyName("vpnClientIpsecPolicies");
                 writer.WriteStartArray();
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RadiusServerAddress != null)
+            if (Optional.IsDefined(RadiusServerAddress))
             {
                 writer.WritePropertyName("radiusServerAddress");
                 writer.WriteStringValue(RadiusServerAddress);
             }
-            if (RadiusServerSecret != null)
+            if (Optional.IsDefined(RadiusServerSecret))
             {
                 writer.WritePropertyName("radiusServerSecret");
                 writer.WriteStringValue(RadiusServerSecret);
             }
-            if (RadiusServers != null)
+            if (Optional.IsCollectionDefined(RadiusServers))
             {
                 writer.WritePropertyName("radiusServers");
                 writer.WriteStartArray();
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AadTenant != null)
+            if (Optional.IsDefined(AadTenant))
             {
                 writer.WritePropertyName("aadTenant");
                 writer.WriteStringValue(AadTenant);
             }
-            if (AadAudience != null)
+            if (Optional.IsDefined(AadAudience))
             {
                 writer.WritePropertyName("aadAudience");
                 writer.WriteStringValue(AadAudience);
             }
-            if (AadIssuer != null)
+            if (Optional.IsDefined(AadIssuer))
             {
                 writer.WritePropertyName("aadIssuer");
                 writer.WriteStringValue(AadIssuer);
@@ -101,23 +101,24 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnClientConfiguration DeserializeVpnClientConfiguration(JsonElement element)
         {
-            AddressSpace vpnClientAddressPool = default;
-            IList<VpnClientRootCertificate> vpnClientRootCertificates = default;
-            IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default;
-            IList<VpnClientProtocol> vpnClientProtocols = default;
-            IList<IpsecPolicy> vpnClientIpsecPolicies = default;
-            string radiusServerAddress = default;
-            string radiusServerSecret = default;
-            IList<RadiusServer> radiusServers = default;
-            string aadTenant = default;
-            string aadAudience = default;
-            string aadIssuer = default;
+            Optional<AddressSpace> vpnClientAddressPool = default;
+            Optional<IList<VpnClientRootCertificate>> vpnClientRootCertificates = default;
+            Optional<IList<VpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
+            Optional<IList<VpnClientProtocol>> vpnClientProtocols = default;
+            Optional<IList<IpsecPolicy>> vpnClientIpsecPolicies = default;
+            Optional<string> radiusServerAddress = default;
+            Optional<string> radiusServerSecret = default;
+            Optional<IList<RadiusServer>> radiusServers = default;
+            Optional<string> aadTenant = default;
+            Optional<string> aadAudience = default;
+            Optional<string> aadIssuer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vpnClientAddressPool"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property.Value);
@@ -127,19 +128,13 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VpnClientRootCertificate> array = new List<VpnClientRootCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VpnClientRootCertificate.DeserializeVpnClientRootCertificate(item));
-                        }
+                        array.Add(VpnClientRootCertificate.DeserializeVpnClientRootCertificate(item));
                     }
                     vpnClientRootCertificates = array;
                     continue;
@@ -148,19 +143,13 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VpnClientRevokedCertificate> array = new List<VpnClientRevokedCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VpnClientRevokedCertificate.DeserializeVpnClientRevokedCertificate(item));
-                        }
+                        array.Add(VpnClientRevokedCertificate.DeserializeVpnClientRevokedCertificate(item));
                     }
                     vpnClientRevokedCertificates = array;
                     continue;
@@ -169,6 +158,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VpnClientProtocol> array = new List<VpnClientProtocol>();
@@ -183,38 +173,24 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IpsecPolicy> array = new List<IpsecPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(IpsecPolicy.DeserializeIpsecPolicy(item));
-                        }
+                        array.Add(IpsecPolicy.DeserializeIpsecPolicy(item));
                     }
                     vpnClientIpsecPolicies = array;
                     continue;
                 }
                 if (property.NameEquals("radiusServerAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     radiusServerAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("radiusServerSecret"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     radiusServerSecret = property.Value.GetString();
                     continue;
                 }
@@ -222,52 +198,34 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RadiusServer> array = new List<RadiusServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(RadiusServer.DeserializeRadiusServer(item));
-                        }
+                        array.Add(RadiusServer.DeserializeRadiusServer(item));
                     }
                     radiusServers = array;
                     continue;
                 }
                 if (property.NameEquals("aadTenant"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aadTenant = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aadAudience"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aadAudience = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aadIssuer"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aadIssuer = property.Value.GetString();
                     continue;
                 }
             }
-            return new VpnClientConfiguration(vpnClientAddressPool, vpnClientRootCertificates, vpnClientRevokedCertificates, vpnClientProtocols, vpnClientIpsecPolicies, radiusServerAddress, radiusServerSecret, radiusServers, aadTenant, aadAudience, aadIssuer);
+            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnClientIpsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value);
         }
     }
 }

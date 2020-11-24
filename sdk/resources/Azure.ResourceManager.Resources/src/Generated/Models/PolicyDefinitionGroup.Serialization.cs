@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName");
                 writer.WriteStringValue(DisplayName);
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category");
                 writer.WriteStringValue(Category);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (AdditionalMetadataId != null)
+            if (Optional.IsDefined(AdditionalMetadataId))
             {
                 writer.WritePropertyName("additionalMetadataId");
                 writer.WriteStringValue(AdditionalMetadataId);
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Resources.Models
         internal static PolicyDefinitionGroup DeserializePolicyDefinitionGroup(JsonElement element)
         {
             string name = default;
-            string displayName = default;
-            string category = default;
-            string description = default;
-            string additionalMetadataId = default;
+            Optional<string> displayName = default;
+            Optional<string> category = default;
+            Optional<string> description = default;
+            Optional<string> additionalMetadataId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -56,42 +56,26 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("category"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     category = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("additionalMetadataId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     additionalMetadataId = property.Value.GetString();
                     continue;
                 }
             }
-            return new PolicyDefinitionGroup(name, displayName, category, description, additionalMetadataId);
+            return new PolicyDefinitionGroup(name, displayName.Value, category.Value, description.Value, additionalMetadataId.Value);
         }
     }
 }

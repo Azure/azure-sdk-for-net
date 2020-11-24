@@ -16,32 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,42 +39,39 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Subnet != null)
-            {
-                writer.WritePropertyName("subnet");
-                writer.WriteObjectValue(Subnet);
-            }
-            if (VirtualNetwork != null)
-            {
-                writer.WritePropertyName("virtualNetwork");
-                writer.WriteObjectValue(VirtualNetwork);
-            }
-            if (TypePropertiesType != null)
+            if (Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(TypePropertiesType.Value.ToString());
             }
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix");
                 writer.WriteStringValue(Prefix);
             }
-            if (PrefixLength != null)
+            if (Optional.IsDefined(PrefixLength))
             {
-                writer.WritePropertyName("prefixLength");
-                writer.WriteNumberValue(PrefixLength.Value);
+                if (PrefixLength != null)
+                {
+                    writer.WritePropertyName("prefixLength");
+                    writer.WriteNumberValue(PrefixLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("prefixLength");
+                }
             }
-            if (PrefixType != null)
+            if (Optional.IsDefined(PrefixType))
             {
                 writer.WritePropertyName("prefixType");
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (IpamAllocationId != null)
+            if (Optional.IsDefined(IpamAllocationId))
             {
                 writer.WritePropertyName("ipamAllocationId");
                 writer.WriteStringValue(IpamAllocationId);
             }
-            if (AllocationTags != null)
+            if (Optional.IsCollectionDefined(AllocationTags))
             {
                 writer.WritePropertyName("allocationTags");
                 writer.WriteStartObject();
@@ -106,64 +88,44 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static IpAllocation DeserializeIpAllocation(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            SubResource subnet = default;
-            SubResource virtualNetwork = default;
-            IpAllocationType? type0 = default;
-            string prefix = default;
-            int? prefixLength = default;
-            IPVersion? prefixType = default;
-            string ipamAllocationId = default;
-            IDictionary<string, string> allocationTags = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<SubResource> subnet = default;
+            Optional<SubResource> virtualNetwork = default;
+            Optional<IpAllocationType> type0 = default;
+            Optional<string> prefix = default;
+            Optional<int?> prefixLength = default;
+            Optional<IPVersion> prefixType = default;
+            Optional<string> ipamAllocationId = default;
+            Optional<IDictionary<string, string>> allocationTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -171,31 +133,31 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("subnet"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             subnet = SubResource.DeserializeSubResource(property0.Value);
@@ -205,6 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetwork = SubResource.DeserializeSubResource(property0.Value);
@@ -214,6 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type0 = new IpAllocationType(property0.Value.GetString());
@@ -221,10 +185,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("prefix"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             prefix = property0.Value.GetString();
                             continue;
                         }
@@ -232,6 +192,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                prefixLength = null;
                                 continue;
                             }
                             prefixLength = property0.Value.GetInt32();
@@ -241,6 +202,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             prefixType = new IPVersion(property0.Value.GetString());
@@ -248,10 +210,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("ipamAllocationId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ipamAllocationId = property0.Value.GetString();
                             continue;
                         }
@@ -259,19 +217,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, property1.Value.GetString());
-                                }
+                                dictionary.Add(property1.Name, property1.Value.GetString());
                             }
                             allocationTags = dictionary;
                             continue;
@@ -280,7 +232,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IpAllocation(id, name, type, location, tags, etag, subnet, virtualNetwork, type0, prefix, prefixLength, prefixType, ipamAllocationId, allocationTags);
+            return new IpAllocation(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, subnet.Value, virtualNetwork.Value, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
         }
     }
 }

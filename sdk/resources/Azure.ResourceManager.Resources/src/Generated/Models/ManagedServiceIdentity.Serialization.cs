@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value.ToString());
             }
-            if (UserAssignedIdentities != null)
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities");
                 writer.WriteStartObject();
@@ -37,42 +37,37 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element)
         {
-            string type = default;
-            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
+            Optional<ManagedServiceIdentityType> type = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString();
+                    type = new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, UserAssignedIdentity.DeserializeUserAssignedIdentity(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, UserAssignedIdentity.DeserializeUserAssignedIdentity(property0.Value));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
                 }
             }
-            return new ManagedServiceIdentity(type, userAssignedIdentities);
+            return new ManagedServiceIdentity(Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

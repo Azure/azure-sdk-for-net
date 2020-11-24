@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 
 namespace Azure.Storage.Queues
@@ -47,7 +48,12 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// The 2019-12-12 service version.
             /// </summary>
-            V2019_12_12 = 3
+            V2019_12_12 = 3,
+
+            /// <summary>
+            /// The 2020-02-10 service version.
+            /// </summary>
+            V2020_02_10 = 4
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -95,6 +101,12 @@ namespace Azure.Storage.Queues
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets a message encoding that determines how <see cref="QueueMessage.Body"/> is represented in HTTP requests and responses.
+        /// The default is <see cref="QueueMessageEncoding.None"/>.
+        /// </summary>
+        public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.None;
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;

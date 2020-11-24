@@ -15,7 +15,7 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ObjectIds != null)
+            if (Optional.IsCollectionDefined(ObjectIds))
             {
                 writer.WritePropertyName("objectIds");
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Types != null)
+            if (Optional.IsCollectionDefined(Types))
             {
                 writer.WritePropertyName("types");
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IncludeDirectoryObjectReferences != null)
+            if (Optional.IsDefined(IncludeDirectoryObjectReferences))
             {
                 writer.WritePropertyName("includeDirectoryObjectReferences");
                 writer.WriteBooleanValue(IncludeDirectoryObjectReferences.Value);

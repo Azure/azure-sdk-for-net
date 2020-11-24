@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class RsaCryptographyProvider : LocalCryptographyProvider
     {
-        internal RsaCryptographyProvider(KeyVaultKey key) : base(key)
+        internal RsaCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties) : base(keyMaterial, keyProperties)
         {
         }
 
@@ -26,12 +26,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return false;
         }
 
-        public override EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken)
+        public override EncryptResult Encrypt(EncryptOptions options, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(plaintext, nameof(plaintext));
+            Argument.AssertNotNull(options, nameof(options));
 
             ThrowIfTimeInvalid();
 
+            EncryptionAlgorithm algorithm = options.Algorithm;
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             if (padding is null)
             {
@@ -39,7 +40,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
-            byte[] ciphertext = Encrypt(plaintext, padding);
+            byte[] ciphertext = Encrypt(options.Plaintext, padding);
             EncryptResult result = null;
 
             if (ciphertext != null)
@@ -55,9 +56,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return result;
         }
 
-        public override DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken)
+        public override DecryptResult Decrypt(DecryptOptions options, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(ciphertext, nameof(ciphertext));
+            Argument.AssertNotNull(options, nameof(options));
 
             if (MustRemote)
             {
@@ -66,6 +67,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
+            EncryptionAlgorithm algorithm = options.Algorithm;
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             if (padding is null)
             {
@@ -73,7 +75,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
-            byte[] plaintext = Decrypt(ciphertext, padding);
+            byte[] plaintext = Decrypt(options.Ciphertext, padding);
             DecryptResult result = null;
 
             if (plaintext != null)
@@ -222,13 +224,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         private byte[] Encrypt(byte[] data, RSAEncryptionPadding padding)
         {
-            using RSA rsa = KeyMaterial.ToRSA(true);
+            using RSA rsa = KeyMaterial.ToRSA();
             return rsa.Encrypt(data, padding);
         }
 
         private byte[] Decrypt(byte[] data, RSAEncryptionPadding padding)
         {
-            using RSA rsa = KeyMaterial.ToRSA();
+            using RSA rsa = KeyMaterial.ToRSA(true);
             return rsa.Decrypt(data, padding);
         }
     }

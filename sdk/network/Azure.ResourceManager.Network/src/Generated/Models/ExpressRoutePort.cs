@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRoutePort. </summary>
         public ExpressRoutePort()
         {
+            Links = new ChangeTrackingList<ExpressRouteLink>();
+            Circuits = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePort. </summary>
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="circuits"> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the express route port resource. </param>
-        internal ExpressRoutePort(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ManagedServiceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLink> links, IList<SubResource> circuits, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, location, tags)
+        internal ExpressRoutePort(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ManagedServiceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLink> links, IReadOnlyList<SubResource> circuits, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Identity = identity;
@@ -72,9 +75,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Date of the physical port allocation to be used in Letter of Authorization. </summary>
         public string AllocationDate { get; }
         /// <summary> The set of physical links of the ExpressRoutePort resource. </summary>
-        public IList<ExpressRouteLink> Links { get; set; }
+        public IList<ExpressRouteLink> Links { get; }
         /// <summary> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </summary>
-        public IList<SubResource> Circuits { get; }
+        public IReadOnlyList<SubResource> Circuits { get; }
         /// <summary> The provisioning state of the express route port resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resource GUID property of the express route port resource. </summary>

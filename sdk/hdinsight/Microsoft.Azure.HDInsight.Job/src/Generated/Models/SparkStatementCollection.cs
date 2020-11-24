@@ -28,6 +28,7 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkStatementCollection class.
         /// </summary>
+        /// <param name="statements">List of spark statements.</param>
         public SparkStatementCollection(IList<SparkStatement> statements = default(IList<SparkStatement>))
         {
             Statements = statements;
@@ -40,6 +41,7 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets list of spark statements.
         /// </summary>
         [JsonProperty(PropertyName = "statements")]
         public IList<SparkStatement> Statements { get; set; }

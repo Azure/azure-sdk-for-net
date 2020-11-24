@@ -15,27 +15,21 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ResourceSkuZoneDetails DeserializeResourceSkuZoneDetails(JsonElement element)
         {
-            IReadOnlyList<string> name = default;
-            IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
+            Optional<IReadOnlyList<string>> name = default;
+            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     name = array;
                     continue;
@@ -44,25 +38,19 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
-                        }
+                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
                     }
                     capabilities = array;
                     continue;
                 }
             }
-            return new ResourceSkuZoneDetails(name, capabilities);
+            return new ResourceSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
         }
     }
 }

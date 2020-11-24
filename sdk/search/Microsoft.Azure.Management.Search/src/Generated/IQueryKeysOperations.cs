@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Search
     public partial interface IQueryKeysOperations
     {
         /// <summary>
-        /// Generates a new query key for the specified Search service. You can
+        /// Generates a new query key for the specified search service. You can
         /// create up to 50 query keys per service.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>

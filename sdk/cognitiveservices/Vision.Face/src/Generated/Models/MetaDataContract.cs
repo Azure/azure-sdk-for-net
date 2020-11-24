@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
         /// <param name="recognitionModel">Possible values include:
-        /// 'recognition_01', 'recognition_02'</param>
+        /// 'recognition_01', 'recognition_02', 'recognition_03'</param>
         public MetaDataContract(string name = default(string), string userData = default(string), string recognitionModel = default(string))
             : base(name, userData)
         {
@@ -51,20 +51,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'recognition_01',
-        /// 'recognition_02'
+        /// 'recognition_02', 'recognition_03'
         /// </summary>
         [JsonProperty(PropertyName = "recognitionModel")]
         public string RecognitionModel { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

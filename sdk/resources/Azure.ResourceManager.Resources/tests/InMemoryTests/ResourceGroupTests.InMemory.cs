@@ -58,7 +58,7 @@ namespace ResourceGroups.Tests
 
             var result = (await client.ResourceGroups.CreateOrUpdateAsync("foo", new ResourceGroup("WestEurope")
             {
-                Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } }
+                Tags = { { "department", "finance" }, { "tagname", "tagvalue" } }
             })).Value;
 
             var request = mockTransport.Requests[0];
@@ -149,7 +149,8 @@ namespace ResourceGroups.Tests
             Assert.IsNull(request.Content);
 
             // Validate response
-            Assert.AreEqual(404, result.Status);
+            Assert.AreEqual(false, result.Value);
+            Assert.AreEqual(404, result.GetRawResponse().Status);
         }
 
         [Test]

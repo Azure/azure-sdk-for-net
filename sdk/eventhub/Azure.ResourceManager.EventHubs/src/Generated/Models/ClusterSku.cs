@@ -11,22 +11,23 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class ClusterSku
     {
         /// <summary> Initializes a new instance of ClusterSku. </summary>
-        public ClusterSku()
+        /// <param name="name"> Name of this SKU. </param>
+        public ClusterSku(ClusterSkuName name)
         {
-            Name = "Dedicated";
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of ClusterSku. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="capacity"> The quantity of Event Hubs Cluster Capacity Units contained in this cluster. </param>
-        internal ClusterSku(string name, int? capacity)
+        internal ClusterSku(ClusterSkuName name, int? capacity)
         {
             Name = name;
             Capacity = capacity;
         }
 
         /// <summary> Name of this SKU. </summary>
-        public string Name { get; set; }
+        public ClusterSkuName Name { get; set; }
         /// <summary> The quantity of Event Hubs Cluster Capacity Units contained in this cluster. </summary>
         public int? Capacity { get; set; }
     }

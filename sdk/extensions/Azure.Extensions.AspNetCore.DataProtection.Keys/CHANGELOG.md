@@ -1,5 +1,14 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+
+## 1.0.2 (2020-09-01)
+
+### Fixed
+
+- Support reading keys created by a previous version of Azure KeyVault Keys DataProtection library.
+
 ## 1.0.1 (2020-08-06)
 
 ### Fixed

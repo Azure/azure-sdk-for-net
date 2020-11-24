@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>
         public AzureFirewallNetworkRule()
         {
+            Protocols = new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>();
+            SourceAddresses = new ChangeTrackingList<string>();
+            DestinationAddresses = new ChangeTrackingList<string>();
+            DestinationPorts = new ChangeTrackingList<string>();
+            DestinationFqdns = new ChangeTrackingList<string>();
+            SourceIpGroups = new ChangeTrackingList<string>();
+            DestinationIpGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>
@@ -45,18 +53,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Description of the rule. </summary>
         public string Description { get; set; }
         /// <summary> Array of AzureFirewallNetworkRuleProtocols. </summary>
-        public IList<AzureFirewallNetworkRuleProtocol> Protocols { get; set; }
+        public IList<AzureFirewallNetworkRuleProtocol> Protocols { get; }
         /// <summary> List of source IP addresses for this rule. </summary>
-        public IList<string> SourceAddresses { get; set; }
+        public IList<string> SourceAddresses { get; }
         /// <summary> List of destination IP addresses. </summary>
-        public IList<string> DestinationAddresses { get; set; }
+        public IList<string> DestinationAddresses { get; }
         /// <summary> List of destination ports. </summary>
-        public IList<string> DestinationPorts { get; set; }
+        public IList<string> DestinationPorts { get; }
         /// <summary> List of destination FQDNs. </summary>
-        public IList<string> DestinationFqdns { get; set; }
+        public IList<string> DestinationFqdns { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
-        public IList<string> SourceIpGroups { get; set; }
+        public IList<string> SourceIpGroups { get; }
         /// <summary> List of destination IpGroups for this rule. </summary>
-        public IList<string> DestinationIpGroups { get; set; }
+        public IList<string> DestinationIpGroups { get; }
     }
 }

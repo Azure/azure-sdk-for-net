@@ -14,18 +14,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationGatewayBackendHealthServer DeserializeApplicationGatewayBackendHealthServer(JsonElement element)
         {
-            string address = default;
-            NetworkInterfaceIPConfiguration ipConfiguration = default;
-            ApplicationGatewayBackendHealthServerHealth? health = default;
-            string healthProbeLog = default;
+            Optional<string> address = default;
+            Optional<NetworkInterfaceIPConfiguration> ipConfiguration = default;
+            Optional<ApplicationGatewayBackendHealthServerHealth> health = default;
+            Optional<string> healthProbeLog = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     address = property.Value.GetString();
                     continue;
                 }
@@ -33,6 +29,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipConfiguration = NetworkInterfaceIPConfiguration.DeserializeNetworkInterfaceIPConfiguration(property.Value);
@@ -42,6 +39,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     health = new ApplicationGatewayBackendHealthServerHealth(property.Value.GetString());
@@ -49,15 +47,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("healthProbeLog"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     healthProbeLog = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHealthServer(address, ipConfiguration, health, healthProbeLog);
+            return new ApplicationGatewayBackendHealthServer(address.Value, ipConfiguration.Value, Optional.ToNullable(health), healthProbeLog.Value);
         }
     }
 }

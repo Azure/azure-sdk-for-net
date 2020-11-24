@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class MaintenanceRedeployStatus
     {
         /// <summary> Initializes a new instance of MaintenanceRedeployStatus. </summary>
-        public MaintenanceRedeployStatus()
+        internal MaintenanceRedeployStatus()
         {
         }
 
@@ -37,18 +37,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> True, if customer is allowed to perform Maintenance. </summary>
-        public bool? IsCustomerInitiatedMaintenanceAllowed { get; set; }
+        public bool? IsCustomerInitiatedMaintenanceAllowed { get; }
         /// <summary> Start Time for the Pre Maintenance Window. </summary>
-        public DateTimeOffset? PreMaintenanceWindowStartTime { get; set; }
+        public DateTimeOffset? PreMaintenanceWindowStartTime { get; }
         /// <summary> End Time for the Pre Maintenance Window. </summary>
-        public DateTimeOffset? PreMaintenanceWindowEndTime { get; set; }
+        public DateTimeOffset? PreMaintenanceWindowEndTime { get; }
         /// <summary> Start Time for the Maintenance Window. </summary>
-        public DateTimeOffset? MaintenanceWindowStartTime { get; set; }
+        public DateTimeOffset? MaintenanceWindowStartTime { get; }
         /// <summary> End Time for the Maintenance Window. </summary>
-        public DateTimeOffset? MaintenanceWindowEndTime { get; set; }
+        public DateTimeOffset? MaintenanceWindowEndTime { get; }
         /// <summary> The Last Maintenance Operation Result Code. </summary>
-        public MaintenanceOperationResultCodeTypes? LastOperationResultCode { get; set; }
+        public MaintenanceOperationResultCodeTypes? LastOperationResultCode { get; }
         /// <summary> Message returned for the last Maintenance Operation. </summary>
-        public string LastOperationMessage { get; set; }
+        public string LastOperationMessage { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateIPConfiguration. </summary>
         public VirtualMachineScaleSetUpdateIPConfiguration()
         {
+            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<SubResource>();
+            ApplicationSecurityGroups = new ChangeTrackingList<SubResource>();
+            LoadBalancerBackendAddressPools = new ChangeTrackingList<SubResource>();
+            LoadBalancerInboundNatPools = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateIPConfiguration. </summary>
@@ -52,12 +57,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> The application gateway backend address pools. </summary>
-        public IList<SubResource> ApplicationGatewayBackendAddressPools { get; set; }
+        public IList<SubResource> ApplicationGatewayBackendAddressPools { get; }
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<SubResource> ApplicationSecurityGroups { get; set; }
+        public IList<SubResource> ApplicationSecurityGroups { get; }
         /// <summary> The load balancer backend address pools. </summary>
-        public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
+        public IList<SubResource> LoadBalancerBackendAddressPools { get; }
         /// <summary> The load balancer inbound nat pools. </summary>
-        public IList<SubResource> LoadBalancerInboundNatPools { get; set; }
+        public IList<SubResource> LoadBalancerInboundNatPools { get; }
     }
 }

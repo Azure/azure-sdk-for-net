@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="KeySource"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeySource(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

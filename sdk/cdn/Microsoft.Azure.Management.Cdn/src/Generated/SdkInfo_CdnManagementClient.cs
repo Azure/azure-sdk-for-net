@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Cdn
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cdn/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-2020-04 --csharp-sdks-folder=C:\\git\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "2916791fddcf1b69ebbc0741aa809350201041be";
+      public static readonly String GithubCommidId = "81ee445f0291ea1b284509dd42b3d37aea3799d7";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

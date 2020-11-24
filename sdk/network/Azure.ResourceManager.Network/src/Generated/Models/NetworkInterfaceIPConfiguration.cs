@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfiguration. </summary>
         public NetworkInterfaceIPConfiguration()
         {
+            VirtualNetworkTaps = new ChangeTrackingList<VirtualNetworkTap>();
+            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<ApplicationGatewayBackendAddressPool>();
+            LoadBalancerBackendAddressPools = new ChangeTrackingList<BackendAddressPool>();
+            LoadBalancerInboundNatRules = new ChangeTrackingList<InboundNatRule>();
+            ApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroup>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfiguration. </summary>
@@ -58,13 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The reference to Virtual Network Taps. </summary>
-        public IList<VirtualNetworkTap> VirtualNetworkTaps { get; set; }
+        public IList<VirtualNetworkTap> VirtualNetworkTaps { get; }
         /// <summary> The reference to ApplicationGatewayBackendAddressPool resource. </summary>
-        public IList<ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools { get; set; }
+        public IList<ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools { get; }
         /// <summary> The reference to LoadBalancerBackendAddressPool resource. </summary>
-        public IList<BackendAddressPool> LoadBalancerBackendAddressPools { get; set; }
+        public IList<BackendAddressPool> LoadBalancerBackendAddressPools { get; }
         /// <summary> A list of references of LoadBalancerInboundNatRules. </summary>
-        public IList<InboundNatRule> LoadBalancerInboundNatRules { get; set; }
+        public IList<InboundNatRule> LoadBalancerInboundNatRules { get; }
         /// <summary> Private IP address of the IP configuration. </summary>
         public string PrivateIPAddress { get; set; }
         /// <summary> The private IP address allocation method. </summary>
@@ -78,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Public IP address bound to the IP configuration. </summary>
         public PublicIPAddress PublicIPAddress { get; set; }
         /// <summary> Application security groups in which the IP configuration is included. </summary>
-        public IList<ApplicationSecurityGroup> ApplicationSecurityGroups { get; set; }
+        public IList<ApplicationSecurityGroup> ApplicationSecurityGroups { get; }
         /// <summary> The provisioning state of the network interface IP configuration. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> PrivateLinkConnection properties for the network interface. </summary>

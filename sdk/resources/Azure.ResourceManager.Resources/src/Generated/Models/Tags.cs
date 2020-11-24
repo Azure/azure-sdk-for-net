@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Tags. </summary>
         public Tags()
         {
+            TagsValue = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of Tags. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IDictionary<string, string> TagsValue { get; set; }
+        public IDictionary<string, string> TagsValue { get; }
     }
 }

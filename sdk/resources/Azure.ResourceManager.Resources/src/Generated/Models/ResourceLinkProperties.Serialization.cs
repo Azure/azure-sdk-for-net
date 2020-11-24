@@ -15,14 +15,9 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SourceId != null)
-            {
-                writer.WritePropertyName("sourceId");
-                writer.WriteStringValue(SourceId);
-            }
             writer.WritePropertyName("targetId");
             writer.WriteStringValue(TargetId);
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes");
                 writer.WriteStringValue(Notes);
@@ -32,17 +27,13 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ResourceLinkProperties DeserializeResourceLinkProperties(JsonElement element)
         {
-            string sourceId = default;
+            Optional<string> sourceId = default;
             string targetId = default;
-            string notes = default;
+            Optional<string> notes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceId = property.Value.GetString();
                     continue;
                 }
@@ -53,15 +44,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("notes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     notes = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceLinkProperties(sourceId, targetId, notes);
+            return new ResourceLinkProperties(sourceId.Value, targetId, notes.Value);
         }
     }
 }

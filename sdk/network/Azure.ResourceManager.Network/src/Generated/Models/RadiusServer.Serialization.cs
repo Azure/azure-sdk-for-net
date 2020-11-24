@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("radiusServerAddress");
             writer.WriteStringValue(RadiusServerAddress);
-            if (RadiusServerScore != null)
+            if (Optional.IsDefined(RadiusServerScore))
             {
                 writer.WritePropertyName("radiusServerScore");
                 writer.WriteNumberValue(RadiusServerScore.Value);
             }
-            if (RadiusServerSecret != null)
+            if (Optional.IsDefined(RadiusServerSecret))
             {
                 writer.WritePropertyName("radiusServerSecret");
                 writer.WriteStringValue(RadiusServerSecret);
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Network.Models
         internal static RadiusServer DeserializeRadiusServer(JsonElement element)
         {
             string radiusServerAddress = default;
-            long? radiusServerScore = default;
-            string radiusServerSecret = default;
+            Optional<long> radiusServerScore = default;
+            Optional<string> radiusServerSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("radiusServerAddress"))
@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     radiusServerScore = property.Value.GetInt64();
@@ -53,15 +54,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("radiusServerSecret"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     radiusServerSecret = property.Value.GetString();
                     continue;
                 }
             }
-            return new RadiusServer(radiusServerAddress, radiusServerScore, radiusServerSecret);
+            return new RadiusServer(radiusServerAddress, Optional.ToNullable(radiusServerScore), radiusServerSecret.Value);
         }
     }
 }

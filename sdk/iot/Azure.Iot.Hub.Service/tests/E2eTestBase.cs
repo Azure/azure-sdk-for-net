@@ -17,7 +17,7 @@ namespace Azure.Iot.Hub.Service.Tests
         public E2eTestBase(bool isAsync)
          : base(isAsync, TestSettings.Instance.TestMode)
         {
-            Sanitizer = new TestConnectionStringSanitizer();
+            Sanitizer = new CustomRequestSanitizer();
         }
 
         public E2eTestBase(bool isAsync, RecordedTestMode testMode)
@@ -39,9 +39,10 @@ namespace Azure.Iot.Hub.Service.Tests
             return InstrumentClient(
                 new IotHubServiceClient(
                     TestEnvironment.IotHubConnectionString,
-                    Recording.InstrumentClientOptions(new IotHubServiceClientOptions())));
+                    InstrumentClientOptions(new IotHubServiceClientOptions())));
         }
 
+        /* Need to use this for playback tests to run, do not use a new instance of random */
         protected string GetRandom()
         {
             return Recording.GenerateId();

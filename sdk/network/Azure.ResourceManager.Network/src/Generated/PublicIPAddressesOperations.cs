@@ -242,6 +242,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all public IP addresses in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<PublicIPAddress> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -285,6 +286,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all public IP addresses in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<PublicIPAddress> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -329,6 +331,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         public virtual AsyncPageable<PublicIPAddress> ListVirtualMachineScaleSetPublicIPAddressesAsync(string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -377,6 +380,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         public virtual Pageable<PublicIPAddress> ListVirtualMachineScaleSetPublicIPAddresses(string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -428,6 +432,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The network interface name. </param>
         /// <param name="ipConfigurationName"> The IP configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
         public virtual AsyncPageable<PublicIPAddress> ListVirtualMachineScaleSetVMPublicIPAddressesAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -491,6 +496,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The network interface name. </param>
         /// <param name="ipConfigurationName"> The IP configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
         public virtual Pageable<PublicIPAddress> ListVirtualMachineScaleSetVMPublicIPAddresses(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -551,6 +557,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="publicIpAddressName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
         public virtual async Task<PublicIPAddressesDeleteOperation> StartDeleteAsync(string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -580,6 +587,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="publicIpAddressName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
         public virtual PublicIPAddressesDeleteOperation StartDelete(string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -610,6 +618,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP address operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpAddressName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<PublicIPAddressesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -644,6 +653,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP address operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpAddressName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual PublicIPAddressesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

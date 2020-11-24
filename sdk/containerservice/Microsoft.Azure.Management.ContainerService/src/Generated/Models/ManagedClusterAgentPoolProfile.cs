@@ -37,8 +37,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="name">Unique name of the agent pool profile in the
         /// context of the subscription and resource group.</param>
         /// <param name="count">Number of agents (VMs) to host docker
-        /// containers. Allowed values must be in the range of 1 to 100
-        /// (inclusive). The default value is 1.</param>
+        /// containers. Allowed values must be in the range of 0 to 100
+        /// (inclusive) for user pools and in the range of 1 to 100 (inclusive)
+        /// for system pools. The default value is 1.</param>
         /// <param name="vmSize">Size of agent VMs. Possible values include:
         /// 'Standard_A1', 'Standard_A10', 'Standard_A11', 'Standard_A1_v2',
         /// 'Standard_A2', 'Standard_A2_v2', 'Standard_A2m_v2', 'Standard_A3',
@@ -114,24 +115,39 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="type">AgentPoolType represents types of an agent pool.
         /// Possible values include: 'VirtualMachineScaleSets',
         /// 'AvailabilitySet'</param>
+        /// <param name="mode">AgentPoolMode represents mode of an agent pool.
+        /// Possible values include: 'System', 'User'</param>
         /// <param name="orchestratorVersion">Version of orchestrator specified
         /// when creating the managed cluster.</param>
+        /// <param name="nodeImageVersion">Version of node image</param>
+        /// <param name="upgradeSettings">Settings for upgrading the
+        /// agentpool</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response.</param>
-        /// <param name="availabilityZones">(PREVIEW) Availability zones for
-        /// nodes. Must use VirtualMachineScaleSets AgentPoolType.</param>
+        /// <param name="availabilityZones">Availability zones for nodes. Must
+        /// use VirtualMachineScaleSets AgentPoolType.</param>
         /// <param name="enableNodePublicIP">Enable public IP for nodes</param>
         /// <param name="scaleSetPriority">ScaleSetPriority to be used to
         /// specify virtual machine scale set priority. Default to regular.
-        /// Possible values include: 'Low', 'Regular'</param>
+        /// Possible values include: 'Spot', 'Regular'</param>
         /// <param name="scaleSetEvictionPolicy">ScaleSetEvictionPolicy to be
-        /// used to specify eviction policy for low priority virtual machine
-        /// scale set. Default to Delete. Possible values include: 'Delete',
+        /// used to specify eviction policy for Spot virtual machine scale set.
+        /// Default to Delete. Possible values include: 'Delete',
         /// 'Deallocate'</param>
+        /// <param name="spotMaxPrice">SpotMaxPrice to be used to specify the
+        /// maximum price you are willing to pay in US Dollars. Possible values
+        /// are any decimal value greater than zero or -1 which indicates
+        /// default price to be up-to on-demand.</param>
+        /// <param name="tags">Agent pool tags to be persisted on the agent
+        /// pool virtual machine scale set.</param>
+        /// <param name="nodeLabels">Agent pool node labels to be persisted
+        /// across all nodes in agent pool.</param>
         /// <param name="nodeTaints">Taints added to new nodes during node pool
         /// create and scale. For example, key=value:NoSchedule.</param>
-        public ManagedClusterAgentPoolProfile(string name, int? count = default(int?), string vmSize = default(string), int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string type = default(string), string orchestratorVersion = default(string), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), IList<string> nodeTaints = default(IList<string>))
-            : base(count, vmSize, osDiskSizeGB, vnetSubnetID, maxPods, osType, maxCount, minCount, enableAutoScaling, type, orchestratorVersion, provisioningState, availabilityZones, enableNodePublicIP, scaleSetPriority, scaleSetEvictionPolicy, nodeTaints)
+        /// <param name="proximityPlacementGroupID">The ID for Proximity
+        /// Placement Group.</param>
+        public ManagedClusterAgentPoolProfile(string name, int? count = default(int?), string vmSize = default(string), int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string type = default(string), string mode = default(string), string orchestratorVersion = default(string), string nodeImageVersion = default(string), AgentPoolUpgradeSettings upgradeSettings = default(AgentPoolUpgradeSettings), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), double? spotMaxPrice = default(double?), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> nodeLabels = default(IDictionary<string, string>), IList<string> nodeTaints = default(IList<string>), string proximityPlacementGroupID = default(string))
+            : base(count, vmSize, osDiskSizeGB, vnetSubnetID, maxPods, osType, maxCount, minCount, enableAutoScaling, type, mode, orchestratorVersion, nodeImageVersion, upgradeSettings, provisioningState, availabilityZones, enableNodePublicIP, scaleSetPriority, scaleSetEvictionPolicy, spotMaxPrice, tags, nodeLabels, nodeTaints, proximityPlacementGroupID)
         {
             Name = name;
             CustomInit();
@@ -160,6 +176,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Name != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Name, "^[a-z][a-z0-9]{0,11}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "Name", "^[a-z][a-z0-9]{0,11}$");
+                }
             }
         }
     }

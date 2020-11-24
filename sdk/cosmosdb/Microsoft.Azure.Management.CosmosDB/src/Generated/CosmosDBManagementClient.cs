@@ -21,9 +21,6 @@ namespace Microsoft.Azure.Management.CosmosDB
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// Azure Cosmos DB Database Service Resource Provider REST API
-    /// </summary>
     public partial class CosmosDBManagementClient : ServiceClient<CosmosDBManagementClient>, ICosmosDBManagementClient, IAzureClient
     {
         /// <summary>

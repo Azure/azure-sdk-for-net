@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DisablePasswordAuthentication != null)
+            if (Optional.IsDefined(DisablePasswordAuthentication))
             {
                 writer.WritePropertyName("disablePasswordAuthentication");
                 writer.WriteBooleanValue(DisablePasswordAuthentication.Value);
             }
-            if (Ssh != null)
+            if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh");
                 writer.WriteObjectValue(Ssh);
             }
-            if (ProvisionVMAgent != null)
+            if (Optional.IsDefined(ProvisionVMAgent))
             {
                 writer.WritePropertyName("provisionVMAgent");
                 writer.WriteBooleanValue(ProvisionVMAgent.Value);
@@ -35,15 +35,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LinuxConfiguration DeserializeLinuxConfiguration(JsonElement element)
         {
-            bool? disablePasswordAuthentication = default;
-            SshConfiguration ssh = default;
-            bool? provisionVMAgent = default;
+            Optional<bool> disablePasswordAuthentication = default;
+            Optional<SshConfiguration> ssh = default;
+            Optional<bool> provisionVMAgent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disablePasswordAuthentication"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disablePasswordAuthentication = property.Value.GetBoolean();
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ssh = SshConfiguration.DeserializeSshConfiguration(property.Value);
@@ -62,13 +64,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisionVMAgent = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new LinuxConfiguration(disablePasswordAuthentication, ssh, provisionVMAgent);
+            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVMAgent));
         }
     }
 }

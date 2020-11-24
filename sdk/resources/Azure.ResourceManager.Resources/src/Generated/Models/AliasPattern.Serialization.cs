@@ -14,26 +14,18 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static AliasPattern DeserializeAliasPattern(JsonElement element)
         {
-            string phrase = default;
-            string variable = default;
-            AliasPatternType? type = default;
+            Optional<string> phrase = default;
+            Optional<string> variable = default;
+            Optional<AliasPatternType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phrase"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     phrase = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("variable"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     variable = property.Value.GetString();
                     continue;
                 }
@@ -41,13 +33,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToAliasPatternType();
                     continue;
                 }
             }
-            return new AliasPattern(phrase, variable, type);
+            return new AliasPattern(phrase.Value, variable.Value, Optional.ToNullable(type));
         }
     }
 }

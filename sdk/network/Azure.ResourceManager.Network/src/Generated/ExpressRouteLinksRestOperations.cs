@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ExpressRouteLinksRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(linkName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/>, or <paramref name="linkName"/> is null. </exception>
         public async Task<Response<ExpressRouteLink>> GetAsync(string resourceGroupName, string expressRoutePortName, string linkName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -91,14 +93,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ExpressRouteLink value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteLink.DeserializeExpressRouteLink(document.RootElement);
-                        }
+                        value = ExpressRouteLink.DeserializeExpressRouteLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,6 +106,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/>, or <paramref name="linkName"/> is null. </exception>
         public Response<ExpressRouteLink> Get(string resourceGroupName, string expressRoutePortName, string linkName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -134,14 +130,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ExpressRouteLink value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteLink.DeserializeExpressRouteLink(document.RootElement);
-                        }
+                        value = ExpressRouteLink.DeserializeExpressRouteLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,6 +154,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/links", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -172,6 +162,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRoutePortName"/> is null. </exception>
         public async Task<Response<ExpressRouteLinkListResult>> ListAsync(string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -191,14 +182,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ExpressRouteLinkListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteLinkListResult.DeserializeExpressRouteLinkListResult(document.RootElement);
-                        }
+                        value = ExpressRouteLinkListResult.DeserializeExpressRouteLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -210,6 +194,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRoutePortName"/> is null. </exception>
         public Response<ExpressRouteLinkListResult> List(string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -229,14 +214,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ExpressRouteLinkListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteLinkListResult.DeserializeExpressRouteLinkListResult(document.RootElement);
-                        }
+                        value = ExpressRouteLinkListResult.DeserializeExpressRouteLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -253,6 +231,7 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -261,6 +240,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="expressRoutePortName"/> is null. </exception>
         public async Task<Response<ExpressRouteLinkListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -284,14 +264,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ExpressRouteLinkListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteLinkListResult.DeserializeExpressRouteLinkListResult(document.RootElement);
-                        }
+                        value = ExpressRouteLinkListResult.DeserializeExpressRouteLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -304,6 +277,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="expressRoutePortName"/> is null. </exception>
         public Response<ExpressRouteLinkListResult> ListNextPage(string nextLink, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -327,14 +301,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ExpressRouteLinkListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteLinkListResult.DeserializeExpressRouteLinkListResult(document.RootElement);
-                        }
+                        value = ExpressRouteLinkListResult.DeserializeExpressRouteLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

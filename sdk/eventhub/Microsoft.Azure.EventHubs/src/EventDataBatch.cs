@@ -14,7 +14,11 @@ namespace Microsoft.Azure.EventHubs
     public class EventDataBatch : IDisposable
     {
         const int MaxSizeLimit = 4 * 1024 * 1024;
-        const int DiagnosticsIdOverhead = 64;
+
+        // System.Diagnostics.Activity.Id is 1024 bytes or shorter.
+        // However we will keep overhead at 128 bytes which should be enough for most scenarios.
+        // Any client in need of longer Ids should create batch with an appropriate mac-batch-size.
+        const int DiagnosticsIdOverhead = 128;
 
         readonly List<EventData> eventDataList;
         readonly long maxSize;

@@ -1,19 +1,43 @@
 # Release History
 
-## 4.1.0-preview.2 (Unreleased)
+## 4.2.0-beta.4 (Unreleased)
 
 
-## 4.1.0-preview.1 (2020-03-09)
+## 4.2.0-beta.3 (2020-11-12)
+
+- Bug fixes and performance improvements.
+
+## 4.2.0-beta.2 (2020-10-06)
+
+- Bug fixes and performance improvements.
+
+## 4.2.0-beta.1 (2020-09-08)
 
 ### Added
 
-- Add `RecoverableDays` property to `SecretProperties`.
+- Added `KeyVaultSecretIdentifier` to parse secret URIs.
+
+## 4.1.0 (2020-08-11)
+
+### Added
+
+- Added `RecoverableDays` property to `SecretProperties`.
+
+### Changed
+
+- Default service version is now 7.1.
 
 ## 4.0.3 (2020-03-18)
 
 ### Fixed
 
 - Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
+
+## 4.1.0-preview.1 (2020-03-09)
+
+### Added
+
+- Add `RecoverableDays` property to `SecretProperties`.
 
 ## 4.0.2 (2020-03-03)
 

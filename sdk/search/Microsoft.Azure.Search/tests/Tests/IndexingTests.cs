@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Search.Tests
     using Newtonsoft.Json.Serialization;
     using Rest.Serialization;
     using Xunit;
+    using Index = Microsoft.Azure.Search.Models.Index;
 
     public sealed class IndexingTests : SearchTestBase<IndexFixture>
     {

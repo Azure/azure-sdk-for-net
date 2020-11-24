@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             writer.WriteEndObject();
         }
     }

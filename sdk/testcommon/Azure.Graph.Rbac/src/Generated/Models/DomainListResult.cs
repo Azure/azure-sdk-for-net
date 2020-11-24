@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of DomainListResult. </summary>
         internal DomainListResult()
         {
+            Value = new ChangeTrackingList<Domain>();
         }
 
         /// <summary> Initializes a new instance of DomainListResult. </summary>

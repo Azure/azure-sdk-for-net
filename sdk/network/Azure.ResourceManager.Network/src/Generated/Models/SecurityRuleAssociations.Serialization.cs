@@ -15,16 +15,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SecurityRuleAssociations DeserializeSecurityRuleAssociations(JsonElement element)
         {
-            NetworkInterfaceAssociation networkInterfaceAssociation = default;
-            SubnetAssociation subnetAssociation = default;
-            IReadOnlyList<SecurityRule> defaultSecurityRules = default;
-            IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default;
+            Optional<NetworkInterfaceAssociation> networkInterfaceAssociation = default;
+            Optional<SubnetAssociation> subnetAssociation = default;
+            Optional<IReadOnlyList<SecurityRule>> defaultSecurityRules = default;
+            Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaceAssociation"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkInterfaceAssociation = NetworkInterfaceAssociation.DeserializeNetworkInterfaceAssociation(property.Value);
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnetAssociation = SubnetAssociation.DeserializeSubnetAssociation(property.Value);
@@ -43,19 +45,13 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityRule> array = new List<SecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SecurityRule.DeserializeSecurityRule(item));
-                        }
+                        array.Add(SecurityRule.DeserializeSecurityRule(item));
                     }
                     defaultSecurityRules = array;
                     continue;
@@ -64,25 +60,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EffectiveNetworkSecurityRule> array = new List<EffectiveNetworkSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(EffectiveNetworkSecurityRule.DeserializeEffectiveNetworkSecurityRule(item));
-                        }
+                        array.Add(EffectiveNetworkSecurityRule.DeserializeEffectiveNetworkSecurityRule(item));
                     }
                     effectiveSecurityRules = array;
                     continue;
                 }
             }
-            return new SecurityRuleAssociations(networkInterfaceAssociation, subnetAssociation, defaultSecurityRules, effectiveSecurityRules);
+            return new SecurityRuleAssociations(networkInterfaceAssociation.Value, subnetAssociation.Value, Optional.ToList(defaultSecurityRules), Optional.ToList(effectiveSecurityRules));
         }
     }
 }

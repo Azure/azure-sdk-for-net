@@ -16,32 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,35 +39,25 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (LocalNetworkAddressSpace != null)
+            if (Optional.IsDefined(LocalNetworkAddressSpace))
             {
                 writer.WritePropertyName("localNetworkAddressSpace");
                 writer.WriteObjectValue(LocalNetworkAddressSpace);
             }
-            if (GatewayIpAddress != null)
+            if (Optional.IsDefined(GatewayIpAddress))
             {
                 writer.WritePropertyName("gatewayIpAddress");
                 writer.WriteStringValue(GatewayIpAddress);
             }
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn");
                 writer.WriteStringValue(Fqdn);
             }
-            if (BgpSettings != null)
+            if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings");
                 writer.WriteObjectValue(BgpSettings);
-            }
-            if (ResourceGuid != null)
-            {
-                writer.WritePropertyName("resourceGuid");
-                writer.WriteStringValue(ResourceGuid);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -90,62 +65,42 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static LocalNetworkGateway DeserializeLocalNetworkGateway(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            AddressSpace localNetworkAddressSpace = default;
-            string gatewayIpAddress = default;
-            string fqdn = default;
-            BgpSettings bgpSettings = default;
-            string resourceGuid = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<AddressSpace> localNetworkAddressSpace = default;
+            Optional<string> gatewayIpAddress = default;
+            Optional<string> fqdn = default;
+            Optional<BgpSettings> bgpSettings = default;
+            Optional<string> resourceGuid = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -153,31 +108,31 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("localNetworkAddressSpace"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             localNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
@@ -185,19 +140,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("gatewayIpAddress"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             gatewayIpAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("fqdn"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             fqdn = property0.Value.GetString();
                             continue;
                         }
@@ -205,6 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value);
@@ -212,10 +160,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             resourceGuid = property0.Value.GetString();
                             continue;
                         }
@@ -223,6 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -232,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new LocalNetworkGateway(id, name, type, location, tags, etag, localNetworkAddressSpace, gatewayIpAddress, fqdn, bgpSettings, resourceGuid, provisioningState);
+            return new LocalNetworkGateway(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, localNetworkAddressSpace.Value, gatewayIpAddress.Value, fqdn.Value, bgpSettings.Value, resourceGuid.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

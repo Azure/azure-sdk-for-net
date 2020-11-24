@@ -14,16 +14,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TagCount DeserializeTagCount(JsonElement element)
         {
-            string type = default;
-            int? value = default;
+            Optional<string> type = default;
+            Optional<int> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -31,13 +27,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new TagCount(type, value);
+            return new TagCount(type.Value, Optional.ToNullable(value));
         }
     }
 }

@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ServiceProviderName != null)
+            if (Optional.IsDefined(ServiceProviderName))
             {
                 writer.WritePropertyName("serviceProviderName");
                 writer.WriteStringValue(ServiceProviderName);
             }
-            if (PeeringLocation != null)
+            if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation");
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (BandwidthInMbps != null)
+            if (Optional.IsDefined(BandwidthInMbps))
             {
                 writer.WritePropertyName("bandwidthInMbps");
                 writer.WriteNumberValue(BandwidthInMbps.Value);
@@ -35,26 +35,18 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteCircuitServiceProviderProperties DeserializeExpressRouteCircuitServiceProviderProperties(JsonElement element)
         {
-            string serviceProviderName = default;
-            string peeringLocation = default;
-            int? bandwidthInMbps = default;
+            Optional<string> serviceProviderName = default;
+            Optional<string> peeringLocation = default;
+            Optional<int> bandwidthInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceProviderName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     serviceProviderName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("peeringLocation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     peeringLocation = property.Value.GetString();
                     continue;
                 }
@@ -62,13 +54,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bandwidthInMbps = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName, peeringLocation, bandwidthInMbps);
+            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName.Value, peeringLocation.Value, Optional.ToNullable(bandwidthInMbps));
         }
     }
 }

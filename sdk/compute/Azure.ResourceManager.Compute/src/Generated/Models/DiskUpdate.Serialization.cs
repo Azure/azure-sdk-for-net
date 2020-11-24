@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -26,54 +26,54 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (OsType != null)
+            if (Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType");
                 writer.WriteStringValue(OsType.Value.ToSerialString());
             }
-            if (DiskSizeGB != null)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (EncryptionSettingsCollection != null)
+            if (Optional.IsDefined(EncryptionSettingsCollection))
             {
                 writer.WritePropertyName("encryptionSettingsCollection");
                 writer.WriteObjectValue(EncryptionSettingsCollection);
             }
-            if (DiskIopsReadWrite != null)
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite");
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (DiskMBpsReadWrite != null)
+            if (Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite");
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
-            if (DiskIopsReadOnly != null)
+            if (Optional.IsDefined(DiskIopsReadOnly))
             {
                 writer.WritePropertyName("diskIOPSReadOnly");
                 writer.WriteNumberValue(DiskIopsReadOnly.Value);
             }
-            if (DiskMBpsReadOnly != null)
+            if (Optional.IsDefined(DiskMBpsReadOnly))
             {
                 writer.WritePropertyName("diskMBpsReadOnly");
                 writer.WriteNumberValue(DiskMBpsReadOnly.Value);
             }
-            if (MaxShares != null)
+            if (Optional.IsDefined(MaxShares))
             {
                 writer.WritePropertyName("maxShares");
                 writer.WriteNumberValue(MaxShares.Value);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);

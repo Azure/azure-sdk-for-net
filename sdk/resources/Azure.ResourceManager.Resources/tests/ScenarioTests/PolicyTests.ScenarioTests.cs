@@ -74,7 +74,7 @@ namespace Policy.Tests
             this.AssertValid(policyName, policyDefinition, getResult, false);
 
             Assert.AreEqual("All", getResult.Mode);
-            Assert.Null(getResult.Parameters);
+            Assert.IsEmpty(getResult.Parameters);
 
             // Delete definition and validate
             await this.DeleteDefinitionAndValidate(policyName);
@@ -109,7 +109,7 @@ namespace Policy.Tests
             Assert.NotNull(policyDefinition);
             Assert.NotNull(policyDefinition.Mode);
             Assert.Null(policyDefinition.Description);
-            Assert.Null(policyDefinition.Parameters);
+            Assert.IsEmpty(policyDefinition.Parameters);
             this.AssertValid(policyName, policyDefinition, getResult, false);
 
             var listResult = await PolicyDefinitionsOperations.ListAsync().ToEnumerableAsync();
@@ -126,7 +126,7 @@ namespace Policy.Tests
             this.AssertValid(policyName, policyDefinition, getResult, false);
 
             Assert.AreEqual("Microsoft.DataCatalog.Data", getResult.Mode);
-            Assert.Null(getResult.Parameters);
+            Assert.IsEmpty(getResult.Parameters);
 
             // Delete definition and validate
             await this.DeleteDefinitionAndValidate(policyName);
@@ -148,7 +148,7 @@ namespace Policy.Tests
             var policySet = new PolicySetDefinition
             {
                 DisplayName = $"{thisTestName} Policy Set Definition ${LivePolicyTests.NameTag}",
-                PolicyDefinitions = new[] { new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id) }
+                PolicyDefinitions = { new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id) }
             };
 
             var result = (await PolicySetDefinitionsOperations.CreateOrUpdateAsync(setName, policySet)).Value;
@@ -160,7 +160,7 @@ namespace Policy.Tests
             Has.One.EqualTo(getResult.PolicyDefinitions);
             Assert.Null(getResult.Description);
             AssertMetadataValid(getResult.Metadata);
-            Assert.Null(getResult.Parameters);
+            Assert.IsEmpty(getResult.Parameters);
             Assert.AreEqual("Custom", getResult.PolicyType.ToString());
 
             var listResult = await PolicySetDefinitionsOperations.ListAsync().ToEnumerableAsync();
@@ -176,11 +176,10 @@ namespace Policy.Tests
             const string refId = "refId2";
             var definitionName2 = Recording.GenerateAssetName("");
             var definitionResult2 = (await PolicyDefinitionsOperations.CreateOrUpdateAsync(policyDefinitionName: definitionName2, parameters: policyDefinition)).Value;
-            policySet.PolicyDefinitions = new[]
-            {
-                    new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id),
-                    new PolicyDefinitionReference(policyDefinitionId: definitionResult2.Id){ PolicyDefinitionReferenceId = refId }
-                };
+
+            policySet.PolicyDefinitions.Clear();
+            policySet.PolicyDefinitions.Add(new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id));
+            policySet.PolicyDefinitions.Add(new PolicyDefinitionReference(policyDefinitionId: definitionResult2.Id){ PolicyDefinitionReferenceId = refId });
 
             result = (await PolicySetDefinitionsOperations.CreateOrUpdateAsync(setName, policySet)).Value;
             Assert.NotNull(result);
@@ -189,7 +188,7 @@ namespace Policy.Tests
             getResult = (await PolicySetDefinitionsOperations.GetAsync(setName)).Value;
             this.AssertValid(setName, policySet, getResult, false);
             Assert.AreEqual(2, getResult.PolicyDefinitions.Count);
-            Assert.Null(getResult.Parameters);
+            Assert.IsEmpty(getResult.Parameters);
             Assert.AreEqual("Custom", getResult.PolicyType.ToString());
             Assert.AreEqual(1, getResult.PolicyDefinitions.Count(definition => refId.Equals(definition.PolicyDefinitionReferenceId, StringComparison.Ordinal)));
 
@@ -199,9 +198,17 @@ namespace Policy.Tests
             // Create a policy set with groups
             const string groupNameOne = "group1";
             const string groupNameTwo = "group2";
-            policySet.PolicyDefinitionGroups = new List<PolicyDefinitionGroup> { new PolicyDefinitionGroup(groupNameOne), new PolicyDefinitionGroup(groupNameTwo) };
-            policySet.PolicyDefinitions[0].GroupNames = new[] { groupNameOne, groupNameTwo };
-            policySet.PolicyDefinitions[1].GroupNames = new[] { groupNameTwo };
+            policySet.PolicyDefinitionGroups.Clear();
+            policySet.PolicyDefinitionGroups.Add(new PolicyDefinitionGroup(groupNameOne));
+            policySet.PolicyDefinitionGroups.Add(new PolicyDefinitionGroup(groupNameTwo));
+
+            policySet.PolicyDefinitions[0].GroupNames.Clear();
+            policySet.PolicyDefinitions[0].GroupNames.Add(groupNameOne);
+            policySet.PolicyDefinitions[0].GroupNames.Add(groupNameTwo);
+
+            policySet.PolicyDefinitions[1].GroupNames.Clear();
+            policySet.PolicyDefinitions[1].GroupNames.Add(groupNameTwo);
+
             result = (await PolicySetDefinitionsOperations.CreateOrUpdateAsync(setName, policySet)).Value;
             Assert.NotNull(result);
             this.AssertValid(setName, policySet, result, false);
@@ -219,17 +226,17 @@ namespace Policy.Tests
             definitionResult = (await PolicyDefinitionsOperations.CreateOrUpdateAsync(policyDefinitionName: definitionName, parameters: policyDefinition)).Value;
             Assert.NotNull(definitionResult);
 
-            var referenceParameters = new Dictionary<string, ParameterValuesValue> { { "foo", new ParameterValuesValue() { Value = "[parameters('fooSet')]" } } };
-            var policySetParameters = new Dictionary<string, ParameterDefinitionsValue> { { "fooSet", new ParameterDefinitionsValue() { Type = ParameterType.String } } };
-
             policySet = new PolicySetDefinition
             {
                 DisplayName = $"{thisTestName} Policy Set Definition ${LivePolicyTests.NameTag}",
-                PolicyDefinitions = new[]
+                PolicyDefinitions =
                 {
-                        new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id){ Parameters = referenceParameters }
+                        new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id)
+                        {
+                            Parameters = { { "foo", new ParameterValuesValue() { Value = "[parameters('fooSet')]" } } }
+                        }
                     },
-                Parameters = policySetParameters
+                Parameters = { { "fooSet", new ParameterDefinitionsValue() { Type = ParameterType.String } } }
             };
 
             result = (await PolicySetDefinitionsOperations.CreateOrUpdateAsync(setName, policySet)).Value;
@@ -275,10 +282,10 @@ namespace Policy.Tests
             // Default enforcement should be set even if not provided as input in PUT request.
             policyAssignment.EnforcementMode = EnforcementMode.Default;
             this.AssertValid(assignmentName, policyAssignment, getResult);
-            Assert.Null(getResult.NotScopes);
+            Assert.IsEmpty(getResult.NotScopes);
             Assert.Null(getResult.Description);
             AssertMetadataValid(getResult.Metadata);
-            Assert.Null(getResult.Parameters);
+            Assert.IsEmpty(getResult.Parameters);
             Assert.AreEqual(EnforcementMode.Default, getResult.EnforcementMode);
 
             var listResult = await PolicyAssignmentsOperations.ListAsync().ToEnumerableAsync();
@@ -378,7 +385,8 @@ namespace Policy.Tests
             // clean up everything
             await PolicyAssignmentsOperations.DeleteAsync("/" + assignmentScope, assignment.Name);
             await PolicyDefinitionsOperations.DeleteAsync(policyDefinition.Name);
-            await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
+            // No need to manual delete
+            //await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
         }
 
         [Test]
@@ -422,7 +430,8 @@ namespace Policy.Tests
             // clean up everything
             await PolicyAssignmentsOperations.DeleteAsync(assignmentScope, assignment.Name);
             await PolicyDefinitionsOperations.DeleteAsync(policyDefinition.Name);
-            await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
+            // No need to manual delete
+            //await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
         }
 
         //No Track2 ManagementGroup
@@ -729,7 +738,7 @@ namespace Policy.Tests
 
             // Unused parameter
             policyDefinition = this.CreatePolicyDefinition($"{thisTestName} - Unused Parameter ${LivePolicyTests.NameTag}");
-            policyDefinition.Parameters = LivePolicyTests.BasicParameters;
+            policyDefinition.Parameters.InitializeFrom(LivePolicyTests.BasicParameters);
 
             try
             {
@@ -744,8 +753,7 @@ namespace Policy.Tests
             }
 
             // Missing parameter
-            policyDefinition = this.CreatePolicyDefinitionWithParameters($"{thisTestName} - Missing Parameter ${LivePolicyTests.NameTag}");
-            policyDefinition.Parameters = null;
+            policyDefinition = this.CreatePolicyDefinitionWithoutParameter($"{thisTestName} - Missing Parameter ${LivePolicyTests.NameTag}");
 
             try
             {
@@ -756,7 +764,7 @@ namespace Policy.Tests
             {
 
                 Assert.NotNull(ex);
-                Assert.IsTrue(ex.Message.ToString().Contains("InvalidPolicyParameters"));
+                StringAssert.Contains("InvalidPolicyParameters", ex.Message);
             }
         }
 
@@ -794,7 +802,7 @@ namespace Policy.Tests
             policySetDefinition = new PolicySetDefinition
             {
                 DisplayName = $"{thisTestName} Bad Set Definition - Bad Policy Id {LivePolicyTests.NameTag}",
-                PolicyDefinitions = new[]
+                PolicyDefinitions =
                 {
                         new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id.Replace(definitionName, Recording.GenerateAssetName("")))
                     }
@@ -816,12 +824,13 @@ namespace Policy.Tests
             policySetDefinition = new PolicySetDefinition
             {
                 DisplayName = $"{thisTestName} Bad Set Definition - Unused Parameter {LivePolicyTests.NameTag}",
-                Parameters = LivePolicyTests.BasicParameters,
-                PolicyDefinitions = new[]
+                PolicyDefinitions =
                 {
                         new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id)
-                    }
+                }
             };
+
+            policySetDefinition.Parameters.InitializeFrom(LivePolicyTests.BasicParameters);
 
             try
             {
@@ -832,19 +841,24 @@ namespace Policy.Tests
             {
 
                 Assert.NotNull(ex);
-                Assert.IsTrue(ex.Message.ToString().Contains("UnusedPolicyParameters"));
+                StringAssert.Contains("UnusedPolicyParameters", ex.Message);
+                Assert.IsTrue(ex.Message.ToString().Contains(""));
             }
-
-            var referenceParameters = new Dictionary<string, ParameterValuesValue> { { "foo", new ParameterValuesValue() { Value = "abc" } } };
 
             // Invalid reference parameters
             policySetDefinition = new PolicySetDefinition
             {
                 DisplayName = $"{thisTestName} Bad Set Definition - Bad Reference Parameter {LivePolicyTests.NameTag}",
-                PolicyDefinitions = new[]
+                PolicyDefinitions =
                 {
-                        new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id){ Parameters = referenceParameters }
+                    new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id)
+                    {
+                        Parameters =
+                        {
+                            { "foo", new ParameterValuesValue() { Value = "abc" } }
+                        }
                     }
+                }
             };
 
             try
@@ -1014,23 +1028,49 @@ namespace Policy.Tests
         };
 
         // create a minimal policy definition model with parameter
-        private PolicyDefinition CreatePolicyDefinitionWithParameters(string displayName) => new PolicyDefinition
+        private PolicyDefinition CreatePolicyDefinitionWithParameters(string displayName)
+        {
+            var definition = new PolicyDefinition
+            {
+                DisplayName = displayName,
+                PolicyRule = new Dictionary<string, object>
+                {
+                    {
+                        "if", new Dictionary<string, object>
+                        {
+                            {"source", "action"},
+                            {"equals", "[parameters('foo')]"}
+                        }
+                    },
+                    {
+                        "then", new Dictionary<string, object>
+                        {
+                            {"effect", "deny"}
+                        }
+                    }
+                }
+            };
+            definition.Parameters.InitializeFrom(LivePolicyTests.BasicParameters);
+            return definition;
+        }
+
+        // create a minimal policy definition model without any parameters
+        private PolicyDefinition CreatePolicyDefinitionWithoutParameter(string displayName) => new PolicyDefinition
         {
             DisplayName = displayName,
-            Parameters = LivePolicyTests.BasicParameters,
             PolicyRule = new Dictionary<string, object>
             {
                 {
                     "if", new Dictionary<string, object>
                     {
-                        { "source", "action" },
-                        { "equals", "[parameters('foo')]" }
+                        {"source", "action"},
+                        {"equals", "[parameters('foo')]"}
                     }
                 },
                 {
                     "then", new Dictionary<string, object>
                     {
-                        { "effect", "deny" }
+                        {"effect", "deny"}
                     }
                 }
             }
@@ -1084,7 +1124,7 @@ namespace Policy.Tests
             Assert.AreEqual("Indexed", definition.Mode);
             Assert.Null(definition.Description);
             AssertMetadataValid(definition.Metadata);
-            Assert.Null(definition.Parameters);
+            Assert.IsEmpty(definition.Parameters);
         }
 
         // update the given policy definition with extra fields
@@ -1149,7 +1189,7 @@ namespace Policy.Tests
             Assert.AreEqual(model.Description, result.Description);
             if (model.Metadata != null)
                 AssertMetadataEqual(model.Metadata, result.Metadata, isBuiltin);
-            Assert.AreEqual(model.Parameters?.ToString(), result.Parameters?.ToString());
+            Assert.AreEqual(model.Parameters.Count, result.Parameters.Count);
         }
 
         // validate that the given result policy definition is equal to the expected one
@@ -1251,7 +1291,7 @@ namespace Policy.Tests
             Assert.AreEqual(model.Description, result.Description);
             if (model.Metadata != null)
                 AssertMetadataEqual(model.Metadata, result.Metadata, isBuiltin);
-            Assert.AreEqual(model.Parameters?.ToString(), result.Parameters?.ToString());
+            Assert.AreEqual(model.Parameters?.Count, result.Parameters?.Count);
             Assert.AreEqual(model.PolicyDefinitions.Count, result.PolicyDefinitions.Count);
             foreach (var expectedDefinition in model.PolicyDefinitions)
             {

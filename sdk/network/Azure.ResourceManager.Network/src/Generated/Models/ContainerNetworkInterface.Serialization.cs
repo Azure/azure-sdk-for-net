@@ -16,52 +16,22 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ContainerNetworkInterfaceConfiguration != null)
-            {
-                writer.WritePropertyName("containerNetworkInterfaceConfiguration");
-                writer.WriteObjectValue(ContainerNetworkInterfaceConfiguration);
-            }
-            if (Container != null)
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container");
                 writer.WriteObjectValue(Container);
-            }
-            if (IpConfigurations != null)
-            {
-                writer.WritePropertyName("ipConfigurations");
-                writer.WriteStartArray();
-                foreach (var item in IpConfigurations)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -69,60 +39,50 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ContainerNetworkInterface DeserializeContainerNetworkInterface(JsonElement element)
         {
-            string name = default;
-            string type = default;
-            string etag = default;
-            string id = default;
-            ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration = default;
-            SubResource container = default;
-            IList<ContainerNetworkInterfaceIpConfiguration> ipConfigurations = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfiguration = default;
+            Optional<SubResource> container = default;
+            Optional<IReadOnlyList<ContainerNetworkInterfaceIpConfiguration>> ipConfigurations = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("containerNetworkInterfaceConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             containerNetworkInterfaceConfiguration = ContainerNetworkInterfaceConfiguration.DeserializeContainerNetworkInterfaceConfiguration(property0.Value);
@@ -132,6 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             container = DeserializeSubResource(property0.Value);
@@ -141,19 +102,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerNetworkInterfaceIpConfiguration> array = new List<ContainerNetworkInterfaceIpConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ContainerNetworkInterfaceIpConfiguration.DeserializeContainerNetworkInterfaceIpConfiguration(item));
-                                }
+                                array.Add(ContainerNetworkInterfaceIpConfiguration.DeserializeContainerNetworkInterfaceIpConfiguration(item));
                             }
                             ipConfigurations = array;
                             continue;
@@ -162,6 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -171,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ContainerNetworkInterface(id, name, type, etag, containerNetworkInterfaceConfiguration, container, ipConfigurations, provisioningState);
+            return new ContainerNetworkInterface(id.Value, name.Value, type.Value, etag.Value, containerNetworkInterfaceConfiguration.Value, container.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(provisioningState));
         }
     }
 }

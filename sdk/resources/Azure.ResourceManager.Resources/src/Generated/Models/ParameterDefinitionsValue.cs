@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ParameterDefinitionsValue. </summary>
         public ParameterDefinitionsValue()
         {
+            AllowedValues = new ChangeTrackingList<object>();
         }
 
         /// <summary> Initializes a new instance of ParameterDefinitionsValue. </summary>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The data type of the parameter. </summary>
         public ParameterType? Type { get; set; }
         /// <summary> The allowed values for the parameter. </summary>
-        public IList<object> AllowedValues { get; set; }
+        public IList<object> AllowedValues { get; }
         /// <summary> The default value for the parameter if no value is provided. </summary>
         public object DefaultValue { get; set; }
         /// <summary> General metadata for the parameter. </summary>

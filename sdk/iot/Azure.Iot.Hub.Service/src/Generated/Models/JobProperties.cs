@@ -31,8 +31,8 @@ namespace Azure.Iot.Hub.Service.Models
         /// <param name="excludeKeysInExport"> Optional for export jobs; ignored for other jobs. If not specified, the service defaults to false. If false, authorization keys are included in export output. Keys are exported as null otherwise. </param>
         /// <param name="storageAuthenticationType"> The authentication type used for connecting to the storage account. </param>
         /// <param name="failureReason"> System genereated.  Ignored at creation. The reason for failure, if a failure occurred. </param>
-        /// <param name="includeConfigurations"> . </param>
-        /// <param name="configurationsBlobName"> . </param>
+        /// <param name="includeConfigurations"> Defaults to false. If true, then configurations are included in the data export/import. </param>
+        /// <param name="configurationsBlobName"> Defaults to configurations.txt. Specifies the name of the blob to use when exporting/importing configurations. </param>
         internal JobProperties(string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobPropertiesType? type, JobPropertiesStatus? status, int? progress, string inputBlobContainerUri, string inputBlobName, string outputBlobContainerUri, string outputBlobName, bool? excludeKeysInExport, JobPropertiesStorageAuthenticationType? storageAuthenticationType, string failureReason, bool? includeConfigurations, string configurationsBlobName)
         {
             JobId = jobId;
@@ -78,7 +78,9 @@ namespace Azure.Iot.Hub.Service.Models
         public JobPropertiesStorageAuthenticationType? StorageAuthenticationType { get; set; }
         /// <summary> System genereated.  Ignored at creation. The reason for failure, if a failure occurred. </summary>
         public string FailureReason { get; set; }
+        /// <summary> Defaults to false. If true, then configurations are included in the data export/import. </summary>
         public bool? IncludeConfigurations { get; set; }
+        /// <summary> Defaults to configurations.txt. Specifies the name of the blob to use when exporting/importing configurations. </summary>
         public string ConfigurationsBlobName { get; set; }
     }
 }

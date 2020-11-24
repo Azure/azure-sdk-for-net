@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (NetworkInterfaces != null)
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces");
                 writer.WriteStartArray();
@@ -31,32 +31,26 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static NetworkProfile DeserializeNetworkProfile(JsonElement element)
         {
-            IList<NetworkInterfaceReference> networkInterfaces = default;
+            Optional<IList<NetworkInterfaceReference>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetworkInterfaceReference> array = new List<NetworkInterfaceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NetworkInterfaceReference.DeserializeNetworkInterfaceReference(item));
-                        }
+                        array.Add(NetworkInterfaceReference.DeserializeNetworkInterfaceReference(item));
                     }
                     networkInterfaces = array;
                     continue;
                 }
             }
-            return new NetworkProfile(networkInterfaces);
+            return new NetworkProfile(Optional.ToList(networkInterfaces));
         }
     }
 }

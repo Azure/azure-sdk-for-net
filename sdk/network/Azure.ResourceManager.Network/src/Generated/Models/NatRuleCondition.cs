@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NatRuleCondition. </summary>
         public NatRuleCondition()
         {
+            IpProtocols = new ChangeTrackingList<FirewallPolicyRuleConditionNetworkProtocol>();
+            SourceAddresses = new ChangeTrackingList<string>();
+            DestinationAddresses = new ChangeTrackingList<string>();
+            DestinationPorts = new ChangeTrackingList<string>();
+            SourceIpGroups = new ChangeTrackingList<string>();
             RuleConditionType = FirewallPolicyRuleConditionType.NatRuleCondition;
         }
 
@@ -40,15 +46,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Array of FirewallPolicyRuleConditionNetworkProtocols. </summary>
-        public IList<FirewallPolicyRuleConditionNetworkProtocol> IpProtocols { get; set; }
+        public IList<FirewallPolicyRuleConditionNetworkProtocol> IpProtocols { get; }
         /// <summary> List of source IP addresses for this rule. </summary>
-        public IList<string> SourceAddresses { get; set; }
+        public IList<string> SourceAddresses { get; }
         /// <summary> List of destination IP addresses or Service Tags. </summary>
-        public IList<string> DestinationAddresses { get; set; }
+        public IList<string> DestinationAddresses { get; }
         /// <summary> List of destination ports. </summary>
-        public IList<string> DestinationPorts { get; set; }
+        public IList<string> DestinationPorts { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
-        public IList<string> SourceIpGroups { get; set; }
+        public IList<string> SourceIpGroups { get; }
         /// <summary> Terminate TLS connections for this rule. </summary>
         public bool? TerminateTLS { get; set; }
     }

@@ -16,37 +16,37 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ComputerNamePrefix != null)
+            if (Optional.IsDefined(ComputerNamePrefix))
             {
                 writer.WritePropertyName("computerNamePrefix");
                 writer.WriteStringValue(ComputerNamePrefix);
             }
-            if (AdminUsername != null)
+            if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername");
                 writer.WriteStringValue(AdminUsername);
             }
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword");
                 writer.WriteStringValue(AdminPassword);
             }
-            if (CustomData != null)
+            if (Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData");
                 writer.WriteStringValue(CustomData);
             }
-            if (WindowsConfiguration != null)
+            if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration");
                 writer.WriteObjectValue(WindowsConfiguration);
             }
-            if (LinuxConfiguration != null)
+            if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration");
                 writer.WriteObjectValue(LinuxConfiguration);
             }
-            if (Secrets != null)
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets");
                 writer.WriteStartArray();
@@ -61,48 +61,32 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetOSProfile DeserializeVirtualMachineScaleSetOSProfile(JsonElement element)
         {
-            string computerNamePrefix = default;
-            string adminUsername = default;
-            string adminPassword = default;
-            string customData = default;
-            WindowsConfiguration windowsConfiguration = default;
-            LinuxConfiguration linuxConfiguration = default;
-            IList<VaultSecretGroup> secrets = default;
+            Optional<string> computerNamePrefix = default;
+            Optional<string> adminUsername = default;
+            Optional<string> adminPassword = default;
+            Optional<string> customData = default;
+            Optional<WindowsConfiguration> windowsConfiguration = default;
+            Optional<LinuxConfiguration> linuxConfiguration = default;
+            Optional<IList<VaultSecretGroup>> secrets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computerNamePrefix"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     computerNamePrefix = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("adminUsername"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     adminUsername = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("adminPassword"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     adminPassword = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("customData"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     customData = property.Value.GetString();
                     continue;
                 }
@@ -110,6 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
@@ -119,6 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value);
@@ -128,25 +114,19 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VaultSecretGroup> array = new List<VaultSecretGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item));
-                        }
+                        array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item));
                     }
                     secrets = array;
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetOSProfile(computerNamePrefix, adminUsername, adminPassword, customData, windowsConfiguration, linuxConfiguration, secrets);
+            return new VirtualMachineScaleSetOSProfile(computerNamePrefix.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets));
         }
     }
 }

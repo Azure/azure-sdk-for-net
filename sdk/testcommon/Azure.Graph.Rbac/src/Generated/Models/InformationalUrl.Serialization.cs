@@ -15,22 +15,22 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TermsOfService != null)
+            if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService");
                 writer.WriteStringValue(TermsOfService);
             }
-            if (Marketing != null)
+            if (Optional.IsDefined(Marketing))
             {
                 writer.WritePropertyName("marketing");
                 writer.WriteStringValue(Marketing);
             }
-            if (Privacy != null)
+            if (Optional.IsDefined(Privacy))
             {
                 writer.WritePropertyName("privacy");
                 writer.WriteStringValue(Privacy);
             }
-            if (Support != null)
+            if (Optional.IsDefined(Support))
             {
                 writer.WritePropertyName("support");
                 writer.WriteStringValue(Support);
@@ -40,50 +40,34 @@ namespace Azure.Graph.Rbac.Models
 
         internal static InformationalUrl DeserializeInformationalUrl(JsonElement element)
         {
-            string termsOfService = default;
-            string marketing = default;
-            string privacy = default;
-            string support = default;
+            Optional<string> termsOfService = default;
+            Optional<string> marketing = default;
+            Optional<string> privacy = default;
+            Optional<string> support = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("termsOfService"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     termsOfService = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("marketing"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     marketing = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privacy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     privacy = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("support"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     support = property.Value.GetString();
                     continue;
                 }
             }
-            return new InformationalUrl(termsOfService, marketing, privacy, support);
+            return new InformationalUrl(termsOfService.Value, marketing.Value, privacy.Value, support.Value);
         }
     }
 }

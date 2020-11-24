@@ -5,6 +5,15 @@ jobs:
     pool:
       vmImage: windows-2019
     steps:
+      - ${{if eq(parameters.TestPipeline, 'true')}}:
+        - task: PowerShell@2
+          displayName: Prep template pipeline for release
+          condition: succeeded()
+          inputs:
+            pwsh: true
+            workingDirectory: $(Build.SourcesDirectory)
+            filePath: eng/scripts/SetTestPipelineVersion.ps1
+            arguments: '-BuildID $(Build.BuildId)'
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
@@ -24,43 +33,36 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
-      - template: /eng/common/pipelines/templates/steps/replace-relative-links.yml
-        parameters:
-          TargetFolder: '.'
-          RootFolder: '.'
-          BuildSHA: $(Build.SourceVersion)
-          RepoId: 'Azure/azure-sdk-for-net'
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          version: "$(DotNetCoreSDKVersion)"
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: >-
-          dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceToBuild}}
-          /p:PublicSign=false $(VersioningProperties) /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
+          dotnet pack eng/service.proj -warnaserror
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:IncludeTests=false
+          /p:PublicSign=false $(VersioningProperties)
+          /p:Configuration=$(BuildConfiguration)
+          /p:CommitSHA=$(Build.SourceVersion)
+          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
-      - task: PublishPipelineArtifact@1
-        condition: succeeded()
-        inputs:
-          artifactName: packages
-          path: $(Build.ArtifactStagingDirectory)
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
           Artifacts: ${{parameters.Artifacts}}
           DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
           LibType: 'client'
+      - task: PublishPipelineArtifact@1
+        condition: succeeded()
+        inputs:
+          artifactName: packages
+          path: $(Build.ArtifactStagingDirectory)
   - job: "Analyze"
-    condition: ne(variables['Skip.Analyze'], true)
+    condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     variables:
       - template: ../variables/globals.yml
-    dependsOn:
-      - Build
     pool:
-      vmImage: "windows-2019"
+      vmImage: ubuntu-18.04
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -68,31 +70,35 @@ jobs:
           versionSpec: "3.6"
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
-          Directory: sdk/${{ parameters.ServiceDirectory }}
+          ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+            Directory: ''
+            Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
+          ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+            Directory: sdk/${{ parameters.ServiceDirectory }}
+          CheckLinkGuidance: $true
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)
           ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
         displayName: "Verify Readmes"
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          version: "$(DotNetCoreSDKVersion)"
-      - task: UseDotNet@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-        inputs:
-          packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
-      - task: DownloadPipelineArtifact@2
-        displayName: "Download Build Artifacts"
-        condition: succeededOrFailed()
-        inputs:
-          artifact: packages
-          path: $(Pipeline.Workspace)/packages
-          patterns: "*.nupkg"
       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '14.x'
+        displayName: 'Install NodeJS'
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - task: PowerShell@2
+        displayName: "Verify generated code"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+        inputs:
+          filePath: "eng/scripts/CodeChecks.ps1"
+          arguments: -ServiceDirectory ${{parameters.ServiceToTest}}
+          pwsh: true
+          failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
@@ -100,24 +106,8 @@ jobs:
         inputs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
-      - task: NodeTool@0
-        inputs:
-          # AutoRest doesn't work with versions 12.x
-          versionSpec: '10.15.0'
-        displayName: 'Install NodeJS'
-      - task: PowerShell@2
-        displayName: "Verify generated code"
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
-        inputs:
-          filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
-          pwsh: true
-          failOnStderr:  false
   - job: "Test"
-    condition: ne(variables['Skip.Test'], true)
+    condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     variables:
       - template: ../variables/globals.yml
     strategy:
@@ -143,28 +133,27 @@ jobs:
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+        Windows_Net50:
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net5.0
     pool:
       vmImage: "$(OSVmImage)"
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-        inputs:
-          packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          packageType: sdk
-          version: "$(DotNetCoreSDKVersion)"
+      - ${{ each step in parameters.TestSetupSteps }}:
+        - ${{ each pair in step }}:
+            ${{ pair.key }}: ${{ pair.value }}
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: >-
-          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
+          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
+          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+          /p:ServiceDirectory=${{parameters.ServiceToTest}}
+          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
+          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
@@ -173,3 +162,16 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
+        displayName: ReportGenerator
+        inputs:
+          reports: '**/*coverage.netcoreapp2.1.cobertura.xml'
+          targetdir: '$(Build.SourcesDirectory)'
+          reporttypes: Cobertura
+      - task: PublishCodeCoverageResults@1
+        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
+        displayName: 'Publish code coverage report'
+        inputs:
+          codeCoverageTool: 'Cobertura'
+          summaryFileLocation: 'Cobertura.xml'

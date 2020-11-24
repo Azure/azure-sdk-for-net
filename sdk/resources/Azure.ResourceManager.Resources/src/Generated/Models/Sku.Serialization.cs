@@ -15,32 +15,32 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
                 writer.WriteStringValue(Tier);
             }
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size");
                 writer.WriteStringValue(Size);
             }
-            if (Family != null)
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family");
                 writer.WriteStringValue(Family);
             }
-            if (Model != null)
+            if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model");
                 writer.WriteStringValue(Model);
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity");
                 writer.WriteNumberValue(Capacity.Value);
@@ -50,56 +50,36 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static Sku DeserializeSku(JsonElement element)
         {
-            string name = default;
-            string tier = default;
-            string size = default;
-            string family = default;
-            string model = default;
-            int? capacity = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
+            Optional<string> size = default;
+            Optional<string> family = default;
+            Optional<string> model = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tier = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("size"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     size = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("family"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     family = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("model"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     model = property.Value.GetString();
                     continue;
                 }
@@ -107,13 +87,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new Sku(name, tier, size, family, model, capacity);
+            return new Sku(name.Value, tier.Value, size.Value, family.Value, model.Value, Optional.ToNullable(capacity));
         }
     }
 }

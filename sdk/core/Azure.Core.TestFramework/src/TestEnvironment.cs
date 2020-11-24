@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
+using System.ComponentModel;
 
 namespace Azure.Core.TestFramework
 {
@@ -19,7 +20,9 @@ namespace Azure.Core.TestFramework
     /// </summary>
     public abstract class TestEnvironment
     {
-        private static readonly string RepositoryRoot;
+        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
+        public static string RepositoryRoot { get; }
+
         private readonly string _prefix;
 
         private TokenCredential _credential;
@@ -74,7 +77,7 @@ namespace Azure.Core.TestFramework
             RepositoryRoot = directoryInfo?.Parent?.FullName;
         }
 
-        internal RecordedTestMode? Mode { get; set; }
+        public RecordedTestMode? Mode { get; set; }
 
         /// <summary>
         ///   The name of the Azure subscription containing the resource group to be used for Live tests. Recorded.
@@ -142,7 +145,7 @@ namespace Azure.Core.TestFramework
 
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    _credential = new TestCredential();
+                    _credential = new MockCredential();
                 }
                 else
                 {
@@ -162,6 +165,14 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected string GetRecordedOptionalVariable(string name)
         {
+            return GetRecordedOptionalVariable(name, _ => { });
+        }
+
+        /// <summary>
+        /// Returns and records an environment variable value when running live or recorded value during playback.
+        /// </summary>
+        protected string GetRecordedOptionalVariable(string name, Action<RecordedVariableOptions> options)
+        {
             if (Mode == RecordedTestMode.Playback)
             {
                 return GetRecordedValue(name);
@@ -169,8 +180,28 @@ namespace Azure.Core.TestFramework
 
             string value = GetOptionalVariable(name);
 
-            SetRecordedValue(name, value);
+            if (!Mode.HasValue)
+            {
+                return value;
+            }
 
+            if (_recording == null)
+            {
+                throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
+            }
+
+            // If the value was populated, sanitize before recording it.
+
+            string sanitizedValue = value;
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                var optionsInstance = new RecordedVariableOptions();
+                options?.Invoke(optionsInstance);
+                sanitizedValue = optionsInstance.Apply(sanitizedValue);
+            }
+
+            _recording?.SetVariable(name, sanitizedValue);
             return value;
         }
 
@@ -180,7 +211,16 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected string GetRecordedVariable(string name)
         {
-            var value = GetRecordedOptionalVariable(name);
+            return GetRecordedVariable(name, null);
+        }
+
+        /// <summary>
+        /// Returns and records an environment variable value when running live or recorded value during playback.
+        /// Throws when variable is not found.
+        /// </summary>
+        protected string GetRecordedVariable(string name, Action<RecordedVariableOptions> options)
+        {
+            var value = GetRecordedOptionalVariable(name, options);
             EnsureValue(name, value);
             return value;
         }
@@ -192,13 +232,17 @@ namespace Azure.Core.TestFramework
         {
             var prefixedName = _prefix + name;
 
-            // Environment variables override the environment file
-            var value = Environment.GetEnvironmentVariable(prefixedName) ??
-                        Environment.GetEnvironmentVariable(name);
+            // Prefixed name overrides non-prefixed
+            var value = Environment.GetEnvironmentVariable(prefixedName);
 
             if (value == null)
             {
                 _environmentFile.TryGetValue(prefixedName, out value);
+            }
+
+            if (value == null)
+            {
+                value = Environment.GetEnvironmentVariable(name);
             }
 
             if (value == null)
@@ -245,34 +289,6 @@ namespace Azure.Core.TestFramework
             }
 
             return _recording.GetVariable(name, null);
-        }
-
-        private void SetRecordedValue(string name, string value)
-        {
-            if (!Mode.HasValue)
-            {
-                return;
-            }
-
-            if (_recording == null)
-            {
-                throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
-            }
-
-            _recording?.SetVariable(name, value);
-        }
-
-        private class TestCredential : TokenCredential
-        {
-            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
-            }
-
-            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
-            }
         }
     }
 }

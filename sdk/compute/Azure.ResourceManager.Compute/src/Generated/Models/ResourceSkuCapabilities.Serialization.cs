@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ResourceSkuCapabilities DeserializeResourceSkuCapabilities(JsonElement element)
         {
-            string name = default;
-            string value = default;
+            Optional<string> name = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceSkuCapabilities(name, value);
+            return new ResourceSkuCapabilities(name.Value, value.Value);
         }
     }
 }

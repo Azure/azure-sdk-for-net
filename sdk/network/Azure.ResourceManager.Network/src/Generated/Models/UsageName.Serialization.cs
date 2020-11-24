@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static UsageName DeserializeUsageName(JsonElement element)
         {
-            string value = default;
-            string localizedValue = default;
+            Optional<string> value = default;
+            Optional<string> localizedValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("localizedValue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     localizedValue = property.Value.GetString();
                     continue;
                 }
             }
-            return new UsageName(value, localizedValue);
+            return new UsageName(value.Value, localizedValue.Value);
         }
     }
 }

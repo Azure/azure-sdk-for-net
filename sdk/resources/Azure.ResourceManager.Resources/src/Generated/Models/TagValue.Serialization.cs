@@ -14,26 +14,18 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TagValue DeserializeTagValue(JsonElement element)
         {
-            string id = default;
-            string tagValue = default;
-            TagCount count = default;
+            Optional<string> id = default;
+            Optional<string> tagValue = default;
+            Optional<TagCount> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tagValue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tagValue = property.Value.GetString();
                     continue;
                 }
@@ -41,13 +33,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = TagCount.DeserializeTagCount(property.Value);
                     continue;
                 }
             }
-            return new TagValue(id, tagValue, count);
+            return new TagValue(id.Value, tagValue.Value, count.Value);
         }
     }
 }

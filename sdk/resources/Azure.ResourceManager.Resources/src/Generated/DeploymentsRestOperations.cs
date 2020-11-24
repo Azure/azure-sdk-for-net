@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public DeploymentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response> DeleteAtScopeAsync(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -90,6 +92,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response DeleteAtScope(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -126,6 +129,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -133,7 +137,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> CheckExistenceAtScopeAsync(string scope, string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
+        public async Task<Response<bool>> CheckExistenceAtScopeAsync(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -148,9 +153,16 @@ namespace Azure.ResourceManager.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -160,7 +172,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response CheckExistenceAtScope(string scope, string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
+        public Response<bool> CheckExistenceAtScope(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -175,9 +188,16 @@ namespace Azure.ResourceManager.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -197,6 +217,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -208,6 +229,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAtScopeAsync(string scope, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -240,6 +262,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdateAtScope(string scope, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -280,6 +303,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -287,6 +311,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentExtended>> GetAtScopeAsync(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -306,14 +331,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExtended value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
-                        }
+                        value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -325,6 +343,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentExtended> GetAtScope(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -344,14 +363,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExtended value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
-                        }
+                        value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -373,6 +385,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -380,6 +393,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response> CancelAtScopeAsync(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -406,6 +420,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response CancelAtScope(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -443,6 +458,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -454,6 +470,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> ValidateAtScopeAsync(string scope, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -487,6 +504,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response ValidateAtScope(string scope, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -529,6 +547,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/exportTemplate", false);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -536,6 +555,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentExportResult>> ExportTemplateAtScopeAsync(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -555,14 +575,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExportResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
-                        }
+                        value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -574,6 +587,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentExportResult> ExportTemplateAtScope(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -593,14 +607,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExportResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
-                        }
+                        value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -628,6 +635,7 @@ namespace Azure.ResourceManager.Resources
             }
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -636,6 +644,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<DeploymentListResult>> ListAtScopeAsync(string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -651,14 +660,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -671,6 +673,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<DeploymentListResult> ListAtScope(string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -686,14 +689,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -712,12 +708,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response> DeleteAtTenantScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -740,6 +738,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public Response DeleteAtTenantScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -770,13 +769,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Checks whether the deployment exists. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> CheckExistenceAtTenantScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public async Task<Response<bool>> CheckExistenceAtTenantScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
@@ -787,9 +788,16 @@ namespace Azure.ResourceManager.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -798,7 +806,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether the deployment exists. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response CheckExistenceAtTenantScope(string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public Response<bool> CheckExistenceAtTenantScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
@@ -809,9 +818,16 @@ namespace Azure.ResourceManager.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -829,6 +845,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -839,6 +856,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAtTenantScopeAsync(string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -866,6 +884,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdateAtTenantScope(string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -900,12 +919,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets a deployment. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentExtended>> GetAtTenantScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -921,14 +942,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExtended value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
-                        }
+                        value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -939,6 +953,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a deployment. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentExtended> GetAtTenantScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -954,14 +969,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExtended value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
-                        }
+                        value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -981,12 +989,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resources partially deployed. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response> CancelAtTenantScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -1008,6 +1018,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resources partially deployed. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public Response CancelAtTenantScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -1039,6 +1050,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1049,6 +1061,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> ValidateAtTenantScopeAsync(string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -1077,6 +1090,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public Response ValidateAtTenantScope(string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -1113,12 +1127,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/exportTemplate", false);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Exports the template used for specified deployment. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentExportResult>> ExportTemplateAtTenantScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -1134,14 +1150,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExportResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
-                        }
+                        value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1152,6 +1161,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Exports the template used for specified deployment. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentExportResult> ExportTemplateAtTenantScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -1167,14 +1177,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExportResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
-                        }
+                        value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1200,6 +1203,7 @@ namespace Azure.ResourceManager.Resources
             }
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1217,14 +1221,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1246,14 +1243,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1274,6 +1264,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1281,6 +1272,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response> DeleteAtManagementGroupScopeAsync(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1308,6 +1300,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response DeleteAtManagementGroupScope(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1344,6 +1337,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1351,7 +1345,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> CheckExistenceAtManagementGroupScopeAsync(string groupId, string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
+        public async Task<Response<bool>> CheckExistenceAtManagementGroupScopeAsync(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -1366,9 +1361,16 @@ namespace Azure.ResourceManager.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -1378,7 +1380,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response CheckExistenceAtManagementGroupScope(string groupId, string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
+        public Response<bool> CheckExistenceAtManagementGroupScope(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -1393,9 +1396,16 @@ namespace Azure.ResourceManager.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -1415,6 +1425,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1426,6 +1437,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAtManagementGroupScopeAsync(string groupId, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1458,6 +1470,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdateAtManagementGroupScope(string groupId, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1498,6 +1511,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1505,6 +1519,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentExtended>> GetAtManagementGroupScopeAsync(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1524,14 +1539,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExtended value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
-                        }
+                        value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1543,6 +1551,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentExtended> GetAtManagementGroupScope(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1562,14 +1571,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExtended value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
-                        }
+                        value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1591,6 +1593,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1598,6 +1601,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response> CancelAtManagementGroupScopeAsync(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1624,6 +1628,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response CancelAtManagementGroupScope(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1661,6 +1666,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1672,6 +1678,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> ValidateAtManagementGroupScopeAsync(string groupId, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1705,6 +1712,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response ValidateAtManagementGroupScope(string groupId, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1747,6 +1755,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/exportTemplate", false);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1754,6 +1763,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentExportResult>> ExportTemplateAtManagementGroupScopeAsync(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1773,14 +1783,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExportResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
-                        }
+                        value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1792,6 +1795,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentExportResult> ExportTemplateAtManagementGroupScope(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1811,14 +1815,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExportResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
-                        }
+                        value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1846,6 +1843,7 @@ namespace Azure.ResourceManager.Resources
             }
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1854,6 +1852,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public async Task<Response<DeploymentListResult>> ListAtManagementGroupScopeAsync(string groupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1869,14 +1868,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1889,6 +1881,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public Response<DeploymentListResult> ListAtManagementGroupScope(string groupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -1904,14 +1897,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1932,12 +1918,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response> DeleteAtSubscriptionScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -1960,6 +1948,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public Response DeleteAtSubscriptionScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -1992,13 +1981,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Checks whether the deployment exists. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> CheckExistenceAtSubscriptionScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public async Task<Response<bool>> CheckExistenceAtSubscriptionScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
@@ -2009,9 +2000,16 @@ namespace Azure.ResourceManager.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -2020,7 +2018,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether the deployment exists. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response CheckExistenceAtSubscriptionScope(string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public Response<bool> CheckExistenceAtSubscriptionScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
@@ -2031,9 +2030,16 @@ namespace Azure.ResourceManager.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -2053,6 +2059,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -2063,6 +2070,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAtSubscriptionScopeAsync(string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2090,6 +2098,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdateAtSubscriptionScope(string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2126,12 +2135,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets a deployment. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentExtended>> GetAtSubscriptionScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2147,14 +2158,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExtended value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
-                        }
+                        value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2165,6 +2169,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a deployment. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentExtended> GetAtSubscriptionScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2180,14 +2185,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExtended value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
-                        }
+                        value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2209,12 +2207,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resources partially deployed. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response> CancelAtSubscriptionScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2236,6 +2236,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resources partially deployed. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public Response CancelAtSubscriptionScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2269,6 +2270,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -2279,6 +2281,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> ValidateAtSubscriptionScopeAsync(string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2307,6 +2310,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public Response ValidateAtSubscriptionScope(string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2346,6 +2350,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -2356,6 +2361,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to What If. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<ResponseWithHeaders<DeploymentsWhatIfAtSubscriptionScopeHeaders>> WhatIfAtSubscriptionScopeAsync(string deploymentName, DeploymentWhatIf parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2384,6 +2390,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to What If. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public ResponseWithHeaders<DeploymentsWhatIfAtSubscriptionScopeHeaders> WhatIfAtSubscriptionScope(string deploymentName, DeploymentWhatIf parameters, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2422,12 +2429,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/exportTemplate", false);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Exports the template used for specified deployment. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentExportResult>> ExportTemplateAtSubscriptionScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2443,14 +2452,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExportResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
-                        }
+                        value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2461,6 +2463,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Exports the template used for specified deployment. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentExportResult> ExportTemplateAtSubscriptionScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -2476,14 +2479,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExportResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
-                        }
+                        value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2511,6 +2507,7 @@ namespace Azure.ResourceManager.Resources
             }
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2528,14 +2525,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2557,14 +2547,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2587,6 +2570,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2594,6 +2578,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group with the deployment to delete. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -2621,6 +2606,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group with the deployment to delete. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -2659,6 +2645,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2666,7 +2653,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group with the deployment to check. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> CheckExistenceAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
+        public async Task<Response<bool>> CheckExistenceAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -2681,9 +2669,16 @@ namespace Azure.ResourceManager.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -2693,7 +2688,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group with the deployment to check. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response CheckExistence(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
+        public Response<bool> CheckExistence(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -2708,9 +2704,16 @@ namespace Azure.ResourceManager.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -2732,6 +2735,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -2743,6 +2747,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -2775,6 +2780,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -2817,6 +2823,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2824,6 +2831,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentExtended>> GetAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -2843,14 +2851,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExtended value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
-                        }
+                        value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2862,6 +2863,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentExtended> Get(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -2881,14 +2883,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExtended value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
-                        }
+                        value = DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2912,6 +2907,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2919,6 +2915,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response> CancelAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -2945,6 +2942,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response Cancel(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -2984,6 +2982,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -2995,6 +2994,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> ValidateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -3028,6 +3028,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response Validate(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -3073,6 +3074,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -3084,6 +3086,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<ResponseWithHeaders<DeploymentsWhatIfHeaders>> WhatIfAsync(string resourceGroupName, string deploymentName, DeploymentWhatIf parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -3117,6 +3120,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="parameters"/> is null. </exception>
         public ResponseWithHeaders<DeploymentsWhatIfHeaders> WhatIf(string resourceGroupName, string deploymentName, DeploymentWhatIf parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -3161,6 +3165,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/exportTemplate", false);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -3168,6 +3173,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentExportResult>> ExportTemplateAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -3187,14 +3193,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExportResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
-                        }
+                        value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3206,6 +3205,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentExportResult> ExportTemplate(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -3225,14 +3225,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentExportResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
-                        }
+                        value = DeploymentExportResult.DeserializeDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3262,6 +3255,7 @@ namespace Azure.ResourceManager.Resources
             }
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -3270,6 +3264,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<DeploymentListResult>> ListByResourceGroupAsync(string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -3285,14 +3280,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3305,6 +3293,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<DeploymentListResult> ListByResourceGroup(string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -3320,14 +3309,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3346,6 +3328,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(template);
             request.Content = content;
@@ -3355,6 +3338,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Calculate the hash of the given template. </summary>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
         public async Task<Response<TemplateHashResult>> CalculateTemplateHashAsync(object template, CancellationToken cancellationToken = default)
         {
             if (template == null)
@@ -3370,14 +3354,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TemplateHashResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TemplateHashResult.DeserializeTemplateHashResult(document.RootElement);
-                        }
+                        value = TemplateHashResult.DeserializeTemplateHashResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3388,6 +3365,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Calculate the hash of the given template. </summary>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
         public Response<TemplateHashResult> CalculateTemplateHash(object template, CancellationToken cancellationToken = default)
         {
             if (template == null)
@@ -3403,14 +3381,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TemplateHashResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TemplateHashResult.DeserializeTemplateHashResult(document.RootElement);
-                        }
+                        value = TemplateHashResult.DeserializeTemplateHashResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3427,6 +3398,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -3436,6 +3408,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<DeploymentListResult>> ListAtScopeNextPageAsync(string nextLink, string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3455,14 +3428,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3476,6 +3442,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<DeploymentListResult> ListAtScopeNextPage(string nextLink, string scope, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3495,14 +3462,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3519,6 +3479,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -3527,6 +3488,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DeploymentListResult>> ListAtTenantScopeNextPageAsync(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3542,14 +3504,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3562,6 +3517,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DeploymentListResult> ListAtTenantScopeNextPage(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3577,14 +3533,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3601,6 +3550,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -3610,6 +3560,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="groupId"/> is null. </exception>
         public async Task<Response<DeploymentListResult>> ListAtManagementGroupScopeNextPageAsync(string nextLink, string groupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3629,14 +3580,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3650,6 +3594,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="groupId"/> is null. </exception>
         public Response<DeploymentListResult> ListAtManagementGroupScopeNextPage(string nextLink, string groupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3669,14 +3614,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3693,6 +3631,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -3701,6 +3640,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DeploymentListResult>> ListAtSubscriptionScopeNextPageAsync(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3716,14 +3656,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3736,6 +3669,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DeploymentListResult> ListAtSubscriptionScopeNextPage(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3751,14 +3685,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3775,6 +3702,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -3784,6 +3712,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<DeploymentListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3803,14 +3732,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3824,6 +3746,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<DeploymentListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3843,14 +3766,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        }
+                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

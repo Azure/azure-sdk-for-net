@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (InstanceIds != null)
+            if (Optional.IsCollectionDefined(InstanceIds))
             {
                 writer.WritePropertyName("instanceIds");
                 writer.WriteStartArray();

@@ -15,42 +15,42 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host");
                 writer.WriteStringValue(Host);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
                 writer.WriteStringValue(Path);
             }
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
                 writer.WriteNumberValue(Timeout.Value);
             }
-            if (PickHostNameFromBackendHttpSettings != null)
+            if (Optional.IsDefined(PickHostNameFromBackendHttpSettings))
             {
                 writer.WritePropertyName("pickHostNameFromBackendHttpSettings");
                 writer.WriteBooleanValue(PickHostNameFromBackendHttpSettings.Value);
             }
-            if (Match != null)
+            if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match");
                 writer.WriteObjectValue(Match);
             }
-            if (BackendAddressPool != null)
+            if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool");
                 writer.WriteObjectValue(BackendAddressPool);
             }
-            if (BackendHttpSettings != null)
+            if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings");
                 writer.WriteObjectValue(BackendHttpSettings);

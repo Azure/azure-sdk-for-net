@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -19,6 +18,7 @@ namespace Azure.Graph.Rbac.Models
         /// <param name="passwordProfile"> Password Profile. </param>
         /// <param name="userPrincipalName"> The user principal name (someuser@contoso.com). It must contain one of the verified domains for the tenant. </param>
         /// <param name="mailNickname"> The mail alias for the user. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="passwordProfile"/>, <paramref name="userPrincipalName"/>, or <paramref name="mailNickname"/> is null. </exception>
         public UserCreateParameters(bool accountEnabled, string displayName, PasswordProfile passwordProfile, string userPrincipalName, string mailNickname)
         {
             if (displayName == null)
@@ -43,29 +43,6 @@ namespace Azure.Graph.Rbac.Models
             PasswordProfile = passwordProfile;
             UserPrincipalName = userPrincipalName;
             MailNickname = mailNickname;
-        }
-
-        /// <summary> Initializes a new instance of UserCreateParameters. </summary>
-        /// <param name="immutableId"> This must be specified if you are using a federated domain for the user&apos;s userPrincipalName (UPN) property when creating a new user account. It is used to associate an on-premises Active Directory user account with their Azure AD user object. </param>
-        /// <param name="usageLocation"> A two letter country code (ISO standard 3166). Required for users that will be assigned licenses due to legal requirement to check for availability of services in countries. Examples include: &quot;US&quot;, &quot;JP&quot;, and &quot;GB&quot;. </param>
-        /// <param name="givenName"> The given name for the user. </param>
-        /// <param name="surname"> The user&apos;s surname (family name or last name). </param>
-        /// <param name="userType"> A string value that can be used to classify user types in your directory, such as &apos;Member&apos; and &apos;Guest&apos;. </param>
-        /// <param name="additionalProperties"> . </param>
-        /// <param name="accountEnabled"> Whether the account is enabled. </param>
-        /// <param name="displayName"> The display name of the user. </param>
-        /// <param name="passwordProfile"> Password Profile. </param>
-        /// <param name="userPrincipalName"> The user principal name (someuser@contoso.com). It must contain one of the verified domains for the tenant. </param>
-        /// <param name="mailNickname"> The mail alias for the user. </param>
-        /// <param name="mail"> The primary email address of the user. </param>
-        internal UserCreateParameters(string immutableId, string usageLocation, string givenName, string surname, UserType? userType, IDictionary<string, object> additionalProperties, bool accountEnabled, string displayName, PasswordProfile passwordProfile, string userPrincipalName, string mailNickname, string mail) : base(immutableId, usageLocation, givenName, surname, userType, additionalProperties)
-        {
-            AccountEnabled = accountEnabled;
-            DisplayName = displayName;
-            PasswordProfile = passwordProfile;
-            UserPrincipalName = userPrincipalName;
-            MailNickname = mailNickname;
-            Mail = mail;
         }
 
         /// <summary> Whether the account is enabled. </summary>

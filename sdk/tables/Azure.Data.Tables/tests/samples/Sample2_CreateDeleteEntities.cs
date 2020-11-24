@@ -25,9 +25,10 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample2CreateTableWithTableClient
             // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
+
             var tableClient = new TableClient(
-                tableName,
                 new Uri(storageUri),
+                tableName,
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             // Create the table in the service.
@@ -36,6 +37,7 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample2CreateDictionaryEntity
             // Make a dictionary entity by defining a <see cref="TableEntity">.
+
             var entity = new TableEntity(partitionKey, rowKey)
             {
                 { "Product", "Marker Set" },
@@ -48,11 +50,13 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample2AddEntity
             // Add the newly created entity.
-            tableClient.CreateEntity(entity);
+
+            tableClient.AddEntity(entity);
             #endregion
 
             #region Snippet:TablesSample2CreateStronglyTypedEntity
             // Create an instance of the strongly-typed entity and set their properties.
+
             var strongEntity = new OfficeSupplyEntity
             {
                 PartitionKey = partitionKey,
@@ -66,10 +70,12 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             // Add the newly created entity.
-            tableClient.CreateEntity(strongEntity);
+
+            tableClient.AddEntity(strongEntity);
 
             #region Snippet:TablesSample2DeleteEntity
             // Delete the entity given the partition and row key.
+
             tableClient.DeleteEntity(partitionKey, rowKey);
             #endregion
 
@@ -80,6 +86,7 @@ namespace Azure.Data.Tables.Samples
 
         #region Snippet:TablesSample2DefineStronglyTypedEntity
         // Define a strongly typed entity by extending the <see cref="ITableEntity"> class.
+
         public class OfficeSupplyEntity : ITableEntity
         {
             public string Product { get; set; }
@@ -88,7 +95,7 @@ namespace Azure.Data.Tables.Samples
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
         }
         #endregion
     }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public RegionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -57,12 +57,14 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/regions", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets the available Regions for a given sku. </summary>
         /// <param name="sku"> The sku type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public async Task<Response<MessagingRegionsListResult>> ListBySkuAsync(string sku, CancellationToken cancellationToken = default)
         {
             if (sku == null)
@@ -78,14 +80,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         MessagingRegionsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MessagingRegionsListResult.DeserializeMessagingRegionsListResult(document.RootElement);
-                        }
+                        value = MessagingRegionsListResult.DeserializeMessagingRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,6 +91,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets the available Regions for a given sku. </summary>
         /// <param name="sku"> The sku type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public Response<MessagingRegionsListResult> ListBySku(string sku, CancellationToken cancellationToken = default)
         {
             if (sku == null)
@@ -111,14 +107,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         MessagingRegionsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MessagingRegionsListResult.DeserializeMessagingRegionsListResult(document.RootElement);
-                        }
+                        value = MessagingRegionsListResult.DeserializeMessagingRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -135,6 +124,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -142,6 +132,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="sku"/> is null. </exception>
         public async Task<Response<MessagingRegionsListResult>> ListBySkuNextPageAsync(string nextLink, string sku, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -161,14 +152,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         MessagingRegionsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MessagingRegionsListResult.DeserializeMessagingRegionsListResult(document.RootElement);
-                        }
+                        value = MessagingRegionsListResult.DeserializeMessagingRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -180,6 +164,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="sku"/> is null. </exception>
         public Response<MessagingRegionsListResult> ListBySkuNextPage(string nextLink, string sku, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -199,14 +184,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         MessagingRegionsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MessagingRegionsListResult.DeserializeMessagingRegionsListResult(document.RootElement);
-                        }
+                        value = MessagingRegionsListResult.DeserializeMessagingRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

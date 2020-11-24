@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -76,9 +77,7 @@ namespace Azure.Search.Documents.Models
         /// <returns>A task representing the serialization.</returns>
         internal async Task SerializeAsync(
             Utf8JsonWriter writer,
-#if EXPERIMENTAL_SERIALIZER
             ObjectSerializer serializer,
-#endif
             JsonSerializerOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -94,27 +93,23 @@ namespace Azure.Search.Documents.Models
             // HACK: Serialize the user's model, parse it, and then write each
             // of its properties as if they were our own.
             byte[] json;
-#if EXPERIMENTAL_SERIALIZER
             if (serializer != null)
             {
                 using MemoryStream stream = new MemoryStream();
                 if (async)
                 {
-                    await serializer.SerializeAsync(stream, Document, typeof(T)).ConfigureAwait(false);
+                    await serializer.SerializeAsync(stream, Document, typeof(T), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    serializer.Serialize(stream, Document, typeof(T));
+                    serializer.Serialize(stream, Document, typeof(T), cancellationToken);
                 }
                 json = stream.ToArray();
             }
             else
             {
-#endif
                 json = JsonSerializer.SerializeToUtf8Bytes<T>(Document, options);
-#if EXPERIMENTAL_SERIALIZER
             }
-#endif
             using JsonDocument nested = JsonDocument.Parse(json);
             foreach (JsonProperty property in nested.RootElement.EnumerateObject())
             {

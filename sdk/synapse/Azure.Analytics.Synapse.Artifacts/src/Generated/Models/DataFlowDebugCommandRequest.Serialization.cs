@@ -15,11 +15,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
-            {
-                writer.WritePropertyName("sessionId");
-                writer.WriteStringValue(SessionId);
-            }
+            writer.WritePropertyName("sessionId");
+            writer.WriteStringValue(SessionId);
             if (Optional.IsDefined(DataFlowName))
             {
                 writer.WritePropertyName("dataFlowName");
@@ -30,11 +27,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("commandName");
                 writer.WriteStringValue(CommandName);
             }
-            if (Optional.IsDefined(CommandPayload))
-            {
-                writer.WritePropertyName("commandPayload");
-                writer.WriteObjectValue(CommandPayload);
-            }
+            writer.WritePropertyName("commandPayload");
+            writer.WriteObjectValue(CommandPayload);
             writer.WriteEndObject();
         }
     }

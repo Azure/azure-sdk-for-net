@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterfaceDnsSettings. </summary>
         public NetworkInterfaceDnsSettings()
         {
+            DnsServers = new ChangeTrackingList<string>();
+            AppliedDnsServers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceDnsSettings. </summary>
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="internalDnsNameLabel"> Relative DNS name for this NIC used for internal communications between VMs in the same virtual network. </param>
         /// <param name="internalFqdn"> Fully qualified DNS name supporting internal communications between VMs in the same virtual network. </param>
         /// <param name="internalDomainNameSuffix"> Even if internalDnsNameLabel is not specified, a DNS entry is created for the primary NIC of the VM. This DNS name can be constructed by concatenating the VM name with the value of internalDomainNameSuffix. </param>
-        internal NetworkInterfaceDnsSettings(IList<string> dnsServers, IList<string> appliedDnsServers, string internalDnsNameLabel, string internalFqdn, string internalDomainNameSuffix)
+        internal NetworkInterfaceDnsSettings(IList<string> dnsServers, IReadOnlyList<string> appliedDnsServers, string internalDnsNameLabel, string internalFqdn, string internalDomainNameSuffix)
         {
             DnsServers = dnsServers;
             AppliedDnsServers = appliedDnsServers;
@@ -33,9 +36,9 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of DNS servers IP addresses. Use &apos;AzureProvidedDNS&apos; to switch to azure provided DNS resolution. &apos;AzureProvidedDNS&apos; value cannot be combined with other IPs, it must be the only value in dnsServers collection. </summary>
-        public IList<string> DnsServers { get; set; }
+        public IList<string> DnsServers { get; }
         /// <summary> If the VM that uses this NIC is part of an Availability Set, then this list will have the union of all DNS servers from all NICs that are part of the Availability Set. This property is what is configured on each of those VMs. </summary>
-        public IList<string> AppliedDnsServers { get; }
+        public IReadOnlyList<string> AppliedDnsServers { get; }
         /// <summary> Relative DNS name for this NIC used for internal communications between VMs in the same virtual network. </summary>
         public string InternalDnsNameLabel { get; set; }
         /// <summary> Fully qualified DNS name supporting internal communications between VMs in the same virtual network. </summary>

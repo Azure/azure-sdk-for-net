@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public virtual AsyncPageable<ExpressRouteCircuitPeering> ListAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public virtual Pageable<ExpressRouteCircuitPeering> List(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -178,6 +180,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
         public virtual async Task<ExpressRouteCircuitPeeringsDeleteOperation> StartDeleteAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -212,6 +215,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
         public virtual ExpressRouteCircuitPeeringsDeleteOperation StartDelete(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -247,6 +251,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="peeringParameters"> Parameters supplied to the create or update express route circuit peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="peeringParameters"/> is null. </exception>
         public virtual async Task<ExpressRouteCircuitPeeringsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -286,6 +291,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="peeringParameters"> Parameters supplied to the create or update express route circuit peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="peeringParameters"/> is null. </exception>
         public virtual ExpressRouteCircuitPeeringsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

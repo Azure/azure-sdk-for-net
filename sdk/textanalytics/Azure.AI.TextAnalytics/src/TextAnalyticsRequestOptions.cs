@@ -6,21 +6,30 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Options that allow callers to specify details about how the operation
     /// is run and what information is returned from it by the service.
+    /// <para>For example set model version, and whether to include statistics.</para>
     /// </summary>
     public class TextAnalyticsRequestOptions
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsRequestOptions"/>
-        /// class.
+        /// class which allows callers to specify details about how the operation
+        /// is run. For example set model version, and whether to include statistics.
         /// </summary>
         public TextAnalyticsRequestOptions()
         {
+        }
+
+        internal TextAnalyticsRequestOptions(bool includeStatistics, string modelVersion)
+        {
+            IncludeStatistics = includeStatistics;
+            ModelVersion = modelVersion;
         }
 
         /// <summary>
         /// Gets or sets a value that, if set to true, indicates that the service
         /// should return document and document batch statistics with the results
         /// of the operation.
+        /// Returns data for batch document methods only.
         /// </summary>
         public bool IncludeStatistics { get; set; }
 

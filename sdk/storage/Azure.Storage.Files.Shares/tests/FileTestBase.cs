@@ -18,7 +18,8 @@ namespace Azure.Storage.Files.Shares.Tests
     [ClientTestFixture(
         ShareClientOptions.ServiceVersion.V2019_02_02,
         ShareClientOptions.ServiceVersion.V2019_07_07,
-        ShareClientOptions.ServiceVersion.V2019_12_12)]
+        ShareClientOptions.ServiceVersion.V2019_12_12,
+        ShareClientOptions.ServiceVersion.V2020_02_10)]
     public class FileTestBase : StorageTestBase
     {
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
@@ -46,8 +47,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 },
                 Transport = GetTransport()
             };
@@ -56,7 +57,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public async Task<DisposingShare> GetTestShareAsync(ShareServiceClient service = default, string shareName = default, IDictionary<string, string> metadata = default)
@@ -121,6 +122,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     new StorageSharedKeyCredential(
                         TestConfigSoftDelete.AccountName,
                         TestConfigSoftDelete.AccountKey),
+                    GetOptions()));
+
+        public ShareServiceClient GetServiceClient_PremiumFile()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigPremiumFile.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigPremiumFile.AccountName,
+                        TestConfigPremiumFile.AccountKey),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
@@ -274,7 +284,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
             {
-                await share.CreateAsync(metadata: metadata);
+                await share.CreateIfNotExistsAsync(metadata: metadata);
                 return new DisposingShare(share);
             }
 
@@ -289,7 +299,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     try
                     {
-                        await Share.DeleteAsync(true);
+                        await Share.DeleteIfExistsAsync();
                         Share = null;
                     }
                     catch
@@ -309,7 +319,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingDirectory> CreateAsync(DisposingShare test, ShareDirectoryClient directory)
             {
-                await directory.CreateAsync();
+                await directory.CreateIfNotExistsAsync();
                 return new DisposingDirectory(test, directory);
             }
 

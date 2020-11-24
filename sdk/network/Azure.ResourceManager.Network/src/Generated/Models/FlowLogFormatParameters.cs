@@ -13,20 +13,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FlowLogFormatParameters. </summary>
         public FlowLogFormatParameters()
         {
-            Type = "JSON";
         }
 
         /// <summary> Initializes a new instance of FlowLogFormatParameters. </summary>
         /// <param name="type"> The file type of flow log. </param>
         /// <param name="version"> The version (revision) of the flow log. </param>
-        internal FlowLogFormatParameters(string type, int? version)
+        internal FlowLogFormatParameters(FlowLogFormatType? type, int? version)
         {
             Type = type;
             Version = version;
         }
 
         /// <summary> The file type of flow log. </summary>
-        public string Type { get; set; }
+        public FlowLogFormatType? Type { get; set; }
         /// <summary> The version (revision) of the flow log. </summary>
         public int? Version { get; set; }
     }

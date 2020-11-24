@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SecurityRule. </summary>
         public SecurityRule()
         {
+            SourceAddressPrefixes = new ChangeTrackingList<string>();
+            SourceApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroup>();
+            DestinationAddressPrefixes = new ChangeTrackingList<string>();
+            DestinationApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroup>();
+            SourcePortRanges = new ChangeTrackingList<string>();
+            DestinationPortRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityRule. </summary>
@@ -74,19 +81,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The CIDR or source IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. If this is an ingress rule, specifies where network traffic originates from. </summary>
         public string SourceAddressPrefix { get; set; }
         /// <summary> The CIDR or source IP ranges. </summary>
-        public IList<string> SourceAddressPrefixes { get; set; }
+        public IList<string> SourceAddressPrefixes { get; }
         /// <summary> The application security group specified as source. </summary>
-        public IList<ApplicationSecurityGroup> SourceApplicationSecurityGroups { get; set; }
+        public IList<ApplicationSecurityGroup> SourceApplicationSecurityGroups { get; }
         /// <summary> The destination address prefix. CIDR or destination IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. </summary>
         public string DestinationAddressPrefix { get; set; }
         /// <summary> The destination address prefixes. CIDR or destination IP ranges. </summary>
-        public IList<string> DestinationAddressPrefixes { get; set; }
+        public IList<string> DestinationAddressPrefixes { get; }
         /// <summary> The application security group specified as destination. </summary>
-        public IList<ApplicationSecurityGroup> DestinationApplicationSecurityGroups { get; set; }
+        public IList<ApplicationSecurityGroup> DestinationApplicationSecurityGroups { get; }
         /// <summary> The source port ranges. </summary>
-        public IList<string> SourcePortRanges { get; set; }
+        public IList<string> SourcePortRanges { get; }
         /// <summary> The destination port ranges. </summary>
-        public IList<string> DestinationPortRanges { get; set; }
+        public IList<string> DestinationPortRanges { get; }
         /// <summary> The network traffic is allowed or denied. </summary>
         public SecurityRuleAccess? Access { get; set; }
         /// <summary> The priority of the rule. The value can be between 100 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </summary>

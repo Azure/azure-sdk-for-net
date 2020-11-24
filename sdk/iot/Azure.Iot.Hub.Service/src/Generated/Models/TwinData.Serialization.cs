@@ -108,16 +108,6 @@ namespace Azure.Iot.Hub.Service.Models
                 writer.WritePropertyName("deviceScope");
                 writer.WriteStringValue(DeviceScope);
             }
-            if (Optional.IsCollectionDefined(ParentScopes))
-            {
-                writer.WritePropertyName("parentScopes");
-                writer.WriteStartArray();
-                foreach (var item in ParentScopes)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
         }
 
@@ -140,7 +130,6 @@ namespace Azure.Iot.Hub.Service.Models
             Optional<X509Thumbprint> x509Thumbprint = default;
             Optional<DeviceCapabilities> capabilities = default;
             Optional<string> deviceScope = default;
-            Optional<IList<string>> parentScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"))
@@ -155,6 +144,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -165,6 +159,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     properties = TwinProperties.DeserializeTwinProperties(property.Value);
                     continue;
                 }
@@ -175,6 +174,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("version"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     version = property.Value.GetInt64();
                     continue;
                 }
@@ -185,6 +189,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new TwinStatus(property.Value.GetString());
                     continue;
                 }
@@ -195,36 +204,71 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("statusUpdateTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     statusUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("connectionState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectionState = new TwinConnectionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastActivityTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastActivityTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("cloudToDeviceMessageCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     cloudToDeviceMessageCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("authenticationType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     authenticationType = new TwinAuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("x509Thumbprint"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     x509Thumbprint = X509Thumbprint.DeserializeX509Thumbprint(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capabilities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     capabilities = DeviceCapabilities.DeserializeDeviceCapabilities(property.Value);
                     continue;
                 }
@@ -233,18 +277,8 @@ namespace Azure.Iot.Hub.Service.Models
                     deviceScope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parentScopes"))
-                {
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    parentScopes = array;
-                    continue;
-                }
             }
-            return new TwinData(deviceId.Value, moduleId.Value, Optional.ToDictionary(tags), properties.Value, etag.Value, Optional.ToNullable(version), deviceEtag.Value, Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(statusUpdateTime), Optional.ToNullable(connectionState), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), Optional.ToNullable(authenticationType), x509Thumbprint.Value, capabilities.Value, deviceScope.Value, Optional.ToList(parentScopes));
+            return new TwinData(deviceId.Value, moduleId.Value, Optional.ToDictionary(tags), properties.Value, etag.Value, Optional.ToNullable(version), deviceEtag.Value, Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(statusUpdateTime), Optional.ToNullable(connectionState), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), Optional.ToNullable(authenticationType), x509Thumbprint.Value, capabilities.Value, deviceScope.Value);
         }
     }
 }

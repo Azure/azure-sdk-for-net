@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ChangeFeed DeserializeChangeFeed(JsonElement element)
         {
-            bool? enabled = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new ChangeFeed(enabled);
+            return new ChangeFeed(Optional.ToNullable(enabled));
         }
     }
 }

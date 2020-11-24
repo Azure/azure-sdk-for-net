@@ -15,15 +15,6 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        /// <summary> Initializes a new instance of OnErrorDeployment. </summary>
-        /// <param name="type"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
-        /// <param name="deploymentName"> The deployment to be used on error case. </param>
-        internal OnErrorDeployment(OnErrorDeploymentType? type, string deploymentName)
-        {
-            Type = type;
-            DeploymentName = deploymentName;
-        }
-
         /// <summary> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </summary>
         public OnErrorDeploymentType? Type { get; set; }
         /// <summary> The deployment to be used on error case. </summary>

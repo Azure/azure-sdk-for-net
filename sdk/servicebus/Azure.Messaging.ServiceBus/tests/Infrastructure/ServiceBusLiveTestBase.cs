@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 options);
         }
 
-        protected ServiceBusClient GetClient(int tryTimeout = 10)
+        protected ServiceBusClient GetClient(int tryTimeout = 15)
         {
             var retryOptions = new ServiceBusRetryOptions();
             if (tryTimeout != default)

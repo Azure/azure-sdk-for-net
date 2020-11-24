@@ -23,11 +23,6 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(VmSize.ToString());
             writer.WritePropertyName("dnsPrefix");
             writer.WriteStringValue(DnsPrefix);
-            if (Fqdn != null)
-            {
-                writer.WritePropertyName("fqdn");
-                writer.WriteStringValue(Fqdn);
-            }
             writer.WriteEndObject();
         }
 
@@ -37,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
             int count = default;
             ContainerServiceVMSizeTypes vmSize = default;
             string dnsPrefix = default;
-            string fqdn = default;
+            Optional<string> fqdn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -62,15 +57,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("fqdn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fqdn = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerServiceAgentPoolProfile(name, count, vmSize, dnsPrefix, fqdn);
+            return new ContainerServiceAgentPoolProfile(name, count, vmSize, dnsPrefix, fqdn.Value);
         }
     }
 }

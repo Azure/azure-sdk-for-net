@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public AvailabilitySetsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="parameters"> Parameters supplied to the Create Availability Set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="availabilitySetName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<AvailabilitySet>> CreateOrUpdateAsync(string resourceGroupName, string availabilitySetName, AvailabilitySet parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -93,14 +95,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySet value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
-                        }
+                        value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -113,6 +108,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="parameters"> Parameters supplied to the Create Availability Set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="availabilitySetName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<AvailabilitySet> CreateOrUpdate(string resourceGroupName, string availabilitySetName, AvailabilitySet parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -136,14 +132,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySet value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
-                        }
+                        value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -167,6 +156,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -178,6 +168,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="parameters"> Parameters supplied to the Update Availability Set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="availabilitySetName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<AvailabilitySet>> UpdateAsync(string resourceGroupName, string availabilitySetName, AvailabilitySetUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -201,14 +192,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySet value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
-                        }
+                        value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -221,6 +205,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="parameters"> Parameters supplied to the Update Availability Set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="availabilitySetName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<AvailabilitySet> Update(string resourceGroupName, string availabilitySetName, AvailabilitySetUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -244,14 +229,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySet value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
-                        }
+                        value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -281,6 +259,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -308,6 +287,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -346,6 +326,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(availabilitySetName, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -353,6 +334,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
         public async Task<Response<AvailabilitySet>> GetAsync(string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -372,14 +354,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySet value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
-                        }
+                        value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -391,6 +366,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
         public Response<AvailabilitySet> Get(string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -410,14 +386,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySet value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
-                        }
+                        value = AvailabilitySet.DeserializeAvailabilitySet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -441,6 +410,7 @@ namespace Azure.ResourceManager.Compute
                 uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -457,14 +427,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySetListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
-                        }
+                        value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -485,14 +448,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySetListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
-                        }
+                        value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -514,12 +470,14 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/availabilitySets", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists all availability sets in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<AvailabilitySetListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -535,14 +493,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySetListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
-                        }
+                        value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -553,6 +504,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all availability sets in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<AvailabilitySetListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -568,14 +520,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySetListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
-                        }
+                        value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -599,6 +544,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/vmSizes", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -606,6 +552,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
         public async Task<Response<VirtualMachineSizeListResult>> ListAvailableSizesAsync(string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -625,14 +572,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineSizeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineSizeListResult.DeserializeVirtualMachineSizeListResult(document.RootElement);
-                        }
+                        value = VirtualMachineSizeListResult.DeserializeVirtualMachineSizeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -644,6 +584,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
         public Response<VirtualMachineSizeListResult> ListAvailableSizes(string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -663,14 +604,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineSizeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineSizeListResult.DeserializeVirtualMachineSizeListResult(document.RootElement);
-                        }
+                        value = VirtualMachineSizeListResult.DeserializeVirtualMachineSizeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -687,6 +621,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -694,6 +629,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="expand"> The expand expression to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<AvailabilitySetListResult>> ListBySubscriptionNextPageAsync(string nextLink, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -709,14 +645,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySetListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
-                        }
+                        value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -728,6 +657,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="expand"> The expand expression to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<AvailabilitySetListResult> ListBySubscriptionNextPage(string nextLink, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -743,14 +673,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySetListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
-                        }
+                        value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -767,6 +690,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -774,6 +698,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<AvailabilitySetListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -793,14 +718,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySetListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
-                        }
+                        value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -812,6 +730,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<AvailabilitySetListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -831,14 +750,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         AvailabilitySetListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
-                        }
+                        value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2. </summary>
         public VirtualHubRouteTableV2()
         {
+            Routes = new ChangeTrackingList<VirtualHubRouteV2>();
+            AttachedConnections = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2. </summary>
@@ -38,9 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> List of all routes. </summary>
-        public IList<VirtualHubRouteV2> Routes { get; set; }
+        public IList<VirtualHubRouteV2> Routes { get; }
         /// <summary> List of all connections attached to this route table v2. </summary>
-        public IList<string> AttachedConnections { get; set; }
+        public IList<string> AttachedConnections { get; }
         /// <summary> The provisioning state of the virtual hub route table v2 resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ScriptStatus
     {
         /// <summary> Initializes a new instance of ScriptStatus. </summary>
-        public ScriptStatus()
+        internal ScriptStatus()
         {
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Time the deployment script resource will expire. </summary>
         public DateTimeOffset? ExpirationTime { get; }
         /// <summary> Error that is relayed from the script execution. </summary>
-        public ErrorResponse Error { get; set; }
+        public ErrorResponse Error { get; }
     }
 }

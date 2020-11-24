@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.TestFramework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
-
+using StorageProvisioningState = Azure.ResourceManager.Storage.Models.ProvisioningState;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests.Helpers
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
     {
         public static bool IsTestTenant = false;
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "eastus2(stage)";
+        public static string DefaultLocation = IsTestTenant ? null : "eastus2";
         public static string DefaultRGLocation = IsTestTenant ? null : "eastus2";
         public static Sku DefaultSkuNameStandardGRS = new Sku(SkuName.StandardGRS);
         public static Kind DefaultKindStorage = Kind.Storage;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
             return CreateClient<StorageManagementClient>(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new StorageManagementClientOptions()));
+                 InstrumentClientOptions(new StorageManagementClientOptions()));
         }
 
         public static StorageAccountCreateParameters GetDefaultStorageAccountParameters(Sku sku = null, Kind? kind = null, string location = null)
@@ -89,10 +89,9 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             Kind kindParameters = kind ?? DefaultKindStorage;
             string locationParameters = location ?? DefaultLocation;
 
-            StorageAccountCreateParameters account = new StorageAccountCreateParameters(skuParameters, kindParameters, locationParameters)
-            {
-                Tags = DefaultTags,
-            };
+            StorageAccountCreateParameters account = new StorageAccountCreateParameters(skuParameters, kindParameters, locationParameters);
+            account.Tags.InitializeFrom(DefaultTags);
+
             return account;
         }
 
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                 }
             }
 
-            Assert.AreEqual(ProvisioningState.Succeeded, account.ProvisioningState);
+            Assert.AreEqual(StorageProvisioningState.Succeeded, account.ProvisioningState);
             Assert.Null(account.LastGeoFailoverTime);
 
             if (account.Sku.Name == SkuName.StandardLRS || account.Sku.Name == SkuName.StandardZRS || account.Sku.Name == SkuName.PremiumLRS)

@@ -152,6 +152,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Bastion Hosts in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<BastionHost> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -195,6 +196,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Bastion Hosts in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<BastionHost> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -239,6 +241,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="bastionHostName"/> is null. </exception>
         public virtual async Task<BastionHostsDeleteOperation> StartDeleteAsync(string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -268,6 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="bastionHostName"/> is null. </exception>
         public virtual BastionHostsDeleteOperation StartDelete(string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -298,6 +302,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Bastion Host operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<BastionHostsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string bastionHostName, BastionHost parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -332,6 +337,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Bastion Host operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual BastionHostsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string bastionHostName, BastionHost parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

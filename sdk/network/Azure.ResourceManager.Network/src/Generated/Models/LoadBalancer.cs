@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancer. </summary>
         public LoadBalancer()
         {
+            FrontendIPConfigurations = new ChangeTrackingList<FrontendIPConfiguration>();
+            BackendAddressPools = new ChangeTrackingList<BackendAddressPool>();
+            LoadBalancingRules = new ChangeTrackingList<LoadBalancingRule>();
+            Probes = new ChangeTrackingList<Probe>();
+            InboundNatRules = new ChangeTrackingList<InboundNatRule>();
+            InboundNatPools = new ChangeTrackingList<InboundNatPool>();
+            OutboundRules = new ChangeTrackingList<OutboundRule>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancer. </summary>
@@ -54,19 +62,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Object representing the frontend IPs to be used for the load balancer. </summary>
-        public IList<FrontendIPConfiguration> FrontendIPConfigurations { get; set; }
+        public IList<FrontendIPConfiguration> FrontendIPConfigurations { get; }
         /// <summary> Collection of backend address pools used by a load balancer. </summary>
-        public IList<BackendAddressPool> BackendAddressPools { get; set; }
+        public IList<BackendAddressPool> BackendAddressPools { get; }
         /// <summary> Object collection representing the load balancing rules Gets the provisioning. </summary>
-        public IList<LoadBalancingRule> LoadBalancingRules { get; set; }
+        public IList<LoadBalancingRule> LoadBalancingRules { get; }
         /// <summary> Collection of probe objects used in the load balancer. </summary>
-        public IList<Probe> Probes { get; set; }
+        public IList<Probe> Probes { get; }
         /// <summary> Collection of inbound NAT Rules used by a load balancer. Defining inbound NAT rules on your load balancer is mutually exclusive with defining an inbound NAT pool. Inbound NAT pools are referenced from virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an Inbound NAT pool. They have to reference individual inbound NAT rules. </summary>
-        public IList<InboundNatRule> InboundNatRules { get; set; }
+        public IList<InboundNatRule> InboundNatRules { get; }
         /// <summary> Defines an external port range for inbound NAT to a single backend port on NICs associated with a load balancer. Inbound NAT rules are created automatically for each NIC associated with the Load Balancer using an external port from this range. Defining an Inbound NAT pool on your Load Balancer is mutually exclusive with defining inbound Nat rules. Inbound NAT pools are referenced from virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an inbound NAT pool. They have to reference individual inbound NAT rules. </summary>
-        public IList<InboundNatPool> InboundNatPools { get; set; }
+        public IList<InboundNatPool> InboundNatPools { get; }
         /// <summary> The outbound rules. </summary>
-        public IList<OutboundRule> OutboundRules { get; set; }
+        public IList<OutboundRule> OutboundRules { get; }
         /// <summary> The resource GUID property of the load balancer resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the load balancer resource. </summary>

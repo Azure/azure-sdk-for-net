@@ -15,24 +15,24 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId");
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (BlobContainer != null)
+            if (Optional.IsDefined(BlobContainer))
             {
                 writer.WritePropertyName("blobContainer");
                 writer.WriteStringValue(BlobContainer);
             }
-            if (ArchiveNameFormat != null)
+            if (Optional.IsDefined(ArchiveNameFormat))
             {
                 writer.WritePropertyName("archiveNameFormat");
                 writer.WriteStringValue(ArchiveNameFormat);
@@ -43,49 +43,38 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static Destination DeserializeDestination(JsonElement element)
         {
-            string name = default;
-            string storageAccountResourceId = default;
-            string blobContainer = default;
-            string archiveNameFormat = default;
+            Optional<string> name = default;
+            Optional<string> storageAccountResourceId = default;
+            Optional<string> blobContainer = default;
+            Optional<string> archiveNameFormat = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("storageAccountResourceId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             storageAccountResourceId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("blobContainer"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             blobContainer = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("archiveNameFormat"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             archiveNameFormat = property0.Value.GetString();
                             continue;
                         }
@@ -93,7 +82,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new Destination(name, storageAccountResourceId, blobContainer, archiveNameFormat);
+            return new Destination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value);
         }
     }
 }

@@ -32,6 +32,6 @@ namespace Azure.Data.Tables
         /// Gets or sets the entity's ETag. Set this value to '*' in order to force an overwrite to an entity as part of an update operation.
         /// </summary>
         /// <value>A string containing the ETag value for the entity.</value>
-        string ETag { get; set; }
+        ETag ETag { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public DeploymentScriptsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deploymentScript);
             request.Content = content;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="scriptName"/>, or <paramref name="deploymentScript"/> is null. </exception>
         public async Task<Response> CreateAsync(string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -102,6 +104,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="scriptName"/>, or <paramref name="deploymentScript"/> is null. </exception>
         public Response Create(string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -145,6 +148,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (deploymentScript != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -159,6 +163,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         public async Task<Response<DeploymentScript>> UpdateAsync(string resourceGroupName, string scriptName, DeploymentScriptUpdateParameter deploymentScript = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -178,14 +183,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScript value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
-                        }
+                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,6 +196,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         public Response<DeploymentScript> Update(string resourceGroupName, string scriptName, DeploymentScriptUpdateParameter deploymentScript = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -217,14 +216,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScript value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
-                        }
+                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -247,6 +239,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(scriptName, true);
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -254,6 +247,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         public async Task<Response<DeploymentScript>> GetAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -273,14 +267,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScript value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
-                        }
+                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -292,6 +279,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         public Response<DeploymentScript> Get(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -311,14 +299,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScript value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
-                        }
+                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -341,6 +322,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(scriptName, true);
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -348,6 +330,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -375,6 +358,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -410,6 +394,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts", false);
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -425,14 +410,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -452,14 +430,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -483,6 +454,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/logs", false);
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -490,6 +462,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         public async Task<Response<ScriptLogsList>> GetLogsAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -509,14 +482,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ScriptLogsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ScriptLogsList.DeserializeScriptLogsList(document.RootElement);
-                        }
+                        value = ScriptLogsList.DeserializeScriptLogsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -528,6 +494,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         public Response<ScriptLogsList> GetLogs(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -547,14 +514,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ScriptLogsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ScriptLogsList.DeserializeScriptLogsList(document.RootElement);
-                        }
+                        value = ScriptLogsList.DeserializeScriptLogsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -582,6 +542,7 @@ namespace Azure.ResourceManager.Resources
                 uri.AppendQuery("tail", tail.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -590,6 +551,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         public async Task<Response<ScriptLog>> GetLogsDefaultAsync(string resourceGroupName, string scriptName, int? tail = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -609,14 +571,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ScriptLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ScriptLog.DeserializeScriptLog(document.RootElement);
-                        }
+                        value = ScriptLog.DeserializeScriptLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -629,6 +584,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         public Response<ScriptLog> GetLogsDefault(string resourceGroupName, string scriptName, int? tail = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -648,14 +604,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ScriptLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ScriptLog.DeserializeScriptLog(document.RootElement);
-                        }
+                        value = ScriptLog.DeserializeScriptLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -677,12 +626,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts", false);
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists deployments scripts. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<DeploymentScriptListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -698,14 +649,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -716,6 +660,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Lists deployments scripts. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<DeploymentScriptListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -731,14 +676,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -755,12 +693,14 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DeploymentScriptListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -776,14 +716,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -794,6 +727,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DeploymentScriptListResult> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -809,14 +743,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -833,6 +760,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -840,6 +768,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<DeploymentScriptListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -859,14 +788,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -878,6 +800,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<DeploymentScriptListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -897,14 +820,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

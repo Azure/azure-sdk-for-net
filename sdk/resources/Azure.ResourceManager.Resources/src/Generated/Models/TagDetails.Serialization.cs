@@ -15,27 +15,19 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TagDetails DeserializeTagDetails(JsonElement element)
         {
-            string id = default;
-            string tagName = default;
-            TagCount count = default;
-            IReadOnlyList<TagValue> values = default;
+            Optional<string> id = default;
+            Optional<string> tagName = default;
+            Optional<TagCount> count = default;
+            Optional<IReadOnlyList<TagValue>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tagName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tagName = property.Value.GetString();
                     continue;
                 }
@@ -43,6 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = TagCount.DeserializeTagCount(property.Value);
@@ -52,25 +45,19 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TagValue> array = new List<TagValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TagValue.DeserializeTagValue(item));
-                        }
+                        array.Add(TagValue.DeserializeTagValue(item));
                     }
                     values = array;
                     continue;
                 }
             }
-            return new TagDetails(id, tagName, count, values);
+            return new TagDetails(id.Value, tagName.Value, count.Value, Optional.ToList(values));
         }
     }
 }

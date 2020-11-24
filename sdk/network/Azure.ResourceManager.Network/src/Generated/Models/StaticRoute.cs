@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of StaticRoute. </summary>
         public StaticRoute()
         {
+            AddressPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StaticRoute. </summary>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the StaticRoute that is unique within a VnetRoute. </summary>
         public string Name { get; set; }
         /// <summary> List of all address prefixes. </summary>
-        public IList<string> AddressPrefixes { get; set; }
+        public IList<string> AddressPrefixes { get; }
         /// <summary> The ip address of the next hop. </summary>
         public string NextHopIpAddress { get; set; }
     }

@@ -17,7 +17,7 @@ namespace Azure.Graph.Rbac.Models
             writer.WriteStartObject();
             writer.WritePropertyName("password");
             writer.WriteStringValue(Password);
-            if (ForceChangePasswordNextLogin != null)
+            if (Optional.IsDefined(ForceChangePasswordNextLogin))
             {
                 writer.WritePropertyName("forceChangePasswordNextLogin");
                 writer.WriteBooleanValue(ForceChangePasswordNextLogin.Value);

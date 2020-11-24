@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ProtectFromScaleIn != null)
+            if (Optional.IsDefined(ProtectFromScaleIn))
             {
                 writer.WritePropertyName("protectFromScaleIn");
                 writer.WriteBooleanValue(ProtectFromScaleIn.Value);
             }
-            if (ProtectFromScaleSetActions != null)
+            if (Optional.IsDefined(ProtectFromScaleSetActions))
             {
                 writer.WritePropertyName("protectFromScaleSetActions");
                 writer.WriteBooleanValue(ProtectFromScaleSetActions.Value);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetVMProtectionPolicy DeserializeVirtualMachineScaleSetVMProtectionPolicy(JsonElement element)
         {
-            bool? protectFromScaleIn = default;
-            bool? protectFromScaleSetActions = default;
+            Optional<bool> protectFromScaleIn = default;
+            Optional<bool> protectFromScaleSetActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectFromScaleIn"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectFromScaleIn = property.Value.GetBoolean();
@@ -47,13 +48,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectFromScaleSetActions = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMProtectionPolicy(protectFromScaleIn, protectFromScaleSetActions);
+            return new VirtualMachineScaleSetVMProtectionPolicy(Optional.ToNullable(protectFromScaleIn), Optional.ToNullable(protectFromScaleSetActions));
         }
     }
 }

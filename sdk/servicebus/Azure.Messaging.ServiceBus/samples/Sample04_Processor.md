@@ -26,7 +26,7 @@ var options = new ServiceBusProcessorOptions
 {
     // By default after the message handler returns, the processor will complete the message
     // If I want more fine-grained control over settlement, I can set this to false.
-    AutoComplete = false,
+    AutoCompleteMessages = false,
 
     // I can also allow for multi-threading
     MaxConcurrentCalls = 2
@@ -76,4 +76,4 @@ await processor.StopProcessingAsync();
 
 To see the full example source, see:
 
-* [Sample04_Processor.cs](../tests/Samples/Sample04_Processor.cs)
+* [Sample04_Processor.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample04_Processor.cs)

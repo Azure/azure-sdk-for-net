@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,12 +16,12 @@ namespace Azure.Iot.Hub.Service
     /// </summary>
     public class ModulesClient
     {
-        private const string ContinuationTokenHeader = "x-ms-continuation";
         private const string HubModuleQuery = "select * from devices.modules";
 
         private readonly DevicesRestClient _devicesRestClient;
         private readonly ModulesRestClient _modulesRestClient;
-        private readonly QueryRestClient _queryRestClient;
+        private readonly QueryClient _queryClient;
+        private readonly BulkRegistryRestClient _bulkRegistryClient;
 
         /// <summary>
         /// Initializes a new instance of ModulesClient.
@@ -35,17 +34,20 @@ namespace Azure.Iot.Hub.Service
         /// Initializes a new instance of DevicesClient.
         /// <param name="devicesRestClient"> The REST client to perform bulk operations on the module. </param>
         /// <param name="modulesRestClient"> The REST client to perform module and module twin operations. </param>
-        /// <param name="queryRestClient"> The REST client to perform query operations for the device. </param>
+        /// <param name="queryClient"> The convenience layer query client to perform query operations for the device. </param>
+        /// <param name="bulkRegistryClient"> The convenience layer client to perform bulk operations on modules. </param>
         /// </summary>
-        internal ModulesClient(DevicesRestClient devicesRestClient, ModulesRestClient modulesRestClient, QueryRestClient queryRestClient)
+        internal ModulesClient(DevicesRestClient devicesRestClient, ModulesRestClient modulesRestClient, QueryClient queryClient, BulkRegistryRestClient bulkRegistryClient)
         {
             Argument.AssertNotNull(devicesRestClient, nameof(devicesRestClient));
             Argument.AssertNotNull(modulesRestClient, nameof(modulesRestClient));
-            Argument.AssertNotNull(queryRestClient, nameof(queryRestClient));
+            Argument.AssertNotNull(queryClient, nameof(queryClient));
+            Argument.AssertNotNull(bulkRegistryClient, nameof(bulkRegistryClient));
 
             _devicesRestClient = devicesRestClient;
             _modulesRestClient = modulesRestClient;
-            _queryRestClient = queryRestClient;
+            _queryClient = queryClient;
+            _bulkRegistryClient = bulkRegistryClient;
         }
 
         /// <summary>
@@ -191,7 +193,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -215,7 +217,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +239,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +261,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -283,7 +285,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -307,7 +309,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -333,7 +335,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -359,86 +361,35 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
         /// List a set of module twins.
         /// </summary>
+        /// <remarks>
+        /// This service request returns the full set of module twins. To get a subset of module twins, you can use the <see cref="QueryClient.QueryAsync(string, int?, CancellationToken)">query API</see> that this method uses but with additional qualifiers for selection.
+        /// </remarks>
         /// <param name="pageSize">The size of each page to be retrieved from the service. Service may override this size.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of module twins <see cref="AsyncPageable{T}"/>.</returns>
         public virtual AsyncPageable<TwinData> GetTwinsAsync(int? pageSize = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TwinData>> FirstPageFunc(int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification
-                {
-                    Query = HubModuleQuery
-                };
-
-                Response<IReadOnlyList<TwinData>> response =
-                    await _queryRestClient.GetTwinsAsync(querySpecification, null, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            async Task<Page<TwinData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification();
-
-                Response<IReadOnlyList<TwinData>> response =
-                    await _queryRestClient.GetTwinsAsync(querySpecification, nextLink, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc, pageSize);
+            return _queryClient.QueryAsync(HubModuleQuery, pageSize, cancellationToken);
         }
 
         /// <summary>
         /// List a set of module twins.
         /// </summary>
+        /// <remarks>
+        /// This service request returns the full set of module twins. To get a subset of module twins, you can use the <see cref="QueryClient.Query(string, int?, CancellationToken)">query API</see> that this method uses but with additional qualifiers for selection.
+        /// </remarks>
         /// <param name="pageSize">The size of each page to be retrieved from the service. Service may override this size.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of module twins <see cref="Pageable{T}"/>.</returns>
         public virtual Pageable<TwinData> GetTwins(int? pageSize = null, CancellationToken cancellationToken = default)
         {
-            Page<TwinData> FirstPageFunc(int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification
-                {
-                    Query = HubModuleQuery
-                };
-
-                Response<IReadOnlyList<TwinData>> response = _queryRestClient.GetTwins(
-                    querySpecification,
-                    null,
-                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
-                    cancellationToken);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            Page<TwinData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification();
-                Response<IReadOnlyList<TwinData>> response = _queryRestClient.GetTwins(
-                    querySpecification,
-                    nextLink,
-                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
-                    cancellationToken);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc, pageSize);
+            return _queryClient.Query(HubModuleQuery, pageSize, cancellationToken);
         }
 
         /// <summary>
@@ -517,7 +468,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -543,7 +494,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>

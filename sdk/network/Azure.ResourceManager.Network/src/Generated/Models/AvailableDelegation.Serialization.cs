@@ -15,46 +15,30 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableDelegation DeserializeAvailableDelegation(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            string type = default;
-            string serviceName = default;
-            IReadOnlyList<string> actions = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> type = default;
+            Optional<string> serviceName = default;
+            Optional<IReadOnlyList<string>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serviceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     serviceName = property.Value.GetString();
                     continue;
                 }
@@ -62,25 +46,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     actions = array;
                     continue;
                 }
             }
-            return new AvailableDelegation(name, id, type, serviceName, actions);
+            return new AvailableDelegation(name.Value, id.Value, type.Value, serviceName.Value, Optional.ToList(actions));
         }
     }
 }

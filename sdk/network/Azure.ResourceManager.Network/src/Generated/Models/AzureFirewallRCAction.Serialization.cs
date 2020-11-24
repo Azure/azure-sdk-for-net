@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type.Value.ToString());
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallRCAction DeserializeAzureFirewallRCAction(JsonElement element)
         {
-            AzureFirewallRCActionType? type = default;
+            Optional<AzureFirewallRCActionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new AzureFirewallRCActionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new AzureFirewallRCAction(type);
+            return new AzureFirewallRCAction(Optional.ToNullable(type));
         }
     }
 }

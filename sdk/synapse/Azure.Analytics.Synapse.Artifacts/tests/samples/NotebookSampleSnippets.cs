@@ -42,7 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
                 nbformatMinor: 2,
                 new List<NotebookCell>()
             );
-            NotebookResource createdNotebook = notebookClient.CreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
+            string notebookName = "MyNotebook";
+            NotebookCreateOrUpdateNotebookOperation operation = notebookClient.StartCreateOrUpdateNotebook(notebookName, new NotebookResource(notebookName, notebook));
+            NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
         }
 
@@ -70,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public void DeleteNotebook()
         {
             #region Snippet:DeleteNotebook
-            notebookClient.DeleteNotebook("MyNotebook");
+            notebookClient.StartDeleteNotebook("MyNotebook");
             #endregion
         }
     }

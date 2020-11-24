@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Diagnostics;
 using System;
 using System.Diagnostics.Tracing;
 using System.Globalization;
@@ -21,19 +22,28 @@ namespace Azure.Core.Shared
 
             if (eventData.Message != null)
             {
-                return string.Format(CultureInfo.InvariantCulture, eventData.Message, payloadArray);
+                try
+                {
+                    return string.Format(CultureInfo.InvariantCulture, eventData.Message, payloadArray);
+                }
+                catch (FormatException)
+                {
+                }
             }
 
             var stringBuilder = new StringBuilder();
             stringBuilder.Append(eventData.EventName);
 
-            if (eventData.PayloadNames != null)
+            if (!string.IsNullOrWhiteSpace(eventData.Message))
             {
-                for (int i = 0; i < eventData.PayloadNames.Count; i++)
-                {
-                    stringBuilder.AppendLine();
-                    stringBuilder.Append(eventData.PayloadNames[i]).Append(" = ").Append(payloadArray[i]);
-                }
+                stringBuilder.AppendLine();
+                stringBuilder.Append(nameof(eventData.Message)).Append(" = ").Append(eventData.Message);
+            }
+
+            for (int i = 0; i < eventData.PayloadNames.Count; i++)
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.Append(eventData.PayloadNames[i]).Append(" = ").Append(payloadArray[i]);
             }
 
             return stringBuilder.ToString();

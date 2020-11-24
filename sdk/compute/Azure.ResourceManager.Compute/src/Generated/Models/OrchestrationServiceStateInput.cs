@@ -11,24 +11,16 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class OrchestrationServiceStateInput
     {
         /// <summary> Initializes a new instance of OrchestrationServiceStateInput. </summary>
-        /// <param name="action"> The action to be performed. </param>
-        public OrchestrationServiceStateInput(OrchestrationServiceStateAction action)
-        {
-            ServiceName = "AutomaticRepairs";
-            Action = action;
-        }
-
-        /// <summary> Initializes a new instance of OrchestrationServiceStateInput. </summary>
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="action"> The action to be performed. </param>
-        internal OrchestrationServiceStateInput(string serviceName, OrchestrationServiceStateAction action)
+        public OrchestrationServiceStateInput(OrchestrationServiceNames serviceName, OrchestrationServiceStateAction action)
         {
             ServiceName = serviceName;
             Action = action;
         }
 
         /// <summary> The name of the service. </summary>
-        public string ServiceName { get; }
+        public OrchestrationServiceNames ServiceName { get; }
         /// <summary> The action to be performed. </summary>
         public OrchestrationServiceStateAction Action { get; }
     }

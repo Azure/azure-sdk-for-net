@@ -54,17 +54,16 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             string shareName = Recording.GenerateAssetName("share");
             FileShare fileShare = new FileShare();
             Response<FileShare> share = await FileSharesClient.CreateAsync(rgName, accountName, shareName, fileShare);
-            Assert.Null(share.Value.Metadata);
+            Assert.IsEmpty(share.Value.Metadata);
 
             share = await FileSharesClient.GetAsync(rgName, accountName, shareName);
-            Assert.Null(share.Value.Metadata);
+            Assert.IsEmpty(share.Value.Metadata);
 
             string shareName2 = Recording.GenerateAssetName("share");
-            fileShare.Metadata = new Dictionary<string, string>
-                {
-                    { "metadata1", "true" },
-                    { "metadata2", "value2" }
-                };
+            fileShare.Metadata.Clear();
+            fileShare.Metadata.Add("metadata1", "true");
+            fileShare.Metadata.Add("metadata2", "value2");
+
             fileShare.ShareQuota = 500;
             Response<FileShare> share2 = await FileSharesClient.CreateAsync(rgName, accountName, shareName2, fileShare);
             Assert.AreEqual(2, share2.Value.Metadata.Count);
@@ -110,13 +109,12 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             string shareName = Recording.GenerateAssetName("share");
             FileShare fileShare = new FileShare();
             Response<FileShare> share = await FileSharesClient.CreateAsync(rgName, accountName, shareName, fileShare);
-            Assert.Null(share.Value.Metadata);
+            Assert.IsEmpty(share.Value.Metadata);
 
-            fileShare.Metadata = new Dictionary<string, string>
-                {
-                    { "metadata1", "true" },
-                    { "metadata2", "value2" }
-                };
+            fileShare.Metadata.Clear();
+            fileShare.Metadata.Add("metadata1", "true");
+            fileShare.Metadata.Add("metadata2", "value2");
+
             fileShare.ShareQuota = 5200;
             Response<FileShare> shareSet = await FileSharesClient.UpdateAsync(rgName, accountName, shareName, fileShare);
             Assert.NotNull(shareSet.Value.Metadata);
@@ -147,8 +145,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             properties1.Value.Cors = new CorsRules
             {
-                CorsRulesValue = new List<CorsRule>
-                    {
+               CorsRulesValue =                    {
                         new CorsRule(allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
                         allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
                         maxAgeInSeconds: 100,

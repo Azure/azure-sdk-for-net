@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of CheckGroupMembershipParameters. </summary>
         /// <param name="groupId"> The object ID of the group to check. </param>
         /// <param name="memberId"> The object ID of the contact, group, user, or service principal to check for membership in the specified group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="memberId"/> is null. </exception>
         public CheckGroupMembershipParameters(string groupId, string memberId)
         {
             if (groupId == null)
@@ -30,18 +32,7 @@ namespace Azure.Graph.Rbac.Models
 
             GroupId = groupId;
             MemberId = memberId;
-            AdditionalProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of CheckGroupMembershipParameters. </summary>
-        /// <param name="groupId"> The object ID of the group to check. </param>
-        /// <param name="memberId"> The object ID of the contact, group, user, or service principal to check for membership in the specified group. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal CheckGroupMembershipParameters(string groupId, string memberId, IDictionary<string, object> additionalProperties)
-        {
-            GroupId = groupId;
-            MemberId = memberId;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> The object ID of the group to check. </summary>

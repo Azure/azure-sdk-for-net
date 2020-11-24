@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Application. </summary>
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="managedResourceGroupId"> The managed resource group Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kind"/> or <paramref name="managedResourceGroupId"/> is null. </exception>
         public Application(string kind, string managedResourceGroupId)
         {
             if (kind == null)

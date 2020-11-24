@@ -25,6 +25,16 @@ namespace EventHub.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
+                // Create Eventhub
+                var eventhubName = EventHubManagementHelper.EventHubPrefix;
+                while (eventhubName.Length != 256)
+                {
+                    eventhubName += TestUtilities.GenerateName();
+
+                    if (eventhubName.Length > 256)
+                        eventhubName = eventhubName.Substring(1, 256);
+                }
+
                 var location = this.ResourceManagementClient.GetLocationFromProvider();
 
                 var resourceGroup = string.Empty;
@@ -70,19 +80,20 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
                     Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
-                    // Create Eventhub
-                    var eventhubName = EventHubManagementHelper.EventHubPrefix;
+                    
                     var createEventhubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
                     new Eventhub() { MessageRetentionInDays = 5 });
 
                     Assert.NotNull(createEventhubResponse);
                     Assert.Equal(createEventhubResponse.Name, eventhubName);
+                    Assert.Equal<int>(256,createEventhubResponse.Name.Length);
 
                     // Get the created EventHub
                     var geteventhubResponse = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
                     Assert.NotNull(geteventhubResponse);
                     Assert.Equal(EntityStatus.Active, geteventhubResponse.Status);
                     Assert.Equal(geteventhubResponse.Name, eventhubName);
+                    Assert.Equal<int>(256, geteventhubResponse.Name.Length);
 
                     // Create a EventHub AuthorizationRule
                     var authorizationRuleName = EventHubManagementHelper.AuthorizationRulesPrefix;
@@ -176,7 +187,7 @@ namespace EventHub.Tests.ScenarioTests
                 finally
                 {
                     //Delete Resource Group
-                    this.ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroup, null, default(CancellationToken)).ConfigureAwait(false);
+                    // this.ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroup, null, default(CancellationToken)).ConfigureAwait(false);
                     Console.WriteLine("End of EH2018 Namespace CRUD IPFilter Rules test");
                 }
             }

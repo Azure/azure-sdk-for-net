@@ -35,7 +35,7 @@ namespace Azure.Core.Tests
                     });
                 });
 
-            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var transport = new HttpClientTransport(mockHandler);
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://example.com:340"));
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
                 });
 
             var expectedUri = new Uri("http://example.com:340");
-            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var transport = new HttpClientTransport(mockHandler);
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(expectedUri);
@@ -96,7 +96,7 @@ namespace Azure.Core.Tests
             HttpContent httpMessageContent = null;
             var mockHandler = new MockHttpClientHandler(httpRequestMessage => { httpMessageContent = httpRequestMessage.Content; });
 
-            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var transport = new HttpClientTransport(mockHandler);
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://example.com:340"));
@@ -128,7 +128,7 @@ namespace Azure.Core.Tests
                     return Task.FromResult(responseMessage);
                 });
 
-            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var transport = new HttpClientTransport(mockHandler);
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://example.com:340"));

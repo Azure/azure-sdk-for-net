@@ -39,20 +39,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<NotebookKernelSpec> kernelspec = default;
             Optional<NotebookLanguageInfo> languageInfo = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kernelspec"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     kernelspec = NotebookKernelSpec.DeserializeNotebookKernelSpec(property.Value);
                     continue;
                 }
                 if (property.NameEquals("language_info"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     languageInfo = NotebookLanguageInfo.DeserializeNotebookLanguageInfo(property.Value);
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

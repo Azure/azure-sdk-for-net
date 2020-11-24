@@ -14,20 +14,16 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static P2SVpnConnectionHealth DeserializeP2SVpnConnectionHealth(JsonElement element)
         {
-            string sasUrl = default;
+            Optional<string> sasUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sasUrl = property.Value.GetString();
                     continue;
                 }
             }
-            return new P2SVpnConnectionHealth(sasUrl);
+            return new P2SVpnConnectionHealth(sasUrl.Value);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -438,29 +439,30 @@ namespace Azure.Identity.Tests
             var cred = new DefaultAzureCredential(credFactory, options);
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var unhandledException = ex.InnerException is AggregateException ae ? ae.InnerExceptions.Last() : ex.InnerException;
 
             switch (exPossition)
             {
                 case 0:
-                    Assert.AreEqual(ex.InnerException.Message, "EnvironmentCredential unhandled exception");
+                    Assert.AreEqual("EnvironmentCredential unhandled exception", unhandledException.Message);
                     break;
                 case 1:
-                    Assert.AreEqual(ex.InnerException.Message, "ManagedIdentityCredential unhandled exception");
+                    Assert.AreEqual("ManagedIdentityCredential unhandled exception", unhandledException.Message);
                     break;
                 case 2:
-                    Assert.AreEqual(ex.InnerException.Message, "SharedTokenCacheCredential unhandled exception");
+                    Assert.AreEqual("SharedTokenCacheCredential unhandled exception", unhandledException.Message);
                     break;
                 case 3:
-                    Assert.AreEqual(ex.InnerException.Message, "VisualStudioCredential unhandled exception");
+                    Assert.AreEqual("VisualStudioCredential unhandled exception", unhandledException.Message);
                     break;
                 case 4:
-                    Assert.AreEqual(ex.InnerException.Message, "VisualStudioCodeCredential unhandled exception");
+                    Assert.AreEqual("VisualStudioCodeCredential unhandled exception", unhandledException.Message);
                     break;
                 case 5:
-                    Assert.AreEqual(ex.InnerException.Message, "CliCredential unhandled exception");
+                    Assert.AreEqual("CliCredential unhandled exception", unhandledException.Message);
                     break;
                 case 6:
-                    Assert.AreEqual(ex.InnerException.Message, "InteractiveBrowserCredential unhandled exception");
+                    Assert.AreEqual("InteractiveBrowserCredential unhandled exception", unhandledException.Message);
                     break;
                 default:
                     Assert.Fail();

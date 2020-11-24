@@ -15,27 +15,21 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ResourceSkuRestrictionInfo DeserializeResourceSkuRestrictionInfo(JsonElement element)
         {
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<string> zones = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locations"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     locations = array;
                     continue;
@@ -44,25 +38,19 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     zones = array;
                     continue;
                 }
             }
-            return new ResourceSkuRestrictionInfo(locations, zones);
+            return new ResourceSkuRestrictionInfo(Optional.ToList(locations), Optional.ToList(zones));
         }
     }
 }

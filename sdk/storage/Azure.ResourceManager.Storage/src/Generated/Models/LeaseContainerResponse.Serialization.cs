@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static LeaseContainerResponse DeserializeLeaseContainerResponse(JsonElement element)
         {
-            string leaseId = default;
-            string leaseTimeSeconds = default;
+            Optional<string> leaseId = default;
+            Optional<string> leaseTimeSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("leaseId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     leaseId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("leaseTimeSeconds"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     leaseTimeSeconds = property.Value.GetString();
                     continue;
                 }
             }
-            return new LeaseContainerResponse(leaseId, leaseTimeSeconds);
+            return new LeaseContainerResponse(leaseId.Value, leaseTimeSeconds.Value);
         }
     }
 }

@@ -3,7 +3,6 @@
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <VersionPrefix>2.2.0</VersionPrefix>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <LangVersion>preview</LangVersion>
     <IsClientLibrary>true</IsClientLibrary>
   </PropertyGroup>
 

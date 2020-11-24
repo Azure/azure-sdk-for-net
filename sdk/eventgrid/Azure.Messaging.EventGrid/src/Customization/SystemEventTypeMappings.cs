@@ -19,6 +19,18 @@ namespace Azure.Messaging.EventGrid
             { EventTypes.AppConfigurationKeyValueDeletedEvent, AppConfigurationKeyValueDeletedEventData.DeserializeAppConfigurationKeyValueDeletedEventData },
             { EventTypes.AppConfigurationKeyValueModifiedEvent, AppConfigurationKeyValueModifiedEventData.DeserializeAppConfigurationKeyValueModifiedEventData },
 
+            // Communication events
+            { EventTypes.ACSChatMemberAddedToThreadWithUserEvent, ACSChatMemberAddedToThreadWithUserEventData.DeserializeACSChatMemberAddedToThreadWithUserEventData },
+            { EventTypes.ACSChatMemberRemovedFromThreadWithUserEvent, ACSChatMemberRemovedFromThreadWithUserEventData.DeserializeACSChatMemberRemovedFromThreadWithUserEventData },
+            { EventTypes.ACSChatMessageDeletedEvent, ACSChatMessageDeletedEventData.DeserializeACSChatMessageDeletedEventData },
+            { EventTypes.ACSChatMessageEditedEvent, ACSChatMessageEditedEventData.DeserializeACSChatMessageEditedEventData },
+            { EventTypes.ACSChatMessageReceivedEvent, ACSChatMessageReceivedEventData.DeserializeACSChatMessageReceivedEventData },
+            { EventTypes.ACSChatThreadCreatedWithUserEvent,  ACSChatThreadCreatedWithUserEventData.DeserializeACSChatThreadCreatedWithUserEventData },
+            { EventTypes.ACSChatThreadPropertiesUpdatedPerUserEvent, ACSChatThreadPropertiesUpdatedPerUserEventData.DeserializeACSChatThreadPropertiesUpdatedPerUserEventData },
+            { EventTypes.ACSChatThreadWithUserDeletedEvent, ACSChatThreadWithUserDeletedEventData.DeserializeACSChatThreadWithUserDeletedEventData },
+            { EventTypes.ACSSMSDeliveryReportReceivedEvent, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
+            { EventTypes.ACSSMSReceivedEvent, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
+
             // ContainerRegistry events
             { EventTypes.ContainerRegistryImagePushedEvent, ContainerRegistryImagePushedEventData.DeserializeContainerRegistryImagePushedEventData },
             { EventTypes.ContainerRegistryImageDeletedEvent, ContainerRegistryImageDeletedEventData.DeserializeContainerRegistryImageDeletedEventData },
@@ -38,6 +50,18 @@ namespace Azure.Messaging.EventGrid
 
             // Event Hub events
             { EventTypes.EventHubCaptureFileCreatedEvent, EventHubCaptureFileCreatedEventData.DeserializeEventHubCaptureFileCreatedEventData },
+
+            // Key Vault events
+            { EventTypes.KeyVaultCertificateNewVersionCreatedEvent, KeyVaultCertificateNewVersionCreatedEventData.DeserializeKeyVaultCertificateNewVersionCreatedEventData },
+            { EventTypes.KeyVaultCertificateNearExpiryEvent, KeyVaultCertificateNearExpiryEventData.DeserializeKeyVaultCertificateNearExpiryEventData },
+            { EventTypes.KeyVaultCertificateExpiredEvent, KeyVaultCertificateExpiredEventData.DeserializeKeyVaultCertificateExpiredEventData },
+            { EventTypes.KeyVaultKeyNearExpiryEvent, KeyVaultKeyNearExpiryEventData.DeserializeKeyVaultKeyNearExpiryEventData },
+            { EventTypes.KeyVaultKeyNewVersionCreatedEvent, KeyVaultKeyNewVersionCreatedEventData.DeserializeKeyVaultKeyNewVersionCreatedEventData },
+            { EventTypes.KeyVaultKeyExpiredEvent, KeyVaultKeyExpiredEventData.DeserializeKeyVaultKeyExpiredEventData },
+            { EventTypes.KeyVaultSecretNewVersionCreatedEvent, KeyVaultSecretNewVersionCreatedEventData.DeserializeKeyVaultSecretNewVersionCreatedEventData },
+            { EventTypes.KeyVaultSecretNearExpiryEvent, KeyVaultSecretNearExpiryEventData.DeserializeKeyVaultSecretNearExpiryEventData },
+            { EventTypes.KeyVaultSecretExpiredEvent, KeyVaultSecretExpiredEventData.DeserializeKeyVaultSecretExpiredEventData },
+            { EventTypes.KeyVaultVaultAccessPolicyChangedEvent, KeyVaultAccessPolicyChangedEventData.DeserializeKeyVaultAccessPolicyChangedEventData },
 
             // MachineLearningServices events
             { EventTypes.MachineLearningServicesDatasetDriftDetectedEvent, MachineLearningServicesDatasetDriftDetectedEventData.DeserializeMachineLearningServicesDatasetDriftDetectedEventData },
@@ -99,6 +123,7 @@ namespace Azure.Messaging.EventGrid
             { EventTypes.StorageDirectoryCreatedEvent, StorageDirectoryCreatedEventData.DeserializeStorageDirectoryCreatedEventData },
             { EventTypes.StorageDirectoryDeletedEvent, StorageDirectoryDeletedEventData.DeserializeStorageDirectoryDeletedEventData },
             { EventTypes.StorageDirectoryRenamedEvent, StorageDirectoryRenamedEventData.DeserializeStorageDirectoryRenamedEventData },
+            { EventTypes.StorageLifecyclePolicyCompletedEvent, StorageLifecyclePolicyCompletedEventData.DeserializeStorageLifecyclePolicyCompletedEventData },
 
             // App Service
             { EventTypes.WebAppUpdated, WebAppUpdatedEventData.DeserializeWebAppUpdatedEventData },

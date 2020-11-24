@@ -308,6 +308,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Lists deployments scripts. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<DeploymentScript> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -351,6 +352,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Lists deployments scripts. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<DeploymentScript> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -396,6 +398,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="scriptName"/>, or <paramref name="deploymentScript"/> is null. </exception>
         public virtual async Task<DeploymentScriptsCreateOperation> StartCreateAsync(string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -430,6 +433,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="scriptName"/>, or <paramref name="deploymentScript"/> is null. </exception>
         public virtual DeploymentScriptsCreateOperation StartCreate(string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

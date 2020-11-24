@@ -4,7 +4,10 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Sentiment Analysis
 * Key Phrase Extraction
 * Named Entity Recognition
+* Personally Identifiable Information (PII) Recognition
 * Linked Entity Recognition
+* Healthcare Recognition <sup>beta</sup>
+* Analyze Operation <sup>beta</sup>
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
 
@@ -16,7 +19,6 @@ Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 ```PowerShell
 dotnet add package Azure.AI.TextAnalytics
 ```
-**Note:** This package version targets Azure Text Analytics service API version v3.0 and above.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -124,11 +126,14 @@ The following section provides several code snippets using the `client` [created
 * [Analyze Sentiment](#analyze-sentiment)
 * [Extract Key Phrases](#extract-key-phrases)
 * [Recognize Entities](#recognize-entities)
+* [Recognize PII Entities](#recognize-pii-entities)
 * [Recognize Linked Entities](#recognize-linked-entities)
 
 ### Async examples
 * [Detect Language Asynchronously](#detect-language-asynchronously)
 * [Recognize Entities Asyncronously](#recognize-entities-asynchronously)
+* [Recognize Healthcare Entities Asyncronously](#recognize-healthcare-entities-asynchronously)
+* [Run Analyze Operation Asyncronously](#run-analyze-operation-asynchronously)
 
 ### Detect Language
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
@@ -158,6 +163,8 @@ Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores
 Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
 ```
 For samples on using the production recommended option `AnalyzeSentimentBatch` see [here][analyze_sentiment_sample].
+
+To get more granular information about the opinions related to aspects of a product/service, also known as Aspect-based Sentiment Analysis in Natural Language Processing (NLP), see a sample on sentiment analysis with opinion mining [here][analyze_sentiment_opinion_mining_sample].
 
 Please refer to the service documentation for a conceptual discussion of [sentiment analysis][sentiment_analysis].
 
@@ -190,12 +197,40 @@ CategorizedEntityCollection entities = client.RecognizeEntities(document);
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+    Console.WriteLine($"Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}");
+    Console.WriteLine($"Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 For samples on using the production recommended option `RecognizeEntitiesBatch` see [here][recognize_entities_sample].
 
 Please refer to the service documentation for a conceptual discussion of [named entity recognition][named_entity_recognition].
+
+### Recognize PII Entities
+Run a predictive model to identify a collection of entities containing Personally Identifiable Information found in the passed-in document or batch of documents, and categorize those entities into categories such as US social security number, drivers license number, or credit card number.
+
+```C# Snippet:RecognizePiiEntities
+string document = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.";
+
+PiiEntityCollection entities = client.RecognizePiiEntities(document).Value;
+
+Console.WriteLine($"Redacted Text: {entities.RedactedText}");
+if (entities.Count > 0)
+{
+    Console.WriteLine($"Recognized {entities.Count} PII entit{(entities.Count > 1 ? "ies" : "y")}:");
+    foreach (PiiEntity entity in entities)
+    {
+        Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+    }
+}
+else
+{
+    Console.WriteLine("No entities were found.");
+}
+```
+
+For samples on using the production recommended option `RecognizePiiEntitiesBatch` see [here][recognize_pii_entities_sample].
+
+Please refer to the service documentation for supported [PII entity types][pii_entity_type].
 
 ### Recognize Linked Entities
 Run a predictive model to identify a collection of entities found in the passed-in document or batch of documents, and include information linking the entities to their corresponding entries in a well-known knowledge base.
@@ -211,7 +246,8 @@ foreach (LinkedEntity linkedEntity in linkedEntities)
     Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
     foreach (LinkedEntityMatch match in linkedEntity.Matches)
     {
-        Console.WriteLine($"    Match Text: {match.Text}, Confidence score: {match.ConfidenceScore}");
+        Console.WriteLine($"    Match Text: {match.Text}, Offset (in UTF-16 code units): {match.Offset}");
+        Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
     }
 }
 ```
@@ -241,7 +277,139 @@ CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(docum
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+    Console.WriteLine($"Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}");
+    Console.WriteLine($"Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+}
+```
+
+### Recognize Healthcare Entities Asynchronously
+Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
+
+```C# Snippet:RecognizeHealthcareEntitiesAsync
+    string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
+                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
+                        The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
+                        with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
+                        another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
+                        which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \
+                        minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
+                        increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
+
+    HealthcareOperation healthOperation = await client.StartHealthcareAsync(document);
+
+    await healthOperation.WaitForCompletionAsync();
+
+    RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+
+    Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
+    Console.WriteLine("");
+
+    foreach (DocumentHealthcareResult result in results)
+    {
+        Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+
+        foreach (HealthcareEntity entity in result.Entities)
+        {
+            Console.WriteLine($"    Entity: {entity.Text}");
+            Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+            Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    Length: {entity.Length}");
+            Console.WriteLine($"    IsNegated: {entity.IsNegated}");
+            Console.WriteLine($"    Links:");
+
+            foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+            {
+                Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
+                Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+            }
+        }
+        Console.WriteLine("");
+    }
+}
+```
+
+### Run Analyze Operation Asynchronously
+The Analyze functionality allows to choose which of the supported Text Analytics features to execute in the same set of documents. Currently the supported features are: entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation_howto].
+
+```C# Snippet:AnalyzeOperationBatchConvenience
+    string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
+                        and we adore the spot! They provide marvelous food and they have a great menu. The
+                        chief cook happens to be the owner (I think his name is John Doe) and he is super 
+                        nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
+                        the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
+                        clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
+                        call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
+                        I have is the food didn't come fast enough. Overall I highly recommend it!";
+
+    var batchDocuments = new List<string> { document };
+
+    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+    {
+        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        PiiTaskParameters = new PiiTaskParameters(),
+        DisplayName = "AnalyzeOperationSample"
+    };
+
+    AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
+
+    await operation.WaitForCompletionAsync();
+
+    AnalyzeOperationResult resultCollection = operation.Value;
+
+    RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
+
+    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+
+    RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
+
+    Console.WriteLine("Recognized Entities");
+
+    foreach (RecognizeEntitiesResult result in entitiesResult)
+    {
+        Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+
+        foreach (CategorizedEntity entity in result.Entities)
+        {
+            Console.WriteLine($"    Entity: {entity.Text}");
+            Console.WriteLine($"    Category: {entity.Category}");
+            Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+        }
+        Console.WriteLine("");
+    }
+
+    Console.WriteLine("Recognized PII Entities");
+
+    foreach (RecognizePiiEntitiesResult result in piiResult)
+    {
+        Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
+
+        foreach (PiiEntity entity in result.Entities)
+        {
+            Console.WriteLine($"    Entity: {entity.Text}");
+            Console.WriteLine($"    Category: {entity.Category}");
+            Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+        }
+        Console.WriteLine("");
+    }
+
+    Console.WriteLine("Key Phrases");
+
+    foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
+    {
+        Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+
+        foreach (string keyphrase in result.KeyPhrases)
+        {
+            Console.WriteLine($"    {keyphrase}");
+        }
+        Console.WriteLine("");
+    }
 }
 ```
 
@@ -304,7 +472,13 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Analyze Sentiment][analyze_sentiment_sample]
 - [Extract Key Phrases][extract_key_phrases_sample]
 - [Recognize Entities][recognize_entities_sample]
+- [Recognize PII Entities][recognize_pii_entities_sample]
 - [Recognize Linked Entities][recognize_linked_entities_sample]
+- [Recognize Healthcare Entities][recognize_healthcare_sample]
+- [Run Analyze Operation][analyze_operation_sample]
+
+### Advanced samples
+- [Analyze Sentiment with Opinion Mining][analyze_sentiment_opinion_mining_sample]
 - [Create a mock client][mock_client_sample] for testing using the [Moq][moq] library.
 
 ## Contributing
@@ -325,15 +499,20 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
 [textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
-[textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/Languages
+[textanalytics_rest_api]: https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-Preview-3/operations/Languages
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 
+[recognize_healthcare_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
+[analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeOperation.md
+[analyze_operation_howto]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-call-api?tabs=analyze
+[healthcare]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner
 [language_detection]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
 [sentiment_analysis]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis
 [key_phrase_extraction]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-keyword-extraction
 [named_entity_recognition]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-entity-linking
 [named_entities_categories]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types
+[pii_entity_type]:https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=personal 
 
 [textanalytics_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/src/TextAnalyticsClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
@@ -348,8 +527,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [detect_language_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md
 [analyze_sentiment_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md
+[analyze_sentiment_opinion_mining_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md
 [extract_key_phrases_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample3_ExtractKeyPhrases.md
 [recognize_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md
+[recognize_pii_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md
 [recognize_linked_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md
 [mock_client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md
 

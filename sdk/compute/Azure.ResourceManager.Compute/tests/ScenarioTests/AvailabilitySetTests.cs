@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Azure.ResourceManager.Compute.Models;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var inputAvailabilitySetName = Recording.GenerateAssetName("invalidfdud");
             var inputAvailabilitySet = new AvailabilitySet(TestEnvironment.Location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                     {
                         {"RG", "rg"},
                         {"testTag", "1"},
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     inputAvailabilitySetName,
                     inputAvailabilitySet);
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 Assert.NotNull(ex);
                 //Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     inputAvailabilitySetName,
                     inputAvailabilitySet);
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 Assert.NotNull(ex);
                 //Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.Compute.Tests
             inputAvailabilitySet.PlatformUpdateDomainCount = UDTooHi;
             try
             {
-                createOrUpdateResponse =await  AvailabilitySetsOperations.CreateOrUpdateAsync(
+                createOrUpdateResponse = await AvailabilitySetsOperations.CreateOrUpdateAsync(
                 resourceGroup1Name,
                 inputAvailabilitySetName,
                 inputAvailabilitySet);
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 Assert.NotNull(ex);
                 //Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var inputAvailabilitySetName = Recording.GenerateAssetName("asdefaultvalues");
             var inputAvailabilitySet = new AvailabilitySet(TestEnvironment.Location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                     {
                         {"RG", "rg"},
                         {"testTag", "1"},
@@ -180,10 +180,8 @@ namespace Azure.ResourceManager.Compute.Tests
             ValidateAvailabilitySet(inputAvailabilitySet, listResponseList.FirstOrDefault(x => x.Name == inputAvailabilitySetName),
                 inputAvailabilitySetName, expectedAvailabilitySetId, defaultFD, defaultUD);
 
-            AvailabilitySetUpdate updateParams = new AvailabilitySetUpdate()
-            {
-                Tags = inputAvailabilitySet.Tags
-            };
+            AvailabilitySetUpdate updateParams = new AvailabilitySetUpdate();
+            updateParams.Tags.InitializeFrom(inputAvailabilitySet.Tags);
 
             string updateKey = "UpdateTag";
             updateParams.Tags.Add(updateKey, "updateValue");
@@ -208,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string inputAvailabilitySetName = Recording.GenerateAssetName("asnondefault");
             var inputAvailabilitySet = new AvailabilitySet(TestEnvironment.Location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                     {
                         {"RG", "rg"},
                         {"testTag", "1"},
@@ -280,78 +278,78 @@ namespace Azure.ResourceManager.Compute.Tests
 
             //try
             //{
-                AvailabilitySet inputAvailabilitySet1 = new AvailabilitySet(TestEnvironment.Location)
-                {
-                    Tags = new Dictionary<string, string>()
+            AvailabilitySet inputAvailabilitySet1 = new AvailabilitySet(TestEnvironment.Location)
+            {
+                Tags =
                     {
                         {"RG1", "rg1"},
                         {"testTag", "1"},
                     },
-                };
-                AvailabilitySet outputAvailabilitySet1 = await AvailabilitySetsOperations.CreateOrUpdateAsync(
-                    resourceGroup1Name,
-                    availabilitySet1Name,
-                    inputAvailabilitySet1);
+            };
+            AvailabilitySet outputAvailabilitySet1 = await AvailabilitySetsOperations.CreateOrUpdateAsync(
+                resourceGroup1Name,
+                availabilitySet1Name,
+                inputAvailabilitySet1);
 
-                resourceGroup2 = (await ResourceGroupsOperations.CreateOrUpdateAsync(
-                    resourceGroup2Name,
-                    new ResourceGroup(TestEnvironment.Location)
-                    {
-                        Tags = new Dictionary<string, string>() { { resourceGroup2Name, Recording.UtcNow.ToString("u") } }
-                    })).Value;
-
-                AvailabilitySet inputAvailabilitySet2 = new AvailabilitySet(TestEnvironment.Location)
+            resourceGroup2 = (await ResourceGroupsOperations.CreateOrUpdateAsync(
+                resourceGroup2Name,
+                new ResourceGroup(TestEnvironment.Location)
                 {
-                    Tags = new Dictionary<string, string>()
+                    Tags = { { resourceGroup2Name, Recording.UtcNow.ToString("u") } }
+                })).Value;
+
+            AvailabilitySet inputAvailabilitySet2 = new AvailabilitySet(TestEnvironment.Location)
+            {
+                Tags =
                     {
                         {"RG2", "rg2"},
                         {"testTag", "2"},
                     },
-                };
-                AvailabilitySet outputAvailabilitySet2 = (await AvailabilitySetsOperations.CreateOrUpdateAsync(
-                    resourceGroup2Name,
-                    availabilitySet2Name,
-                    inputAvailabilitySet2)).Value;
-                var response = AvailabilitySetsOperations.ListBySubscriptionAsync();
-                var resp = await response.ToEnumerableAsync();
-                //Assert.Null(resp.NextPageLink);
+            };
+            AvailabilitySet outputAvailabilitySet2 = (await AvailabilitySetsOperations.CreateOrUpdateAsync(
+                resourceGroup2Name,
+                availabilitySet2Name,
+                inputAvailabilitySet2)).Value;
+            var response = AvailabilitySetsOperations.ListBySubscriptionAsync();
+            var resp = await response.ToEnumerableAsync();
+            //Assert.Null(resp.NextPageLink);
 
-                foreach (AvailabilitySet availabilitySet in resp)
+            foreach (AvailabilitySet availabilitySet in resp)
+            {
+                if (availabilitySet.Name == availabilitySet1Name)
                 {
-                    if (availabilitySet.Name == availabilitySet1Name)
-                    {
-                        Assert.AreEqual(inputAvailabilitySet1.Location, availabilitySet.Location);
-                        Assert.Null(availabilitySet.VirtualMachines);
-                    }
-                    else if (availabilitySet.Name == availabilitySet2Name)
-                    {
-                        Assert.AreEqual(inputAvailabilitySet2.Location, availabilitySet.Location);
-                        Assert.Null(availabilitySet.VirtualMachines);
-                    }
+                    Assert.AreEqual(inputAvailabilitySet1.Location, availabilitySet.Location);
+                    Assert.IsEmpty(availabilitySet.VirtualMachines);
                 }
-
-                response = AvailabilitySetsOperations.ListBySubscriptionAsync("virtualMachines/$ref");
-                resp = await response.ToEnumerableAsync();
-                int validationCount = 0;
-
-                foreach (AvailabilitySet availabilitySet in resp)
+                else if (availabilitySet.Name == availabilitySet2Name)
                 {
-                    Assert.NotNull(availabilitySet.VirtualMachines);
-                    if (availabilitySet.Name == availabilitySet1Name)
-                    {
-                        Assert.AreEqual(0, availabilitySet.VirtualMachines.Count);
-                        await ValidateResults(outputAvailabilitySet1, inputAvailabilitySet1, resourceGroup1Name, availabilitySet1Name, defaultFD, defaultUD);
-                        validationCount++;
-                    }
-                    else if (availabilitySet.Name == availabilitySet2Name)
-                    {
-                        Assert.AreEqual(0, availabilitySet.VirtualMachines.Count);
-                        await ValidateResults(outputAvailabilitySet2, inputAvailabilitySet2, resourceGroup2Name, availabilitySet2Name, defaultFD, defaultUD);
-                        validationCount++;
-                    }
+                    Assert.AreEqual(inputAvailabilitySet2.Location, availabilitySet.Location);
+                    Assert.IsEmpty(availabilitySet.VirtualMachines);
                 }
+            }
 
-                Assert.True(validationCount == 2);
+            response = AvailabilitySetsOperations.ListBySubscriptionAsync("virtualMachines/$ref");
+            resp = await response.ToEnumerableAsync();
+            int validationCount = 0;
+
+            foreach (AvailabilitySet availabilitySet in resp)
+            {
+                Assert.NotNull(availabilitySet.VirtualMachines);
+                if (availabilitySet.Name == availabilitySet1Name)
+                {
+                    Assert.AreEqual(0, availabilitySet.VirtualMachines.Count);
+                    await ValidateResults(outputAvailabilitySet1, inputAvailabilitySet1, resourceGroup1Name, availabilitySet1Name, defaultFD, defaultUD);
+                    validationCount++;
+                }
+                else if (availabilitySet.Name == availabilitySet2Name)
+                {
+                    Assert.AreEqual(0, availabilitySet.VirtualMachines.Count);
+                    await ValidateResults(outputAvailabilitySet2, inputAvailabilitySet2, resourceGroup2Name, availabilitySet2Name, defaultFD, defaultUD);
+                    validationCount++;
+                }
+            }
+
+            Assert.True(validationCount == 2);
         }
 
         private async Task Initialize()
@@ -366,7 +364,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 resourceGroup1Name,
                 new ResourceGroup(TestEnvironment.Location)
                 {
-                    Tags = new Dictionary<string, string>() { { resourceGroup1Name, Recording.UtcNow.ToString("u") } }
+                    Tags = { { resourceGroup1Name, Recording.UtcNow.ToString("u") } }
                 });
         }
     }

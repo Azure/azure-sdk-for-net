@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName");
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri");
                 writer.WriteStringValue(KeyVaultUri);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion");
                 writer.WriteStringValue(KeyVersion);
@@ -35,40 +35,28 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
-            string keyName = default;
-            string keyVaultUri = default;
-            string keyVersion = default;
+            Optional<string> keyName = default;
+            Optional<string> keyVaultUri = default;
+            Optional<string> keyVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVaultUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyVaultUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new KeyVaultProperties(keyName, keyVaultUri, keyVersion);
+            return new KeyVaultProperties(keyName.Value, keyVaultUri.Value, keyVersion.Value);
         }
     }
 }

@@ -18,7 +18,6 @@ namespace Azure.Iot.Hub.Service.Models
         public TwinData()
         {
             Tags = new ChangeTrackingDictionary<string, object>();
-            ParentScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of TwinData. </summary>
@@ -39,8 +38,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <param name="x509Thumbprint"> The X509 thumbprint of the device. </param>
         /// <param name="capabilities"> The status of capabilities enabled on the device. </param>
         /// <param name="deviceScope"> The scope of the device. </param>
-        /// <param name="parentScopes"> The scopes of the upper level edge devices if applicable. Only available for edge devices. </param>
-        internal TwinData(string deviceId, string moduleId, IDictionary<string, object> tags, TwinProperties properties, string etag, long? version, string deviceEtag, TwinStatus? status, string statusReason, DateTimeOffset? statusUpdateTime, TwinConnectionState? connectionState, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, TwinAuthenticationType? authenticationType, X509Thumbprint x509Thumbprint, DeviceCapabilities capabilities, string deviceScope, IList<string> parentScopes)
+        internal TwinData(string deviceId, string moduleId, IDictionary<string, object> tags, TwinProperties properties, string etag, long? version, string deviceEtag, TwinStatus? status, string statusReason, DateTimeOffset? statusUpdateTime, TwinConnectionState? connectionState, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, TwinAuthenticationType? authenticationType, X509Thumbprint x509Thumbprint, DeviceCapabilities capabilities, string deviceScope)
         {
             DeviceId = deviceId;
             ModuleId = moduleId;
@@ -59,7 +57,6 @@ namespace Azure.Iot.Hub.Service.Models
             X509Thumbprint = x509Thumbprint;
             Capabilities = capabilities;
             DeviceScope = deviceScope;
-            ParentScopes = parentScopes;
         }
 
         /// <summary> The unique identifier of the device in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </summary>
@@ -96,7 +93,5 @@ namespace Azure.Iot.Hub.Service.Models
         public DeviceCapabilities Capabilities { get; set; }
         /// <summary> The scope of the device. </summary>
         public string DeviceScope { get; set; }
-        /// <summary> The scopes of the upper level edge devices if applicable. Only available for edge devices. </summary>
-        public IList<string> ParentScopes { get; }
     }
 }

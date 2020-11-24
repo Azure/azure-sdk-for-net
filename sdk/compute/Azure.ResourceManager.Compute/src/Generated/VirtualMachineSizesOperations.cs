@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list). </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<VirtualMachineSize> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list). </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Pageable<VirtualMachineSize> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)

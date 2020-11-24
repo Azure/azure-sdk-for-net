@@ -6,45 +6,30 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Common properties for the deployment script. </summary>
-    public partial class DeploymentScriptPropertiesBase
+    internal partial class DeploymentScriptPropertiesBase
     {
         /// <summary> Initializes a new instance of DeploymentScriptPropertiesBase. </summary>
-        public DeploymentScriptPropertiesBase()
+        internal DeploymentScriptPropertiesBase()
         {
-        }
-
-        /// <summary> Initializes a new instance of DeploymentScriptPropertiesBase. </summary>
-        /// <param name="containerSettings"> Container settings. </param>
-        /// <param name="storageAccountSettings"> Storage Account settings. </param>
-        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </param>
-        /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
-        /// <param name="status"> Contains the results of script execution. </param>
-        /// <param name="outputs"> List of script outputs. </param>
-        internal DeploymentScriptPropertiesBase(ContainerConfiguration containerSettings, StorageAccountConfiguration storageAccountSettings, CleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, IDictionary<string, object> outputs)
-        {
-            ContainerSettings = containerSettings;
-            StorageAccountSettings = storageAccountSettings;
-            CleanupPreference = cleanupPreference;
-            ProvisioningState = provisioningState;
-            Status = status;
-            Outputs = outputs;
+            Outputs = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Container settings. </summary>
-        public ContainerConfiguration ContainerSettings { get; set; }
+        public ContainerConfiguration ContainerSettings { get; }
         /// <summary> Storage Account settings. </summary>
-        public StorageAccountConfiguration StorageAccountSettings { get; set; }
+        public StorageAccountConfiguration StorageAccountSettings { get; }
         /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </summary>
-        public CleanupOptions? CleanupPreference { get; set; }
+        public CleanupOptions? CleanupPreference { get; }
         /// <summary> State of the script execution. This only appears in the response. </summary>
         public ScriptProvisioningState? ProvisioningState { get; }
         /// <summary> Contains the results of script execution. </summary>
         public ScriptStatus Status { get; }
         /// <summary> List of script outputs. </summary>
-        public IDictionary<string, object> Outputs { get; }
+        public IReadOnlyDictionary<string, object> Outputs { get; }
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ApplicationProviderAuthorization. </summary>
         /// <param name="principalId"> The provider&apos;s principal identifier. This is the identity that the provider will use to call ARM to manage the managed application resources. </param>
         /// <param name="roleDefinitionId"> The provider&apos;s role definition identifier. This role will define all the permissions that the provider must have on the managed application&apos;s container resource group. This role definition cannot have permission to delete the resource group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="roleDefinitionId"/> is null. </exception>
         public ApplicationProviderAuthorization(string principalId, string roleDefinitionId)
         {
             if (principalId == null)

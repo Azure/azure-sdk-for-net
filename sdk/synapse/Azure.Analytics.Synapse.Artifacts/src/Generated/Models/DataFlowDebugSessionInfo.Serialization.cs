@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<int> timeToLiveInMinutes = default;
             Optional<string> lastActivityTime = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataFlowName"))
@@ -40,11 +40,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("coreCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     coreCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("nodeCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
@@ -65,6 +75,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("timeToLiveInMinutes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timeToLiveInMinutes = property.Value.GetInt32();
                     continue;
                 }
@@ -73,7 +88,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     lastActivityTime = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

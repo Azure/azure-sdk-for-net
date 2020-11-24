@@ -17,7 +17,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// </summary>
     public partial class RbacScopeAssignment : AccessControlTestBase
     {
-        public RbacScopeAssignment(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
+        public RbacScopeAssignment(bool isAsync)
+            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [SetUp]
@@ -26,13 +27,13 @@ namespace Azure.Security.KeyVault.Administration.Samples
             _objectId = TestEnvironment.ClientObjectId;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateRoleAssignmentAsync()
         {
             // Replace client with the Instrumented Client.
             client = Client;
 
-            List<RoleDefinition> definitions = await client.GetRoleDefinitionsAsync(RoleAssignmentScope.Global).ToEnumerableAsync().ConfigureAwait(false);
+            List<KeyVaultRoleDefinition> definitions = await client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
             _roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
 
             // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleDefinitionsAsync.
@@ -45,23 +46,25 @@ namespace Azure.Security.KeyVault.Administration.Samples
             //@@string definitionIdToAssign = "<roleDefinitionId>";
             //@@string servicePrincipalObjectId = "<objectId>";
 
-            RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
-            //@@RoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties);
-            /*@@*/RoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Keys, properties, _roleAssignmentId).ConfigureAwait(false);
+            //@@RoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectId);
+            /*@@*/KeyVaultRoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Keys, definitionIdToAssign, servicePrincipalObjectId , _roleAssignmentId).ConfigureAwait(false);
             #endregion
 
             RegisterForCleanup(keysScopedAssignment);
 
-            var keyClient = KeyClient;
-            List<KeyProperties> keyProperties = await keyClient.GetPropertiesOfKeysAsync().ToEnumerableAsync().ConfigureAwait(false);
-            string keyName = keyProperties.First().Name;
+            // Make sure we have a key to secure.
+            KeyClient keyClient = KeyClient;
+            KeyVaultKey createdKey = await keyClient.CreateKeyAsync(Recording.GenerateId(), KeyType.Oct);
+            string keyName = createdKey.Name;
+
+            RegisterKeyForCleanup(keyName);
 
             #region Snippet:CreateRoleAssignmentKeyScope
             //@@string keyName = "<your-key-name>";
             KeyVaultKey key = await keyClient.GetKeyAsync(keyName);
 
-            //@@RoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new RoleAssignmentScope(key.Id), properties);
-            /*@@*/RoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new RoleAssignmentScope(key.Id), properties, _roleAssignmentId).ConfigureAwait(false);
+            //@@RoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new RoleAssignmentScope(key.Id), definitionIdToAssign, servicePrincipalObjectId);
+            /*@@*/KeyVaultRoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new KeyVaultRoleScope(key.Id), definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId).ConfigureAwait(false);
             #endregion
 
             RegisterForCleanup(keyScopedAssignment);

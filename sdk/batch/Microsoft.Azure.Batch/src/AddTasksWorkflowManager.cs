@@ -159,11 +159,10 @@
 
                 //Add any tasks (up to max count in 1 request) which are remaining since we have an open parallel slot
                 Dictionary<string, TrackedCloudTask> nameToTaskMapping = new Dictionary<string, TrackedCloudTask>();
-                
+
                 //Attempt to take some items from the set of tasks remaining to be added and prepare it to be added
-                TrackedCloudTask taskToAdd;
                 int tmpMaxTasks = this._maxTasks;
-                while (nameToTaskMapping.Count < tmpMaxTasks && this._remainingTasksToAdd.TryDequeue(out taskToAdd))
+                while (nameToTaskMapping.Count < tmpMaxTasks && this._remainingTasksToAdd.TryDequeue(out TrackedCloudTask taskToAdd))
                 {
                     nameToTaskMapping.Add(taskToAdd.Task.Id, taskToAdd);
                 }
@@ -313,9 +312,9 @@
             }
             catch(Common.BatchException e)
             {
-                if (e.InnerException is Models.BatchErrorException)
+                if (e.InnerException is Models.BatchErrorException exception)
                 {
-                    Models.BatchError error = ((Models.BatchErrorException)e.InnerException).Body;
+                    Models.BatchError error = exception.Body;
                     int currLength = tasksToAdd.Count;
                     if (error.Code == Common.BatchErrorCodeStrings.RequestBodyTooLarge && currLength != 1)
                     {

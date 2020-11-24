@@ -75,7 +75,7 @@ if (-not $sp)
 }
 
 # Get test application OID from the service principal
-$applicationOId = az ad sp show --id $sp --query "objectId" --output tsv
+$applicationOId = az ad sp show --id $appId --query "objectId" --output tsv
 
 $rgExists = az group exists --name $ResourceGroup
 if ($rgExists -eq "False")
@@ -101,14 +101,14 @@ az deployment group create --resource-group $ResourceGroup --name $($DigitalTwin
 
 # Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
 # and we have to use that casing in order to get them from the deployment outputs.
-$dtHostName = az deployment group show -g $ResourceGroup -n $($DigitalTwinName.ToLower()) --query 'properties.outputs.digitaltwinS_ADT_INSTANCE_ENDPOINT_URL.value' --output tsv
+$dtHostName = az deployment group show -g $ResourceGroup -n $($DigitalTwinName.ToLower()) --query 'properties.outputs.digitaltwinS_URL.value' --output tsv
 
-Write-Host("Set a new client secret for $appId`n")
+Write-Host("`nSet a new client secret for $appId`n")
 $appSecret = az ad app credential reset --id $appId --years 2 --query 'password' --output tsv
 
 $user = $env:UserName
 $fileName = "$user.config.json"
-Write-Host("Writing user config file - $fileName`n")
+Write-Host("`nWriting user config file - $fileName`n")
 
 $config = @"
 {
@@ -134,9 +134,12 @@ $environmentText = @"
 }
 "@
 
+Write-Host "`nEnvironment variables set, this will now be encrypted. Copy these values for future reference.`n"
+Write-Host "`n$environmentText`n"
+
 $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
 $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
 Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
-Write-Host "Test environment settings stored into encrypted $outputFile"
+Write-Host "`nTest environment settings stored into encrypted $outputFile`n"
 
 Write-Host "Done!"

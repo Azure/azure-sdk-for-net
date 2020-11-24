@@ -20,6 +20,8 @@ namespace ResourceGroups.Tests
         {
         }
 
+        public const string SKIP_TEARDOWN = "SkipTearDown";
+
         [SetUp]
         public void ClearChallengeCacheforRecord()
         {
@@ -31,10 +33,21 @@ namespace ResourceGroups.Tests
             }
         }
 
+        private static bool CheckForSkipTearDown()
+        {
+            var categories = TestContext.CurrentContext.Test?.Properties["Category"];
+
+            bool skipTearDown = categories != null && categories.Contains("SkipTearDown");
+            return skipTearDown;
+        }
+
         [TearDown]
         public async Task CleanupResourceGroup()
         {
-            await CleanupResourceGroupsAsync();
+            if (!CheckForSkipTearDown())
+            {
+                await CleanupResourceGroupsAsync();
+            }
         }
 
         private const string DefaultLocation = "South Central US";
@@ -46,7 +59,7 @@ namespace ResourceGroups.Tests
             var result = await ResourceGroupsOperations.CreateOrUpdateAsync(groupName,
                 new ResourceGroup(DefaultLocation)
                 {
-                    Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } },
+                    Tags = { { "department", "finance" }, { "tagname", "tagvalue" } },
                 });
             var listResult = await ResourceGroupsOperations.ListAsync().ToEnumerableAsync();
             var listedGroup = listResult.FirstOrDefault((g) => string.Equals(g.Name, groupName, StringComparison.Ordinal));
@@ -68,16 +81,19 @@ namespace ResourceGroups.Tests
             string groupName = Recording.GenerateAssetName("csmrg");;
 
             var checkExistenceFirst = await ResourceGroupsOperations.CheckExistenceAsync(groupName);
-            Assert.AreEqual(404, checkExistenceFirst.Status);
+            Assert.AreEqual(false, checkExistenceFirst.Value);
+            Assert.AreEqual(404, checkExistenceFirst.GetRawResponse().Status);
 
             await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(DefaultLocation));
 
             var checkExistenceSecond = await ResourceGroupsOperations.CheckExistenceAsync(groupName);
 
-            Assert.AreEqual(204, checkExistenceSecond.Status);
+            Assert.AreEqual(true, checkExistenceSecond.Value);
+            Assert.AreEqual(204, checkExistenceSecond.GetRawResponse().Status);
         }
 
         [Test]
+        [Category(SKIP_TEARDOWN)]
         public async Task DeleteResourceGroupRemovesGroup()
         {
             var resourceGroupName = Recording.GenerateAssetName("csmrg");

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrivateLinkServiceAlias != null)
+            if (Optional.IsDefined(PrivateLinkServiceAlias))
             {
                 writer.WritePropertyName("privateLinkServiceAlias");
                 writer.WriteStringValue(PrivateLinkServiceAlias);

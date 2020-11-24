@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Microsoft Azure WebJobs SDK EventHubs Extension</Description>
+    <Version>5.0.0-beta.1</Version>
+    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
+    <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Messaging.EventHubs" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
+  </ItemGroup>
+
+</Project>

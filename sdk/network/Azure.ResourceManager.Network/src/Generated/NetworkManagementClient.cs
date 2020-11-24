@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public NetworkManagementClient(string subscriptionId, Uri endpoint, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
         {
             if (subscriptionId == null)
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Returns an instance of BastionHostsOperations. </summary>
         public virtual BastionHostsOperations BastionHosts => new BastionHostsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of ServiceOperations. </summary>
-        public virtual ServiceOperations Service => new ServiceOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of NetworkManagementOperations. </summary>
+        public virtual NetworkManagementOperations NetworkManagement => new NetworkManagementOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of DdosCustomPoliciesOperations. </summary>
         public virtual DdosCustomPoliciesOperations DdosCustomPolicies => new DdosCustomPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);

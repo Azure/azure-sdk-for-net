@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Pipeline resource type. </summary>
-    public partial class PipelineResource : SubResource, IDictionary<string, object>
+    public partial class PipelineResource : AzureEntityResource, IDictionary<string, object>
     {
         /// <summary> Initializes a new instance of PipelineResource. </summary>
         public PipelineResource()
@@ -26,10 +26,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of PipelineResource. </summary>
-        /// <param name="id"> The resource identifier. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="description"> The description of the pipeline. </param>
         /// <param name="activities"> List of activities in pipeline. </param>
         /// <param name="parameters"> List of parameters for pipeline. </param>

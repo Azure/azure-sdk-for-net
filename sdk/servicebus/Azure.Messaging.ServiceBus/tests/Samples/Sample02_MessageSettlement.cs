@@ -139,11 +139,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #region Snippet:ServiceBusDeadLetterMessage
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-                // deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+                // dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
                 await receiver.DeadLetterMessageAsync(receivedMessage);
 
                 // receive the dead lettered message with receiver scoped to the dead letter queue.
-                ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
+                ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
+                {
+                    SubQueue = SubQueue.DeadLetter
+                });
                 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
                 #endregion
                 Assert.IsNotNull(dlqMessage);

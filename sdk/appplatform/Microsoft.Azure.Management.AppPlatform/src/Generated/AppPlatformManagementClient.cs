@@ -82,6 +82,16 @@ namespace Microsoft.Azure.Management.AppPlatform
         public virtual IServicesOperations Services { get; private set; }
 
         /// <summary>
+        /// Gets the IConfigServersOperations.
+        /// </summary>
+        public virtual IConfigServersOperations ConfigServers { get; private set; }
+
+        /// <summary>
+        /// Gets the IMonitoringSettingsOperations.
+        /// </summary>
+        public virtual IMonitoringSettingsOperations MonitoringSettings { get; private set; }
+
+        /// <summary>
         /// Gets the IAppsOperations.
         /// </summary>
         public virtual IAppsOperations Apps { get; private set; }
@@ -92,6 +102,16 @@ namespace Microsoft.Azure.Management.AppPlatform
         public virtual IBindingsOperations Bindings { get; private set; }
 
         /// <summary>
+        /// Gets the ICertificatesOperations.
+        /// </summary>
+        public virtual ICertificatesOperations Certificates { get; private set; }
+
+        /// <summary>
+        /// Gets the ICustomDomainsOperations.
+        /// </summary>
+        public virtual ICustomDomainsOperations CustomDomains { get; private set; }
+
+        /// <summary>
         /// Gets the IDeploymentsOperations.
         /// </summary>
         public virtual IDeploymentsOperations Deployments { get; private set; }
@@ -100,6 +120,11 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the ISkusOperations.
+        /// </summary>
+        public virtual ISkusOperations Skus { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AppPlatformManagementClient class.
@@ -343,12 +368,17 @@ namespace Microsoft.Azure.Management.AppPlatform
         private void Initialize()
         {
             Services = new ServicesOperations(this);
+            ConfigServers = new ConfigServersOperations(this);
+            MonitoringSettings = new MonitoringSettingsOperations(this);
             Apps = new AppsOperations(this);
             Bindings = new BindingsOperations(this);
+            Certificates = new CertificatesOperations(this);
+            CustomDomains = new CustomDomainsOperations(this);
             Deployments = new DeploymentsOperations(this);
             Operations = new Operations(this);
+            Skus = new SkusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-05-01-preview";
+            ApiVersion = "2020-07-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

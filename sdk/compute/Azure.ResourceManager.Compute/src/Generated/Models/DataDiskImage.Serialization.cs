@@ -15,30 +15,26 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Lun != null)
-            {
-                writer.WritePropertyName("lun");
-                writer.WriteNumberValue(Lun.Value);
-            }
             writer.WriteEndObject();
         }
 
         internal static DataDiskImage DeserializeDataDiskImage(JsonElement element)
         {
-            int? lun = default;
+            Optional<int> lun = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lun = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new DataDiskImage(lun);
+            return new DataDiskImage(Optional.ToNullable(lun));
         }
     }
 }

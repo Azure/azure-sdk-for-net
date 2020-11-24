@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,19 +16,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskEncryptionSetUpdate. </summary>
         public DiskEncryptionSetUpdate()
         {
-        }
-
-        /// <summary> Initializes a new instance of DiskEncryptionSetUpdate. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="activeKey"> Key Vault Key Url and vault id of KeK, KeK is optional and when provided is used to unwrap the encryptionKey. </param>
-        internal DiskEncryptionSetUpdate(IDictionary<string, string> tags, KeyVaultAndKeyReference activeKey)
-        {
-            Tags = tags;
-            ActiveKey = activeKey;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Key Vault Key Url and vault id of KeK, KeK is optional and when provided is used to unwrap the encryptionKey. </summary>
         public KeyVaultAndKeyReference ActiveKey { get; set; }
     }

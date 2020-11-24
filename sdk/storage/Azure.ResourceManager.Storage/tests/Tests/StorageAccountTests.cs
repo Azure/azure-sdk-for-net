@@ -448,7 +448,12 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(SkuName.StandardLRS, accountProerties.Value.Sku.Name);
 
             // Update storage tags
-            parameters.Tags = new Dictionary<string, string> { { "key3", "value3" }, { "key4", "value4" }, { "key5", "value6" } };
+            // Update storage tags
+            parameters.Tags.Clear();
+            parameters.Tags.Add("key3", "value3");
+            parameters.Tags.Add("key4", "value4");
+            parameters.Tags.Add("key5", "value6");
+
             account = await _CreateStorageAccountAsync(rgname, accountName, parameters);
             Assert.AreEqual(account.Tags.Count, parameters.Tags.Count);
 
@@ -528,7 +533,11 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(SkuName.StandardLRS, accountProerties.Value.Sku.Name);
 
             // Update storage tags
-            parameters.Tags = new Dictionary<string, string> { { "key3", "value3" }, { "key4", "value4" }, { "key5", "value6" } };
+            parameters.Tags.Clear();
+            parameters.Tags.Add("key3", "value3");
+            parameters.Tags.Add("key4", "value4");
+            parameters.Tags.Add("key5", "value6");
+
             account = await UpdateStorageAccountAsync(rgname, accountName, parameters);
             Assert.AreEqual(account.Tags.Count, parameters.Tags.Count);
 
@@ -605,7 +614,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             StorageAccountUpdateParameters parameters = new StorageAccountUpdateParameters()
             {
                 Sku = new Sku(SkuName.StandardLRS),
-                Tags = new Dictionary<string, string> { { "key3", "value3" }, { "key4", "value4" }, { "key5", "value6" } }
+                Tags = { { "key3", "value3" }, { "key4", "value4" }, { "key5", "value6" } }
             };
             StorageAccount account = await UpdateStorageAccountAsync(rgname, accountName, parameters);
             Assert.AreEqual(SkuName.StandardLRS, account.Sku.Name);
@@ -840,7 +849,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             // Update storage tags
             parameters = new StorageAccountUpdateParameters
             {
-                Tags = new Dictionary<string, string>
+                Tags =
                     {
                         {"key3","value3"},
                         {"key4","value4"},
@@ -1163,7 +1172,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             parameters.NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Deny)
             {
                 Bypass = @"Logging,AzureServices",
-                IpRules = new List<IPRule> { new IPRule(iPAddressOrRange: "23.45.67.90") }
+               IpRules ={ new IPRule(iPAddressOrRange: "23.45.67.90") }
             };
             await _CreateStorageAccountAsync(rgname, accountName, parameters);
 
@@ -1185,7 +1194,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
                 NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Deny)
                 {
                     Bypass = @"Logging, Metrics",
-                    IpRules = new List<IPRule> {
+                   IpRules ={
                             new IPRule(iPAddressOrRange:"23.45.67.91") { Action = DefaultAction.Allow.ToString() },
                             new IPRule(iPAddressOrRange:"23.45.67.92")
                         },
@@ -1309,10 +1318,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             {
                 Filters = new ManagementPolicyFilter(new List<string>() { "blockBlob" })
                 {
-                    PrefixMatch = new List<string>() { "olcmtestcontainer", "testblob" }
+                   PrefixMatch = { "olcmtestcontainer", "testblob" }
                 }
             };
-            ManagementPolicyRule rule1 = new ManagementPolicyRule("olcmtest", Definition)
+            ManagementPolicyRule rule1 = new ManagementPolicyRule("olcmtest", RuleType.Lifecycle, Definition)
             {
                 Enabled = true
             };
@@ -1330,7 +1339,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             {
                 Filters = new ManagementPolicyFilter(new List<string>() { "blockBlob" })
             };
-            ManagementPolicyRule rule2 = new ManagementPolicyRule("olcmtest2", Definition2)
+            ManagementPolicyRule rule2 = new ManagementPolicyRule("olcmtest2", RuleType.Lifecycle, Definition2)
             {
                 Enabled = false
             };
@@ -1347,7 +1356,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             {
                 Filters = new ManagementPolicyFilter(new List<string>() { "blockBlob" })
             };
-            ManagementPolicyRule rule3 = new ManagementPolicyRule("olcmtest3", Definition3);
+            ManagementPolicyRule rule3 = new ManagementPolicyRule("olcmtest3", RuleType.Lifecycle, Definition3);
             rules.Add(rule3);
 
             //Set Management Policies
@@ -1356,19 +1365,19 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             {
                 Policy = policyToSet
             };
-            Response<ManagementPolicy> policy = await ManagementPoliciesClient.CreateOrUpdateAsync(rgname, accountName, managementPolicy);
+            Response<ManagementPolicy> policy = await ManagementPoliciesClient.CreateOrUpdateAsync(rgname, accountName, ManagementPolicyName.Default, managementPolicy);
             CompareStorageAccountManagementPolicyProperty(policyToSet, policy.Value.Policy);
 
             //Get Management Policies
-            policy = await ManagementPoliciesClient.GetAsync(rgname, accountName);
+            policy = await ManagementPoliciesClient.GetAsync(rgname, accountName, ManagementPolicyName.Default);
             CompareStorageAccountManagementPolicyProperty(policyToSet, policy.Value.Policy);
 
             //Delete Management Policies, and check policy not exist
-            await ManagementPoliciesClient.DeleteAsync(rgname, accountName);
+            await ManagementPoliciesClient.DeleteAsync(rgname, accountName, ManagementPolicyName.Default);
             bool dataPolicyExist = true;
             try
             {
-                policy = await ManagementPoliciesClient.GetAsync(rgname, accountName);
+                policy = await ManagementPoliciesClient.GetAsync(rgname, accountName, ManagementPolicyName.Default);
             }
             catch (RequestFailedException cloudException)
             {
@@ -1378,7 +1387,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.False(dataPolicyExist);
 
             //Delete not exist Management Policies will not fail
-            await ManagementPoliciesClient.DeleteAsync(rgname, accountName);
+            await ManagementPoliciesClient.DeleteAsync(rgname, accountName, ManagementPolicyName.Default);
         }
 
         private static void CompareStorageAccountManagementPolicyProperty(ManagementPolicySchema policy1, ManagementPolicySchema policy2)
@@ -1571,7 +1580,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             // Create storage account
             Sku sku = new Sku(SkuName.StandardRagrs);
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.StorageV2, location: "eastus2(stage)");
+            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.StorageV2, location: "eastus2");
             StorageAccount account = await _CreateStorageAccountAsync(rgname, accountName, parameters);
             Assert.AreEqual(SkuName.StandardRagrs, account.Sku.Name);
             Assert.Null(account.GeoReplicationStats);
@@ -1624,7 +1633,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(SkuName.StandardLRS, account.Sku.Name);
 
             account = await WaitToGetAccountSuccessfullyAsync(rgname, accountName);
-            IList<PrivateEndpointConnection> pes = account.PrivateEndpointConnections;
+            IReadOnlyList<PrivateEndpointConnection> pes = account.PrivateEndpointConnections;
             foreach (PrivateEndpointConnection pe in pes)
             {
                 //Get from account
@@ -1702,7 +1711,6 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Sku sku = new Sku(SkuName.StandardLRS);
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.StorageV2, location: "East US 2 EUAP")
             {
-                LargeFileSharesState = LargeFileSharesState.Enabled,
                 Encryption = new Encryption(keySource: KeySource.MicrosoftStorage)
                 {
                     Services = new EncryptionServices

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnGateway. </summary>
         public VpnGateway()
         {
+            Connections = new ChangeTrackingList<VpnConnection>();
         }
 
         /// <summary> Initializes a new instance of VpnGateway. </summary>
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The VirtualHub to which the gateway belongs. </summary>
         public SubResource VirtualHub { get; set; }
         /// <summary> List of all vpn connections to the gateway. </summary>
-        public IList<VpnConnection> Connections { get; set; }
+        public IList<VpnConnection> Connections { get; }
         /// <summary> Local network gateway&apos;s BGP speaker settings. </summary>
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The provisioning state of the VPN gateway resource. </summary>

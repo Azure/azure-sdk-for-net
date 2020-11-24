@@ -31,7 +31,7 @@ namespace Azure.Management.EventHub.Tests
                     {
                        Tier= SkuTier.Standard
                     },
-                    Tags = new Dictionary<string, string>()
+                    Tags =
                     {
                         {"tag1", "value1"},
                         {"tag2", "value2"}
@@ -68,7 +68,7 @@ namespace Azure.Management.EventHub.Tests
             string createPrimaryKey = Recording.GetVariable("CreatePrimaryKey", Helper.GenerateRandomKey());
             var createAutorizationRuleParameter = new AuthorizationRule()
             {
-                Rights = new List<AccessRights>() { AccessRights.Listen, AccessRights.Send }
+                Rights = { AccessRights.Listen, AccessRights.Send }
             };
             var createEventhubAuthorizationRuleResponse =await EventHubsOperations.CreateOrUpdateAuthorizationRuleAsync(resourceGroup, namespaceName, eventHubName,
                 authorizationRuleName, createAutorizationRuleParameter);
@@ -98,7 +98,7 @@ namespace Azure.Management.EventHub.Tests
             // Update Eventhub authorizationRule
             string updatePrimaryKey = Recording.GetVariable("UpdatePrimaryKey", Helper.GenerateRandomKey());
             AuthorizationRule updateEventhubAuthorizationRuleParameter = new AuthorizationRule();
-            updateEventhubAuthorizationRuleParameter.Rights = new List<AccessRights>() { AccessRights.Listen };
+            updateEventhubAuthorizationRuleParameter.Rights.Add(AccessRights.Listen);
             var updateEventhubAuthorizationRuleResponse =await EventHubsOperations.CreateOrUpdateAuthorizationRuleAsync(resourceGroup,
                 namespaceName, eventHubName, authorizationRuleName, updateEventhubAuthorizationRuleParameter);
             Assert.NotNull(updateEventhubAuthorizationRuleResponse);

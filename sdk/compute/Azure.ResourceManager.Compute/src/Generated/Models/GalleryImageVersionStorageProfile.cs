@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryImageVersionStorageProfile. </summary>
         public GalleryImageVersionStorageProfile()
         {
+            DataDiskImages = new ChangeTrackingList<GalleryDataDiskImage>();
         }
 
         /// <summary> Initializes a new instance of GalleryImageVersionStorageProfile. </summary>
@@ -33,6 +35,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> This is the disk image base class. </summary>
         public GalleryDiskImage OsDiskImage { get; set; }
         /// <summary> A list of data disk images. </summary>
-        public IList<GalleryDataDiskImage> DataDiskImages { get; set; }
+        public IList<GalleryDataDiskImage> DataDiskImages { get; }
     }
 }

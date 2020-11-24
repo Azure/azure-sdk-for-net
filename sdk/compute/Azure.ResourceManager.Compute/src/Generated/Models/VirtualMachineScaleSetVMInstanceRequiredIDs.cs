@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMInstanceRequiredIDs. </summary>
         /// <param name="instanceIds"> The virtual machine scale set instance ids. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceIds"/> is null. </exception>
         public VirtualMachineScaleSetVMInstanceRequiredIDs(IEnumerable<string> instanceIds)
         {
             if (instanceIds == null)
@@ -24,13 +25,6 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             InstanceIds = instanceIds.ToList();
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMInstanceRequiredIDs. </summary>
-        /// <param name="instanceIds"> The virtual machine scale set instance ids. </param>
-        internal VirtualMachineScaleSetVMInstanceRequiredIDs(IList<string> instanceIds)
-        {
-            InstanceIds = instanceIds ?? new List<string>();
         }
 
         /// <summary> The virtual machine scale set instance ids. </summary>

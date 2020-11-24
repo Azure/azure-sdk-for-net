@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of ManagedArtifact. </summary>
         /// <param name="id"> The managed artifact id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal ManagedArtifact(string id)
         {
             if (id == null)

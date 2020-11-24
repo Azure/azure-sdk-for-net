@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Implementation of Azure.Core serialization and type discovery for Newtonsoft.Json</Description>
-    <AssemblyTitle>Microsoft Azure Implementation for Newtonsoft.Json</AssemblyTitle>
-    <RootNamespace>Azure.Core</RootNamespace>
+    <AssemblyTitle>Newtonsoft.Json support for Azure Core shared client library for .NET</AssemblyTitle>
+    <RootNamespace>Azure.Core.Serialization</RootNamespace>
     <Version>1.0.0-preview.2</Version>
-    <PackageTags>Microsoft Azure Newtonsoft Json</PackageTags>
+    <Description>This library contains converters dependent on the Newtonsoft.Json package for use with Azure.Core.</Description>
+    <PackageTags>Microsoft Azure SDK Newtonsoft Json</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>

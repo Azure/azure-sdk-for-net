@@ -47,8 +47,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "BlobEventsTrigger": return BlobEventsTrigger.DeserializeBlobEventsTrigger(element);
+                    case "BlobTrigger": return BlobTrigger.DeserializeBlobTrigger(element);
+                    case "ChainingTrigger": return ChainingTrigger.DeserializeChainingTrigger(element);
                     case "MultiplePipelineTrigger": return MultiplePipelineTrigger.DeserializeMultiplePipelineTrigger(element);
                     case "RerunTumblingWindowTrigger": return RerunTumblingWindowTrigger.DeserializeRerunTumblingWindowTrigger(element);
+                    case "ScheduleTrigger": return ScheduleTrigger.DeserializeScheduleTrigger(element);
+                    case "TumblingWindowTrigger": return TumblingWindowTrigger.DeserializeTumblingWindowTrigger(element);
                 }
             }
             string type = default;
@@ -56,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<TriggerRuntimeState> runtimeState = default;
             Optional<IList<object>> annotations = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -71,11 +76,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("runtimeState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     runtimeState = new TriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -84,7 +99,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     annotations = array;
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

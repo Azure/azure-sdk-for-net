@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SourceVault != null)
+            if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault");
                 writer.WriteObjectValue(SourceVault);
             }
-            if (VaultCertificates != null)
+            if (Optional.IsCollectionDefined(VaultCertificates))
             {
                 writer.WritePropertyName("vaultCertificates");
                 writer.WriteStartArray();
@@ -36,14 +36,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VaultSecretGroup DeserializeVaultSecretGroup(JsonElement element)
         {
-            SubResource sourceVault = default;
-            IList<VaultCertificate> vaultCertificates = default;
+            Optional<SubResource> sourceVault = default;
+            Optional<IList<VaultCertificate>> vaultCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceVault"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceVault = SubResource.DeserializeSubResource(property.Value);
@@ -53,25 +54,19 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VaultCertificate> array = new List<VaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VaultCertificate.DeserializeVaultCertificate(item));
-                        }
+                        array.Add(VaultCertificate.DeserializeVaultCertificate(item));
                     }
                     vaultCertificates = array;
                     continue;
                 }
             }
-            return new VaultSecretGroup(sourceVault, vaultCertificates);
+            return new VaultSecretGroup(sourceVault.Value, Optional.ToList(vaultCertificates));
         }
     }
 }

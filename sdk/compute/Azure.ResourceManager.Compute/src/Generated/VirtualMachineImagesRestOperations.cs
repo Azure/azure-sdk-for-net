@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VirtualMachineImagesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(version, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -75,6 +76,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/>, or <paramref name="version"/> is null. </exception>
         public async Task<Response<VirtualMachineImage>> GetAsync(string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -106,14 +108,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineImage value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineImage.DeserializeVirtualMachineImage(document.RootElement);
-                        }
+                        value = VirtualMachineImage.DeserializeVirtualMachineImage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,6 +123,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/>, or <paramref name="version"/> is null. </exception>
         public Response<VirtualMachineImage> Get(string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -159,14 +155,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineImage value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineImage.DeserializeVirtualMachineImage(document.RootElement);
-                        }
+                        value = VirtualMachineImage.DeserializeVirtualMachineImage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -206,6 +195,7 @@ namespace Azure.ResourceManager.Compute
             }
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -218,6 +208,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, or <paramref name="skus"/> is null. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListAsync(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -245,26 +236,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineImageResource> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -281,6 +258,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, or <paramref name="skus"/> is null. </exception>
         public Response<IReadOnlyList<VirtualMachineImageResource>> List(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -308,26 +286,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineImageResource> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -351,6 +315,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/artifacttypes/vmimage/offers", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -358,6 +323,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListOffersAsync(string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -377,26 +343,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineImageResource> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -408,6 +360,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
         public Response<IReadOnlyList<VirtualMachineImageResource>> ListOffers(string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -427,26 +380,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineImageResource> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -468,12 +407,14 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/publishers", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets a list of virtual machine image publishers for the specified Azure location. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListPublishersAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -489,26 +430,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineImageResource> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -519,6 +446,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of virtual machine image publishers for the specified Azure location. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Response<IReadOnlyList<VirtualMachineImageResource>> ListPublishers(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -534,26 +462,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineImageResource> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -579,6 +493,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/skus", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -587,6 +502,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="offer"/> is null. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListSkusAsync(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -610,26 +526,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineImageResource> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -642,6 +544,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="offer"/> is null. </exception>
         public Response<IReadOnlyList<VirtualMachineImageResource>> ListSkus(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -665,26 +568,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineImageResource> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:

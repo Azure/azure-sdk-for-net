@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BgpServiceCommunity. </summary>
         public BgpServiceCommunity()
         {
+            BgpCommunities = new ChangeTrackingList<BGPCommunity>();
         }
 
         /// <summary> Initializes a new instance of BgpServiceCommunity. </summary>
@@ -34,6 +36,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the bgp community. e.g. Skype. </summary>
         public string ServiceName { get; set; }
         /// <summary> A list of bgp communities. </summary>
-        public IList<BGPCommunity> BgpCommunities { get; set; }
+        public IList<BGPCommunity> BgpCommunities { get; }
     }
 }

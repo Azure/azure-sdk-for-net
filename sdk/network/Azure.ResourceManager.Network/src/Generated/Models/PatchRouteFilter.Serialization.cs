@@ -16,22 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -42,14 +27,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Rules != null)
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules");
                 writer.WriteStartArray();
@@ -59,72 +44,35 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Peerings != null)
-            {
-                writer.WritePropertyName("peerings");
-                writer.WriteStartArray();
-                foreach (var item in Peerings)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Ipv6Peerings != null)
-            {
-                writer.WritePropertyName("ipv6Peerings");
-                writer.WriteStartArray();
-                foreach (var item in Ipv6Peerings)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static PatchRouteFilter DeserializePatchRouteFilter(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            IDictionary<string, string> tags = default;
-            string id = default;
-            IList<RouteFilterRule> rules = default;
-            IList<ExpressRouteCircuitPeering> peerings = default;
-            IList<ExpressRouteCircuitPeering> ipv6Peerings = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> id = default;
+            Optional<IList<RouteFilterRule>> rules = default;
+            Optional<IReadOnlyList<ExpressRouteCircuitPeering>> peerings = default;
+            Optional<IReadOnlyList<ExpressRouteCircuitPeering>> ipv6Peerings = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -132,53 +80,42 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("rules"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RouteFilterRule> array = new List<RouteFilterRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(RouteFilterRule.DeserializeRouteFilterRule(item));
-                                }
+                                array.Add(RouteFilterRule.DeserializeRouteFilterRule(item));
                             }
                             rules = array;
                             continue;
@@ -187,19 +124,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ExpressRouteCircuitPeering> array = new List<ExpressRouteCircuitPeering>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(item));
-                                }
+                                array.Add(ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(item));
                             }
                             peerings = array;
                             continue;
@@ -208,19 +139,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ExpressRouteCircuitPeering> array = new List<ExpressRouteCircuitPeering>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(item));
-                                }
+                                array.Add(ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(item));
                             }
                             ipv6Peerings = array;
                             continue;
@@ -229,6 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -238,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PatchRouteFilter(id, name, etag, type, tags, rules, peerings, ipv6Peerings, provisioningState);
+            return new PatchRouteFilter(id.Value, name.Value, etag.Value, type.Value, Optional.ToDictionary(tags), Optional.ToList(rules), Optional.ToList(peerings), Optional.ToList(ipv6Peerings), Optional.ToNullable(provisioningState));
         }
     }
 }

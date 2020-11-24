@@ -11,7 +11,9 @@ namespace Azure.Messaging.EventHubs.Producer
 {
     /// <summary>
     ///   A set of <see cref="EventData" /> with size constraints known up-front,
-    ///   intended to be sent to the Event Hubs service as a single batch.
+    ///   intended to be sent to the Event Hubs service in a single operation.
+    ///   When published, the result is atomic; either all events that belong to the batch
+    ///   were successful or all have failed.  Partial success is not possible.
     /// </summary>
     ///
     /// <remarks>
@@ -40,6 +42,25 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         public long SizeInBytes => InnerBatch.SizeInBytes;
+
+        /// <summary>
+        ///   The publishing sequence number assigned to the first event in the batch at the time
+        ///   the batch was successfully published.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The sequence number of the first event in the batch, if the batch was successfully
+        ///   published by a sequence-aware producer.  If the producer was not configured to apply
+        ///   sequence numbering or if the batch has not yet been successfully published, this member
+        ///   will be <c>null</c>.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The starting published sequence number is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        public int? StartingPublishedSequenceNumber { get; internal set; }
 
         /// <summary>
         ///   The count of events contained in the batch.

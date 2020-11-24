@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StatusCode != null)
+            if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode");
                 writer.WriteStringValue(StatusCode.Value.ToString());
             }
-            if (CustomErrorPageUrl != null)
+            if (Optional.IsDefined(CustomErrorPageUrl))
             {
                 writer.WritePropertyName("customErrorPageUrl");
                 writer.WriteStringValue(CustomErrorPageUrl);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayCustomError DeserializeApplicationGatewayCustomError(JsonElement element)
         {
-            ApplicationGatewayCustomErrorStatusCode? statusCode = default;
-            string customErrorPageUrl = default;
+            Optional<ApplicationGatewayCustomErrorStatusCode> statusCode = default;
+            Optional<string> customErrorPageUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = new ApplicationGatewayCustomErrorStatusCode(property.Value.GetString());
@@ -45,15 +46,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("customErrorPageUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     customErrorPageUrl = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApplicationGatewayCustomError(statusCode, customErrorPageUrl);
+            return new ApplicationGatewayCustomError(Optional.ToNullable(statusCode), customErrorPageUrl.Value);
         }
     }
 }

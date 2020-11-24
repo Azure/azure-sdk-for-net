@@ -16,32 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,52 +39,22 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (DisableVpnEncryption != null)
+            if (Optional.IsDefined(DisableVpnEncryption))
             {
                 writer.WritePropertyName("disableVpnEncryption");
                 writer.WriteBooleanValue(DisableVpnEncryption.Value);
             }
-            if (VirtualHubs != null)
-            {
-                writer.WritePropertyName("virtualHubs");
-                writer.WriteStartArray();
-                foreach (var item in VirtualHubs)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (VpnSites != null)
-            {
-                writer.WritePropertyName("vpnSites");
-                writer.WriteStartArray();
-                foreach (var item in VpnSites)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (AllowBranchToBranchTraffic != null)
+            if (Optional.IsDefined(AllowBranchToBranchTraffic))
             {
                 writer.WritePropertyName("allowBranchToBranchTraffic");
                 writer.WriteBooleanValue(AllowBranchToBranchTraffic.Value);
             }
-            if (AllowVnetToVnetTraffic != null)
+            if (Optional.IsDefined(AllowVnetToVnetTraffic))
             {
                 writer.WritePropertyName("allowVnetToVnetTraffic");
                 writer.WriteBooleanValue(AllowVnetToVnetTraffic.Value);
             }
-            if (Office365LocalBreakoutCategory != null)
-            {
-                writer.WritePropertyName("office365LocalBreakoutCategory");
-                writer.WriteStringValue(Office365LocalBreakoutCategory.Value.ToString());
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (TypePropertiesType != null)
+            if (Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(TypePropertiesType);
@@ -110,64 +65,44 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualWAN DeserializeVirtualWAN(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            bool? disableVpnEncryption = default;
-            IList<SubResource> virtualHubs = default;
-            IList<SubResource> vpnSites = default;
-            bool? allowBranchToBranchTraffic = default;
-            bool? allowVnetToVnetTraffic = default;
-            OfficeTrafficCategory? office365LocalBreakoutCategory = default;
-            ProvisioningState? provisioningState = default;
-            string type0 = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<bool> disableVpnEncryption = default;
+            Optional<IReadOnlyList<SubResource>> virtualHubs = default;
+            Optional<IReadOnlyList<SubResource>> vpnSites = default;
+            Optional<bool> allowBranchToBranchTraffic = default;
+            Optional<bool> allowVnetToVnetTraffic = default;
+            Optional<OfficeTrafficCategory> office365LocalBreakoutCategory = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> type0 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -175,31 +110,31 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("disableVpnEncryption"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableVpnEncryption = property0.Value.GetBoolean();
@@ -209,19 +144,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(SubResource.DeserializeSubResource(item));
-                                }
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             virtualHubs = array;
                             continue;
@@ -230,19 +159,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(SubResource.DeserializeSubResource(item));
-                                }
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             vpnSites = array;
                             continue;
@@ -251,6 +174,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowBranchToBranchTraffic = property0.Value.GetBoolean();
@@ -260,6 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowVnetToVnetTraffic = property0.Value.GetBoolean();
@@ -269,6 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             office365LocalBreakoutCategory = new OfficeTrafficCategory(property0.Value.GetString());
@@ -278,6 +204,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -285,10 +212,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("type"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             type0 = property0.Value.GetString();
                             continue;
                         }
@@ -296,7 +219,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualWAN(id, name, type, location, tags, etag, disableVpnEncryption, virtualHubs, vpnSites, allowBranchToBranchTraffic, allowVnetToVnetTraffic, office365LocalBreakoutCategory, provisioningState, type0);
+            return new VirtualWAN(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToNullable(disableVpnEncryption), Optional.ToList(virtualHubs), Optional.ToList(vpnSites), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(allowVnetToVnetTraffic), Optional.ToNullable(office365LocalBreakoutCategory), Optional.ToNullable(provisioningState), type0.Value);
         }
     }
 }

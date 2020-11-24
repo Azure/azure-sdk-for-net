@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ObjectReplicationPolicy. </summary>
         public ObjectReplicationPolicy()
         {
+            Rules = new ChangeTrackingList<ObjectReplicationPolicyRule>();
         }
 
         /// <summary> Initializes a new instance of ObjectReplicationPolicy. </summary>
@@ -45,6 +47,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Required. Destination account name. </summary>
         public string DestinationAccount { get; set; }
         /// <summary> The storage account object replication rules. </summary>
-        public IList<ObjectReplicationPolicyRule> Rules { get; set; }
+        public IList<ObjectReplicationPolicyRule> Rules { get; }
     }
 }

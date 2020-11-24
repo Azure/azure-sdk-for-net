@@ -14,14 +14,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveNetworkSecurityGroupAssociation DeserializeEffectiveNetworkSecurityGroupAssociation(JsonElement element)
         {
-            SubResource subnet = default;
-            SubResource networkInterface = default;
+            Optional<SubResource> subnet = default;
+            Optional<SubResource> networkInterface = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnet"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnet = SubResource.DeserializeSubResource(property.Value);
@@ -31,13 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkInterface = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
             }
-            return new EffectiveNetworkSecurityGroupAssociation(subnet, networkInterface);
+            return new EffectiveNetworkSecurityGroupAssociation(subnet.Value, networkInterface.Value);
         }
     }
 }

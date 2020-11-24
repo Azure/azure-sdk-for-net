@@ -15,47 +15,22 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PrivateEndpoint != null)
-            {
-                writer.WritePropertyName("privateEndpoint");
-                writer.WriteObjectValue(PrivateEndpoint);
-            }
-            if (PrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState");
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (LinkIdentifier != null)
-            {
-                writer.WritePropertyName("linkIdentifier");
-                writer.WriteStringValue(LinkIdentifier);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -63,60 +38,50 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PrivateEndpointConnection DeserializePrivateEndpointConnection(JsonElement element)
         {
-            string name = default;
-            string type = default;
-            string etag = default;
-            string id = default;
-            PrivateEndpoint privateEndpoint = default;
-            PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            ProvisioningState? provisioningState = default;
-            string linkIdentifier = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> linkIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("privateEndpoint"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
@@ -126,6 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
@@ -135,6 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -142,10 +109,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("linkIdentifier"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             linkIdentifier = property0.Value.GetString();
                             continue;
                         }
@@ -153,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnection(id, name, type, etag, privateEndpoint, privateLinkServiceConnectionState, provisioningState, linkIdentifier);
+            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, etag.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), linkIdentifier.Value);
         }
     }
 }

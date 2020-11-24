@@ -26,7 +26,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
     ///   Defines a context for AMQP operations which can be shared amongst the different
     ///   client types within a given scope.
     /// </summary>
-    ///
     internal class AmqpConnectionScope : TransportConnectionScope
     {
         /// <summary>The name to assign to the SASL handler to specify that CBS tokens are in use.</summary>
@@ -41,14 +40,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   The version of AMQP to use within the scope.
         /// </summary>
-        ///
         private static Version AmqpVersion { get; } = new Version(1, 0, 0, 0);
 
         /// <summary>
         ///   The amount of time to allow an AMQP connection to be idle before considering
         ///   it to be timed out.
         /// </summary>
-        ///
         private static TimeSpan ConnectionIdleTimeout { get; } = TimeSpan.FromMinutes(1);
 
         /// <summary>
@@ -56,20 +53,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   refreshing authorization.  Authorization will be refreshed earlier
         ///   than the expected expiration by this amount.
         /// </summary>
-        ///
         private static TimeSpan AuthorizationRefreshBuffer { get; } = TimeSpan.FromMinutes(5);
 
         /// <summary>
         ///   The minimum amount of time for authorization to be refreshed; any calculations that
         ///   call for refreshing more frequently will be substituted with this value.
         /// </summary>
-        ///
         private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(4);
 
         /// <summary>
         ///   The amount time to allow to refresh authorization of an AMQP link.
         /// </summary>
-        ///
         private static TimeSpan AuthorizationRefreshTimeout { get; } = TimeSpan.FromMinutes(3);
 
         /// <summary>
@@ -77,57 +71,52 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
-        ///
         public override bool IsDisposed { get; protected set; }
 
         /// <summary>
         ///   The cancellation token to use with operations initiated by the scope.
         /// </summary>
-        ///
         private CancellationTokenSource OperationCancellationSource { get; } = new CancellationTokenSource();
 
         /// <summary>
         ///   The set of active AMQP links associated with the connection scope.  These are considered children
         ///   of the active connection and should be managed as such.
         /// </summary>
-        ///
         private ConcurrentDictionary<AmqpObject, Timer> ActiveLinks { get; } = new ConcurrentDictionary<AmqpObject, Timer>();
 
         /// <summary>
         ///   The unique identifier of the scope.
         /// </summary>
-        ///
         private string Id { get; }
 
         /// <summary>
         ///   The endpoint for the Service Bus service to which the scope is associated.
         /// </summary>
-        ///
         private Uri ServiceEndpoint { get; }
 
         /// <summary>
         ///   The provider to use for obtaining a token for authorization with the Service Bus service.
         /// </summary>
-        ///
         private CbsTokenProvider TokenProvider { get; }
 
         /// <summary>
         ///   The type of transport to use for communication.
         /// </summary>
-        ///
         private ServiceBusTransportType Transport { get; }
 
         /// <summary>
         ///   The proxy, if any, which should be used for communication.
         /// </summary>
-        ///
         private IWebProxy Proxy { get; }
 
         /// <summary>
         ///   The AMQP connection that is active for the current scope.
         /// </summary>
-        ///
         private FaultTolerantAmqpObject<AmqpConnection> ActiveConnection { get; }
+
+        /// <summary>
+        ///  The controller responsible for managing transactions.
+        /// </summary>
         public FaultTolerantAmqpObject<Controller> TransactionController { get; }
 
         /// <summary>
@@ -258,15 +247,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Opens an AMQP link for use with consumer operations.
+        ///   Opens an AMQP link for use with receiver operations.
         /// </summary>
-        /// <param name="entityPath"></param>
-        ///
-        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
-        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
-        /// <param name="sessionId"></param>
-        /// <param name="isSessionReceiver"></param>
+        /// <param name="entityPath">The entity path to receive from.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
+        /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
+        /// <param name="sessionId">The session to connect to.</param>
+        /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with consumer operations.</returns>
@@ -275,7 +263,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath,
             TimeSpan timeout,
             uint prefetchCount,
-            ReceiveMode receiveMode,
+            ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
             CancellationToken cancellationToken)
@@ -309,10 +297,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Opens an AMQP link for use with producer operations.
+        ///   Opens an AMQP link for use with sender operations.
         /// </summary>
         /// <param name="entityPath"></param>
-        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -320,7 +307,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public virtual async Task<SendingAmqpLink> OpenSenderLinkAsync(
             string entityPath,
-            string viaEntityPath,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -333,7 +319,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             SendingAmqpLink link = await CreateSendingLinkAsync(
                 entityPath,
-                viaEntityPath,
                 connection,
                 timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
 
@@ -349,7 +334,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Performs the task needed to clean up resources used by the <see cref="AmqpConnectionScope" />,
         ///   including ensuring that the client itself has been closed.
         /// </summary>
-        ///
         public override void Dispose()
         {
             if (IsDisposed)
@@ -376,7 +360,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout">The timeout to consider when creating the connection.</param>
         ///
         /// <returns>An AMQP connection that may be used for communicating with the Service Bus service.</returns>
-        ///
         protected virtual async Task<AmqpConnection> CreateAndOpenConnectionAsync(
             Version amqpVersion,
             Uri serviceEndpoint,
@@ -439,7 +422,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with management operations.</returns>
-        ///
         protected virtual async Task<RequestResponseAmqpLink> CreateManagementLinkAsync(
             string entityPath,
             AmqpConnection connection,
@@ -533,26 +515,24 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   Creates an AMQP link for use with receiving operations.
         /// </summary>
-        /// <param name="entityPath"></param>
-        ///
+        /// <param name="entityPath">The entity path to receive from.</param>
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
-        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
-        /// <param name="sessionId"></param>
-        /// <param name="isSessionReceiver"></param>
+        /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
+        /// <param name="sessionId">The session to receive from.</param>
+        /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use for operations related to receiving events.</returns>
-        ///
         protected virtual async Task<ReceivingAmqpLink> CreateReceivingLinkAsync(
             string entityPath,
             AmqpConnection connection,
             Uri endpoint,
             TimeSpan timeout,
             uint prefetchCount,
-             ReceiveMode receiveMode,
+             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
             CancellationToken cancellationToken)
@@ -581,6 +561,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // Create and open the AMQP session associated with the link.
 
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
+
+                // This is the maximum number of unsettled transfers across all receive links on this session.
+                // This will allow the session to accept unlimited number of transfers, even if the receiver(s)
+                // are not settling any of the deliveries.
+                sessionSettings.IncomingWindow = uint.MaxValue;
+
                 session = connection.CreateSession(sessionSettings);
 
                 await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
@@ -599,7 +585,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Role = true,
                     TotalLinkCredit = prefetchCount,
                     AutoSendFlow = prefetchCount > 0,
-                    SettleType = (receiveMode == ReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
+                    SettleType = (receiveMode == ServiceBusReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
                     Target = new Target { Address = Guid.NewGuid().ToString() }
                 };
@@ -653,17 +639,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   Creates an AMQP link for use with publishing operations.
         /// </summary>
-        /// <param name="entityPath"></param>
-        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
+        /// <param name="entityPath">The entity path to send to.</param>
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use for operations related to receiving events.</returns>
-        ///
         protected virtual async Task<SendingAmqpLink> CreateSendingLinkAsync(
             string entityPath,
-            string viaEntityPath,
             AmqpConnection connection,
             TimeSpan timeout,
             CancellationToken cancellationToken)
@@ -679,19 +662,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 string[] audience;
                 Uri destinationEndpoint = null;
 
-                // if there is a via entityPath, include that in the audience
-
-                if (!string.IsNullOrEmpty(viaEntityPath))
-                {
-                    destinationEndpoint = new Uri(ServiceEndpoint, viaEntityPath);
-                    var finalDestinationEndpoint = new Uri(ServiceEndpoint, entityPath);
-                    audience = new string[] { finalDestinationEndpoint.AbsoluteUri, destinationEndpoint.AbsoluteUri };
-                }
-                else
-                {
-                    destinationEndpoint = new Uri(ServiceEndpoint, entityPath);
-                    audience = new string[] { destinationEndpoint.AbsoluteUri };
-                }
+                destinationEndpoint = new Uri(ServiceEndpoint, entityPath);
+                audience = new string[] { destinationEndpoint.AbsoluteUri };
 
                 // Perform the initial authorization for the link.
 
@@ -725,11 +697,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Source = new Source { Address = Guid.NewGuid().ToString() },
                     Target = new Target { Address = destinationEndpoint.AbsolutePath }
                 };
-
-                if (!string.IsNullOrEmpty(viaEntityPath))
-                {
-                    linkSettings.AddProperty(AmqpClientConstants.TransferDestinationAddress, entityPath);
-                }
 
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
 
@@ -782,8 +749,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Performs the actions needed to configure and begin tracking the specified AMQP
         ///   link as an active link bound to this scope.
         /// </summary>
-        /// <param name="entityPath"></param>
-        ///
+        /// <param name="entityPath">The entity path for the associated link.</param>
         /// <param name="link">The link to begin tracking.</param>
         /// <param name="authorizationRefreshTimer">The timer used to manage refreshing authorization, if the link requires it.</param>
         ///
@@ -792,7 +758,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   for active tracking; no assumptions are made about the open/connected state of the link nor are
         ///   its communication properties modified.
         /// </remarks>
-        ///
         protected virtual void BeginTrackingLinkAsActive(
             string entityPath,
             AmqpObject link,
@@ -829,7 +794,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="connection">The connection to close.</param>
-        ///
         protected virtual void CloseConnection(AmqpConnection connection) => connection.SafeClose();
 
         /// <summary>
@@ -838,12 +802,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="expirationTimeUtc">The date/time, in UTC, that the current authorization is expected to expire.</param>
+        /// <param name="currentTimeUtc">The current date/time, in UTC.  If not specified, the system time will be used.</param>
         ///
         /// <returns>The interval after which authorization should be refreshed.</returns>
         ///
-        protected virtual TimeSpan CalculateLinkAuthorizationRefreshInterval(DateTime expirationTimeUtc)
+        protected virtual TimeSpan CalculateLinkAuthorizationRefreshInterval(
+            DateTime expirationTimeUtc,
+            DateTime? currentTimeUtc = null)
         {
-            var refreshDueInterval = (expirationTimeUtc.Subtract(DateTime.UtcNow)).Add(AuthorizationRefreshBuffer);
+            currentTimeUtc ??= DateTime.UtcNow;
+
+            var refreshDueInterval = (expirationTimeUtc.Subtract(AuthorizationRefreshBuffer)).Subtract(currentTimeUtc.Value);
             return (refreshDueInterval < MinimumAuthorizationRefresh) ? MinimumAuthorizationRefresh : refreshDueInterval;
         }
 
@@ -854,7 +823,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath"></param>
         ///
         /// <param name="connection">The AMQP connection to which the link being refreshed is bound to.</param>
-        /// <param name="amqpLink">The AMQO link to refresh authorization for.</param>
+        /// <param name="amqpLink">The AMQP link to refresh authorization for.</param>
         /// <param name="tokenProvider">The <see cref="CbsTokenProvider" /> to use for obtaining access tokens.</param>
         /// <param name="endpoint">The Service Bus service endpoint that the AMQP link is communicating with.</param>
         /// <param name="audience">The audience associated with the authorization.  This is likely the <paramref name="endpoint"/> absolute URI.</param>
@@ -863,7 +832,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="refreshTimerFactory">A function to allow retrieving the <see cref="Timer" /> associated with the link authorization.</param>
         ///
         /// <returns>A <see cref="TimerCallback"/> delegate to perform the refresh when a timer is due.</returns>
-        ///
         protected virtual TimerCallback CreateAuthorizationRefreshHandler(
             string entityPath,
             AmqpConnection connection,
@@ -896,28 +864,28 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         refreshTimeout)
                     .ConfigureAwait(false);
 
-                // Reset the timer for the next refresh.
+                    // Reset the timer for the next refresh.
 
-                if (authExpirationUtc >= DateTimeOffset.UtcNow)
+                    if (authExpirationUtc >= DateTimeOffset.UtcNow)
                     {
                         refreshTimer.Change(CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
                     }
                 }
                 catch (ObjectDisposedException)
                 {
-                // This can occur if the connection is closed or the scope disposed after the factory
-                // is called but before the timer is updated.  The callback may also fire while the timer is
-                // in the act of disposing.  Do not consider it an error.
-            }
+                    // This can occur if the connection is closed or the scope disposed after the factory
+                    // is called but before the timer is updated.  The callback may also fire while the timer is
+                    // in the act of disposing.  Do not consider it an error.
+                }
                 catch (Exception ex)
                 {
                     ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshError(entityPath, endpoint.AbsoluteUri, ex.Message);
 
-                // Attempt to unset the timer; there's a decent chance that it has been disposed at this point or
-                // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
-                // At worse, another timer tick will occur and the operation will be retried.
+                    // Attempt to unset the timer; there's a decent chance that it has been disposed at this point or
+                    // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
+                    // At worse, another timer tick will occur and the operation will be retried.
 
-                try
+                    try
                     { refreshTimer.Change(Timeout.Infinite, Timeout.Infinite); }
                     catch { }
                 }
@@ -935,7 +903,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="target">The target AMQP object to open.</param>
         /// <param name="timeout">The timeout to apply when opening the link.</param>
-        ///
         protected virtual async Task OpenAmqpObjectAsync(
             AmqpObject target,
             TimeSpan timeout)
@@ -982,7 +949,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   with the connection; this will be used as the transport for the authorization
         ///   credentials.
         /// </remarks>
-        ///
         protected virtual async Task<DateTime> RequestAuthorizationUsingCbsAsync(
             AmqpConnection connection,
             CbsTokenProvider tokenProvider,
@@ -1012,7 +978,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="amqpVersion">The version of AMQP to be used.</param>
         ///
         /// <returns>The settings for AMQP to use for communication with the Service Bus service.</returns>
-        ///
         private static AmqpSettings CreateAmpqSettings(Version amqpVersion)
         {
             var saslProvider = new SaslTransportProvider();
@@ -1037,7 +1002,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="port">The port to use for connecting to the endpoint.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
-        ///
         private static TransportSettings CreateTransportSettingsforTcp(
             string hostName,
             int port)
@@ -1064,7 +1028,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="proxy">The proxy to use for connecting to the endpoint.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
-        ///
         private static TransportSettings CreateTransportSettingsForWebSockets(
             string hostName,
             IWebProxy proxy)
@@ -1091,7 +1054,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="identifier">unique identifier of the current Service Bus scope.</param>
         ///
         /// <returns>The settings to apply to the connection.</returns>
-        ///
         private static AmqpConnectionSettings CreateAmqpConnectionSettings(
             string hostName,
             string identifier)
@@ -1118,7 +1080,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="transport">The transport to validate.</param>
-        ///
         private static void ValidateTransport(ServiceBusTransportType transport)
         {
             if ((transport != ServiceBusTransportType.AmqpTcp) && (transport != ServiceBusTransportType.AmqpWebSockets))

@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="remoteVpnSite">Id of the connected vpn site.</param>
         /// <param name="routingWeight">Routing weight for vpn
         /// connection.</param>
-        /// <param name="dpdTimeoutSeconds">The dead peer detection timeout for
-        /// a vpn connection in seconds.</param>
+        /// <param name="dpdTimeoutSeconds">DPD timeout in seconds for vpn
+        /// connection.</param>
         /// <param name="connectionStatus">The connection status. Possible
         /// values include: 'Unknown', 'Connecting', 'Connected',
         /// 'NotConnected'</param>
@@ -120,8 +120,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? RoutingWeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the dead peer detection timeout for a vpn connection
-        /// in seconds.
+        /// Gets or sets DPD timeout in seconds for vpn connection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dpdTimeoutSeconds")]
         public int? DpdTimeoutSeconds { get; set; }

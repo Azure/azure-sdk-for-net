@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (HasLegalHold != null)
-            {
-                writer.WritePropertyName("hasLegalHold");
-                writer.WriteBooleanValue(HasLegalHold.Value);
-            }
             writer.WritePropertyName("tags");
             writer.WriteStartArray();
             foreach (var item in Tags)
@@ -33,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static LegalHold DeserializeLegalHold(JsonElement element)
         {
-            bool? hasLegalHold = default;
+            Optional<bool> hasLegalHold = default;
             IList<string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,6 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasLegalHold = property.Value.GetBoolean();
@@ -51,20 +47,13 @@ namespace Azure.ResourceManager.Storage.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     tags = array;
                     continue;
                 }
             }
-            return new LegalHold(hasLegalHold, tags);
+            return new LegalHold(Optional.ToNullable(hasLegalHold), tags);
         }
     }
 }

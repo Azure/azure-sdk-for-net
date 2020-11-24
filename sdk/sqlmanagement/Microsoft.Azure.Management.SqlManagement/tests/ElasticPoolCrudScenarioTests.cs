@@ -169,7 +169,7 @@ namespace Sql.Tests
                 // Make sure the elastic pool is not updated due to cancel operation
                 var epGetResponse = sqlClient.ElasticPools.Get(resourceGroup.Name, server.Name, epName);
                 Assert.Equal(125, epGetResponse.Dtu);
-                Assert.Equal(DatabaseEdition.Premium, epGetResponse.Edition);
+                Assert.Equal("Premium", epGetResponse.Edition);
             }
         }
 
@@ -220,6 +220,7 @@ namespace Sql.Tests
             // Update elasticPool Dtu Max
             // 
             dynamic epInput3 = createModelFunc();
+            epInput3.Sku = returnedEp.Sku;
             epInput3.DatabaseDtuMax = 100;
 
             returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput3);
@@ -233,6 +234,7 @@ namespace Sql.Tests
             // Update elasticPool Dtu Min
             // 
             dynamic epInput4 = createModelFunc();
+            epInput4.Sku = returnedEp.Sku;
             epInput4.DatabaseDtuMin = 10;
 
             returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput4);

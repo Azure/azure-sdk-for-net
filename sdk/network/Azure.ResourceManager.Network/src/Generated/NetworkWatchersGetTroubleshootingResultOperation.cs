@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         TroubleshootingResult IOperationSource<TroubleshootingResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return TroubleshootingResult.DeserializeTroubleshootingResult(document.RootElement);
-            }
+            return TroubleshootingResult.DeserializeTroubleshootingResult(document.RootElement);
         }
 
         async ValueTask<TroubleshootingResult> IOperationSource<TroubleshootingResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return TroubleshootingResult.DeserializeTroubleshootingResult(document.RootElement);
-            }
+            return TroubleshootingResult.DeserializeTroubleshootingResult(document.RootElement);
         }
     }
 }

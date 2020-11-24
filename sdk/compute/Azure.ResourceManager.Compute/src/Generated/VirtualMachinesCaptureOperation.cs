@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Compute
         VirtualMachineCaptureResult IOperationSource<VirtualMachineCaptureResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement);
-            }
+            return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement);
         }
 
         async ValueTask<VirtualMachineCaptureResult> IOperationSource<VirtualMachineCaptureResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement);
-            }
+            return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement);
         }
     }
 }

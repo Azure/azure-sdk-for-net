@@ -15,13 +15,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of ProtocolConfiguration. </summary>
-        /// <param name="httpConfiguration"> HTTP configuration of the connectivity check. </param>
-        internal ProtocolConfiguration(HttpConfiguration httpConfiguration)
-        {
-            HttpConfiguration = httpConfiguration;
-        }
-
         /// <summary> HTTP configuration of the connectivity check. </summary>
         public HttpConfiguration HttpConfiguration { get; set; }
     }

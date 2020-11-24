@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static SKUCapability DeserializeSKUCapability(JsonElement element)
         {
-            string name = default;
-            string value = default;
+            Optional<string> name = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
             }
-            return new SKUCapability(name, value);
+            return new SKUCapability(name.Value, value.Value);
         }
     }
 }

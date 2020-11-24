@@ -14,15 +14,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static NameAvailabilityStatus DeserializeNameAvailabilityStatus(JsonElement element)
         {
-            bool? nameAvailable = default;
-            string message = default;
-            string reason = default;
+            Optional<bool> nameAvailable = default;
+            Optional<string> message = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nameAvailable = property.Value.GetBoolean();
@@ -30,24 +31,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("reason"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     reason = property.Value.GetString();
                     continue;
                 }
             }
-            return new NameAvailabilityStatus(nameAvailable, message, reason);
+            return new NameAvailabilityStatus(Optional.ToNullable(nameAvailable), message.Value, reason.Value);
         }
     }
 }

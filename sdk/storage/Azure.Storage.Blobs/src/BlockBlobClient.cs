@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -715,12 +716,14 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
+                    Errors.VerifyStreamPosition(content, nameof(content));
+
                     return await BlobRestClient.BlockBlob.UploadAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content?.Length ?? 0,
+                        contentLength: (content?.Length - content?.Position) ?? 0,
                         version: Version.ToVersionString(),
                         blobContentType: blobHttpHeaders?.ContentType,
                         blobContentEncoding: blobHttpHeaders?.ContentEncoding,
@@ -966,6 +969,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
+                    Errors.VerifyStreamPosition(content, nameof(content));
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     return await BlobRestClient.BlockBlob.StageBlockAsync(
                         ClientDiagnostics,
@@ -973,7 +977,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Uri,
                         blockId: base64BlockId,
                         body: content,
-                        contentLength: content.Length,
+                        contentLength: (content?.Length - content?.Position) ?? 0,
                         version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         leaseId: conditions?.LeaseId,
@@ -1961,8 +1965,8 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         QueryType = Constants.QuickQuery.SqlQueryType,
                         Expression = querySqlExpression,
-                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
-                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
+                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(isInput: true),
+                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization(isInput: false)
                     };
                     (Response<BlobQueryResult> result, Stream stream) = await BlobRestClient.Blob.QueryAsync(
                         clientDiagnostics: ClientDiagnostics,
@@ -2003,6 +2007,159 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion Query
 
+        #region OpenWrite
+        /// <summary>
+        /// Opens a stream for writing to the blob.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenWrite(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            BlockBlobOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => OpenWriteInternal(
+                overwrite: overwrite,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for writing to the blob.  If the blob exists,
+        /// it will be overwritten.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenWriteAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            BlockBlobOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await OpenWriteInternal(
+                overwrite: overwrite,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for writing to the blob.  If the blob exists,
+        /// it will be overwritten.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Stream> OpenWriteInternal(
+            bool overwrite,
+            BlockBlobOpenWriteOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}");
+
+            try
+            {
+                scope.Start();
+
+                if (!overwrite)
+                {
+                    throw new ArgumentException($"{nameof(BlockBlobClient)}.{nameof(BlockBlobClient.OpenWrite)} only supports overwriting");
+                }
+
+                long position = 0;
+
+                // Create Block Blob
+                Response<BlobContentInfo> response = await UploadInternal(
+                    content: new MemoryStream(Array.Empty<byte>()),
+                    blobHttpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    tags: options?.Tags,
+                    conditions: options?.OpenConditions,
+                    accessTier: default,
+                    progressHandler: default,
+                    operationName: default,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                BlobRequestConditions conditions = new BlobRequestConditions
+                {
+                    IfMatch = response.Value.ETag,
+                    LeaseId = options?.OpenConditions?.LeaseId
+                };
+
+                return new BlockBlobWriteStream(
+                    blockBlobClient: this,
+                    bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
+                    position: position,
+                    conditions: conditions,
+                    progressHandler: options?.ProgressHandler,
+                    blobHttpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    tags: options?.Tags);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion OpenWrite
+
         #region PartitionedUploader
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
@@ -2016,17 +2173,6 @@ namespace Azure.Storage.Blobs.Specialized
 
         internal static PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors GetPartitionedUploaderBehaviors(BlockBlobClient client)
         {
-            static string GenerateBlockId(long offset)
-            {
-                // TODO #8162 - Add in a random GUID so multiple simultaneous
-                // uploads won't stomp on each other and the first to commit wins.
-                // This will require some changes to our test framework's
-                // RecordedClientRequestIdPolicy.
-                byte[] id = new byte[48]; // 48 raw bytes => 64 byte string once Base64 encoded
-                BitConverter.GetBytes(offset).CopyTo(id, 0);
-                return Convert.ToBase64String(id);
-            }
-
             return new PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors
             {
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken)
@@ -2043,7 +2189,7 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken).ConfigureAwait(false),
                 UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
                     => await client.StageBlockInternal(
-                        GenerateBlockId(offset),
+                        StorageExtensions.GenerateBlockId(offset),
                         stream,
                         transactionalContentHash: default,
                         args.Conditions,
@@ -2052,7 +2198,7 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken).ConfigureAwait(false),
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
-                        partitions.Select(partition => GenerateBlockId(partition.Offset)),
+                        partitions.Select(partition => StorageExtensions.GenerateBlockId(partition.Offset)),
                         args.HttpHeaders,
                         args.Metadata,
                         args.Tags,
@@ -2089,23 +2235,7 @@ namespace Azure.Storage.Blobs.Specialized
             this BlobContainerClient client,
             string blobName)
         {
-            if (client.ClientSideEncryption != default)
-            {
-                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
-            }
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
-            {
-                BlobName = blobName
-            };
-
-            return new BlockBlobClient(
-                blobUriBuilder.ToUri(),
-                client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey,
-                client.EncryptionScope);
+            return client.GetBlockBlobClientCore(blobName);
         }
     }
 }

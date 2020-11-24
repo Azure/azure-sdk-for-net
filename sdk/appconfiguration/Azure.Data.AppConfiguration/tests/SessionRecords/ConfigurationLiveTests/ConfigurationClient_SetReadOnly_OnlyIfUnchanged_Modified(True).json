@@ -1,0 +1,209 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://endpoint.azconfig.io/kv/key-1928949396?label=test_label\u0026api-version=1.0",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
+        "Authorization": "Sanitized",
+        "Content-Length": "98",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Sep 2020 16:11:32 GMT",
+        "If-None-Match": "*",
+        "traceparent": "00-5ba6e8dc0d86a442ba4d3ea3a69069cd-26fbe2406aca2344-00",
+        "User-Agent": [
+          "azsdk-net-Data.AppConfiguration/1.0.2-alpha.20200911.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "ddb026d00db047875b7b7b2e626c56e9",
+        "x-ms-content-sha256": "b11OQu6GthUatwGXUIKHHSRVyik0TdrUk5kZm3yZd2A=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": "test_value",
+        "content_type": "test_content_type",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, retry-after-ms, x-ms-request-id, WWW-Authenticate",
+        "Connection": "keep-alive",
+        "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
+        "Date": "Fri, 11 Sep 2020 16:11:29 GMT",
+        "ETag": "\u0022ZRzxCHyyhPSpBs82ZbISBzaX8V7\u0022",
+        "Last-Modified": "Fri, 11 Sep 2020 16:11:30 GMT",
+        "Server": "openresty/1.15.8.3",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Sync-Token": "zAJw6V16=ODo0IzIyODQxNzIjMT0tMQ==;sn=2284172",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "ddb026d00db047875b7b7b2e626c56e9",
+        "x-ms-correlation-request-id": "a3247262-2aef-41bf-8298-a6e66fc2396d",
+        "x-ms-request-id": "a3247262-2aef-41bf-8298-a6e66fc2396d"
+      },
+      "ResponseBody": {
+        "etag": "ZRzxCHyyhPSpBs82ZbISBzaX8V7",
+        "key": "key-1928949396",
+        "label": "test_label",
+        "content_type": "test_content_type",
+        "value": "test_value",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "locked": false,
+        "last_modified": "2020-09-11T16:11:30\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://endpoint.azconfig.io/kv/key-1928949396?label=test_label\u0026api-version=1.0",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
+        "Authorization": "Sanitized",
+        "Content-Length": "97",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Sep 2020 16:11:32 GMT",
+        "Sync-Token": "zAJw6V16=ODo0IzIyODQxNzIjMT0tMQ==",
+        "traceparent": "00-35ae8357f3204846a26b059011644950-fc5ce993431a9e42-00",
+        "User-Agent": [
+          "azsdk-net-Data.AppConfiguration/1.0.2-alpha.20200911.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a7c6401a0a16ee8c9d3ace869080fddf",
+        "x-ms-content-sha256": "F3eHNRh9S0k2rEReyPeZgvNiSj68jb56eyaFBtbC0EM=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": "new_value",
+        "content_type": "test_content_type",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, retry-after-ms, x-ms-request-id, WWW-Authenticate",
+        "Connection": "keep-alive",
+        "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
+        "Date": "Fri, 11 Sep 2020 16:11:29 GMT",
+        "ETag": "\u0022XNxTljSFC7yjnL1nVfNLvmf8K30\u0022",
+        "Last-Modified": "Fri, 11 Sep 2020 16:11:30 GMT",
+        "Server": "openresty/1.15.8.3",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Sync-Token": "zAJw6V16=ODo0IzIyODQxNzMjMT0tMQ==;sn=2284173",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "a7c6401a0a16ee8c9d3ace869080fddf",
+        "x-ms-correlation-request-id": "eef5771b-e401-479d-a1b2-d1e859df75b3",
+        "x-ms-request-id": "eef5771b-e401-479d-a1b2-d1e859df75b3"
+      },
+      "ResponseBody": {
+        "etag": "XNxTljSFC7yjnL1nVfNLvmf8K30",
+        "key": "key-1928949396",
+        "label": "test_label",
+        "content_type": "test_content_type",
+        "value": "new_value",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "locked": false,
+        "last_modified": "2020-09-11T16:11:30\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://endpoint.azconfig.io/locks/key-1928949396?label=test_label\u0026api-version=1.0",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Date": "Fri, 11 Sep 2020 16:11:32 GMT",
+        "If-Match": "\u0022ZRzxCHyyhPSpBs82ZbISBzaX8V7\u0022",
+        "Sync-Token": "zAJw6V16=ODo0IzIyODQxNzMjMT0tMQ==",
+        "traceparent": "00-14c87262da0c6341a89a156491429e9f-eaa792e441f0424a-00",
+        "User-Agent": [
+          "azsdk-net-Data.AppConfiguration/1.0.2-alpha.20200911.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "6ef1337d663a6123e046ef6907888783",
+        "x-ms-content-sha256": "47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 412,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, retry-after-ms, x-ms-request-id, WWW-Authenticate",
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Fri, 11 Sep 2020 16:11:29 GMT",
+        "Server": "openresty/1.15.8.3",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "6ef1337d663a6123e046ef6907888783",
+        "x-ms-correlation-request-id": "00bc387c-aa7d-4327-9489-87e8e9941afc",
+        "x-ms-request-id": "00bc387c-aa7d-4327-9489-87e8e9941afc"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://endpoint.azconfig.io/kv/key-1928949396?label=test_label\u0026api-version=1.0",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Date": "Fri, 11 Sep 2020 16:11:32 GMT",
+        "Sync-Token": "zAJw6V16=ODo0IzIyODQxNzMjMT0tMQ==",
+        "traceparent": "00-ba245fc613d52c46bbdc9a9f1695cf01-abde7534707bc146-00",
+        "User-Agent": [
+          "azsdk-net-Data.AppConfiguration/1.0.2-alpha.20200911.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "47c5bb13a3a6c57e9ac240753f01b6da",
+        "x-ms-content-sha256": "47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, retry-after-ms, x-ms-request-id, WWW-Authenticate",
+        "Connection": "keep-alive",
+        "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
+        "Date": "Fri, 11 Sep 2020 16:11:29 GMT",
+        "ETag": "\u0022XNxTljSFC7yjnL1nVfNLvmf8K30\u0022",
+        "Last-Modified": "Fri, 11 Sep 2020 16:11:30 GMT",
+        "Server": "openresty/1.15.8.3",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Sync-Token": "zAJw6V16=ODo0IzIyODQxNzQjMT0tMQ==;sn=2284174",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "47c5bb13a3a6c57e9ac240753f01b6da",
+        "x-ms-correlation-request-id": "0609c6f1-3345-48e1-8785-02646787e50a",
+        "x-ms-request-id": "0609c6f1-3345-48e1-8785-02646787e50a"
+      },
+      "ResponseBody": {
+        "etag": "XNxTljSFC7yjnL1nVfNLvmf8K30",
+        "key": "key-1928949396",
+        "label": "test_label",
+        "content_type": "test_content_type",
+        "value": "new_value",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "locked": false,
+        "last_modified": "2020-09-11T16:11:30\u002B00:00"
+      }
+    }
+  ],
+  "Variables": {
+    "APPCONFIGURATION_CONNECTION_STRING": "Endpoint=https://endpoint.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002BFOYz;Secret=;",
+    "RandomSeed": "1401940098"
+  }
+}

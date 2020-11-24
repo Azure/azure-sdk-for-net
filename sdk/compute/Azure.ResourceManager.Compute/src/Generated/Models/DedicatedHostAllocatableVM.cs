@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DedicatedHostAllocatableVM
     {
         /// <summary> Initializes a new instance of DedicatedHostAllocatableVM. </summary>
-        public DedicatedHostAllocatableVM()
+        internal DedicatedHostAllocatableVM()
         {
         }
 
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> VM size in terms of which the unutilized capacity is represented. </summary>
-        public string VmSize { get; set; }
+        public string VmSize { get; }
         /// <summary> Maximum number of VMs of size vmSize that can fit in the dedicated host&apos;s remaining capacity. </summary>
-        public double? Count { get; set; }
+        public double? Count { get; }
     }
 }

@@ -105,7 +105,7 @@ namespace Sql.Tests
                     parameters: new ManagedDatabase
                     {
                         Location = locationName,
-                        CreateMode = CreateMode.RestoreLongTermRetentionBackup,
+                        CreateMode = ManagedDatabaseCreateMode.RestoreLongTermRetentionBackup,
                         LongTermRetentionBackupResourceId = backup.Id
                     });
             }
@@ -155,7 +155,7 @@ namespace Sql.Tests
                     parameters: new ManagedDatabase
                     {
                         Location = locationName,
-                        CreateMode = CreateMode.RestoreLongTermRetentionBackup,
+                        CreateMode = ManagedDatabaseCreateMode.RestoreLongTermRetentionBackup,
                         LongTermRetentionBackupResourceId = backup.Id
                     });
 

@@ -30,7 +30,7 @@ namespace Azure.Management.EventHub.Tests
                         Tier = SkuTier.Standard,
                         Capacity = 1
                     },
-                    Tags = new Dictionary<string, string>()
+                    Tags =
                         {
                             {"tag1", "value1"},
                             {"tag2", "value2"}
@@ -52,7 +52,7 @@ namespace Azure.Management.EventHub.Tests
                        Tier = SkuTier.Standard,
                        Capacity = 1
                    },
-                   Tags = new Dictionary<string, string>()
+                   Tags =
                        {
                             {"tag1", "value1"},
                             {"tag2", "value2"}
@@ -67,7 +67,7 @@ namespace Azure.Management.EventHub.Tests
             var authorizationRuleName = Recording.GenerateAssetName(Helper.AuthorizationRulesPrefix);
             var createAutorizationRuleParameter = new AuthorizationRule()
             {
-                Rights = new List<AccessRights>() { AccessRights.Listen,AccessRights.Send}
+                Rights = { AccessRights.Listen,AccessRights.Send}
             };
             var createNamespaceAuthorizationRuleResponse =await NamespacesOperations.CreateOrUpdateAuthorizationRuleAsync(resourceGroup, namespaceName,
                 authorizationRuleName, createAutorizationRuleParameter);

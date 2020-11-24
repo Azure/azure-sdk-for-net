@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
                 writer.WriteObjectValue(Value);
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ParameterValuesValue DeserializeParameterValuesValue(JsonElement element)
         {
-            object value = default;
+            Optional<object> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetObject();
                     continue;
                 }
             }
-            return new ParameterValuesValue(value);
+            return new ParameterValuesValue(value.Value);
         }
     }
 }

@@ -77,8 +77,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for creating or updating an Active Directory
-            /// Administrator.
+            /// The requested Azure Active Directory administrator Resource state.
             /// </param>
             public static ServerAzureADAdministrator CreateOrUpdate(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator parameters)
             {
@@ -99,8 +98,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for creating or updating an Active Directory
-            /// Administrator.
+            /// The requested Azure Active Directory administrator Resource state.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -195,48 +193,6 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Disables Azure Active Directory only authentication on logical Server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            public static ServerAzureADAdministrator DisableAzureADOnlyAuthentication(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.DisableAzureADOnlyAuthenticationAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Disables Azure Active Directory only authentication on logical Server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerAzureADAdministrator> DisableAzureADOnlyAuthenticationAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.DisableAzureADOnlyAuthenticationWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Creates or updates an existing Azure Active Directory administrator.
             /// </summary>
             /// <param name='operations'>
@@ -250,8 +206,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for creating or updating an Active Directory
-            /// Administrator.
+            /// The requested Azure Active Directory administrator Resource state.
             /// </param>
             public static ServerAzureADAdministrator BeginCreateOrUpdate(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator parameters)
             {
@@ -272,8 +227,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for creating or updating an Active Directory
-            /// Administrator.
+            /// The requested Azure Active Directory administrator Resource state.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -323,48 +277,6 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task BeginDeleteAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Disables Azure Active Directory only authentication on logical Server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            public static ServerAzureADAdministrator BeginDisableAzureADOnlyAuthentication(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.BeginDisableAzureADOnlyAuthenticationAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Disables Azure Active Directory only authentication on logical Server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerAzureADAdministrator> BeginDisableAzureADOnlyAuthenticationAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginDisableAzureADOnlyAuthenticationWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>

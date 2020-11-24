@@ -8,6 +8,7 @@ namespace Azure
         public abstract System.Collections.Generic.IAsyncEnumerable<Azure.Page<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
+        public static Azure.AsyncPageable<T> FromPages(System.Collections.Generic.IEnumerable<Azure.Page<T>> pages) { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
@@ -34,7 +35,9 @@ namespace Azure
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ETag left, Azure.ETag right) { throw null; }
         public static bool operator !=(Azure.ETag left, Azure.ETag right) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public string ToString(string format) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpRange : System.IEquatable<Azure.HttpRange>
@@ -50,6 +53,24 @@ namespace Azure
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.HttpRange left, Azure.HttpRange right) { throw null; }
         public static bool operator !=(Azure.HttpRange left, Azure.HttpRange right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class JsonPatchDocument
+    {
+        public JsonPatchDocument() { }
+        public JsonPatchDocument(Azure.Core.Serialization.ObjectSerializer serializer) { }
+        public JsonPatchDocument(System.ReadOnlyMemory<byte> rawDocument) { }
+        public JsonPatchDocument(System.ReadOnlyMemory<byte> rawDocument, Azure.Core.Serialization.ObjectSerializer serializer) { }
+        public void AppendAddRaw(string path, string rawJsonValue) { }
+        public void AppendAdd<T>(string path, T value) { }
+        public void AppendCopy(string from, string path) { }
+        public void AppendMove(string from, string path) { }
+        public void AppendRemove(string path) { }
+        public void AppendReplaceRaw(string path, string rawJsonValue) { }
+        public void AppendReplace<T>(string path, T value) { }
+        public void AppendTestRaw(string path, string rawJsonValue) { }
+        public void AppendTest<T>(string path, T value) { }
+        public System.ReadOnlyMemory<byte> ToBytes() { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class MatchConditions
@@ -85,6 +106,7 @@ namespace Azure
         public abstract System.Collections.Generic.IEnumerable<Azure.Page<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
+        public static Azure.Pageable<T> FromPages(System.Collections.Generic.IEnumerable<Azure.Page<T>> pages) { throw null; }
         public virtual System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
@@ -216,15 +238,18 @@ namespace Azure.Core
         {
             public static string Accept { get { throw null; } }
             public static string Authorization { get { throw null; } }
+            public static string ContentDisposition { get { throw null; } }
             public static string ContentLength { get { throw null; } }
             public static string ContentType { get { throw null; } }
             public static string Date { get { throw null; } }
             public static string ETag { get { throw null; } }
+            public static string Host { get { throw null; } }
             public static string IfMatch { get { throw null; } }
             public static string IfModifiedSince { get { throw null; } }
             public static string IfNoneMatch { get { throw null; } }
             public static string IfUnmodifiedSince { get { throw null; } }
             public static string Range { get { throw null; } }
+            public static string Referer { get { throw null; } }
             public static string UserAgent { get { throw null; } }
             public static string XMsDate { get { throw null; } }
             public static string XMsRange { get { throw null; } }
@@ -450,6 +475,7 @@ namespace Azure.Core.Pipeline
         public static readonly Azure.Core.Pipeline.HttpClientTransport Shared;
         public HttpClientTransport() { }
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
+        public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
         public override void Process(Azure.Core.HttpMessage message) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }

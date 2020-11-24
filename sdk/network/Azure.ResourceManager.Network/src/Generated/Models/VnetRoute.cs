@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VnetRoute. </summary>
         public VnetRoute()
         {
+            StaticRoutes = new ChangeTrackingList<StaticRoute>();
         }
 
         /// <summary> Initializes a new instance of VnetRoute. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of all Static Routes. </summary>
-        public IList<StaticRoute> StaticRoutes { get; set; }
+        public IList<StaticRoute> StaticRoutes { get; }
     }
 }

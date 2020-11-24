@@ -60,6 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/rerun", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -117,6 +118,78 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal HttpMessage CreateCancelTriggerInstanceRequest(string triggerName, string runId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendPath("/triggerRuns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Cancel single trigger instance by runId. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
+        public async Task<Response> CancelTriggerInstanceAsync(string triggerName, string runId, CancellationToken cancellationToken = default)
+        {
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+
+            using var message = CreateCancelTriggerInstanceRequest(triggerName, runId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Cancel single trigger instance by runId. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
+        public Response CancelTriggerInstance(string triggerName, string runId, CancellationToken cancellationToken = default)
+        {
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+
+            using var message = CreateCancelTriggerInstanceRequest(triggerName, runId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateQueryTriggerRunsByWorkspaceRequest(RunFilterParameters filterParameters)
         {
             var message = _pipeline.CreateMessage();
@@ -128,6 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(filterParameters);
             request.Content = content;

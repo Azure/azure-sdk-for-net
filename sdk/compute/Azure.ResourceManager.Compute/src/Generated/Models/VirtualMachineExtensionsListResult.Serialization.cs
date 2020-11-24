@@ -15,32 +15,26 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineExtensionsListResult DeserializeVirtualMachineExtensionsListResult(JsonElement element)
         {
-            IReadOnlyList<VirtualMachineExtension> value = default;
+            Optional<IReadOnlyList<VirtualMachineExtension>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineExtension> array = new List<VirtualMachineExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualMachineExtension.DeserializeVirtualMachineExtension(item));
-                        }
+                        array.Add(VirtualMachineExtension.DeserializeVirtualMachineExtension(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new VirtualMachineExtensionsListResult(value);
+            return new VirtualMachineExtensionsListResult(Optional.ToList(value));
         }
     }
 }

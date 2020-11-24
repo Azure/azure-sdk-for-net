@@ -74,6 +74,44 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        /// <summary> Cancel single trigger instance by runId. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CancelTriggerInstanceAsync(string triggerName, string runId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.CancelTriggerInstance");
+            scope.Start();
+            try
+            {
+                return await RestClient.CancelTriggerInstanceAsync(triggerName, runId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Cancel single trigger instance by runId. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response CancelTriggerInstance(string triggerName, string runId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.CancelTriggerInstance");
+            scope.Start();
+            try
+            {
+                return RestClient.CancelTriggerInstance(triggerName, runId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Query trigger runs. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

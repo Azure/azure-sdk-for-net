@@ -13,17 +13,19 @@ namespace Azure.ResourceManager.Network.Models
     public partial class Usage
     {
         /// <summary> Initializes a new instance of Usage. </summary>
+        /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal Usage(long currentValue, long limit, UsageName name)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        internal Usage(UsageUnit unit, long currentValue, long limit, UsageName name)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Unit = "Count";
+            Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal Usage(string id, string unit, long currentValue, long limit, UsageName name)
+        internal Usage(string id, UsageUnit unit, long currentValue, long limit, UsageName name)
         {
             Id = id;
             Unit = unit;
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource identifier. </summary>
         public string Id { get; }
         /// <summary> An enum describing the unit of measurement. </summary>
-        public string Unit { get; }
+        public UsageUnit Unit { get; }
         /// <summary> The current value of the usage. </summary>
         public long CurrentValue { get; }
         /// <summary> The limit of usage. </summary>

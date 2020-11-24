@@ -22,7 +22,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="OperationsLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public OperationsLiveTests(bool isAsync) : base(isAsync)
+        public OperationsLiveTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -56,6 +57,24 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartRecognizeReceiptsFromUriAsync(uri);
 
             var sameOperation = new RecognizeReceiptsOperation(operation.Id, client);
+            await sameOperation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(sameOperation.HasValue);
+            Assert.AreEqual(1, sameOperation.Value.Count);
+        }
+
+        [Test]
+        public async Task RecognizeInvoicesOperationCanPollFromNewObject()
+        {
+            // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
+            // making the test fail.
+
+            var client = CreateFormRecognizerClient(skipInstrumenting: true);
+
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Blank);
+            var operation = await client.StartRecognizeInvoicesFromUriAsync(uri);
+
+            var sameOperation = new RecognizeInvoicesOperation(operation.Id, client);
             await sameOperation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(sameOperation.HasValue);

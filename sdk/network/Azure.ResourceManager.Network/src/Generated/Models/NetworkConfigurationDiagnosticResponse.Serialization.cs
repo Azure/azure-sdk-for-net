@@ -15,32 +15,26 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkConfigurationDiagnosticResponse DeserializeNetworkConfigurationDiagnosticResponse(JsonElement element)
         {
-            IReadOnlyList<NetworkConfigurationDiagnosticResult> results = default;
+            Optional<IReadOnlyList<NetworkConfigurationDiagnosticResult>> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetworkConfigurationDiagnosticResult> array = new List<NetworkConfigurationDiagnosticResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NetworkConfigurationDiagnosticResult.DeserializeNetworkConfigurationDiagnosticResult(item));
-                        }
+                        array.Add(NetworkConfigurationDiagnosticResult.DeserializeNetworkConfigurationDiagnosticResult(item));
                     }
                     results = array;
                     continue;
                 }
             }
-            return new NetworkConfigurationDiagnosticResponse(results);
+            return new NetworkConfigurationDiagnosticResponse(Optional.ToList(results));
         }
     }
 }

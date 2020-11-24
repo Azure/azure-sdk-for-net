@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PublicIPPrefix. </summary>
         public PublicIPPrefix()
         {
+            Zones = new ChangeTrackingList<string>();
+            IpTags = new ChangeTrackingList<IpTag>();
+            PublicIPAddresses = new ChangeTrackingList<ReferencedPublicIpAddress>();
         }
 
         /// <summary> Initializes a new instance of PublicIPPrefix. </summary>
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="loadBalancerFrontendIpConfiguration"> The reference to load balancer frontend IP configuration associated with the public IP prefix. </param>
         /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
-        internal PublicIPPrefix(string id, string name, string type, string location, IDictionary<string, string> tags, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IpTag> ipTags, int? prefixLength, string ipPrefix, IList<ReferencedPublicIpAddress> publicIPAddresses, SubResource loadBalancerFrontendIpConfiguration, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal PublicIPPrefix(string id, string name, string type, string location, IDictionary<string, string> tags, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IpTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses, SubResource loadBalancerFrontendIpConfiguration, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Sku = sku;
             Etag = etag;
@@ -54,17 +58,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> The public IP address version. </summary>
         public IPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> The list of tags associated with the public IP prefix. </summary>
-        public IList<IpTag> IpTags { get; set; }
+        public IList<IpTag> IpTags { get; }
         /// <summary> The Length of the Public IP Prefix. </summary>
         public int? PrefixLength { get; set; }
         /// <summary> The allocated Prefix. </summary>
         public string IpPrefix { get; }
         /// <summary> The list of all referenced PublicIPAddresses. </summary>
-        public IList<ReferencedPublicIpAddress> PublicIPAddresses { get; }
+        public IReadOnlyList<ReferencedPublicIpAddress> PublicIPAddresses { get; }
         /// <summary> The reference to load balancer frontend IP configuration associated with the public IP prefix. </summary>
         public SubResource LoadBalancerFrontendIpConfiguration { get; }
         /// <summary> The resource GUID property of the public IP prefix resource. </summary>

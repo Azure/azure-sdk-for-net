@@ -28,7 +28,7 @@ namespace Azure.Management.EventHub.Tests
                     {
                         Tier = SkuTier.Standard
                     },
-                    Tags = new Dictionary<string, string>()
+                    Tags =
                     {
                         {"tag1", "value1"},
                         {"tag2", "value2"}

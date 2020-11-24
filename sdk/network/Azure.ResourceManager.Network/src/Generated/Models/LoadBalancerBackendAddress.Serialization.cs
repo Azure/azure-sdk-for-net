@@ -15,24 +15,24 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (VirtualNetwork != null)
+            if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork");
                 writer.WriteObjectValue(VirtualNetwork);
             }
-            if (IpAddress != null)
+            if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress");
                 writer.WriteStringValue(IpAddress);
             }
-            if (NetworkInterfaceIPConfiguration != null)
+            if (Optional.IsDefined(NetworkInterfaceIPConfiguration))
             {
                 writer.WritePropertyName("networkInterfaceIPConfiguration");
                 writer.WriteObjectValue(NetworkInterfaceIPConfiguration);
@@ -43,29 +43,31 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static LoadBalancerBackendAddress DeserializeLoadBalancerBackendAddress(JsonElement element)
         {
-            string name = default;
-            VirtualNetwork virtualNetwork = default;
-            string ipAddress = default;
-            NetworkInterfaceIPConfiguration networkInterfaceIPConfiguration = default;
+            Optional<string> name = default;
+            Optional<VirtualNetwork> virtualNetwork = default;
+            Optional<string> ipAddress = default;
+            Optional<NetworkInterfaceIPConfiguration> networkInterfaceIPConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("virtualNetwork"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetwork = VirtualNetwork.DeserializeVirtualNetwork(property0.Value);
@@ -73,10 +75,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("ipAddress"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ipAddress = property0.Value.GetString();
                             continue;
                         }
@@ -84,6 +82,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkInterfaceIPConfiguration = NetworkInterfaceIPConfiguration.DeserializeNetworkInterfaceIPConfiguration(property0.Value);
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new LoadBalancerBackendAddress(name, virtualNetwork, ipAddress, networkInterfaceIPConfiguration);
+            return new LoadBalancerBackendAddress(name.Value, virtualNetwork.Value, ipAddress.Value, networkInterfaceIPConfiguration.Value);
         }
     }
 }

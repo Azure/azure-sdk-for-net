@@ -1,13 +1,41 @@
 # Release History
 
-## 4.1.0-preview.2 (Unreleased)
+## 4.2.0-beta.4 (Unreleased)
 
-## 4.1.0-preview.1 (2020-03-09)
+
+## 4.2.0-beta.3 (2020-11-12)
 
 ### Added
 
-- Add "import" value to `KeyOperation` enumeration.
-- Add `RecoverableDays` property to `KeyProperties`.
+- Added `KeyType.OctHsm` to support "oct-HSM" key operations.
+- Added AES-GCM and AES-CBC support for encrypting and decrypting, including new `Encrypt` and `Decrypt` overloads.
+- Added support for Secure Key Release including the `Export` method on `KeyClient` and `ReleasePolicy` property on various models.
+
+## 4.2.0-beta.2 (2020-10-06)
+
+- Bug fixes and performance improvements.
+
+## 4.2.0-beta.1 (2020-09-08)
+
+### Added
+
+- Added `KeyVaultKeyIdentifier` to parse key URIs.
+- Added `LocalCryptographyClient` to do cryptography operations locally using a `JsonWebKey`.
+
+### Changed
+
+- Clarified documentation for `KeyClientBuilderExtensions` methods.
+
+## 4.1.0 (2020-08-11)
+
+### Added
+
+- Added "import" value to `KeyOperation` enumeration.
+- Added `RecoverableDays` property to `KeyProperties`.
+
+### Changed
+
+- Default service version is now 7.1.
 
 ## 4.0.4 (2020-07-09)
 
@@ -24,6 +52,13 @@
 ### Fixed
 
 - Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
+
+## 4.1.0-preview.1 (2020-03-09)
+
+### Added
+
+- Add "import" value to `KeyOperation` enumeration.
+- Add `RecoverableDays` property to `KeyProperties`.
 
 ## 4.0.2 (2020-03-03)
 

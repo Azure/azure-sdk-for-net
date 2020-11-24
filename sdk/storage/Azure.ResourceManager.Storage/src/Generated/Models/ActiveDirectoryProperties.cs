@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="domainGuid"> Specifies the domain GUID. </param>
         /// <param name="domainSid"> Specifies the security identifier (SID). </param>
         /// <param name="azureStorageSid"> Specifies the security identifier (SID) for Azure Storage. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/>, <paramref name="netBiosDomainName"/>, <paramref name="forestName"/>, <paramref name="domainGuid"/>, <paramref name="domainSid"/>, or <paramref name="azureStorageSid"/> is null. </exception>
         public ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid)
         {
             if (domainName == null)

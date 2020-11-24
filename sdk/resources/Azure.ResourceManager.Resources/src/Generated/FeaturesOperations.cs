@@ -228,6 +228,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual AsyncPageable<FeatureResult> ListAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -271,6 +272,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual Pageable<FeatureResult> List(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)

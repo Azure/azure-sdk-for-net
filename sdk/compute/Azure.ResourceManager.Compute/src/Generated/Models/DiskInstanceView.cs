@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -13,15 +14,17 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DiskInstanceView
     {
         /// <summary> Initializes a new instance of DiskInstanceView. </summary>
-        public DiskInstanceView()
+        internal DiskInstanceView()
         {
+            EncryptionSettings = new ChangeTrackingList<DiskEncryptionSettings>();
+            Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of DiskInstanceView. </summary>
         /// <param name="name"> The disk name. </param>
         /// <param name="encryptionSettings"> Specifies the encryption settings for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal DiskInstanceView(string name, IList<DiskEncryptionSettings> encryptionSettings, IList<InstanceViewStatus> statuses)
+        internal DiskInstanceView(string name, IReadOnlyList<DiskEncryptionSettings> encryptionSettings, IReadOnlyList<InstanceViewStatus> statuses)
         {
             Name = name;
             EncryptionSettings = encryptionSettings;
@@ -29,10 +32,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The disk name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Specifies the encryption settings for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </summary>
-        public IList<DiskEncryptionSettings> EncryptionSettings { get; set; }
+        public IReadOnlyList<DiskEncryptionSettings> EncryptionSettings { get; }
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; set; }
+        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }
 }

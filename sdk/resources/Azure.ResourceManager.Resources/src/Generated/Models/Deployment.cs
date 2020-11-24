@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of Deployment. </summary>
         /// <param name="properties"> The deployment properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public Deployment(DeploymentProperties properties)
         {
             if (properties == null)
@@ -23,17 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             Properties = properties;
-        }
-
-        /// <summary> Initializes a new instance of Deployment. </summary>
-        /// <param name="location"> The location to store the deployment data. </param>
-        /// <param name="properties"> The deployment properties. </param>
-        /// <param name="tags"> Deployment tags. </param>
-        internal Deployment(string location, DeploymentProperties properties, IDictionary<string, string> tags)
-        {
-            Location = location;
-            Properties = properties;
-            Tags = tags;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The location to store the deployment data. </summary>
@@ -41,6 +33,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The deployment properties. </summary>
         public DeploymentProperties Properties { get; }
         /// <summary> Deployment tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

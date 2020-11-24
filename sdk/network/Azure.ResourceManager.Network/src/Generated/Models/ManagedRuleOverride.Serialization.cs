@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId");
             writer.WriteStringValue(RuleId);
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state");
-                writer.WriteStringValue(State);
+                writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ManagedRuleOverride DeserializeManagedRuleOverride(JsonElement element)
         {
             string ruleId = default;
-            string state = default;
+            Optional<ManagedRuleEnabledState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"))
@@ -40,13 +40,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = property.Value.GetString();
+                    state = new ManagedRuleEnabledState(property.Value.GetString());
                     continue;
                 }
             }
-            return new ManagedRuleOverride(ruleId, state);
+            return new ManagedRuleOverride(ruleId, Optional.ToNullable(state));
         }
     }
 }

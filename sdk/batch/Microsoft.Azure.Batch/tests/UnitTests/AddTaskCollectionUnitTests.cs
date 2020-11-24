@@ -30,17 +30,15 @@
         public async Task AddTaskCollectionNoHandlerThrows()
         {
             const string dummyJobId = "Dummy";
-            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
-            {
-                //Clear the behaviors so that there is no way there is a AddTaskResultHandler defined
-                batchCli.CustomBehaviors.Clear();
+            using BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient();
+            //Clear the behaviors so that there is no way there is a AddTaskResultHandler defined
+            batchCli.CustomBehaviors.Clear();
 
-                CloudTask task = new CloudTask("Foo", "Bar");
-                
-                BatchClientException exception = await Assert.ThrowsAsync<BatchClientException>(() => batchCli.JobOperations.AddTaskAsync(dummyJobId, new List<CloudTask> { task }));
-                string expectedString = string.Format(BatchErrorMessages.GeneralBehaviorMissing, typeof (AddTaskCollectionResultHandler));
-                Assert.Equal(expectedString, exception.Message);
-            }
+            CloudTask task = new CloudTask("Foo", "Bar");
+
+            BatchClientException exception = await Assert.ThrowsAsync<BatchClientException>(() => batchCli.JobOperations.AddTaskAsync(dummyJobId, new List<CloudTask> { task }));
+            string expectedString = string.Format(BatchErrorMessages.GeneralBehaviorMissing, typeof(AddTaskCollectionResultHandler));
+            Assert.Equal(expectedString, exception.Message);
         }
 
         [Fact]
@@ -48,12 +46,10 @@
         public async Task AddTaskCollectionNullTaskThrows()
         {
             const string dummyJobId = "Dummy";
-            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
-            {
-                ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(() => batchCli.JobOperations.AddTaskAsync(dummyJobId, new List<CloudTask> { null }));
-                string expectedString = string.Format(BatchErrorMessages.CollectionMustNotContainNull);
-                Assert.Contains(expectedString, exception.Message);
-            }
+            using BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient();
+            ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(() => batchCli.JobOperations.AddTaskAsync(dummyJobId, new List<CloudTask> { null }));
+            string expectedString = string.Format(BatchErrorMessages.CollectionMustNotContainNull);
+            Assert.Contains(expectedString, exception.Message);
         }
 
         [Theory, InlineData(1), InlineData(2)]
@@ -118,15 +114,14 @@
             const string expectedCode = "badness";
             const string failingTaskId = "baz";
 
-            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
-            {
-                var tasksToAdd = new List<CloudTask>
+            using BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient();
+            var tasksToAdd = new List<CloudTask>
                     {
                         new CloudTask("foo", "bar"),
                         new CloudTask(failingTaskId, "qux")
                     };
 
-                var results = new List<Protocol.Models.TaskAddResult>
+            var results = new List<Protocol.Models.TaskAddResult>
                     {
                         new Protocol.Models.TaskAddResult(Protocol.Models.TaskAddStatus.Success, "foo"),
                         new Protocol.Models.TaskAddResult(
@@ -141,24 +136,23 @@
                                     }))
                     };
 
-                ParallelOperationsException parallelOperationsException = await Assert.ThrowsAsync<ParallelOperationsException>(
-                    () => batchCli.JobOperations.AddTaskAsync(
-                        "dummy",
-                        tasksToAdd,
-                        additionalBehaviors: InterceptorFactory.CreateAddTaskCollectionInterceptor(results)));
+            ParallelOperationsException parallelOperationsException = await Assert.ThrowsAsync<ParallelOperationsException>(
+                () => batchCli.JobOperations.AddTaskAsync(
+                    "dummy",
+                    tasksToAdd,
+                    additionalBehaviors: InterceptorFactory.CreateAddTaskCollectionInterceptor(results)));
 
-                Assert.Single(parallelOperationsException.InnerExceptions);
+            Assert.Single(parallelOperationsException.InnerExceptions);
 
-                var exception = parallelOperationsException.InnerException as AddTaskCollectionTerminatedException;
+            var exception = parallelOperationsException.InnerException as AddTaskCollectionTerminatedException;
 
-                Assert.NotNull(exception);
-                Assert.NotNull(exception.AddTaskResult);
-                Assert.Equal(failingTaskId, exception.AddTaskResult.TaskId);
-                Assert.Equal(AddTaskStatus.ClientError, exception.AddTaskResult.Status);
-                Assert.Equal(expectedCode, exception.AddTaskResult.Error.Code);
-                Assert.Equal("Addition of a task failed with unexpected status code. Details: TaskId=baz, Status=ClientError, Error.Code=badness, Error.Message=Test value, Error.Values=[key=value]",
-                    exception.Message);
-            }
+            Assert.NotNull(exception);
+            Assert.NotNull(exception.AddTaskResult);
+            Assert.Equal(failingTaskId, exception.AddTaskResult.TaskId);
+            Assert.Equal(AddTaskStatus.ClientError, exception.AddTaskResult.Status);
+            Assert.Equal(expectedCode, exception.AddTaskResult.Error.Code);
+            Assert.Equal("Addition of a task failed with unexpected status code. Details: TaskId=baz, Status=ClientError, Error.Code=badness, Error.Message=Test value, Error.Values=[key=value]",
+                exception.Message);
         }
 
         private async static Task<T> IssueAddTaskCollectionAndAssertExceptionIsExpectedAsync<T>(int operationCount, Func<int, string, Exception> exceptionFactory) where T : Exception
@@ -166,22 +160,20 @@
             const string dummyJobId = "Dummy";
             int taskCountToAdd = operationCount * Constants.MaxTasksInSingleAddTaskCollectionRequest;
 
-            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
-            {
-                AddExceptionGeneratingBehavior(batchCli, exceptionFactory);
+            using BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient();
+            AddExceptionGeneratingBehavior(batchCli, exceptionFactory);
 
-                IEnumerable<CloudTask> cloudTaskList = CreateCloudTasks(taskCountToAdd);
+            IEnumerable<CloudTask> cloudTaskList = CreateCloudTasks(taskCountToAdd);
 
-                T exception = await Assert.ThrowsAsync<T>(() => batchCli.JobOperations.AddTaskAsync(
-                    dummyJobId,
-                    cloudTaskList,
-                    parallelOptions: new BatchClientParallelOptions()
-                        {
-                            MaxDegreeOfParallelism = operationCount
-                        }));
+            T exception = await Assert.ThrowsAsync<T>(() => batchCli.JobOperations.AddTaskAsync(
+                dummyJobId,
+                cloudTaskList,
+                parallelOptions: new BatchClientParallelOptions()
+                {
+                    MaxDegreeOfParallelism = operationCount
+                }));
 
-                return exception;
-            }
+            return exception;
         }
 
         private static IEnumerable<CloudTask> CreateCloudTasks(int count)

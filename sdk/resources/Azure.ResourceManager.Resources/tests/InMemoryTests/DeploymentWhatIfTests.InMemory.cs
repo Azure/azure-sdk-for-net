@@ -440,7 +440,7 @@ namespace ResourceGroups.Tests
             Assert.AreEqual(ChangeType.Create, change.ChangeType);
 
             Assert.Null(change.Before);
-            Assert.Null(change.Delta);
+            Assert.IsEmpty(change.Delta);
 
             Assert.NotNull(change.After);
             Assert.AreEqual("myResourceGroup", JsonDocument.Parse(JsonSerializer.Serialize(change.After)).RootElement.GetProperty("name").GetString());

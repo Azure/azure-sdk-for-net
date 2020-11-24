@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,12 +16,15 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of StorageAccount. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public StorageAccount(string location) : base(location)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of StorageAccount. </summary>
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage account. </param>
         /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
         /// <param name="blobRestoreStatus"> Blob restore status. </param>
-        internal StorageAccount(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, Kind? kind, Identity identity, ProvisioningState? provisioningState, Endpoints primaryEndpoints, string primaryLocation, AccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverTime, string secondaryLocation, AccountStatus? statusOfSecondary, DateTimeOffset? creationTime, CustomDomain customDomain, Endpoints secondaryEndpoints, Encryption encryption, AccessTier? accessTier, AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, NetworkRuleSet networkRuleSet, bool? isHnsEnabled, GeoReplicationStats geoReplicationStats, bool? failoverInProgress, LargeFileSharesState? largeFileSharesState, IList<PrivateEndpointConnection> privateEndpointConnections, RoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus) : base(id, name, type, tags, location)
+        internal StorageAccount(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, Kind? kind, Identity identity, ProvisioningState? provisioningState, Endpoints primaryEndpoints, string primaryLocation, AccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverTime, string secondaryLocation, AccountStatus? statusOfSecondary, DateTimeOffset? creationTime, CustomDomain customDomain, Endpoints secondaryEndpoints, Encryption encryption, AccessTier? accessTier, AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, NetworkRuleSet networkRuleSet, bool? isHnsEnabled, GeoReplicationStats geoReplicationStats, bool? failoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections, RoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -128,7 +132,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
         public LargeFileSharesState? LargeFileSharesState { get; set; }
         /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
-        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<PrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
         public RoutingPreference RoutingPreference { get; set; }
         /// <summary> Blob restore status. </summary>

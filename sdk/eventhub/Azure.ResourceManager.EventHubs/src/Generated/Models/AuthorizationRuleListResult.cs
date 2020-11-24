@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
         internal AuthorizationRuleListResult()
         {
+            Value = new ChangeTrackingList<AuthorizationRule>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>

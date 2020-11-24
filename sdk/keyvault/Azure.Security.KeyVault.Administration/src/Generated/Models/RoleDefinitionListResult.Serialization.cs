@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -15,16 +16,21 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static RoleDefinitionListResult DeserializeRoleDefinitionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RoleDefinition>> value = default;
+            Optional<IReadOnlyList<KeyVaultRoleDefinition>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<RoleDefinition> array = new List<RoleDefinition>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<KeyVaultRoleDefinition> array = new List<KeyVaultRoleDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleDefinition.DeserializeRoleDefinition(item));
+                        array.Add(KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(item));
                     }
                     value = array;
                     continue;

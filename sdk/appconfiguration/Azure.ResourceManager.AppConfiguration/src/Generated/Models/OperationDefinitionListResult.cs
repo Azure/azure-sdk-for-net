@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of OperationDefinitionListResult. </summary>
         internal OperationDefinitionListResult()
         {
+            Value = new ChangeTrackingList<OperationDefinition>();
         }
 
         /// <summary> Initializes a new instance of OperationDefinitionListResult. </summary>

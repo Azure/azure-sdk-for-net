@@ -28,8 +28,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(DefaultLanguageCode))
             {
-                writer.WritePropertyName("defaultLanguageCode");
-                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                if (DefaultLanguageCode != null)
+                {
+                    writer.WritePropertyName("defaultLanguageCode");
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("defaultLanguageCode");
+                }
             }
             if (Optional.IsDefined(IncludeTypelessEntities))
             {
@@ -92,7 +99,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static EntityRecognitionSkill DeserializeEntityRecognitionSkill(JsonElement element)
         {
             Optional<IList<EntityCategory>> categories = default;
-            Optional<EntityRecognitionSkillLanguage> defaultLanguageCode = default;
+            Optional<EntityRecognitionSkillLanguage?> defaultLanguageCode = default;
             Optional<bool?> includeTypelessEntities = default;
             Optional<double?> minimumPrecision = default;
             string odataType = default;
@@ -105,6 +112,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("categories"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<EntityCategory> array = new List<EntityCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -115,6 +127,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("defaultLanguageCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        defaultLanguageCode = null;
+                        continue;
+                    }
                     defaultLanguageCode = new EntityRecognitionSkillLanguage(property.Value.GetString());
                     continue;
                 }

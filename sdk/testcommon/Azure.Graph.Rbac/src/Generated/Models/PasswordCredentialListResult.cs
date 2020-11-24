@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of PasswordCredentialListResult. </summary>
         internal PasswordCredentialListResult()
         {
+            Value = new ChangeTrackingList<PasswordCredential>();
         }
 
         /// <summary> Initializes a new instance of PasswordCredentialListResult. </summary>

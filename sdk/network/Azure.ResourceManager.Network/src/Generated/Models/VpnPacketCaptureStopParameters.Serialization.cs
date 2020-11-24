@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SasUrl != null)
+            if (Optional.IsDefined(SasUrl))
             {
                 writer.WritePropertyName("sasUrl");
                 writer.WriteStringValue(SasUrl);

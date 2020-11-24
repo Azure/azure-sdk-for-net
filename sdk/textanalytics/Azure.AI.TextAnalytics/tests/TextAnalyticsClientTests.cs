@@ -58,6 +58,17 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public void RecognizePiiEntitiesArgumentValidation()
+        {
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizePiiEntitiesAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync((string)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizePiiEntitiesBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync(null, new RecognizePiiEntitiesOptions()));
+        }
+
+        [Test]
         public void AnalyzeSentimentArgumentValidation()
         {
             var documents = new List<string>();
@@ -88,41 +99,6 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync((List<string>)null));
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeLinkedEntitiesBatchAsync(documents));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
-        }
-
-        [Test]
-        public void ConvertToDocumentInputTest()
-        {
-            string document = "This is a test";
-            var expectedDocument = new TextDocumentInput("0", document)
-            {
-                Language = "en"
-            };
-
-            TextDocumentInput textInput = Client.ConvertToDocumentInput(document, null);
-            Assert.IsTrue(CompareTextDocumentInput(expectedDocument, textInput));
-
-            textInput = Client.ConvertToDocumentInput(document, "es");
-            expectedDocument.Language = "es";
-            Assert.IsTrue(CompareTextDocumentInput(expectedDocument, textInput));
-
-            textInput = Client.ConvertToDocumentInput(document, "es", 2);
-            var expectedDocument2 = new TextDocumentInput("2", document)
-            {
-                Language = "es"
-            };
-            Assert.IsTrue(CompareTextDocumentInput(expectedDocument2, textInput));
-        }
-
-        private bool CompareTextDocumentInput(TextDocumentInput tdi1, TextDocumentInput tdi2)
-        {
-            if (!tdi1.Id.Equals(tdi2.Id))
-                return false;
-            if (!tdi1.Language.Equals(tdi2.Language))
-                return false;
-            if (!tdi1.Text.Equals(tdi2.Text))
-                return false;
-            return true;
         }
     }
 }

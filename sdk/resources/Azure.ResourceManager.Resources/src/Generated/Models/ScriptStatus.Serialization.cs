@@ -11,69 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ScriptStatus : IUtf8JsonSerializable
+    public partial class ScriptStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (ContainerInstanceId != null)
-            {
-                writer.WritePropertyName("containerInstanceId");
-                writer.WriteStringValue(ContainerInstanceId);
-            }
-            if (StorageAccountId != null)
-            {
-                writer.WritePropertyName("storageAccountId");
-                writer.WriteStringValue(StorageAccountId);
-            }
-            if (StartTime != null)
-            {
-                writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
-            }
-            if (EndTime != null)
-            {
-                writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime.Value, "O");
-            }
-            if (ExpirationTime != null)
-            {
-                writer.WritePropertyName("expirationTime");
-                writer.WriteStringValue(ExpirationTime.Value, "O");
-            }
-            if (Error != null)
-            {
-                writer.WritePropertyName("error");
-                writer.WriteObjectValue(Error);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ScriptStatus DeserializeScriptStatus(JsonElement element)
         {
-            string containerInstanceId = default;
-            string storageAccountId = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
-            DateTimeOffset? expirationTime = default;
-            ErrorResponse error = default;
+            Optional<string> containerInstanceId = default;
+            Optional<string> storageAccountId = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<DateTimeOffset> expirationTime = default;
+            Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerInstanceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     containerInstanceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("storageAccountId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageAccountId = property.Value.GetString();
                     continue;
                 }
@@ -81,6 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -90,6 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -99,6 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expirationTime = property.Value.GetDateTimeOffset("O");
@@ -108,13 +67,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
             }
-            return new ScriptStatus(containerInstanceId, storageAccountId, startTime, endTime, expirationTime, error);
+            return new ScriptStatus(containerInstanceId.Value, storageAccountId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(expirationTime), error.Value);
         }
     }
 }

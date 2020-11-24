@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName");
                 writer.WriteStringValue(TargetResourceGroupName);
             }
-            if (TargetVirtualNetwork != null)
+            if (Optional.IsDefined(TargetVirtualNetwork))
             {
                 writer.WritePropertyName("targetVirtualNetwork");
                 writer.WriteObjectValue(TargetVirtualNetwork);
             }
-            if (TargetSubnet != null)
+            if (Optional.IsDefined(TargetSubnet))
             {
                 writer.WritePropertyName("targetSubnet");
                 writer.WriteObjectValue(TargetSubnet);

@@ -12,5 +12,10 @@ namespace Azure.Storage.Blobs.Models
     /// </summary>
     public class BlobQueryJsonTextOptions : BlobQueryTextOptions
     {
+
+        /// <summary>
+        /// Record Separator.
+        /// </summary>
+        public string RecordSeparator { get; set; }
     }
 }

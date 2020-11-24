@@ -14,17 +14,18 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualNetworkUsage DeserializeVirtualNetworkUsage(JsonElement element)
         {
-            double? currentValue = default;
-            string id = default;
-            double? limit = default;
-            VirtualNetworkUsageName name = default;
-            string unit = default;
+            Optional<double> currentValue = default;
+            Optional<string> id = default;
+            Optional<double> limit = default;
+            Optional<VirtualNetworkUsageName> name = default;
+            Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentValue"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetDouble();
@@ -32,10 +33,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -43,6 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetDouble();
@@ -52,6 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = VirtualNetworkUsageName.DeserializeVirtualNetworkUsageName(property.Value);
@@ -59,15 +58,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("unit"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     unit = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworkUsage(currentValue, id, limit, name, unit);
+            return new VirtualNetworkUsage(Optional.ToNullable(currentValue), id.Value, Optional.ToNullable(limit), name.Value, unit.Value);
         }
     }
 }

@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public virtual AsyncPageable<ExpressRouteCircuitAuthorization> ListAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public virtual Pageable<ExpressRouteCircuitAuthorization> List(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -178,6 +180,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="authorizationName"/> is null. </exception>
         public virtual async Task<ExpressRouteCircuitAuthorizationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -212,6 +215,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="authorizationName"/> is null. </exception>
         public virtual ExpressRouteCircuitAuthorizationsDeleteOperation StartDelete(string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -247,6 +251,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="authorizationParameters"> Parameters supplied to the create or update express route circuit authorization operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="authorizationName"/>, or <paramref name="authorizationParameters"/> is null. </exception>
         public virtual async Task<ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -286,6 +291,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="authorizationParameters"> Parameters supplied to the create or update express route circuit authorization operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="authorizationName"/>, or <paramref name="authorizationParameters"/> is null. </exception>
         public virtual ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

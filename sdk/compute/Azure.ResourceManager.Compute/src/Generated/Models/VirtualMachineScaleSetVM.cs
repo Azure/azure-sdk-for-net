@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,12 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVM. </summary>
         /// <param name="location"> Resource location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public VirtualMachineScaleSetVM(string location) : base(location)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            Resources = new ChangeTrackingList<VirtualMachineExtension>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVM. </summary>
@@ -49,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that contain the Windows Server operating system. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; If this element is included in a request for an update, the value must match the initial value. This value cannot be updated. &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
         /// <param name="modelDefinitionApplied"> Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine. </param>
         /// <param name="protectionPolicy"> Specifies the protection policy of the virtual machine. </param>
-        internal VirtualMachineScaleSetVM(string id, string name, string type, string location, IDictionary<string, string> tags, string instanceId, Sku sku, Plan plan, IList<VirtualMachineExtension> resources, IList<string> zones, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVMInstanceView instanceView, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVMProtectionPolicy protectionPolicy) : base(id, name, type, location, tags)
+        internal VirtualMachineScaleSetVM(string id, string name, string type, string location, IDictionary<string, string> tags, string instanceId, Sku sku, Plan plan, IReadOnlyList<VirtualMachineExtension> resources, IReadOnlyList<string> zones, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVMInstanceView instanceView, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVMProtectionPolicy protectionPolicy) : base(id, name, type, location, tags)
         {
             InstanceId = instanceId;
             Sku = sku;
@@ -80,9 +85,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </summary>
         public Plan Plan { get; set; }
         /// <summary> The virtual machine child extension resources. </summary>
-        public IList<VirtualMachineExtension> Resources { get; }
+        public IReadOnlyList<VirtualMachineExtension> Resources { get; }
         /// <summary> The virtual machine zones. </summary>
-        public IList<string> Zones { get; }
+        public IReadOnlyList<string> Zones { get; }
         /// <summary> Specifies whether the latest model has been applied to the virtual machine. </summary>
         public bool? LatestModelApplied { get; }
         /// <summary> Azure VM unique ID. </summary>

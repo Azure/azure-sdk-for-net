@@ -102,6 +102,10 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Update != null)
+            {
+                Update.Validate();
+            }
             if (DefaultAnswerUsedForExtraction != null)
             {
                 if (DefaultAnswerUsedForExtraction.Length > 300)

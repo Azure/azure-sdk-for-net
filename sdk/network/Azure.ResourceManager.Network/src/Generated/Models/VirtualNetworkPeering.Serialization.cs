@@ -15,62 +15,52 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (AllowVirtualNetworkAccess != null)
+            if (Optional.IsDefined(AllowVirtualNetworkAccess))
             {
                 writer.WritePropertyName("allowVirtualNetworkAccess");
                 writer.WriteBooleanValue(AllowVirtualNetworkAccess.Value);
             }
-            if (AllowForwardedTraffic != null)
+            if (Optional.IsDefined(AllowForwardedTraffic))
             {
                 writer.WritePropertyName("allowForwardedTraffic");
                 writer.WriteBooleanValue(AllowForwardedTraffic.Value);
             }
-            if (AllowGatewayTransit != null)
+            if (Optional.IsDefined(AllowGatewayTransit))
             {
                 writer.WritePropertyName("allowGatewayTransit");
                 writer.WriteBooleanValue(AllowGatewayTransit.Value);
             }
-            if (UseRemoteGateways != null)
+            if (Optional.IsDefined(UseRemoteGateways))
             {
                 writer.WritePropertyName("useRemoteGateways");
                 writer.WriteBooleanValue(UseRemoteGateways.Value);
             }
-            if (RemoteVirtualNetwork != null)
+            if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork");
                 writer.WriteObjectValue(RemoteVirtualNetwork);
             }
-            if (RemoteAddressSpace != null)
+            if (Optional.IsDefined(RemoteAddressSpace))
             {
                 writer.WritePropertyName("remoteAddressSpace");
                 writer.WriteObjectValue(RemoteAddressSpace);
             }
-            if (PeeringState != null)
+            if (Optional.IsDefined(PeeringState))
             {
                 writer.WritePropertyName("peeringState");
                 writer.WriteStringValue(PeeringState.Value.ToString());
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -78,54 +68,48 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualNetworkPeering DeserializeVirtualNetworkPeering(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string id = default;
-            bool? allowVirtualNetworkAccess = default;
-            bool? allowForwardedTraffic = default;
-            bool? allowGatewayTransit = default;
-            bool? useRemoteGateways = default;
-            SubResource remoteVirtualNetwork = default;
-            AddressSpace remoteAddressSpace = default;
-            VirtualNetworkPeeringState? peeringState = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<bool> allowVirtualNetworkAccess = default;
+            Optional<bool> allowForwardedTraffic = default;
+            Optional<bool> allowGatewayTransit = default;
+            Optional<bool> useRemoteGateways = default;
+            Optional<SubResource> remoteVirtualNetwork = default;
+            Optional<AddressSpace> remoteAddressSpace = default;
+            Optional<VirtualNetworkPeeringState> peeringState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("allowVirtualNetworkAccess"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowVirtualNetworkAccess = property0.Value.GetBoolean();
@@ -135,6 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowForwardedTraffic = property0.Value.GetBoolean();
@@ -144,6 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowGatewayTransit = property0.Value.GetBoolean();
@@ -153,6 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             useRemoteGateways = property0.Value.GetBoolean();
@@ -162,6 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             remoteVirtualNetwork = DeserializeSubResource(property0.Value);
@@ -171,6 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             remoteAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
@@ -180,6 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             peeringState = new VirtualNetworkPeeringState(property0.Value.GetString());
@@ -189,6 +179,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -198,7 +189,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkPeering(id, name, etag, allowVirtualNetworkAccess, allowForwardedTraffic, allowGatewayTransit, useRemoteGateways, remoteVirtualNetwork, remoteAddressSpace, peeringState, provisioningState);
+            return new VirtualNetworkPeering(id.Value, name.Value, etag.Value, Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork.Value, remoteAddressSpace.Value, Optional.ToNullable(peeringState), Optional.ToNullable(provisioningState));
         }
     }
 }

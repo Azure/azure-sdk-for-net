@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VaultSecretGroup. </summary>
         public VaultSecretGroup()
         {
+            VaultCertificates = new ChangeTrackingList<VaultCertificate>();
         }
 
         /// <summary> Initializes a new instance of VaultSecretGroup. </summary>
@@ -29,6 +31,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </summary>
         public SubResource SourceVault { get; set; }
         /// <summary> The list of key vault references in SourceVault which contain certificates. </summary>
-        public IList<VaultCertificate> VaultCertificates { get; set; }
+        public IList<VaultCertificate> VaultCertificates { get; }
     }
 }

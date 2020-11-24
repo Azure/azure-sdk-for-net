@@ -14,16 +14,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static OperationDefinition DeserializeOperationDefinition(JsonElement element)
         {
-            string name = default;
-            OperationDefinitionDisplay display = default;
+            Optional<string> name = default;
+            Optional<OperationDefinitionDisplay> display = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -31,13 +27,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     display = OperationDefinitionDisplay.DeserializeOperationDefinitionDisplay(property.Value);
                     continue;
                 }
             }
-            return new OperationDefinition(name, display);
+            return new OperationDefinition(name.Value, display.Value);
         }
     }
 }

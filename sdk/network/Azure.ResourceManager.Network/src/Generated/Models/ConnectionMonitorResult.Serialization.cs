@@ -16,69 +16,49 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionMonitorResult DeserializeConnectionMonitorResult(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            string etag = default;
-            string type = default;
-            string location = default;
-            IReadOnlyDictionary<string, string> tags = default;
-            ConnectionMonitorSource source = default;
-            ConnectionMonitorDestination destination = default;
-            bool? autoStart = default;
-            int? monitoringIntervalInSeconds = default;
-            IReadOnlyList<ConnectionMonitorEndpoint> endpoints = default;
-            IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations = default;
-            IReadOnlyList<ConnectionMonitorTestGroup> testGroups = default;
-            IReadOnlyList<ConnectionMonitorOutput> outputs = default;
-            string notes = default;
-            ProvisioningState? provisioningState = default;
-            DateTimeOffset? startTime = default;
-            string monitoringStatus = default;
-            ConnectionMonitorType? connectionMonitorType = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ConnectionMonitorSource> source = default;
+            Optional<ConnectionMonitorDestination> destination = default;
+            Optional<bool> autoStart = default;
+            Optional<int> monitoringIntervalInSeconds = default;
+            Optional<IReadOnlyList<ConnectionMonitorEndpoint>> endpoints = default;
+            Optional<IReadOnlyList<ConnectionMonitorTestConfiguration>> testConfigurations = default;
+            Optional<IReadOnlyList<ConnectionMonitorTestGroup>> testGroups = default;
+            Optional<IReadOnlyList<ConnectionMonitorOutput>> outputs = default;
+            Optional<string> notes = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<string> monitoringStatus = default;
+            Optional<ConnectionMonitorType> connectionMonitorType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -86,31 +66,31 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("source"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             source = ConnectionMonitorSource.DeserializeConnectionMonitorSource(property0.Value);
@@ -120,6 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             destination = ConnectionMonitorDestination.DeserializeConnectionMonitorDestination(property0.Value);
@@ -129,6 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoStart = property0.Value.GetBoolean();
@@ -138,6 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             monitoringIntervalInSeconds = property0.Value.GetInt32();
@@ -147,19 +130,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ConnectionMonitorEndpoint> array = new List<ConnectionMonitorEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ConnectionMonitorEndpoint.DeserializeConnectionMonitorEndpoint(item));
-                                }
+                                array.Add(ConnectionMonitorEndpoint.DeserializeConnectionMonitorEndpoint(item));
                             }
                             endpoints = array;
                             continue;
@@ -168,19 +145,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ConnectionMonitorTestConfiguration> array = new List<ConnectionMonitorTestConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ConnectionMonitorTestConfiguration.DeserializeConnectionMonitorTestConfiguration(item));
-                                }
+                                array.Add(ConnectionMonitorTestConfiguration.DeserializeConnectionMonitorTestConfiguration(item));
                             }
                             testConfigurations = array;
                             continue;
@@ -189,19 +160,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ConnectionMonitorTestGroup> array = new List<ConnectionMonitorTestGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ConnectionMonitorTestGroup.DeserializeConnectionMonitorTestGroup(item));
-                                }
+                                array.Add(ConnectionMonitorTestGroup.DeserializeConnectionMonitorTestGroup(item));
                             }
                             testGroups = array;
                             continue;
@@ -210,29 +175,19 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ConnectionMonitorOutput> array = new List<ConnectionMonitorOutput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ConnectionMonitorOutput.DeserializeConnectionMonitorOutput(item));
-                                }
+                                array.Add(ConnectionMonitorOutput.DeserializeConnectionMonitorOutput(item));
                             }
                             outputs = array;
                             continue;
                         }
                         if (property0.NameEquals("notes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             notes = property0.Value.GetString();
                             continue;
                         }
@@ -240,6 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -249,6 +205,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
@@ -256,10 +213,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("monitoringStatus"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             monitoringStatus = property0.Value.GetString();
                             continue;
                         }
@@ -267,6 +220,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectionMonitorType = new ConnectionMonitorType(property0.Value.GetString());
@@ -276,7 +230,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorResult(name, id, etag, type, location, tags, source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes, provisioningState, startTime, monitoringStatus, connectionMonitorType);
+            return new ConnectionMonitorResult(name.Value, id.Value, etag.Value, type.Value, location.Value, Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType));
         }
     }
 }

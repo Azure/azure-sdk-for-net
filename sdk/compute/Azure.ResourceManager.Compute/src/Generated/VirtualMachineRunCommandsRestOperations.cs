@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VirtualMachineRunCommandsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -57,12 +57,14 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/runCommands", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Lists all available run commands for a subscription in a location. </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public async Task<Response<RunCommandListResult>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -78,14 +80,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         RunCommandListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
-                        }
+                        value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,6 +91,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available run commands for a subscription in a location. </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Response<RunCommandListResult> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -111,14 +107,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         RunCommandListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
-                        }
+                        value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -141,6 +130,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(commandId, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -148,6 +138,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="commandId"/> is null. </exception>
         public async Task<Response<RunCommandDocument>> GetAsync(string location, string commandId, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -167,14 +158,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         RunCommandDocument value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RunCommandDocument.DeserializeRunCommandDocument(document.RootElement);
-                        }
+                        value = RunCommandDocument.DeserializeRunCommandDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -186,6 +170,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="commandId"/> is null. </exception>
         public Response<RunCommandDocument> Get(string location, string commandId, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -205,14 +190,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         RunCommandDocument value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RunCommandDocument.DeserializeRunCommandDocument(document.RootElement);
-                        }
+                        value = RunCommandDocument.DeserializeRunCommandDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -229,6 +207,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -236,6 +215,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
         public async Task<Response<RunCommandListResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -255,14 +235,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         RunCommandListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
-                        }
+                        value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -274,6 +247,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
         public Response<RunCommandListResult> ListNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -293,14 +267,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         RunCommandListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
-                        }
+                        value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

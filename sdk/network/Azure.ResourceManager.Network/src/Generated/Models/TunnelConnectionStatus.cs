@@ -11,11 +11,12 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The current state of the tunnel. </summary>
-    public readonly partial struct TunnelConnectionStatus : IEquatable<TunnelConnectionStatus>
+    internal readonly partial struct TunnelConnectionStatus : IEquatable<TunnelConnectionStatus>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="TunnelConnectionStatus"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TunnelConnectionStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

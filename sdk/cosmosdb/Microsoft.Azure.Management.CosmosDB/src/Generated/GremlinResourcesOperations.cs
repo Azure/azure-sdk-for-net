@@ -1860,6 +1860,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
             cancellationToken.ThrowIfCancellationRequested();
             System.Uri _originRequestUri = _httpRequest.RequestUri;
+
             _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
@@ -2620,6 +2621,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
             cancellationToken.ThrowIfCancellationRequested();
             System.Uri _originRequestUri = _httpRequest.RequestUri;
+
             _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
@@ -3126,6 +3128,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
             cancellationToken.ThrowIfCancellationRequested();
             System.Uri _originRequestUri = _httpRequest.RequestUri;
+
             _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {

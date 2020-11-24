@@ -15,13 +15,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of P2SVpnProfileParameters. </summary>
-        /// <param name="authenticationMethod"> VPN client authentication method. </param>
-        internal P2SVpnProfileParameters(AuthenticationMethod? authenticationMethod)
-        {
-            AuthenticationMethod = authenticationMethod;
-        }
-
         /// <summary> VPN client authentication method. </summary>
         public AuthenticationMethod? AuthenticationMethod { get; set; }
     }

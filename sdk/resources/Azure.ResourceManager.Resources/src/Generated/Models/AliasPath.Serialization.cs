@@ -15,17 +15,13 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static AliasPath DeserializeAliasPath(JsonElement element)
         {
-            string path = default;
-            IReadOnlyList<string> apiVersions = default;
-            AliasPattern pattern = default;
+            Optional<string> path = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<AliasPattern> pattern = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     path = property.Value.GetString();
                     continue;
                 }
@@ -33,19 +29,13 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     apiVersions = array;
                     continue;
@@ -54,13 +44,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pattern = AliasPattern.DeserializeAliasPattern(property.Value);
                     continue;
                 }
             }
-            return new AliasPath(path, apiVersions, pattern);
+            return new AliasPath(path.Value, Optional.ToList(apiVersions), pattern.Value);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (KeyUri != null)
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri");
                 writer.WriteStringValue(KeyUri);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static EncryptionScopeKeyVaultProperties DeserializeEncryptionScopeKeyVaultProperties(JsonElement element)
         {
-            string keyUri = default;
+            Optional<string> keyUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyUri = property.Value.GetString();
                     continue;
                 }
             }
-            return new EncryptionScopeKeyVaultProperties(keyUri);
+            return new EncryptionScopeKeyVaultProperties(keyUri.Value);
         }
     }
 }

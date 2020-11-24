@@ -15,27 +15,27 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher");
                 writer.WriteStringValue(Publisher);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product");
                 writer.WriteStringValue(Product);
             }
-            if (PromotionCode != null)
+            if (Optional.IsDefined(PromotionCode))
             {
                 writer.WritePropertyName("promotionCode");
                 writer.WriteStringValue(PromotionCode);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version");
                 writer.WriteStringValue(Version);
@@ -45,60 +45,40 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static PlanPatchable DeserializePlanPatchable(JsonElement element)
         {
-            string name = default;
-            string publisher = default;
-            string product = default;
-            string promotionCode = default;
-            string version = default;
+            Optional<string> name = default;
+            Optional<string> publisher = default;
+            Optional<string> product = default;
+            Optional<string> promotionCode = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("publisher"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     publisher = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("product"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     product = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("promotionCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     promotionCode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     version = property.Value.GetString();
                     continue;
                 }
             }
-            return new PlanPatchable(name, publisher, product, promotionCode, version);
+            return new PlanPatchable(name.Value, publisher.Value, product.Value, promotionCode.Value, version.Value);
         }
     }
 }

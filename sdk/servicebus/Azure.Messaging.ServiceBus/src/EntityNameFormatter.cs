@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Administration;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     /// This class can be used to format the path for different Service Bus entity types.
     /// </summary>
-    public static class EntityNameFormatter
+    internal static class EntityNameFormatter
     {
         private const string PathDelimiter = @"/";
         private const string SubscriptionsSubPath = "Subscriptions";
@@ -76,22 +76,22 @@ namespace Azure.Messaging.ServiceBus
 
         internal static void CheckValidQueueName(string queueName, string paramName = "queuePath")
         {
-            CheckValidEntityName(GetPathWithoutBaseUri(queueName), ManagementClientConstants.QueueNameMaximumLength, true, paramName);
+            CheckValidEntityName(GetPathWithoutBaseUri(queueName), AdministrationClientConstants.QueueNameMaximumLength, true, paramName);
         }
 
         internal static void CheckValidTopicName(string topicName, string paramName = "topicPath")
         {
-            CheckValidEntityName(topicName, ManagementClientConstants.TopicNameMaximumLength, true, paramName);
+            CheckValidEntityName(topicName, AdministrationClientConstants.TopicNameMaximumLength, true, paramName);
         }
 
         internal static void CheckValidSubscriptionName(string subscriptionName, string paramName = "subscriptionName")
         {
-            CheckValidEntityName(subscriptionName, ManagementClientConstants.SubscriptionNameMaximumLength, false, paramName);
+            CheckValidEntityName(subscriptionName, AdministrationClientConstants.SubscriptionNameMaximumLength, false, paramName);
         }
 
         internal static void CheckValidRuleName(string ruleName, string paramName = "ruleName")
         {
-            CheckValidEntityName(ruleName, ManagementClientConstants.RuleNameMaximumLength, false, paramName);
+            CheckValidEntityName(ruleName, AdministrationClientConstants.RuleNameMaximumLength, false, paramName);
         }
 
         private static void CheckValidEntityName(string entityName, int maxEntityNameLength, bool allowSeparator, string paramName)
@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus
                 throw new ArgumentException($@"The entity name/path contains an invalid character '{Constants.PathDelimiter}'", paramName);
             }
 
-            foreach (var uriSchemeKey in ManagementClientConstants.InvalidEntityPathCharacters)
+            foreach (var uriSchemeKey in AdministrationClientConstants.InvalidEntityPathCharacters)
             {
                 if (entityName.IndexOf(uriSchemeKey) >= 0)
                 {

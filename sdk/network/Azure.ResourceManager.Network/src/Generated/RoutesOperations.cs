@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routeTableName"/> is null. </exception>
         public virtual AsyncPageable<Route> ListAsync(string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routeTableName"/> is null. </exception>
         public virtual Pageable<Route> List(string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -178,6 +180,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeTableName"/>, or <paramref name="routeName"/> is null. </exception>
         public virtual async Task<RoutesDeleteOperation> StartDeleteAsync(string resourceGroupName, string routeTableName, string routeName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -212,6 +215,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeTableName"/>, or <paramref name="routeName"/> is null. </exception>
         public virtual RoutesDeleteOperation StartDelete(string resourceGroupName, string routeTableName, string routeName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -247,6 +251,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="routeParameters"> Parameters supplied to the create or update route operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeTableName"/>, <paramref name="routeName"/>, or <paramref name="routeParameters"/> is null. </exception>
         public virtual async Task<RoutesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string routeTableName, string routeName, Route routeParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -286,6 +291,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="routeParameters"> Parameters supplied to the create or update route operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routeTableName"/>, <paramref name="routeName"/>, or <paramref name="routeParameters"/> is null. </exception>
         public virtual RoutesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string routeTableName, string routeName, Route routeParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

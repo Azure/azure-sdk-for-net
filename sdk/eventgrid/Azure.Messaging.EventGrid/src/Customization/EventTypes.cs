@@ -19,6 +19,18 @@ namespace Azure.Messaging.EventGrid
         public const string AppConfigurationKeyValueDeletedEvent = "Microsoft.AppConfiguration.KeyValueDeleted";
         public const string AppConfigurationKeyValueModifiedEvent = "Microsoft.AppConfiguration.KeyValueModified";
 
+        // Communication events
+        public const string ACSChatMemberAddedToThreadWithUserEvent = "Microsoft.Communication.ChatMemberAddedToThreadWithUser";
+        public const string ACSChatMemberRemovedFromThreadWithUserEvent = "Microsoft.Communication.ChatMemberRemovedFromThreadWithUser";
+        public const string ACSChatMessageDeletedEvent = "Microsoft.Communication.ChatMessageDeleted";
+        public const string ACSChatMessageEditedEvent = "Microsoft.Communication.ChatMessageEdited";
+        public const string ACSChatMessageReceivedEvent = "Microsoft.Communication.ChatMessageReceived";
+        public const string ACSChatThreadCreatedWithUserEvent = "Microsoft.Communication.ChatThreadCreatedWithUser";
+        public const string ACSChatThreadPropertiesUpdatedPerUserEvent = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
+        public const string ACSChatThreadWithUserDeletedEvent = "Microsoft.Communication.ChatThreadWithUserDeleted";
+        public const string ACSSMSDeliveryReportReceivedEvent = "Microsoft.Communication.SMSDeliveryReportReceived";
+        public const string ACSSMSReceivedEvent= "Microsoft.Communication.SMSReceived";
+
         // ContainerRegistry events
         public const string ContainerRegistryImagePushedEvent = "Microsoft.ContainerRegistry.ImagePushed";
         public const string ContainerRegistryImageDeletedEvent = "Microsoft.ContainerRegistry.ImageDeleted";
@@ -38,6 +50,18 @@ namespace Azure.Messaging.EventGrid
 
         // Event Hub Events
         public const string EventHubCaptureFileCreatedEvent = "Microsoft.EventHub.CaptureFileCreated";
+
+        // Key Vault Events
+        public const string KeyVaultCertificateNewVersionCreatedEvent = "Microsoft.KeyVault.CertificateNewVersionCreated";
+        public const string KeyVaultCertificateNearExpiryEvent = "Microsoft.KeyVault.CertificateNearExpiry";
+        public const string KeyVaultCertificateExpiredEvent = "Microsoft.KeyVault.CertificateExpired";
+        public const string KeyVaultKeyNewVersionCreatedEvent = "Microsoft.KeyVault.KeyNewVersionCreated";
+        public const string KeyVaultKeyNearExpiryEvent = "Microsoft.KeyVault.KeyNearExpiry";
+        public const string KeyVaultKeyExpiredEvent = "Microsoft.KeyVault.KeyExpired";
+        public const string KeyVaultSecretNewVersionCreatedEvent = "Microsoft.KeyVault.SecretNewVersionCreated";
+        public const string KeyVaultSecretNearExpiryEvent = "Microsoft.KeyVault.SecretNearExpiry";
+        public const string KeyVaultSecretExpiredEvent = "Microsoft.KeyVault.SecretExpired";
+        public const string KeyVaultVaultAccessPolicyChangedEvent = "Microsoft.KeyVault.VaultAccessPolicyChanged";
 
         // MachineLearningServices events
         public const string MachineLearningServicesDatasetDriftDetectedEvent = "Microsoft.MachineLearningServices.DatasetDriftDetected";
@@ -99,6 +123,7 @@ namespace Azure.Messaging.EventGrid
         public const string StorageDirectoryCreatedEvent = "Microsoft.Storage.DirectoryCreated";
         public const string StorageDirectoryDeletedEvent = "Microsoft.Storage.DirectoryDeleted";
         public const string StorageDirectoryRenamedEvent = "Microsoft.Storage.DirectoryRenamed";
+        public const string StorageLifecyclePolicyCompletedEvent = "Microsoft.Storage.LifecyclePolicyCompleted";
 
         // App Service
         public const string WebAppUpdated = "Microsoft.Web.AppUpdated";

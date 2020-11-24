@@ -1,8 +1,45 @@
 # Release History
 
-## 12.3.0-preview.3 (Unreleased)
+## 12.6.0-beta.1 (Unreleased)
+
+
+## 12.5.0 (2020-11-10)
+- Includes all features from 12.5.0-preview.1
+- Fixed bug where ShareDirectoryClient.Exists(), .DeleteIfExists() and ShareFileClient.Exists(), .DeleteIfExists() would thrown an exception when the directory or file's parent directory didn't exist.
+- Renamed ShareClient.SetTier() -> ShareClient.SetProperties().  SetProperties() can be used to set both Share Tier and Share Quota.
+- Changed ShareDeleteOptions.IncludeSnapshots -> .ShareSnapshotsDeleteOption, and added option to also delete Share Snapshots that have been leased.
+- Added additional info to exception messages.
+- Removed ability to create a ShareLeaseClient for a Share or Share Snapshot.  This feature has been rescheduled for future release.
+- Fixed bug where File Share SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
+- Added ability to set Position on streams created with ShareFileClient.OpenRead().
+- Added CanGenerateSasUri property and GenerateSasUri() to ShareFileClient, ShareDirectoryClient and ShareClient.
+- Added CanGenerateSasUri property and GenerateAccountSasUri() to ShareServiceClient.
+- Changed default constructor for FileSmbProperties from internal to public.
+
+## 12.5.0-preview.1 (2020-09-30)
+- Added support for service version 2020-02-10.
+- Added support for 4 TB files.
+- Added support for SMB Multichannel.
+- Added support for Share and Share Snapshot Leases.
+- Added support for Get File Range Diff.
+- Added support for Set Share Tier.
+- Fixed bug where Stream returned from ShareFileClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
+- Fixed bug where ShareAccessPolicy.StartsOn and .ExpiresOn would cause the process to crash.
+- Added seekability to ShareFileClient.OpenRead().
+
+## 12.4.0 (2020-08-31)
+- Fixed bug where ShareFileClient.Upload() and .UploadRange() would deadlock if the content stream's position was not zero.
+- Fixed bug in ShareFileClient.OpenRead() causing us to do more download called than necessary.
+- Fixed bug where ShareClient.Delete() could not delete Share Snapshots unless the includeSnapshots parameter was set to false.
+
+## 12.3.1 (2020-08-18)
+- Fixed bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 12.3.0 (2020-08-13)
+- Includes all features from 12.3.0-preview.1 through 12.3.0-preview.2.
 - Fixed bug where ShareClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in ShareAccessPolicy
 - Added nullable properties, PolicyStartsOn and PolicyExpiresOn to ShareAccessPolicy
+- Added ShareFileClient.OpenWrite().
 
 ## 12.3.0-preview.2 (2020-07-27)
 - Fixed bug where ShareUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.

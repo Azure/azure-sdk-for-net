@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ListContainerItem. </summary>
         public ListContainerItem()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ListContainerItem. </summary>
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </summary>
         public LeaseDuration? LeaseDuration { get; }
         /// <summary> A name-value pair to associate with the container as metadata. </summary>
-        public IDictionary<string, string> Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; }
         /// <summary> The ImmutabilityPolicy property of the container. </summary>
         public ImmutabilityPolicyProperties ImmutabilityPolicy { get; }
         /// <summary> The LegalHold property of the container. </summary>

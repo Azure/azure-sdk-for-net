@@ -15,17 +15,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of TopologyParameters. </summary>
-        /// <param name="targetResourceGroupName"> The name of the target resource group to perform topology on. </param>
-        /// <param name="targetVirtualNetwork"> The reference to the Virtual Network resource. </param>
-        /// <param name="targetSubnet"> The reference to the Subnet resource. </param>
-        internal TopologyParameters(string targetResourceGroupName, SubResource targetVirtualNetwork, SubResource targetSubnet)
-        {
-            TargetResourceGroupName = targetResourceGroupName;
-            TargetVirtualNetwork = targetVirtualNetwork;
-            TargetSubnet = targetSubnet;
-        }
-
         /// <summary> The name of the target resource group to perform topology on. </summary>
         public string TargetResourceGroupName { get; set; }
         /// <summary> The reference to the Virtual Network resource. </summary>

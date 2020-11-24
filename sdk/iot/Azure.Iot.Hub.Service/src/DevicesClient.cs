@@ -1,9 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,11 +17,11 @@ namespace Azure.Iot.Hub.Service
     /// </summary>
     public class DevicesClient
     {
-        private const string ContinuationTokenHeader = "x-ms-continuation";
         private const string HubDeviceQuery = "select * from devices";
 
         private readonly DevicesRestClient _devicesRestClient;
-        private readonly QueryRestClient _queryRestClient;
+        private readonly QueryClient _queryClient;
+        private readonly BulkRegistryRestClient _bulkRegistryClient;
 
         /// <summary>
         /// Initializes a new instance of DevicesClient.
@@ -34,15 +33,18 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Initializes a new instance of DevicesClient.
         /// <param name="devicesRestClient"> The REST client to perform device, device twin, and bulk operations. </param>
-        /// <param name="queryRestClient"> The REST client to perform query operations for the device. </param>
+        /// <param name="queryClient"> The convenience layer query client to perform query operations for the device. </param>
+        /// <param name="bulkRegistryClient"> The convenience layer client to perform bulk operations on devices. </param>
         /// </summary>
-        internal DevicesClient(DevicesRestClient devicesRestClient, QueryRestClient queryRestClient)
+        internal DevicesClient(DevicesRestClient devicesRestClient, QueryClient queryClient, BulkRegistryRestClient bulkRegistryClient)
         {
             Argument.AssertNotNull(devicesRestClient, nameof(devicesRestClient));
-            Argument.AssertNotNull(queryRestClient, nameof(queryRestClient));
+            Argument.AssertNotNull(queryClient, nameof(queryClient));
+            Argument.AssertNotNull(bulkRegistryClient, nameof(bulkRegistryClient));
 
             _devicesRestClient = devicesRestClient;
-            _queryRestClient = queryRestClient;
+            _queryClient = queryClient;
+            _bulkRegistryClient = bulkRegistryClient;
         }
 
         /// <summary>
@@ -55,6 +57,26 @@ namespace Azure.Iot.Hub.Service
         /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created device identity and the http response <see cref="Response{T}"/>.</returns>
+        /// <code snippet="Snippet:IotHubCreateDeviceIdentity">
+        /// Response&lt;DeviceIdentity&gt; response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
+        ///
+        /// SampleLogger.PrintSuccess($&quot;Successfully create a new device identity with Id: &apos;{response.Value.DeviceId}&apos;, ETag: &apos;{response.Value.Etag}&apos;&quot;);
+        /// </code>
+        /// <code snippet="Snippet:IotHubUpdateDeviceIdentity">
+        /// Response&lt;DeviceIdentity&gt; getResponse = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
+        ///
+        /// DeviceIdentity deviceIdentity = getResponse.Value;
+        /// Console.WriteLine($&quot;Current device identity: DeviceId: &apos;{deviceIdentity.DeviceId}&apos;, Status: &apos;{deviceIdentity.Status}&apos;, ETag: &apos;{deviceIdentity.Etag}&apos;&quot;);
+        ///
+        /// Console.WriteLine($&quot;Updating device identity with Id: &apos;{deviceIdentity.DeviceId}&apos;. Disabling device so it cannot connect to IoT Hub.&quot;);
+        /// deviceIdentity.Status = DeviceStatus.Disabled;
+        ///
+        /// Response&lt;DeviceIdentity&gt; response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
+        ///
+        /// DeviceIdentity updatedDevice = response.Value;
+        ///
+        /// SampleLogger.PrintSuccess($&quot;Successfully updated device identity: DeviceId: &apos;{updatedDevice.DeviceId}&apos;, DeviceId: &apos;{updatedDevice.DeviceId}&apos;, Status: &apos;{updatedDevice.Status}&apos;, ETag: &apos;{updatedDevice.Etag}&apos;&quot;);
+        /// </code>
         public virtual Task<Response<DeviceIdentity>> CreateOrUpdateIdentityAsync(
             DeviceIdentity deviceIdentity,
             IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
@@ -91,9 +113,16 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId">The unique identifier of the device identity to get.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The retrieved device identity and the http response <see cref="Response{T}"/>.</returns>
+        /// <code snippet="Snippet:IotHubGetDeviceIdentity">
+        /// Response&lt;DeviceIdentity&gt; response = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
+        ///
+        /// DeviceIdentity deviceIdentity = response.Value;
+        ///
+        /// SampleLogger.PrintSuccess($&quot;\t- Device Id: &apos;{deviceIdentity.DeviceId}&apos;, ETag: &apos;{deviceIdentity.Etag}&apos;&quot;);
+        /// </code>
         public virtual Task<Response<DeviceIdentity>> GetIdentityAsync(string deviceId, CancellationToken cancellationToken = default)
         {
-            return _devicesRestClient.GetDeviceAsync(deviceId, cancellationToken);
+            return _devicesRestClient.GetIdentityAsync(deviceId, cancellationToken);
         }
 
         /// <summary>
@@ -104,7 +133,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The retrieved device identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<DeviceIdentity> GetIdentity(string deviceId, CancellationToken cancellationToken = default)
         {
-            return _devicesRestClient.GetDevice(deviceId, cancellationToken);
+            return _devicesRestClient.GetIdentity(deviceId, cancellationToken);
         }
 
         /// <summary>
@@ -114,6 +143,11 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to delete the device.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
+        /// <code snippet="Snippet:IotHubDeleteDeviceIdentity">
+        /// Response response = await IoTHubServiceClient.Devices.DeleteIdentityAsync(deviceIdentity);
+        ///
+        /// SampleLogger.PrintSuccess($&quot;Successfully deleted device identity with Id: &apos;{deviceIdentity.DeviceId}&apos;&quot;);
+        /// </code>
         public virtual Task<Response> DeleteIdentityAsync(
             DeviceIdentity deviceIdentity,
             IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
@@ -162,9 +196,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.Key.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties).WithParentScopes(x.Key.ParentScopes));
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -188,9 +222,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.Key.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties).WithParentScopes(x.Key.ParentScopes));
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -213,9 +247,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                }.WithParentScopes(x.ParentScopes));
+                });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -238,9 +272,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                }.WithParentScopes(x.ParentScopes));
+                });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -268,9 +302,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
-                }.WithParentScopes(x.ParentScopes));
+                });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -298,9 +332,9 @@ namespace Azure.Iot.Hub.Service
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
-                }.WithParentScopes(x.ParentScopes));
+                });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -325,7 +359,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -350,96 +384,35 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
         /// List a set of device twins.
         /// </summary>
+        /// <remarks>
+        /// This service request returns the full set of device twins. To get a subset of device twins, you can use the <see cref="QueryClient.QueryAsync(string, int?, CancellationToken)">query API</see> that this method uses but with additional qualifiers for selection.
+        /// </remarks>
         /// <param name="pageSize">The size of each page to be retrieved from the service. Service may override this size.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of device twins <see cref="AsyncPageable{T}"/>.</returns>
         public virtual AsyncPageable<TwinData> GetTwinsAsync(int? pageSize = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TwinData>> FirstPageFunc(int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification
-                {
-                    Query = HubDeviceQuery
-                };
-                Response<IReadOnlyList<TwinData>> response = await _queryRestClient.GetTwinsAsync(
-                    querySpecification,
-                    null,
-                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
-                    cancellationToken).ConfigureAwait(false);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            async Task<Page<TwinData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification()
-                {
-                    Query = HubDeviceQuery
-                };
-                Response<IReadOnlyList<TwinData>> response = await _queryRestClient.GetTwinsAsync(
-                    querySpecification,
-                    nextLink,
-                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
-                    cancellationToken).ConfigureAwait(false);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc, pageSize);
+            return _queryClient.QueryAsync(HubDeviceQuery, pageSize, cancellationToken);
         }
 
         /// <summary>
         /// List a set of device twins.
         /// </summary>
+        /// <remarks>
+        /// This service request returns the full set of device twins. To get a subset of device twins, you can use the <see cref="QueryClient.Query(string, int?, CancellationToken)">query API</see> that this method uses but with additional qualifiers for selection.
+        /// </remarks>
         /// <param name="pageSize">The size of each page to be retrieved from the service. Service may override this size.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of device twins <see cref="Pageable{T}"/>.</returns>
         public virtual Pageable<TwinData> GetTwins(int? pageSize = null, CancellationToken cancellationToken = default)
         {
-            Page<TwinData> FirstPageFunc(int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification
-                {
-                    Query = HubDeviceQuery
-                };
-
-                Response<IReadOnlyList<TwinData>> response = _queryRestClient.GetTwins(
-                    querySpecification,
-                    null,
-                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
-                    cancellationToken);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            Page<TwinData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification()
-                {
-                    Query = HubDeviceQuery
-                };
-                Response<IReadOnlyList<TwinData>> response = _queryRestClient.GetTwins(
-                    querySpecification,
-                    nextLink,
-                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
-                    cancellationToken);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc, pageSize);
+            return _queryClient.Query(HubDeviceQuery, pageSize, cancellationToken);
         }
 
         /// <summary>
@@ -448,6 +421,11 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId">The unique identifier of the device identity to get the twin of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The device's twin, including reported properties and desired properties and the http response <see cref="Response{T}"/>.</returns>
+        /// <code snippet="Snippet:IotHubGetDeviceTwin">
+        /// Response&lt;TwinData&gt; response = await IoTHubServiceClient.Devices.GetTwinAsync(deviceId);
+        ///
+        /// SampleLogger.PrintSuccess($&quot;\t- Device Twin: DeviceId: &apos;{response.Value.DeviceId}&apos;, Status: &apos;{response.Value.Status}&apos;, ETag: &apos;{response.Value.Etag}&apos;&quot;);
+        /// </code>
         public virtual Task<Response<TwinData>> GetTwinAsync(string deviceId, CancellationToken cancellationToken = default)
         {
             return _devicesRestClient.GetTwinAsync(deviceId, cancellationToken);
@@ -471,6 +449,26 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition for which this operation will execute.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The new representation of the device twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <code snippet="Snippet:IotHubUpdateDeviceTwin">
+        /// Response&lt;TwinData&gt; getResponse = await IoTHubServiceClient.Devices.GetTwinAsync(deviceId);
+        /// TwinData deviceTwin = getResponse.Value;
+        ///
+        /// Console.WriteLine($&quot;Updating device twin: DeviceId: &apos;{deviceTwin.DeviceId}&apos;, ETag: &apos;{deviceTwin.Etag}&apos;&quot;);
+        /// Console.WriteLine($&quot;Setting a new desired property {userPropName} to: &apos;{Environment.UserName}&apos;&quot;);
+        ///
+        /// deviceTwin.Properties.Desired.Add(new KeyValuePair&lt;string, object&gt;(userPropName, Environment.UserName));
+        ///
+        /// Response&lt;TwinData&gt; response = await IoTHubServiceClient.Devices.UpdateTwinAsync(deviceTwin);
+        ///
+        /// TwinData updatedTwin = response.Value;
+        ///
+        /// var userPropValue = (string)updatedTwin.Properties.Desired
+        ///     .Where(p =&gt; p.Key == userPropName)
+        ///     .First()
+        ///     .Value;
+        ///
+        /// SampleLogger.PrintSuccess($&quot;Successfully updated device twin: DeviceId: &apos;{updatedTwin.DeviceId}&apos;, desired property: [&apos;{userPropName}&apos;: &apos;{userPropValue}&apos;], ETag: &apos;{updatedTwin.Etag}&apos;,&quot;);
+        /// </code>
         public virtual Task<Response<TwinData>> UpdateTwinAsync(TwinData twinUpdate, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(twinUpdate, nameof(twinUpdate));
@@ -512,7 +510,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -537,7 +535,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>

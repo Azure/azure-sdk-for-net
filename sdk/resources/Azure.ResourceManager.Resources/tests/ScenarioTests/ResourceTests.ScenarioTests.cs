@@ -63,7 +63,7 @@ namespace ResourceGroups.Tests
                    {
                        Location = mySqlLocation,
                        Plan = new Plan { Name = "free", Publisher = "Sendgrid", Product = "sendgrid_azure", PromotionCode = "" },
-                       Tags = new Dictionary<string, string> { { "provision_source", "RMS" } },
+                       Tags = { { "provision_source", "RMS" } },
                        Properties = new Dictionary<string, object>
                                 {
                                     {
@@ -161,7 +161,7 @@ namespace ResourceGroups.Tests
                 WebResourceProviderVersion,
                 new GenericResource
                 {
-                    Tags = new Dictionary<string, string> { { tagName, "" } },
+                    Tags = { { tagName, "" } },
                     Location = location,
                     Sku = new Sku
                     {
@@ -229,7 +229,7 @@ namespace ResourceGroups.Tests
                 WebResourceProviderVersion,
                 new GenericResource
                 {
-                    Tags = new Dictionary<string, string> { { tagName, tagValue } },
+                    Tags = { { tagName, tagValue } },
                     Location = location,
                     Sku = new Sku
                     {
@@ -366,7 +366,7 @@ namespace ResourceGroups.Tests
                 WebResourceProviderVersion,
                 new GenericResource
                 {
-                    Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } },
+                    Tags = { { "department", "finance" }, { "tagname", "tagvalue" } },
                     Location = location,
                     Sku = new Sku
                     {

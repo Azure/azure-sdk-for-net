@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineImageResource. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
         public VirtualMachineImageResource(string name, string location)
         {
             if (name == null)
@@ -29,6 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
 
             Name = name;
             Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineImageResource. </summary>
@@ -48,6 +51,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The supported Azure location of the resource. </summary>
         public string Location { get; set; }
         /// <summary> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

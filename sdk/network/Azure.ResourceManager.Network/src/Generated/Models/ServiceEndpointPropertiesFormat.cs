@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceEndpointPropertiesFormat. </summary>
         public ServiceEndpointPropertiesFormat()
         {
+            Locations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointPropertiesFormat. </summary>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The type of the endpoint service. </summary>
         public string Service { get; set; }
         /// <summary> A list of locations. </summary>
-        public IList<string> Locations { get; set; }
+        public IList<string> Locations { get; }
         /// <summary> The provisioning state of the service endpoint resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

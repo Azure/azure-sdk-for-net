@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
@@ -76,6 +77,7 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [NonParallelizable]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -100,6 +102,36 @@ namespace Azure.Storage.Files.Shares.Test
             properties = await service.GetPropertiesAsync();
             Assert.AreEqual(1, properties.Value.Cors.Count());
             Assert.IsTrue(properties.Value.Cors[0].MaxAgeInSeconds == 1000);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        [NonParallelizable]
+        public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_PremiumFile();
+
+            // Act
+            Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
+            ShareServiceProperties properties = propertiesResponse.Value;
+
+            // Assert
+            Assert.IsFalse(properties.Protocol.Smb.Multichannel.Enabled);
+
+            // Act
+            properties.Protocol.Smb.Multichannel.Enabled = true;
+            await service.SetPropertiesAsync(properties);
+            propertiesResponse = await service.GetPropertiesAsync();
+            properties = propertiesResponse.Value;
+
+            // Assert
+            Assert.IsTrue(properties.Protocol.Smb.Multichannel.Enabled);
+
+            // Cleanup
+            properties.Protocol.Smb.Multichannel.Enabled = false;
+            await service.SetPropertiesAsync(properties);
         }
 
         [Test]
@@ -224,6 +256,38 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListSharesSegmentAsync_AccessTier()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+
+            // Ensure at least one share
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
+            {
+                AccessTier = ShareAccessTier.Hot
+            };
+
+            await test.Share.SetPropertiesAsync(options);
+
+            var shares = new List<ShareItem>();
+            await foreach (ShareItem shareItem in service.GetSharesAsync())
+            {
+                shares.Add(shareItem);
+            }
+
+            ShareItem shareItemForShare = shares.FirstOrDefault(r => r.Name == test.Share.Name);
+
+            // Assert
+            Assert.AreEqual(ShareAccessTier.Hot.ToString(), shareItemForShare.Properties.AccessTier);
+            Assert.IsNotNull(shareItemForShare.Properties.AccessTierChangeTime);
+            Assert.AreEqual("pending-from-transactionOptimized", shareItemForShare.Properties.AccessTierTransitionState);
+        }
+
+        [Test]
         public async Task ListShareSegmentAsync_Error()
         {
             // Arrange
@@ -312,5 +376,137 @@ namespace Azure.Storage.Files.Shares.Test
                 service.UndeleteShareAsync(GetNewShareName(), fakeVersion),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
+
+        #region GenerateSasTests
+        [Test]
+        public void CanGenerateSas_ClientConstructors()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - ShareServiceClient(string connectionString)
+            ShareServiceClient share = new ShareServiceClient(
+                connectionString);
+            Assert.IsTrue(share.CanGenerateAccountSasUri);
+
+            // Act - ShareServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            ShareServiceClient share2 = new ShareServiceClient(
+                connectionString,
+                GetOptions());
+            Assert.IsTrue(share2.CanGenerateAccountSasUri);
+
+            // Act - ShareServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
+            ShareServiceClient share3 = new ShareServiceClient(
+                blobEndpoint,
+                GetOptions());
+            Assert.IsFalse(share3.CanGenerateAccountSasUri);
+
+            // Act - ShareServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            ShareServiceClient share4 = new ShareServiceClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            Assert.IsTrue(share4.CanGenerateAccountSasUri);
+        }
+
+        [Test]
+        public void GenerateAccountSas_RequiredParameters()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var fileEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (fileEndpoint, fileSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
+            ShareServiceClient serviceClient = new ShareServiceClient(connectionString, GetOptions());
+
+            // Act
+            Uri sasUri = serviceClient.GenerateAccountSasUri(
+                permissions: permissions,
+                expiresOn: expiresOn,
+                resourceTypes: resourceTypes);
+
+            // Assert
+            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, AccountSasServices.Files, resourceTypes);
+            UriBuilder expectedUri = new UriBuilder(fileEndpoint)
+            {
+                Query = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString()
+            };
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateAccountSas_Builder()
+        {
+            var constants = new TestConstants(this);
+            var fileEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (fileEndpoint, fileSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
+            AccountSasServices services = AccountSasServices.Files;
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
+            ShareServiceClient serviceClient = new ShareServiceClient(connectionString, GetOptions());
+
+            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
+            {
+                StartsOn = startsOn
+            };
+
+            // Act
+            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+
+            // Assert
+            AccountSasBuilder sasBuilder2 = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
+            {
+                StartsOn = startsOn
+            };
+            UriBuilder expectedUri = new UriBuilder(fileEndpoint);
+            expectedUri.Query += sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateAccountSas_WrongService_Service()
+        {
+            var constants = new TestConstants(this);
+            var fileEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (fileEndpoint, fileSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            AccountSasServices services = AccountSasServices.Blobs; // Wrong Service
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
+            ShareServiceClient serviceClient = new ShareServiceClient(connectionString, GetOptions());
+
+            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
+            {
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None),
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
+            // Act
+            try
+            {
+                Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+
+                Assert.Fail("FileServiceClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                // the correct exception came back
+            }
+        }
+        #endregion
     }
 }

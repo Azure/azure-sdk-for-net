@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>
         public ConnectionMonitorHttpConfiguration()
         {
+            RequestHeaders = new ChangeTrackingList<HttpHeader>();
+            ValidStatusCodeRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>
@@ -41,9 +44,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The path component of the URI. For instance, &quot;/dir1/dir2&quot;. </summary>
         public string Path { get; set; }
         /// <summary> The HTTP headers to transmit with the request. </summary>
-        public IList<HttpHeader> RequestHeaders { get; set; }
+        public IList<HttpHeader> RequestHeaders { get; }
         /// <summary> HTTP status codes to consider successful. For instance, &quot;2xx,301-304,418&quot;. </summary>
-        public IList<string> ValidStatusCodeRanges { get; set; }
+        public IList<string> ValidStatusCodeRanges { get; }
         /// <summary> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </summary>
         public bool? PreferHttps { get; set; }
     }

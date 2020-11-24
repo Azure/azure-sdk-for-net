@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class AuthorizationRule : Azure.ResourceManager.EventHubs.Models.Resource
     {
         public AuthorizationRule() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.AccessRights> Rights { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.AccessRights> Rights { get { throw null; } }
     }
     public partial class AuthorizationRuleListResult
     {
@@ -340,13 +340,30 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class ClusterQuotaConfigurationProperties
     {
         public ClusterQuotaConfigurationProperties() { }
-        public System.Collections.Generic.IDictionary<string, string> Settings { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Settings { get { throw null; } }
     }
     public partial class ClusterSku
     {
-        public ClusterSku() { }
+        public ClusterSku(Azure.ResourceManager.EventHubs.Models.ClusterSkuName name) { }
         public int? Capacity { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.ClusterSkuName Name { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterSkuName : System.IEquatable<Azure.ResourceManager.EventHubs.Models.ClusterSkuName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.ClusterSkuName Dedicated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.ClusterSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.ClusterSkuName left, Azure.ResourceManager.EventHubs.Models.ClusterSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.ClusterSkuName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.ClusterSkuName left, Azure.ResourceManager.EventHubs.Models.ClusterSkuName right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ConsumerGroup : Azure.ResourceManager.EventHubs.Models.Resource
     {
@@ -429,7 +446,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         public Encryption() { }
         public string KeySource { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.KeyVaultProperties> KeyVaultProperties { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.KeyVaultProperties> KeyVaultProperties { get { throw null; } }
     }
     public enum EntityStatus
     {
@@ -450,7 +467,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public long? MessageRetentionInDays { get { throw null; } set { } }
         public long? PartitionCount { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PartitionIds { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> PartitionIds { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.EntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
     }
@@ -527,17 +544,34 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string Code { get { throw null; } }
         public string FullName { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkRuleIPAction : System.IEquatable<Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkRuleIPAction(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction Allow { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction left, Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction left, Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NetworkRuleSet : Azure.ResourceManager.EventHubs.Models.Resource
     {
         public NetworkRuleSet() { }
         public Azure.ResourceManager.EventHubs.Models.DefaultAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.NWRuleSetIpRules> IpRules { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.NWRuleSetVirtualNetworkRules> VirtualNetworkRules { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.NWRuleSetIpRules> IpRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.NWRuleSetVirtualNetworkRules> VirtualNetworkRules { get { throw null; } }
     }
     public partial class NWRuleSetIpRules
     {
         public NWRuleSetIpRules() { }
-        public string Action { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction? Action { get { throw null; } set { } }
         public string IpMask { get { throw null; } set { } }
     }
     public partial class NWRuleSetVirtualNetworkRules
@@ -642,7 +676,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         public TrackedResource() { }
         public string Location { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public enum UnavailableReason
     {

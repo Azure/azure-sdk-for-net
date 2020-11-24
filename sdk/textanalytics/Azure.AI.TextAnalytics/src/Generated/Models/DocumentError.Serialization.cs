@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal static DocumentError DeserializeDocumentError(JsonElement element)
         {
             string id = default;
-            TextAnalyticsError_internal error = default;
+            TextAnalyticsErrorInternal error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("error"))
                 {
-                    error = TextAnalyticsError_internal.DeserializeTextAnalyticsError_internal(property.Value);
+                    error = TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(property.Value);
                     continue;
                 }
             }

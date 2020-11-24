@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RoutingChoice != null)
+            if (Optional.IsDefined(RoutingChoice))
             {
                 writer.WritePropertyName("routingChoice");
                 writer.WriteStringValue(RoutingChoice.Value.ToString());
             }
-            if (PublishMicrosoftEndpoints != null)
+            if (Optional.IsDefined(PublishMicrosoftEndpoints))
             {
                 writer.WritePropertyName("publishMicrosoftEndpoints");
                 writer.WriteBooleanValue(PublishMicrosoftEndpoints.Value);
             }
-            if (PublishInternetEndpoints != null)
+            if (Optional.IsDefined(PublishInternetEndpoints))
             {
                 writer.WritePropertyName("publishInternetEndpoints");
                 writer.WriteBooleanValue(PublishInternetEndpoints.Value);
@@ -35,15 +35,16 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static RoutingPreference DeserializeRoutingPreference(JsonElement element)
         {
-            RoutingChoice? routingChoice = default;
-            bool? publishMicrosoftEndpoints = default;
-            bool? publishInternetEndpoints = default;
+            Optional<RoutingChoice> routingChoice = default;
+            Optional<bool> publishMicrosoftEndpoints = default;
+            Optional<bool> publishInternetEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routingChoice"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routingChoice = new RoutingChoice(property.Value.GetString());
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publishMicrosoftEndpoints = property.Value.GetBoolean();
@@ -62,13 +64,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publishInternetEndpoints = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new RoutingPreference(routingChoice, publishMicrosoftEndpoints, publishInternetEndpoints);
+            return new RoutingPreference(Optional.ToNullable(routingChoice), Optional.ToNullable(publishMicrosoftEndpoints), Optional.ToNullable(publishInternetEndpoints));
         }
     }
 }

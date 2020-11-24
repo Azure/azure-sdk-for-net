@@ -4,15 +4,15 @@ using System;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Management.EventHub.Tests
 {
     public static class Helper
     {
         internal const string ResourceGroupPrefix = "Default-EventHub-";
-        internal const string NamespacePrefix = "sdk-Namespace-";
+        internal const string NamespacePrefix = "sdk-eventhub-Namespace-";
         internal const string AuthorizationRulesPrefix = "sdk-Authrules-";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         internal const string EventHubPrefix = "sdk-EventHub-";

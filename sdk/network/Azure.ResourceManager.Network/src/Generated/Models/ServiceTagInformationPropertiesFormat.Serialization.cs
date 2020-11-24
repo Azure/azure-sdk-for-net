@@ -15,36 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceTagInformationPropertiesFormat DeserializeServiceTagInformationPropertiesFormat(JsonElement element)
         {
-            string changeNumber = default;
-            string region = default;
-            string systemService = default;
-            IReadOnlyList<string> addressPrefixes = default;
+            Optional<string> changeNumber = default;
+            Optional<string> region = default;
+            Optional<string> systemService = default;
+            Optional<IReadOnlyList<string>> addressPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeNumber"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     changeNumber = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("region"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     region = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("systemService"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     systemService = property.Value.GetString();
                     continue;
                 }
@@ -52,25 +40,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     addressPrefixes = array;
                     continue;
                 }
             }
-            return new ServiceTagInformationPropertiesFormat(changeNumber, region, systemService, addressPrefixes);
+            return new ServiceTagInformationPropertiesFormat(changeNumber.Value, region.Value, systemService.Value, Optional.ToList(addressPrefixes));
         }
     }
 }

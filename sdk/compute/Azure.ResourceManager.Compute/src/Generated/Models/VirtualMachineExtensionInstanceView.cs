@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineExtensionInstanceView. </summary>
         public VirtualMachineExtensionInstanceView()
         {
+            Substatuses = new ChangeTrackingList<InstanceViewStatus>();
+            Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionInstanceView. </summary>
@@ -39,8 +42,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; set; }
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Substatuses { get; set; }
+        public IList<InstanceViewStatus> Substatuses { get; }
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; set; }
+        public IList<InstanceViewStatus> Statuses { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FilterData != null)
+            if (Optional.IsDefined(FilterData))
             {
                 writer.WritePropertyName("filterData");
                 writer.WriteStringValue(FilterData);

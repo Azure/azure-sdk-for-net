@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Listeners != null)
+            if (Optional.IsCollectionDefined(Listeners))
             {
                 writer.WritePropertyName("listeners");
                 writer.WriteStartArray();
@@ -31,32 +31,26 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static WinRMConfiguration DeserializeWinRMConfiguration(JsonElement element)
         {
-            IList<WinRMListener> listeners = default;
+            Optional<IList<WinRMListener>> listeners = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("listeners"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WinRMListener> array = new List<WinRMListener>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(WinRMListener.DeserializeWinRMListener(item));
-                        }
+                        array.Add(WinRMListener.DeserializeWinRMListener(item));
                     }
                     listeners = array;
                     continue;
                 }
             }
-            return new WinRMConfiguration(listeners);
+            return new WinRMConfiguration(Optional.ToList(listeners));
         }
     }
 }

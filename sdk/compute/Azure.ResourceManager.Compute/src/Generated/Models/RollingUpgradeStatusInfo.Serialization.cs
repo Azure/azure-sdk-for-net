@@ -16,24 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -46,67 +31,35 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Policy != null)
-            {
-                writer.WritePropertyName("policy");
-                writer.WriteObjectValue(Policy);
-            }
-            if (RunningStatus != null)
-            {
-                writer.WritePropertyName("runningStatus");
-                writer.WriteObjectValue(RunningStatus);
-            }
-            if (Progress != null)
-            {
-                writer.WritePropertyName("progress");
-                writer.WriteObjectValue(Progress);
-            }
-            if (Error != null)
-            {
-                writer.WritePropertyName("error");
-                writer.WriteObjectValue(Error);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static RollingUpgradeStatusInfo DeserializeRollingUpgradeStatusInfo(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            RollingUpgradePolicy policy = default;
-            RollingUpgradeRunningStatus runningStatus = default;
-            RollingUpgradeProgressInfo progress = default;
-            ApiError error = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<RollingUpgradePolicy> policy = default;
+            Optional<RollingUpgradeRunningStatus> runningStatus = default;
+            Optional<RollingUpgradeProgressInfo> progress = default;
+            Optional<ApiError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -119,31 +72,31 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("policy"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             policy = RollingUpgradePolicy.DeserializeRollingUpgradePolicy(property0.Value);
@@ -153,6 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             runningStatus = RollingUpgradeRunningStatus.DeserializeRollingUpgradeRunningStatus(property0.Value);
@@ -162,6 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property0.Value);
@@ -171,6 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             error = ApiError.DeserializeApiError(property0.Value);
@@ -180,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RollingUpgradeStatusInfo(id, name, type, location, tags, policy, runningStatus, progress, error);
+            return new RollingUpgradeStatusInfo(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), policy.Value, runningStatus.Value, progress.Value, error.Value);
         }
     }
 }

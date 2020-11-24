@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs.Tests;
-
+using Azure.ResourceManager.Network.Models;
 using NUnit.Framework;
 
 namespace Azure.Management.EventHub.Tests
@@ -19,13 +18,43 @@ namespace Azure.Management.EventHub.Tests
             var location = GetLocation();
             var resourceGroup = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
             await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, location.Result, resourceGroup);
-            //Create a namespace
+
+            // Prepare VNet
+            var vnetName = Recording.GenerateAssetName("sdktestvnet");
+            var parameters = new VirtualNetwork
+            {
+                AddressSpace = new AddressSpace { AddressPrefixes = { "10.0.0.0/16" } },
+                Subnets = {
+                    new ResourceManager.Network.Models.Subnet
+                    {
+                        Name = "default1",
+                        AddressPrefix = "10.0.0.0/24",
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                    },
+                    new ResourceManager.Network.Models.Subnet
+                    {
+                        Name = "default2",
+                        AddressPrefix = "10.0.1.0/24",
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                    },
+                    new ResourceManager.Network.Models.Subnet
+                    {
+                        Name = "default3",
+                        AddressPrefix = "10.0.2.0/24",
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                    }
+                },
+                Location = "eastus2"
+            };
+            await WaitForCompletionAsync(await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroup, vnetName, parameters));
+
+            // Create a namespace
             var namespaceName = Recording.GenerateAssetName(Helper.NamespacePrefix);
             var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroup, namespaceName,
                 new EHNamespace()
                 {
                     Location = location.Result,
-                    Tags = new Dictionary<string, string>()
+                    Tags =
                         {
                             {"tag1", "value1"},
                             {"tag2", "value2"}
@@ -42,22 +71,28 @@ namespace Azure.Management.EventHub.Tests
                 DelayInTest(5);
             getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
             Assert.NotNull(getNamespaceResponse);
-            Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState,StringComparer.CurrentCultureIgnoreCase.ToString());
+            Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState, StringComparer.CurrentCultureIgnoreCase.ToString());
             Assert.AreEqual(location.Result, getNamespaceResponse.Value.Location, StringComparer.CurrentCultureIgnoreCase.ToString());
-            //Create Namepsace IPRules
-            List<NWRuleSetIpRules> IPRules = new List<NWRuleSetIpRules>();
-            //TODO
-            IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.1", Action = "Allow" });
-            IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.2", Action = "Allow" });
-            IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.3", Action = "Allow" });
-            IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.4", Action = "Allow" });
-            IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" });
-            List<NWRuleSetVirtualNetworkRules> VNetRules = new List<NWRuleSetVirtualNetworkRules>();
-            //You should create Three virtualNetworks/sbehvnettest1/subnets/default(sbdefault and sbdefault01) and add EventHub to Service endpoint --youri 8.5.2020
-            VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default") });
-            VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault") });
-            VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault01") });
-            var netWorkRuleSet =await NamespacesOperations.CreateOrUpdateNetworkRuleSetAsync(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = DefaultAction.Deny, VirtualNetworkRules = VNetRules, IpRules = IPRules });
+
+            var netWorkRuleSet = await NamespacesOperations.CreateOrUpdateNetworkRuleSetAsync(resourceGroup, namespaceName,
+                new NetworkRuleSet()
+                {
+                    DefaultAction = DefaultAction.Deny,
+                    VirtualNetworkRules =
+                    {
+                        new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default1") },
+                        new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default2") },
+                        new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default3") }
+                    },
+                    IpRules =
+                    {
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.1", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.2", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.3", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.4", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" }
+                    }
+                });
             var getNetworkRuleSet = await NamespacesOperations.GetNetworkRuleSetAsync(resourceGroup, namespaceName);
             var netWorkRuleSet1 = await NamespacesOperations.CreateOrUpdateNetworkRuleSetAsync(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = "Allow" });
             var getNetworkRuleSet1 = await NamespacesOperations.GetNetworkRuleSetAsync(resourceGroup, namespaceName);

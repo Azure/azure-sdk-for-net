@@ -18,15 +18,10 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled");
             writer.WriteBooleanValue(Enabled);
-            if (Days != null)
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days");
                 writer.WriteNumberValue(Days.Value);
-            }
-            if (LastEnabledTime != null)
-            {
-                writer.WritePropertyName("lastEnabledTime");
-                writer.WriteStringValue(LastEnabledTime.Value, "O");
             }
             writer.WriteEndObject();
         }
@@ -34,8 +29,8 @@ namespace Azure.ResourceManager.Storage.Models
         internal static RestorePolicyProperties DeserializeRestorePolicyProperties(JsonElement element)
         {
             bool enabled = default;
-            int? days = default;
-            DateTimeOffset? lastEnabledTime = default;
+            Optional<int> days = default;
+            Optional<DateTimeOffset> lastEnabledTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -47,6 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     days = property.Value.GetInt32();
@@ -56,13 +52,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastEnabledTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new RestorePolicyProperties(enabled, days, lastEnabledTime);
+            return new RestorePolicyProperties(enabled, Optional.ToNullable(days), Optional.ToNullable(lastEnabledTime));
         }
     }
 }

@@ -28,6 +28,33 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkBatchJobRequest class.
         /// </summary>
+        /// <param name="file">File containing the application to
+        /// execute.</param>
+        /// <param name="proxyUser">User to impersonate when running the
+        /// job.</param>
+        /// <param name="className">Application Java/Spark main class.</param>
+        /// <param name="arguments">Command line arguments for the
+        /// application.</param>
+        /// <param name="jars">Jars to be used in this batch job.</param>
+        /// <param name="pythonFiles">Python files to be used in this batch
+        /// job.</param>
+        /// <param name="files">Files to be used in this batch job.</param>
+        /// <param name="driverMemory">Amount of memory to use for the driver
+        /// process.</param>
+        /// <param name="driverCores">Number of cores to use for the driver
+        /// process.</param>
+        /// <param name="executorMemory">Amount of memory to use per executor
+        /// process.</param>
+        /// <param name="executorCores">Number of cores to use for each
+        /// executor.</param>
+        /// <param name="executorCount">Number of executors to launch for this
+        /// batch job.</param>
+        /// <param name="archives">Archives to be used in this batch
+        /// job.</param>
+        /// <param name="queue">The name of the YARN queue to which
+        /// submitted.</param>
+        /// <param name="name">The name of this batch job.</param>
+        /// <param name="configuration">Spark configuration properties.</param>
         public SparkBatchJobRequest(string file = default(string), string proxyUser = default(string), string className = default(string), IList<string> arguments = default(IList<string>), IList<string> jars = default(IList<string>), IList<string> pythonFiles = default(IList<string>), IList<string> files = default(IList<string>), string driverMemory = default(string), int? driverCores = default(int?), string executorMemory = default(string), int? executorCores = default(int?), int? executorCount = default(int?), IList<string> archives = default(IList<string>), string queue = default(string), string name = default(string), IDictionary<string, string> configuration = default(IDictionary<string, string>))
         {
             File = file;
@@ -55,81 +82,97 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets file containing the application to execute.
         /// </summary>
         [JsonProperty(PropertyName = "file")]
         public string File { get; set; }
 
         /// <summary>
+        /// Gets or sets user to impersonate when running the job.
         /// </summary>
         [JsonProperty(PropertyName = "proxyUser")]
         public string ProxyUser { get; set; }
 
         /// <summary>
+        /// Gets or sets application Java/Spark main class.
         /// </summary>
         [JsonProperty(PropertyName = "className")]
         public string ClassName { get; set; }
 
         /// <summary>
+        /// Gets or sets command line arguments for the application.
         /// </summary>
         [JsonProperty(PropertyName = "args")]
         public IList<string> Arguments { get; set; }
 
         /// <summary>
+        /// Gets or sets jars to be used in this batch job.
         /// </summary>
         [JsonProperty(PropertyName = "jars")]
         public IList<string> Jars { get; set; }
 
         /// <summary>
+        /// Gets or sets python files to be used in this batch job.
         /// </summary>
         [JsonProperty(PropertyName = "pyFiles")]
         public IList<string> PythonFiles { get; set; }
 
         /// <summary>
+        /// Gets or sets files to be used in this batch job.
         /// </summary>
         [JsonProperty(PropertyName = "files")]
         public IList<string> Files { get; set; }
 
         /// <summary>
+        /// Gets or sets amount of memory to use for the driver process.
         /// </summary>
         [JsonProperty(PropertyName = "driverMemory")]
         public string DriverMemory { get; set; }
 
         /// <summary>
+        /// Gets or sets number of cores to use for the driver process.
         /// </summary>
         [JsonProperty(PropertyName = "driverCores")]
         public int? DriverCores { get; set; }
 
         /// <summary>
+        /// Gets or sets amount of memory to use per executor process.
         /// </summary>
         [JsonProperty(PropertyName = "executorMemory")]
         public string ExecutorMemory { get; set; }
 
         /// <summary>
+        /// Gets or sets number of cores to use for each executor.
         /// </summary>
         [JsonProperty(PropertyName = "executorCores")]
         public int? ExecutorCores { get; set; }
 
         /// <summary>
+        /// Gets or sets number of executors to launch for this batch job.
         /// </summary>
         [JsonProperty(PropertyName = "numExecutors")]
         public int? ExecutorCount { get; set; }
 
         /// <summary>
+        /// Gets or sets archives to be used in this batch job.
         /// </summary>
         [JsonProperty(PropertyName = "archives")]
         public IList<string> Archives { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the YARN queue to which submitted.
         /// </summary>
         [JsonProperty(PropertyName = "queue")]
         public string Queue { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of this batch job.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets spark configuration properties.
         /// </summary>
         [JsonProperty(PropertyName = "conf")]
         public IDictionary<string, string> Configuration { get; set; }

@@ -14,18 +14,14 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static Operation DeserializeOperation(JsonElement element)
         {
-            string name = default;
-            OperationDisplay display = default;
-            string origin = default;
-            ServiceSpecification serviceSpecification = default;
+            Optional<string> name = default;
+            Optional<OperationDisplay> display = default;
+            Optional<string> origin = default;
+            Optional<ServiceSpecification> serviceSpecification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -33,6 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     display = OperationDisplay.DeserializeOperationDisplay(property.Value);
@@ -40,21 +37,23 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("origin"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     origin = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("serviceSpecification"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property0.Value);
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new Operation(name, display, origin, serviceSpecification);
+            return new Operation(name.Value, display.Value, origin.Value, serviceSpecification.Value);
         }
     }
 }

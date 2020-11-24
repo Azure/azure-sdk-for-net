@@ -1,0 +1,299 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/linkedservices?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "4f2ace59b3b83ebc6d97535970e1f994",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2084",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:23:23 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "4f2ace59b3b83ebc6d97535970e1f994",
+        "x-ms-request-id": "5e2fab6a-209e-464d-9469-b5b5a76e812f"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/linkedservices/workspaceywlive-WorkspaceDefaultStorage",
+            "name": "workspaceywlive-WorkspaceDefaultStorage",
+            "type": "Microsoft.Synapse/workspaces/linkedservices",
+            "etag": "61005ad1-0000-0800-0000-5f6960570000",
+            "properties": {
+              "typeProperties": {
+                "url": "https://storageywlive.dfs.core.windows.net"
+              },
+              "type": "AzureBlobFS",
+              "connectVia": {
+                "referenceName": "AutoResolveIntegrationRuntime",
+                "type": "IntegrationRuntimeReference"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/linkedservices/workspaceywlive-WorkspaceDefaultSqlServer",
+            "name": "workspaceywlive-WorkspaceDefaultSqlServer",
+            "type": "Microsoft.Synapse/workspaces/linkedservices",
+            "etag": "610070d1-0000-0800-0000-5f6960590000",
+            "properties": {
+              "typeProperties": {
+                "connectionString": "Data Source=tcp:workspaceywlive.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+              },
+              "parameters": {
+                "DBName": {
+                  "type": "String"
+                }
+              },
+              "type": "AzureSqlDW",
+              "connectVia": {
+                "referenceName": "AutoResolveIntegrationRuntime",
+                "type": "IntegrationRuntimeReference"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/linkedservices/LinkedSercive1266290659",
+            "name": "LinkedSercive1266290659",
+            "type": "Microsoft.Synapse/workspaces/linkedservices",
+            "etag": "7600f6d2-0000-0800-0000-5f6b06cc0000",
+            "properties": {
+              "type": "AzureDataLakeStore",
+              "typeProperties": {
+                "dataLakeStoreUri": "adl://test.azuredatalakestore.net/"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/linkedservices/LinkedSercive468335119",
+            "name": "LinkedSercive468335119",
+            "type": "Microsoft.Synapse/workspaces/linkedservices",
+            "etag": "760039d3-0000-0800-0000-5f6b06d20000",
+            "properties": {
+              "type": "AzureDataLakeStore",
+              "typeProperties": {
+                "dataLakeStoreUri": "adl://test.azuredatalakestore.net/"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/linkedservices/workspaceywlive-WorkspaceDefaultStorage?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ab25c71f962b294e9c44f910f1d12618-f8b8ab4d1f605d46-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "684e9f5e21cfb0cbe7d96251e503007e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "549",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:23:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "684e9f5e21cfb0cbe7d96251e503007e",
+        "x-ms-correlation-request-id": "16bc3348-4ba1-412a-b772-73cd9388efda",
+        "x-ms-request-id": "55003502-d2a9-4050-99c4-981d0461eed6",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/linkedservices/workspaceywlive-WorkspaceDefaultStorage",
+        "name": "workspaceywlive-WorkspaceDefaultStorage",
+        "type": "Microsoft.Synapse/workspaces/linkedservices",
+        "properties": {
+          "typeProperties": {
+            "url": "https://storageywlive.dfs.core.windows.net"
+          },
+          "type": "AzureBlobFS",
+          "connectVia": {
+            "referenceName": "AutoResolveIntegrationRuntime",
+            "type": "IntegrationRuntimeReference"
+          }
+        },
+        "etag": "61005ad1-0000-0800-0000-5f6960570000"
+      }
+    },
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/linkedservices/workspaceywlive-WorkspaceDefaultSqlServer?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-16e269ac89692441bc6448b89713d652-220c6734c3b5804b-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "453617658095eadc0682c623600058a9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "664",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:23:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "453617658095eadc0682c623600058a9",
+        "x-ms-correlation-request-id": "bbd41ae9-8089-4f61-ab29-9c6e9607fa91",
+        "x-ms-request-id": "ea03a4d6-cd06-48bd-bf43-2c364d69ee3c",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/linkedservices/workspaceywlive-WorkspaceDefaultSqlServer",
+        "name": "workspaceywlive-WorkspaceDefaultSqlServer",
+        "type": "Microsoft.Synapse/workspaces/linkedservices",
+        "properties": {
+          "typeProperties": {
+            "connectionString": "Data Source=tcp:workspaceywlive.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+          },
+          "parameters": {
+            "DBName": {
+              "type": "String"
+            }
+          },
+          "type": "AzureSqlDW",
+          "connectVia": {
+            "referenceName": "AutoResolveIntegrationRuntime",
+            "type": "IntegrationRuntimeReference"
+          }
+        },
+        "etag": "610070d1-0000-0800-0000-5f6960590000"
+      }
+    },
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/linkedservices/LinkedSercive1266290659?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-aba43cab5478ca479c9760cbe0026ad3-b4e58930887cf345-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "5c6a10f6767238bc027968df506b5869",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "429",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:23:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5c6a10f6767238bc027968df506b5869",
+        "x-ms-correlation-request-id": "3402f5c7-2424-4168-bc41-d6fcb2b423f1",
+        "x-ms-request-id": "16fecafb-b596-4144-bbe0-2aea7efc5b6f",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/linkedservices/LinkedSercive1266290659",
+        "name": "LinkedSercive1266290659",
+        "type": "Microsoft.Synapse/workspaces/linkedservices",
+        "properties": {
+          "type": "AzureDataLakeStore",
+          "typeProperties": {
+            "dataLakeStoreUri": "adl://test.azuredatalakestore.net/"
+          }
+        },
+        "etag": "7600f6d2-0000-0800-0000-5f6b06cc0000"
+      }
+    },
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/linkedservices/LinkedSercive468335119?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-22253b8b76c25c4eb0b8436dad58e69f-0ff6c7bb4039634b-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "59f4d597b4abddfec264624c5ba750e7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "427",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:23:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "59f4d597b4abddfec264624c5ba750e7",
+        "x-ms-correlation-request-id": "ccd0f78e-a3d9-48fa-a718-b457786a9b69",
+        "x-ms-request-id": "aa823977-5d8b-4d43-ac7f-189d67bac4c5",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/linkedservices/LinkedSercive468335119",
+        "name": "LinkedSercive468335119",
+        "type": "Microsoft.Synapse/workspaces/linkedservices",
+        "properties": {
+          "type": "AzureDataLakeStore",
+          "typeProperties": {
+            "dataLakeStoreUri": "adl://test.azuredatalakestore.net/"
+          }
+        },
+        "etag": "760039d3-0000-0800-0000-5f6b06d20000"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://workspaceywlive.dev.azuresynapse.net",
+    "RandomSeed": "1278627404"
+  }
+}

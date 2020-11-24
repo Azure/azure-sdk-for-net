@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 

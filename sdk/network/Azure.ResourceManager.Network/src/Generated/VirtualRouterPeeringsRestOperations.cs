@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VirtualRouterPeeringsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(peeringName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualRouterName"/>, or <paramref name="peeringName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string virtualRouterName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -101,6 +103,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualRouterName"/>, or <paramref name="peeringName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string virtualRouterName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -146,6 +149,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(peeringName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -154,6 +158,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualRouterName"/>, or <paramref name="peeringName"/> is null. </exception>
         public async Task<Response<VirtualRouterPeering>> GetAsync(string resourceGroupName, string virtualRouterName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -177,14 +182,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualRouterPeering value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualRouterPeering.DeserializeVirtualRouterPeering(document.RootElement);
-                        }
+                        value = VirtualRouterPeering.DeserializeVirtualRouterPeering(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -197,6 +195,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualRouterName"/>, or <paramref name="peeringName"/> is null. </exception>
         public Response<VirtualRouterPeering> Get(string resourceGroupName, string virtualRouterName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -220,14 +219,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualRouterPeering value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualRouterPeering.DeserializeVirtualRouterPeering(document.RootElement);
-                        }
+                        value = VirtualRouterPeering.DeserializeVirtualRouterPeering(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -253,6 +245,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -265,6 +258,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualRouterName"/>, <paramref name="peeringName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualRouterName, string peeringName, VirtualRouterPeering parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -302,6 +296,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualRouterName"/>, <paramref name="peeringName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string virtualRouterName, string peeringName, VirtualRouterPeering parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -349,6 +344,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/peerings", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -356,6 +352,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualRouterName"/> is null. </exception>
         public async Task<Response<VirtualRouterPeeringListResult>> ListAsync(string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -375,14 +372,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualRouterPeeringListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualRouterPeeringListResult.DeserializeVirtualRouterPeeringListResult(document.RootElement);
-                        }
+                        value = VirtualRouterPeeringListResult.DeserializeVirtualRouterPeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -394,6 +384,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualRouterName"/> is null. </exception>
         public Response<VirtualRouterPeeringListResult> List(string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -413,14 +404,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualRouterPeeringListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualRouterPeeringListResult.DeserializeVirtualRouterPeeringListResult(document.RootElement);
-                        }
+                        value = VirtualRouterPeeringListResult.DeserializeVirtualRouterPeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -437,6 +421,7 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -445,6 +430,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualRouterName"/> is null. </exception>
         public async Task<Response<VirtualRouterPeeringListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -468,14 +454,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualRouterPeeringListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualRouterPeeringListResult.DeserializeVirtualRouterPeeringListResult(document.RootElement);
-                        }
+                        value = VirtualRouterPeeringListResult.DeserializeVirtualRouterPeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -488,6 +467,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualRouterName"/> is null. </exception>
         public Response<VirtualRouterPeeringListResult> ListNextPage(string nextLink, string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -511,14 +491,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualRouterPeeringListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualRouterPeeringListResult.DeserializeVirtualRouterPeeringListResult(document.RootElement);
-                        }
+                        value = VirtualRouterPeeringListResult.DeserializeVirtualRouterPeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

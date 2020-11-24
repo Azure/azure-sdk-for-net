@@ -99,8 +99,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(0, 1)]
         [TestCase(1000, 2000)]
         [TestCase(-1001, -1000)]
-        public void ArgumentAtLeastEnforcesInvariants(long value,
-                                                      long minValue)
+        public void ArgumentAtLeastEnforcesInvariantsForLongs(long value,
+                                                             long minValue)
         {
             Assert.That(() => Argument.AssertAtLeast(value, minValue, nameof(value)), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
@@ -116,8 +116,40 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(99, 0)]
         [TestCase(0, 0)]
         [TestCase(100, 0)]
-        public void ArgumentAtLeastAllowsValidValues(long value,
-                                                     long minValue)
+        public void ArgumentAtLeastAllowsValidValuesForLongs(long value,
+                                                             long minValue)
+        {
+            Assert.That(() => Argument.AssertAtLeast(value, minValue, nameof(value)), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Argument.AssertAtLeast" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(2, 3)]
+        [TestCase(0, 1)]
+        [TestCase(1000, 2000)]
+        [TestCase(-1001, -1000)]
+        public void ArgumentAtLeastEnforcesInvariantsForInts(int value,
+                                                             int minValue)
+        {
+            Assert.That(() => Argument.AssertAtLeast(value, minValue, nameof(value)), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Argument.AssertAtLeast" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(1, 0)]
+        [TestCase(10, -100)]
+        [TestCase(-5, -10)]
+        [TestCase(99, 0)]
+        [TestCase(0, 0)]
+        [TestCase(100, 0)]
+        public void ArgumentAtLeastAllowsValidValuesForInts(int value,
+                                                            int minValue)
         {
             Assert.That(() => Argument.AssertAtLeast(value, minValue, nameof(value)), Throws.Nothing);
         }

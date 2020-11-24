@@ -16,32 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,47 +39,42 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (VirtualWan != null)
+            if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan");
                 writer.WriteObjectValue(VirtualWan);
             }
-            if (DeviceProperties != null)
+            if (Optional.IsDefined(DeviceProperties))
             {
                 writer.WritePropertyName("deviceProperties");
                 writer.WriteObjectValue(DeviceProperties);
             }
-            if (IpAddress != null)
+            if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress");
                 writer.WriteStringValue(IpAddress);
             }
-            if (SiteKey != null)
+            if (Optional.IsDefined(SiteKey))
             {
                 writer.WritePropertyName("siteKey");
                 writer.WriteStringValue(SiteKey);
             }
-            if (AddressSpace != null)
+            if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace");
                 writer.WriteObjectValue(AddressSpace);
             }
-            if (BgpProperties != null)
+            if (Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties");
                 writer.WriteObjectValue(BgpProperties);
             }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (IsSecuritySite != null)
+            if (Optional.IsDefined(IsSecuritySite))
             {
                 writer.WritePropertyName("isSecuritySite");
                 writer.WriteBooleanValue(IsSecuritySite.Value);
             }
-            if (VpnSiteLinks != null)
+            if (Optional.IsCollectionDefined(VpnSiteLinks))
             {
                 writer.WritePropertyName("vpnSiteLinks");
                 writer.WriteStartArray();
@@ -110,65 +90,45 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnSite DeserializeVpnSite(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            SubResource virtualWan = default;
-            DeviceProperties deviceProperties = default;
-            string ipAddress = default;
-            string siteKey = default;
-            AddressSpace addressSpace = default;
-            BgpSettings bgpProperties = default;
-            ProvisioningState? provisioningState = default;
-            bool? isSecuritySite = default;
-            IList<VpnSiteLink> vpnSiteLinks = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<SubResource> virtualWan = default;
+            Optional<DeviceProperties> deviceProperties = default;
+            Optional<string> ipAddress = default;
+            Optional<string> siteKey = default;
+            Optional<AddressSpace> addressSpace = default;
+            Optional<BgpSettings> bgpProperties = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<bool> isSecuritySite = default;
+            Optional<IList<VpnSiteLink>> vpnSiteLinks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -176,31 +136,31 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("virtualWan"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualWan = SubResource.DeserializeSubResource(property0.Value);
@@ -210,6 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deviceProperties = DeviceProperties.DeserializeDeviceProperties(property0.Value);
@@ -217,19 +178,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("ipAddress"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ipAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("siteKey"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             siteKey = property0.Value.GetString();
                             continue;
                         }
@@ -237,6 +190,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
@@ -246,6 +200,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bgpProperties = BgpSettings.DeserializeBgpSettings(property0.Value);
@@ -255,6 +210,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -264,6 +220,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isSecuritySite = property0.Value.GetBoolean();
@@ -273,19 +230,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<VpnSiteLink> array = new List<VpnSiteLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VpnSiteLink.DeserializeVpnSiteLink(item));
-                                }
+                                array.Add(VpnSiteLink.DeserializeVpnSiteLink(item));
                             }
                             vpnSiteLinks = array;
                             continue;
@@ -294,7 +245,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnSite(id, name, type, location, tags, etag, virtualWan, deviceProperties, ipAddress, siteKey, addressSpace, bgpProperties, provisioningState, isSecuritySite, vpnSiteLinks);
+            return new VpnSite(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, virtualWan.Value, deviceProperties.Value, ipAddress.Value, siteKey.Value, addressSpace.Value, bgpProperties.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isSecuritySite), Optional.ToList(vpnSiteLinks));
         }
     }
 }

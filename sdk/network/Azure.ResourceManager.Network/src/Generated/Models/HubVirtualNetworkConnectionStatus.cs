@@ -11,11 +11,12 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The current state of the VirtualHub to vnet connection. </summary>
-    public readonly partial struct HubVirtualNetworkConnectionStatus : IEquatable<HubVirtualNetworkConnectionStatus>
+    internal readonly partial struct HubVirtualNetworkConnectionStatus : IEquatable<HubVirtualNetworkConnectionStatus>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="HubVirtualNetworkConnectionStatus"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HubVirtualNetworkConnectionStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

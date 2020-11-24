@@ -11,11 +11,12 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Status of the Azure async operation. </summary>
-    public readonly partial struct NetworkOperationStatus : IEquatable<NetworkOperationStatus>
+    internal readonly partial struct NetworkOperationStatus : IEquatable<NetworkOperationStatus>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="NetworkOperationStatus"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkOperationStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

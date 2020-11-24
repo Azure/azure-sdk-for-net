@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId");
                 writer.WriteStringValue(WorkspaceResourceId);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorWorkspaceSettings DeserializeConnectionMonitorWorkspaceSettings(JsonElement element)
         {
-            string workspaceResourceId = default;
+            Optional<string> workspaceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceResourceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     workspaceResourceId = property.Value.GetString();
                     continue;
                 }
             }
-            return new ConnectionMonitorWorkspaceSettings(workspaceResourceId);
+            return new ConnectionMonitorWorkspaceSettings(workspaceResourceId.Value);
         }
     }
 }

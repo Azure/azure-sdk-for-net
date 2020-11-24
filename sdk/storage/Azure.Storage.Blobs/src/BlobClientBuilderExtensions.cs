@@ -9,7 +9,7 @@ using Azure.Storage.Blobs;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
-    /// Extension methods to add <see cref="BlobServiceClient"/> client to clients builder
+    /// Extension methods to add <see cref="BlobServiceClient"/> client to clients builder.
     /// </summary>
     public static class BlobClientBuilderExtensions
     {

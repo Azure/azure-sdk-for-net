@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of TagsResource. </summary>
         /// <param name="properties"> The set of tags. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TagsResource(Tags properties)
         {
             if (properties == null)

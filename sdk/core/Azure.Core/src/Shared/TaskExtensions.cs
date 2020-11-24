@@ -15,6 +15,9 @@ namespace Azure.Core.Pipeline
 {
     internal static class TaskExtensions
     {
+        public static WithCancellationTaskAwaitable AwaitWithCancellation(this Task task, CancellationToken cancellationToken)
+            => new WithCancellationTaskAwaitable(task, cancellationToken);
+
         public static WithCancellationTaskAwaitable<T> AwaitWithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
             => new WithCancellationTaskAwaitable<T>(task, cancellationToken);
 
@@ -25,11 +28,6 @@ namespace Azure.Core.Pipeline
         {
 #if DEBUG
             VerifyTaskCompleted(task.IsCompleted);
-#else
-            if (HasSynchronizationContext())
-            {
-                throw new InvalidOperationException("Synchronously waiting on non-completed task isn't allowed.");
-            }
 #endif
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
             return task.GetAwaiter().GetResult();
@@ -40,11 +38,6 @@ namespace Azure.Core.Pipeline
         {
 #if DEBUG
             VerifyTaskCompleted(task.IsCompleted);
-#else
-            if (HasSynchronizationContext())
-            {
-                throw new InvalidOperationException("Synchronously waiting on non-completed task isn't allowed.");
-            }
 #endif
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
             task.GetAwaiter().GetResult();
@@ -53,12 +46,9 @@ namespace Azure.Core.Pipeline
 
         public static T EnsureCompleted<T>(this ValueTask<T> task)
         {
-            if (!task.IsCompleted)
-            {
-#pragma warning disable AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
-                return EnsureCompleted(task.AsTask());
-#pragma warning restore AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
-            }
+#if DEBUG
+            VerifyTaskCompleted(task.IsCompleted);
+#endif
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
             return task.GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
@@ -66,18 +56,12 @@ namespace Azure.Core.Pipeline
 
         public static void EnsureCompleted(this ValueTask task)
         {
-            if (!task.IsCompleted)
-            {
-#pragma warning disable AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
-                EnsureCompleted(task.AsTask());
-#pragma warning restore AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
-            }
-            else
-            {
+#if DEBUG
+            VerifyTaskCompleted(task.IsCompleted);
+#endif
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-                task.GetAwaiter().GetResult();
+            task.GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            }
         }
 
         public static Enumerable<T> EnsureSyncEnumerable<T>(this IAsyncEnumerable<T> asyncEnumerable) => new Enumerable<T>(asyncEnumerable);
@@ -120,9 +104,6 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static bool HasSynchronizationContext()
-            => SynchronizationContext.Current != null && SynchronizationContext.Current.GetType() != typeof(SynchronizationContext) || TaskScheduler.Current != TaskScheduler.Default;
-
         /// <summary>
         /// Both <see cref="Enumerable{T}"/> and <see cref="Enumerator{T}"/> are defined as public structs so that foreach can use duck typing
         /// to call <see cref="Enumerable{T}.GetEnumerator"/> and avoid heap memory allocation.
@@ -163,6 +144,20 @@ namespace Azure.Core.Pipeline
 #pragma warning restore AZC0107 // Do not call public asynchronous method in synchronous scope.
         }
 
+        public readonly struct WithCancellationTaskAwaitable
+        {
+            private readonly CancellationToken _cancellationToken;
+            private readonly ConfiguredTaskAwaitable _awaitable;
+
+            public WithCancellationTaskAwaitable(Task task, CancellationToken cancellationToken)
+            {
+                _awaitable = task.ConfigureAwait(false);
+                _cancellationToken = cancellationToken;
+            }
+
+            public WithCancellationTaskAwaiter GetAwaiter() => new WithCancellationTaskAwaiter(_awaitable.GetAwaiter(), _cancellationToken);
+        }
+
         public readonly struct WithCancellationTaskAwaitable<T>
         {
             private readonly CancellationToken _cancellationToken;
@@ -189,6 +184,39 @@ namespace Azure.Core.Pipeline
             }
 
             public WithCancellationValueTaskAwaiter<T> GetAwaiter() => new WithCancellationValueTaskAwaiter<T>(_awaitable.GetAwaiter(), _cancellationToken);
+        }
+
+        public readonly struct WithCancellationTaskAwaiter : ICriticalNotifyCompletion
+        {
+            private readonly CancellationToken _cancellationToken;
+            private readonly ConfiguredTaskAwaitable.ConfiguredTaskAwaiter _taskAwaiter;
+
+            public WithCancellationTaskAwaiter(ConfiguredTaskAwaitable.ConfiguredTaskAwaiter awaiter, CancellationToken cancellationToken)
+            {
+                _taskAwaiter = awaiter;
+                _cancellationToken = cancellationToken;
+            }
+
+            public bool IsCompleted => _taskAwaiter.IsCompleted || _cancellationToken.IsCancellationRequested;
+
+            public void OnCompleted(Action continuation) => _taskAwaiter.OnCompleted(WrapContinuation(continuation));
+
+            public void UnsafeOnCompleted(Action continuation) => _taskAwaiter.UnsafeOnCompleted(WrapContinuation(continuation));
+
+            public void GetResult()
+            {
+                Debug.Assert(IsCompleted);
+                if (!_taskAwaiter.IsCompleted)
+                {
+                    _cancellationToken.ThrowIfCancellationRequested();
+                }
+                _taskAwaiter.GetResult();
+            }
+
+            private Action WrapContinuation(in Action originalContinuation)
+                => _cancellationToken.CanBeCanceled
+                    ? new WithCancellationContinuationWrapper(originalContinuation, _cancellationToken).Continuation
+                    : originalContinuation;
         }
 
         public readonly struct WithCancellationTaskAwaiter<T> : ICriticalNotifyCompletion

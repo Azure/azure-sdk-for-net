@@ -15,27 +15,19 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EvaluatedNetworkSecurityGroup DeserializeEvaluatedNetworkSecurityGroup(JsonElement element)
         {
-            string networkSecurityGroupId = default;
-            string appliedTo = default;
-            MatchedRule matchedRule = default;
-            IReadOnlyList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult = default;
+            Optional<string> networkSecurityGroupId = default;
+            Optional<string> appliedTo = default;
+            Optional<MatchedRule> matchedRule = default;
+            Optional<IReadOnlyList<NetworkSecurityRulesEvaluationResult>> rulesEvaluationResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkSecurityGroupId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     networkSecurityGroupId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("appliedTo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     appliedTo = property.Value.GetString();
                     continue;
                 }
@@ -43,6 +35,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     matchedRule = MatchedRule.DeserializeMatchedRule(property.Value);
@@ -52,25 +45,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetworkSecurityRulesEvaluationResult> array = new List<NetworkSecurityRulesEvaluationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NetworkSecurityRulesEvaluationResult.DeserializeNetworkSecurityRulesEvaluationResult(item));
-                        }
+                        array.Add(NetworkSecurityRulesEvaluationResult.DeserializeNetworkSecurityRulesEvaluationResult(item));
                     }
                     rulesEvaluationResult = array;
                     continue;
                 }
             }
-            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId, appliedTo, matchedRule, rulesEvaluationResult);
+            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId.Value, appliedTo.Value, matchedRule.Value, Optional.ToList(rulesEvaluationResult));
         }
     }
 }

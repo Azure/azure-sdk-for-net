@@ -36,7 +36,7 @@ var options = new ServiceBusSessionProcessorOptions
 {
     // By default after the message handler returns, the processor will complete the message
     // If I want more fine-grained control over settlement, I can set this to false.
-    AutoComplete = false,
+    AutoCompleteMessages = false,
 
     // I can also allow for processing multiple sessions
     MaxConcurrentSessions = 5,
@@ -66,7 +66,7 @@ async Task MessageHandler(ProcessSessionMessageEventArgs args)
 
     // we can also set arbitrary session state using this receiver
     // the state is specific to the session, and not any particular message
-    await args.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
+    await args.SetSessionStateAsync(new BinaryData("some state"));
 
     // Once we've received the last message, complete the
     // task completion source.
@@ -100,4 +100,4 @@ await processor.StopProcessingAsync();
 
 To see the full example source, see:
 
-* [Sample05_SessionProcessor.cs](../tests/Samples/Sample05_SessionProcessor.cs)
+* [Sample05_SessionProcessor.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample05_SessionProcessor.cs)

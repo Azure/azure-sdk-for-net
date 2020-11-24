@@ -17,12 +17,12 @@ namespace Azure.Data.Tables.Models
 
         /// <summary> Initializes a new instance of TableServiceStatistics. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
-        internal TableServiceStatistics(TableGeoReplication geoReplication)
+        internal TableServiceStatistics(TableGeoReplicationInfo geoReplication)
         {
             GeoReplication = geoReplication;
         }
 
         /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
-        public TableGeoReplication GeoReplication { get; }
+        public TableGeoReplicationInfo GeoReplication { get; }
     }
 }

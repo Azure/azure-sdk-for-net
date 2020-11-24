@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

@@ -14,26 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnClientConnectionHealthDetail DeserializeVpnClientConnectionHealthDetail(JsonElement element)
         {
-            string vpnConnectionId = default;
-            long? vpnConnectionDuration = default;
-            string vpnConnectionTime = default;
-            string publicIpAddress = default;
-            string privateIpAddress = default;
-            string vpnUserName = default;
-            long? maxBandwidth = default;
-            long? egressPacketsTransferred = default;
-            long? egressBytesTransferred = default;
-            long? ingressPacketsTransferred = default;
-            long? ingressBytesTransferred = default;
-            long? maxPacketsPerSecond = default;
+            Optional<string> vpnConnectionId = default;
+            Optional<long> vpnConnectionDuration = default;
+            Optional<string> vpnConnectionTime = default;
+            Optional<string> publicIpAddress = default;
+            Optional<string> privateIpAddress = default;
+            Optional<string> vpnUserName = default;
+            Optional<long> maxBandwidth = default;
+            Optional<long> egressPacketsTransferred = default;
+            Optional<long> egressBytesTransferred = default;
+            Optional<long> ingressPacketsTransferred = default;
+            Optional<long> ingressBytesTransferred = default;
+            Optional<long> maxPacketsPerSecond = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vpnConnectionId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vpnConnectionId = property.Value.GetString();
                     continue;
                 }
@@ -41,6 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vpnConnectionDuration = property.Value.GetInt64();
@@ -48,37 +45,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("vpnConnectionTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vpnConnectionTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("publicIpAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     publicIpAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     privateIpAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("vpnUserName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vpnUserName = property.Value.GetString();
                     continue;
                 }
@@ -86,6 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxBandwidth = property.Value.GetInt64();
@@ -95,6 +77,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     egressPacketsTransferred = property.Value.GetInt64();
@@ -104,6 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     egressBytesTransferred = property.Value.GetInt64();
@@ -113,6 +97,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingressPacketsTransferred = property.Value.GetInt64();
@@ -122,6 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingressBytesTransferred = property.Value.GetInt64();
@@ -131,13 +117,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxPacketsPerSecond = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new VpnClientConnectionHealthDetail(vpnConnectionId, vpnConnectionDuration, vpnConnectionTime, publicIpAddress, privateIpAddress, vpnUserName, maxBandwidth, egressPacketsTransferred, egressBytesTransferred, ingressPacketsTransferred, ingressBytesTransferred, maxPacketsPerSecond);
+            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), vpnConnectionTime.Value, publicIpAddress.Value, privateIpAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond));
         }
     }
 }

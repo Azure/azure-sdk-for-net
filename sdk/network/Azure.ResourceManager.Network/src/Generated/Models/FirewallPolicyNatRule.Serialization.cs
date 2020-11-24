@@ -15,34 +15,34 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action");
                 writer.WriteObjectValue(Action);
             }
-            if (TranslatedAddress != null)
+            if (Optional.IsDefined(TranslatedAddress))
             {
                 writer.WritePropertyName("translatedAddress");
                 writer.WriteStringValue(TranslatedAddress);
             }
-            if (TranslatedPort != null)
+            if (Optional.IsDefined(TranslatedPort))
             {
                 writer.WritePropertyName("translatedPort");
                 writer.WriteStringValue(TranslatedPort);
             }
-            if (RuleCondition != null)
+            if (Optional.IsDefined(RuleCondition))
             {
                 writer.WritePropertyName("ruleCondition");
                 writer.WriteObjectValue(RuleCondition);
             }
             writer.WritePropertyName("ruleType");
             writer.WriteStringValue(RuleType.ToString());
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Priority != null)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority");
                 writer.WriteNumberValue(Priority.Value);
@@ -52,19 +52,20 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyNatRule DeserializeFirewallPolicyNatRule(JsonElement element)
         {
-            FirewallPolicyNatRuleAction action = default;
-            string translatedAddress = default;
-            string translatedPort = default;
-            FirewallPolicyRuleCondition ruleCondition = default;
+            Optional<FirewallPolicyNatRuleAction> action = default;
+            Optional<string> translatedAddress = default;
+            Optional<string> translatedPort = default;
+            Optional<FirewallPolicyRuleCondition> ruleCondition = default;
             FirewallPolicyRuleType ruleType = default;
-            string name = default;
-            int? priority = default;
+            Optional<string> name = default;
+            Optional<int> priority = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = FirewallPolicyNatRuleAction.DeserializeFirewallPolicyNatRuleAction(property.Value);
@@ -72,19 +73,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("translatedAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     translatedAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("translatedPort"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     translatedPort = property.Value.GetString();
                     continue;
                 }
@@ -92,6 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ruleCondition = FirewallPolicyRuleCondition.DeserializeFirewallPolicyRuleCondition(property.Value);
@@ -104,10 +98,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -115,13 +105,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     priority = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new FirewallPolicyNatRule(ruleType, name, priority, action, translatedAddress, translatedPort, ruleCondition);
+            return new FirewallPolicyNatRule(ruleType, name.Value, Optional.ToNullable(priority), action.Value, translatedAddress.Value, translatedPort.Value, ruleCondition.Value);
         }
     }
 }

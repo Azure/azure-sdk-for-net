@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of TroubleshootingResult. </summary>
         internal TroubleshootingResult()
         {
+            Results = new ChangeTrackingList<TroubleshootingDetails>();
         }
 
         /// <summary> Initializes a new instance of TroubleshootingResult. </summary>

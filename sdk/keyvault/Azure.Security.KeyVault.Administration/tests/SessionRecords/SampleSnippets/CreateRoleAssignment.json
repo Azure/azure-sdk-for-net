@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
@@ -23,7 +23,7 @@
       "ResponseBody": "OK"
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -155,7 +155,7 @@
                   "notDataActions": []
                 }
               ],
-              "roleName": "Azure Key Vault Managed HSM Crypto User",
+              "roleName": "HSM Crypto User",
               "type": ""
             },
             "type": "Microsoft.Authorization/roleDefinitions"
@@ -239,7 +239,7 @@
       }
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -279,7 +279,7 @@
       }
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -312,7 +312,7 @@
       }
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -346,7 +346,7 @@
     }
   ],
   "Variables": {
-    "AZURE_KEYVAULT_URL": "https://eastus.clitest.managedhsm-preview.azure.net",
+    "AZURE_KEYVAULT_URL": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net",
     "CLIENT_OBJECTID": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
     "RandomSeed": "2120151692"
   }

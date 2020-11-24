@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("directoryServiceOptions");
             writer.WriteStringValue(DirectoryServiceOptions.ToString());
-            if (ActiveDirectoryProperties != null)
+            if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties");
                 writer.WriteObjectValue(ActiveDirectoryProperties);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static AzureFilesIdentityBasedAuthentication DeserializeAzureFilesIdentityBasedAuthentication(JsonElement element)
         {
             DirectoryServiceOptions directoryServiceOptions = default;
-            ActiveDirectoryProperties activeDirectoryProperties = default;
+            Optional<ActiveDirectoryProperties> activeDirectoryProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoryServiceOptions"))
@@ -40,13 +40,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activeDirectoryProperties = ActiveDirectoryProperties.DeserializeActiveDirectoryProperties(property.Value);
                     continue;
                 }
             }
-            return new AzureFilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties);
+            return new AzureFilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties.Value);
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
@@ -41,26 +41,18 @@ namespace Azure.ResourceManager.Network.Models
                     case "NetworkRuleCondition": return NetworkRuleCondition.DeserializeNetworkRuleCondition(element);
                 }
             }
-            string name = default;
-            string description = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
             FirewallPolicyRuleConditionType ruleConditionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -70,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyRuleCondition(name, description, ruleConditionType);
+            return new FirewallPolicyRuleCondition(name.Value, description.Value, ruleConditionType);
         }
     }
 }

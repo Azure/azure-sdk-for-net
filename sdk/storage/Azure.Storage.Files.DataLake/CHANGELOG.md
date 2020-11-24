@@ -1,8 +1,43 @@
 # Release History
 
-## 12.3.0-preview.3 (Unreleased)
+## 12.6.0-beta.1 (Unreleased)
+
+
+## 12.5.0 (2020-11-10)
+- Includes all features from 12.5.0-preview.1
+- Fixed bug where DataLakeFileSystem.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
+- Added additional info to exception messages.
+- Added DataLakeDirectoryClient.GetPaths().
+- Fixed bug where Data Lake SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
+- Added ability to set Position on streams created with DataLakeFileClient.OpenRead().
+- Added CanGenerateSasUri property and GenerateSasUri() to DataLakePathClient, DataLakeFileClient, DataLakeDirectoryClient and DataLakeFileSystemClient.
+- Added CanGenerateAccountSasUri property and GenerateAccountSasUri() to DataLakeServiceClient.
+- Restored single upload threshold for parallel uploads from 5 TB to 256 MB.
+
+## 12.5.0-preview.1 (2020-09-30)
+- Added support for service version 2020-02-10.
+- Added support for Directory SAS.
+- Added support for File Set Expiry.
+- Fixed bug where Stream returned from DataLakeFileClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
+- Fixed bug where DataLakeFileClient.Upload() could not upload read-only files.
+- Fixed bug where DataLakeBlobAccessPolicy.StartsOn and .ExpiresOn would cause the process to crash.
+- Added seekability to DataLakeFileClient.OpenRead().
+- Added Close and RetainUncommitedData to DataLakeFileUploadOptions.
+- Fixed bug where DataLakeDirectoryClient.Rename(), DataLakeFileClient.Rename(), and DataLakeFileClient.Rename() couldn't handle source paths with special characters.
+- Added DataLakeClientBuilderExtensions.
+
+## 12.4.0 (2020-08-31)
+- Fixed bug where DataLakeFileClient.Upload() would deadlock if the content stream's position was not 0.
+- Fixed bug in DataLakeFileClient.OpenRead() causing us to do more download called than necessary.
+
+## 12.3.1 (2020-08-18)
+- Fixed bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 12.3.0 (2020-08-13)
+- Includes all features from 12.3.0-preview.1 through 12.3.0-preview.2.
 - Fixed bug where DataLakeFileSystemClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in DataLakeAccessPolicy
 - Added nullable properties, PolicyStartsOn and PolicyExpiresOn to DataLakeAccessPolicy
+- Added DataLakeFileClient.OpenWrite().
 
 ## 12.3.0-preview.2 (2020-07-27)
 - Fixed bug where DataLakeUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.

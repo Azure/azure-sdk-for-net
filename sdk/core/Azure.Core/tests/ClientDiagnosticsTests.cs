@@ -100,7 +100,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
 
-            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetProperty("Links", BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly).GetValue(startEvent.Value);
+            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startEvent.Value);
             Activity[] activitiesArray = activities.ToArray();
 
             Assert.AreEqual(activitiesArray.Length, 2);
@@ -144,7 +144,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
 
-            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetProperty("Links", BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly).GetValue(startEvent.Value);
+            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startEvent.Value);
             Activity linkedActivity = activities.Single();
 
             Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity.IdFormat);

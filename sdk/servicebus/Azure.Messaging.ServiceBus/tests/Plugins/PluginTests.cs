@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
@@ -21,10 +22,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             plugin.AfterMessageReceiveAsync(msg);
             Assert.AreEqual("body", msg.Body.ToString());
             Assert.AreEqual("contentType", msg.ContentType);
-            Assert.AreEqual("propertyValue", msg.Properties["propertyKey"]);
+            Assert.AreEqual("propertyValue", msg.ApplicationProperties["propertyKey"]);
             Assert.AreEqual("deadLetterDescription", msg.DeadLetterErrorDescription);
             Assert.AreEqual("deadLetterReason", msg.DeadLetterReason);
-            Assert.AreEqual("label", msg.Label);
+            Assert.AreEqual("label", msg.Subject);
             Assert.AreEqual("messageId", msg.MessageId);
             Assert.AreEqual("partitionKey", msg.PartitionKey);
             Assert.AreEqual("replyTo", msg.ReplyTo);
@@ -44,8 +45,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 SetContentType(message, "contentType");
                 SetCorrelationId(message, "correlationId");
                 SetUserProperty(message, "propertyKey", "propertyValue");
-                SetUserProperty(message, ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader, "deadLetterDescription");
-                SetUserProperty(message, ServiceBusReceivedMessage.DeadLetterReasonHeader, "deadLetterReason");
+                SetUserProperty(message, AmqpMessageConstants.DeadLetterErrorDescriptionHeader, "deadLetterDescription");
+                SetUserProperty(message, AmqpMessageConstants.DeadLetterReasonHeader, "deadLetterReason");
                 SetLabel(message, "label");
                 SetMessageId(message, "messageId");
                 SetPartitionKey(message, "partitionKey");

@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Search.Models
         /// for bool), which will override the value of the property currently stored in the index, even if this was
         /// not your intent. For this reason, it is strongly recommended that you always declare value-typed
         /// properties to be nullable in type T.</para>
-        /// <para>The above does not apply if you are using <c cref="Document">Document</c> as type T.</para>
+        /// <para>The above does not apply if you are using <see cref="Document" /> as type T.</para>
         /// </remarks>
         public static IndexAction<T> Merge<T>(T document)
         {
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Search.Models
         /// for bool), which will override the value of the property currently stored in the index, even if this was
         /// not your intent. For this reason, it is strongly recommended that you always declare value-typed
         /// properties to be nullable in type T.</para>
-        /// <para>The above does not apply if you are using <c cref="Document">Document</c> as type T.</para>
+        /// <para>The above does not apply if you are using <see cref="Document" /> as type T.</para>
         /// </remarks>
         public static IndexAction<T> MergeOrUpload<T>(T document)
         {

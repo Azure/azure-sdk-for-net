@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static MatchedRule DeserializeMatchedRule(JsonElement element)
         {
-            string ruleName = default;
-            string action = default;
+            Optional<string> ruleName = default;
+            Optional<string> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ruleName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("action"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     action = property.Value.GetString();
                     continue;
                 }
             }
-            return new MatchedRule(ruleName, action);
+            return new MatchedRule(ruleName.Value, action.Value);
         }
     }
 }

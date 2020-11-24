@@ -15,19 +15,20 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static LocationMetadata DeserializeLocationMetadata(JsonElement element)
         {
-            RegionType? regionType = default;
-            RegionCategory? regionCategory = default;
-            string geographyGroup = default;
-            string longitude = default;
-            string latitude = default;
-            string physicalLocation = default;
-            IReadOnlyList<PairedRegion> pairedRegion = default;
+            Optional<RegionType> regionType = default;
+            Optional<RegionCategory> regionCategory = default;
+            Optional<string> geographyGroup = default;
+            Optional<string> longitude = default;
+            Optional<string> latitude = default;
+            Optional<string> physicalLocation = default;
+            Optional<IReadOnlyList<PairedRegion>> pairedRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("regionType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     regionType = new RegionType(property.Value.GetString());
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     regionCategory = new RegionCategory(property.Value.GetString());
@@ -44,37 +46,21 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("geographyGroup"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     geographyGroup = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("longitude"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     longitude = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("latitude"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     latitude = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("physicalLocation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     physicalLocation = property.Value.GetString();
                     continue;
                 }
@@ -82,25 +68,19 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PairedRegion> array = new List<PairedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Models.PairedRegion.DeserializePairedRegion(item));
-                        }
+                        array.Add(Models.PairedRegion.DeserializePairedRegion(item));
                     }
                     pairedRegion = array;
                     continue;
                 }
             }
-            return new LocationMetadata(regionType, regionCategory, geographyGroup, longitude, latitude, physicalLocation, pairedRegion);
+            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geographyGroup.Value, longitude.Value, latitude.Value, physicalLocation.Value, Optional.ToList(pairedRegion));
         }
     }
 }

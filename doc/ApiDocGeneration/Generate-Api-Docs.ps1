@@ -45,7 +45,8 @@ Param (
     $RepoRoot = "${PSScriptRoot}/../..",
     [Parameter(Mandatory = $True)]
     $BinDirectory,
-    $DocGenDir = "${PSScriptRoot}"
+    $DocGenDir = "${PSScriptRoot}",
+    $ArtifactStagingDirectory
 )
 
 Write-Verbose "Name Reccuring paths with variable names"
@@ -77,10 +78,10 @@ mkdir $DocOutDir
 
 if ($LibType -eq 'client') { 
     Write-Verbose "Build Packages for Doc Generation - Client"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0
+    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0
 
     Write-Verbose "Include client Dependencies"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
+    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
 }
 
 if ($LibType -eq 'management') {
@@ -139,5 +140,5 @@ Write-Verbose "Build Doc Content"
 Write-Verbose "Copy over site Logo"
 Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
 
-Write-Verbose "Set variable for publish pipeline step"
-echo "##vso[task.setvariable variable=PublishTargetPath]${DocOutHtmlDir}"
+Write-Verbose "Compress and copy HTML into the staging Area"
+Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest

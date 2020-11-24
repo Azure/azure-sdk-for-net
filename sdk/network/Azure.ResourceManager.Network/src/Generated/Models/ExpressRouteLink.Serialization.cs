@@ -15,59 +15,24 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (RouterName != null)
-            {
-                writer.WritePropertyName("routerName");
-                writer.WriteStringValue(RouterName);
-            }
-            if (InterfaceName != null)
-            {
-                writer.WritePropertyName("interfaceName");
-                writer.WriteStringValue(InterfaceName);
-            }
-            if (PatchPanelId != null)
-            {
-                writer.WritePropertyName("patchPanelId");
-                writer.WriteStringValue(PatchPanelId);
-            }
-            if (RackId != null)
-            {
-                writer.WritePropertyName("rackId");
-                writer.WriteStringValue(RackId);
-            }
-            if (ConnectorType != null)
-            {
-                writer.WritePropertyName("connectorType");
-                writer.WriteStringValue(ConnectorType.Value.ToString());
-            }
-            if (AdminState != null)
+            if (Optional.IsDefined(AdminState))
             {
                 writer.WritePropertyName("adminState");
                 writer.WriteStringValue(AdminState.Value.ToString());
             }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (MacSecConfig != null)
+            if (Optional.IsDefined(MacSecConfig))
             {
                 writer.WritePropertyName("macSecConfig");
                 writer.WriteObjectValue(MacSecConfig);
@@ -78,83 +43,60 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteLink DeserializeExpressRouteLink(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string id = default;
-            string routerName = default;
-            string interfaceName = default;
-            string patchPanelId = default;
-            string rackId = default;
-            ExpressRouteLinkConnectorType? connectorType = default;
-            ExpressRouteLinkAdminState? adminState = default;
-            ProvisioningState? provisioningState = default;
-            ExpressRouteLinkMacSecConfig macSecConfig = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> routerName = default;
+            Optional<string> interfaceName = default;
+            Optional<string> patchPanelId = default;
+            Optional<string> rackId = default;
+            Optional<ExpressRouteLinkConnectorType> connectorType = default;
+            Optional<ExpressRouteLinkAdminState> adminState = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<ExpressRouteLinkMacSecConfig> macSecConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("routerName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             routerName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("interfaceName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             interfaceName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("patchPanelId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             patchPanelId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("rackId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             rackId = property0.Value.GetString();
                             continue;
                         }
@@ -162,6 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectorType = new ExpressRouteLinkConnectorType(property0.Value.GetString());
@@ -171,6 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             adminState = new ExpressRouteLinkAdminState(property0.Value.GetString());
@@ -180,6 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -189,6 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             macSecConfig = ExpressRouteLinkMacSecConfig.DeserializeExpressRouteLinkMacSecConfig(property0.Value);
@@ -198,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteLink(id, name, etag, routerName, interfaceName, patchPanelId, rackId, connectorType, adminState, provisioningState, macSecConfig);
+            return new ExpressRouteLink(id.Value, name.Value, etag.Value, routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
         }
     }
 }

@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.Serialization;
+
 namespace Azure.Data.Tables
 {
     internal static class TableConstants
@@ -36,7 +38,9 @@ namespace Azure.Data.Tables
             public const string TimeStamp = "Timestamp";
             public const string PartitionKey = "PartitionKey";
             public const string RowKey = "RowKey";
-            public const string Etag = "odata.etag";
+            public const string EtagOdata = "odata.etag";
+            public const string ETag = "ETag";
+            public const string OdataMetadata = "odata.metadata";
         }
 
         internal static class Odata
@@ -56,6 +60,12 @@ namespace Azure.Data.Tables
         {
             internal const string MissingPartitionKey = "The entity must contain a PartitionKey value";
             internal const string MissingRowKey = "The entity must contain a RowKey value";
+            internal const string BatchCanOnlyBeSubmittedOnce = "A batch can only be submitted once.";
+        }
+
+        internal static class ExceptionData
+        {
+            internal const string FailedEntityIndex = "FailedEntity";
         }
 
         /// <summary>
@@ -127,6 +137,31 @@ namespace Azure.Data.Tables
             {
                 public const string Table = "t";
             }
+
+        }
+        /// <summary>
+        /// Table Connection String constant values.
+        /// </summary>
+        internal static class ConnectionStrings
+        {
+            internal const int TableEndpointPortNumber = 10002;
+            internal const string UseDevelopmentSetting = "UseDevelopmentStorage";
+            internal const string DevelopmentProxyUriSetting = "DevelopmentStorageProxyUri";
+            internal const string DefaultEndpointsProtocolSetting = "DefaultEndpointsProtocol";
+            internal const string AccountNameSetting = "AccountName";
+            internal const string AccountKeyNameSetting = "AccountKeyName";
+            internal const string AccountKeySetting = "AccountKey";
+            internal const string TableEndpointSetting = "TableEndpoint";
+            internal const string TableSecondaryEndpointSetting = "TableSecondaryEndpoint";
+            internal const string EndpointSuffixSetting = "EndpointSuffix";
+            internal const string SharedAccessSignatureSetting = "SharedAccessSignature";
+            internal const string DevStoreAccountName = "devstoreaccount1";
+            internal const string DevStoreAccountKey =
+                "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
+            internal const string SecondaryLocationAccountSuffix = "-secondary";
+            internal const string DefaultEndpointSuffix = "core.windows.net";
+            internal const string DefaultTableHostnamePrefix = "table";
+            internal const string Localhost = "127.0.0.1";
         }
     }
 }

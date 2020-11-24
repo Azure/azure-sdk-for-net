@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public BlobContainersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-06-01")
         {
             if (subscriptionId == null)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string accountName, string maxpagesize, string filter)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string accountName, string maxpagesize, string filter, ListContainersInclude? include)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,8 +73,12 @@ namespace Azure.ResourceManager.Storage
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("$include", "deleted", true);
+            if (include != null)
+            {
+                uri.AppendQuery("$include", include.Value.ToString(), true);
+            }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -83,8 +87,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ListContainerItems>> ListAsync(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<ListContainerItems>> ListAsync(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, accountName, maxpagesize, filter);
+            using var message = CreateListRequest(resourceGroupName, accountName, maxpagesize, filter, include);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -103,14 +109,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ListContainerItems value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListContainerItems.DeserializeListContainerItems(document.RootElement);
-                        }
+                        value = ListContainerItems.DeserializeListContainerItems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -123,8 +122,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ListContainerItems> List(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public Response<ListContainerItems> List(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, accountName, maxpagesize, filter);
+            using var message = CreateListRequest(resourceGroupName, accountName, maxpagesize, filter, include);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -143,14 +144,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ListContainerItems value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListContainerItems.DeserializeListContainerItems(document.RootElement);
-                        }
+                        value = ListContainerItems.DeserializeListContainerItems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,6 +170,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(blobContainer);
             request.Content = content;
@@ -188,6 +183,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="blobContainer"> Properties of the blob container to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="blobContainer"/> is null. </exception>
         public async Task<Response<BlobContainer>> CreateAsync(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -216,14 +212,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         BlobContainer value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobContainer.DeserializeBlobContainer(document.RootElement);
-                        }
+                        value = BlobContainer.DeserializeBlobContainer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -237,6 +226,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="blobContainer"> Properties of the blob container to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="blobContainer"/> is null. </exception>
         public Response<BlobContainer> Create(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -265,14 +255,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         BlobContainer value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobContainer.DeserializeBlobContainer(document.RootElement);
-                        }
+                        value = BlobContainer.DeserializeBlobContainer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -298,6 +281,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(blobContainer);
             request.Content = content;
@@ -310,6 +294,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="blobContainer"> Properties to update for the blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="blobContainer"/> is null. </exception>
         public async Task<Response<BlobContainer>> UpdateAsync(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -337,14 +322,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         BlobContainer value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobContainer.DeserializeBlobContainer(document.RootElement);
-                        }
+                        value = BlobContainer.DeserializeBlobContainer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -358,6 +336,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="blobContainer"> Properties to update for the blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="blobContainer"/> is null. </exception>
         public Response<BlobContainer> Update(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -385,14 +364,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         BlobContainer value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobContainer.DeserializeBlobContainer(document.RootElement);
-                        }
+                        value = BlobContainer.DeserializeBlobContainer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -417,6 +389,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(containerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -425,6 +398,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="containerName"/> is null. </exception>
         public async Task<Response<BlobContainer>> GetAsync(string resourceGroupName, string accountName, string containerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -448,14 +422,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         BlobContainer value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobContainer.DeserializeBlobContainer(document.RootElement);
-                        }
+                        value = BlobContainer.DeserializeBlobContainer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -468,6 +435,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="containerName"/> is null. </exception>
         public Response<BlobContainer> Get(string resourceGroupName, string accountName, string containerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -491,14 +459,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         BlobContainer value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobContainer.DeserializeBlobContainer(document.RootElement);
-                        }
+                        value = BlobContainer.DeserializeBlobContainer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -531,6 +492,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="containerName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string containerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -563,6 +525,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="containerName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string accountName, string containerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -609,6 +572,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(legalHold);
             request.Content = content;
@@ -621,6 +585,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="legalHold"> The LegalHold property that will be set to a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="legalHold"/> is null. </exception>
         public async Task<Response<LegalHold>> SetLegalHoldAsync(string resourceGroupName, string accountName, string containerName, LegalHold legalHold, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -648,14 +613,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         LegalHold value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LegalHold.DeserializeLegalHold(document.RootElement);
-                        }
+                        value = LegalHold.DeserializeLegalHold(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -669,6 +627,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="legalHold"> The LegalHold property that will be set to a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="legalHold"/> is null. </exception>
         public Response<LegalHold> SetLegalHold(string resourceGroupName, string accountName, string containerName, LegalHold legalHold, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -696,14 +655,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         LegalHold value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LegalHold.DeserializeLegalHold(document.RootElement);
-                        }
+                        value = LegalHold.DeserializeLegalHold(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -730,6 +682,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(legalHold);
             request.Content = content;
@@ -742,6 +695,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="legalHold"> The LegalHold property that will be clear from a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="legalHold"/> is null. </exception>
         public async Task<Response<LegalHold>> ClearLegalHoldAsync(string resourceGroupName, string accountName, string containerName, LegalHold legalHold, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -769,14 +723,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         LegalHold value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LegalHold.DeserializeLegalHold(document.RootElement);
-                        }
+                        value = LegalHold.DeserializeLegalHold(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -790,6 +737,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="legalHold"> The LegalHold property that will be clear from a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="legalHold"/> is null. </exception>
         public Response<LegalHold> ClearLegalHold(string resourceGroupName, string accountName, string containerName, LegalHold legalHold, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -817,14 +765,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         LegalHold value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LegalHold.DeserializeLegalHold(document.RootElement);
-                        }
+                        value = LegalHold.DeserializeLegalHold(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -856,6 +797,7 @@ namespace Azure.ResourceManager.Storage
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (parameters != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -872,6 +814,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="parameters"> The ImmutabilityPolicy Properties that will be created or updated to a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="containerName"/> is null. </exception>
         public async Task<Response<ImmutabilityPolicy>> CreateOrUpdateImmutabilityPolicyAsync(string resourceGroupName, string accountName, string containerName, string ifMatch = null, ImmutabilityPolicy parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -895,14 +838,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ImmutabilityPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
-                        }
+                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -917,6 +853,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="parameters"> The ImmutabilityPolicy Properties that will be created or updated to a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="containerName"/> is null. </exception>
         public Response<ImmutabilityPolicy> CreateOrUpdateImmutabilityPolicy(string resourceGroupName, string accountName, string containerName, string ifMatch = null, ImmutabilityPolicy parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -940,14 +877,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ImmutabilityPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
-                        }
+                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -978,6 +908,7 @@ namespace Azure.ResourceManager.Storage
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -987,6 +918,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="containerName"/> is null. </exception>
         public async Task<Response<ImmutabilityPolicy>> GetImmutabilityPolicyAsync(string resourceGroupName, string accountName, string containerName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1010,14 +942,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ImmutabilityPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
-                        }
+                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1031,6 +956,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="containerName"/> is null. </exception>
         public Response<ImmutabilityPolicy> GetImmutabilityPolicy(string resourceGroupName, string accountName, string containerName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1054,14 +980,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ImmutabilityPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
-                        }
+                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1089,6 +1008,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1098,6 +1018,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
         public async Task<Response<ImmutabilityPolicy>> DeleteImmutabilityPolicyAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1125,14 +1046,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ImmutabilityPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
-                        }
+                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1146,6 +1060,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
         public Response<ImmutabilityPolicy> DeleteImmutabilityPolicy(string resourceGroupName, string accountName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1173,14 +1088,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ImmutabilityPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
-                        }
+                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1207,6 +1115,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1216,6 +1125,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
         public async Task<Response<ImmutabilityPolicy>> LockImmutabilityPolicyAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1243,14 +1153,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ImmutabilityPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
-                        }
+                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1264,6 +1167,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
         public Response<ImmutabilityPolicy> LockImmutabilityPolicy(string resourceGroupName, string accountName, string containerName, string ifMatch, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1291,14 +1195,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ImmutabilityPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
-                        }
+                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1326,6 +1223,7 @@ namespace Azure.ResourceManager.Storage
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (parameters != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -1342,6 +1240,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="parameters"> The ImmutabilityPolicy Properties that will be extended for a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
         public async Task<Response<ImmutabilityPolicy>> ExtendImmutabilityPolicyAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1369,14 +1268,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ImmutabilityPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
-                        }
+                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1391,6 +1283,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
         /// <param name="parameters"> The ImmutabilityPolicy Properties that will be extended for a blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="ifMatch"/> is null. </exception>
         public Response<ImmutabilityPolicy> ExtendImmutabilityPolicy(string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1418,14 +1311,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ImmutabilityPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
-                        }
+                        value = ImmutabilityPolicy.DeserializeImmutabilityPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1452,6 +1338,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (parameters != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -1467,6 +1354,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="parameters"> Lease Container request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="containerName"/> is null. </exception>
         public async Task<Response<LeaseContainerResponse>> LeaseAsync(string resourceGroupName, string accountName, string containerName, LeaseContainerRequest parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1490,14 +1378,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         LeaseContainerResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LeaseContainerResponse.DeserializeLeaseContainerResponse(document.RootElement);
-                        }
+                        value = LeaseContainerResponse.DeserializeLeaseContainerResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1511,6 +1392,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="parameters"> Lease Container request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="containerName"/> is null. </exception>
         public Response<LeaseContainerResponse> Lease(string resourceGroupName, string accountName, string containerName, LeaseContainerRequest parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1534,14 +1416,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         LeaseContainerResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LeaseContainerResponse.DeserializeLeaseContainerResponse(document.RootElement);
-                        }
+                        value = LeaseContainerResponse.DeserializeLeaseContainerResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1549,7 +1424,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string accountName, string maxpagesize, string filter)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string accountName, string maxpagesize, string filter, ListContainersInclude? include)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1558,6 +1433,7 @@ namespace Azure.ResourceManager.Storage
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1567,8 +1443,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ListContainerItems>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<ListContainerItems>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1583,7 +1461,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, maxpagesize, filter);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, maxpagesize, filter, include);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1591,14 +1469,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ListContainerItems value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListContainerItems.DeserializeListContainerItems(document.RootElement);
-                        }
+                        value = ListContainerItems.DeserializeListContainerItems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1612,8 +1483,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ListContainerItems> ListNextPage(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public Response<ListContainerItems> ListNextPage(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1628,7 +1501,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, maxpagesize, filter);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, accountName, maxpagesize, filter, include);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1636,14 +1509,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ListContainerItems value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListContainerItems.DeserializeListContainerItems(document.RootElement);
-                        }
+                        value = ListContainerItems.DeserializeListContainerItems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

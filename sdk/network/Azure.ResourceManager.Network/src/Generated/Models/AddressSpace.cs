@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AddressSpace. </summary>
         public AddressSpace()
         {
+            AddressPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AddressSpace. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> AddressPrefixes { get; set; }
+        public IList<string> AddressPrefixes { get; }
     }
 }

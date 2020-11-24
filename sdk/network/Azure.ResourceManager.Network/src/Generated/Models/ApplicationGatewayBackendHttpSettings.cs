@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHttpSettings. </summary>
         public ApplicationGatewayBackendHttpSettings()
         {
+            AuthenticationCertificates = new ChangeTrackingList<SubResource>();
+            TrustedRootCertificates = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHttpSettings. </summary>
@@ -74,9 +77,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Probe resource of an application gateway. </summary>
         public SubResource Probe { get; set; }
         /// <summary> Array of references to application gateway authentication certificates. </summary>
-        public IList<SubResource> AuthenticationCertificates { get; set; }
+        public IList<SubResource> AuthenticationCertificates { get; }
         /// <summary> Array of references to application gateway trusted root certificates. </summary>
-        public IList<SubResource> TrustedRootCertificates { get; set; }
+        public IList<SubResource> TrustedRootCertificates { get; }
         /// <summary> Connection draining of the backend http settings resource. </summary>
         public ApplicationGatewayConnectionDraining ConnectionDraining { get; set; }
         /// <summary> Host header to be sent to the backend servers. </summary>

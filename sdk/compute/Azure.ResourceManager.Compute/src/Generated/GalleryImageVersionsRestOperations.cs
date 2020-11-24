@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public GalleryImageVersionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(galleryImageVersion);
             request.Content = content;
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery Image Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersion galleryImageVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -119,6 +121,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery Image Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersion galleryImageVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -175,6 +178,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(galleryImageVersion);
             request.Content = content;
@@ -188,6 +192,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the update gallery Image Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
         public async Task<Response> UpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionUpdate galleryImageVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -229,6 +234,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the update gallery Image Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
         public Response Update(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionUpdate galleryImageVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, ReplicationStatusTypes? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -280,9 +286,13 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryImageName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryImageVersionName, true);
-            uri.AppendQuery("$expand", "ReplicationStatus", true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -291,8 +301,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
         /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version resides. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GalleryImageVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public async Task<Response<GalleryImageVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -311,7 +323,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageVersionName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
+            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -319,14 +331,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryImageVersion value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryImageVersion.DeserializeGalleryImageVersion(document.RootElement);
-                        }
+                        value = GalleryImageVersion.DeserializeGalleryImageVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -339,8 +344,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
         /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version resides. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GalleryImageVersion> Get(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public Response<GalleryImageVersion> Get(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -359,7 +366,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageVersionName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
+            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -367,14 +374,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryImageVersion value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryImageVersion.DeserializeGalleryImageVersion(document.RootElement);
-                        }
+                        value = GalleryImageVersion.DeserializeGalleryImageVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -401,6 +401,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryImageVersionName, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -410,6 +411,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version resides. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -448,6 +450,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version resides. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -498,6 +501,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/versions", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -506,6 +510,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
         public async Task<Response<GalleryImageVersionList>> ListByGalleryImageAsync(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -529,14 +534,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryImageVersionList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
-                        }
+                        value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -549,6 +547,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
         public Response<GalleryImageVersionList> ListByGalleryImage(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -572,14 +571,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryImageVersionList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
-                        }
+                        value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -596,6 +588,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -605,6 +598,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
         public async Task<Response<GalleryImageVersionList>> ListByGalleryImageNextPageAsync(string nextLink, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -632,14 +626,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryImageVersionList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
-                        }
+                        value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -653,6 +640,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
         public Response<GalleryImageVersionList> ListByGalleryImageNextPage(string nextLink, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -680,14 +668,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryImageVersionList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
-                        }
+                        value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

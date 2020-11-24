@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (VCPUs != null)
+            if (Optional.IsDefined(VCPUs))
             {
                 writer.WritePropertyName("vCPUs");
                 writer.WriteObjectValue(VCPUs);
             }
-            if (Memory != null)
+            if (Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory");
                 writer.WriteObjectValue(Memory);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element)
         {
-            ResourceRange vCPUs = default;
-            ResourceRange memory = default;
+            Optional<ResourceRange> vCPUs = default;
+            Optional<ResourceRange> memory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vCPUs"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vCPUs = ResourceRange.DeserializeResourceRange(property.Value);
@@ -47,13 +48,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memory = ResourceRange.DeserializeResourceRange(property.Value);
                     continue;
                 }
             }
-            return new RecommendedMachineConfiguration(vCPUs, memory);
+            return new RecommendedMachineConfiguration(vCPUs.Value, memory.Value);
         }
     }
 }

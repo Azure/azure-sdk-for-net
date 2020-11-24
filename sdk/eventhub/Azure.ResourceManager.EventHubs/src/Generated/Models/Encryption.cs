@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of Encryption. </summary>
         public Encryption()
         {
+            KeyVaultProperties = new ChangeTrackingList<KeyVaultProperties>();
             KeySource = "Microsoft.KeyVault";
         }
 
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Properties of KeyVault. </summary>
-        public IList<KeyVaultProperties> KeyVaultProperties { get; set; }
+        public IList<KeyVaultProperties> KeyVaultProperties { get; }
         /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
         public string KeySource { get; set; }
     }

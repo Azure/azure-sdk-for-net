@@ -17,18 +17,13 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled");
             writer.WriteBooleanValue(Enabled);
-            if (StorageUri != null)
-            {
-                writer.WritePropertyName("storageUri");
-                writer.WriteStringValue(StorageUri);
-            }
             writer.WriteEndObject();
         }
 
         internal static ContainerServiceVMDiagnostics DeserializeContainerServiceVMDiagnostics(JsonElement element)
         {
             bool enabled = default;
-            string storageUri = default;
+            Optional<string> storageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -38,15 +33,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("storageUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageUri = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerServiceVMDiagnostics(enabled, storageUri);
+            return new ContainerServiceVMDiagnostics(enabled, storageUri.Value);
         }
     }
 }

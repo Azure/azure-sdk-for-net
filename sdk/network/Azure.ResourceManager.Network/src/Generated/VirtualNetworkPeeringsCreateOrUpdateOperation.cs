@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         VirtualNetworkPeering IOperationSource<VirtualNetworkPeering>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualNetworkPeering.DeserializeVirtualNetworkPeering(document.RootElement);
-            }
+            return VirtualNetworkPeering.DeserializeVirtualNetworkPeering(document.RootElement);
         }
 
         async ValueTask<VirtualNetworkPeering> IOperationSource<VirtualNetworkPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualNetworkPeering.DeserializeVirtualNetworkPeering(document.RootElement);
-            }
+            return VirtualNetworkPeering.DeserializeVirtualNetworkPeering(document.RootElement);
         }
     }
 }

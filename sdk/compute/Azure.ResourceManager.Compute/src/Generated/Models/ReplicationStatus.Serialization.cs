@@ -11,39 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ReplicationStatus : IUtf8JsonSerializable
+    public partial class ReplicationStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (AggregatedState != null)
-            {
-                writer.WritePropertyName("aggregatedState");
-                writer.WriteStringValue(AggregatedState.Value.ToString());
-            }
-            if (Summary != null)
-            {
-                writer.WritePropertyName("summary");
-                writer.WriteStartArray();
-                foreach (var item in Summary)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ReplicationStatus DeserializeReplicationStatus(JsonElement element)
         {
-            AggregatedReplicationState? aggregatedState = default;
-            IList<RegionalReplicationStatus> summary = default;
+            Optional<AggregatedReplicationState> aggregatedState = default;
+            Optional<IReadOnlyList<RegionalReplicationStatus>> summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregatedState"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aggregatedState = new AggregatedReplicationState(property.Value.GetString());
@@ -53,25 +33,19 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RegionalReplicationStatus> array = new List<RegionalReplicationStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item));
-                        }
+                        array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item));
                     }
                     summary = array;
                     continue;
                 }
             }
-            return new ReplicationStatus(aggregatedState, summary);
+            return new ReplicationStatus(Optional.ToNullable(aggregatedState), Optional.ToList(summary));
         }
     }
 }

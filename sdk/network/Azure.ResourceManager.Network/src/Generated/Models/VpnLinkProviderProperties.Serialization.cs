@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkProviderName != null)
+            if (Optional.IsDefined(LinkProviderName))
             {
                 writer.WritePropertyName("linkProviderName");
                 writer.WriteStringValue(LinkProviderName);
             }
-            if (LinkSpeedInMbps != null)
+            if (Optional.IsDefined(LinkSpeedInMbps))
             {
                 writer.WritePropertyName("linkSpeedInMbps");
                 writer.WriteNumberValue(LinkSpeedInMbps.Value);
@@ -30,16 +30,12 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnLinkProviderProperties DeserializeVpnLinkProviderProperties(JsonElement element)
         {
-            string linkProviderName = default;
-            int? linkSpeedInMbps = default;
+            Optional<string> linkProviderName = default;
+            Optional<int> linkSpeedInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkProviderName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     linkProviderName = property.Value.GetString();
                     continue;
                 }
@@ -47,13 +43,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkSpeedInMbps = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new VpnLinkProviderProperties(linkProviderName, linkSpeedInMbps);
+            return new VpnLinkProviderProperties(linkProviderName.Value, Optional.ToNullable(linkSpeedInMbps));
         }
     }
 }

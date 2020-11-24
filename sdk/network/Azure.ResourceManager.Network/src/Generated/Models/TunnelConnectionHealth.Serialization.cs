@@ -10,54 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TunnelConnectionHealth : IUtf8JsonSerializable
+    public partial class TunnelConnectionHealth
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Tunnel != null)
-            {
-                writer.WritePropertyName("tunnel");
-                writer.WriteStringValue(Tunnel);
-            }
-            if (ConnectionStatus != null)
-            {
-                writer.WritePropertyName("connectionStatus");
-                writer.WriteStringValue(ConnectionStatus.Value.ToString());
-            }
-            if (IngressBytesTransferred != null)
-            {
-                writer.WritePropertyName("ingressBytesTransferred");
-                writer.WriteNumberValue(IngressBytesTransferred.Value);
-            }
-            if (EgressBytesTransferred != null)
-            {
-                writer.WritePropertyName("egressBytesTransferred");
-                writer.WriteNumberValue(EgressBytesTransferred.Value);
-            }
-            if (LastConnectionEstablishedUtcTime != null)
-            {
-                writer.WritePropertyName("lastConnectionEstablishedUtcTime");
-                writer.WriteStringValue(LastConnectionEstablishedUtcTime);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element)
         {
-            string tunnel = default;
-            VirtualNetworkGatewayConnectionStatus? connectionStatus = default;
-            long? ingressBytesTransferred = default;
-            long? egressBytesTransferred = default;
-            string lastConnectionEstablishedUtcTime = default;
+            Optional<string> tunnel = default;
+            Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
+            Optional<long> ingressBytesTransferred = default;
+            Optional<long> egressBytesTransferred = default;
+            Optional<string> lastConnectionEstablishedUtcTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tunnel"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tunnel = property.Value.GetString();
                     continue;
                 }
@@ -65,6 +30,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectionStatus = new VirtualNetworkGatewayConnectionStatus(property.Value.GetString());
@@ -74,6 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingressBytesTransferred = property.Value.GetInt64();
@@ -83,6 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     egressBytesTransferred = property.Value.GetInt64();
@@ -90,15 +58,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("lastConnectionEstablishedUtcTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastConnectionEstablishedUtcTime = property.Value.GetString();
                     continue;
                 }
             }
-            return new TunnelConnectionHealth(tunnel, connectionStatus, ingressBytesTransferred, egressBytesTransferred, lastConnectionEstablishedUtcTime);
+            return new TunnelConnectionHealth(tunnel.Value, Optional.ToNullable(connectionStatus), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value);
         }
     }
 }

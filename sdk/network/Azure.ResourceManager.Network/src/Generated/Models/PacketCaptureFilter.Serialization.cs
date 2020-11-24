@@ -15,27 +15,27 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (LocalIPAddress != null)
+            if (Optional.IsDefined(LocalIPAddress))
             {
                 writer.WritePropertyName("localIPAddress");
                 writer.WriteStringValue(LocalIPAddress);
             }
-            if (RemoteIPAddress != null)
+            if (Optional.IsDefined(RemoteIPAddress))
             {
                 writer.WritePropertyName("remoteIPAddress");
                 writer.WriteStringValue(RemoteIPAddress);
             }
-            if (LocalPort != null)
+            if (Optional.IsDefined(LocalPort))
             {
                 writer.WritePropertyName("localPort");
                 writer.WriteStringValue(LocalPort);
             }
-            if (RemotePort != null)
+            if (Optional.IsDefined(RemotePort))
             {
                 writer.WritePropertyName("remotePort");
                 writer.WriteStringValue(RemotePort);
@@ -45,17 +45,18 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PacketCaptureFilter DeserializePacketCaptureFilter(JsonElement element)
         {
-            PcProtocol? protocol = default;
-            string localIPAddress = default;
-            string remoteIPAddress = default;
-            string localPort = default;
-            string remotePort = default;
+            Optional<PcProtocol> protocol = default;
+            Optional<string> localIPAddress = default;
+            Optional<string> remoteIPAddress = default;
+            Optional<string> localPort = default;
+            Optional<string> remotePort = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new PcProtocol(property.Value.GetString());
@@ -63,42 +64,26 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("localIPAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     localIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("remoteIPAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     remoteIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("localPort"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     localPort = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("remotePort"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     remotePort = property.Value.GetString();
                     continue;
                 }
             }
-            return new PacketCaptureFilter(protocol, localIPAddress, remoteIPAddress, localPort, remotePort);
+            return new PacketCaptureFilter(Optional.ToNullable(protocol), localIPAddress.Value, remoteIPAddress.Value, localPort.Value, remotePort.Value);
         }
     }
 }

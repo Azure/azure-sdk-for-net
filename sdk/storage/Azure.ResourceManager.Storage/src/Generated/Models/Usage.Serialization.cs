@@ -14,16 +14,17 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static Usage DeserializeUsage(JsonElement element)
         {
-            UsageUnit? unit = default;
-            int? currentValue = default;
-            int? limit = default;
-            UsageName name = default;
+            Optional<UsageUnit> unit = default;
+            Optional<int> currentValue = default;
+            Optional<int> limit = default;
+            Optional<UsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = property.Value.GetString().ToUsageUnit();
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetInt32();
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt32();
@@ -51,13 +54,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = UsageName.DeserializeUsageName(property.Value);
                     continue;
                 }
             }
-            return new Usage(unit, currentValue, limit, name);
+            return new Usage(Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

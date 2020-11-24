@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion");
             writer.WriteStringValue(RuleSetVersion);
-            if (RuleGroupOverrides != null)
+            if (Optional.IsCollectionDefined(RuleGroupOverrides))
             {
                 writer.WritePropertyName("ruleGroupOverrides");
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             string ruleSetType = default;
             string ruleSetVersion = default;
-            IList<ManagedRuleGroupOverride> ruleGroupOverrides = default;
+            Optional<IList<ManagedRuleGroupOverride>> ruleGroupOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleSetType"))
@@ -54,25 +54,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedRuleGroupOverride> array = new List<ManagedRuleGroupOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ManagedRuleGroupOverride.DeserializeManagedRuleGroupOverride(item));
-                        }
+                        array.Add(ManagedRuleGroupOverride.DeserializeManagedRuleGroupOverride(item));
                     }
                     ruleGroupOverrides = array;
                     continue;
                 }
             }
-            return new ManagedRuleSet(ruleSetType, ruleSetVersion, ruleGroupOverrides);
+            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToList(ruleGroupOverrides));
         }
     }
 }

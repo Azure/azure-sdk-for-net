@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VirtualNetworkTapsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(tapName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -65,6 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="tapName"> The name of the virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="tapName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string tapName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -93,6 +95,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="tapName"> The name of the virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="tapName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string tapName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -132,6 +135,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(tapName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -139,6 +143,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="tapName"/> is null. </exception>
         public async Task<Response<VirtualNetworkTap>> GetAsync(string resourceGroupName, string tapName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -158,14 +163,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTap value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTap.DeserializeVirtualNetworkTap(document.RootElement);
-                        }
+                        value = VirtualNetworkTap.DeserializeVirtualNetworkTap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,6 +175,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="tapName"/> is null. </exception>
         public Response<VirtualNetworkTap> Get(string resourceGroupName, string tapName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -196,14 +195,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTap value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTap.DeserializeVirtualNetworkTap(document.RootElement);
-                        }
+                        value = VirtualNetworkTap.DeserializeVirtualNetworkTap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -227,6 +219,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -238,6 +231,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tapName"> The name of the virtual network tap. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="tapName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string tapName, VirtualNetworkTap parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -270,6 +264,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tapName"> The name of the virtual network tap. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="tapName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string tapName, VirtualNetworkTap parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -313,6 +308,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(tapParameters);
             request.Content = content;
@@ -324,6 +320,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tapName"> The name of the tap. </param>
         /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="tapName"/>, or <paramref name="tapParameters"/> is null. </exception>
         public async Task<Response<VirtualNetworkTap>> UpdateTagsAsync(string resourceGroupName, string tapName, TagsObject tapParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -347,14 +344,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTap value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTap.DeserializeVirtualNetworkTap(document.RootElement);
-                        }
+                        value = VirtualNetworkTap.DeserializeVirtualNetworkTap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -367,6 +357,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tapName"> The name of the tap. </param>
         /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="tapName"/>, or <paramref name="tapParameters"/> is null. </exception>
         public Response<VirtualNetworkTap> UpdateTags(string resourceGroupName, string tapName, TagsObject tapParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -390,14 +381,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTap value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTap.DeserializeVirtualNetworkTap(document.RootElement);
-                        }
+                        value = VirtualNetworkTap.DeserializeVirtualNetworkTap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -417,6 +401,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkTaps", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -432,14 +417,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTapListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -459,14 +437,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTapListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -488,12 +459,14 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkTaps", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all the VirtualNetworkTaps in a subscription. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<VirtualNetworkTapListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -509,14 +482,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTapListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -527,6 +493,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the VirtualNetworkTaps in a subscription. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<VirtualNetworkTapListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -542,14 +509,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTapListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -566,12 +526,14 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all the VirtualNetworkTaps in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<VirtualNetworkTapListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -587,14 +549,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTapListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -605,6 +560,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the VirtualNetworkTaps in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<VirtualNetworkTapListResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -620,14 +576,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTapListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -644,6 +593,7 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -651,6 +601,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<VirtualNetworkTapListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -670,14 +621,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTapListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -689,6 +633,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<VirtualNetworkTapListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -708,14 +653,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkTapListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkTapListResult.DeserializeVirtualNetworkTapListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

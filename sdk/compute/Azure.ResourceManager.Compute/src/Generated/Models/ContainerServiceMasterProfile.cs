@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of ContainerServiceMasterProfile. </summary>
         /// <param name="dnsPrefix"> DNS prefix to be used to create the FQDN for master. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsPrefix"/> is null. </exception>
         public ContainerServiceMasterProfile(string dnsPrefix)
         {
             if (dnsPrefix == null)
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="count"> Number of masters (VMs) in the container service cluster. Allowed values are 1, 3, and 5. The default value is 1. </param>
         /// <param name="dnsPrefix"> DNS prefix to be used to create the FQDN for master. </param>
         /// <param name="fqdn"> FQDN for the master. </param>
-        internal ContainerServiceMasterProfile(Enum27? count, string dnsPrefix, string fqdn)
+        internal ContainerServiceMasterProfile(Enum31? count, string dnsPrefix, string fqdn)
         {
             Count = count;
             DnsPrefix = dnsPrefix;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Number of masters (VMs) in the container service cluster. Allowed values are 1, 3, and 5. The default value is 1. </summary>
-        public Enum27? Count { get; set; }
+        public Enum31? Count { get; set; }
         /// <summary> DNS prefix to be used to create the FQDN for master. </summary>
         public string DnsPrefix { get; set; }
         /// <summary> FQDN for the master. </summary>

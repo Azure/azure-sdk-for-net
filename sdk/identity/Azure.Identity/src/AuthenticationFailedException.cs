@@ -31,10 +31,5 @@ namespace Azure.Identity
             : base(message, innerException)
         {
         }
-
-        internal static AuthenticationFailedException CreateAggregateException(string message, IList<Exception> innerExceptions)
-        {
-            return new AuthenticationFailedException(message, new AggregateException("Multiple exceptions were encountered while attempting to authenticate.", innerExceptions.ToArray()));
-        }
     }
 }

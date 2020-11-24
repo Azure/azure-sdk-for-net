@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string activity = default;
             IList<DependencyCondition> dependencyConditions = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activity"))
@@ -56,7 +56,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dependencyConditions = array;
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

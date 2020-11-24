@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId");
                 writer.WriteStringValue(DiskEncryptionSetId);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static OSDiskImageEncryption DeserializeOSDiskImageEncryption(JsonElement element)
         {
-            string diskEncryptionSetId = default;
+            Optional<string> diskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionSetId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     diskEncryptionSetId = property.Value.GetString();
                     continue;
                 }
             }
-            return new OSDiskImageEncryption(diskEncryptionSetId);
+            return new OSDiskImageEncryption(diskEncryptionSetId.Value);
         }
     }
 }

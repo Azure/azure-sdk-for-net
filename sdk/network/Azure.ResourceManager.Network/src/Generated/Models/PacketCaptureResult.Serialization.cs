@@ -15,55 +15,44 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PacketCaptureResult DeserializePacketCaptureResult(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            string etag = default;
-            string target = default;
-            int? bytesToCapturePerPacket = default;
-            int? totalBytesPerSession = default;
-            int? timeLimitInSeconds = default;
-            PacketCaptureStorageLocation storageLocation = default;
-            IReadOnlyList<PacketCaptureFilter> filters = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> etag = default;
+            Optional<string> target = default;
+            Optional<int> bytesToCapturePerPacket = default;
+            Optional<int> totalBytesPerSession = default;
+            Optional<int> timeLimitInSeconds = default;
+            Optional<PacketCaptureStorageLocation> storageLocation = default;
+            Optional<IReadOnlyList<PacketCaptureFilter>> filters = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("target"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             target = property0.Value.GetString();
                             continue;
                         }
@@ -71,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bytesToCapturePerPacket = property0.Value.GetInt32();
@@ -80,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalBytesPerSession = property0.Value.GetInt32();
@@ -89,6 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeLimitInSeconds = property0.Value.GetInt32();
@@ -98,6 +90,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(property0.Value);
@@ -107,19 +100,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PacketCaptureFilter> array = new List<PacketCaptureFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item));
-                                }
+                                array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item));
                             }
                             filters = array;
                             continue;
@@ -128,6 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -137,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PacketCaptureResult(name, id, etag, target, bytesToCapturePerPacket, totalBytesPerSession, timeLimitInSeconds, storageLocation, filters, provisioningState);
+            return new PacketCaptureResult(name.Value, id.Value, etag.Value, target.Value, Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState));
         }
     }
 }

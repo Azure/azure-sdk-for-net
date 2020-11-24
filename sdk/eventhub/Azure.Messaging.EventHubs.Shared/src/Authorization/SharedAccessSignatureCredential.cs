@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         private SharedAccessSignature SharedAccessSignature { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SharedAccessSignatureCredential"/> class.
+        ///   Initializes a new instance of the <see cref="SharedAccessSignatureCredential" /> class.
         /// </summary>
         ///
         /// <param name="signature">The shared access signature on which to base the token.</param>
@@ -58,7 +58,11 @@ namespace Azure.Messaging.EventHubs.Authorization
         public override AccessToken GetToken(TokenRequestContext requestContext,
                                              CancellationToken cancellationToken)
         {
-            if (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
+            // If the signature was derived from a shared key rather than being provided externally,
+            // determine if the expiration is approaching and attempt to extend the token.
+
+            if ((!string.IsNullOrEmpty(SharedAccessSignature.SharedAccessKey))
+                && (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer)))
             {
                 lock (SignatureSyncRoot)
                 {
@@ -86,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Authorization
                                                              CancellationToken cancellationToken) => new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
 
         /// <summary>
-        ///   It creates a new shared signature using the key name and the key value passed as
+        ///   Creates a new shared signature using the key name and the key value passed as
         ///   input allowing credentials rotation. A call will not extend the signature duration.
         /// </summary>
         ///
@@ -102,6 +106,20 @@ namespace Azure.Messaging.EventHubs.Authorization
                                                                   keyValue,
                                                                   SharedAccessSignature.Value,
                                                                   SharedAccessSignature.SignatureExpiration);
+            }
+        }
+
+        /// <summary>
+        ///   Creates a new shared signature allowing credentials rotation.
+        /// </summary>
+        ///
+        /// <param name="signature">The shared access signature that forms the basis of this security token.</param>
+        ///
+        internal void UpdateSharedAccessSignature(string signature)
+        {
+            lock (SignatureSyncRoot)
+            {
+                SharedAccessSignature = new SharedAccessSignature(signature);
             }
         }
     }

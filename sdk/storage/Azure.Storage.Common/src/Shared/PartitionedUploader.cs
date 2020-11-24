@@ -130,7 +130,7 @@ namespace Azure.Storage
             }
             else
             {
-                _singleUploadThreshold = Constants.Blob.Block.MaxUploadBytes;
+                _singleUploadThreshold = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
             }
 
             // Set _blockSize
@@ -155,6 +155,13 @@ namespace Azure.Storage
             if (content == default)
             {
                 throw Errors.ArgumentNull(nameof(content));
+            }
+
+            Errors.VerifyStreamPosition(content, nameof(content));
+
+            if (content.CanSeek && content.Position > 0)
+            {
+                content = WindowStream.GetWindow(content, content.Length - content.Position, content.Position);
             }
 
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
@@ -250,9 +257,7 @@ namespace Azure.Storage
                 // The list tracking blocks IDs we're going to commit
                 List<(long Offset, long Size)> partitions = new List<(long, long)>();
 
-                /* Streamed partitions only work if we can seek the stream; we need retries on
-                 * individual uploads.
-                 */
+                // Streamed partitions only work if we can seek the stream; we need retries on individual uploads.
                 GetNextStreamPartition partitionGetter = content.CanSeek
                             ? (GetNextStreamPartition)GetStreamedPartitionInternal
                             : /*   redundant cast   */GetBufferedPartitionInternal;
@@ -460,7 +465,7 @@ namespace Azure.Storage
             {
                 if (content.CanSeek)
                 {
-                    return content.Length;
+                    return content.Length - content.Position;
                 }
             }
             catch (NotSupportedException)

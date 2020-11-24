@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VirtualNetworkGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to create or update virtual network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -102,6 +104,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to create or update virtual network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -144,6 +147,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -151,6 +155,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response<VirtualNetworkGateway>> GetAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -170,14 +175,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGateway.DeserializeVirtualNetworkGateway(document.RootElement);
-                        }
+                        value = VirtualNetworkGateway.DeserializeVirtualNetworkGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -189,6 +187,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response<VirtualNetworkGateway> Get(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -208,14 +207,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGateway.DeserializeVirtualNetworkGateway(document.RootElement);
-                        }
+                        value = VirtualNetworkGateway.DeserializeVirtualNetworkGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,6 +230,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -245,6 +238,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -273,6 +267,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -313,6 +308,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -324,6 +320,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdateTagsAsync(string resourceGroupName, string virtualNetworkGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -356,6 +353,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response UpdateTags(string resourceGroupName, string virtualNetworkGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -397,12 +395,14 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all virtual network gateways by resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<VirtualNetworkGatewayListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -418,14 +418,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -436,6 +429,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all virtual network gateways by resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<VirtualNetworkGatewayListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -451,14 +445,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -482,6 +469,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/connections", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -489,6 +477,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response<VirtualNetworkGatewayListConnectionsResult>> ListConnectionsAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -508,14 +497,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayListConnectionsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -527,6 +509,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response<VirtualNetworkGatewayListConnectionsResult> ListConnections(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -546,14 +529,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayListConnectionsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -581,6 +557,7 @@ namespace Azure.ResourceManager.Network
             }
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -589,6 +566,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response> ResetAsync(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -617,6 +595,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response Reset(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -656,6 +635,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resetvpnclientsharedkey", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -663,6 +643,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response> ResetVpnClientSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -690,6 +671,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response ResetVpnClientSharedKey(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -730,6 +712,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -741,6 +724,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> GeneratevpnclientpackageAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -773,6 +757,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response Generatevpnclientpackage(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -817,6 +802,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -828,6 +814,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> GenerateVpnProfileAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -860,6 +847,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response GenerateVpnProfile(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -903,6 +891,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/getvpnprofilepackageurl", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -910,6 +899,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response> GetVpnProfilePackageUrlAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -937,6 +927,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response GetVpnProfilePackageUrl(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -980,6 +971,7 @@ namespace Azure.ResourceManager.Network
             }
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -988,6 +980,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response> GetBgpPeerStatusAsync(string resourceGroupName, string virtualNetworkGatewayName, string peer = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1016,6 +1009,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response GetBgpPeerStatus(string resourceGroupName, string virtualNetworkGatewayName, string peer = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1055,6 +1049,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/supportedvpndevices", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1062,6 +1057,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response<string>> SupportedVpnDevicesAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1081,14 +1077,7 @@ namespace Azure.ResourceManager.Network
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1100,6 +1089,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response<string> SupportedVpnDevices(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1119,14 +1109,7 @@ namespace Azure.ResourceManager.Network
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1150,6 +1133,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/getLearnedRoutes", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1157,6 +1141,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response> GetLearnedRoutesAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1184,6 +1169,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response GetLearnedRoutes(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1224,6 +1210,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("peer", peer, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1232,6 +1219,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="peer"/> is null. </exception>
         public async Task<Response> GetAdvertisedRoutesAsync(string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1264,6 +1252,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="peer"/> is null. </exception>
         public Response GetAdvertisedRoutes(string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1308,6 +1297,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(vpnclientIpsecParams);
             request.Content = content;
@@ -1319,6 +1309,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="vpnclientIpsecParams"/> is null. </exception>
         public async Task<Response> SetVpnclientIpsecParametersAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1351,6 +1342,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="vpnclientIpsecParams"/> is null. </exception>
         public Response SetVpnclientIpsecParameters(string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1394,6 +1386,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/getvpnclientipsecparameters", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1401,6 +1394,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The virtual network gateway name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response> GetVpnclientIpsecParametersAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1427,6 +1421,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The virtual network gateway name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response GetVpnclientIpsecParameters(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1466,6 +1461,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1477,6 +1473,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection for which the configuration script is generated. </param>
         /// <param name="parameters"> Parameters supplied to the generate vpn device script operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<string>> VpnDeviceConfigurationScriptAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1500,14 +1497,7 @@ namespace Azure.ResourceManager.Network
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1520,6 +1510,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection for which the configuration script is generated. </param>
         /// <param name="parameters"> Parameters supplied to the generate vpn device script operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<string> VpnDeviceConfigurationScript(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1543,14 +1534,7 @@ namespace Azure.ResourceManager.Network
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1575,6 +1559,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (parameters != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -1589,6 +1574,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response> StartPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1617,6 +1603,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response StartPacketCapture(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1657,6 +1644,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1668,6 +1656,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> StopPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1700,6 +1689,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response StopPacketCapture(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1743,6 +1733,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/getVpnClientConnectionHealth", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1750,6 +1741,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response> GetVpnclientConnectionHealthAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1777,6 +1769,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response GetVpnclientConnectionHealth(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1817,6 +1810,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request0.Uri = uri;
             request0.Headers.Add("Content-Type", "application/json");
+            request0.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -1828,6 +1822,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="request"/> is null. </exception>
         public async Task<Response> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1860,6 +1855,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="request"/> is null. </exception>
         public Response DisconnectVirtualNetworkGatewayVpnConnections(string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1896,6 +1892,7 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1903,6 +1900,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<VirtualNetworkGatewayListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1922,14 +1920,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1941,6 +1932,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<VirtualNetworkGatewayListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1960,14 +1952,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1984,6 +1969,7 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1992,6 +1978,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async Task<Response<VirtualNetworkGatewayListConnectionsResult>> ListConnectionsNextPageAsync(string nextLink, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2015,14 +2002,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayListConnectionsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2035,6 +2015,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public Response<VirtualNetworkGatewayListConnectionsResult> ListConnectionsNextPage(string nextLink, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2058,14 +2039,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayListConnectionsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

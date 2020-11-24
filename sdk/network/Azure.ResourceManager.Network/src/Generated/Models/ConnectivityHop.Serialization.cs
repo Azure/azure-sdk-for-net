@@ -15,47 +15,31 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectivityHop DeserializeConnectivityHop(JsonElement element)
         {
-            string type = default;
-            string id = default;
-            string address = default;
-            string resourceId = default;
-            IReadOnlyList<string> nextHopIds = default;
-            IReadOnlyList<ConnectivityIssue> issues = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<string> address = default;
+            Optional<string> resourceId = default;
+            Optional<IReadOnlyList<string>> nextHopIds = default;
+            Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("address"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     address = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceId = property.Value.GetString();
                     continue;
                 }
@@ -63,19 +47,13 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     nextHopIds = array;
                     continue;
@@ -84,25 +62,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectivityIssue> array = new List<ConnectivityIssue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item));
-                        }
+                        array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item));
                     }
                     issues = array;
                     continue;
                 }
             }
-            return new ConnectivityHop(type, id, address, resourceId, nextHopIds, issues);
+            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(issues));
         }
     }
 }

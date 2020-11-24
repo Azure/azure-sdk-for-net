@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 {
     using System;
     using System.Collections.Generic;
+    using System.Xml.Linq;
     using Microsoft.Azure.ServiceBus.Primitives;
 
     /// <summary>
@@ -14,6 +15,7 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         internal TimeSpan duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
         internal string path;
+        internal bool? internalSupportOrdering = null;
         TimeSpan lockDuration = TimeSpan.FromSeconds(60);
         TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
         TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
@@ -273,11 +275,27 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
         }
 
+        internal bool IsAnonymousAccessible { get; set; } = false;
+
+        internal bool SupportOrdering
+        { 
+            get
+            {
+                return this.internalSupportOrdering ?? !this.EnablePartitioning;
+            }
+            set
+            {
+                this.internalSupportOrdering = value;
+            }
+        }
+
+        internal bool EnableExpress { get; set; } = false;
+
         /// <summary>
         /// List of properties that were retrieved using GetQueue but are not understood by this version of client is stored here.
         /// The list will be sent back when an already retrieved QueueDescription will be used in UpdateQueue call.
         /// </summary>
-        internal List<object> UnknownProperties { get; set; }
+        internal List<XElement> UnknownProperties { get; set; }
 
         public override int GetHashCode()
         {
@@ -308,6 +326,9 @@ namespace Microsoft.Azure.ServiceBus.Management
                 && this.RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
                 && this.RequiresSession.Equals(other.RequiresSession)
                 && this.Status.Equals(other.Status)
+                && this.SupportOrdering.Equals(other.SupportOrdering)
+                && this.EnableExpress == other.EnableExpress
+                && this.IsAnonymousAccessible == other.IsAnonymousAccessible
                 && string.Equals(this.userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
                 && (this.AuthorizationRules != null && other.AuthorizationRules != null
                     || this.AuthorizationRules == null && other.AuthorizationRules == null)

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PlatformUpdateDomainCount != null)
+            if (Optional.IsDefined(PlatformUpdateDomainCount))
             {
                 writer.WritePropertyName("platformUpdateDomainCount");
                 writer.WriteNumberValue(PlatformUpdateDomainCount.Value);
             }
-            if (PlatformFaultDomainCount != null)
+            if (Optional.IsDefined(PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount");
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (VirtualMachines != null)
+            if (Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines");
                 writer.WriteStartArray();
@@ -53,20 +53,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProximityPlacementGroup != null)
+            if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
                 writer.WriteObjectValue(ProximityPlacementGroup);
-            }
-            if (Statuses != null)
-            {
-                writer.WritePropertyName("statuses");
-                writer.WriteStartArray();
-                foreach (var item in Statuses)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

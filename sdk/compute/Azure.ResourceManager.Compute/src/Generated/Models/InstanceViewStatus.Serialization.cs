@@ -16,27 +16,27 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code");
                 writer.WriteStringValue(Code);
             }
-            if (Level != null)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level");
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (DisplayStatus != null)
+            if (Optional.IsDefined(DisplayStatus))
             {
                 writer.WritePropertyName("displayStatus");
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message");
                 writer.WriteStringValue(Message);
             }
-            if (Time != null)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time");
                 writer.WriteStringValue(Time.Value, "O");
@@ -46,19 +46,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element)
         {
-            string code = default;
-            StatusLevelTypes? level = default;
-            string displayStatus = default;
-            string message = default;
-            DateTimeOffset? time = default;
+            Optional<string> code = default;
+            Optional<StatusLevelTypes> level = default;
+            Optional<string> displayStatus = default;
+            Optional<string> message = default;
+            Optional<DateTimeOffset> time = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
@@ -66,6 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     level = property.Value.GetString().ToStatusLevelTypes();
@@ -73,19 +70,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("displayStatus"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayStatus = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
@@ -93,13 +82,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new InstanceViewStatus(code, level, displayStatus, message, time);
+            return new InstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time));
         }
     }
 }

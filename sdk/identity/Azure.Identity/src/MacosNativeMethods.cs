@@ -19,16 +19,6 @@ namespace Azure.Identity
         public const int SecStatusCodeInteractionRequired = -25315;
         public const int SecStatusCodeNoSuchAttr = -25303;
 
-        public readonly struct CFRange
-        {
-            public readonly int Location, Length;
-            public CFRange (int location, int length)
-            {
-                Location = location;
-                Length = length;
-            }
-        }
-
         public static void SecKeychainFindGenericPassword(IntPtr keychainOrArray, string serviceName, string accountName, out int passwordLength, out IntPtr credentialsPtr, out IntPtr itemRef)
         {
             byte[] serviceNameBytes = Encoding.UTF8.GetBytes(serviceName);
@@ -66,77 +56,24 @@ namespace Azure.Identity
             }
         }
 
-        private static string GetErrorMessageString(int status)
-        {
-            IntPtr messagePtr = IntPtr.Zero;
-            try
+        private static string GetErrorMessageString(int status) =>
+            status switch
             {
-                messagePtr = Imports.SecCopyErrorMessageString(status, IntPtr.Zero);
-                return GetStringFromCFStringPtr(messagePtr);
-            }
-            catch
-            {
-                return status switch
-                {
-                    SecStatusCodeNoSuchKeychain => $"The keychain does not exist. [0x{status:x}]",
-                    SecStatusCodeInvalidKeychain => $"The keychain is not valid. [0x{status:x}]",
-                    SecStatusCodeAuthFailed => $"Authorization/Authentication failed. [0x{status:x}]",
-                    SecStatusCodeDuplicateItem => $"The item already exists. [0x{status:x}]",
-                    SecStatusCodeItemNotFound => $"The item cannot be found. [0x{status:x}]",
-                    SecStatusCodeInteractionNotAllowed => $"Interaction with the Security Server is not allowed. [0x{status:x}]",
-                    SecStatusCodeInteractionRequired => $"User interaction is required. [0x{status:x}]",
-                    SecStatusCodeNoSuchAttr => $"The attribute does not exist. [0x{status:x}]",
-                    _ => $"Unknown error. [0x{status:x}]",
-                };
-            }
-            finally
-            {
-                CFRelease(messagePtr);
-            }
-        }
-
-        private static string GetStringFromCFStringPtr(IntPtr handle)
-        {
-            IntPtr stringPtr = IntPtr.Zero;
-            try
-            {
-                int length = Imports.CFStringGetLength (handle);
-                stringPtr = Imports.CFStringGetCharactersPtr(handle);
-
-                if (stringPtr == IntPtr.Zero)
-                {
-                    var range = new CFRange(0, length);
-                    stringPtr = Marshal.AllocCoTaskMem(length * 2);
-                    Imports.CFStringGetCharacters(handle, range, stringPtr);
-                }
-
-                return Marshal.PtrToStringAuto(stringPtr, length);
-            }
-            finally
-            {
-                if (stringPtr != IntPtr.Zero)
-                {
-                    Marshal.FreeCoTaskMem (stringPtr);
-                }
-            }
-        }
+                SecStatusCodeNoSuchKeychain => $"The keychain does not exist. [{status}]",
+                SecStatusCodeInvalidKeychain => $"The keychain is not valid. [{status}]",
+                SecStatusCodeAuthFailed => $"Authorization/Authentication failed. [{status}]",
+                SecStatusCodeDuplicateItem => $"The item already exists. [{status}]",
+                SecStatusCodeItemNotFound => $"The item cannot be found. [{status}]",
+                SecStatusCodeInteractionNotAllowed => $"Interaction with the Security Server is not allowed. [{status}]",
+                SecStatusCodeInteractionRequired => $"User interaction is required. [{status}]",
+                SecStatusCodeNoSuchAttr => $"The attribute does not exist. [{status}]",
+                _ => $"Unknown error. [{status}]",
+            };
 
         public static class Imports
         {
-            private const string CoreFoundationLibrary = "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation";
+            private const string CoreFoundationLibrary = "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation";
             private const string SecurityLibrary = "/System/Library/Frameworks/Security.framework/Security";
-
-            [DllImport (CoreFoundationLibrary, CharSet=CharSet.Unicode)]
-            [DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories)]
-            public static extern int CFStringGetLength (IntPtr handle);
-
-            [DllImport (CoreFoundationLibrary, CharSet=CharSet.Unicode)]
-            [DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories)]
-            public static extern IntPtr CFStringGetCharactersPtr (IntPtr handle);
-
-            [DllImport (CoreFoundationLibrary, CharSet=CharSet.Unicode)]
-            [DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories)]
-            public static extern IntPtr CFStringGetCharacters (IntPtr handle, CFRange range, IntPtr buffer);
 
             [DllImport (CoreFoundationLibrary, CharSet=CharSet.Unicode)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories)]

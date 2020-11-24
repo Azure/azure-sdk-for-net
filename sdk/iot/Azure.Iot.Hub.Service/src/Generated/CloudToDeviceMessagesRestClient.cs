@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Iot.Hub.Service.Models;
 
 namespace Azure.Iot.Hub.Service
 {
@@ -39,6 +41,76 @@ namespace Azure.Iot.Hub.Service
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+        }
+
+        internal HttpMessage CreatePurgeCloudToDeviceMessageQueueRequest(string id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/devices/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/commands", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes all the pending commands for a device in the IoT Hub. </summary>
+        /// <param name="id"> The unique identifier of the device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<PurgeMessageQueueResult>> PurgeCloudToDeviceMessageQueueAsync(string id, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreatePurgeCloudToDeviceMessageQueueRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PurgeMessageQueueResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = PurgeMessageQueueResult.DeserializePurgeMessageQueueResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Deletes all the pending commands for a device in the IoT Hub. </summary>
+        /// <param name="id"> The unique identifier of the device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<PurgeMessageQueueResult> PurgeCloudToDeviceMessageQueue(string id, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreatePurgeCloudToDeviceMessageQueueRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PurgeMessageQueueResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = PurgeMessageQueueResult.DeserializePurgeMessageQueueResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateReceiveFeedbackNotificationRequest()
@@ -159,8 +231,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Abandons a cloud-to-device feedback message. An abandoned message is deleted from the feedback queue of the service. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. </summary>
-        /// <param name="lockToken"> The lock token obtained when the cloud-to-device message is received. This is used to resolve race conditions when abandoning a feedback message. </param>
+        /// <summary> Abandons the lock on a cloud-to-device feedback message. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. </summary>
+        /// <param name="lockToken"> The lock token obtained when the cloud-to-device message is received. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> is null. </exception>
         public async Task<Response> AbandonFeedbackNotificationAsync(string lockToken, CancellationToken cancellationToken = default)
@@ -181,8 +253,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Abandons a cloud-to-device feedback message. An abandoned message is deleted from the feedback queue of the service. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. </summary>
-        /// <param name="lockToken"> The lock token obtained when the cloud-to-device message is received. This is used to resolve race conditions when abandoning a feedback message. </param>
+        /// <summary> Abandons the lock on a cloud-to-device feedback message. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. </summary>
+        /// <param name="lockToken"> The lock token obtained when the cloud-to-device message is received. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> is null. </exception>
         public Response AbandonFeedbackNotification(string lockToken, CancellationToken cancellationToken = default)

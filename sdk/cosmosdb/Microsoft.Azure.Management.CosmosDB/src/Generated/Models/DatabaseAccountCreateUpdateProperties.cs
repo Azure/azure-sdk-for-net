@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// <summary>
     /// Properties to create and update Azure Cosmos DB database accounts.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DatabaseAccountCreateUpdateProperties")]
     public partial class DatabaseAccountCreateUpdateProperties
     {
         /// <summary>
@@ -72,7 +73,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// enable storage analytics.</param>
         /// <param name="backupPolicy">The object representing the policy for
         /// taking backups on an account.</param>
-        public DatabaseAccountCreateUpdateProperties(IList<Location> locations, ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy))
+        /// <param name="cors">The CORS policy for the Cosmos DB database
+        /// account.</param>
+        public DatabaseAccountCreateUpdateProperties(IList<Location> locations, ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>))
         {
             ConsistencyPolicy = consistencyPolicy;
             Locations = locations;
@@ -91,6 +94,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             ApiProperties = apiProperties;
             EnableAnalyticalStorage = enableAnalyticalStorage;
             BackupPolicy = backupPolicy;
+            Cors = cors;
             CustomInit();
         }
         /// <summary>
@@ -222,6 +226,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public BackupPolicy BackupPolicy { get; set; }
 
         /// <summary>
+        /// Gets or sets the CORS policy for the Cosmos DB database account.
+        /// </summary>
+        [JsonProperty(PropertyName = "cors")]
+        public IList<CorsPolicy> Cors { get; set; }
+
+        /// <summary>
         /// The offer type for the database
         /// </summary>
         [JsonProperty(PropertyName = "databaseAccountOfferType")]
@@ -250,6 +260,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (Cors != null)
+            {
+                foreach (var element1 in Cors)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

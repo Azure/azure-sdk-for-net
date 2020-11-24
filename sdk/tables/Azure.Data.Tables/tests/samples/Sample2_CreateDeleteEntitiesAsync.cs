@@ -27,8 +27,8 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:TablesSample2CreateTableClientAsync
             // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
             var client = new TableClient(
-                tableName,
                 new Uri(storageUri),
+                tableName,
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             // Create the table in the service.
@@ -49,7 +49,7 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample2AddEntityAsync
             // Insert the newly created entity.
-            await client.CreateEntityAsync(entity);
+            await client.AddEntityAsync(entity);
             #endregion
 
             #region Snippet:TablesSample2CreateStronglyTypedEntityAsync
@@ -67,7 +67,7 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             // Add the newly created entity.
-            await client.CreateEntityAsync(strongEntity);
+            await client.AddEntityAsync(strongEntity);
 
             #region Snippet:TablesSample2DeleteEntityAsync
             // Delete the entity given the partition and row key.

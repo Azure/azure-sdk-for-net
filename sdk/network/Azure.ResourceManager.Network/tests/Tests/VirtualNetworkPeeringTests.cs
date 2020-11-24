@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Location = location,
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnet1Name, AddressPrefix = "10.0.1.0/24", }, new Subnet() { Name = subnet2Name, AddressPrefix = "10.0.2.0/24", } }
+                Subnets = { new Subnet() { Name = subnet1Name, AddressPrefix = "10.0.1.0/24", }, new Subnet() { Name = subnet2Name, AddressPrefix = "10.0.2.0/24", } }
             };
 
             // Put Vnet

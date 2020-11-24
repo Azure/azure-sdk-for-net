@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayProbeHealthResponseMatch. </summary>
         public ApplicationGatewayProbeHealthResponseMatch()
         {
+            StatusCodes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayProbeHealthResponseMatch. </summary>
@@ -29,6 +31,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Body that must be contained in the health response. Default value is empty. </summary>
         public string Body { get; set; }
         /// <summary> Allowed ranges of healthy status codes. Default range of healthy status codes is 200-399. </summary>
-        public IList<string> StatusCodes { get; set; }
+        public IList<string> StatusCodes { get; }
     }
 }

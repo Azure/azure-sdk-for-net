@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static PairedRegion DeserializePairedRegion(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            string subscriptionId = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
             }
-            return new PairedRegion(name, id, subscriptionId);
+            return new PairedRegion(name.Value, id.Value, subscriptionId.Value);
         }
     }
 }

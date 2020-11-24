@@ -14,56 +14,36 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static Location DeserializeLocation(JsonElement element)
         {
-            string id = default;
-            string subscriptionId = default;
-            string name = default;
-            string displayName = default;
-            string regionalDisplayName = default;
-            LocationMetadata metadata = default;
+            Optional<string> id = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> regionalDisplayName = default;
+            Optional<LocationMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("regionalDisplayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     regionalDisplayName = property.Value.GetString();
                     continue;
                 }
@@ -71,13 +51,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = LocationMetadata.DeserializeLocationMetadata(property.Value);
                     continue;
                 }
             }
-            return new Location(id, subscriptionId, name, displayName, regionalDisplayName, metadata);
+            return new Location(id.Value, subscriptionId.Value, name.Value, displayName.Value, regionalDisplayName.Value, metadata.Value);
         }
     }
 }

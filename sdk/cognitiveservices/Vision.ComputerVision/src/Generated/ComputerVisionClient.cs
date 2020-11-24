@@ -186,7 +186,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "{Endpoint}/vision/v3.0";
+            BaseUri = "{Endpoint}/vision/v3.1";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -3466,7 +3466,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// The BCP-47 language code of the text in the document. Currently, only
         /// English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’),
         /// Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto
-        /// language identification and multilanguage documents, so only provide a
+        /// language identification and multi-language documents, so only provide a
         /// language code if you would like to force the documented to be processed as
         /// that specific language. Possible values include: 'en', 'es', 'fr', 'de',
         /// 'it', 'nl', 'pt'
@@ -3796,7 +3796,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// The BCP-47 language code of the text in the document. Currently, only
         /// English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’),
         /// Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto
-        /// language identification and multilanguage documents, so only provide a
+        /// language identification and multi-language documents, so only provide a
         /// language code if you would like to force the documented to be processed as
         /// that specific language. Possible values include: 'en', 'es', 'fr', 'de',
         /// 'it', 'nl', 'pt'

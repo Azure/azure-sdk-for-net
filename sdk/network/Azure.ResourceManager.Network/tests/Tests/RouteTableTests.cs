@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string route2Name = Recording.GenerateAssetName("azsmnet");
 
             RouteTable routeTable = new RouteTable() { Location = location, };
-            routeTable.Routes = new List<Route>();
 
             // Add a route
             Route route1 = new Route()
@@ -163,7 +162,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string route1Name = Recording.GenerateAssetName("azsmnet");
 
             RouteTable routeTable = new RouteTable() { Location = location, };
-            routeTable.Routes = new List<Route>();
 
             Route route1 = new Route()
             {
@@ -184,7 +182,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Response<RouteTable> getRouteTableResponse = await NetworkManagementClient.RouteTables.GetAsync(resourceGroupName, routeTableName);
 
             // Verify that the subnet reference is null
-            Assert.Null(getRouteTableResponse.Value.Subnets);
+            Assert.IsEmpty(getRouteTableResponse.Value.Subnets);
 
             // Create Vnet with subnet and add a route table
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -196,14 +194,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>()
-                {
+                Subnets = {
                     new Subnet()
                     {
                         Name = subnetName,

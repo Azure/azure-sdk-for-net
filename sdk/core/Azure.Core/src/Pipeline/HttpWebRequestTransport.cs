@@ -13,15 +13,14 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-// TODO: Uncomment after release
-#if false && NETFRAMEWORK
+#if NETFRAMEWORK
     /// <summary>
     /// The <see cref="HttpWebRequest"/> based <see cref="HttpPipelineTransport"/> implementation.
     /// </summary>
     internal class HttpWebRequestTransport : HttpPipelineTransport
     {
         public static readonly HttpWebRequestTransport Shared = new HttpWebRequestTransport();
-        private readonly IWebProxy? _proxy;
+        private readonly IWebProxy? _environmentProxy;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpWebRequestTransport"/>
@@ -30,7 +29,7 @@ namespace Azure.Core.Pipeline
         {
             if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
             {
-                _proxy = webProxy;
+                _environmentProxy = webProxy;
             }
         }
 
@@ -49,6 +48,9 @@ namespace Azure.Core.Pipeline
         private async ValueTask ProcessInternal(HttpMessage message, bool async)
         {
             var request = CreateRequest(message.Request);
+
+            ServicePointHelpers.SetLimits(request.ServicePoint);
+
             using var registration = message.CancellationToken.Register(state => ((HttpWebRequest) state).Abort(), request);
             try
             {
@@ -103,12 +105,17 @@ namespace Azure.Core.Pipeline
         {
             var request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
             request.Method = messageRequest.Method.Method;
-            request.Proxy = _proxy;
+            // Don't disable the default proxy when there is no environment proxy configured
+            if (_environmentProxy != null)
+            {
+                request.Proxy = _environmentProxy;
+            }
+
             foreach (var messageRequestHeader in messageRequest.Headers)
             {
                 if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.ContentLength, StringComparison.OrdinalIgnoreCase))
                 {
-                    request.ContentLength = int.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
+                    request.ContentLength = long.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
                     continue;
                 }
 
@@ -178,6 +185,12 @@ namespace Azure.Core.Pipeline
                 request.Headers.Add(messageRequestHeader.Name, messageRequestHeader.Value);
             }
 
+            if (request.ContentLength != -1)
+            {
+                // disable buffering when the content length is known
+                // as the content stream is re-playable and we don't want to allocate extra buffers
+                request.AllowWriteStreamBuffering = false;
+            }
             return request;
         }
 

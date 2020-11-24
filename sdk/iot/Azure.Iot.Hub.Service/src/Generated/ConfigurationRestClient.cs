@@ -55,6 +55,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -128,6 +129,7 @@ namespace Azure.Iot.Hub.Service
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configuration);
             request.Content = content;
@@ -137,7 +139,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Creates or updates a configuration on the IoT Hub for automatic device/module management. Configuration identifier and Content cannot be updated. </summary>
         /// <param name="id"> The unique identifier of the configuration. </param>
         /// <param name="configuration"> The configuration to be created or updated. </param>
-        /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration. </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for the configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="configuration"/> is null. </exception>
         public async Task<Response<TwinConfiguration>> CreateOrUpdateAsync(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
@@ -171,7 +173,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Creates or updates a configuration on the IoT Hub for automatic device/module management. Configuration identifier and Content cannot be updated. </summary>
         /// <param name="id"> The unique identifier of the configuration. </param>
         /// <param name="configuration"> The configuration to be created or updated. </param>
-        /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration. </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for the configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="configuration"/> is null. </exception>
         public Response<TwinConfiguration> CreateOrUpdate(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
@@ -222,7 +224,7 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary> Deletes a configuration on the IoT Hub for automatic device/module management. </summary>
         /// <param name="id"> The unique identifier of the configuration. </param>
-        /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for the configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response> DeleteAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
@@ -245,7 +247,7 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary> Deletes a configuration on the IoT Hub for automatic device/module management. </summary>
         /// <param name="id"> The unique identifier of the configuration. </param>
-        /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for the configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response Delete(string id, string ifMatch = null, CancellationToken cancellationToken = default)
@@ -280,6 +282,7 @@ namespace Azure.Iot.Hub.Service
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -346,6 +349,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;

@@ -172,18 +172,5 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             return lastConsumable;
         }
-
-        internal static string ComputeMD5(string input)
-        {
-#pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-#pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
-            {
-                byte[] inputBytes = System.Text.Encoding.UTF8.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                return Convert.ToBase64String(hashBytes);
-            }
-        }
     }
 }

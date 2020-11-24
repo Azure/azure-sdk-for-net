@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualNetworkGateway. </summary>
         public VirtualNetworkGateway()
         {
+            IpConfigurations = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGateway. </summary>
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> IP configurations for virtual network gateway. </summary>
-        public IList<VirtualNetworkGatewayIPConfiguration> IpConfigurations { get; set; }
+        public IList<VirtualNetworkGatewayIPConfiguration> IpConfigurations { get; }
         /// <summary> The type of this virtual network gateway. </summary>
         public VirtualNetworkGatewayType? GatewayType { get; set; }
         /// <summary> The type of this virtual network gateway. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("policyDefinitionId");
             writer.WriteStringValue(PolicyDefinitionId);
-            if (Parameters != null)
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndObject();
             }
-            if (PolicyDefinitionReferenceId != null)
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId");
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (GroupNames != null)
+            if (Optional.IsCollectionDefined(GroupNames))
             {
                 writer.WritePropertyName("groupNames");
                 writer.WriteStartArray();
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Resources.Models
         internal static PolicyDefinitionReference DeserializePolicyDefinitionReference(JsonElement element)
         {
             string policyDefinitionId = default;
-            IDictionary<string, ParameterValuesValue> parameters = default;
-            string policyDefinitionReferenceId = default;
-            IList<string> groupNames = default;
+            Optional<IDictionary<string, ParameterValuesValue>> parameters = default;
+            Optional<string> policyDefinitionReferenceId = default;
+            Optional<IList<string>> groupNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDefinitionId"))
@@ -64,29 +64,19 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ParameterValuesValue> dictionary = new Dictionary<string, ParameterValuesValue>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, ParameterValuesValue.DeserializeParameterValuesValue(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, ParameterValuesValue.DeserializeParameterValuesValue(property0.Value));
                     }
                     parameters = dictionary;
                     continue;
                 }
                 if (property.NameEquals("policyDefinitionReferenceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     policyDefinitionReferenceId = property.Value.GetString();
                     continue;
                 }
@@ -94,25 +84,19 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     groupNames = array;
                     continue;
                 }
             }
-            return new PolicyDefinitionReference(policyDefinitionId, parameters, policyDefinitionReferenceId, groupNames);
+            return new PolicyDefinitionReference(policyDefinitionId, Optional.ToDictionary(parameters), policyDefinitionReferenceId.Value, Optional.ToList(groupNames));
         }
     }
 }

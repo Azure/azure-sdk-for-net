@@ -10,9 +10,9 @@ using Azure.Security.KeyVault.Administration.Models;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
-    /// A long-running operation for <see cref="KeyVaultBackupClient.StartRestore(Uri, string, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync(Uri, string, string, CancellationToken)"/>.
+    /// A long-running operation for <see cref="KeyVaultBackupClient.StartRestore"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync"/>.
     /// </summary>
-    public class RestoreOperation : Operation<Response>
+    public class RestoreOperation : Operation<RestoreResult>
     {
         /// <summary>
         /// The number of seconds recommended by the service to delay before checking on completion status.
@@ -28,10 +28,10 @@ namespace Azure.Security.KeyVault.Administration
         ///  <see cref="WaitForCompletionAsync(CancellationToken)"/>, or <see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/> must be called
         /// to re-populate the details of this operation.
         /// </summary>
-        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
-        public RestoreOperation(string id, KeyVaultBackupClient client)
+        public RestoreOperation(KeyVaultBackupClient client, string id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
@@ -44,9 +44,9 @@ namespace Azure.Security.KeyVault.Administration
         /// Initializes a new instance of a RestoreOperation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartRestore(Uri, string, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync(Uri, string, string, CancellationToken)"/>.</param>
+        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartRestore"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
-        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<ServiceFullRestoreOperationHeaders> response)
+        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders> response)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(response, nameof(response));
@@ -61,9 +61,9 @@ namespace Azure.Security.KeyVault.Administration
         /// Initializes a new instance of a RestoreOperation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartSelectiveRestore(string, Uri, string, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartSelectiveRestoreAsync(string, Uri, string, string, CancellationToken)"/>.</param>
+        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartSelectiveRestore"/> or <see cref="KeyVaultBackupClient.StartSelectiveRestoreAsync"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
-        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<ServiceSelectiveKeyRestoreOperationHeaders> response)
+        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders> response)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(response, nameof(response));
@@ -107,7 +107,7 @@ namespace Azure.Security.KeyVault.Administration
         public override string Id => _id;
 
         /// <inheritdoc/>
-        public override Response Value
+        public override RestoreResult Value
         {
             get
             {
@@ -116,17 +116,17 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     throw new InvalidOperationException("The operation is not complete.");
                 }
-                if (EndTime.HasValue && _value.Error != null)
+                if (_value != null && _value.EndTime.HasValue && _value.Error != null)
                 {
                     throw new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
                 }
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                return _response;
+                return new RestoreResult(_value.StartTime.Value, _value.EndTime.Value);
             }
         }
 
         /// <inheritdoc/>
-        public override bool HasCompleted => EndTime.HasValue;
+        public override bool HasCompleted => _value?.EndTime.HasValue ?? false;
 
         /// <inheritdoc/>
         public override bool HasValue => _response != null && _value?.Error == null && HasCompleted;
@@ -161,12 +161,12 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <inheritdoc/>
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<RestoreResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             _retryAfterSeconds.HasValue ? this.DefaultWaitForCompletionAsync(TimeSpan.FromSeconds(_retryAfterSeconds.Value), cancellationToken) :
                 this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        public override ValueTask<Response<RestoreResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

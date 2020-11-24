@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
-    <Version>13.1.0-preview.1</Version>
+    <Version>14.1.0-beta.1</Version>
+    <ApiCompatVersion>14.0.0</ApiCompatVersion>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyTitle>Microsoft Azure Batch</AssemblyTitle>
-    <PackageTags>Microsoft;Azure;Batch;windowsazureofficial</PackageTags>
+    <PackageTags>Microsoft;Azure;Batch</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <SignAssembly>true</SignAssembly>
     <NoWarn>$(NoWarn);1591;NU5105;CA1308;CA1825;CA2237</NoWarn>  <!-- Remove CA1825 supression here when we deprecate net452 -->

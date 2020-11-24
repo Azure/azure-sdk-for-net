@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
                 writer.WriteStringValue(Tier);
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity");
                 writer.WriteNumberValue(Capacity.Value);
@@ -35,26 +35,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static Sku DeserializeSku(JsonElement element)
         {
-            string name = default;
-            string tier = default;
-            long? capacity = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
+            Optional<long> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tier = property.Value.GetString();
                     continue;
                 }
@@ -62,13 +54,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new Sku(name, tier, capacity);
+            return new Sku(name.Value, tier.Value, Optional.ToNullable(capacity));
         }
     }
 }

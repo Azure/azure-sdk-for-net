@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of UserArtifactSource. </summary>
         /// <param name="fileName"> Required. The fileName of the artifact. </param>
         /// <param name="mediaLink"> Required. The mediaLink of the artifact, must be a readable storage blob. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="mediaLink"/> is null. </exception>
         public UserArtifactSource(string fileName, string mediaLink)
         {
             if (fileName == null)

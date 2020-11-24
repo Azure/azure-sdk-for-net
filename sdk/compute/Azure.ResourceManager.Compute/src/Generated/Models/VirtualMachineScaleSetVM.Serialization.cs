@@ -16,59 +16,14 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (InstanceId != null)
-            {
-                writer.WritePropertyName("instanceId");
-                writer.WriteStringValue(InstanceId);
-            }
-            if (Sku != null)
-            {
-                writer.WritePropertyName("sku");
-                writer.WriteObjectValue(Sku);
-            }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan");
                 writer.WriteObjectValue(Plan);
             }
-            if (Resources != null)
-            {
-                writer.WritePropertyName("resources");
-                writer.WriteStartArray();
-                foreach (var item in Resources)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Zones != null)
-            {
-                writer.WritePropertyName("zones");
-                writer.WriteStartArray();
-                foreach (var item in Zones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -81,77 +36,52 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (LatestModelApplied != null)
-            {
-                writer.WritePropertyName("latestModelApplied");
-                writer.WriteBooleanValue(LatestModelApplied.Value);
-            }
-            if (VmId != null)
-            {
-                writer.WritePropertyName("vmId");
-                writer.WriteStringValue(VmId);
-            }
-            if (InstanceView != null)
-            {
-                writer.WritePropertyName("instanceView");
-                writer.WriteObjectValue(InstanceView);
-            }
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile");
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile");
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (AdditionalCapabilities != null)
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities");
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            if (OsProfile != null)
+            if (Optional.IsDefined(OsProfile))
             {
                 writer.WritePropertyName("osProfile");
                 writer.WriteObjectValue(OsProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile");
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (NetworkProfileConfiguration != null)
+            if (Optional.IsDefined(NetworkProfileConfiguration))
             {
                 writer.WritePropertyName("networkProfileConfiguration");
                 writer.WriteObjectValue(NetworkProfileConfiguration);
             }
-            if (DiagnosticsProfile != null)
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile");
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (AvailabilitySet != null)
+            if (Optional.IsDefined(AvailabilitySet))
             {
                 writer.WritePropertyName("availabilitySet");
                 writer.WriteObjectValue(AvailabilitySet);
             }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType);
             }
-            if (ModelDefinitionApplied != null)
-            {
-                writer.WritePropertyName("modelDefinitionApplied");
-                writer.WriteStringValue(ModelDefinitionApplied);
-            }
-            if (ProtectionPolicy != null)
+            if (Optional.IsDefined(ProtectionPolicy))
             {
                 writer.WritePropertyName("protectionPolicy");
                 writer.WriteObjectValue(ProtectionPolicy);
@@ -162,39 +92,35 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetVM DeserializeVirtualMachineScaleSetVM(JsonElement element)
         {
-            string instanceId = default;
-            Sku sku = default;
-            Plan plan = default;
-            IList<VirtualMachineExtension> resources = default;
-            IList<string> zones = default;
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> instanceId = default;
+            Optional<Sku> sku = default;
+            Optional<Plan> plan = default;
+            Optional<IReadOnlyList<VirtualMachineExtension>> resources = default;
+            Optional<IReadOnlyList<string>> zones = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            bool? latestModelApplied = default;
-            string vmId = default;
-            VirtualMachineScaleSetVMInstanceView instanceView = default;
-            HardwareProfile hardwareProfile = default;
-            StorageProfile storageProfile = default;
-            AdditionalCapabilities additionalCapabilities = default;
-            OSProfile osProfile = default;
-            NetworkProfile networkProfile = default;
-            VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration = default;
-            DiagnosticsProfile diagnosticsProfile = default;
-            SubResource availabilitySet = default;
-            string provisioningState = default;
-            string licenseType = default;
-            string modelDefinitionApplied = default;
-            VirtualMachineScaleSetVMProtectionPolicy protectionPolicy = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<bool> latestModelApplied = default;
+            Optional<string> vmId = default;
+            Optional<VirtualMachineScaleSetVMInstanceView> instanceView = default;
+            Optional<HardwareProfile> hardwareProfile = default;
+            Optional<StorageProfile> storageProfile = default;
+            Optional<AdditionalCapabilities> additionalCapabilities = default;
+            Optional<OSProfile> osProfile = default;
+            Optional<NetworkProfile> networkProfile = default;
+            Optional<VirtualMachineScaleSetVMNetworkProfileConfiguration> networkProfileConfiguration = default;
+            Optional<DiagnosticsProfile> diagnosticsProfile = default;
+            Optional<SubResource> availabilitySet = default;
+            Optional<string> provisioningState = default;
+            Optional<string> licenseType = default;
+            Optional<string> modelDefinitionApplied = default;
+            Optional<VirtualMachineScaleSetVMProtectionPolicy> protectionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     instanceId = property.Value.GetString();
                     continue;
                 }
@@ -202,6 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = Sku.DeserializeSku(property.Value);
@@ -211,6 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     plan = Plan.DeserializePlan(property.Value);
@@ -220,19 +148,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineExtension> array = new List<VirtualMachineExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualMachineExtension.DeserializeVirtualMachineExtension(item));
-                        }
+                        array.Add(VirtualMachineExtension.DeserializeVirtualMachineExtension(item));
                     }
                     resources = array;
                     continue;
@@ -241,47 +163,29 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     zones = array;
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -294,31 +198,31 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("latestModelApplied"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             latestModelApplied = property0.Value.GetBoolean();
@@ -326,10 +230,6 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("vmId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vmId = property0.Value.GetString();
                             continue;
                         }
@@ -337,6 +237,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             instanceView = VirtualMachineScaleSetVMInstanceView.DeserializeVirtualMachineScaleSetVMInstanceView(property0.Value);
@@ -346,6 +247,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property0.Value);
@@ -355,6 +257,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value);
@@ -364,6 +267,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value);
@@ -373,6 +277,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osProfile = OSProfile.DeserializeOSProfile(property0.Value);
@@ -382,6 +287,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
@@ -391,6 +297,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkProfileConfiguration = VirtualMachineScaleSetVMNetworkProfileConfiguration.DeserializeVirtualMachineScaleSetVMNetworkProfileConfiguration(property0.Value);
@@ -400,6 +307,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property0.Value);
@@ -409,6 +317,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             availabilitySet = SubResource.DeserializeSubResource(property0.Value);
@@ -416,28 +325,16 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("licenseType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             licenseType = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("modelDefinitionApplied"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             modelDefinitionApplied = property0.Value.GetString();
                             continue;
                         }
@@ -445,6 +342,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protectionPolicy = VirtualMachineScaleSetVMProtectionPolicy.DeserializeVirtualMachineScaleSetVMProtectionPolicy(property0.Value);
@@ -454,7 +352,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVM(id, name, type, location, tags, instanceId, sku, plan, resources, zones, latestModelApplied, vmId, instanceView, hardwareProfile, storageProfile, additionalCapabilities, osProfile, networkProfile, networkProfileConfiguration, diagnosticsProfile, availabilitySet, provisioningState, licenseType, modelDefinitionApplied, protectionPolicy);
+            return new VirtualMachineScaleSetVM(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), instanceId.Value, sku.Value, plan.Value, Optional.ToList(resources), Optional.ToList(zones), Optional.ToNullable(latestModelApplied), vmId.Value, instanceView.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, networkProfileConfiguration.Value, diagnosticsProfile.Value, availabilitySet.Value, provisioningState.Value, licenseType.Value, modelDefinitionApplied.Value, protectionPolicy.Value);
         }
     }
 }

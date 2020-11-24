@@ -1,11 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Provides job operations for Microsoft Azure HDInsight.</Description>
     <AssemblyTitle>Microsoft Azure HDInsight Job Library</AssemblyTitle>
     <AzureApiTag>HDInsightJobClient_2018-11-01-preview;</AzureApiTag>
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+Support using Apache Spark REST API to submit remote jobs to an HDInsight Spark cluster.
+      ]]>
+    </PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <Version>3.0.0-preview.1</Version>
+    <Version>3.0.0-preview.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

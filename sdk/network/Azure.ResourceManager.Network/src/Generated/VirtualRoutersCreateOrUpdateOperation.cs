@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         VirtualRouter IOperationSource<VirtualRouter>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualRouter.DeserializeVirtualRouter(document.RootElement);
-            }
+            return VirtualRouter.DeserializeVirtualRouter(document.RootElement);
         }
 
         async ValueTask<VirtualRouter> IOperationSource<VirtualRouter>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualRouter.DeserializeVirtualRouter(document.RootElement);
-            }
+            return VirtualRouter.DeserializeVirtualRouter(document.RootElement);
         }
     }
 }

@@ -16,54 +16,44 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (CookieBasedAffinity != null)
+            if (Optional.IsDefined(CookieBasedAffinity))
             {
                 writer.WritePropertyName("cookieBasedAffinity");
                 writer.WriteStringValue(CookieBasedAffinity.Value.ToString());
             }
-            if (RequestTimeout != null)
+            if (Optional.IsDefined(RequestTimeout))
             {
                 writer.WritePropertyName("requestTimeout");
                 writer.WriteNumberValue(RequestTimeout.Value);
             }
-            if (Probe != null)
+            if (Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe");
                 writer.WriteObjectValue(Probe);
             }
-            if (AuthenticationCertificates != null)
+            if (Optional.IsCollectionDefined(AuthenticationCertificates))
             {
                 writer.WritePropertyName("authenticationCertificates");
                 writer.WriteStartArray();
@@ -73,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TrustedRootCertificates != null)
+            if (Optional.IsCollectionDefined(TrustedRootCertificates))
             {
                 writer.WritePropertyName("trustedRootCertificates");
                 writer.WriteStartArray();
@@ -83,40 +73,35 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ConnectionDraining != null)
+            if (Optional.IsDefined(ConnectionDraining))
             {
                 writer.WritePropertyName("connectionDraining");
                 writer.WriteObjectValue(ConnectionDraining);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName");
                 writer.WriteStringValue(HostName);
             }
-            if (PickHostNameFromBackendAddress != null)
+            if (Optional.IsDefined(PickHostNameFromBackendAddress))
             {
                 writer.WritePropertyName("pickHostNameFromBackendAddress");
                 writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
             }
-            if (AffinityCookieName != null)
+            if (Optional.IsDefined(AffinityCookieName))
             {
                 writer.WritePropertyName("affinityCookieName");
                 writer.WriteStringValue(AffinityCookieName);
             }
-            if (ProbeEnabled != null)
+            if (Optional.IsDefined(ProbeEnabled))
             {
                 writer.WritePropertyName("probeEnabled");
                 writer.WriteBooleanValue(ProbeEnabled.Value);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
                 writer.WriteStringValue(Path);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -124,70 +109,60 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayBackendHttpSettings DeserializeApplicationGatewayBackendHttpSettings(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            string id = default;
-            int? port = default;
-            ApplicationGatewayProtocol? protocol = default;
-            ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = default;
-            int? requestTimeout = default;
-            SubResource probe = default;
-            IList<SubResource> authenticationCertificates = default;
-            IList<SubResource> trustedRootCertificates = default;
-            ApplicationGatewayConnectionDraining connectionDraining = default;
-            string hostName = default;
-            bool? pickHostNameFromBackendAddress = default;
-            string affinityCookieName = default;
-            bool? probeEnabled = default;
-            string path = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<int> port = default;
+            Optional<ApplicationGatewayProtocol> protocol = default;
+            Optional<ApplicationGatewayCookieBasedAffinity> cookieBasedAffinity = default;
+            Optional<int> requestTimeout = default;
+            Optional<SubResource> probe = default;
+            Optional<IList<SubResource>> authenticationCertificates = default;
+            Optional<IList<SubResource>> trustedRootCertificates = default;
+            Optional<ApplicationGatewayConnectionDraining> connectionDraining = default;
+            Optional<string> hostName = default;
+            Optional<bool> pickHostNameFromBackendAddress = default;
+            Optional<string> affinityCookieName = default;
+            Optional<bool> probeEnabled = default;
+            Optional<string> path = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("port"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             port = property0.Value.GetInt32();
@@ -197,6 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protocol = new ApplicationGatewayProtocol(property0.Value.GetString());
@@ -206,6 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cookieBasedAffinity = new ApplicationGatewayCookieBasedAffinity(property0.Value.GetString());
@@ -215,6 +192,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestTimeout = property0.Value.GetInt32();
@@ -224,6 +202,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             probe = DeserializeSubResource(property0.Value);
@@ -233,19 +212,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DeserializeSubResource(item));
-                                }
+                                array.Add(DeserializeSubResource(item));
                             }
                             authenticationCertificates = array;
                             continue;
@@ -254,19 +227,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DeserializeSubResource(item));
-                                }
+                                array.Add(DeserializeSubResource(item));
                             }
                             trustedRootCertificates = array;
                             continue;
@@ -275,6 +242,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value);
@@ -282,10 +250,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("hostName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hostName = property0.Value.GetString();
                             continue;
                         }
@@ -293,6 +257,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             pickHostNameFromBackendAddress = property0.Value.GetBoolean();
@@ -300,10 +265,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("affinityCookieName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             affinityCookieName = property0.Value.GetString();
                             continue;
                         }
@@ -311,6 +272,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             probeEnabled = property0.Value.GetBoolean();
@@ -318,10 +280,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("path"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             path = property0.Value.GetString();
                             continue;
                         }
@@ -329,6 +287,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -338,7 +297,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHttpSettings(id, name, etag, type, port, protocol, cookieBasedAffinity, requestTimeout, probe, authenticationCertificates, trustedRootCertificates, connectionDraining, hostName, pickHostNameFromBackendAddress, affinityCookieName, probeEnabled, path, provisioningState);
+            return new ApplicationGatewayBackendHttpSettings(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(cookieBasedAffinity), Optional.ToNullable(requestTimeout), probe.Value, Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), connectionDraining.Value, hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Optional.ToNullable(probeEnabled), path.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

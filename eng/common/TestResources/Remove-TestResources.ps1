@@ -43,7 +43,7 @@ param (
     [string] $ServiceDirectory,
 
     [Parameter()]
-    [ValidateSet('AzureCloud', 'AzureUSGovernment', 'AzureChinaCloud')]
+    [ValidateSet('AzureCloud', 'AzureUSGovernment', 'AzureChinaCloud', 'Dogfood')]
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
@@ -137,9 +137,31 @@ if (![string]::IsNullOrWhiteSpace($ServiceDirectory)) {
     }
 }
 
+$verifyDeleteScript = {
+    try {
+        $group = Get-AzResourceGroup -name $ResourceGroupName
+    } catch {
+        if ($_.ToString().Contains("Provided resource group does not exist")) {
+            Write-Verbose "Resource group '$ResourceGroupName' not found. Continuing..."
+            return
+        }
+        throw $_
+    }
+
+    if ($group.ProvisioningState -ne "Deleting")
+    {
+        throw "Resource group is in '$($group.ProvisioningState)' state, expected 'Deleting'"
+    }
+}
+
 Log "Deleting resource group '$ResourceGroupName'"
-if (Retry { Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force }) {
-    Write-Verbose "Successfully deleted resource group '$ResourceGroupName'"
+if ($Force) {
+    Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force -AsJob
+    Retry $verifyDeleteScript 3
+    Write-Verbose "Requested async deletion of resource group '$ResourceGroupName'"
+} else {
+    # Don't swallow interactive confirmation when Force is false
+    Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force
 }
 
 $exitActions.Invoke()
@@ -192,6 +214,4 @@ Remove-TestResources.ps1 `
 When run in the context of an Azure DevOps pipeline, this script removes the
 resource group whose name is stored in the environment variable
 AZURE_RESOURCEGROUP_NAME.
-.LINK
-New-TestResources.ps1
 #>

@@ -15,14 +15,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkSecurityGroupResult DeserializeNetworkSecurityGroupResult(JsonElement element)
         {
-            SecurityRuleAccess? securityRuleAccessResult = default;
-            IReadOnlyList<EvaluatedNetworkSecurityGroup> evaluatedNetworkSecurityGroups = default;
+            Optional<SecurityRuleAccess> securityRuleAccessResult = default;
+            Optional<IReadOnlyList<EvaluatedNetworkSecurityGroup>> evaluatedNetworkSecurityGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("securityRuleAccessResult"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     securityRuleAccessResult = new SecurityRuleAccess(property.Value.GetString());
@@ -32,25 +33,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EvaluatedNetworkSecurityGroup> array = new List<EvaluatedNetworkSecurityGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(EvaluatedNetworkSecurityGroup.DeserializeEvaluatedNetworkSecurityGroup(item));
-                        }
+                        array.Add(EvaluatedNetworkSecurityGroup.DeserializeEvaluatedNetworkSecurityGroup(item));
                     }
                     evaluatedNetworkSecurityGroups = array;
                     continue;
                 }
             }
-            return new NetworkSecurityGroupResult(securityRuleAccessResult, evaluatedNetworkSecurityGroups);
+            return new NetworkSecurityGroupResult(Optional.ToNullable(securityRuleAccessResult), Optional.ToList(evaluatedNetworkSecurityGroups));
         }
     }
 }

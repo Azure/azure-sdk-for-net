@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name.Value.ToString());
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PublicIPAddressSku DeserializePublicIPAddressSku(JsonElement element)
         {
-            PublicIPAddressSkuName? name = default;
+            Optional<PublicIPAddressSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new PublicIPAddressSkuName(property.Value.GetString());
                     continue;
                 }
             }
-            return new PublicIPAddressSku(name);
+            return new PublicIPAddressSku(Optional.ToNullable(name));
         }
     }
 }

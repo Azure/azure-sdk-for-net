@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
@@ -105,8 +105,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             LoadBalancer loadBalancer = new LoadBalancer()
             {
                 Location = location,
-                FrontendIPConfigurations = new List<FrontendIPConfiguration>()
-                {
+                FrontendIPConfigurations = {
                     new FrontendIPConfiguration()
                     {
                         Name = frontendIpConfigName,
@@ -116,15 +115,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         }
                     }
                 },
-                BackendAddressPools = new List<BackendAddressPool>()
-                {
+                BackendAddressPools = {
                     new BackendAddressPool()
                     {
                         Name = backEndAddressPoolName,
                     }
                 },
-                LoadBalancingRules = new List<LoadBalancingRule>()
-                {
+                LoadBalancingRules = {
                     new LoadBalancingRule()
                     {
                         Name = loadBalancingRuleName,
@@ -150,8 +147,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         }
                     }
                 },
-                Probes = new List<Probe>()
-                {
+                Probes = {
                     new Probe()
                     {
                         Name = probeName,
@@ -162,8 +158,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         NumberOfProbes = 2
                     }
                 },
-                InboundNatRules = new List<InboundNatRule>()
-                {
+                InboundNatRules = {
                     new InboundNatRule()
                     {
                         Name = inboundNatRule1Name,
@@ -201,10 +196,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Response<LoadBalancer> getLoadBalancer = await NetworkManagementClient.LoadBalancers.GetAsync(resourceGroupName, lbName);
 
             // Associate the nic with LB
-            nic1.IpConfigurations.First().LoadBalancerBackendAddressPools = new List<BackendAddressPool> { getLoadBalancer.Value.BackendAddressPools.First() };
-            nic1.IpConfigurations.First().LoadBalancerInboundNatRules = new List<InboundNatRule> { getLoadBalancer.Value.InboundNatRules.First() };
-            nic2.IpConfigurations.First().LoadBalancerBackendAddressPools = new List<BackendAddressPool> { getLoadBalancer.Value.BackendAddressPools.First() };
-            nic3.IpConfigurations.First().LoadBalancerInboundNatRules = new List<InboundNatRule> { getLoadBalancer.Value.InboundNatRules[1] };
+            nic1.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.BackendAddressPools.First());
+            nic1.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.InboundNatRules.First());
+            nic2.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.BackendAddressPools.First());
+            nic3.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.InboundNatRules[1]);
 
             // Put Nics
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation1 = await NetworkManagementClient.NetworkInterfaces.StartCreateOrUpdateAsync(resourceGroupName, nic1name, nic1);

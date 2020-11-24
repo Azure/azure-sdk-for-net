@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Days != null)
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days");
                 writer.WriteNumberValue(Days.Value);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static DeleteRetentionPolicy DeserializeDeleteRetentionPolicy(JsonElement element)
         {
-            bool? enabled = default;
-            int? days = default;
+            Optional<bool> enabled = default;
+            Optional<int> days = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -47,13 +48,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     days = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new DeleteRetentionPolicy(enabled, days);
+            return new DeleteRetentionPolicy(Optional.ToNullable(enabled), Optional.ToNullable(days));
         }
     }
 }

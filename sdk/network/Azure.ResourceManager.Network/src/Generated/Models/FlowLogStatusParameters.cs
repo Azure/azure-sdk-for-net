@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of FlowLogStatusParameters. </summary>
         /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
         public FlowLogStatusParameters(string targetResourceId)
         {
             if (targetResourceId == null)

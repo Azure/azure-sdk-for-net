@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryArtifactPublishingProfileBase. </summary>
         public GalleryArtifactPublishingProfileBase()
         {
+            TargetRegions = new ChangeTrackingList<TargetRegion>();
         }
 
         /// <summary> Initializes a new instance of GalleryArtifactPublishingProfileBase. </summary>
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The target regions where the Image Version is going to be replicated to. This property is updatable. </summary>
-        public IList<TargetRegion> TargetRegions { get; set; }
+        public IList<TargetRegion> TargetRegions { get; }
         /// <summary> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </summary>
         public int? ReplicaCount { get; set; }
         /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won&apos;t use this Image Version. </summary>

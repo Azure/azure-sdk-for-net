@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher");
                 writer.WriteStringValue(Publisher);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product");
                 writer.WriteStringValue(Product);
@@ -35,40 +35,28 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImagePurchasePlan DeserializeImagePurchasePlan(JsonElement element)
         {
-            string name = default;
-            string publisher = default;
-            string product = default;
+            Optional<string> name = default;
+            Optional<string> publisher = default;
+            Optional<string> product = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("publisher"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     publisher = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("product"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     product = property.Value.GetString();
                     continue;
                 }
             }
-            return new ImagePurchasePlan(name, publisher, product);
+            return new ImagePurchasePlan(name.Value, publisher.Value, product.Value);
         }
     }
 }

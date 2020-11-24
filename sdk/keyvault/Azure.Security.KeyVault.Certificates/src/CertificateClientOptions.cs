@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_1_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_1;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client
@@ -31,9 +31,9 @@ namespace Azure.Security.KeyVault.Certificates
             V7_0 = 0,
 
             /// <summary>
-            /// The Key Vault API version 7.1-preview.
+            /// The Key Vault API version 7.1.
             /// </summary>
-            V7_1_Preview,
+            V7_1 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -64,8 +64,7 @@ namespace Azure.Security.KeyVault.Certificates
             return Version switch
             {
                 ServiceVersion.V7_0 => "7.0",
-                ServiceVersion.V7_1_Preview => "7.1-preview",
-
+                ServiceVersion.V7_1 => "7.1",
                 _ => throw new ArgumentException(Version.ToString()),
             };
         }

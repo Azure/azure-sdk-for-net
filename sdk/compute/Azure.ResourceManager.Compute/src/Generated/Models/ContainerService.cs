@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,12 +16,15 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of ContainerService. </summary>
         /// <param name="location"> Resource location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public ContainerService(string location) : base(location)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            AgentPoolProfiles = new ChangeTrackingList<ContainerServiceAgentPoolProfile>();
         }
 
         /// <summary> Initializes a new instance of ContainerService. </summary>
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Properties of master agents. </summary>
         public ContainerServiceMasterProfile MasterProfile { get; set; }
         /// <summary> Properties of the agent pool. </summary>
-        public IList<ContainerServiceAgentPoolProfile> AgentPoolProfiles { get; set; }
+        public IList<ContainerServiceAgentPoolProfile> AgentPoolProfiles { get; }
         /// <summary> Properties of Windows VMs. </summary>
         public ContainerServiceWindowsProfile WindowsProfile { get; set; }
         /// <summary> Properties of Linux VMs. </summary>

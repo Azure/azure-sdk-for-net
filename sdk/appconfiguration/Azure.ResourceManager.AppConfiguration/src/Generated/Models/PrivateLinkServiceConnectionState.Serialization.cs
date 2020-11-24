@@ -15,35 +15,31 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
-            }
-            if (ActionsRequired != null)
-            {
-                writer.WritePropertyName("actionsRequired");
-                writer.WriteStringValue(ActionsRequired.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static PrivateLinkServiceConnectionState DeserializePrivateLinkServiceConnectionState(JsonElement element)
         {
-            ConnectionStatus? status = default;
-            string description = default;
-            ActionsRequired? actionsRequired = default;
+            Optional<ConnectionStatus> status = default;
+            Optional<string> description = default;
+            Optional<ActionsRequired> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ConnectionStatus(property.Value.GetString());
@@ -51,10 +47,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -62,13 +54,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionsRequired = new ActionsRequired(property.Value.GetString());
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionState(status, description, actionsRequired);
+            return new PrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired));
         }
     }
 }

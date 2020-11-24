@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of FileShareItem. </summary>
         public FileShareItem()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of FileShareItem. </summary>
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Returns the date and time the share was last modified. </summary>
         public DateTimeOffset? LastModifiedTime { get; }
         /// <summary> A name-value pair to associate with the share as metadata. </summary>
-        public IDictionary<string, string> Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; }
         /// <summary> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </summary>
         public int? ShareQuota { get; set; }
         /// <summary> The authentication protocol that is used for the file share. Can only be specified when creating a share. </summary>

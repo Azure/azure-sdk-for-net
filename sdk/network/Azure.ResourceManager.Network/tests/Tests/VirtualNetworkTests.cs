@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Location = location,
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnet1Name, AddressPrefix = "10.0.1.0/24", }, new Subnet() { Name = subnet2Name, AddressPrefix = "10.0.2.0/24", } }
+                Subnets = { new Subnet() { Name = subnet1Name, AddressPrefix = "10.0.1.0/24", }, new Subnet() { Name = subnet2Name, AddressPrefix = "10.0.2.0/24", } }
             };
 
             // Put Vnet
@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.1.0/24" } }
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.1.0/24" } }
             };
 
             // Put Vnet
@@ -139,9 +139,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Response<IPAddressAvailabilityResult> responseAvailable = await NetworkManagementClient.VirtualNetworks.CheckIPAddressAvailabilityAsync(resourceGroupName, vnetName, "10.0.1.10");
 
             Assert.True(responseAvailable.Value.Available);
-            Assert.Null(responseAvailable.Value.AvailableIPAddresses);
+            Assert.IsEmpty(responseAvailable.Value.AvailableIPAddresses);
 
             Response<IPAddressAvailabilityResult> responseTaken = await NetworkManagementClient.VirtualNetworks.CheckIPAddressAvailabilityAsync(resourceGroupName, vnetName, "10.0.1.9");
 
@@ -191,13 +190,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnet1Name, AddressPrefix = "10.0.1.0/24", }, new Subnet() { Name = subnet2Name, AddressPrefix = "10.0.2.0/24" } }
+                Subnets = { new Subnet() { Name = subnet1Name, AddressPrefix = "10.0.1.0/24", }, new Subnet() { Name = subnet2Name, AddressPrefix = "10.0.2.0/24" } }
             };
 
             // Put Vnet
@@ -217,9 +216,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Location = location,
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.1.0.0/16", }
+                    AddressPrefixes = { "10.1.0.0/16", }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnet1Name, AddressPrefix = "10.1.1.0/24" } }
+                Subnets = { new Subnet() { Name = subnet1Name, AddressPrefix = "10.1.1.0/24" } }
             };
 
             // Put Vnet2
@@ -300,13 +299,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Location = location,
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.1.0/24" } }
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.1.0/24" } }
             };
 
             // Put Vnet
@@ -328,9 +327,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,

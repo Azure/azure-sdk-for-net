@@ -15,13 +15,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of VpnPacketCaptureStopParameters. </summary>
-        /// <param name="sasUrl"> SAS url for packet capture on virtual network gateway. </param>
-        internal VpnPacketCaptureStopParameters(string sasUrl)
-        {
-            SasUrl = sasUrl;
-        }
-
         /// <summary> SAS url for packet capture on virtual network gateway. </summary>
         public string SasUrl { get; set; }
     }

@@ -31,6 +31,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("timestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -41,21 +46,41 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("target"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     target = ContainerRegistryEventTarget.DeserializeContainerRegistryEventTarget(property.Value);
                     continue;
                 }
                 if (property.NameEquals("request"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     request = ContainerRegistryEventRequest.DeserializeContainerRegistryEventRequest(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actor"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     actor = ContainerRegistryEventActor.DeserializeContainerRegistryEventActor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("source"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     source = ContainerRegistryEventSource.DeserializeContainerRegistryEventSource(property.Value);
                     continue;
                 }

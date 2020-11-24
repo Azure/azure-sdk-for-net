@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -28,50 +28,20 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PlatformFaultDomain != null)
+            if (Optional.IsDefined(PlatformFaultDomain))
             {
                 writer.WritePropertyName("platformFaultDomain");
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (AutoReplaceOnFailure != null)
+            if (Optional.IsDefined(AutoReplaceOnFailure))
             {
                 writer.WritePropertyName("autoReplaceOnFailure");
                 writer.WriteBooleanValue(AutoReplaceOnFailure.Value);
             }
-            if (HostId != null)
-            {
-                writer.WritePropertyName("hostId");
-                writer.WriteStringValue(HostId);
-            }
-            if (VirtualMachines != null)
-            {
-                writer.WritePropertyName("virtualMachines");
-                writer.WriteStartArray();
-                foreach (var item in VirtualMachines)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType.Value.ToSerialString());
-            }
-            if (ProvisioningTime != null)
-            {
-                writer.WritePropertyName("provisioningTime");
-                writer.WriteStringValue(ProvisioningTime.Value, "O");
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (InstanceView != null)
-            {
-                writer.WritePropertyName("instanceView");
-                writer.WriteObjectValue(InstanceView);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
