@@ -1,22 +1,23 @@
 param(
-$GenerateInput, 
-$GenerateOutput,
-$RepoRoot = "${PSScriptRoot}/../.."
+  [string] $InputJsonPath = $GenerateInput,
+  [string] $OutputJsonPath = $GenerateOutput,
+  [string] $RepoRoot = "${PSScriptRoot}/../.."
 )
 
-$input = Get-Content $GenerateInput | ConvertFrom-Json
-$inputFiles = $input.changedFiles;
-$inputFiles += $input.relatedReadmeMdFiles;
-$inputFiles = $inputFiles | select -Unique
-Write-Output "List Of changed swagger files and related readmes" $inputFiles "`n"
+$input = Get-Content $InputJsonPath | ConvertFrom-Json
+$inputFilePaths = $input.changedFiles;
+$inputFilePaths += $input.relatedReadmeMdFiles;
+$inputFilePaths = $inputFilePaths | select -Unique
+$changedFilePaths = $inputFilePaths -join "`n";
+Write-Host "List Of changed swagger files and related readmes`n $changedFilePaths `n"
 
 $autorestFilesPath = Get-ChildItem -Path "$RepoRoot/sdk"  -Filter autorest.md -Recurse | Resolve-Path -Relative
 
 Write-Host "Updating autorest.md files for all the changed swaggers."
-$sdkPaths = @()
+$sdksInfo = @{}
 $headSha = $input.headSha
 $repoHttpsUrl = $input.repoHttpsUrl
-foreach ($inputFile in $inputFiles)
+foreach ($inputFilePath in $inputFilePaths)
 {
   foreach ($path in $autorestFilesPath)
   {
@@ -24,15 +25,18 @@ foreach ($inputFile in $inputFiles)
     $isUpdatedLines = $false
     $updatedLines = foreach($line in $fileContent)
     {
-      if($line -match "[\/][0-9a-f]{4,40}[\/]$inputFile")
+      $regexForMatchingShaAndPath = "[\/][0-9a-f]{4,40}[\/]$inputFilePath"
+      if($line -match $regexForMatchingShaAndPath)
       {
-        # replacing sha
-        $line = $line -replace "[\/][0-9a-f]{4,40}[\/]$inputFile", "/$headSha/$inputFile"
-        # replacing repo path
-        $line -replace "https:\/\/[^`"]+?$headSha", "$repoHttpsUrl/blob/$headSha"
+        $line -replace "https:\/\/[^`"]*$regexForMatchingShaAndPath", "$repoHttpsUrl/blob/$headSha/$inputFilePath"
 
         $isUpdatedLines = $true
-        $sdkPaths += (get-item $path).Directory.Parent.FullName | Resolve-Path -Relative
+        $sdkpath = (get-item $path).Directory.Parent.FullName | Resolve-Path -Relative
+        if (!$sdksInfo.ContainsKey($sdkpath))
+        {
+          $specReadmePath = $input.relatedReadmeMdFiles -match $inputFilePath
+          $sdksInfo.Add($sdkpath, $specReadmePath)
+        }
       }
       else
       {
@@ -59,17 +63,12 @@ function Test-PreviousScript()
   {
     $result = "failed"
   }
-  Write-Output $result
+  Write-Host "Result: $result"
+  return $result
 }
 
-$sdkPaths = $sdkPaths | select -Unique
 $packages = @()
-$artifactsPath = "$RepoRoot/artifacts/packages"
-if(!(Test-Path $artifactsPath))
-{
-  New-Item -ItemType Directory -Force -Path $artifactsPath
-}
-foreach ($sdkPath in $sdkPaths)
+foreach ($sdkPath in $sdksInfo.Keys)
 {
   $packageName = Split-Path $sdkPath -Leaf
   Write-Host "Generating code for " $packageName
@@ -85,11 +84,12 @@ foreach ($sdkPath in $sdkPaths)
     Write-Host "Successfully generated code for" $packageName "`n"
     
     $csprojPath = Get-ChildItem $srcPath -Filter *.csproj -Recurse
-    dotnet pack $csprojPath --output $artifactsPath /p:RunApiCompat=$false
+    dotnet pack $csprojPath /p:RunApiCompat=$false
     $result = Test-PreviousScript
     if($result -eq "succeeded")
     {
-      $artifacts +=  Get-ChildItem $artifactsPath -Filter *$packageName* -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+      $artifactsPath = "$RepoRoot/artifacts/packages/Debug/$packageName"
+      $artifacts +=  Get-ChildItem $artifactsPath -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
 
       $logFilePath = Join-Path "$srcPath" 'log.txt'
       if(!(Test-Path $logFilePath))
@@ -106,16 +106,12 @@ foreach ($sdkPath in $sdkPaths)
       else
       {
         $logFile = Get-Content -Path $logFilePath | select-object -skip 2
-        $breakingChanges = foreach($Obj in $logFile) 
-        {       
-          $begin = ""
-          $end = ",`n"
-          $begin + $Obj + $end
-        }
+        $breakingChanges = $logFile -join ",`n"
         $content = "Breaking Changes: $breakingChanges"
         $hasBreakingChange = $true
         $result = "succeeded"
       }
+
       if (Test-Path $logFilePath) 
       {
         Remove-Item $logFilePath
@@ -130,17 +126,8 @@ foreach ($sdkPath in $sdkPaths)
   $path = @()
   $path += $sdkPath
 
-  $packageNameArr = $packageName.Split(".")
-  $name = $input.relatedReadmeMdFiles -match $packageNameArr[2]
   $readmeMd = @()
-  if($packageName -match "Azure.ResourceManager")
-  {
-    $readmeMd += $name -match "resource-plane"
-  }
-  elseif($packageName -match "Azure.")
-  {
-    $readmeMd += $name -match "data-plane"
-  }
+  $readmeMd += $sdksInfo[$sdkPath]
 
   $changelog = [PSCustomObject]@{
     content = $content
@@ -148,9 +135,10 @@ foreach ($sdkPath in $sdkPaths)
     }
 
   $downloadUrlPrefix = $input.installInstructionInput.downloadUrlPrefix
+  $fileName = Split-Path $artifacts[0] -Leaf
   $installInstructions = [PSCustomObject]@{
-    full = "Download the $packageName from [here]($downloadUrlPrefix)"
-    lite = "Download the $packagename from [here]($downloadUrlPrefix)"
+    full = "Download the $packageName package from [here]($downloadUrlPrefix/$fileName)"
+    lite = "Download the $packagename package from [here]($downloadUrlPrefix/$fileName)"
     }
 
   $packageInfo = [PSCustomObject]@{
@@ -165,9 +153,9 @@ foreach ($sdkPath in $sdkPaths)
     $packages += $packageInfo
 }
 
-if ($GenerateOutput) {
+if ($OutputJsonPath) {
     Write-Host "`nGenerating output JSON..."
     ConvertTo-Json @{
       packages         = $packages
-    } -depth 5 | Out-File -FilePath $GenerateOutput
+    } -depth 5 | Out-File -FilePath $OutputJsonPath
 }
