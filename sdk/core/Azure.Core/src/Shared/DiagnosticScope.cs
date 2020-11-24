@@ -111,7 +111,7 @@ namespace Azure.Core.Pipeline
         {
             private List<Activity>? _links;
 
-#pragma warning disable 109
+#pragma warning disable 109 // extra new modifier
             public new IEnumerable<Activity> Links => (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>();
 #pragma warning restore 109
 

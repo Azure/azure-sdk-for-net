@@ -21,5 +21,6 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>
 </Project>

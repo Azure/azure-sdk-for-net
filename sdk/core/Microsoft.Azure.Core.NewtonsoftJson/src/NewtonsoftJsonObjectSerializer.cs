@@ -72,8 +72,8 @@ namespace Azure.Core.Serialization
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> or <paramref name="returnType"/> is null.</exception>
-        public override ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken) =>
-            new ValueTask<object>(Deserialize(stream, returnType, cancellationToken));
+        public override ValueTask<object?> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken) =>
+            new ValueTask<object?>(Deserialize(stream, returnType, cancellationToken));
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> or <paramref name="inputType"/> is null.</exception>

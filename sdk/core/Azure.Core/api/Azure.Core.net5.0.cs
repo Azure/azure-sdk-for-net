@@ -159,8 +159,8 @@ namespace Azure
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
         public override string ToString() { throw null; }
-        protected internal abstract bool TryGetHeader(string name, out string? value);
-        protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
+        protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
+        protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
     public abstract partial class Response<T>
     {
@@ -289,8 +289,8 @@ namespace Azure.Core
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         protected internal abstract bool RemoveHeader(string name);
         protected internal virtual void SetHeader(string name, string value) { }
-        protected internal abstract bool TryGetHeader(string name, out string? value);
-        protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
+        protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
+        protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
     public abstract partial class RequestContent : System.IDisposable
     {
@@ -317,8 +317,8 @@ namespace Azure.Core
         public bool Remove(string name) { throw null; }
         public void SetValue(string name, string value) { }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string name, out string? value) { throw null; }
-        public bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+        public bool TryGetValue(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value) { throw null; }
+        public bool TryGetValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RequestMethod : System.IEquatable<Azure.Core.RequestMethod>
@@ -381,8 +381,8 @@ namespace Azure.Core
         public bool Contains(string name) { throw null; }
         public System.Collections.Generic.IEnumerator<Azure.Core.HttpHeader> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string name, out string? value) { throw null; }
-        public bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+        public bool TryGetValue(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value) { throw null; }
+        public bool TryGetValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
     public enum RetryMode
     {

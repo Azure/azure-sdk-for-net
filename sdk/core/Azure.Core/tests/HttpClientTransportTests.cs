@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
@@ -168,6 +169,11 @@ namespace Azure.Core.Tests
                 return Task.CompletedTask;
             }
 
+#if NET5_0
+            protected override void SerializeToStream(Stream stream, TransportContext context, CancellationToken cancellationToken)
+            {
+            }
+#endif
             protected override bool TryComputeLength(out long length)
             {
                 length = 0;
