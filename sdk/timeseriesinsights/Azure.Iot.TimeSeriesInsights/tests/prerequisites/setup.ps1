@@ -114,7 +114,6 @@ $timeSeriesIdProperties = $timeSeriesIdProperties.Replace('"','\"')
 az deployment group create --resource-group $ResourceGroup --name $($EnvironmentName.ToLower()) --template-file $armTemplateFile --parameters `
     region=$Region `
     resourceGroup=$ResourceGroup `
-    subscriptionId=$SubscriptionId `
     environmentName=$EnvironmentName `
     iotHubName=$($EnvironmentName + "-hub") `
     consumerGroupName=$ConsumerGroupName `

@@ -89,6 +89,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="SeriesGroupDetectionConditions"/> is null.</exception>
         [CodeGenMember("DimensionGroupOverrideConfigurations")]
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<MetricSeriesGroupDetectionCondition> SeriesGroupDetectionConditions
         {
             get => _seriesGroupDetectionConditions;
@@ -98,6 +99,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 _seriesGroupDetectionConditions = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// The anomaly detection conditions to be applied to the time series associated with this configuration's
@@ -106,6 +108,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="SeriesDetectionConditions"/> is null.</exception>
         [CodeGenMember("SeriesOverrideConfigurations")]
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<MetricSingleSeriesDetectionCondition> SeriesDetectionConditions
         {
             get => _seriesDetectionConditions;
@@ -115,6 +118,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 _seriesDetectionConditions = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// A description about the <see cref="AnomalyDetectionConfiguration"/>.

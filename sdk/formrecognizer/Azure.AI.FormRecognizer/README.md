@@ -2,9 +2,11 @@
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents.  It includes the following capabilities:
 
 - Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
-- Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
-- Recognize Receipts - Recognize and extract common fields from receipts, using a pre-trained receipt model.
-- Recognize Business Card - Recognize and extract common fields from business cards, using a pre-trained business cards model.
+- Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in form documents, without the need to train a model.
+- Recognize Prebuilt models - Recognize data using the following prebuilt models:
+  - Receipts - Recognize and extract common fields from receipts, using a pre-trained receipt model.
+  - Business Cards - Recognize and extract common fields from business cards, using a pre-trained business cards model.
+  - Invoices - Recognize and extract common fields from invoices, using a pre-trained invoice model.
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
@@ -14,10 +16,8 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.FormRecognizer --version 3.0.0
+dotnet add package Azure.AI.FormRecognizer
 ``` 
-
-**Note:** This package version targets Azure Form Recognizer service API version v2.0.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -36,7 +36,7 @@ You can create either resource using:
 Below is an example of how you can create a Form Recognizer resource using the CLI:
 
 ```PowerShell
-# Create a new resource group to hold the form recognizer resource -
+# Create a new resource group to hold the form recognizer resource
 # if using an existing resource group, skip this step
 az group create --name <your-resource-name> --location <location>
 ```
@@ -101,10 +101,12 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 
 `FormRecognizerClient` provides operations for:
 
- - Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects. See example [Recognize Custom Forms](#recognize-custom-forms).
- - Recognizing form content, including tables, lines, words, and selection marks like radio buttons and check boxes without the need to train a model.  Form content is returned in a collection of `FormPage` objects. See example [Recognize Content](#recognize-content).
- - Recognizing common fields from receipts, using a pre-trained receipt model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizedForm` objects. See example [Recognize Receipts](#recognize-receipts).
-- Recognizing common fields from business cards, using a pre-trained business cards model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizedForm` objects. See example [Recognize Business Cards](#recognize-business-cards).
+- Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects. See example [Recognize Custom Forms](#recognize-custom-forms).
+- Recognizing form content, including tables, lines, words, and selection marks like radio buttons and check boxes without the need to train a model.  Form content is returned in a collection of `FormPage` objects. See example [Recognize Content](#recognize-content).
+- Recognizing common fields from the following form types using prebuilt models. These fields and meta-data are returned in a collection of `RecognizedForm` objects.
+  - Sales receipts. See example [Recognize Receipts](#recognize-receipts).
+  - Business cards. See example [Recognize Business Cards](#recognize-business-cards).
+  - Invoices. See example [Recognize Invoices](#recognize-invoices).
 
 ### FormTrainingClient
 
@@ -134,6 +136,7 @@ The following section provides several code snippets illustrating common pattern
 * [Recognize Custom Forms](#recognize-custom-forms)
 * [Recognize Receipts](#recognize-receipts)
 * [Recognize Business Cards](#recognize-business-cards)
+* [Recognize Invoices](#recognize-invoices)
 * [Train a Model](#train-a-model)
 * [Manage Custom Models](#manage-custom-models)
 
@@ -299,7 +302,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 Recognize data from business cards using a prebuilt model. Business card fields recognized by the service can be found [here][service_recognize_business_cards_fields].
 
 ```C# Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
-using (FileStream stream = new FileStream(busienssCardsPath, FileMode.Open))
+using (FileStream stream = new FileStream(businessCardsPath, FileMode.Open))
 {
     var options = new RecognizeBusinessCardsOptions() { Locale = "en-US" };
     RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsAsync(stream, options).WaitForCompletionAsync();
@@ -309,12 +312,12 @@ using (FileStream stream = new FileStream(busienssCardsPath, FileMode.Open))
 
     foreach (RecognizedForm businessCard in businessCards)
     {
-        FormField ContactNamesField;
-        if (businessCard.Fields.TryGetValue("ContactNames", out ContactNamesField))
+        FormField contactNamesField;
+        if (businessCard.Fields.TryGetValue("ContactNames", out contactNamesField))
         {
-            if (ContactNamesField.Value.ValueType == FieldValueType.List)
+            if (contactNamesField.Value.ValueType == FieldValueType.List)
             {
-                foreach (FormField contactNameField in ContactNamesField.Value.AsList())
+                foreach (FormField contactNameField in contactNamesField.Value.AsList())
                 {
                     Console.WriteLine($"Contact Name: {contactNameField.ValueData.Text}");
 
@@ -363,6 +366,52 @@ using (FileStream stream = new FileStream(busienssCardsPath, FileMode.Open))
                     }
                 }
             }
+        }
+    }
+}
+```
+
+### Recognize Invoices
+Recognize data from invoices using a prebuilt model. Invoices fields recognized by the service can be found [here][service_recognize_invoices_fields].
+
+```C# Snippet:FormRecognizerSampleRecognizeInvoicesFileStream
+using (FileStream stream = new FileStream(invoicePath, FileMode.Open))
+{
+    var options = new RecognizeInvoicesOptions() { Locale = "en-US" };
+    RecognizedFormCollection invoices = await client.StartRecognizeInvoicesAsync(stream, options).WaitForCompletionAsync();
+
+    // To see the list of the supported fields returned by service and its corresponding types, consult:
+    // https://aka.ms/formrecognizer/invoicefields
+
+    RecognizedForm invoice = invoices.Single();
+
+    FormField vendorNameField;
+    if (invoice.Fields.TryGetValue("VendorName", out vendorNameField))
+    {
+        if (vendorNameField.Value.ValueType == FieldValueType.String)
+        {
+            string vendorName = vendorNameField.Value.AsString();
+            Console.WriteLine($"    Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
+        }
+    }
+
+    FormField customerNameField;
+    if (invoice.Fields.TryGetValue("CustomerName", out customerNameField))
+    {
+        if (customerNameField.Value.ValueType == FieldValueType.String)
+        {
+            string customerName = customerNameField.Value.AsString();
+            Console.WriteLine($"    Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
+        }
+    }
+
+    FormField invoiceTotalField;
+    if (invoice.Fields.TryGetValue("InvoiceTotal", out invoiceTotalField))
+    {
+        if (invoiceTotalField.Value.ValueType == FieldValueType.Float)
+        {
+            float invoiceTotal = invoiceTotalField.Value.AsFloat();
+            Console.WriteLine($"    Invoice Total: '{invoiceTotal}', with confidence {invoiceTotalField.Confidence}");
         }
     }
 }
@@ -602,6 +651,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 [service_recognize_receipt_fields]: https://aka.ms/formrecognizer/receiptfields
 [service_recognize_business_cards_fields]: https://aka.ms/formrecognizer/businesscardfields
+[service_recognize_invoices_fields]: https://aka.ms/formrecognizer/invoicefields
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/samples/Diagnostics.md

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyze?includeTextDetails=true",
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyze?includeTextDetails=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "915108",
         "Content-Type": "image/jpeg",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f30b585a5003d74385b9b305ed906971-65c43291631b3943-00",
+        "traceparent": "00-f0a079ab6fd40441bcd25505974a5c56-02bbc3a63fb89546-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201009.1",
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "8821a952a91e5abfe77f81b8f179130d",
@@ -19,24 +19,24 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "fe857cb9-7bf3-4bde-8f02-9049b3b27d98",
+        "apim-request-id": "34f5676b-8c2e-4bc2-925c-dec1abbb0d4e",
         "Content-Length": "0",
-        "Date": "Fri, 09 Oct 2020 23:19:43 GMT",
-        "Operation-Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/fe857cb9-7bf3-4bde-8f02-9049b3b27d98",
+        "Date": "Tue, 17 Nov 2020 00:31:49 GMT",
+        "Operation-Location": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/34f5676b-8c2e-4bc2-925c-dec1abbb0d4e",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "636"
+        "x-envoy-upstream-service-time": "603"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/fe857cb9-7bf3-4bde-8f02-9049b3b27d98",
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/34f5676b-8c2e-4bc2-925c-dec1abbb0d4e",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201009.1",
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "13ee3bef010528250e466e3e75604bf3",
@@ -45,28 +45,28 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "703556c0-dc7f-4d5e-b8d1-a81a77a501b4",
-        "Content-Length": "109",
+        "apim-request-id": "e2de779e-90fd-4668-ab50-e04929a8bcfb",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Oct 2020 23:19:43 GMT",
+        "Date": "Tue, 17 Nov 2020 00:31:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "13"
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-10-09T23:19:43Z",
-        "lastUpdatedDateTime": "2020-10-09T23:19:43Z"
+        "status": "running",
+        "createdDateTime": "2020-11-17T00:31:49Z",
+        "lastUpdatedDateTime": "2020-11-17T00:31:49Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/fe857cb9-7bf3-4bde-8f02-9049b3b27d98",
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/34f5676b-8c2e-4bc2-925c-dec1abbb0d4e",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201009.1",
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "9e25e42ab6a4786e35cdfac91b870052",
@@ -75,28 +75,28 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "79c6038b-9a57-45c7-ac8f-544019e37171",
+        "apim-request-id": "8a37f182-a1f0-4f59-b549-1aca29df2d22",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Oct 2020 23:19:44 GMT",
+        "Date": "Tue, 17 Nov 2020 00:31:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-10-09T23:19:43Z",
-        "lastUpdatedDateTime": "2020-10-09T23:19:43Z"
+        "createdDateTime": "2020-11-17T00:31:49Z",
+        "lastUpdatedDateTime": "2020-11-17T00:31:49Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/fe857cb9-7bf3-4bde-8f02-9049b3b27d98",
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/34f5676b-8c2e-4bc2-925c-dec1abbb0d4e",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201009.1",
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "3d152f669c9e507283f979d73a80e587",
@@ -105,28 +105,28 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9f2902fc-1b57-47e3-a607-eba132f199a8",
+        "apim-request-id": "04beefdc-9185-4fdb-abbc-abf00872f6f6",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Oct 2020 23:19:45 GMT",
+        "Date": "Tue, 17 Nov 2020 00:31:52 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "11"
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-10-09T23:19:43Z",
-        "lastUpdatedDateTime": "2020-10-09T23:19:43Z"
+        "createdDateTime": "2020-11-17T00:31:49Z",
+        "lastUpdatedDateTime": "2020-11-17T00:31:49Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/fe857cb9-7bf3-4bde-8f02-9049b3b27d98",
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/34f5676b-8c2e-4bc2-925c-dec1abbb0d4e",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201009.1",
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "0d8e8d3374533868cc76dd38065b0d87",
@@ -135,54 +135,24 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "967d68f9-9e53-4732-a352-e1f98fe8c09d",
-        "Content-Length": "106",
+        "apim-request-id": "9c6c47ea-b35b-4d60-a76b-7bbfe53af365",
+        "Content-Length": "9010",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Oct 2020 23:19:46 GMT",
+        "Date": "Tue, 17 Nov 2020 00:31:53 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "12"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2020-10-09T23:19:43Z",
-        "lastUpdatedDateTime": "2020-10-09T23:19:43Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/fe857cb9-7bf3-4bde-8f02-9049b3b27d98",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201009.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "45d81b450e4a8e5471d51aab3c963db4",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "8006d6c8-bbe7-45f4-a6b9-327545e4c3f7",
-        "Content-Length": "8383",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Oct 2020 23:19:47 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
+        "x-envoy-upstream-service-time": "19"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2020-10-09T23:19:43Z",
-        "lastUpdatedDateTime": "2020-10-09T23:19:46Z",
+        "createdDateTime": "2020-11-17T00:31:49Z",
+        "lastUpdatedDateTime": "2020-11-17T00:31:52Z",
         "analyzeResult": {
           "version": "2.1.0",
           "readResults": [
             {
               "page": 1,
-              "angle": -17.0956,
+              "angle": -16.6836,
               "width": 4032,
               "height": 3024,
               "unit": "pixel",
@@ -190,671 +160,737 @@
                 {
                   "text": "Dr. Avery Smith",
                   "boundingBox": [
-                    418,
-                    1156,
+                    416,
+                    1155,
                     1608,
-                    874,
-                    1636,
-                    994,
-                    445,
-                    1264
+                    871,
+                    1637,
+                    993,
+                    443,
+                    1268
                   ],
                   "words": [
                     {
                       "text": "Dr.",
                       "boundingBox": [
-                        422,
-                        1166,
-                        664,
-                        1105,
-                        694,
-                        1214,
-                        451,
-                        1264
+                        416,
+                        1161,
+                        661,
+                        1103,
+                        691,
+                        1217,
+                        446,
+                        1268
                       ],
-                      "confidence": 0.946
+                      "confidence": 0.984
                     },
                     {
                       "text": "Avery",
                       "boundingBox": [
-                        703,
-                        1096,
-                        1134,
-                        989,
-                        1165,
-                        1109,
-                        733,
-                        1206
+                        683,
+                        1098,
+                        1158,
+                        984,
+                        1187,
+                        1103,
+                        712,
+                        1212
                       ],
-                      "confidence": 0.956
+                      "confidence": 0.983
                     },
                     {
                       "text": "Smith",
                       "boundingBox": [
-                        1186,
-                        976,
-                        1585,
-                        879,
-                        1618,
-                        998,
-                        1218,
-                        1096
+                        1179,
+                        979,
+                        1610,
+                        871,
+                        1637,
+                        990,
+                        1209,
+                        1097
                       ],
-                      "confidence": 0.943
+                      "confidence": 0.985
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 0.998
+                    }
+                  }
                 },
                 {
                   "text": "Senior Researcher",
                   "boundingBox": [
-                    448,
-                    1310,
-                    1314,
-                    1099,
-                    1334,
-                    1180,
+                    447,
+                    1313,
+                    1317,
+                    1103,
+                    1332,
+                    1179,
                     465,
-                    1389
+                    1390
                   ],
                   "words": [
                     {
                       "text": "Senior",
                       "boundingBox": [
-                        456,
-                        1308,
-                        777,
-                        1232,
-                        795,
+                        447,
                         1313,
-                        472,
-                        1388
+                        779,
+                        1234,
+                        796,
+                        1310,
+                        466,
+                        1390
                       ],
-                      "confidence": 0.959
+                      "confidence": 0.983
                     },
                     {
                       "text": "Researcher",
                       "boundingBox": [
-                        798,
-                        1227,
-                        1313,
-                        1100,
+                        794,
+                        1231,
+                        1318,
+                        1103,
                         1332,
-                        1179,
-                        816,
-                        1308
+                        1181,
+                        811,
+                        1306
                       ],
-                      "confidence": 0.959
+                      "confidence": 0.981
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Cloud \u0026 Al Department",
                   "boundingBox": [
                     474,
-                    1407,
-                    1593,
-                    1129,
-                    1615,
-                    1216,
+                    1410,
+                    1596,
+                    1131,
+                    1613,
+                    1215,
                     494,
-                    1489
+                    1490
                   ],
                   "words": [
                     {
                       "text": "Cloud",
                       "boundingBox": [
-                        483,
-                        1410,
-                        759,
-                        1340,
-                        778,
-                        1423,
-                        501,
-                        1488
+                        474,
+                        1411,
+                        771,
+                        1337,
+                        790,
+                        1421,
+                        494,
+                        1490
                       ],
-                      "confidence": 0.958
+                      "confidence": 0.984
                     },
                     {
                       "text": "\u0026",
                       "boundingBox": [
-                        799,
-                        1330,
-                        851,
-                        1317,
-                        870,
-                        1401,
-                        819,
-                        1414
+                        792,
+                        1332,
+                        876,
+                        1311,
+                        894,
+                        1396,
+                        811,
+                        1416
                       ],
-                      "confidence": 0.889
+                      "confidence": 0.983
                     },
                     {
                       "text": "Al",
                       "boundingBox": [
-                        907,
-                        1302,
-                        1014,
-                        1275,
-                        1035,
-                        1362,
-                        927,
-                        1388
+                        902,
+                        1305,
+                        1011,
+                        1277,
+                        1029,
+                        1363,
+                        920,
+                        1390
                       ],
-                      "confidence": 0.762
+                      "confidence": 0.817
                     },
                     {
                       "text": "Department",
                       "boundingBox": [
-                        1029,
-                        1272,
-                        1589,
-                        1130,
-                        1612,
-                        1217,
-                        1050,
-                        1358
+                        1027,
+                        1274,
+                        1594,
+                        1132,
+                        1611,
+                        1215,
+                        1045,
+                        1359
                       ],
-                      "confidence": 0.959
+                      "confidence": 0.981
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "avery.smith@contoso.com",
                   "boundingBox": [
-                    2101,
-                    932,
-                    2938,
-                    689,
-                    2957,
-                    755,
+                    2102,
+                    933,
+                    2939,
+                    697,
+                    2952,
+                    757,
                     2119,
-                    996
+                    994
                   ],
                   "words": [
                     {
                       "text": "avery.smith@contoso.com",
                       "boundingBox": [
-                        2107,
-                        934,
-                        2917,
-                        696,
-                        2935,
+                        2103,
+                        935,
+                        2926,
+                        701,
+                        2938,
                         764,
-                        2126,
-                        995
+                        2119,
+                        994
                       ],
-                      "confidence": 0.849
+                      "confidence": 0.943
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "https://www.contoso.com/",
                   "boundingBox": [
-                    2118,
-                    1002,
-                    2994,
-                    754,
-                    3015,
-                    826,
-                    2139,
-                    1076
+                    2116,
+                    1004,
+                    2986,
+                    756,
+                    3007,
+                    825,
+                    2135,
+                    1075
                   ],
                   "words": [
                     {
                       "text": "https://www.contoso.com/",
                       "boundingBox": [
-                        2121,
-                        1002,
-                        2992,
-                        755,
-                        3014,
-                        826,
-                        2143,
-                        1077
+                        2116,
+                        1004,
+                        2981,
+                        757,
+                        3006,
+                        824,
+                        2136,
+                        1075
                       ],
-                      "confidence": 0.864
+                      "confidence": 0.939
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "mob: \u002B44 (0) 7911 123456",
                   "boundingBox": [
-                    2240,
-                    1093,
-                    3073,
-                    835,
-                    3097,
+                    2239,
+                    1098,
+                    3080,
+                    846,
+                    3100,
                     912,
-                    2262,
-                    1167
+                    2256,
+                    1165
                   ],
                   "words": [
                     {
                       "text": "mob:",
                       "boundingBox": [
-                        2240,
-                        1097,
-                        2421,
-                        1042,
-                        2446,
-                        1113,
-                        2265,
-                        1167
+                        2239,
+                        1103,
+                        2425,
+                        1043,
+                        2441,
+                        1112,
+                        2256,
+                        1165
                       ],
-                      "confidence": 0.958
+                      "confidence": 0.983
                     },
                     {
                       "text": "\u002B44",
                       "boundingBox": [
-                        2436,
-                        1037,
-                        2553,
-                        1001,
-                        2578,
-                        1073,
-                        2461,
-                        1109
+                        2437,
+                        1039,
+                        2554,
+                        1002,
+                        2571,
+                        1074,
+                        2453,
+                        1108
                       ],
-                      "confidence": 0.942
+                      "confidence": 0.987
                     },
                     {
                       "text": "(0)",
                       "boundingBox": [
-                        2567,
-                        997,
-                        2661,
+                        2566,
+                        998,
+                        2667,
                         967,
-                        2686,
+                        2684,
                         1040,
-                        2592,
-                        1069
+                        2583,
+                        1070
                       ],
-                      "confidence": 0.946
+                      "confidence": 0.983
                     },
                     {
                       "text": "7911",
                       "boundingBox": [
-                        2675,
-                        963,
-                        2830,
-                        914,
-                        2855,
-                        989,
-                        2700,
+                        2679,
+                        964,
+                        2833,
+                        918,
+                        2850,
+                        990,
+                        2696,
                         1036
                       ],
-                      "confidence": 0.919
+                      "confidence": 0.984
                     },
                     {
                       "text": "123456",
                       "boundingBox": [
-                        2844,
-                        909,
-                        3072,
-                        836,
-                        3095,
+                        2846,
                         914,
-                        2869,
-                        984
+                        3082,
+                        846,
+                        3099,
+                        913,
+                        2863,
+                        986
                       ],
-                      "confidence": 0.954
+                      "confidence": 0.983
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 0.998
+                    }
+                  }
                 },
                 {
                   "text": "tel: \u002B44 (0) 20 9876 5432",
                   "boundingBox": [
-                    2343,
-                    1154,
-                    3138,
-                    908,
-                    3162,
+                    2341,
+                    1158,
+                    3137,
+                    914,
+                    3153,
                     983,
-                    2365,
-                    1227
+                    2362,
+                    1224
                   ],
                   "words": [
                     {
                       "text": "tel:",
                       "boundingBox": [
-                        2344,
-                        1160,
-                        2461,
+                        2342,
+                        1161,
+                        2459,
                         1123,
-                        2483,
+                        2478,
                         1192,
-                        2364,
-                        1227
+                        2361,
+                        1224
                       ],
-                      "confidence": 0.958
+                      "confidence": 0.986
                     },
                     {
                       "text": "\u002B44",
                       "boundingBox": [
-                        2474,
-                        1118,
-                        2593,
-                        1080,
-                        2617,
-                        1152,
-                        2496,
-                        1188
+                        2472,
+                        1119,
+                        2589,
+                        1082,
+                        2608,
+                        1155,
+                        2491,
+                        1189
                       ],
-                      "confidence": 0.959
+                      "confidence": 0.987
                     },
                     {
                       "text": "(0)",
                       "boundingBox": [
-                        2607,
-                        1076,
-                        2700,
-                        1047,
-                        2724,
-                        1120,
-                        2630,
-                        1148
+                        2602,
+                        1078,
+                        2703,
+                        1046,
+                        2720,
+                        1121,
+                        2620,
+                        1151
                       ],
-                      "confidence": 0.884
+                      "confidence": 0.983
                     },
                     {
                       "text": "20",
                       "boundingBox": [
-                        2713,
-                        1043,
-                        2797,
-                        1016,
-                        2822,
-                        1090,
-                        2737,
-                        1116
+                        2716,
+                        1042,
+                        2791,
+                        1019,
+                        2808,
+                        1094,
+                        2733,
+                        1117
                       ],
-                      "confidence": 0.958
+                      "confidence": 0.988
                     },
                     {
                       "text": "9876",
                       "boundingBox": [
-                        2810,
-                        1012,
-                        2965,
-                        963,
-                        2991,
+                        2804,
+                        1015,
+                        2964,
+                        967,
+                        2980,
                         1038,
-                        2835,
-                        1086
+                        2821,
+                        1090
                       ],
-                      "confidence": 0.958
+                      "confidence": 0.982
                     },
                     {
                       "text": "5432",
                       "boundingBox": [
-                        2978,
-                        958,
-                        3135,
-                        909,
-                        3163,
-                        984,
-                        3005,
+                        2977,
+                        963,
+                        3137,
+                        915,
+                        3152,
+                        981,
+                        2993,
                         1034
                       ],
-                      "confidence": 0.955
+                      "confidence": 0.983
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 0.992
+                    }
+                  }
                 },
                 {
                   "text": "fax: \u002B44 (0) 20 6789 2345",
                   "boundingBox": [
-                    2374,
-                    1235,
-                    3194,
-                    977,
+                    2376,
+                    1242,
+                    3199,
+                    981,
                     3219,
-                    1056,
-                    2398,
-                    1311
+                    1055,
+                    2396,
+                    1308
                   ],
                   "words": [
                     {
                       "text": "fax:",
                       "boundingBox": [
-                        2377,
-                        1237,
-                        2513,
-                        1196,
-                        2538,
+                        2376,
+                        1243,
+                        2512,
+                        1199,
+                        2531,
                         1270,
-                        2401,
-                        1311
+                        2395,
+                        1308
                       ],
-                      "confidence": 0.959
+                      "confidence": 0.984
                     },
                     {
                       "text": "\u002B44",
                       "boundingBox": [
-                        2527,
-                        1192,
-                        2649,
-                        1154,
-                        2674,
-                        1229,
-                        2552,
-                        1266
+                        2525,
+                        1195,
+                        2644,
+                        1157,
+                        2663,
+                        1232,
+                        2544,
+                        1267
                       ],
-                      "confidence": 0.958
+                      "confidence": 0.983
                     },
                     {
                       "text": "(0)",
                       "boundingBox": [
-                        2663,
-                        1150,
-                        2755,
+                        2657,
+                        1153,
+                        2759,
                         1121,
-                        2780,
-                        1196,
-                        2688,
-                        1224
+                        2778,
+                        1197,
+                        2676,
+                        1228
                       ],
-                      "confidence": 0.857
+                      "confidence": 0.983
                     },
                     {
                       "text": "20",
                       "boundingBox": [
-                        2770,
-                        1116,
-                        2852,
-                        1090,
-                        2877,
-                        1166,
-                        2795,
-                        1191
+                        2772,
+                        1117,
+                        2853,
+                        1091,
+                        2872,
+                        1167,
+                        2791,
+                        1193
                       ],
-                      "confidence": 0.958
+                      "confidence": 0.988
                     },
                     {
                       "text": "6789",
                       "boundingBox": [
-                        2867,
-                        1086,
-                        3021,
-                        1035,
-                        3046,
-                        1112,
-                        2892,
-                        1161
+                        2866,
+                        1087,
+                        3028,
+                        1036,
+                        3047,
+                        1110,
+                        2885,
+                        1163
                       ],
-                      "confidence": 0.913
+                      "confidence": 0.985
                     },
                     {
                       "text": "2345",
                       "boundingBox": [
-                        3036,
-                        1031,
-                        3192,
-                        978,
-                        3217,
-                        1057,
-                        3061,
-                        1108
+                        3041,
+                        1032,
+                        3199,
+                        982,
+                        3218,
+                        1052,
+                        3060,
+                        1106
                       ],
-                      "confidence": 0.943
+                      "confidence": 0.983
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 0.991
+                    }
+                  }
                 },
                 {
                   "text": "Contoso",
                   "boundingBox": [
                     1145,
-                    1908,
-                    2303,
-                    1549,
-                    2366,
-                    1732,
-                    1206,
-                    2105
+                    1922,
+                    2313,
+                    1562,
+                    2368,
+                    1731,
+                    1200,
+                    2099
                   ],
                   "words": [
                     {
                       "text": "Contoso",
                       "boundingBox": [
-                        1152,
-                        1916,
-                        2293,
-                        1552,
-                        2358,
-                        1733,
-                        1219,
-                        2105
+                        1157,
+                        1923,
+                        2299,
+                        1565,
+                        2361,
+                        1731,
+                        1213,
+                        2098
                       ],
-                      "confidence": 0.959
+                      "confidence": 0.982
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "2 Kingdom Street",
                   "boundingBox": [
-                    1227,
+                    1228,
                     2139,
-                    2027,
-                    1869,
-                    2059,
-                    1961,
-                    1260,
-                    2236
+                    2028,
+                    1876,
+                    2058,
+                    1962,
+                    1257,
+                    2235
                   ],
                   "words": [
                     {
                       "text": "2",
                       "boundingBox": [
-                        1230,
+                        1229,
                         2138,
-                        1295,
+                        1293,
                         2116,
-                        1333,
-                        2213,
-                        1269,
+                        1322,
+                        2215,
+                        1258,
                         2236
                       ],
-                      "confidence": 0.89
+                      "confidence": 0.987
                     },
                     {
                       "text": "Kingdom",
                       "boundingBox": [
-                        1315,
-                        2109,
-                        1710,
-                        1974,
-                        1746,
-                        2069,
-                        1352,
-                        2207
+                        1313,
+                        2110,
+                        1726,
+                        1975,
+                        1753,
+                        2065,
+                        1341,
+                        2209
                       ],
-                      "confidence": 0.959
+                      "confidence": 0.984
                     },
                     {
                       "text": "Street",
                       "boundingBox": [
-                        1756,
-                        1959,
-                        2026,
-                        1869,
-                        2059,
-                        1958,
-                        1792,
-                        2053
+                        1745,
+                        1969,
+                        2030,
+                        1877,
+                        2056,
+                        1954,
+                        1772,
+                        2059
                       ],
-                      "confidence": 0.959
+                      "confidence": 0.984
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Paddington, London, W2 6BD",
                   "boundingBox": [
-                    1271,
-                    2260,
-                    2578,
-                    1797,
-                    2613,
+                    1273,
+                    2262,
+                    2576,
+                    1803,
+                    2608,
                     1898,
-                    1306,
-                    2359
+                    1304,
+                    2354
                   ],
                   "words": [
                     {
                       "text": "Paddington,",
                       "boundingBox": [
-                        1275,
-                        2260,
-                        1855,
-                        2052,
-                        1890,
-                        2158,
-                        1308,
-                        2359
+                        1274,
+                        2262,
+                        1850,
+                        2056,
+                        1881,
+                        2160,
+                        1302,
+                        2354
                       ],
-                      "confidence": 0.938
+                      "confidence": 0.976
                     },
                     {
                       "text": "London,",
                       "boundingBox": [
-                        1874,
-                        2045,
-                        2229,
-                        1920,
-                        2265,
-                        2023,
-                        1909,
-                        2151
+                        1869,
+                        2049,
+                        2224,
+                        1925,
+                        2256,
+                        2024,
+                        1899,
+                        2154
                       ],
-                      "confidence": 0.958
+                      "confidence": 0.984
                     },
                     {
                       "text": "W2",
                       "boundingBox": [
-                        2249,
-                        1913,
-                        2391,
-                        1863,
-                        2427,
-                        1963,
-                        2284,
-                        2016
+                        2242,
+                        1919,
+                        2380,
+                        1870,
+                        2413,
+                        1965,
+                        2274,
+                        2017
                       ],
-                      "confidence": 0.94
+                      "confidence": 0.988
                     },
                     {
                       "text": "6BD",
                       "boundingBox": [
-                        2410,
-                        1856,
-                        2575,
-                        1798,
-                        2611,
-                        1894,
-                        2446,
-                        1956
+                        2398,
+                        1864,
+                        2573,
+                        1804,
+                        2607,
+                        1889,
+                        2431,
+                        1957
                       ],
-                      "confidence": 0.909
+                      "confidence": 0.982
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "print",
+                      "confidence": 1
+                    }
+                  }
                 }
               ]
             }
@@ -878,14 +914,14 @@
                           "valueString": "Avery",
                           "text": "Avery",
                           "boundingBox": [
-                            703,
-                            1096,
-                            1134,
-                            989,
-                            1165,
-                            1109,
-                            733,
-                            1206
+                            683,
+                            1098,
+                            1158,
+                            984,
+                            1187,
+                            1103,
+                            712,
+                            1212
                           ],
                           "page": 1,
                           "elements": [
@@ -897,14 +933,14 @@
                           "valueString": "Smith",
                           "text": "Smith",
                           "boundingBox": [
-                            1186,
-                            976,
-                            1585,
-                            879,
-                            1618,
-                            998,
-                            1218,
-                            1096
+                            1179,
+                            979,
+                            1610,
+                            871,
+                            1637,
+                            990,
+                            1209,
+                            1097
                           ],
                           "page": 1,
                           "elements": [
@@ -914,16 +950,17 @@
                       },
                       "text": "Dr. Avery Smith",
                       "boundingBox": [
-                        419.3,
-                        1154.6,
-                        1589.6,
-                        877.9,
-                        1618.9,
-                        1001.7,
-                        448.6,
-                        1278.4
+                        413.8,
+                        1151.8,
+                        1610,
+                        871,
+                        1639.5,
+                        996.8,
+                        443.4,
+                        1277.6
                       ],
-                      "confidence": 0.793,
+                      "page": 1,
+                      "confidence": 0.979,
                       "elements": [
                         "#/readResults/0/lines/0/words/0",
                         "#/readResults/0/lines/0/words/1",
@@ -940,14 +977,14 @@
                       "valueString": "Senior Researcher",
                       "text": "Senior Researcher",
                       "boundingBox": [
-                        451.8,
-                        1301.9,
-                        1313.5,
-                        1099.9,
-                        1333.8,
-                        1186.7,
-                        472.2,
-                        1388.7
+                        446.8,
+                        1312.2,
+                        1318,
+                        1103,
+                        1336.7,
+                        1180.9,
+                        465.5,
+                        1390.1
                       ],
                       "page": 1,
                       "confidence": 0.99,
@@ -966,17 +1003,17 @@
                       "valueString": "Cloud \u0026 Al Department",
                       "text": "Cloud \u0026 Al Department",
                       "boundingBox": [
-                        480.1,
-                        1403.3,
-                        1590.5,
-                        1129.6,
-                        1612.6,
-                        1219.6,
-                        502.3,
-                        1493.3
+                        473.1,
+                        1407.2,
+                        1594,
+                        1132,
+                        1615.4,
+                        1219.3,
+                        494.5,
+                        1494.5
                       ],
                       "page": 1,
-                      "confidence": 0.99,
+                      "confidence": 0.989,
                       "elements": [
                         "#/readResults/0/lines/2/words/0",
                         "#/readResults/0/lines/2/words/1",
@@ -994,14 +1031,14 @@
                       "valueString": "avery.smith@contoso.com",
                       "text": "avery.smith@contoso.com",
                       "boundingBox": [
-                        2107,
-                        934,
-                        2917,
-                        696,
-                        2935,
+                        2103,
+                        935,
+                        2926,
+                        701,
+                        2938,
                         764,
-                        2126,
-                        995
+                        2119,
+                        994
                       ],
                       "page": 1,
                       "confidence": 0.99,
@@ -1019,17 +1056,17 @@
                       "valueString": "https://www.contoso.com/",
                       "text": "https://www.contoso.com/",
                       "boundingBox": [
-                        2121,
-                        1002,
-                        2992,
-                        755,
-                        3014,
-                        826,
-                        2143,
-                        1077
+                        2116,
+                        1004,
+                        2981,
+                        757,
+                        3006,
+                        824,
+                        2136,
+                        1075
                       ],
                       "page": 1,
-                      "confidence": 0.995,
+                      "confidence": 0.99,
                       "elements": [
                         "#/readResults/0/lines/4/words/0"
                       ]
@@ -1043,14 +1080,14 @@
                       "type": "phoneNumber",
                       "text": "\u002B44 (0) 7911 123456",
                       "boundingBox": [
-                        2434.9,
-                        1033.3,
-                        3072,
-                        836,
-                        3096.2,
-                        914.3,
-                        2459.1,
-                        1111.6
+                        2431.9,
+                        1037.2,
+                        3081.2,
+                        843.3,
+                        3102.7,
+                        915.2,
+                        2453.3,
+                        1109.1
                       ],
                       "page": 1,
                       "confidence": 0.99,
@@ -1070,14 +1107,14 @@
                       "type": "phoneNumber",
                       "text": "\u002B44 (0) 20 9876 5432",
                       "boundingBox": [
-                        2473.2,
-                        1115.4,
-                        3139.2,
-                        907.7,
-                        3163.2,
-                        984.7,
-                        2497.2,
-                        1192.4
+                        2469.1,
+                        1118.1,
+                        3136.2,
+                        912.4,
+                        3158.8,
+                        985.8,
+                        2491.8,
+                        1191.5
                       ],
                       "page": 1,
                       "confidence": 0.99,
@@ -1098,14 +1135,14 @@
                       "type": "phoneNumber",
                       "text": "\u002B44 (0) 20 6789 2345",
                       "boundingBox": [
-                        2525,
-                        1185.4,
-                        3192.4,
-                        977.9,
-                        3217.9,
-                        1060,
-                        2550.5,
-                        1267.5
+                        2521.3,
+                        1196.2,
+                        3198,
+                        979,
+                        3222.3,
+                        1054.7,
+                        2545.6,
+                        1271.9
                       ],
                       "page": 1,
                       "confidence": 0.99,
@@ -1119,37 +1156,6 @@
                     }
                   ]
                 },
-                "Addresses": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "string",
-                      "valueString": "2 Kingdom Street Paddington, London, W2 6BD",
-                      "text": "2 Kingdom Street Paddington, London, W2 6BD",
-                      "boundingBox": [
-                        1230,
-                        2138,
-                        2535.2,
-                        1678.6,
-                        2614.2,
-                        1903.1,
-                        1309,
-                        2362.5
-                      ],
-                      "page": 1,
-                      "confidence": 0.977,
-                      "elements": [
-                        "#/readResults/0/lines/9/words/0",
-                        "#/readResults/0/lines/9/words/1",
-                        "#/readResults/0/lines/9/words/2",
-                        "#/readResults/0/lines/10/words/0",
-                        "#/readResults/0/lines/10/words/1",
-                        "#/readResults/0/lines/10/words/2",
-                        "#/readResults/0/lines/10/words/3"
-                      ]
-                    }
-                  ]
-                },
                 "CompanyNames": {
                   "type": "array",
                   "valueArray": [
@@ -1158,19 +1164,50 @@
                       "valueString": "Contoso",
                       "text": "Contoso",
                       "boundingBox": [
-                        1152,
-                        1916,
-                        2293,
-                        1552,
-                        2358,
-                        1733,
-                        1219,
-                        2105
+                        1157,
+                        1923,
+                        2299,
+                        1565,
+                        2361,
+                        1731,
+                        1213,
+                        2098
                       ],
                       "page": 1,
-                      "confidence": 0.067,
+                      "confidence": 0.222,
                       "elements": [
                         "#/readResults/0/lines/8/words/0"
+                      ]
+                    }
+                  ]
+                },
+                "Addresses": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "text": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "boundingBox": [
+                        1224.6,
+                        2139.5,
+                        2536.4,
+                        1685.2,
+                        2613.1,
+                        1906.7,
+                        1301.3,
+                        2361
+                      ],
+                      "page": 1,
+                      "confidence": 0.979,
+                      "elements": [
+                        "#/readResults/0/lines/9/words/0",
+                        "#/readResults/0/lines/9/words/1",
+                        "#/readResults/0/lines/9/words/2",
+                        "#/readResults/0/lines/10/words/0",
+                        "#/readResults/0/lines/10/words/1",
+                        "#/readResults/0/lines/10/words/2",
+                        "#/readResults/0/lines/10/words/3"
                       ]
                     }
                   ]
@@ -1184,7 +1221,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-centraluseuap.cognitiveservices.azure.com/",
     "RandomSeed": "767711153"
   }
 }

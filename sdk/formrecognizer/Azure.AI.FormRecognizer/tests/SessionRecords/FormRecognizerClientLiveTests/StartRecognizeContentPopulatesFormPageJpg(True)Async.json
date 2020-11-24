@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/layout/analyze",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/layout/analyze",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "479269",
         "Content-Type": "image/jpeg",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1b779299755255438d26101996b45e49-083ec1d93bd1014c-00",
+        "traceparent": "00-7bf34f83e4cf3b449b493956013cd5af-0410c081bc1f6440-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "e59a22f4eabcf314d1ef0fe0bb600981",
         "x-ms-return-client-request-id": "true"
@@ -19,25 +19,25 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "de1ebb5a-11cb-4629-82f3-491d00a2f66b",
+        "apim-request-id": "0ae8ac16-cb77-4e04-bffd-6f7014e9b030",
         "Content-Length": "0",
-        "Date": "Wed, 09 Sep 2020 22:34:57 GMT",
-        "Operation-Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/layout/analyzeResults/de1ebb5a-11cb-4629-82f3-491d00a2f66b",
+        "Date": "Fri, 30 Oct 2020 12:46:32 GMT",
+        "Operation-Location": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/layout/analyzeResults/0ae8ac16-cb77-4e04-bffd-6f7014e9b030",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "155"
+        "x-envoy-upstream-service-time": "88"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/layout/analyzeResults/de1ebb5a-11cb-4629-82f3-491d00a2f66b",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/layout/analyzeResults/0ae8ac16-cb77-4e04-bffd-6f7014e9b030",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "24bdc359347d64841a818f281dc61a60",
         "x-ms-return-client-request-id": "true"
@@ -45,29 +45,29 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "11bb0a16-2fca-4323-b5da-1e4622629e7f",
+        "apim-request-id": "e20d5935-1f00-4738-9e65-c88188053c3e",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:34:57 GMT",
+        "Date": "Fri, 30 Oct 2020 12:46:32 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "12"
+        "x-envoy-upstream-service-time": "9"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-09-09T22:34:58Z",
-        "lastUpdatedDateTime": "2020-09-09T22:34:58Z"
+        "createdDateTime": "2020-10-30T12:46:32Z",
+        "lastUpdatedDateTime": "2020-10-30T12:46:32Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/layout/analyzeResults/de1ebb5a-11cb-4629-82f3-491d00a2f66b",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/layout/analyzeResults/0ae8ac16-cb77-4e04-bffd-6f7014e9b030",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "2728eb5cbad352816f14cc0d1eef5731",
         "x-ms-return-client-request-id": "true"
@@ -75,29 +75,29 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b93148ff-53ea-4a4f-a99a-ab756f06d57d",
+        "apim-request-id": "8b407d3a-9f60-498b-96af-5e306e6129ec",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:34:58 GMT",
+        "Date": "Fri, 30 Oct 2020 12:46:33 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "10"
+        "x-envoy-upstream-service-time": "9"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-09-09T22:34:58Z",
-        "lastUpdatedDateTime": "2020-09-09T22:34:58Z"
+        "createdDateTime": "2020-10-30T12:46:32Z",
+        "lastUpdatedDateTime": "2020-10-30T12:46:32Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/layout/analyzeResults/de1ebb5a-11cb-4629-82f3-491d00a2f66b",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/layout/analyzeResults/0ae8ac16-cb77-4e04-bffd-6f7014e9b030",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "d3ba96c54d1ebf249d35ca3b5aecd60a",
         "x-ms-return-client-request-id": "true"
@@ -105,29 +105,29 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d130e663-27ac-4b19-87db-ed9cd8e371d9",
+        "apim-request-id": "b38c2f37-b81f-44f8-871f-cfd679c32f53",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:35:00 GMT",
+        "Date": "Fri, 30 Oct 2020 12:46:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "15"
+        "x-envoy-upstream-service-time": "11"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-09-09T22:34:58Z",
-        "lastUpdatedDateTime": "2020-09-09T22:34:58Z"
+        "createdDateTime": "2020-10-30T12:46:32Z",
+        "lastUpdatedDateTime": "2020-10-30T12:46:32Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/layout/analyzeResults/de1ebb5a-11cb-4629-82f3-491d00a2f66b",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/layout/analyzeResults/0ae8ac16-cb77-4e04-bffd-6f7014e9b030",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "cf83afd5e2389fae426ab4686877452b",
         "x-ms-return-client-request-id": "true"
@@ -135,18 +135,48 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "55fd5578-d997-4532-a66c-a892f97ad1e3",
-        "Content-Length": "21134",
+        "apim-request-id": "b4247840-0813-4ff1-a4c0-f5dda03ffcab",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:35:01 GMT",
+        "Date": "Fri, 30 Oct 2020 12:46:35 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "40"
+        "x-envoy-upstream-service-time": "9"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2020-10-30T12:46:32Z",
+        "lastUpdatedDateTime": "2020-10-30T12:46:32Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/layout/analyzeResults/0ae8ac16-cb77-4e04-bffd-6f7014e9b030",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "86625e29470c0e41c768899df046f783",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9505716d-c072-4fdc-89f7-355268ea36ce",
+        "Content-Length": "24387",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 30 Oct 2020 12:46:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2020-09-09T22:34:58Z",
-        "lastUpdatedDateTime": "2020-09-09T22:35:00Z",
+        "createdDateTime": "2020-10-30T12:46:32Z",
+        "lastUpdatedDateTime": "2020-10-30T12:46:36Z",
         "analyzeResult": {
           "version": "2.1.0",
           "readResults": [
@@ -169,6 +199,12 @@
                     166
                   ],
                   "text": "Purchase Order",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -212,6 +248,12 @@
                     266
                   ],
                   "text": "Hero Limited",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -255,6 +297,12 @@
                     369
                   ],
                   "text": "Purchase Order",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -298,6 +346,12 @@
                     379
                   ],
                   "text": "Company Phone: 555-348-6512",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -355,6 +409,12 @@
                     418
                   ],
                   "text": "Website: www.herolimited.com",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -398,6 +458,12 @@
                     460
                   ],
                   "text": "Email:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.99
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -427,6 +493,12 @@
                     448
                   ],
                   "text": "Dated As: 12/20/2020",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.998
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -484,6 +556,12 @@
                     503
                   ],
                   "text": "accounts@herolimited.com",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -513,6 +591,12 @@
                     488
                   ],
                   "text": "Purchase Order #: 948284",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -584,6 +668,12 @@
                     592
                   ],
                   "text": "Shipped To",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -627,6 +717,12 @@
                     638
                   ],
                   "text": "Vendor Name: Hillary Swank",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -640,7 +736,7 @@
                         637
                       ],
                       "text": "Vendor",
-                      "confidence": 0.983
+                      "confidence": 0.982
                     },
                     {
                       "boundingBox": [
@@ -698,6 +794,12 @@
                     679
                   ],
                   "text": "Company Name: Higgly Wiggly Books",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -783,6 +885,12 @@
                     711
                   ],
                   "text": "Address: 938 NE Burner Road",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -868,6 +976,12 @@
                     751
                   ],
                   "text": "Boulder City, CO 92848",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -923,7 +1037,7 @@
                         751
                       ],
                       "text": "92848",
-                      "confidence": 0.977
+                      "confidence": 0.976
                     }
                   ]
                 },
@@ -939,6 +1053,12 @@
                     748
                   ],
                   "text": "Phone: 938-294-2949",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.998
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -982,6 +1102,12 @@
                     830
                   ],
                   "text": "Shipped From",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1025,6 +1151,12 @@
                     879
                   ],
                   "text": "Name: Bernie Sanders",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1082,6 +1214,12 @@
                     919
                   ],
                   "text": "Company Name: Jupiter Book Supply",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1167,6 +1305,12 @@
                     952
                   ],
                   "text": "Address: 383 N Kinnick Road",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1252,6 +1396,12 @@
                     991
                   ],
                   "text": "Seattle, WA 38383",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1309,6 +1459,12 @@
                     990
                   ],
                   "text": "Phone: 932-299-0292",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.997
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1352,6 +1508,12 @@
                     1077
                   ],
                   "text": "Details",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1381,6 +1543,12 @@
                     1083
                   ],
                   "text": "Quantity",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1410,6 +1578,12 @@
                     1077
                   ],
                   "text": "Unit Price",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1453,6 +1627,12 @@
                     1077
                   ],
                   "text": "Total",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.997
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1482,6 +1662,12 @@
                     1121
                   ],
                   "text": "Bindings",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1511,6 +1697,12 @@
                     1119
                   ],
                   "text": "20",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.959
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1540,6 +1732,12 @@
                     1118
                   ],
                   "text": "1.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1569,6 +1767,12 @@
                     1119
                   ],
                   "text": "20.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1598,6 +1802,12 @@
                     1161
                   ],
                   "text": "Covers Small",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1641,6 +1851,12 @@
                     1160
                   ],
                   "text": "20",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.952
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1670,6 +1886,12 @@
                     1160
                   ],
                   "text": "1.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1699,6 +1921,12 @@
                     1160
                   ],
                   "text": "20.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1728,6 +1956,12 @@
                     1206
                   ],
                   "text": "Feather Bookmark",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1771,6 +2005,12 @@
                     1203
                   ],
                   "text": "20",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.842
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1800,6 +2040,12 @@
                     1204
                   ],
                   "text": "5.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.998
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1829,6 +2075,12 @@
                     1204
                   ],
                   "text": "100.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1858,6 +2110,12 @@
                     1253
                   ],
                   "text": "Copper Swirl Marker",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1915,6 +2173,12 @@
                     1247
                   ],
                   "text": "20",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.985
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1944,6 +2208,12 @@
                     1247
                   ],
                   "text": "5.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.996
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1973,6 +2243,12 @@
                     1247
                   ],
                   "text": "100.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2002,6 +2278,12 @@
                     1600
                   ],
                   "text": "SUBTOTAL",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.998
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2031,6 +2313,12 @@
                     1598
                   ],
                   "text": "$140.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.997
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2060,6 +2348,12 @@
                     1643
                   ],
                   "text": "TAX",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2089,6 +2383,12 @@
                     1643
                   ],
                   "text": "$4.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.998
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2118,6 +2418,12 @@
                     1706
                   ],
                   "text": "Bernie Sanders",
+                  "appearance": {
+                    "style": {
+                      "name": "handwriting",
+                      "confidence": 0.793
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2161,6 +2467,12 @@
                     1699
                   ],
                   "text": "TOTAL",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2190,6 +2502,12 @@
                     1697
                   ],
                   "text": "$144.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.995
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2219,6 +2537,12 @@
                     1741
                   ],
                   "text": "Bernie Sanders",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2262,6 +2586,12 @@
                     1776
                   ],
                   "text": "Manager",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.999
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2291,6 +2621,12 @@
                     1831
                   ],
                   "text": "Additional Notes:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.998
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2334,6 +2670,12 @@
                     1908
                   ],
                   "text": "Do not Jostle Box. Unpack carefully. Enjoy.",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2447,6 +2789,12 @@
                     1958
                   ],
                   "text": "Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.998
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2700,6 +3048,12 @@
                     1991
                   ],
                   "text": "offer you 25% off you next total purchase.",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1.0
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2815,22 +3169,6 @@
                     }
                   ]
                 }
-              ],
-              "selectionMarks": [
-                {
-                  "boundingBox": [
-                    2,
-                    2060,
-                    195,
-                    2060,
-                    195,
-                    2200,
-                    2,
-                    2200
-                  ],
-                  "confidence": 0.881,
-                  "state": "unselected"
-                }
               ]
             }
           ],
@@ -2839,155 +3177,23 @@
               "page": 1,
               "tables": [
                 {
-                  "rows": 4,
-                  "columns": 3,
-                  "cells": [
-                    {
-                      "rowIndex": 1,
-                      "columnIndex": 1,
-                      "text": "SUBTOTAL",
-                      "boundingBox": [
-                        1072,
-                        1566,
-                        1309,
-                        1566,
-                        1309,
-                        1610,
-                        1072,
-                        1610
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/41/words/0"
-                      ]
-                    },
-                    {
-                      "rowIndex": 1,
-                      "columnIndex": 2,
-                      "text": "$140.00",
-                      "boundingBox": [
-                        1309,
-                        1566,
-                        1544,
-                        1566,
-                        1544,
-                        1610,
-                        1309,
-                        1610
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/42/words/0"
-                      ]
-                    },
-                    {
-                      "rowIndex": 2,
-                      "columnIndex": 1,
-                      "text": "TAX",
-                      "boundingBox": [
-                        1072,
-                        1610,
-                        1309,
-                        1610,
-                        1309,
-                        1658,
-                        1072,
-                        1658
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/43/words/0"
-                      ]
-                    },
-                    {
-                      "rowIndex": 2,
-                      "columnIndex": 2,
-                      "text": "$4.00",
-                      "boundingBox": [
-                        1309,
-                        1610,
-                        1544,
-                        1610,
-                        1544,
-                        1658,
-                        1309,
-                        1658
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/44/words/0"
-                      ]
-                    },
-                    {
-                      "rowIndex": 3,
-                      "columnIndex": 0,
-                      "text": "Bernie Sanders",
-                      "boundingBox": [
-                        489,
-                        1658,
-                        1072,
-                        1658,
-                        1072,
-                        1708,
-                        489,
-                        1708
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/45/words/0",
-                        "#/readResults/0/lines/45/words/1"
-                      ]
-                    },
-                    {
-                      "rowIndex": 3,
-                      "columnIndex": 1,
-                      "text": "TOTAL",
-                      "boundingBox": [
-                        1072,
-                        1658,
-                        1309,
-                        1658,
-                        1309,
-                        1708,
-                        1072,
-                        1708
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/46/words/0"
-                      ]
-                    },
-                    {
-                      "rowIndex": 3,
-                      "columnIndex": 2,
-                      "text": "$144.00",
-                      "boundingBox": [
-                        1309,
-                        1658,
-                        1544,
-                        1658,
-                        1544,
-                        1708,
-                        1309,
-                        1708
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/47/words/0"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "rows": 6,
-                  "columns": 4,
+                  "rows": 5,
+                  "columns": 5,
                   "cells": [
                     {
                       "rowIndex": 0,
                       "columnIndex": 0,
+                      "columnSpan": 2,
                       "text": "Details",
                       "boundingBox": [
-                        156,
+                        157,
                         1038,
                         847,
-                        1038,
+                        1037,
                         847,
-                        1087,
-                        156,
-                        1087
+                        1086,
+                        157,
+                        1086
                       ],
                       "elements": [
                         "#/readResults/0/lines/21/words/0"
@@ -2995,17 +3201,17 @@
                     },
                     {
                       "rowIndex": 0,
-                      "columnIndex": 1,
+                      "columnIndex": 2,
                       "text": "Quantity",
                       "boundingBox": [
                         847,
-                        1038,
-                        1072,
-                        1038,
-                        1072,
-                        1087,
+                        1037,
+                        1071,
+                        1037,
+                        1071,
+                        1086,
                         847,
-                        1087
+                        1086
                       ],
                       "elements": [
                         "#/readResults/0/lines/22/words/0"
@@ -3013,17 +3219,17 @@
                     },
                     {
                       "rowIndex": 0,
-                      "columnIndex": 2,
+                      "columnIndex": 3,
                       "text": "Unit Price",
                       "boundingBox": [
-                        1072,
+                        1071,
+                        1037,
+                        1310,
                         1038,
-                        1309,
-                        1038,
-                        1309,
-                        1087,
-                        1072,
-                        1087
+                        1310,
+                        1086,
+                        1071,
+                        1086
                       ],
                       "elements": [
                         "#/readResults/0/lines/23/words/0",
@@ -3032,17 +3238,17 @@
                     },
                     {
                       "rowIndex": 0,
-                      "columnIndex": 3,
+                      "columnIndex": 4,
                       "text": "Total",
                       "boundingBox": [
-                        1309,
+                        1310,
                         1038,
-                        1544,
+                        1543,
                         1038,
-                        1544,
-                        1087,
-                        1309,
-                        1087
+                        1543,
+                        1086,
+                        1310,
+                        1086
                       ],
                       "elements": [
                         "#/readResults/0/lines/24/words/0"
@@ -3051,15 +3257,16 @@
                     {
                       "rowIndex": 1,
                       "columnIndex": 0,
+                      "columnSpan": 2,
                       "text": "Bindings",
                       "boundingBox": [
-                        156,
-                        1087,
+                        157,
+                        1086,
                         847,
-                        1087,
+                        1086,
                         847,
-                        1128,
-                        156,
+                        1127,
+                        157,
                         1128
                       ],
                       "elements": [
@@ -3068,17 +3275,17 @@
                     },
                     {
                       "rowIndex": 1,
-                      "columnIndex": 1,
+                      "columnIndex": 2,
                       "text": "20",
                       "boundingBox": [
                         847,
-                        1087,
-                        1072,
-                        1087,
-                        1072,
-                        1128,
+                        1086,
+                        1071,
+                        1086,
+                        1071,
+                        1127,
                         847,
-                        1128
+                        1127
                       ],
                       "elements": [
                         "#/readResults/0/lines/26/words/0"
@@ -3086,17 +3293,17 @@
                     },
                     {
                       "rowIndex": 1,
-                      "columnIndex": 2,
+                      "columnIndex": 3,
                       "text": "1.00",
                       "boundingBox": [
-                        1072,
-                        1087,
-                        1309,
-                        1087,
-                        1309,
-                        1128,
-                        1072,
-                        1128
+                        1071,
+                        1086,
+                        1310,
+                        1086,
+                        1310,
+                        1127,
+                        1071,
+                        1127
                       ],
                       "elements": [
                         "#/readResults/0/lines/27/words/0"
@@ -3104,17 +3311,17 @@
                     },
                     {
                       "rowIndex": 1,
-                      "columnIndex": 3,
+                      "columnIndex": 4,
                       "text": "20.00",
                       "boundingBox": [
-                        1309,
-                        1087,
-                        1544,
-                        1087,
-                        1544,
-                        1128,
-                        1309,
-                        1128
+                        1310,
+                        1086,
+                        1543,
+                        1086,
+                        1543,
+                        1127,
+                        1310,
+                        1127
                       ],
                       "elements": [
                         "#/readResults/0/lines/28/words/0"
@@ -3123,16 +3330,17 @@
                     {
                       "rowIndex": 2,
                       "columnIndex": 0,
+                      "columnSpan": 2,
                       "text": "Covers Small",
                       "boundingBox": [
-                        156,
+                        157,
                         1128,
                         847,
-                        1128,
+                        1127,
                         847,
-                        1172,
-                        156,
-                        1172
+                        1171,
+                        157,
+                        1171
                       ],
                       "elements": [
                         "#/readResults/0/lines/29/words/0",
@@ -3141,17 +3349,17 @@
                     },
                     {
                       "rowIndex": 2,
-                      "columnIndex": 1,
+                      "columnIndex": 2,
                       "text": "20",
                       "boundingBox": [
                         847,
-                        1128,
-                        1072,
-                        1128,
-                        1072,
-                        1172,
+                        1127,
+                        1071,
+                        1127,
+                        1071,
+                        1171,
                         847,
-                        1172
+                        1171
                       ],
                       "elements": [
                         "#/readResults/0/lines/30/words/0"
@@ -3159,17 +3367,17 @@
                     },
                     {
                       "rowIndex": 2,
-                      "columnIndex": 2,
+                      "columnIndex": 3,
                       "text": "1.00",
                       "boundingBox": [
-                        1072,
-                        1128,
-                        1309,
-                        1128,
-                        1309,
-                        1172,
-                        1072,
-                        1172
+                        1071,
+                        1127,
+                        1310,
+                        1127,
+                        1310,
+                        1171,
+                        1071,
+                        1171
                       ],
                       "elements": [
                         "#/readResults/0/lines/31/words/0"
@@ -3177,17 +3385,17 @@
                     },
                     {
                       "rowIndex": 2,
-                      "columnIndex": 3,
+                      "columnIndex": 4,
                       "text": "20.00",
                       "boundingBox": [
-                        1309,
-                        1128,
-                        1544,
-                        1128,
-                        1544,
-                        1172,
-                        1309,
-                        1172
+                        1310,
+                        1127,
+                        1543,
+                        1127,
+                        1543,
+                        1171,
+                        1310,
+                        1171
                       ],
                       "elements": [
                         "#/readResults/0/lines/32/words/0"
@@ -3196,16 +3404,17 @@
                     {
                       "rowIndex": 3,
                       "columnIndex": 0,
+                      "columnSpan": 2,
                       "text": "Feather Bookmark",
                       "boundingBox": [
-                        156,
-                        1172,
+                        157,
+                        1171,
                         847,
-                        1172,
+                        1171,
                         847,
-                        1216,
-                        156,
-                        1216
+                        1214,
+                        157,
+                        1214
                       ],
                       "elements": [
                         "#/readResults/0/lines/33/words/0",
@@ -3214,17 +3423,17 @@
                     },
                     {
                       "rowIndex": 3,
-                      "columnIndex": 1,
+                      "columnIndex": 2,
                       "text": "20",
                       "boundingBox": [
                         847,
-                        1172,
-                        1072,
-                        1172,
-                        1072,
-                        1216,
+                        1171,
+                        1071,
+                        1171,
+                        1071,
+                        1214,
                         847,
-                        1216
+                        1214
                       ],
                       "elements": [
                         "#/readResults/0/lines/34/words/0"
@@ -3232,17 +3441,17 @@
                     },
                     {
                       "rowIndex": 3,
-                      "columnIndex": 2,
+                      "columnIndex": 3,
                       "text": "5.00",
                       "boundingBox": [
-                        1072,
-                        1172,
-                        1309,
-                        1172,
-                        1309,
-                        1216,
-                        1072,
-                        1216
+                        1071,
+                        1171,
+                        1310,
+                        1171,
+                        1310,
+                        1214,
+                        1071,
+                        1214
                       ],
                       "elements": [
                         "#/readResults/0/lines/35/words/0"
@@ -3250,17 +3459,17 @@
                     },
                     {
                       "rowIndex": 3,
-                      "columnIndex": 3,
+                      "columnIndex": 4,
                       "text": "100.00",
                       "boundingBox": [
-                        1309,
-                        1172,
-                        1544,
-                        1172,
-                        1544,
-                        1216,
-                        1309,
-                        1216
+                        1310,
+                        1171,
+                        1543,
+                        1171,
+                        1543,
+                        1215,
+                        1310,
+                        1214
                       ],
                       "elements": [
                         "#/readResults/0/lines/36/words/0"
@@ -3269,16 +3478,17 @@
                     {
                       "rowIndex": 4,
                       "columnIndex": 0,
+                      "columnSpan": 2,
                       "text": "Copper Swirl Marker",
                       "boundingBox": [
-                        156,
-                        1216,
+                        157,
+                        1214,
                         847,
-                        1216,
+                        1214,
                         847,
-                        1260,
-                        156,
-                        1260
+                        1258,
+                        157,
+                        1258
                       ],
                       "elements": [
                         "#/readResults/0/lines/37/words/0",
@@ -3288,17 +3498,17 @@
                     },
                     {
                       "rowIndex": 4,
-                      "columnIndex": 1,
+                      "columnIndex": 2,
                       "text": "20",
                       "boundingBox": [
                         847,
-                        1216,
-                        1072,
-                        1216,
-                        1072,
-                        1260,
+                        1214,
+                        1071,
+                        1214,
+                        1071,
+                        1258,
                         847,
-                        1260
+                        1258
                       ],
                       "elements": [
                         "#/readResults/0/lines/38/words/0"
@@ -3306,17 +3516,17 @@
                     },
                     {
                       "rowIndex": 4,
-                      "columnIndex": 2,
+                      "columnIndex": 3,
                       "text": "5.00",
                       "boundingBox": [
-                        1072,
-                        1216,
-                        1309,
-                        1216,
-                        1309,
-                        1260,
-                        1072,
-                        1260
+                        1071,
+                        1214,
+                        1310,
+                        1214,
+                        1310,
+                        1258,
+                        1071,
+                        1258
                       ],
                       "elements": [
                         "#/readResults/0/lines/39/words/0"
@@ -3324,22 +3534,188 @@
                     },
                     {
                       "rowIndex": 4,
-                      "columnIndex": 3,
+                      "columnIndex": 4,
                       "text": "100.00",
                       "boundingBox": [
-                        1309,
-                        1216,
-                        1544,
-                        1216,
-                        1544,
+                        1310,
+                        1214,
+                        1543,
+                        1215,
+                        1543,
                         1260,
-                        1309,
-                        1260
+                        1310,
+                        1258
                       ],
                       "elements": [
                         "#/readResults/0/lines/40/words/0"
                       ]
                     }
+                  ],
+                  "boundingBox": [
+                    153,
+                    1036,
+                    1547,
+                    1037,
+                    1547,
+                    1265,
+                    153,
+                    1265
+                  ]
+                },
+                {
+                  "rows": 4,
+                  "columns": 2,
+                  "cells": [
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 0,
+                      "text": "SUBTOTAL",
+                      "boundingBox": [
+                        1072,
+                        1564,
+                        1307,
+                        1565,
+                        1308,
+                        1609,
+                        1071,
+                        1608
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/41/words/0"
+                      ]
+                    },
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 1,
+                      "text": "$140.00",
+                      "boundingBox": [
+                        1307,
+                        1565,
+                        1542,
+                        1564,
+                        1543,
+                        1609,
+                        1308,
+                        1609
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/42/words/0"
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 0,
+                      "text": "TAX",
+                      "boundingBox": [
+                        1071,
+                        1608,
+                        1308,
+                        1609,
+                        1308,
+                        1652,
+                        1071,
+                        1651
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/43/words/0"
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 1,
+                      "text": "$4.00",
+                      "boundingBox": [
+                        1308,
+                        1609,
+                        1543,
+                        1609,
+                        1543,
+                        1652,
+                        1308,
+                        1652
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/44/words/0"
+                      ]
+                    },
+                    {
+                      "rowIndex": 2,
+                      "columnIndex": 0,
+                      "text": "",
+                      "boundingBox": [
+                        1071,
+                        1651,
+                        1308,
+                        1652,
+                        1308,
+                        1663,
+                        1071,
+                        1663
+                      ],
+                      "elements": []
+                    },
+                    {
+                      "rowIndex": 2,
+                      "columnIndex": 1,
+                      "text": "",
+                      "boundingBox": [
+                        1308,
+                        1652,
+                        1543,
+                        1652,
+                        1543,
+                        1663,
+                        1308,
+                        1663
+                      ],
+                      "elements": []
+                    },
+                    {
+                      "rowIndex": 3,
+                      "columnIndex": 0,
+                      "text": "TOTAL",
+                      "boundingBox": [
+                        1071,
+                        1663,
+                        1308,
+                        1663,
+                        1308,
+                        1707,
+                        1071,
+                        1707
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/46/words/0"
+                      ]
+                    },
+                    {
+                      "rowIndex": 3,
+                      "columnIndex": 1,
+                      "text": "$144.00",
+                      "boundingBox": [
+                        1308,
+                        1663,
+                        1543,
+                        1663,
+                        1543,
+                        1708,
+                        1308,
+                        1707
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/47/words/0"
+                      ]
+                    }
+                  ],
+                  "boundingBox": [
+                    1058,
+                    1563,
+                    1555,
+                    1563,
+                    1555,
+                    1707,
+                    1058,
+                    1707
                   ]
                 }
               ]
@@ -3351,7 +3727,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/",
     "RandomSeed": "505472818"
   }
 }
