@@ -4,6 +4,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 
@@ -39,16 +40,6 @@ namespace Azure.Security.Attestation.Tests
 
         private static Uri DataPlaneScope => new Uri($"https://attest.azure.net");
 
-        public ClientSecretCredential GetClientSecretCredential()
-        {
-            return new ClientSecretCredential(TenantId,
-                ClientId,
-                ClientSecret,
-                new TokenCredentialOptions()
-                {
-                    AuthorityHost = new Uri(AuthorityHostUrl)/*DataPlaneScope*/,
-                }
-                );
-        }
+        public TokenCredential GetClientSecretCredential() => Credential;
     }
 }
