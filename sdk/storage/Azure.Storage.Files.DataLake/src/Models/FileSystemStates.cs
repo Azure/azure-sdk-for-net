@@ -6,11 +6,12 @@ using System;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Specifies options for listing file systems with the
-    /// <see cref="DataLakeServiceClient.GetFileSystems(FileSystemTraits, FileSystemStates, string, System.Threading.CancellationToken)"/> operation.
+    /// Specifies options for listing blob containers with the
+    /// <see cref="DataLakeServiceClient.GetFileSystems(FileSystemTraits, FileSystemStates, string, System.Threading.CancellationToken)"></see>
+    /// operation.
     /// </summary>
     [Flags]
-    public enum FileSystemTraits
+    public enum FileSystemStates
     {
         /// <summary>
         /// Default flag specifying that no flags are set in <see cref="FileSystemTraits"/>.
@@ -18,9 +19,8 @@ namespace Azure.Storage.Files.DataLake.Models
         None = 0,
 
         /// <summary>
-        /// Flag specifying that the file system's metadata should
-        /// be included.
+        /// Flag specifying that deleted containers should be included.
         /// </summary>
-        Metadata = 1,
+        Deleted = 1,
     }
 }
