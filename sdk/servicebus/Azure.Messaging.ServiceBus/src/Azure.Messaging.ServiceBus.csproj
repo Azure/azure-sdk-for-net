@@ -4,6 +4,10 @@
     <Version>7.0.0-preview.10</Version>
     <PackageTags>Azure;Service Bus;ServiceBus;.NET;AMQP;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>
+      <!-- TODO: Investigate and remove suppressions https://github.com/Azure/azure-sdk-for-net/issues/17154 -->
+      $(NoWarn);CA1816;CA2016;CA2213
+    </NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

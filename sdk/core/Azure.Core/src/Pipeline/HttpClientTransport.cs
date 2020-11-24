@@ -62,7 +62,7 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, false).EnsureCompleted();
 #else
             // Intentionally blocking here
-            ProcessAsync(message, true).GetAwaiter().GetResult();
+            ProcessAsync(message).AsTask().GetAwaiter().GetResult();
 #endif
         }
 
@@ -218,7 +218,7 @@ namespace Azure.Core.Pipeline
 
         private sealed class PipelineRequest : Request
         {
-            private bool _wasSent = false;
+            private bool _wasSent;
             private readonly HttpRequestMessage _requestMessage;
 
             private PipelineContentAdapter? _requestContent;
@@ -314,6 +314,7 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 Content?.Dispose();
+                _requestContent?.Dispose();
                 _requestMessage.Dispose();
             }
 
@@ -408,7 +409,9 @@ namespace Azure.Core.Pipeline
 
             private readonly HttpContent _responseContent;
 
+#pragma warning disable CA2213 // Content stream is intentionally not disposed
             private Stream? _contentStream;
+#pragma warning restore CA2213
 
             public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
             {
