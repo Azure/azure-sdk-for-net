@@ -1,7 +1,5 @@
 jobs:
   - job: CreateDocIndex
-    variables:
-      - template: templates/variables/globals.yml
     pool:
       vmImage: windows-2019
     steps:
@@ -49,7 +47,7 @@ jobs:
           targetPath: $(Build.ArtifactStagingDirectory)/docfx_project/_site
           
       - pwsh: |
-          git checkout -b gh-pages-local --track origin/gh-pages-root
+          git checkout -b gh-pages-local --track origin/gh-pages-root -f
         workingDirectory: $(Build.SourcesDirectory)
         displayName: Git pull GH pages branch
 
