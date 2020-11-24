@@ -58,7 +58,7 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
-#if NETCOREAPP
+#if NET5_0
             ProcessAsync(message, false).EnsureCompleted();
 #else
             // Intentionally blocking here
@@ -81,7 +81,7 @@ namespace Azure.Core.Pipeline
             Stream? contentStream = null;
             try
             {
-#if NETCOREAPP
+#if NET5_0
                 if (!async)
                 {
                     responseMessage = _client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
@@ -95,16 +95,19 @@ namespace Azure.Core.Pipeline
 
                 if (responseMessage.Content != null)
                 {
-#if NETCOREAPP
+#if NET5_0
                     if (!async)
                     {
-                        contentStream = responseMessage.Content.ReadAsStream();
+                        contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
                     }
                     else
-#endif
                     {
-                        contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                        contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
                     }
+#else
+                    contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#endif
+
 
                 }
             }
