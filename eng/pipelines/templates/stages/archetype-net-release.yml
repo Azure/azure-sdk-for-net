@@ -63,7 +63,7 @@ stages:
                           pwsh: true
                           workingDirectory: $(Build.SourcesDirectory)
                           filePath: eng/scripts/SetTestPipelineVersion.ps1
-                          arguments: '-BuildNumber $(Build.BuildNumber)'
+                          arguments: '-BuildID $(Build.BuildId)'
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}

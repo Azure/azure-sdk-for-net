@@ -2081,9 +2081,14 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2129,6 +2134,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2173,6 +2183,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2198,6 +2213,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -2230,6 +2250,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
@@ -2255,6 +2280,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
@@ -2382,7 +2412,7 @@ namespace Azure.AI.TextAnalytics
 
                 try
                 {
-                    Response<RecognizeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                    Response<RecognizeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
                     RecognizeHealthcareEntitiesResultCollection result = operation.Value;
                     return Page.FromValues(result.AsEnumerable(), operation.NextLink, response.GetRawResponse());
@@ -2414,7 +2444,7 @@ namespace Azure.AI.TextAnalytics
                     string[] jobIdParams = nextLinkSplit.Last().Split('?');
                     // jobIdParams = ['8002878d-2e43-4675-ad20-455fe004641b', '$skip=20&$top=0']
 
-                    if (jobIdParams.Count() != 2)
+                    if (jobIdParams.Length != 2)
                     {
                         throw new InvalidOperationException($"Failed to parse element reference: {nextLink}");
                     }
@@ -2446,7 +2476,7 @@ namespace Azure.AI.TextAnalytics
                         }
                     }
 
-                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, showStats).ConfigureAwait(false);
+                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, showStats, cancellationToken).ConfigureAwait(false);
 
                     RecognizeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, operation._idToIndexMap);
                     return Page.FromValues(result.AsEnumerable(), jobState.Value.NextLink, jobState.GetRawResponse());
@@ -2735,7 +2765,7 @@ namespace Azure.AI.TextAnalytics
         private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<DetectLanguageInput> documents)
             => new LanguageBatchInput(documents.Select((document) => new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? _options.DefaultCountryHint }).ToList());
 
-        private IDictionary<string,string> CreateAdditionalInformation(TextAnalyticsError error)
+        private static IDictionary<string,string> CreateAdditionalInformation(TextAnalyticsError error)
         {
             if (string.IsNullOrEmpty(error.Target))
                 return null;

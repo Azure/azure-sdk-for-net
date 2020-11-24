@@ -84,7 +84,7 @@ namespace Azure.Identity.Tests
 
             if (testEnvironment.TestTenantId != default && cloudName != default)
             {
-                sb.Append(",");
+                sb.Append(',');
             }
 
             if (cloudName != default)
@@ -92,7 +92,7 @@ namespace Azure.Identity.Tests
                 sb.AppendFormat("\"azure.cloud\": \"{0}\"", cloudName);
             }
 
-            sb.Append("}");
+            sb.Append('}');
 
             return new TestFileSystemService
             {

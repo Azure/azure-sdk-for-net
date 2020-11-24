@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the consumer is associated with.  This is likely
@@ -1060,7 +1060,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns>A bounded channel, configured for 1:many read/write usage.</returns>
         ///
-        private Channel<PartitionEvent> CreateEventChannel(int capacity) =>
+        private static Channel<PartitionEvent> CreateEventChannel(int capacity) =>
             Channel.CreateBounded<PartitionEvent>(new BoundedChannelOptions(capacity)
             {
                 FullMode = BoundedChannelFullMode.Wait,

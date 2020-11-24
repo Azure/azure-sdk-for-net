@@ -68,6 +68,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Custom headers to send in the API call.
         /// </summary>
         /// <exception cref="ArgumentNullException">The value assigned to <see cref="Headers"/> is null.</exception>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IDictionary<string, string> Headers
         {
             get => HookParameter.Headers;
@@ -77,6 +78,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 HookParameter.Headers = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Used by CodeGen during serialization.

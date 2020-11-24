@@ -1,26 +1,34 @@
 trigger: none
 
+resources:
+  containers:
+    - container: 'ubuntu_netcore_keyring'
+      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:523386'
+      endpoint: 'azsdkengsys'
+      options: -ti --cap-add=IPC_LOCK
+
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     AdditionalPlatforms:
-      DisplayName: 'Test on Linux with keyring'
-      OSVmImage: "ubuntu-18.04"
-      TestTargetFramework: netcoreapp2.1
-      Container:
-        image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:523386'
-        endpoint: 'azsdkengsys'
-        options: -ti --cap-add=IPC_LOCK
-      PreSteps:
-        - script: |
-            set -x
-            export $(dbus-launch)
-            gnome-keyring-daemon --start --daemonize --components=secrets
-            echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_ADDRESS]$DBUS_SESSION_BUS_ADDRESS"
-            echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_PID]$DBUS_SESSION_BUS_PID"
-            echo "##vso[task.setvariable variable=GNOME_KEYRING_CONTROL]$GNOME_KEYRING_CONTROL"
-    ServiceDirectory: identity    
+      Linux_NetCore_Keyring:
+        OSVmImage: "ubuntu-18.04"
+        TestTargetFramework: 'netcoreapp2.1'
+        Container: 'ubuntu_netcore_keyring'
+        SupportedClouds: 'Public,Canary,Preview'
+    ServiceDirectory: identity
     PreSteps:
+      - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
+        displayName: Install Azure PowerShell module
+        condition: and(succeededOrFailed(), eq(variables['Agent.JobName'], 'Linux_NetCore_Keyring'))
+      - script: |
+          set -x
+          export $(dbus-launch)
+          gnome-keyring-daemon --start --daemonize --components=secrets
+          echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_ADDRESS]$DBUS_SESSION_BUS_ADDRESS"
+          echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_PID]$DBUS_SESSION_BUS_PID"
+          echo "##vso[task.setvariable variable=GNOME_KEYRING_CONTROL]$GNOME_KEYRING_CONTROL"
+        condition: and(succeededOrFailed(), eq(variables['Agent.JobName'], 'Linux_NetCore_Keyring'))
       - pwsh: |
           [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
           Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS

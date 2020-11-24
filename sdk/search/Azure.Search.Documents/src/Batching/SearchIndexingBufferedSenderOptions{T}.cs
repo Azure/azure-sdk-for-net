@@ -45,7 +45,7 @@ namespace Azure.Search.Documents
         /// default value will be 512 if unset.  The current service maximum is
         /// 32000.
         /// </summary>
-        public int? InitialBatchActionCount { get; set; } = null;
+        public int? InitialBatchActionCount { get; set; }
         internal const int DefaultInitialBatchActionCount = 512;
 
         /// <summary>

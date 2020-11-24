@@ -73,7 +73,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Synapse
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -21,6 +23,58 @@ namespace Microsoft.Azure.Management.Synapse
     /// </summary>
     public static partial class SqlPoolGeoBackupPoliciesOperationsExtensions
     {
+            /// <summary>
+            /// List SQL pool geo backup policies
+            /// </summary>
+            /// <remarks>
+            /// Get list of SQL pool geo backup policies
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            public static IEnumerable<GeoBackupPolicy> List(this ISqlPoolGeoBackupPoliciesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            {
+                return operations.ListAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List SQL pool geo backup policies
+            /// </summary>
+            /// <remarks>
+            /// Get list of SQL pool geo backup policies
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<GeoBackupPolicy>> ListAsync(this ISqlPoolGeoBackupPoliciesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
             /// <summary>
             /// Get a SQL pool geo backup policy
             /// </summary>
