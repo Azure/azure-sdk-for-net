@@ -1851,7 +1851,7 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="message">A Message object which can be stored in a Queue</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
+            /// <param name="visibilitytimeout">Optional. If specified, the request must be made using an x-ms-version of 2011-08-18 or later. If not specified, the default value is 0. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the expiry time. visibilitytimeout should be set to a value smaller than the time-to-live value.</param>
             /// <param name="messageTimeToLive">Optional. Specifies the time-to-live interval for the message, in seconds. Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For version 2017-07-29 or later, the maximum time-to-live can be any positive number, as well as -1 indicating that the message does not expire. If this parameter is omitted, the default time-to-live is 7 days.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
@@ -1922,7 +1922,7 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="message">A Message object which can be stored in a Queue</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
+            /// <param name="visibilitytimeout">Optional. If specified, the request must be made using an x-ms-version of 2011-08-18 or later. If not specified, the default value is 0. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the expiry time. visibilitytimeout should be set to a value smaller than the time-to-live value.</param>
             /// <param name="messageTimeToLive">Optional. Specifies the time-to-live interval for the message, in seconds. Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For version 2017-07-29 or later, the maximum time-to-live can be any positive number, as well as -1 indicating that the message does not expire. If this parameter is omitted, the default time-to-live is 7 days.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
@@ -3814,13 +3814,13 @@ namespace Azure.Storage.Queues.Models
         /// Creates a new QueueProperties instance for mocking.
         /// </summary>
         public static QueueProperties QueueProperties(
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            int approximateMessagesCount)
+            int approximateMessagesCount,
+            System.Collections.Generic.IDictionary<string, string> metadata)
         {
             return new QueueProperties()
             {
-                Metadata = metadata,
                 ApproximateMessagesCount = approximateMessagesCount,
+                Metadata = metadata,
             };
         }
     }
@@ -3968,9 +3968,9 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
-#pragma warning disable CA2227 // Collection properties should be readonly
+        #pragma warning disable CA2227 // Collection properties should be readonly
         public System.Collections.Generic.IList<Azure.Storage.Queues.Models.QueueCorsRule> Cors { get; set; }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Creates a new QueueServiceProperties instance
@@ -4440,19 +4440,19 @@ namespace Azure.Storage.Queues.Models
         /// Creates a new SendReceipt instance for mocking.
         /// </summary>
         public static SendReceipt SendReceipt(
-            string messageId,
-            System.DateTimeOffset insertionTime,
-            System.DateTimeOffset expirationTime,
+            System.DateTimeOffset timeNextVisible,
             string popReceipt,
-            System.DateTimeOffset timeNextVisible)
+            System.DateTimeOffset expirationTime,
+            System.DateTimeOffset insertionTime,
+            string messageId)
         {
             return new SendReceipt()
             {
-                MessageId = messageId,
-                InsertionTime = insertionTime,
-                ExpirationTime = expirationTime,
-                PopReceipt = popReceipt,
                 TimeNextVisible = timeNextVisible,
+                PopReceipt = popReceipt,
+                ExpirationTime = expirationTime,
+                InsertionTime = insertionTime,
+                MessageId = messageId,
             };
         }
     }
@@ -4546,13 +4546,13 @@ namespace Azure.Storage.Queues.Models
         /// Creates a new UpdateReceipt instance for mocking.
         /// </summary>
         public static UpdateReceipt UpdateReceipt(
-            string popReceipt,
-            System.DateTimeOffset nextVisibleOn)
+            System.DateTimeOffset nextVisibleOn,
+            string popReceipt)
         {
             return new UpdateReceipt()
             {
-                PopReceipt = popReceipt,
                 NextVisibleOn = nextVisibleOn,
+                PopReceipt = popReceipt,
             };
         }
     }
