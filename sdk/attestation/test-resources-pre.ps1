@@ -142,9 +142,10 @@ try {
    $templateFileParameters.isolatedSigningCertificate = $([Convert]::ToBase64String($isolatedCertificate.RawData, 'None'))
 
    $EnvironmentVariables["isolatedSigningKey"] = $([Convert]::ToBase64String($isolatedKey.ExportPkcs8PrivateKey()))
+   $EnvironmentVariables["serializedIsolatedSigningKey"] = $isolatedKey.ToXmlString($True)
 }
 finally {
-        $isolatedKey.Dispose()
+   $isolatedKey.Dispose()
 }
 
 $EnvironmentVariables["locationShortName"] = $shortLocation
@@ -159,6 +160,7 @@ $wrappingFiles = foreach ($i in 0..2) {
         $EnvironmentVariables["policySigningCertificate$i"] = $([Convert]::ToBase64String($certificate.RawData))
 
         $EnvironmentVariables["policySigningKey$i"] = $([Convert]::ToBase64String($certificateKey.ExportPkcs8PrivateKey()))
+        $EnvironmentVariables["serializedPolicySigningKey$i"] = $certificateKey.ToXmlString($True)
 
         $baseName = "$PSScriptRoot\attestation-certificate$i"
         Export-X509Certificate2 "$baseName.pfx" $certificate
