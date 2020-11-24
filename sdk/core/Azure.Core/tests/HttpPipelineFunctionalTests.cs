@@ -91,14 +91,14 @@ namespace Azure.Core.Tests
 
                     await ExecuteRequest(message, httpPipeline);
 
-                    Assert.AreEqual(false, message.Response.ContentStream.CanSeek);
+                    Assert.False(message.Response.ContentStream.CanSeek);
 
                     extractedStream = message.ExtractResponseContent();
                 }
 
                 var memoryStream = new MemoryStream();
                 await extractedStream.CopyToAsync(memoryStream);
-                Assert.AreEqual(memoryStream.Length, 1000);
+                Assert.AreEqual(1000, memoryStream.Length);
                 extractedStream.Dispose();
             }
         }

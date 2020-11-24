@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- TODO: Remove before release -->
     <ProjectReference Include="../../Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
 
