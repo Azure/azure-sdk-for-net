@@ -428,6 +428,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
+        [Ignore("Debugging Potential Hang")]
         public async Task ProcessByBatch()
         {
             #region Snippet:EventHubs_Processor_Sample04_ProcessByBatch
@@ -549,6 +550,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
+        [Ignore("Debugging Potential Hang")]
         public async Task ProcessWithHeartbeat()
         {
             #region Snippet:EventHubs_Processor_Sample04_ProcessWithHeartbeat
