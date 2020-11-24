@@ -109,7 +109,7 @@ namespace Azure.Core.Pipeline
                 assemblyName = assemblyName.Substring(PackagePrefix.Length);
             }
 
-            int hashSeparator = version.IndexOf('+');
+            int hashSeparator = version.IndexOfOrdinal('+');
             if (hashSeparator != -1)
             {
                 version = version.Substring(0, hashSeparator);

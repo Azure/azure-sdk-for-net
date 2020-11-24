@@ -40,10 +40,13 @@ namespace Azure.Core.Shared
                 stringBuilder.Append(nameof(eventData.Message)).Append(" = ").Append(eventData.Message);
             }
 
-            for (int i = 0; i < eventData.PayloadNames.Count; i++)
+            if (eventData.PayloadNames != null)
             {
-                stringBuilder.AppendLine();
-                stringBuilder.Append(eventData.PayloadNames[i]).Append(" = ").Append(payloadArray[i]);
+                for (int i = 0; i < eventData.PayloadNames.Count; i++)
+                {
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append(eventData.PayloadNames[i]).Append(" = ").Append(payloadArray[i]);
+                }
             }
 
             return stringBuilder.ToString();

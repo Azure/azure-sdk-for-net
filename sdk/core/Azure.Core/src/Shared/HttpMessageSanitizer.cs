@@ -44,7 +44,7 @@ namespace Azure.Core
                 return url;
             }
 
-            int indexOfQuerySeparator = url.IndexOf('?');
+            int indexOfQuerySeparator = url.IndexOfOrdinal('?');
             if (indexOfQuerySeparator == -1)
             {
                 return url;
