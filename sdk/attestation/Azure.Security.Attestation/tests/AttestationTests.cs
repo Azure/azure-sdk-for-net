@@ -102,7 +102,7 @@ namespace Azure.Security.Attestation.Tests
     "dOd2FRR1RjZHBhMEVDCklRQ1V0OFNHdnhLbWpwY00vejBXUDlEdm84aDJrNWR1MWlXRGRCa0FuKzBpaUE9" +
     "PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCgA";
 
-        public AttestationTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public AttestationTests(bool isAsync) : base(isAsync)
         {
         }
 

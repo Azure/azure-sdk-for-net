@@ -15,7 +15,7 @@ namespace Azure.Security.Attestation.Tests
 {
     public class TokenCertTests : RecordedTestBase<AttestationClientTestEnvironment>
     {
-        public TokenCertTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public TokenCertTests(bool isAsync) : base(isAsync)
         {
         }
 
