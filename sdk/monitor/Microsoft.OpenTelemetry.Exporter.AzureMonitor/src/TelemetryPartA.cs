@@ -4,9 +4,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+
+using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
+
+using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
@@ -42,6 +45,36 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             if (activity.Parent != null)
             {
                 telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.Parent.SpanId.ToHexString();
+            }
+
+            telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
+
+            return telemetryItem;
+        }
+
+        internal static TelemetryItem GetTelemetryItem(LogRecord logRecord, string instrumentationKey)
+        {
+            var name = PartA_Name_Mapping[TelemetryType.Message];
+            var time = logRecord.Timestamp.ToString(CultureInfo.InvariantCulture);
+
+            TelemetryItem telemetryItem = new TelemetryItem(name, time)
+            {
+                InstrumentationKey = instrumentationKey
+            };
+
+            // TODO: I WAS TOLD THIS MIGHT BE CHANGING. IGNORING FOR NOW.
+            //InitRoleInfo(activity);
+            //telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = RoleName;
+            //telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
+
+            if (logRecord.TraceId != default)
+            {
+                telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
+            }
+
+            if (logRecord.SpanId != default)
+            {
+                telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
             }
 
             telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
