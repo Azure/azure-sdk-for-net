@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "1188",
         "Content-Type": "text/plain",
-        "traceparent": "00-afa2553b192e1c4584d0b5af594168d0-31fe97cc236c8f45-00",
+        "traceparent": "00-073203b09a03c842a8a1a3ed60bd5c34-cc2c29bf25d97042-00",
         "User-Agent": "azsdk-net-Security.Attestation/1.0.3-alpha.20201123.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "909a713b3060d97c30dd91167bd30d40",
+        "x-ms-client-request-id": "ddb95d9381b4d80a24024bcd68e429d5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "eyJhbGciOiJub25lIn0.eyJBdHRlc3RhdGlvblBvbGljeSI6IkRRcDJaWEp6YVc5dVBURXVNRHNOQ21GMWRHaHZjbWw2WVhScGIyNXlkV3hsY3lCN0lBMEtZem9nVzNSNWNHVTlQU0lrYVhNdFpHVmlkV2RuWVdKc1pTSmRJQ1ltSUZ0MllXeDFaVDA5ZEhKMVpWMGdQVDRnWkdWdWVTZ3BPdzBLUFQ0Z2NHVnliV2wwS0NrN0RRcDlPdzBLYVhOemRXRnVZMlZ5ZFd4bGN5QjdEUW9nSUNBZ1l6cGJkSGx3WlQwOUlpUnBjeTFrWldKMVoyZGhZbXhsSWwwZ1BUNGdhWE56ZFdVb2RIbHdaVDBpVG05MFJHVmlkV2RuWVdKc1pTSXNJSFpoYkhWbFBXTXVkbUZzZFdVcE93MEtJQ0FnSUdNNlczUjVjR1U5UFNJa2FYTXRaR1ZpZFdkbllXSnNaU0pkSUQwLUlHbHpjM1ZsS0hSNWNHVTlJbWx6TFdSbFluVm5aMkZpYkdVaUxDQjJZV3gxWlQxakxuWmhiSFZsS1RzTkNpQWdJQ0JqT2x0MGVYQmxQVDBpSkhObmVDMXRjbk5wWjI1bGNpSmRJRDAtSUdsemMzVmxLSFI1Y0dVOUluTm5lQzF0Y25OcFoyNWxjaUlzSUhaaGJIVmxQV011ZG1Gc2RXVXBPdzBLSUNBZ0lHTTZXM1I1Y0dVOVBTSWtjMmQ0TFcxeVpXNWpiR0YyWlNKZElEMC1JR2x6YzNWbEtIUjVjR1U5SW5ObmVDMXRjbVZ1WTJ4aGRtVWlMQ0IyWVd4MVpUMWpMblpoYkhWbEtUc05DaUFnSUNCak9sdDBlWEJsUFQwaUpIQnliMlIxWTNRdGFXUWlYU0E5UGlCcGMzTjFaU2gwZVhCbFBTSndjbTlrZFdOMExXbGtJaXdnZG1Gc2RXVTlZeTUyWVd4MVpTazdEUW9nSUNBZ1l6cGJkSGx3WlQwOUlpUnpkbTRpWFNBOVBpQnBjM04xWlNoMGVYQmxQU0p6ZG00aUxDQjJZV3gxWlQxakxuWmhiSFZsS1RzTkNpQWdJQ0JqT2x0MGVYQmxQVDBpSkhSbFpTSmRJRDAtSUdsemMzVmxLSFI1Y0dVOUluUmxaU0lzSUhaaGJIVmxQV011ZG1Gc2RXVXBPdzBLZlRzIn0.",
@@ -18,10 +18,10 @@
       "ResponseHeaders": {
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Nov 2020 18:40:23 GMT",
+        "Date": "Tue, 24 Nov 2020 18:59:27 GMT",
         "Server": "Kestrel",
         "x-ms-maa-service-version": "1.10.01419.0005",
-        "x-ms-request-id": "00-afa2553b192e1c4584d0b5af594168d0-31fe97cc236c8f45-00"
+        "x-ms-request-id": "00-073203b09a03c842a8a1a3ed60bd5c34-cc2c29bf25d97042-00"
       },
       "ResponseBody": {
         "error": {
@@ -33,6 +33,6 @@
   ],
   "Variables": {
     "ISOLATED_ATTESTATION_URL": "https://larryoattestationiso.wus.attest.azure.net",
-    "RandomSeed": "1018042843"
+    "RandomSeed": "1486408373"
   }
 }
