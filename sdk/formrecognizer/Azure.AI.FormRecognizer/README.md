@@ -2,7 +2,7 @@
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents.  It includes the following capabilities:
 
 - Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
-- Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
+- Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in form documents, without the need to train a model.
 - Recognize Prebuilt models - Recognize data using the following prebuilt models:
   - Receipts - Recognize and extract common fields from receipts, using a pre-trained receipt model.
   - Business Cards - Recognize and extract common fields from business cards, using a pre-trained business cards model.
@@ -16,10 +16,8 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.FormRecognizer --version 3.0.0
+dotnet add package Azure.AI.FormRecognizer
 ``` 
-
-**Note:** This package version targets Azure Form Recognizer service API version v2.0.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -38,7 +36,7 @@ You can create either resource using:
 Below is an example of how you can create a Form Recognizer resource using the CLI:
 
 ```PowerShell
-# Create a new resource group to hold the form recognizer resource -
+# Create a new resource group to hold the form recognizer resource
 # if using an existing resource group, skip this step
 az group create --name <your-resource-name> --location <location>
 ```
@@ -314,12 +312,12 @@ using (FileStream stream = new FileStream(businessCardsPath, FileMode.Open))
 
     foreach (RecognizedForm businessCard in businessCards)
     {
-        FormField ContactNamesField;
-        if (businessCard.Fields.TryGetValue("ContactNames", out ContactNamesField))
+        FormField contactNamesField;
+        if (businessCard.Fields.TryGetValue("ContactNames", out contactNamesField))
         {
-            if (ContactNamesField.Value.ValueType == FieldValueType.List)
+            if (contactNamesField.Value.ValueType == FieldValueType.List)
             {
-                foreach (FormField contactNameField in ContactNamesField.Value.AsList())
+                foreach (FormField contactNameField in contactNamesField.Value.AsList())
                 {
                     Console.WriteLine($"Contact Name: {contactNameField.ValueData.Text}");
 

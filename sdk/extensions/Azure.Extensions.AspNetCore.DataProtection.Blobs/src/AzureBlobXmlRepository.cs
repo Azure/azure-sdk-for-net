@@ -71,7 +71,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
             Task.Run(() => StoreElementAsync(element)).GetAwaiter().GetResult();
         }
 
-        private XDocument CreateDocumentFromBlob(byte[] blob)
+        private static XDocument CreateDocumentFromBlob(byte[] blob)
         {
             using (var memoryStream = new MemoryStream(blob))
             {

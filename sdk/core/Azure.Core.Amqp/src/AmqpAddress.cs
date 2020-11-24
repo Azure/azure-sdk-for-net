@@ -89,16 +89,6 @@ namespace Azure.Core.Amqp
         /// <inheritdoc/>
         public static bool operator ==(AmqpAddress left, AmqpAddress right)
         {
-            if (ReferenceEquals(left, right))
-            {
-                return true;
-            }
-
-            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
-            {
-                return false;
-            }
-
             return left.Equals(right);
         }
 

@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Batching
         /// <summary>
         /// Flag indicating whether the publisher has been disposed.
         /// </summary>
-        private volatile int _disposed = 0;
+        private volatile int _disposed;
 
         /// <summary>
         /// Channel used to communicate between the sender and publisher.
