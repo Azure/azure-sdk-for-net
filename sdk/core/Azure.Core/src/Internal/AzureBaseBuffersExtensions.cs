@@ -16,6 +16,9 @@ namespace Azure.Core.Buffers
         public static async Task WriteAsync(this Stream stream, ReadOnlyMemory<byte> buffer, CancellationToken cancellation = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
+#if NET5_0
+            await stream.WriteAsync(buffer, cancellation).ConfigureAwait(false);
+#else
 
             if (buffer.Length == 0)
                 return;
@@ -42,6 +45,7 @@ namespace Azure.Core.Buffers
                 if (array != null)
                     ArrayPool<byte>.Shared.Return(array);
             }
+#endif
         }
 
         public static async Task WriteAsync(this Stream stream, ReadOnlySequence<byte> buffer, CancellationToken cancellation = default)
@@ -55,6 +59,9 @@ namespace Azure.Core.Buffers
             {
                 foreach (ReadOnlyMemory<byte> segment in buffer)
                 {
+#if NET5_0
+                    await stream.WriteAsync(buffer, cancellation).ConfigureAwait(false);
+#else
                     if (MemoryMarshal.TryGetArray(segment, out ArraySegment<byte> arraySegment))
                     {
                         Debug.Assert(arraySegment.Array != null);
@@ -72,6 +79,7 @@ namespace Azure.Core.Buffers
                             throw new Exception("could not rent large enough buffer.");
                         await stream.WriteAsync(array, 0, segment.Length, cancellation).ConfigureAwait(false);
                     }
+#endif
                 }
             }
             finally
