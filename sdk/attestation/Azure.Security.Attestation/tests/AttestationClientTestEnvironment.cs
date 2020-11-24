@@ -10,6 +10,10 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 
+
+// licy":"CnZlcnNpb249MS4 => version=1.
+// licy":"DQp2ZXJzaW9uPTE => version=1
+
 namespace Azure.Security.Attestation.Tests
 {
     public class AttestationClientTestEnvironment : TestEnvironment

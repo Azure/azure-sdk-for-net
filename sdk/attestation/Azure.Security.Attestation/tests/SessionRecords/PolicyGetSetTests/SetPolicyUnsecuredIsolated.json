@@ -6,22 +6,22 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1188",
+        "Content-Length": "1135",
         "Content-Type": "text/plain",
-        "traceparent": "00-d0dfaecb0376374f8042a77ff0d04629-01ad61fd1f61c041-00",
+        "traceparent": "00-6fea38593e08014d8e2240f203f53f42-a657b08e6880214c-00",
         "User-Agent": "azsdk-net-Security.Attestation/1.0.3-alpha.20201123.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "d61d381e5cc237ecc862768fe5f1f2f5",
+        "x-ms-client-request-id": "f91ba243e23912b5ee839315a98bf30d",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "eyJhbGciOiJub25lIn0.eyJBdHRlc3RhdGlvblBvbGljeSI6IkRRcDJaWEp6YVc5dVBURXVNRHNOQ21GMWRHaHZjbWw2WVhScGIyNXlkV3hsY3lCN0lBMEtZem9nVzNSNWNHVTlQU0lrYVhNdFpHVmlkV2RuWVdKc1pTSmRJQ1ltSUZ0MllXeDFaVDA5ZEhKMVpWMGdQVDRnWkdWdWVTZ3BPdzBLUFQ0Z2NHVnliV2wwS0NrN0RRcDlPdzBLYVhOemRXRnVZMlZ5ZFd4bGN5QjdEUW9nSUNBZ1l6cGJkSGx3WlQwOUlpUnBjeTFrWldKMVoyZGhZbXhsSWwwZ1BUNGdhWE56ZFdVb2RIbHdaVDBpVG05MFJHVmlkV2RuWVdKc1pTSXNJSFpoYkhWbFBXTXVkbUZzZFdVcE93MEtJQ0FnSUdNNlczUjVjR1U5UFNJa2FYTXRaR1ZpZFdkbllXSnNaU0pkSUQwLUlHbHpjM1ZsS0hSNWNHVTlJbWx6TFdSbFluVm5aMkZpYkdVaUxDQjJZV3gxWlQxakxuWmhiSFZsS1RzTkNpQWdJQ0JqT2x0MGVYQmxQVDBpSkhObmVDMXRjbk5wWjI1bGNpSmRJRDAtSUdsemMzVmxLSFI1Y0dVOUluTm5lQzF0Y25OcFoyNWxjaUlzSUhaaGJIVmxQV011ZG1Gc2RXVXBPdzBLSUNBZ0lHTTZXM1I1Y0dVOVBTSWtjMmQ0TFcxeVpXNWpiR0YyWlNKZElEMC1JR2x6YzNWbEtIUjVjR1U5SW5ObmVDMXRjbVZ1WTJ4aGRtVWlMQ0IyWVd4MVpUMWpMblpoYkhWbEtUc05DaUFnSUNCak9sdDBlWEJsUFQwaUpIQnliMlIxWTNRdGFXUWlYU0E5UGlCcGMzTjFaU2gwZVhCbFBTSndjbTlrZFdOMExXbGtJaXdnZG1Gc2RXVTlZeTUyWVd4MVpTazdEUW9nSUNBZ1l6cGJkSGx3WlQwOUlpUnpkbTRpWFNBOVBpQnBjM04xWlNoMGVYQmxQU0p6ZG00aUxDQjJZV3gxWlQxakxuWmhiSFZsS1RzTkNpQWdJQ0JqT2x0MGVYQmxQVDBpSkhSbFpTSmRJRDAtSUdsemMzVmxLSFI1Y0dVOUluUmxaU0lzSUhaaGJIVmxQV011ZG1Gc2RXVXBPdzBLZlRzIn0.",
+      "RequestBody": "eyJhbGciOiJub25lIn0.eyJBdHRlc3RhdGlvblBvbGljeSI6ImRtVnljMmx2YmoweExqQTdZWFYwYUc5eWFYcGhkR2x2Ym5KMWJHVnpJSHRqT2x0MGVYQmxQVDBpSkdsekxXUmxZblZuWjJGaWJHVWlYU0FtSmlCYmRtRnNkV1U5UFhSeWRXVmRJRDAtSUdSbGJua29LVHM5UGlCd1pYSnRhWFFvS1R0OU8ybHpjM1ZoYm1ObGNuVnNaWE1nZXlBZ0lDQmpPbHQwZVhCbFBUMGlKR2x6TFdSbFluVm5aMkZpYkdVaVhTQTlQaUJwYzNOMVpTaDBlWEJsUFNKT2IzUkVaV0oxWjJkaFlteGxJaXdnZG1Gc2RXVTlZeTUyWVd4MVpTazdJQ0FnSUdNNlczUjVjR1U5UFNJa2FYTXRaR1ZpZFdkbllXSnNaU0pkSUQwLUlHbHpjM1ZsS0hSNWNHVTlJbWx6TFdSbFluVm5aMkZpYkdVaUxDQjJZV3gxWlQxakxuWmhiSFZsS1RzZ0lDQWdZenBiZEhsd1pUMDlJaVJ6WjNndGJYSnphV2R1WlhJaVhTQTlQaUJwYzNOMVpTaDBlWEJsUFNKelozZ3RiWEp6YVdkdVpYSWlMQ0IyWVd4MVpUMWpMblpoYkhWbEtUc2dJQ0FnWXpwYmRIbHdaVDA5SWlSelozZ3RiWEpsYm1Oc1lYWmxJbDBnUFQ0Z2FYTnpkV1VvZEhsd1pUMGljMmQ0TFcxeVpXNWpiR0YyWlNJc0lIWmhiSFZsUFdNdWRtRnNkV1VwT3lBZ0lDQmpPbHQwZVhCbFBUMGlKSEJ5YjJSMVkzUXRhV1FpWFNBOVBpQnBjM04xWlNoMGVYQmxQU0p3Y205a2RXTjBMV2xrSWl3Z2RtRnNkV1U5WXk1MllXeDFaU2s3SUNBZ0lHTTZXM1I1Y0dVOVBTSWtjM1p1SWwwZ1BUNGdhWE56ZFdVb2RIbHdaVDBpYzNadUlpd2dkbUZzZFdVOVl5NTJZV3gxWlNrN0lDQWdJR002VzNSNWNHVTlQU0lrZEdWbElsMGdQVDRnYVhOemRXVW9kSGx3WlQwaWRHVmxJaXdnZG1Gc2RXVTlZeTUyWVd4MVpTazdmVHMifQ.",
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Nov 2020 18:57:12 GMT",
+        "Date": "Tue, 24 Nov 2020 22:17:15 GMT",
         "Server": "Kestrel",
         "x-ms-maa-service-version": "1.10.01419.0005",
-        "x-ms-request-id": "00-d0dfaecb0376374f8042a77ff0d04629-01ad61fd1f61c041-00"
+        "x-ms-request-id": "00-6fea38593e08014d8e2240f203f53f42-a657b08e6880214c-00"
       },
       "ResponseBody": {
         "error": {
@@ -33,6 +33,6 @@
   ],
   "Variables": {
     "ISOLATED_ATTESTATION_URL": "https://larryoattestationiso.wus.attest.azure.net",
-    "RandomSeed": "1974061994"
+    "RandomSeed": "1803895978"
   }
 }
