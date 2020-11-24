@@ -150,7 +150,7 @@ namespace Azure.Identity
             }
         }
 
-        private ProcessStartInfo GetAzurePowerShellProcessStartInfo(string fileName, string argument) =>
+        private static ProcessStartInfo GetAzurePowerShellProcessStartInfo(string fileName, string argument) =>
             new ProcessStartInfo
             {
                 FileName = fileName,
