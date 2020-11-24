@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Rule of type application.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ApplicationRule")]
     public partial class ApplicationRule : FirewallPolicyRule
     {
         /// <summary>
@@ -39,18 +40,27 @@ namespace Microsoft.Azure.Management.Network.Models
         /// or Service Tags.</param>
         /// <param name="protocols">Array of Application Protocols.</param>
         /// <param name="targetFqdns">List of FQDNs for this rule.</param>
+        /// <param name="targetUrls">List of Urls for this rule
+        /// condition.</param>
         /// <param name="fqdnTags">List of FQDN Tags for this rule.</param>
         /// <param name="sourceIpGroups">List of source IpGroups for this
         /// rule.</param>
-        public ApplicationRule(string name = default(string), string description = default(string), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<FirewallPolicyRuleApplicationProtocol> protocols = default(IList<FirewallPolicyRuleApplicationProtocol>), IList<string> targetFqdns = default(IList<string>), IList<string> fqdnTags = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>))
+        /// <param name="terminateTLS">Terminate TLS connections for this
+        /// rule.</param>
+        /// <param name="webCategories">List of destination azure web
+        /// categories.</param>
+        public ApplicationRule(string name = default(string), string description = default(string), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<FirewallPolicyRuleApplicationProtocol> protocols = default(IList<FirewallPolicyRuleApplicationProtocol>), IList<string> targetFqdns = default(IList<string>), IList<string> targetUrls = default(IList<string>), IList<string> fqdnTags = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>), bool? terminateTLS = default(bool?), IList<string> webCategories = default(IList<string>))
             : base(name, description)
         {
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;
             Protocols = protocols;
             TargetFqdns = targetFqdns;
+            TargetUrls = targetUrls;
             FqdnTags = fqdnTags;
             SourceIpGroups = sourceIpGroups;
+            TerminateTLS = terminateTLS;
+            WebCategories = webCategories;
             CustomInit();
         }
 
@@ -84,6 +94,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> TargetFqdns { get; set; }
 
         /// <summary>
+        /// Gets or sets list of Urls for this rule condition.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetUrls")]
+        public IList<string> TargetUrls { get; set; }
+
+        /// <summary>
         /// Gets or sets list of FQDN Tags for this rule.
         /// </summary>
         [JsonProperty(PropertyName = "fqdnTags")]
@@ -94,6 +110,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "sourceIpGroups")]
         public IList<string> SourceIpGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets terminate TLS connections for this rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "terminateTLS")]
+        public bool? TerminateTLS { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of destination azure web categories.
+        /// </summary>
+        [JsonProperty(PropertyName = "webCategories")]
+        public IList<string> WebCategories { get; set; }
 
     }
 }

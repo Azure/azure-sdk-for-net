@@ -3,15 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Executors;
-using System.Globalization;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Microsoft.Azure.WebJobs.Host.Executors;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
 {
     internal class QueueTriggerExecutor : ITriggerExecutor<QueueMessage>
     {

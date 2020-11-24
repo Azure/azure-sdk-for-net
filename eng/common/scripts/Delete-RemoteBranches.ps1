@@ -30,7 +30,9 @@ foreach ($branch in $branches)
     exit 1
   }
 
-  if ($pullRequests -and (($pullRequests | ? { $_.State -eq "open" }).Count -eq 0))
+  $openPullRequests = $pullRequests | ? { $_.State -eq "open" }
+
+  if ($openPullRequests.Count -eq 0)
   {
     LogDebug "Branch [ $branchName ] in repo [ $RepoName ] has no associated open Pull Request. Deleting Branch"
     try{

@@ -4,6 +4,7 @@
   -->
   <PropertyGroup Condition="$(MSBuildProjectName.Contains('Azure.WebJobs'))">
     <IsClientLibrary>true</IsClientLibrary>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <IsWebjobsProject>true</IsWebjobsProject>
     <SupportsNetStandard20>true</SupportsNetStandard20>
   </PropertyGroup>

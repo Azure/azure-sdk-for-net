@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
 {
     internal class StringToCloudBlobConverter : IAsyncConverter<string, BlobBaseClient>
     {

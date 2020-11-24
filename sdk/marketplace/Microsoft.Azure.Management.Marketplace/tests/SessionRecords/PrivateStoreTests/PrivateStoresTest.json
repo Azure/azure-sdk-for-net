@@ -55,7 +55,7 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14999"
+          "14998"
         ],
         "x-ms-request-id": [
           "b9ac24e5-103e-41cb-a74f-9cf561c02c86"
@@ -137,7 +137,7 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14998"
+          "14997"
         ],
         "x-ms-request-id": [
           "208c6d47-1bea-4328-b175-e739a9d899ac"

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -260,7 +262,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
             Assert.AreEqual(resource, sasQueryParameters.Resource);
-            Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
         }
 
         [Test]
@@ -313,7 +314,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         [TestCase("TLXDWMECAR")]
         [TestCase("racwdxltme")]
         public async Task ContainerPermissionsRawPermissions(string permissionsString)
@@ -367,6 +368,75 @@ namespace Azure.Storage.Blobs.Test
                     rawPermissions: "ptsdfsd",
                     normalize: true),
                 new ArgumentException("s is not a valid SAS permission"));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        [TestCase(BlobSasPermissions.Read)]
+        [TestCase(BlobSasPermissions.Read | BlobSasPermissions.Write | BlobSasPermissions.List)]
+        [TestCase(BlobSasPermissions.All)]
+        public async Task SetPermissions_BlobSasPermissions(BlobSasPermissions permissions)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                BlobContainerName = test.Container.Name,
+                BlobName = blob.Name
+            };
+            blobSasBuilder.SetPermissions(permissions);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            BlobBaseClient sasBlobClient = InstrumentClient(new BlobBaseClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            await sasBlobClient.ExistsAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        [TestCase(BlobContainerSasPermissions.List)]
+        [TestCase(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.List)]
+        [TestCase(BlobContainerSasPermissions.Move | BlobContainerSasPermissions.Execute | BlobContainerSasPermissions.List)]
+        [TestCase(BlobContainerSasPermissions.All)]
+        public async Task SetPermissions_BlobContainerSasPermissions(BlobContainerSasPermissions permissions)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                BlobContainerName = test.Container.Name
+            };
+
+            blobSasBuilder.SetPermissions(permissions);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                Sas = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            BlobContainerClient sasContainerClient = new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions());
+
+            // Act
+            await foreach (BlobItem blobItem in sasContainerClient.GetBlobsAsync())
+            {
+                // Just make sure the call succeeds.
+            }
         }
 
         private BlobSasBuilder BuildBlobSasBuilder(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)
