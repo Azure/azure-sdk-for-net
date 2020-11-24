@@ -33,5 +33,22 @@ namespace Azure.Security.Attestation.Tests
         public string SharedEusTest => "https://sharedeus.eus.test.attest.azure.net";
         public string SharedUkSouth => "https://shareduks.uks.test.attest.azure.net";
 
+        public string ActiveDirectoryTenantId => GetRecordedVariable("TENANT_ID");
+        public string ActiveDirectoryApplicationId => GetRecordedVariable("CLIENT_ID");
+        public string ActiveDirectoryClientSecret => GetRecordedVariable("CLIENT_SECRET");
+
+        private static Uri DataPlaneScope => new Uri($"https://attest.azure.net");
+
+        public ClientSecretCredential GetClientSecretCredential()
+        {
+            return new ClientSecretCredential(TenantId,
+                ClientId,
+                ClientSecret,
+                new TokenCredentialOptions()
+                {
+                    AuthorityHost = new Uri(AuthorityHostUrl)/*DataPlaneScope*/,
+                }
+                );
+        }
     }
 }

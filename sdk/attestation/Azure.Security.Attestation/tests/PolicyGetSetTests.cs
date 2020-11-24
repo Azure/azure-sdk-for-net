@@ -410,7 +410,7 @@ issuancerules {
         {
             string endpoint = TestEnvironment.SharedUkSouth;
             var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
         private AttestationAdministrationClient GetAadAdministrationClient()
@@ -418,7 +418,7 @@ issuancerules {
             string endpoint = TestEnvironment.AadAttestationUrl;
 
             var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
         private AttestationAdministrationClient GetIsolatedAdministrationClient()
@@ -426,7 +426,7 @@ issuancerules {
             string endpoint = TestEnvironment.IsolatedAttestationUrl;
 
             var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
     }
 }

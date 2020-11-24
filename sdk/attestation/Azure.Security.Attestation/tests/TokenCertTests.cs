@@ -15,7 +15,7 @@ namespace Azure.Security.Attestation.Tests
 {
     public class TokenCertTests : RecordedTestBase<AttestationClientTestEnvironment>
     {
-        public TokenCertTests(bool isAsync) : base(isAsync)
+        public TokenCertTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -36,7 +36,7 @@ namespace Azure.Security.Attestation.Tests
             string endpoint = TestEnvironment.AadAttestationUrl;
 
             var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+            return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
     }
 }

@@ -102,7 +102,7 @@ namespace Azure.Security.Attestation.Tests
     "dOd2FRR1RjZHBhMEVDCklRQ1V0OFNHdnhLbWpwY00vejBXUDlEdm84aDJrNWR1MWlXRGRCa0FuKzBpaUE9" +
     "PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCgA";
 
-        public AttestationTests(bool isAsync) : base(isAsync)
+        public AttestationTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Security.Attestation.Tests
         {
             string endpoint = TestEnvironment.SharedUkSouth;
             var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+            return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
         private AttestationClient GetAadAttestationClient()
@@ -142,7 +142,7 @@ namespace Azure.Security.Attestation.Tests
             string endpoint = TestEnvironment.AadAttestationUrl;
 
             var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+            return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
         private AttestationAdministrationClient GetAadAdministrationClient()
@@ -150,7 +150,7 @@ namespace Azure.Security.Attestation.Tests
             string endpoint = TestEnvironment.AadAttestationUrl;
 
             var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
         private AttestationClient GetIsolatedAttestationClient()
@@ -158,7 +158,7 @@ namespace Azure.Security.Attestation.Tests
             string endpoint = TestEnvironment.IsolatedAttestationUrl;
 
             var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+            return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
     }
 }

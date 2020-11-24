@@ -9,20 +9,6 @@
         "description": "The base resource name."
       }
     },
-    "tenantIdAad": {
-      "type": "string",
-      "defaultValue": "attestaadsdktests",
-      "metadata": {
-        "description": "The AAD tenant ID to which the application and resources belong."
-      }
-    },
-    "tenantIdIsolated": {
-      "type": "string",
-      "defaultValue": "attestisosdktests",
-      "metadata": {
-        "description": "The Isolated tenant ID to which the application and resources belong."
-      }
-    },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -40,8 +26,10 @@
     }
   },
   "variables": {
-    "isolatedUri": "[format('https://{0}.{1}.attest.azure.net', parameters('tenantIdIsolated'), parameters('locationShortName'))]",
-    "aadUri": "[format('https://{0}.{1}.attest.azure.net', parameters('tenantIdAad'), parameters('locationShortName'))]",
+    "isolatedTenantName": "[concat(parameters('baseName'), 'iso')]",
+    "aadTenantName": "[concat(parameters('baseName'), 'aad')]",
+    "isolatedUri": "[format('https://{0}.{1}.attest.azure.net', variables('isolatedTenantName'), parameters('locationShortName'))]",
+    "aadUri": "[format('https://{0}.{1}.attest.azure.net', variables('aadTenantName'), parameters('locationShortName'))]",
     "PolicySigningCertificates": {
       "PolicySigningCertificates": {
         "keys": [
@@ -58,13 +46,13 @@
     {
       "type": "Microsoft.Attestation/attestationProviders",
       "apiVersion": "2020-10-01",
-      "name": "[parameters('tenantIdAad')]",
+      "name": "[variables('aadTenantName')]",
       "location": "[parameters('location')]",
     },
     {
       "type": "Microsoft.Attestation/attestationProviders",
       "apiVersion": "2020-10-01",
-      "name": "[parameters('tenantIdIsolated')]",
+      "name": "[variables('isolatedTenantName')]",
       "location": "[parameters('location')]",
       "properties": "[variables('PolicySigningCertificates')]"
     }

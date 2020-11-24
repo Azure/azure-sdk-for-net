@@ -31,6 +31,9 @@ namespace Azure.Security.Attestation
 
         private IReadOnlyList<AttestationSigner> _signers;
 
+        // Default scope for data plane APIs.
+        private const string DefaultScope = "https://attest.azure.net/.default";
+
         /// <summary>
         /// Returns the URI used to communicate with the service.
         /// </summary>
@@ -64,7 +67,7 @@ namespace Azure.Security.Attestation
             _options = options;
 
             // Add the authentication policy to our builder.
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope()));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, DefaultScope));
 
             // Initialize the ClientDiagnostics.
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -429,9 +432,6 @@ namespace Azure.Security.Attestation
         }
 
 #pragma warning restore
-
-        // A helper method to construct the default scope based on the service endpoint.
-        private static string GetDefaultScope() => $"https://attest.azure.net";
 
         private IReadOnlyList<AttestationSigner> GetSigners()
         {
