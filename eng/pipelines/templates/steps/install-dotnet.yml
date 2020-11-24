@@ -1,6 +1,7 @@
 steps:
   - task: UseDotNet@2
     displayName: 'Use .NET Core SDK'
+    condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
     inputs:
       useGlobalJson: true
       performMultiLevelLookup: true
