@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs
     public class EventProcessorClientOptions
     {
         /// <summary>The maximum amount of time to wait for an event to become available before emitting an <c>null</c> value.</summary>
-        private TimeSpan? _maximumWaitTime = null;
+        private TimeSpan? _maximumWaitTime;
 
         /// <summary>The event catch count to use when reading events.</summary>
         private int _cacheEventCount = 100;
@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs
         private int _prefetchCount = 300;
 
         /// <summary>The prefetch size limit to use for the partition receiver.</summary>
-        private long? _prefetchSizeInBytes = default;
+        private long? _prefetchSizeInBytes;
 
         /// <summary>The desired amount of time to allow between load balancing verification attempts.</summary>
         private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(10);

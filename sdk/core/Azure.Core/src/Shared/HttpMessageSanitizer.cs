@@ -115,11 +115,11 @@ namespace Azure.Core
                     else
                     {
                         stringBuilder.Append(query, queryIndex, nameLength);
-                        stringBuilder.Append("=");
+                        stringBuilder.Append('=');
                         stringBuilder.Append(_redactedPlaceholder);
                         if (query[endOfParameterValue - 1] == '&')
                         {
-                            stringBuilder.Append("&");
+                            stringBuilder.Append('&');
                         }
                     }
                 }

@@ -76,7 +76,7 @@ namespace Azure.Identity
             {
                 // Throw OperationCanceledException only if another thread hasn't set a value to this waiter
                 // by calling either Reset or SetValue
-                if (valueTcs.TrySetCanceled())
+                if (valueTcs.TrySetCanceled(cancellationToken))
                 {
                     throw;
                 }

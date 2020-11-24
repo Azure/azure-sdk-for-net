@@ -3968,7 +3968,9 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public System.Collections.Generic.IList<Azure.Storage.Queues.Models.QueueCorsRule> Cors { get; set; }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Creates a new QueueServiceProperties instance

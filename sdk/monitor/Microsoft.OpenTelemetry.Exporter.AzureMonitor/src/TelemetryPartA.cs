@@ -23,9 +23,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             [TelemetryType.Event] = "Event",
         };
 
-        internal static string RoleName { get; set; } = null;
+        internal static string RoleName { get; set; }
 
-        internal static string RoleInstance { get; set; } = null;
+        internal static string RoleInstance { get; set; }
 
         internal static TelemetryItem GetTelemetryItem(Activity activity, string instrumentationKey)
         {

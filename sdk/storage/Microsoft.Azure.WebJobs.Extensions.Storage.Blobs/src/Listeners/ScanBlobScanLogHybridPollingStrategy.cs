@@ -131,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             await Task.WhenAll(pollingTasks).ConfigureAwait(false);
 
             // Run subsequent iterations at "_pollingInterval" second intervals.
-            return new TaskSeriesCommandResult(wait: Task.Delay(PollingInterval));
+            return new TaskSeriesCommandResult(wait: Task.Delay(PollingInterval, CancellationToken.None));
         }
 
         private async Task PollAndNotify(BlobContainerClient container, ContainerScanInfo containerScanInfo,

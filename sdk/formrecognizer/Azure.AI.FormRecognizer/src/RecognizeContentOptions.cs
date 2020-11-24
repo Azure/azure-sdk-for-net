@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer
         /// When set, specifies the content type for uploaded streams and skips automatic
         /// content type detection.
         /// </summary>
-        public FormContentType? ContentType { get; set; } = null;
+        public FormContentType? ContentType { get; set; }
 
         /// <summary>
         /// The BCP-47 language code of the text in the document.

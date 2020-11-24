@@ -12,7 +12,7 @@ namespace Azure.Identity
     /// </summary>
     public class DeviceCodeCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
-        private string _tenantId = null;
+        private string _tenantId;
 
         /// <summary>
         /// Prevents the <see cref="DeviceCodeCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="DeviceCodeCredential.GetToken"/> and <see cref="DeviceCodeCredential.GetTokenAsync"/> in the case that

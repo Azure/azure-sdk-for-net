@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private const string PartitionProducerPathSuffixMask = "{0}/Partitions/{1}";
 
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
-        private volatile bool _disposed = false;
+        private volatile bool _disposed;
 
         /// <summary>
         ///   The version of AMQP to use within the scope.

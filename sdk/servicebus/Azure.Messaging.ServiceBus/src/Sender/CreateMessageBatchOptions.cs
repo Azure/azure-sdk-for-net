@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus
     public class CreateMessageBatchOptions
     {
         /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
-        private long? _maxSizeInBytes = null;
+        private long? _maxSizeInBytes;
 
         /// <summary>
         ///   The maximum size to allow for a single batch of messages, in bytes.

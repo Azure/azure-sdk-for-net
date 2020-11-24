@@ -354,11 +354,11 @@ namespace Azure.Storage.Files.DataLake
             // regular style Uri will already have account name in domain
             if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(AccountName);
+                path.Append('/').Append(AccountName);
             }
             if (!string.IsNullOrWhiteSpace(FileSystemName))
             {
-                path.Append("/").Append(FileSystemName);
+                path.Append('/').Append(FileSystemName);
                 if (!string.IsNullOrWhiteSpace(DirectoryOrFilePath))
                 {
                     if (DirectoryOrFilePath == "/")
@@ -368,7 +368,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         // Encode path.
-                        path.Append("/").Append(DirectoryOrFilePath.EscapePath());
+                        path.Append('/').Append(DirectoryOrFilePath.EscapePath());
                     }
                 }
             }
@@ -378,14 +378,14 @@ namespace Azure.Storage.Files.DataLake
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
+                { query.Append('&'); }
+                query.Append(Constants.SnapshotParameterName).Append('=').Append(Snapshot);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
+                { query.Append('&'); }
                 query.Append(sas);
             }
 

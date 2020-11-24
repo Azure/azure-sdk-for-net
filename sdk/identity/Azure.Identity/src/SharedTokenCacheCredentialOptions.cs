@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// </summary>
     public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
-        private string _tenantId = null;
+        private string _tenantId;
 
         /// <summary>
         /// The client id of the application registration used to authenticate users in the cache.

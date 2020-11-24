@@ -118,8 +118,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             private readonly CancellationTokenSource _cts = new CancellationTokenSource();
             private readonly ICheckpointer _checkpointer;
             private readonly int _batchCheckpointFrequency;
-            private int _batchCounter = 0;
-            private bool _disposed = false;
+            private int _batchCounter;
+            private bool _disposed;
 
             public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch, ICheckpointer checkpointer = null)
             {
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 await context.CheckpointAsync().ConfigureAwait(false);
             }
 
-            private Dictionary<string, object> GetLinksScope(EventData message)
+            private static Dictionary<string, object> GetLinksScope(EventData message)
             {
                 if (TryGetLinkedActivity(message, out var link))
                 {
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return EmptyScope;
             }
 
-            private Dictionary<string, object> GetLinksScope(EventData[] messages)
+            private static Dictionary<string, object> GetLinksScope(EventData[] messages)
             {
                 List<Activity> links = null;
 
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return false;
             }
 
-            private string GetOperationDetails(ProcessorPartitionContext context, string operation)
+            private static string GetOperationDetails(ProcessorPartitionContext context, string operation)
             {
                 StringWriter sw = new StringWriter();
                 using (JsonTextWriter writer = new JsonTextWriter(sw) { Formatting = Formatting.None })

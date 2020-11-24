@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private static readonly TimeSpan PartitionProducerLifespan = TimeSpan.FromMinutes(5);
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the producer is associated with.  This is likely

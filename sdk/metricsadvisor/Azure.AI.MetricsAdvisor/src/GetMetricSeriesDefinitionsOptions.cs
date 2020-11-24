@@ -34,6 +34,7 @@ namespace Azure.AI.MetricsAdvisor
         /// Filters the result, mapping a dimension's name to a list of possible values it can assume. Only time series
         /// with the specified dimension values will be returned.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IDictionary<string, IList<string>> DimensionCombinationsToFilter
         {
             get => _dimensionCombinationsToFilter;
@@ -43,6 +44,7 @@ namespace Azure.AI.MetricsAdvisor
                 _dimensionCombinationsToFilter = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

@@ -19,9 +19,9 @@ namespace Azure.Messaging.ServiceBus.Administration
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
         private int _maxDeliveryCount = 10;
-        private string _forwardTo = null;
-        private string _forwardDeadLetteredMessagesTo = null;
-        private string _userMetadata = null;
+        private string _forwardTo;
+        private string _forwardDeadLetteredMessagesTo;
+        private string _userMetadata;
 
         /// <summary>
         /// Initializes a new instance of QueueProperties class with the specified relative name.
@@ -151,7 +151,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// Indicates whether this queue has dead letter support when a message expires.
         /// </summary>
         /// <remarks>If true, the expired messages are moved to dead-letter subqueue. Default value is false.</remarks>
-        public bool DeadLetteringOnMessageExpiration { get; set; } = false;
+        public bool DeadLetteringOnMessageExpiration { get; set; }
 
         /// <summary>
         /// The <see cref="TimeSpan"/> duration of duplicate detection history that is maintained by the service.
@@ -289,7 +289,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
         }
 
-        internal bool IsAnonymousAccessible { get; set; } = false;
+        internal bool IsAnonymousAccessible { get; set; }
 
         internal bool SupportOrdering
         {
@@ -303,9 +303,9 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
         }
 
-        internal bool? _internalSupportOrdering = null;
+        internal bool? _internalSupportOrdering;
 
-        internal bool EnableExpress { get; set; } = false;
+        internal bool EnableExpress { get; set; }
 
         /// <summary>
         /// List of properties that were retrieved using GetQueue but are not understood by this version of client is stored here.

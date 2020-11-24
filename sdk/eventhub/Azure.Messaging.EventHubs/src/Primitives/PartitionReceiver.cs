@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Primitives
     public class PartitionReceiver : IAsyncDisposable
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the client is associated with.  This is likely

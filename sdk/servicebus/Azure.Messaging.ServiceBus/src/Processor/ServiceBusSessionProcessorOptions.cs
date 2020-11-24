@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus
                 _prefetchCount = value;
             }
         }
-        private int _prefetchCount = 0;
+        private int _prefetchCount;
 
         /// <inheritdoc cref="ServiceBusProcessorOptions.ReceiveMode"/>
         public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;

@@ -48,6 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// monitored in search of anomalies.
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="DimensionColumns"/> is null.</exception>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<DataFeedDimension> DimensionColumns
         {
             get => _dimensionColumns;
@@ -57,6 +58,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 _dimensionColumns = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// The name of the data source's column with date or string values to be used as timestamp.

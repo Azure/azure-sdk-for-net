@@ -25,6 +25,10 @@
       CA2231; <!-- Override Equality operators -->
       CA2225; <!-- Provide alternative to implicit operators -->
       CA1714; <!-- Flags should have plural names -->
+      CA1062; <!-- Public parameter should be checked for null -->
+      CA1031; <!-- Don't catch generic exceptions -->
+      CA2000; <!-- Call dispose on IDisposable objects -->
+      CA2012; <!-- ValueTask should only be awaited once - conflicts with EnsureCompleted check -->
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

@@ -271,7 +271,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 };
 
                 using MemoryStream legacyCheckpointStream = new MemoryStream();
-                await JsonSerializer.SerializeAsync(legacyCheckpointStream, lease).ConfigureAwait(false);
+                await JsonSerializer.SerializeAsync(legacyCheckpointStream, lease, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 string legacyCheckpointBlob = $"{LegacyCheckpointStorageBlobPrefix}{ConsumerGroup}/{partitionId}";
                 Dictionary<string, string> legacyCheckpoitMetadata = new Dictionary<string, string>()

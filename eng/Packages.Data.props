@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201113.1" />
+    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201123.1" />
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
 		<PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
@@ -63,7 +63,7 @@
     <PackageReference Update="Microsoft.Build.Tasks.Core" Version="15.5.180" />
     <PackageReference Update="Microsoft.Build" Version="15.5.180" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.6.1" />
-    <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2" />
+    <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" />
     <PackageReference Update="Microsoft.CodeAnalysis" Version="2.3.0" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" />
     <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.1" />

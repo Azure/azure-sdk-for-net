@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static readonly IReadOnlyList<EventData> EmptyEventSet = Array.Empty<EventData>();
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         ///   Indicates whether or not this consumer has been closed.

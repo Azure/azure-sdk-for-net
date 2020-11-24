@@ -30,12 +30,14 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Flag indicating whether the sender has been disposed.
         /// </summary>
-        private volatile int _disposed = 0;
+        private volatile int _disposed;
 
         /// <summary>
         /// The single publisher responsible for submitting requests.
         /// </summary>
+#pragma warning disable CA2213 // Member should be disposed. Disposed in DisposeAsync
         private SearchIndexingPublisher<T> _publisher;
+#pragma warning restore CA2213 // Member should be disposed. Disposed in DisposeAsync
 
         /// <summary>
         /// Gets the <see cref="SearchClient"/> used to send requests to the
@@ -73,7 +75,7 @@ namespace Azure.Search.Documents
         /// Task used to minimize simultaneous requests for the key field
         /// accessor.
         /// </summary>
-        private Task _getKeyFieldAccessorTask = null;
+        private Task _getKeyFieldAccessorTask;
 
         /// <summary>
         /// Async event raised whenever an indexing action is added to the
@@ -150,8 +152,10 @@ namespace Azure.Search.Documents
         /// <returns>
         /// A task that will complete when the object has finished disposing.
         /// </returns>
+#pragma warning disable CA1816 // Dispose methods should call SuppressFinalize
         async ValueTask IAsyncDisposable.DisposeAsync() =>
             await DisposeAsync(async: true).ConfigureAwait(false);
+#pragma warning restore CA1816 // Dispose methods should call SuppressFinalize
 
         /// <summary>
         /// Dispose the sender and flush any remaining indexing actions that

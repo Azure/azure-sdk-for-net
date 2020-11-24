@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private readonly object SyncGuard = new object();
 
         /// <summary>A flag indicating that the batch is locked, such as when in use during a publish operation.</summary>
-        private bool _locked = false;
+        private bool _locked;
 
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
