@@ -23,7 +23,7 @@ namespace Azure.Core
 #if NET5_0
             return s.GetHashCode(StringComparison.Ordinal);
 #else
-            return StringComparer.OrdinalIgnoreCase.GetHashCode(s);
+            return StringComparer.Ordinal.GetHashCode(s);
 #endif
         }
     }
