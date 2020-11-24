@@ -34,7 +34,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Options tags to set for this block blob.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public Tags Tags { get; set; }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Optional <see cref="BlobRequestConditions"/> to add
