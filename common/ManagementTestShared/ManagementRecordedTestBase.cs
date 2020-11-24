@@ -13,8 +13,6 @@ namespace Azure.ResourceManager.TestFramework
 {
     public abstract class ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment> where TEnvironment: TestEnvironment, new()
     {
-        private static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
-
         protected ResourceGroupCleanupPolicy CleanupPolicy { get; set; }
 
         protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
@@ -23,18 +21,6 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
-        }
-
-        protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
-        {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return operation.WaitForCompletionAsync(ZeroPollingInterval, default);
-            }
-            else
-            {
-                return operation.WaitForCompletionAsync();
-            }
         }
 
         protected ResourcesManagementClient GetResourceManagementClient()

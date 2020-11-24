@@ -762,7 +762,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
 
@@ -804,7 +804,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
             string version = certificate.Properties.Version;
@@ -819,7 +819,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             policy.Exportable = false;
             operation = await Client.StartCreateCertificateAsync(name, policy);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             certificate = await Client.GetCertificateAsync(name);
             Assert.AreNotEqual(version, certificate.Properties.Version);
@@ -857,7 +857,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
             Assert.IsFalse(x509certificate.HasPrivateKey);

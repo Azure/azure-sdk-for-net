@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -97,7 +97,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -150,7 +150,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -221,7 +221,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -254,7 +254,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -325,7 +325,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(documents, operationOptions, "en");
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -370,7 +370,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
 
-            await operation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(operation);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 

@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         {
             string linkedServiceName = Recording.GenerateName("LinkedSercive");
             LinkedServiceCreateOrUpdateLinkedServiceOperation operation = await LinkedServiceClient.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
-            LinkedServiceResource linkedService = await operation.WaitForCompletionAsync();
+            LinkedServiceResource linkedService = await WaitForCompletionAsync(operation);
             Assert.AreEqual(linkedServiceName, linkedService.Name);
         }
 
@@ -51,10 +51,10 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
             string linkedServiceName = Recording.GenerateName("LinkedSercive");
 
             LinkedServiceCreateOrUpdateLinkedServiceOperation createOperation = await LinkedServiceClient.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
-            await createOperation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(createOperation);
 
             LinkedServiceDeleteLinkedServiceOperation deleteOperation = await LinkedServiceClient.StartDeleteLinkedServiceAsync(linkedServiceName);
-            Response response = await deleteOperation.WaitForCompletionAsync();
+            Response response = await WaitForCompletionAsync(deleteOperation);
             Assert.AreEqual(200, response.Status);
         }
     }

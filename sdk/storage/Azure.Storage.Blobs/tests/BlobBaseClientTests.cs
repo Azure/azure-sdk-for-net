@@ -1565,7 +1565,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                await operation.WaitForCompletionAsync();
+                await WaitForCompletionAsync(operation);
             }
 
             Assert.IsTrue(operation.HasCompleted);
@@ -1597,7 +1597,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                await operation.WaitForCompletionAsync();
+                await WaitForCompletionAsync(operation);
             }
 
             Response<GetBlobTagResult> response = await destBlob.GetTagsAsync();
@@ -1729,7 +1729,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                await operation.WaitForCompletionAsync();
+                await WaitForCompletionAsync(operation);
             }
 
             Assert.IsTrue(operation.HasCompleted);
@@ -1883,7 +1883,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                await operation.WaitForCompletionAsync();
+                await WaitForCompletionAsync(operation);
             }
 
             Assert.IsTrue(operation.HasCompleted);
@@ -1942,7 +1942,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                await operation.WaitForCompletionAsync();
+                await WaitForCompletionAsync(operation);
             }
 
             Assert.IsTrue(operation.HasCompleted);
@@ -1974,7 +1974,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                await operation.WaitForCompletionAsync();
+                await WaitForCompletionAsync(operation);
             }
 
             Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
@@ -2037,7 +2037,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                await operation.WaitForCompletionAsync();
+                await WaitForCompletionAsync(operation);
             }
 
             Assert.IsTrue(operation.HasCompleted);
@@ -2094,7 +2094,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                await operation.WaitForCompletionAsync();
+                await WaitForCompletionAsync(operation);
             }
 
             Assert.IsTrue(operation.HasCompleted);

@@ -2086,7 +2086,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                await operation.WaitForCompletionAsync();
+                await WaitForCompletionAsync(operation);
             }
 
             // Assert
@@ -2155,7 +2155,7 @@ namespace Azure.Storage.Blobs.Test
                 }
                 else
                 {
-                    await operation.WaitForCompletionAsync();
+                    await WaitForCompletionAsync(operation);
                 }
                 parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
 
@@ -2215,7 +2215,7 @@ namespace Azure.Storage.Blobs.Test
                 }
                 else
                 {
-                    await operation.WaitForCompletionAsync();
+                    await WaitForCompletionAsync(operation);
                 }
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                 await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
@@ -2386,7 +2386,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                await operation.WaitForCompletionAsync();
+                await WaitForCompletionAsync(operation);
             }
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);

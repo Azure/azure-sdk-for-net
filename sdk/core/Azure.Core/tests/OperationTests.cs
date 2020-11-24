@@ -26,7 +26,7 @@ namespace Azure.Core.Tests
                 UpdateCalled = () => { updateCalled++; }
             };
 
-            Response<int> operationResult = await operation.WaitForCompletionAsync();
+            Response<int> operationResult = await WaitForCompletionAsync(operation);
 
             Assert.Greater(updateCalled, 0);
             Assert.IsTrue(operation.HasCompleted);

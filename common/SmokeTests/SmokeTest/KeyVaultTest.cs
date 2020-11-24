@@ -81,7 +81,7 @@ namespace SmokeTest
         {
             Console.Write("Cleaning up the resource...");
             var secretDeletePoller = await client.StartDeleteSecretAsync(SecretName);
-            await secretDeletePoller.WaitForCompletionAsync();
+            await WaitForCompletionAsync(secretDeletePoller);
             Console.WriteLine("\tdone");
         }
 

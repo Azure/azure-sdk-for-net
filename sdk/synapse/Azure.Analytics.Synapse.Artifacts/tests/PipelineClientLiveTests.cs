@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         {
             string pipelineName = Recording.GenerateName("Pipeline");
             PipelineCreateOrUpdatePipelineOperation operation = await PipelineClient.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
-            PipelineResource pipeline = await operation.WaitForCompletionAsync();
+            PipelineResource pipeline = await WaitForCompletionAsync(operation);
             Assert.AreEqual(pipelineName, pipeline.Name);
         }
 
@@ -51,10 +51,10 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
             string pipelineName = Recording.GenerateName("Pipeline");
 
             PipelineCreateOrUpdatePipelineOperation createOperation = await PipelineClient.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
-            await createOperation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(createOperation);
 
             PipelineDeletePipelineOperation deleteOperation = await PipelineClient.StartDeletePipelineAsync(pipelineName);
-            Response response = await deleteOperation.WaitForCompletionAsync();
+            Response response = await WaitForCompletionAsync(deleteOperation);
             Assert.AreEqual(200, response.Status);
         }
     }

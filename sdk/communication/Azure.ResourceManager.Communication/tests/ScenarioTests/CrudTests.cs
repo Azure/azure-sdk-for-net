@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Communication.Tests
                 rg.Name,
                 resourceName,
                 new CommunicationServiceResource { Location = ResourceLocation, DataLocation = ResourceDataLocation });
-            await result.WaitForCompletionAsync();
+            await WaitForCompletionAsync(result);
 
             // Check that our resource has been created successfully
             Assert.IsTrue(result.HasCompleted);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Tests
 
             // Delete
             CommunicationServiceDeleteOperation deleteResult = await acsClient.CommunicationService.StartDeleteAsync(rg.Name, resourceName);
-            await deleteResult.WaitForCompletionAsync();
+            await WaitForCompletionAsync(deleteResult);
 
             // Check that our resource has been deleted successfully
             Assert.IsTrue(deleteResult.HasCompleted);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Communication.Tests
                 rg.Name,
                 resourceName,
                 serviceResource);
-            await result.WaitForCompletionAsync();
+            await WaitForCompletionAsync(result);
 
             // Check that our resource has been created successfully
             Assert.IsTrue(result.HasCompleted);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Communication.Tests
 
             // Delete
             CommunicationServiceDeleteOperation deleteResult = await acsClient.CommunicationService.StartDeleteAsync(rg.Name, resourceName);
-            await deleteResult.WaitForCompletionAsync();
+            await WaitForCompletionAsync(deleteResult);
 
             // Check that our resource has been deleted successfully
             Assert.IsTrue(deleteResult.HasCompleted);

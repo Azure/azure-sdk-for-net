@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 {
                     Tags = { { rgName, Recording.UtcNow.ToString("u") } }
                 });
-            //var xx = return await response.WaitForCompletionAsync()
+            //var xx = return await WaitForCompletionAsync(response)
             return await WaitForCompletionAsync(response);
             //return await DedicatedHostsClient.StartCreateOrUpdateAsync(rgName, dedicatedHostGroupName, dedicatedHostName,
             //    new DedicatedHost(m_location,new Sku() { Name= "ESv3-Type1" })

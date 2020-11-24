@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
@@ -153,6 +155,18 @@ namespace Azure.Core.TestFramework
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
+        }
+
+        public async ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return await operation.WaitForCompletionAsync(TimeSpan.Zero, CancellationToken.None);
+            }
+            else
+            {
+                return await WaitForCompletionAsync(operation);
+            }
         }
     }
 }

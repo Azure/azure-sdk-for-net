@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         {
             string dataFlowName = Recording.GenerateName("DataFlow");
             DataFlowCreateOrUpdateDataFlowOperation operation = await DataFlowClient.StartCreateOrUpdateDataFlowAsync(dataFlowName, new DataFlowResource(new DataFlow()));
-            DataFlowResource dataFlow = await operation.WaitForCompletionAsync();
+            DataFlowResource dataFlow = await WaitForCompletionAsync(operation);
             Assert.AreEqual(dataFlowName, dataFlow.Name);
         }
 
@@ -51,10 +51,10 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
             string dataFlowName = Recording.GenerateName("DataFlow");
 
             DataFlowCreateOrUpdateDataFlowOperation createOperation = await DataFlowClient.StartCreateOrUpdateDataFlowAsync(dataFlowName, new DataFlowResource(new DataFlow()));
-            await createOperation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(createOperation);
 
             DataFlowDeleteDataFlowOperation deleteOperation = await DataFlowClient.StartDeleteDataFlowAsync(dataFlowName);
-            Response response = await deleteOperation.WaitForCompletionAsync();
+            Response response = await WaitForCompletionAsync(deleteOperation);
             Assert.AreEqual(200, response.Status);
         }
     }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Communication.Tests
                 rg.Name,
                 resourceName,
                 testResource);
-            await result.WaitForCompletionAsync();
+            await WaitForCompletionAsync(result);
 
             Assert.IsTrue(result.HasCompleted);
             Assert.IsTrue(result.HasValue);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Communication.Tests
                 rg.Name,
                 resourceName,
                 testResource);
-            await result.WaitForCompletionAsync();
+            await WaitForCompletionAsync(result);
 
             Assert.IsTrue(result.HasCompleted);
             Assert.IsTrue(result.HasValue);

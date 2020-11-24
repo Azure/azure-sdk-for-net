@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         {
             string datasetName = Recording.GenerateName("Dataset");
             DatasetCreateOrUpdateDatasetOperation operation = await DatasetClient.StartCreateOrUpdateDatasetAsync(datasetName, new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
-            DatasetResource dataset = await operation.WaitForCompletionAsync();
+            DatasetResource dataset = await WaitForCompletionAsync(operation);
             Assert.AreEqual(datasetName, dataset.Name);
         }
 
@@ -51,10 +51,10 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
             string datasetName = Recording.GenerateName("Dataset");
 
             DatasetCreateOrUpdateDatasetOperation createOperation = await DatasetClient.StartCreateOrUpdateDatasetAsync(datasetName, new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
-            await createOperation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(createOperation);
 
             DatasetDeleteDatasetOperation deleteOperation = await DatasetClient.StartDeleteDatasetAsync(datasetName);
-            Response response = await deleteOperation.WaitForCompletionAsync();
+            Response response = await WaitForCompletionAsync(deleteOperation);
             Assert.AreEqual(200, response.Status);
         }
     }
