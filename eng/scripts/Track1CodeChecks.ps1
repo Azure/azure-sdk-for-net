@@ -103,6 +103,10 @@ try {
         Invoke-Block {
             & npm install -g autorest
         }
+
+        Invoke-Block {
+            & autorest --rest
+        }
         
         Write-Output "Ready to execute code: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path"
         Invoke-Block {
