@@ -66,7 +66,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        [Ignore("Debugging Potential Hang")]
         public async Task BasicEventProcessing()
         {
             #region Snippet:EventHubs_Processor_Sample04_BasicEventProcessing
@@ -203,7 +202,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        [Ignore("Debugging Potential Hang")]
         public async Task CheckpointByEventCount()
         {
             #region Snippet:EventHubs_Processor_Sample04_CheckpointByEventCount
