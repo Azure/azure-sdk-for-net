@@ -39,12 +39,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">SQL pool SKU</param>
         /// <param name="maxSizeBytes">Maximum size in bytes</param>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="restorePointInTime">Snapshot time to restore</param>
         /// <param name="createMode">What is this?</param>
         /// <param name="creationDate">Date the SQL pool was created</param>
-        public SqlPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), long? maxSizeBytes = default(long?), string collation = default(string), string sourceDatabaseId = default(string), string recoverableDatabaseId = default(string), string provisioningState = default(string), string status = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string createMode = default(string), System.DateTime? creationDate = default(System.DateTime?))
+        public SqlPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), long? maxSizeBytes = default(long?), string collation = default(string), string sourceDatabaseId = default(string), string recoverableDatabaseId = default(string), string provisioningState = default(string), string status = default(string), string restorePointInTime = default(string), string createMode = default(string), System.DateTime? creationDate = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Gets or sets snapshot time to restore
         /// </summary>
         [JsonProperty(PropertyName = "properties.restorePointInTime")]
-        public System.DateTime? RestorePointInTime { get; set; }
+        public string RestorePointInTime { get; set; }
 
         /// <summary>
         /// Gets or sets what is this?

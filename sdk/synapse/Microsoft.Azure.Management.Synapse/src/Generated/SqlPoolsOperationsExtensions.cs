@@ -392,61 +392,6 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
-            /// Rename a SQL pool
-            /// </summary>
-            /// <remarks>
-            /// Rename a SQL pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace
-            /// </param>
-            /// <param name='sqlPoolName'>
-            /// SQL pool name
-            /// </param>
-            /// <param name='parameters'>
-            /// The resource move definition for renaming this Sql pool.
-            /// </param>
-            public static void Rename(this ISqlPoolsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, ResourceMoveDefinition parameters)
-            {
-                operations.RenameAsync(resourceGroupName, workspaceName, sqlPoolName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Rename a SQL pool
-            /// </summary>
-            /// <remarks>
-            /// Rename a SQL pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace
-            /// </param>
-            /// <param name='sqlPoolName'>
-            /// SQL pool name
-            /// </param>
-            /// <param name='parameters'>
-            /// The resource move definition for renaming this Sql pool.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RenameAsync(this ISqlPoolsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, ResourceMoveDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.RenameWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Create SQL pool
             /// </summary>
             /// <remarks>

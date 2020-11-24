@@ -14,9 +14,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
     using System.Linq;
 
     /// <summary>
-    /// The resource model definition for a Azure Resource Manager resource
-    /// with an etag.
+    /// Entity Resource
     /// </summary>
+    /// <remarks>
+    /// The resource model definition for an Azure Resource Manager resource
+    /// with an etag.
+    /// </remarks>
     public partial class AzureEntityResource : Resource
     {
         /// <summary>
@@ -30,12 +33,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the AzureEntityResource class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="etag">Resource Etag.</param>
         public AzureEntityResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
             : base(id, name, type)

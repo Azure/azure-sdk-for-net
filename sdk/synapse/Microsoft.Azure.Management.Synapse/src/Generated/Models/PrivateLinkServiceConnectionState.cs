@@ -31,9 +31,8 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Initializes a new instance of the PrivateLinkServiceConnectionState
         /// class.
         /// </summary>
-        /// <param name="status">The private link service connection status.
-        /// Possible values include: 'Approved', 'Pending', 'Rejected',
-        /// 'Disconnected'</param>
+        /// <param name="status">The private link service connection
+        /// status.</param>
         /// <param name="description">The private link service connection
         /// description.</param>
         /// <param name="actionsRequired">The actions required for private link
@@ -52,8 +51,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the private link service connection status. Possible
-        /// values include: 'Approved', 'Pending', 'Rejected', 'Disconnected'
+        /// Gets or sets the private link service connection status.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }

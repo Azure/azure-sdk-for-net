@@ -34,14 +34,14 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
             /// </param>
-            public static IntegrationRuntimeMonitoringData Get(this IIntegrationRuntimeMonitoringDataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            public static IntegrationRuntimeMonitoringData List(this IIntegrationRuntimeMonitoringDataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
             {
-                return operations.GetAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationRuntimeMonitoringData> GetAsync(this IIntegrationRuntimeMonitoringDataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationRuntimeMonitoringData> ListAsync(this IIntegrationRuntimeMonitoringDataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
