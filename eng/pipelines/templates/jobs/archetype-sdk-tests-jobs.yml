@@ -94,6 +94,7 @@ jobs:
           --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
+          /p:RunApiCompat=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
           $(AdditionalTestArguments)
 
