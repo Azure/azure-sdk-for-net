@@ -507,10 +507,10 @@ namespace Azure.Storage.Files.DataLake
             foreach (KeyValuePair<string, string> kv in metadata)
             {
                 sb.Append(kv.Key);
-                sb.Append("=");
+                sb.Append('=');
                 byte[] valueBytes = Encoding.UTF8.GetBytes(kv.Value);
                 sb.Append(Convert.ToBase64String(valueBytes));
-                sb.Append(",");
+                sb.Append(',');
             }
             sb.Remove(sb.Length - 1, 1);
             return sb.ToString();
@@ -3151,7 +3151,8 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetMetadata(
                     metadata,
-                    conditions.ToBlobRequestConditions());
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
 
                 return Response.FromValue(
                     response.Value.ToPathInfo(),
@@ -3208,7 +3209,8 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetMetadataAsync(
                     metadata,
-                    conditions.ToBlobRequestConditions())
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken)
                     .ConfigureAwait(false);
 
                 return Response.FromValue(

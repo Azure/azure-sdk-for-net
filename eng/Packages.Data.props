@@ -9,12 +9,12 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201028.2" />
+    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201123.1" />
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
 		<PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
     <PackageReference Update="Azure.Core" Version="1.6.0" />
-    <PackageReference Update="Azure.Core.Amqp" Version="1.0.0-beta.1" />
+    <PackageReference Update="Azure.Core.Amqp" Version="1.0.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.7" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
     <PackageReference Update="Azure.Search.Documents" Version="11.1.1" />
@@ -63,7 +63,7 @@
     <PackageReference Update="Microsoft.Build.Tasks.Core" Version="15.5.180" />
     <PackageReference Update="Microsoft.Build" Version="15.5.180" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.6.1" />
-    <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2" />
+    <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" />
     <PackageReference Update="Microsoft.CodeAnalysis" Version="2.3.0" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" />
     <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.1" />
@@ -87,7 +87,7 @@
     <PackageReference Update="MSTest.TestFramework" Version="1.3.2" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Update="NSubstitute" Version="3.1.0" />
-    <PackageReference Update="nunit" Version="3.12.0" />
+    <PackageReference Update="NUnit" Version="3.12.0" />
     <PackageReference Update="NUnit3TestAdapter" Version="3.13.0" />
     <PackageReference Update="OpenTelemetry" Version="0.8.0-beta.1" />
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="0.8.0-beta.1" />
@@ -194,6 +194,15 @@
   <ItemGroup Condition="('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true')">
     <PackageReference Update="CommandLineParser" Version="2.8.0" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
+  </ItemGroup>
+
+  <!-- InheritDoc-->
+  <ItemGroup>
+    <PackageReference Update="SauceControl.InheritDoc" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
   </ItemGroup>
 
 </Project>

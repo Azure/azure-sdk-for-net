@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static TimeSpan CredentialRefreshBuffer { get; } = TimeSpan.FromMinutes(5);
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed = false;
+        private bool _closed;
 
         /// <summary>The currently active token to use for authorization with the Service Bus service.</summary>
         private AccessToken _accessToken;

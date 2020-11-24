@@ -23,7 +23,7 @@ namespace Azure.Communication.Identity
         internal const int OnDemandRefreshIntervalInMinutes = 2;
 
         private readonly object _syncLock = new object();
-        private bool _someThreadIsRefreshing = false;
+        private bool _someThreadIsRefreshing;
         private AccessToken _currentToken;
         private bool _valueIsInitialized;
 

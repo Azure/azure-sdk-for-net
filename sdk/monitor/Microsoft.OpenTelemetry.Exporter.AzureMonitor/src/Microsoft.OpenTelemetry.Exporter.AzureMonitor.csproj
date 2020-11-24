@@ -29,22 +29,9 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <PropertyGroup>
-    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
-    <NoWarn>
-      ;NU5105;
-      CA1716; 
-      CA1308; 
-      CA1819; 
-      CA1710; 
-      CA1028; 
-      CA1032; 
-      CA1063; 
-      CA1066; 
-      CA1815; 
-      CA2007; 
-      CA2231; 
-      CA2225; 
-      CA1714; ;AZC0001;CA1812;CS0108;CA1812;CS1591;</NoWarn>
+    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace
+      https://github.com/Azure/azure-sdk-for-net/issues/17155 -->
+    <NoWarn>$(NoWarn);AZC0001;CS0108;CS1591</NoWarn>
   </PropertyGroup>
 
 </Project>
