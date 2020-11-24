@@ -117,6 +117,11 @@ namespace Microsoft.Azure.Management.AppPlatform
         IOperations Operations { get; }
 
         /// <summary>
+        /// Gets the IRuntimeVersionsOperations.
+        /// </summary>
+        IRuntimeVersionsOperations RuntimeVersions { get; }
+
+        /// <summary>
         /// Gets the ISkusOperations.
         /// </summary>
         ISkusOperations Skus { get; }
