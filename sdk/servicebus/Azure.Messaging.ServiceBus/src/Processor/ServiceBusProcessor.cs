@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus
 
         private Func<ProcessSessionMessageEventArgs, Task> _processSessionMessageAsync;
 
-        private Func<ProcessErrorEventArgs, Task> _processErrorAsync = default;
+        private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         private Func<ProcessSessionEventArgs, Task> _sessionInitializingAsync;
 
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;

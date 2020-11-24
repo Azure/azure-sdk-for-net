@@ -152,7 +152,7 @@ namespace Azure.Core.Pipeline
             }
 
             public override bool CanRead => _currentStream.CanRead;
-            public override bool CanSeek { get; } = false;
+            public override bool CanSeek { get; }
             public override long Length
             {
                 get

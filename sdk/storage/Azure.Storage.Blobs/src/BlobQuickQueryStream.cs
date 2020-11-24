@@ -309,6 +309,8 @@ namespace Azure.Storage.Blobs
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(true);
+
             // Return the buffer to the pool if we're called from Dispose or a finalizer
             if (_buffer != null)
             {
@@ -322,6 +324,8 @@ namespace Azure.Storage.Blobs
                 ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
                 _buffer = null;
             }
+
+            _avroReader.Dispose();
         }
     }
 }

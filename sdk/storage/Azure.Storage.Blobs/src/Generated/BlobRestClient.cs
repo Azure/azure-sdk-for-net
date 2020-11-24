@@ -19186,7 +19186,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobCorsRule> Cors { get; set; }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions
