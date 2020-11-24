@@ -1,5 +1,8 @@
 # Release History
 
+## 7.1.0-beta.1 (Unreleased)
+
+
 ## 7.0.0 (2020-11-23)
 ### Breaking Changes
 - Renamed GetRawMessage method to GetRawAmqpMessage.
