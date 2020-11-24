@@ -30,6 +30,7 @@ namespace Azure.Security.Attestation
         private readonly SigningCertificatesRestClient _metadataClient;
         private readonly AttestationClientOptions _options;
         private IReadOnlyList<AttestationSigner> _signers;
+        private object _statelock = new object();
 
         // The default scope for our data plane operations.
         private readonly string DefaultScope = "https://attest.azure.net/.default";
@@ -403,7 +404,7 @@ namespace Azure.Security.Attestation
 
         private IReadOnlyList<AttestationSigner> GetSigners()
         {
-            lock (this)
+            lock (_statelock)
             {
                 if (_signers == null)
                 {

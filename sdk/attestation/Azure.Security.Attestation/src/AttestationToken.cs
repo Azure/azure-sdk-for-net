@@ -22,6 +22,7 @@ namespace Azure.Security.Attestation
         private JsonSerializerOptions _options = new JsonSerializerOptions();
 
         private object _deserializedBody;
+        private object _statelock = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationToken"/> class.
@@ -139,7 +140,7 @@ namespace Azure.Security.Attestation
         public T GetBody<T>()
             where T: class
         {
-            lock (this)
+            lock (_statelock)
             {
                 if (_deserializedBody == null || _deserializedBody.GetType() != typeof(T))
                 {

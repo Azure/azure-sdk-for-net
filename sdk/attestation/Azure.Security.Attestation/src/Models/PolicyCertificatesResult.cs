@@ -15,7 +15,9 @@ namespace Azure.Security.Attestation.Models
     [JsonConverter(typeof(PolicyCertificatesResultConverter))]
     public partial class PolicyCertificatesResult
     {
-        private IReadOnlyList<X509Certificate2> _certificateList = null;
+        private IReadOnlyList<X509Certificate2> _certificateList;
+        private object _statelock = new object();
+
         /// <summary>
         /// Creates a new instance of a <see cref="PolicyCertificatesResult"/> object.
         /// </summary>
@@ -29,7 +31,7 @@ namespace Azure.Security.Attestation.Models
         /// <returns>A list of <see cref="X509Certificate2"/> certificates which are used to sign incoming requests.</returns>
         public IReadOnlyList<X509Certificate2> GetPolicyCertificates()
         {
-            lock (this)
+            lock (_statelock)
             {
                 if (_certificateList == null)
                 {
