@@ -3,8 +3,11 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
-using OpenTelemetry;
+
 using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
+
+using OpenTelemetry;
+using OpenTelemetry.Logs;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
@@ -45,6 +48,25 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
                 }
 
                 telemetryItem.Data = telemetryData;
+                telemetryItems.Add(telemetryItem);
+            }
+
+            return telemetryItems;
+        }
+
+        internal static List<TelemetryItem> Convert(Batch<LogRecord> batchLogRecord, string instrumentationKey)
+        {
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            TelemetryItem telemetryItem;
+
+            foreach (var logRecord in batchLogRecord)
+            {
+                telemetryItem = TelemetryPartA.GetTelemetryItem(logRecord, instrumentationKey);
+                telemetryItem.Data = new MonitorBase
+                {
+                    BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Message],
+                    BaseData = TelemetryPartB.GetMessageData(logRecord),
+                };
                 telemetryItems.Add(telemetryItem);
             }
 
