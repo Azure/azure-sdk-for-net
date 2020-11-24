@@ -96,13 +96,13 @@ namespace Azure.Core.Pipeline
                 if (responseMessage.Content != null)
                 {
 #if NET5_0
-                    if (!async)
+                    if (async)
                     {
-                        contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
+                        contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
+                        contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
                     }
 #else
                     contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
@@ -393,11 +393,17 @@ namespace Azure.Core.Pipeline
                     return PipelineContent!.TryComputeLength(out length);
                 }
 
-#if NETCOREAPP
+#if NET5_0
+                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+                {
+                    Debug.Assert(PipelineContent != null);
+                    await PipelineContent!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+                }
+
                 protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
                 {
                     Debug.Assert(PipelineContent != null);
-                    PipelineContent.WriteTo(stream, CancellationToken);
+                    PipelineContent.WriteTo(stream, cancellationToken);
                 }
 #endif
             }
