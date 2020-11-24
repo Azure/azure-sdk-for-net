@@ -5,8 +5,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using OpenTelemetry.Trace;
+
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
+
+using OpenTelemetry.Logs;
+using OpenTelemetry.Trace;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
@@ -89,6 +93,14 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             return dependency;
         }
 
+        internal static MessageData GetMessageData(LogRecord logRecord)
+        {
+            return new MessageData(version: 2, message: logRecord.State.ToString())
+            {
+                SeverityLevel = GetSeverityLevel(logRecord.LogLevel),
+            };
+        }
+
         private static TagEnumerationState EnumerateActivityTags(Activity activity)
         {
             var monitorTags = new TagEnumerationState
@@ -108,6 +120,28 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             for (int i = 0; i < PartCTags.Length; i++)
             {
                 destination.Add(PartCTags[i].Key, PartCTags[i].Value?.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Converts the <see cref="LogRecord.LogLevel"/> into corresponding Azure Monitor <see cref="SeverityLevel"/>.
+        /// </summary>
+        private static SeverityLevel GetSeverityLevel(LogLevel logLevel)
+        {
+            switch (logLevel)
+            {
+                case LogLevel.Critical:
+                    return SeverityLevel.Critical;
+                case LogLevel.Error:
+                    return SeverityLevel.Error;
+                case LogLevel.Warning:
+                    return SeverityLevel.Warning;
+                case LogLevel.Information:
+                    return SeverityLevel.Information;
+                case LogLevel.Debug:
+                case LogLevel.Trace:
+                default:
+                    return SeverityLevel.Verbose;
             }
         }
     }

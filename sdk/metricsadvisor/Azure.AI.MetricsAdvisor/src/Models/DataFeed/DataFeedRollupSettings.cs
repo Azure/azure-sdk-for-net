@@ -52,6 +52,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Defines the column names to which these <see cref="DataFeedRollupSettings"/> will apply.
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="AutoRollupGroupByColumnNames"/> is null.</exception>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<string> AutoRollupGroupByColumnNames
         {
             get => _autoRollupGroupByColumnNames;
@@ -61,5 +62,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 _autoRollupGroupByColumnNames = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
     }
 }
