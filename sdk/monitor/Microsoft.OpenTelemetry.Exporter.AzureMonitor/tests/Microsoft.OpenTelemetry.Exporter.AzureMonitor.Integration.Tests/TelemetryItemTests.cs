@@ -90,7 +90,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         private TelemetryItem RunActivityTest(Action<ActivitySource> testScenario)
         {
             // SETUP
-            var ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
+            var ActivitySourceName = $"{nameof(TelemetryItemTests)}.{nameof(RunActivityTest)}";
             using var activitySource = new ActivitySource(ActivitySourceName);
 
             var mockTransmitter = new MockTransmitter();
@@ -157,7 +157,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         public void VerifyLoggerWithActivity()
         {
             // SETUP
-            var ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
+            var ActivitySourceName = $"{nameof(TelemetryItemTests)}.{nameof(VerifyLoggerWithActivity)}";
             using var activitySource = new ActivitySource(ActivitySourceName);
 
             var mockTransmitter = new MockTransmitter();
