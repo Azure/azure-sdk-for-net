@@ -104,7 +104,7 @@ try {
             & npm install -g autorest
         }
 
-        Write-Output "Ready to execute code: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path"
+        Write-Output "Ready to execute code: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90"
         Invoke-Block {
             & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90 
         }
