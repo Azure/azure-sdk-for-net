@@ -10,7 +10,7 @@ $inputFilePaths += $inputFileContent.relatedReadmeMdFiles;
 $inputFilePaths = $inputFilePaths | Select-Object -Unique
 
 $changedFilePaths = $inputFilePaths -join "`n";
-Write-Host "List Of changed swagger files and related readmes`n $changedFilePaths `n"
+Write-Host "List of changed swagger files and related readmes:`n$changedFilePaths`n"
 
 $autorestFilesPath = Get-ChildItem -Path "$RepoRoot/sdk"  -Filter autorest.md -Recurse | Resolve-Path -Relative
 
