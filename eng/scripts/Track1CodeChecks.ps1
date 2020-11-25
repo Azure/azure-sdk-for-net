@@ -135,12 +135,12 @@ try {
             }
             LogError "Generated code is manually altered, you may need to re-run sdk\<RP Name>\generate.ps1"
         }
+        Write-Output "IF you need a result, here is it."
+        $result=''
+        $result
     }
 }
 finally {
-    Write-Output "IF you need a result, here is it."
-    $result=''
-    $result
     Write-Host ""
     Write-Host "Summary:"
     Write-Host ""
