@@ -5,7 +5,9 @@ using System;
 
 namespace Azure
 {
+#pragma warning disable SA1649 // File name should match first type name
     internal class NoBodyResponse<T> : Response<T>
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly Response _response;
 
