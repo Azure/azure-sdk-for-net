@@ -115,21 +115,21 @@ try {
         $diffResult = git -c core.safecrlf=false diff HEAD --name-only --ignore-space-at-eol
         if($diffResult.Length -gt 1){
             $exitCode ++
-        }
-        if(($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')){
-            $content = git -c core.safecrlf=false diff HEAD --ignore-space-at-eol $result[0]
-            $content[0..($content.Length-1)] | ForEach-Object {
-                if($_.StartsWith('-')){
-                    $exitCode ++
-                    break
-                }
-            }
+        } elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')){
+            # $content = git -c core.safecrlf=false diff HEAD --ignore-space-at-eol $result[0]
+            # $content[0..($content.Length-1)] | ForEach-Object {
+            #     if($_.StartsWith('+')){
+            #         $exitCode ++
+            #         break
+            #     }
+            # }
+            Write-Output "Git diff on sdkinfo"
+        } else {
+            $exitCode ++
         }
 
         if ($exitCode -ne 0) {
-            Invoke-Block {
-                & git -c core.safecrlf=false diff HEAD --ignore-space-at-eol
-            }
+            & git -c core.safecrlf=false diff HEAD --ignore-space-at-eol
             Write-Output "Git Diff file is:" 
             $diffResult | ForEach-Object {
                 Write-Output $_
