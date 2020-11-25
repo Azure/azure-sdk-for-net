@@ -118,7 +118,7 @@ try {
         } elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')){
             $changeContent = @()
             $content = git -c core.safecrlf=false diff -U0 HEAD --ignore-space-at-eol $diffResult[0]
-            $content | ForEach-Object {
+            $content[4..($content.Length-1)] | ForEach-Object {
                 if($_.StartsWith('+') -or $_.StartsWith('-')){
                     $changeContent += $_
                 }
@@ -133,7 +133,7 @@ try {
         '-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";',
         '-      public static readonly String GithubForkName = "Azure";',
         '-      public static readonly String GithubBranchName = "master";',
-        '-      public static readonly String GithubCommidId = "{0}";' -f $commit,
+        '-      public static readonly String GithubCommidId = "{0}";'.Replace('{0}',$commit),
         '-      public static readonly String CodeGenerationErrors = "";',
         '-      public static readonly String GithubRepoName = "azure-rest-api-specs";',
         '-      // END: Code Generation Metadata Section'
