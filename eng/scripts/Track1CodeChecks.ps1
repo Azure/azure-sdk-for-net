@@ -82,7 +82,7 @@ try {
             $mataPath += $path
         }
     }
-
+    Write-Output "MetaPath is"$mataPath
     $mataPath | ForEach-Object {
         $metaData = Get-Content $mataPath
         $commit = ''
@@ -113,7 +113,6 @@ try {
         & git add -A
         $diffResult=@()
         $diffResult += git -c core.safecrlf=false diff HEAD --name-only --ignore-space-at-eol
-        Write-Output "Length is "$diffResult.Length
         if($diffResult.Length -gt 1){
             $exitCode ++
         } elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')){
