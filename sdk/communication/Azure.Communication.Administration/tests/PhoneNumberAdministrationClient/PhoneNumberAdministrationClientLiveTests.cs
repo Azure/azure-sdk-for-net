@@ -74,7 +74,7 @@ namespace Azure.Communication.Administration.Tests
             var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync();
 
             Assert.IsNotNull(phonePlanGroups);
-            Assert.AreEqual(3, phonePlanGroups.Count);
+            Assert.IsNotEmpty(phonePlanGroups);
 
             var firstGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.Geographic);
 
