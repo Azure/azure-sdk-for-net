@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// class.
         /// </summary>
         /// <param name="source">The source.</param>
-        public SetTriggerStateActionDefinition(WorkflowTrigger source)
+        public SetTriggerStateActionDefinition(WorkflowTriggerReference source)
         {
             Source = source;
             CustomInit();
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the source.
         /// </summary>
         [JsonProperty(PropertyName = "source")]
-        public WorkflowTrigger Source { get; set; }
+        public WorkflowTriggerReference Source { get; set; }
 
         /// <summary>
         /// Validate the object.

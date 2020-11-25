@@ -194,12 +194,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            /// <param name='workflow'>
-            /// The workflow.
-            /// </param>
-            public static Workflow Update(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, Workflow workflow)
+            public static Workflow Update(this IWorkflowsOperations operations, string resourceGroupName, string workflowName)
             {
-                return operations.UpdateAsync(resourceGroupName, workflowName, workflow).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, workflowName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -214,15 +211,12 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            /// <param name='workflow'>
-            /// The workflow.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Workflow> UpdateAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, Workflow workflow, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Workflow> UpdateAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, workflowName, workflow, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, workflowName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -486,7 +480,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='move'>
             /// The workflow to move.
             /// </param>
-            public static void Move(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, Workflow move)
+            public static void Move(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, WorkflowReference move)
             {
                 operations.MoveAsync(resourceGroupName, workflowName, move).GetAwaiter().GetResult();
             }
@@ -509,7 +503,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task MoveAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, Workflow move, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task MoveAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, WorkflowReference move, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.MoveWithHttpMessagesAsync(resourceGroupName, workflowName, move, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -615,12 +609,12 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            /// <param name='workflow'>
-            /// The workflow definition.
+            /// <param name='validate'>
+            /// The workflow.
             /// </param>
-            public static void ValidateByLocation(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, Workflow workflow)
+            public static void ValidateByLocation(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, Workflow validate)
             {
-                operations.ValidateByLocationAsync(resourceGroupName, location, workflowName, workflow).GetAwaiter().GetResult();
+                operations.ValidateByLocationAsync(resourceGroupName, location, workflowName, validate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -638,15 +632,15 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            /// <param name='workflow'>
-            /// The workflow definition.
+            /// <param name='validate'>
+            /// The workflow.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ValidateByLocationAsync(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, Workflow workflow, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ValidateByLocationAsync(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, Workflow validate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ValidateByLocationWithHttpMessagesAsync(resourceGroupName, location, workflowName, workflow, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ValidateByLocationWithHttpMessagesAsync(resourceGroupName, location, workflowName, validate, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -664,7 +658,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='move'>
             /// The workflow to move.
             /// </param>
-            public static void BeginMove(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, Workflow move)
+            public static void BeginMove(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, WorkflowReference move)
             {
                 operations.BeginMoveAsync(resourceGroupName, workflowName, move).GetAwaiter().GetResult();
             }
@@ -687,7 +681,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginMoveAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, Workflow move, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginMoveAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, WorkflowReference move, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginMoveWithHttpMessagesAsync(resourceGroupName, workflowName, move, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

@@ -34,5 +34,9 @@ namespace Microsoft.Azure.Management.Logic.Models
         public const string Unregistering = "Unregistering";
         public const string Unregistered = "Unregistered";
         public const string Completed = "Completed";
+        public const string Renewing = "Renewing";
+        public const string Pending = "Pending";
+        public const string Waiting = "Waiting";
+        public const string InProgress = "InProgress";
     }
 }

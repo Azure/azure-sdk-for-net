@@ -133,9 +133,6 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='workflowName'>
         /// The workflow name.
         /// </param>
-        /// <param name='workflow'>
-        /// The workflow.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -151,7 +148,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Workflow>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workflowName, Workflow workflow, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Workflow>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workflowName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a workflow.
         /// </summary>
@@ -323,7 +320,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> MoveWithHttpMessagesAsync(string resourceGroupName, string workflowName, Workflow move, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> MoveWithHttpMessagesAsync(string resourceGroupName, string workflowName, WorkflowReference move, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Regenerates the callback URL access key for request triggers.
         /// </summary>
@@ -386,8 +383,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='workflowName'>
         /// The workflow name.
         /// </param>
-        /// <param name='workflow'>
-        /// The workflow definition.
+        /// <param name='validate'>
+        /// The workflow.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -401,7 +398,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ValidateByLocationWithHttpMessagesAsync(string resourceGroupName, string location, string workflowName, Workflow workflow, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ValidateByLocationWithHttpMessagesAsync(string resourceGroupName, string location, string workflowName, Workflow validate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Moves an existing workflow.
         /// </summary>
@@ -426,7 +423,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginMoveWithHttpMessagesAsync(string resourceGroupName, string workflowName, Workflow move, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginMoveWithHttpMessagesAsync(string resourceGroupName, string workflowName, WorkflowReference move, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of workflows by subscription.
         /// </summary>

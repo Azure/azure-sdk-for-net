@@ -857,9 +857,6 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='workflowName'>
         /// The workflow name.
         /// </param>
-        /// <param name='workflow'>
-        /// The workflow.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -881,7 +878,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Workflow>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workflowName, Workflow workflow, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Workflow>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workflowName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -899,10 +896,6 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (workflow == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "workflow");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -912,7 +905,6 @@ namespace Microsoft.Azure.Management.Logic
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workflowName", workflowName);
-                tracingParameters.Add("workflow", workflow);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
@@ -965,12 +957,6 @@ namespace Microsoft.Azure.Management.Logic
 
             // Serialize Request
             string _requestContent = null;
-            if(workflow != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(workflow, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -2182,7 +2168,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> MoveWithHttpMessagesAsync(string resourceGroupName, string workflowName, Workflow move, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> MoveWithHttpMessagesAsync(string resourceGroupName, string workflowName, WorkflowReference move, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse _response = await BeginMoveWithHttpMessagesAsync(resourceGroupName, workflowName, move, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -2573,8 +2559,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='workflowName'>
         /// The workflow name.
         /// </param>
-        /// <param name='workflow'>
-        /// The workflow definition.
+        /// <param name='validate'>
+        /// The workflow.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2594,7 +2580,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ValidateByLocationWithHttpMessagesAsync(string resourceGroupName, string location, string workflowName, Workflow workflow, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ValidateByLocationWithHttpMessagesAsync(string resourceGroupName, string location, string workflowName, Workflow validate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2612,20 +2598,18 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workflowName");
             }
+            if (validate == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "validate");
+            }
+            if (validate != null)
+            {
+                validate.Validate();
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (workflow == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "workflow");
-            }
-
-            if (workflow != null)
-            {
-                workflow.Validate();
-            }
-
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2636,7 +2620,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("workflowName", workflowName);
-                tracingParameters.Add("workflow", workflow);
+                tracingParameters.Add("validate", validate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ValidateByLocation", tracingParameters);
             }
@@ -2690,13 +2674,12 @@ namespace Microsoft.Azure.Management.Logic
 
             // Serialize Request
             string _requestContent = null;
-            if(workflow != null)
+            if(validate != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(workflow, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(validate, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
-
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -2791,7 +2774,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginMoveWithHttpMessagesAsync(string resourceGroupName, string workflowName, Workflow move, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginMoveWithHttpMessagesAsync(string resourceGroupName, string workflowName, WorkflowReference move, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2808,10 +2791,6 @@ namespace Microsoft.Azure.Management.Logic
             if (move == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "move");
-            }
-            if (move != null)
-            {
-                move.Validate();
             }
             if (Client.ApiVersion == null)
             {
