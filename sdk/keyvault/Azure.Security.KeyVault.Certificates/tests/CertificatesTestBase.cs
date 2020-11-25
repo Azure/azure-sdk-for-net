@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         CertificateClientOptions.ServiceVersion.V7_0,
         CertificateClientOptions.ServiceVersion.V7_1)]
     [NonParallelizable]
-    public class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
+    public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
         private readonly CertificateClientOptions.ServiceVersion _serviceVersion;

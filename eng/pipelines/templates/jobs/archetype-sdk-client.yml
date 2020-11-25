@@ -110,6 +110,8 @@ jobs:
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     variables:
       - template: ../variables/globals.yml
+      - name: disable.coverage.autogenerate
+        value: true
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
@@ -119,6 +121,7 @@ jobs:
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+          CollectCoverage: true
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
@@ -149,7 +152,8 @@ jobs:
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{parameters.ServiceToTest}}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
-          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
+          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
+          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{parameters.ServiceDirectory}}
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -163,15 +167,18 @@ jobs:
           testResultsFormat: "VSTest"
           mergeTestResults: true
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
-        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
-        displayName: ReportGenerator
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
+        displayName: Generate Code Coverage Reports
         inputs:
-          reports: '**/*coverage.netcoreapp2.1.cobertura.xml'
-          targetdir: '$(Build.SourcesDirectory)'
-          reporttypes: Cobertura
+          reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
+          targetdir: $(Build.ArtifactStagingDirectory)\coverage
+          reporttypes: Cobertura;HtmlInline_AzurePipelines
+          filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
+          verbosity: Verbose
       - task: PublishCodeCoverageResults@1
-        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
-        displayName: 'Publish code coverage report'
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
+        displayName: Publish Code Coverage Reports
         inputs:
-          codeCoverageTool: 'Cobertura'
-          summaryFileLocation: 'Cobertura.xml'
+          codeCoverageTool: Cobertura
+          summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
+          reportDirectory: $(Build.ArtifactStagingDirectory)\coverage

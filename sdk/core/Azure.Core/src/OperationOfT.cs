@@ -14,7 +14,9 @@ namespace Azure
     /// Represents a long-running operation.
     /// </summary>
     /// <typeparam name="T">The final result of the long-running operation.</typeparam>
+#pragma warning disable SA1649 // File name should match first type name
     public abstract class Operation<T> where T : notnull
+#pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
