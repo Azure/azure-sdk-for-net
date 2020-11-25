@@ -26,12 +26,12 @@ namespace Azure.Data.Tables
         private readonly OdataMetadataFormat _format;
         private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
         internal MultipartContent _batch;
-        internal Guid _batchGuid = default;
-        internal Guid _changesetGuid = default;
+        internal Guid _batchGuid;
+        internal Guid _changesetGuid;
         internal ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup = new ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)>();
         internal ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)> _requestMessages = new ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)>();
         private List<(ITableEntity entity, HttpMessage HttpMessage)> _submittedMessageList;
-        private bool _submitted = false;
+        private bool _submitted;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableTransactionalBatch"/> class.

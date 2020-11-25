@@ -1,5 +1,8 @@
 # Release History
 
+## 4.0.0-beta.4 (Unreleased)
+
+
 ## 4.0.0-beta.3 (2020-11-12)
 
 ### Changes

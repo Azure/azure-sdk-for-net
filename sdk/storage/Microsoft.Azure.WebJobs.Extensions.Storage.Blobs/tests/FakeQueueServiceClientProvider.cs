@@ -4,6 +4,8 @@
 using System;
 using Azure.Core;
 using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
@@ -12,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         private readonly QueueServiceClient _queueServiceClient;
 
         public FakeQueueServiceClientProvider(QueueServiceClient queueServiceClient)
-            : base(null, null, null)
+            : base(null, null, null, null)
         {
             _queueServiceClient = queueServiceClient;
         }

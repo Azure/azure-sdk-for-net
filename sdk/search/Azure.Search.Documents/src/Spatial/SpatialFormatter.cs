@@ -34,7 +34,7 @@ namespace Azure.Search.Documents
             return new StringBuilder(maxLength)
                 .Append("geography'POINT(")
                 .Append(JsonSerialization.Double(longitude, CultureInfo.InvariantCulture))
-                .Append(" ")
+                .Append(' ')
                 .Append(JsonSerialization.Double(latitude, CultureInfo.InvariantCulture))
                 .Append(")'")
                 .ToString();
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents
             {
                 if (!first)
                 {
-                    odata.Append(",");
+                    odata.Append(',');
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents
                 }
 
                 odata.Append(JsonSerialization.Double(position.Longitude, CultureInfo.InvariantCulture))
-                    .Append(" ")
+                    .Append(' ')
                     .Append(JsonSerialization.Double(position.Latitude, CultureInfo.InvariantCulture));
             }
 
@@ -149,7 +149,7 @@ namespace Azure.Search.Documents
             {
                 if (!first)
                 {
-                    odata.Append(",");
+                    odata.Append(',');
                 }
                 else
                 {
@@ -157,7 +157,7 @@ namespace Azure.Search.Documents
                 }
 
                 odata.Append(JsonSerialization.Double(point.Longitude, CultureInfo.InvariantCulture))
-                    .Append(" ")
+                    .Append(' ')
                     .Append(JsonSerialization.Double(point.Latitude, CultureInfo.InvariantCulture));
             }
 

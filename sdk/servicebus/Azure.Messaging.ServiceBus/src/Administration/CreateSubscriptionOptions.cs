@@ -17,9 +17,9 @@ namespace Azure.Messaging.ServiceBus.Administration
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
         private int _maxDeliveryCount = 10;
-        private string _forwardTo = null;
-        private string _forwardDeadLetteredMessagesTo = null;
-        private string _userMetadata = null;
+        private string _forwardTo;
+        private string _forwardDeadLetteredMessagesTo;
+        private string _userMetadata;
 
         /// <summary>
         /// Initializes a new instance of SubscriptionDescription class with the specified name and topic name.
@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// If true, the receiver can only receive messages using <see cref="ServiceBusSessionProcessor"/>.
         /// Defaults to false.
         /// </remarks>
-        public bool RequiresSession { get; set; } = false;
+        public bool RequiresSession { get; set; }
 
         /// <summary>
         /// The default time to live value for the messages. This is the duration after which the message expires, starting from when
@@ -130,7 +130,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// Indicates whether this subscription has dead letter support when a message expires.
         /// </summary>
         /// <remarks>If true, the expired messages are moved to dead-letter subqueue. Default value is false.</remarks>
-        public bool DeadLetteringOnMessageExpiration { get; set; } = false;
+        public bool DeadLetteringOnMessageExpiration { get; set; }
 
         /// <summary>
         /// indicates whether messages need to be forwarded to dead-letter sub queue when subscription rule evaluation fails.
@@ -171,7 +171,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>
         /// The maximum delivery count of a message before it is dead-lettered.
         /// </summary>
-        /// <remarks>The delivery count is increased when a message is received in <see cref="ReceiveMode.PeekLock"/> mode
+        /// <remarks>The delivery count is increased when a message is received in <see cref="ServiceBusReceiveMode.PeekLock"/> mode
         /// and didn't complete the message before the message lock expired.
         /// Default value is 10. Minimum value is 1.</remarks>
         public int MaxDeliveryCount

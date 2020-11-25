@@ -1,0 +1,633 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:42:51 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "9e93c3d8a5cbfbf3fee52ae69b7fc4f5",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:42:52 GMT",
+        "MS-CV": "kjXKhh34nU6dC45D/XXIdg.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0a4y9XwAAAADrsuyQQKomRJTt\u002BxQYmLryWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "910ms"
+      },
+      "ResponseBody": {
+        "phonePlanGroups": [
+          {
+            "phonePlanGroupId": "Sanitized",
+            "phoneNumberType": "Geographic",
+            "localizedName": "Azure- User - Geographic",
+            "localizedDescription": "These are numbers used by Azure resources."
+          },
+          {
+            "phonePlanGroupId": "Sanitized",
+            "phoneNumberType": "Geographic",
+            "localizedName": "Azure - Geographic",
+            "localizedDescription": "These are numbers used by Azure resources."
+          },
+          {
+            "phonePlanGroupId": "Sanitized",
+            "phoneNumberType": "TollFree",
+            "localizedName": "Azure - Toll Free",
+            "localizedDescription": "These are toll free numbers used by Azure resources."
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:42:52 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "6e4215e47f4056a68f10c9947ef77cc9",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:42:52 GMT",
+        "MS-CV": "t/9yRZg3DUqg2LhD2CgC4w.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0bIy9XwAAAADXE2QiHzruT7iINuzWDFwjWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "298ms"
+      },
+      "ResponseBody": {
+        "phonePlans": [
+          {
+            "phonePlanId": "Sanitized",
+            "localizedName": "2-way SMS (A2P) \u0026 Outbound Only PSTN - Toll Free",
+            "locationType": "NotRequired",
+            "areaCodes": [
+              "833"
+            ],
+            "capabilities": [
+              "Azure",
+              "OutboundCalling",
+              "ThirdPartyAppAssignment",
+              "InboundA2PSms",
+              "OutboundA2PSms",
+              "TollFree"
+            ],
+            "maximumSearchSize": 20
+          },
+          {
+            "phonePlanId": "Sanitized",
+            "localizedName": "2-way SMS (A2P) \u0026 Inbound Only PSTN - Toll Free",
+            "locationType": "NotRequired",
+            "areaCodes": [
+              "833"
+            ],
+            "capabilities": [
+              "Azure",
+              "InboundCalling",
+              "ThirdPartyAppAssignment",
+              "InboundA2PSms",
+              "OutboundA2PSms",
+              "TollFree"
+            ],
+            "maximumSearchSize": 20
+          },
+          {
+            "phonePlanId": "Sanitized",
+            "localizedName": "Outbound Only Sms - Toll Free",
+            "locationType": "NotRequired",
+            "areaCodes": [
+              "833"
+            ],
+            "capabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "OutboundA2PSms",
+              "TollFree"
+            ],
+            "maximumSearchSize": 20
+          },
+          {
+            "phonePlanId": "Sanitized",
+            "localizedName": "Outbound Only SMS (A2P) \u0026 Outbound Only PSTN - Toll Free",
+            "locationType": "NotRequired",
+            "areaCodes": [
+              "833"
+            ],
+            "capabilities": [
+              "Azure",
+              "OutboundCalling",
+              "ThirdPartyAppAssignment",
+              "OutboundA2PSms",
+              "TollFree"
+            ],
+            "maximumSearchSize": 20
+          },
+          {
+            "phonePlanId": "Sanitized",
+            "localizedName": "Outbound Only SMS (A2P) \u0026 Inbound Only PSTN - Toll Free",
+            "locationType": "NotRequired",
+            "areaCodes": [
+              "833"
+            ],
+            "capabilities": [
+              "Azure",
+              "InboundCalling",
+              "ThirdPartyAppAssignment",
+              "OutboundA2PSms",
+              "TollFree"
+            ],
+            "maximumSearchSize": 20
+          },
+          {
+            "phonePlanId": "Sanitized",
+            "localizedName": "2-way SMS (A2P) - Toll Free",
+            "locationType": "NotRequired",
+            "areaCodes": [
+              "833"
+            ],
+            "capabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "InboundA2PSms",
+              "OutboundA2PSms",
+              "TollFree"
+            ],
+            "maximumSearchSize": 20
+          },
+          {
+            "phonePlanId": "Sanitized",
+            "localizedName": "Outbound Only PSTN - Toll Free",
+            "locationType": "NotRequired",
+            "areaCodes": [
+              "833"
+            ],
+            "capabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "OutboundCalling",
+              "TollFree"
+            ],
+            "maximumSearchSize": 20
+          },
+          {
+            "phonePlanId": "Sanitized",
+            "localizedName": "Inbound Only PSTN - Toll Free",
+            "locationType": "NotRequired",
+            "areaCodes": [
+              "833"
+            ],
+            "capabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "InboundCalling",
+              "TollFree"
+            ],
+            "maximumSearchSize": 20
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:42:53 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "936e264cbd31c33e96de98a05ce9b667",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:42:53 GMT",
+        "MS-CV": "2RAw5qJSE0G5rWVoVkxWUQ.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0bIy9XwAAAAAlqP/q2l6gQ64P1zn235/SWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "249ms"
+      },
+      "ResponseBody": {
+        "phonePlans": [
+          {
+            "phonePlanId": "Sanitized",
+            "localizedName": "Outbound Only PSTN For User - Geographic",
+            "locationType": "Selection",
+            "areaCodes": [],
+            "capabilities": [
+              "Azure",
+              "OutboundCalling",
+              "UserAssignment",
+              "Geographic"
+            ],
+            "maximumSearchSize": 20
+          },
+          {
+            "phonePlanId": "Sanitized",
+            "localizedName": "Inbound Only PSTN For User - Geographic",
+            "locationType": "Selection",
+            "areaCodes": [],
+            "capabilities": [
+              "Azure",
+              "InboundCalling",
+              "UserAssignment",
+              "Geographic"
+            ],
+            "maximumSearchSize": 20
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches?api-version=2020-07-20-preview1",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "122",
+        "Content-Type": "application/json",
+        "Date": "Tue, 24 Nov 2020 22:42:53 GMT",
+        "traceparent": "00-ab25fd08c97c904f8227bde12af18f21-4a80bbb66c06e141-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "95ac8732b90759d01d3c0ebbdc5e7d06",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "displayName": "My reservation",
+        "description": "my description",
+        "phonePlanIds": [
+          "Sanitized"
+        ],
+        "areaCode": "833",
+        "quantity": 1
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:42:54 GMT",
+        "MS-CV": "wFHKeU6Y3UiS4vdZUGOW1g.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0bYy9XwAAAADEx1EHXoDETZ/5zRtozOsEWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "1187ms"
+      },
+      "ResponseBody": {
+        "searchId": "e09e3766-4cda-45de-a1b0-8077705b764b"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:42:54 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "75996068311127c3d77ed761e605faa6",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:42:54 GMT",
+        "MS-CV": "kRSxqkCR20W3RXtWddxsxw.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0boy9XwAAAABBR89EFHaXSIs/VNw9N/y\u002BWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "267ms"
+      },
+      "ResponseBody": {
+        "searchId": "e09e3766-4cda-45de-a1b0-8077705b764b",
+        "displayName": "My reservation",
+        "createdAt": "2020-11-24T22:42:53.5062009\u002B00:00",
+        "description": "my description",
+        "phonePlanIds": [
+          "Sanitized"
+        ],
+        "areaCode": "833",
+        "quantity": 1,
+        "locationOptions": [],
+        "status": "Pending",
+        "phoneNumbers": []
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:42:56 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "f661625ae64a93c2551475f5ae82e737",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:42:56 GMT",
+        "MS-CV": "mpl3\u002BNH4PkynZZHkGKOwSg.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0b4y9XwAAAAA9dsCSsyffSZRP\u002BYYerngLWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "269ms"
+      },
+      "ResponseBody": {
+        "searchId": "e09e3766-4cda-45de-a1b0-8077705b764b",
+        "displayName": "My reservation",
+        "createdAt": "2020-11-24T22:42:53.5062009\u002B00:00",
+        "description": "my description",
+        "phonePlanIds": [
+          "Sanitized"
+        ],
+        "areaCode": "833",
+        "quantity": 1,
+        "locationOptions": [],
+        "status": "Pending",
+        "phoneNumbers": []
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:42:57 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "fb379261414f0156c385be88e16e7318",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:42:57 GMT",
+        "MS-CV": "7wpYXsHQHkCXwg0GMz9SHA.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0cYy9XwAAAAAQw8a2pTS/RbSsUJ/EJBwXWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "266ms"
+      },
+      "ResponseBody": {
+        "searchId": "e09e3766-4cda-45de-a1b0-8077705b764b",
+        "displayName": "My reservation",
+        "createdAt": "2020-11-24T22:42:53.5062009\u002B00:00",
+        "description": "my description",
+        "phonePlanIds": [
+          "Sanitized"
+        ],
+        "areaCode": "833",
+        "quantity": 1,
+        "locationOptions": [],
+        "status": "Pending",
+        "phoneNumbers": []
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:42:58 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "7961684286fc82bb9e061ffcbbce7854",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:42:58 GMT",
+        "MS-CV": "MDTLFj5W10yc\u002B/F2xay5sQ.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0coy9XwAAAABp\u002BBcpRGOGQqgwEHnzeJmgWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "261ms"
+      },
+      "ResponseBody": {
+        "searchId": "e09e3766-4cda-45de-a1b0-8077705b764b",
+        "displayName": "My reservation",
+        "createdAt": "2020-11-24T22:42:53.5062009\u002B00:00",
+        "description": "my description",
+        "phonePlanIds": [
+          "Sanitized"
+        ],
+        "areaCode": "833",
+        "quantity": 1,
+        "locationOptions": [],
+        "status": "Pending",
+        "phoneNumbers": []
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:43:00 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "53ff9f97fecd19560c6033c52839b1e6",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:42:59 GMT",
+        "MS-CV": "YSDBWfHw6UCcDMZ7GUu5VQ.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0c4y9XwAAAAAWFBXi4Op1SJFoGKj5iigjWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "298ms"
+      },
+      "ResponseBody": {
+        "searchId": "e09e3766-4cda-45de-a1b0-8077705b764b",
+        "displayName": "My reservation",
+        "createdAt": "2020-11-24T22:42:53.5062009\u002B00:00",
+        "description": "my description",
+        "phonePlanIds": [
+          "Sanitized"
+        ],
+        "areaCode": "833",
+        "quantity": 1,
+        "locationOptions": [],
+        "status": "Pending",
+        "phoneNumbers": []
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:43:01 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "45b25da16e20db3ad7b55d48215946f4",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:43:01 GMT",
+        "MS-CV": "VrnX\u002BM5BX0qDj00135f9nw.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0dYy9XwAAAACmTHOl8LjtQY0dRmOD6i1SWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "335ms"
+      },
+      "ResponseBody": {
+        "searchId": "e09e3766-4cda-45de-a1b0-8077705b764b",
+        "displayName": "My reservation",
+        "createdAt": "2020-11-24T22:42:53.5062009\u002B00:00",
+        "description": "my description",
+        "phonePlanIds": [
+          "Sanitized"
+        ],
+        "areaCode": "833",
+        "quantity": 1,
+        "locationOptions": [],
+        "status": "InProgress",
+        "phoneNumbers": []
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:43:02 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "42f1690d1f6f434b11486d9c52f65a65",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:43:02 GMT",
+        "MS-CV": "8O2s1mhOXkK5jMWDlh4o9A.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0doy9XwAAAAA9Xx2xX7FATb\u002BLErXGBXsBWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "265ms"
+      },
+      "ResponseBody": {
+        "searchId": "e09e3766-4cda-45de-a1b0-8077705b764b",
+        "displayName": "My reservation",
+        "createdAt": "2020-11-24T22:42:53.5062009\u002B00:00",
+        "description": "my description",
+        "phonePlanIds": [
+          "Sanitized"
+        ],
+        "areaCode": "833",
+        "quantity": 1,
+        "locationOptions": [],
+        "status": "InProgress",
+        "phoneNumbers": []
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/searches/Sanitized?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 24 Nov 2020 22:43:04 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201124.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "5d5b3855321b283464237c17a10ef7b2",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Nov 2020 22:43:03 GMT",
+        "MS-CV": "4UwzdUMvpEeMh4RkGDsfuA.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0eIy9XwAAAAC1mqz2jnhzT7PB3B7QvrSUWVZSMzBFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "281ms"
+      },
+      "ResponseBody": {
+        "searchId": "e09e3766-4cda-45de-a1b0-8077705b764b",
+        "displayName": "My reservation",
+        "createdAt": "2020-11-24T22:42:53.5062009\u002B00:00",
+        "description": "my description",
+        "phonePlanIds": [
+          "Sanitized"
+        ],
+        "areaCode": "833",
+        "quantity": 1,
+        "locationOptions": [],
+        "status": "Error",
+        "phoneNumbers": [],
+        "errorCode": 1000
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==;",
+    "RandomSeed": "1268666862"
+  }
+}
