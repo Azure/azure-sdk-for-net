@@ -8654,13 +8654,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new FileLeaseReleaseInfo instance for mocking.
         /// </summary>
         public static FileLeaseReleaseInfo FileLeaseReleaseInfo(
-            System.DateTimeOffset lastModified,
-            Azure.ETag eTag)
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
         {
             return new FileLeaseReleaseInfo()
             {
-                LastModified = lastModified,
                 ETag = eTag,
+                LastModified = lastModified,
             };
         }
     }
@@ -10354,17 +10354,17 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareFileCopyInfo instance for mocking.
         /// </summary>
         public static ShareFileCopyInfo ShareFileCopyInfo(
-            Azure.Storage.Files.Shares.Models.CopyStatus copyStatus,
-            string copyId,
+            Azure.ETag eTag,
             System.DateTimeOffset lastModified,
-            Azure.ETag eTag)
+            string copyId,
+            Azure.Storage.Files.Shares.Models.CopyStatus copyStatus)
         {
             return new ShareFileCopyInfo()
             {
-                CopyStatus = copyStatus,
-                CopyId = copyId,
-                LastModified = lastModified,
                 ETag = eTag,
+                LastModified = lastModified,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
             };
         }
     }
@@ -10491,22 +10491,22 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareFileHandle instance for mocking.
         /// </summary>
         public static ShareFileHandle ShareFileHandle(
-            string clientIp,
-            string sessionId,
-            string fileId,
-            string path,
             string handleId,
+            string path,
+            string fileId,
+            string sessionId,
+            string clientIp,
             string parentId = default,
             System.DateTimeOffset? openedOn = default,
             System.DateTimeOffset? lastReconnectedOn = default)
         {
             return new ShareFileHandle()
             {
-                ClientIp = clientIp,
-                SessionId = sessionId,
-                FileId = fileId,
-                Path = path,
                 HandleId = handleId,
+                Path = path,
+                FileId = fileId,
+                SessionId = sessionId,
+                ClientIp = clientIp,
                 ParentId = parentId,
                 OpenedOn = openedOn,
                 LastReconnectedOn = lastReconnectedOn,
@@ -10555,15 +10555,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareFileLease instance for mocking.
         /// </summary>
         public static ShareFileLease ShareFileLease(
-            string leaseId,
+            Azure.ETag eTag,
             System.DateTimeOffset lastModified,
-            Azure.ETag eTag)
+            string leaseId)
         {
             return new ShareFileLease()
             {
-                LeaseId = leaseId,
-                LastModified = lastModified,
                 ETag = eTag,
+                LastModified = lastModified,
+                LeaseId = leaseId,
             };
         }
     }
@@ -10770,17 +10770,17 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareFileUploadInfo instance for mocking.
         /// </summary>
         public static ShareFileUploadInfo ShareFileUploadInfo(
-            bool isServerEncrypted,
-            byte[] contentHash,
+            Azure.ETag eTag,
             System.DateTimeOffset lastModified,
-            Azure.ETag eTag)
+            byte[] contentHash,
+            bool isServerEncrypted)
         {
             return new ShareFileUploadInfo()
             {
-                IsServerEncrypted = isServerEncrypted,
-                ContentHash = contentHash,
-                LastModified = lastModified,
                 ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                IsServerEncrypted = isServerEncrypted,
             };
         }
     }
@@ -10821,13 +10821,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareInfo instance for mocking.
         /// </summary>
         public static ShareInfo ShareInfo(
-            System.DateTimeOffset lastModified,
-            Azure.ETag eTag)
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
         {
             return new ShareInfo()
             {
-                LastModified = lastModified,
                 ETag = eTag,
+                LastModified = lastModified,
             };
         }
     }
@@ -10938,16 +10938,16 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareItem instance for mocking.
         /// </summary>
         public static ShareItem ShareItem(
-            Azure.Storage.Files.Shares.Models.ShareProperties properties,
             string name,
+            Azure.Storage.Files.Shares.Models.ShareProperties properties,
             string snapshot = default,
             bool? isDeleted = default,
             string versionId = default)
         {
             return new ShareItem()
             {
-                Properties = properties,
                 Name = name,
+                Properties = properties,
                 Snapshot = snapshot,
                 IsDeleted = isDeleted,
                 VersionId = versionId,
@@ -11469,15 +11469,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareProperties instance for mocking.
         /// </summary>
         public static ShareProperties ShareProperties(
+            string accessTier = default,
             System.DateTimeOffset? lastModified = default,
-            Azure.ETag? eTag = default,
             int? provisionedIops = default,
             int? provisionedIngressMBps = default,
             int? provisionedEgressMBps = default,
             System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
             System.DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
-            string accessTier = default,
+            Azure.ETag? eTag = default,
             System.DateTimeOffset? accessTierChangeTime = default,
             string accessTierTransitionState = default,
             Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus = default,
@@ -11488,15 +11488,15 @@ namespace Azure.Storage.Files.Shares.Models
         {
             return new ShareProperties()
             {
+                AccessTier = accessTier,
                 LastModified = lastModified,
-                ETag = eTag,
                 ProvisionedIops = provisionedIops,
                 ProvisionedIngressMBps = provisionedIngressMBps,
                 ProvisionedEgressMBps = provisionedEgressMBps,
                 NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
                 DeletedOn = deletedOn,
                 RemainingRetentionDays = remainingRetentionDays,
-                AccessTier = accessTier,
+                ETag = eTag,
                 AccessTierChangeTime = accessTierChangeTime,
                 AccessTierTransitionState = accessTierTransitionState,
                 LeaseStatus = leaseStatus,
@@ -11997,15 +11997,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareSnapshotInfo instance for mocking.
         /// </summary>
         public static ShareSnapshotInfo ShareSnapshotInfo(
-            System.DateTimeOffset lastModified,
+            string snapshot,
             Azure.ETag eTag,
-            string snapshot)
+            System.DateTimeOffset lastModified)
         {
             return new ShareSnapshotInfo()
             {
-                LastModified = lastModified,
-                ETag = eTag,
                 Snapshot = snapshot,
+                ETag = eTag,
+                LastModified = lastModified,
             };
         }
     }
@@ -12341,15 +12341,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new StorageClosedHandlesSegment instance for mocking.
         /// </summary>
         public static StorageClosedHandlesSegment StorageClosedHandlesSegment(
-            int numberOfHandlesFailedToClose,
+            string marker,
             int numberOfHandlesClosed,
-            string marker)
+            int numberOfHandlesFailedToClose)
         {
             return new StorageClosedHandlesSegment()
             {
-                NumberOfHandlesFailedToClose = numberOfHandlesFailedToClose,
-                NumberOfHandlesClosed = numberOfHandlesClosed,
                 Marker = marker,
+                NumberOfHandlesClosed = numberOfHandlesClosed,
+                NumberOfHandlesFailedToClose = numberOfHandlesFailedToClose,
             };
         }
     }

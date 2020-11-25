@@ -3814,13 +3814,13 @@ namespace Azure.Storage.Queues.Models
         /// Creates a new QueueProperties instance for mocking.
         /// </summary>
         public static QueueProperties QueueProperties(
-            int approximateMessagesCount,
-            System.Collections.Generic.IDictionary<string, string> metadata)
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            int approximateMessagesCount)
         {
             return new QueueProperties()
             {
-                ApproximateMessagesCount = approximateMessagesCount,
                 Metadata = metadata,
+                ApproximateMessagesCount = approximateMessagesCount,
             };
         }
     }
@@ -4440,19 +4440,19 @@ namespace Azure.Storage.Queues.Models
         /// Creates a new SendReceipt instance for mocking.
         /// </summary>
         public static SendReceipt SendReceipt(
-            System.DateTimeOffset timeNextVisible,
-            string popReceipt,
-            System.DateTimeOffset expirationTime,
+            string messageId,
             System.DateTimeOffset insertionTime,
-            string messageId)
+            System.DateTimeOffset expirationTime,
+            string popReceipt,
+            System.DateTimeOffset timeNextVisible)
         {
             return new SendReceipt()
             {
-                TimeNextVisible = timeNextVisible,
-                PopReceipt = popReceipt,
-                ExpirationTime = expirationTime,
-                InsertionTime = insertionTime,
                 MessageId = messageId,
+                InsertionTime = insertionTime,
+                ExpirationTime = expirationTime,
+                PopReceipt = popReceipt,
+                TimeNextVisible = timeNextVisible,
             };
         }
     }
@@ -4546,13 +4546,13 @@ namespace Azure.Storage.Queues.Models
         /// Creates a new UpdateReceipt instance for mocking.
         /// </summary>
         public static UpdateReceipt UpdateReceipt(
-            System.DateTimeOffset nextVisibleOn,
-            string popReceipt)
+            string popReceipt,
+            System.DateTimeOffset nextVisibleOn)
         {
             return new UpdateReceipt()
             {
-                NextVisibleOn = nextVisibleOn,
                 PopReceipt = popReceipt,
+                NextVisibleOn = nextVisibleOn,
             };
         }
     }
