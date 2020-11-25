@@ -116,7 +116,7 @@ try {
         if($diffResult.Length -gt 1){
             $exitCode ++
         } elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')){
-            $content = git -c core.safecrlf=false diff HEAD --ignore-space-at-eol $result[0]
+            $content = git -c core.safecrlf=false diff HEAD --ignore-space-at-eol $diffResult[0]
             $content[0..($content.Length-1)] | ForEach-Object {
                 if($_.StartsWith('+')){
                     $exitCode ++
@@ -135,9 +135,6 @@ try {
             }
             LogError "Generated code is manually altered, you may need to re-run sdk\<RP Name>\generate.ps1"
         }
-        Write-Output "IF you need a result, here is it."
-        $result=''
-        $result
     }
 }
 finally {
