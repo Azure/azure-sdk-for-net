@@ -1584,12 +1584,11 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(1, address.ValueData.PageNumber);
             Assert.AreEqual("2345 Dogwood Lane Birch, Kansas 98123", address.Value.AsString());
 
-            // Disabled until issue is fixed: https://app.zenhub.com/workspaces/azure-sdk-team-5bdca72c4b5806bc2bf0aab2/issues/azure/azure-sdk-for-net/16514
-            //ValidatePrebuiltForm(
-            //    form,
-            //    includeFieldElements: false,
-            //    expectedFirstPageNumber: 1,
-            //    expectedLastPageNumber: 2);
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 2);
         }
 
         [Test]
