@@ -119,7 +119,7 @@ try {
         if(($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')){
             $content = git -c core.safecrlf=false diff HEAD --ignore-space-at-eol $result[0]
             $content[0..($content.Length-1)] | ForEach-Object {
-                if($_.StartsWith('+')){
+                if($_.StartsWith('-')){
                     $exitCode ++
                     break
                 }
