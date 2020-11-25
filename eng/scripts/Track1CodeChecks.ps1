@@ -116,13 +116,34 @@ try {
         if($diffResult.Length -gt 1){
             $exitCode ++
         } elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')){
-            $content = git -c core.safecrlf=false diff HEAD --ignore-space-at-eol $diffResult[0]
-            $content[0..($content.Length-1)] | ForEach-Object {
-                if($_.StartsWith('+')){
-                    $exitCode ++
-                    break
+            $changeContent = @()
+            $content = git -c core.safecrlf=false diff -U0 HEAD --ignore-space-at-eol $diffResult[0]
+            $content | ForEach-Object {
+                if($_.StartsWith('+') -or $_.StartsWith('-')){
+                    $changeContent += $_
                 }
             }
+            if ($changeContent.Length -ne 11){
+                $exitCode ++
+            }
+
+        # metaDataContent doesn't contains 'AutoRestCmdExecuted' part since it can't be verified
+        $metaDataContent = @('-      // BEGIN: Code Generation Metadata Section',
+        '-      public static readonly String AutoRestVersion = "v2";',
+        '-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";',
+        '-      public static readonly String GithubForkName = "Azure";',
+        '-      public static readonly String GithubBranchName = "master";',
+        '-      public static readonly String GithubCommidId = "{0}";' -f $commit,
+        '-      public static readonly String CodeGenerationErrors = "";',
+        '-      public static readonly String GithubRepoName = "azure-rest-api-specs";',
+        '-      // END: Code Generation Metadata Section'
+        )
+        foreach ($metaString in $metaDataContent) {
+            if ($metaString -notin $changeContent) {
+                $exitCode ++
+                break
+            }
+        }
         } elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -notmatch 'SdkInfo_')) {
             $exitCode ++
         }
