@@ -224,7 +224,7 @@ namespace Microsoft.Azure.ContainerRegistry
 
         private async Task<string> GetScope(string operation, string method, string path)
         {
-            string methodOperationKey = $"{method}>{operation}";
+            string methodOperationKey = $"{method}>{operation}";         
 
             if (_acrScopes.TryGetValue(methodOperationKey, out string result))
             {
@@ -280,22 +280,26 @@ namespace Microsoft.Azure.ContainerRegistry
                 if (headerKVP.Key.ToLower() == challengeHeader)
                 {
                     headerValue = string.Join(",", headerKVP.Value);
+                    
                     break;
                 }
             }
-            
-            foreach (string part in headerValue.Split(','))
+
+            string scope = "";
+            int position = headerValue.IndexOf("scope=");
+            if (position > 0)
             {
-                string[] keyValues = part.Split(new char[] { '=' }, 2);
-                if (keyValues.Length != 2)
-                {
-                    throw new Exception($"{challengeHeader} has incorrect format, " +
-                        $"header key-value pair '{part}' does not have a value but in '{headerValue}'");
-                }
-                if (keyValues[0].ToLower().Trim() == "scope")
-                {
-                    return TrimDoubleQuotes(keyValues[1]);
-                } 
+                scope = headerValue.Substring(position);
+            }
+            else
+            {
+                throw new Exception($"Could not find a scope in the {headerValue}");
+            }
+
+            string[] keyValues = scope.Split(new char[] { '=' }, 2);
+            if (keyValues[0].ToLower().Trim() == "scope")
+            {
+                return TrimDoubleQuotes(keyValues[1]);
             }
 
             return null;
