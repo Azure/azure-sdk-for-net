@@ -7,7 +7,9 @@ namespace Azure.AI.FormRecognizer.Models
     /// Represents a field recognized in the input form, where the field's value is of a known type.
     /// </summary>
     /// <typeparam name="T">The type of the value in the field this instance represents.</typeparam>
+#pragma warning disable SA1649 // File name should match first type name
     public class FormField<T>
+#pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FormField{T}"/> class.
