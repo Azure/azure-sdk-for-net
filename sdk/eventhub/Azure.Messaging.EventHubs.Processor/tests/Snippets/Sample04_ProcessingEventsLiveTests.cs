@@ -230,8 +230,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 eventHubsConnectionString,
                 eventHubName);
 
-            //const int EventsBeforeCheckpoint = 25;
-            //var partitionEventCount = new ConcurrentDictionary<string, int>();
+            const int EventsBeforeCheckpoint = 25;
+            var partitionEventCount = new ConcurrentDictionary<string, int>();
 
             async Task processEventHandler(ProcessEventArgs args)
             {
@@ -247,18 +247,18 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     // checkpointing threshold, a new checkpoint will be
                     // created and the count reset.
 
-                    //string partition = args.Partition.PartitionId;
+                    string partition = args.Partition.PartitionId;
 
-                    //int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
-                    //    key: partition,
-                    //    addValue: 1,
-                    //    updateValueFactory: (_, currentCount) => currentCount + 1);
+                    int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
+                        key: partition,
+                        addValue: 1,
+                        updateValueFactory: (_, currentCount) => currentCount + 1);
 
-                    //if (eventsSinceLastCheckpoint >= EventsBeforeCheckpoint)
-                    //{
-                    //    await args.UpdateCheckpointAsync();
-                    //    partitionEventCount[partition] = 0;
-                    //}
+                    if (eventsSinceLastCheckpoint >= EventsBeforeCheckpoint)
+                    {
+                        //await args.UpdateCheckpointAsync();
+                        partitionEventCount[partition] = 0;
+                    }
                 }
                 catch (Exception ex)
                 {
