@@ -76,7 +76,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         {
             var message = "Hello World!";
 
+            var activity = new Activity("test activity").Start();
             var telemetryItem = this.RunLoggerTest(x => x.Log(logLevel: logLevel, message: message));
+            activity.Stop();
 
             VerifyTelemetryItem.VerifyEvent(
                 telemetryItem: telemetryItem,
@@ -84,6 +86,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
                 {
                     Message = message,
                     SeverityLevel = expectedSeverityLevel,
+                    SpanId = activity.SpanId.ToHexString(),
+                    TraceId = activity.TraceId.ToHexString(),
                 });
         }
 
