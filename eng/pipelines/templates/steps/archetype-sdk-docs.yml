@@ -30,3 +30,12 @@ steps:
           -DocGenDir ${{parameters.DocGenerationDir}}
           -ArtifactStagingDirectory '$(Build.ArtifactStagingDirectory)'
           -verbose
+    - task: PowerShell@2
+      displayName: Mashup ${{artifact.name}} documentation
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/doc/ApiDocGeneration/Mashup-sdk-docindex.ps1
+        arguments: >
+          -DocHtmlDir $(DocHtmlDir)
+          -ArtifactName '${{artifact.name}}'
+          -ArtifactStagingDirectory '$(Build.ArtifactStagingDirectory)'

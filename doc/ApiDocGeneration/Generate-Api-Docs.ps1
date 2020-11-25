@@ -60,6 +60,7 @@ $YamlOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-yaml-output"
 $DocOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/docfx-output/docfx_project"
 $DocOutApiDir = "${DocOutDir}/api"
 $DocOutHtmlDir = "${DocOutDir}/_site"
+echo "##vso[task.setvariable variable=DocHtmlDir]$DocOutHtmlDir"
 $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
 $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
 
@@ -139,6 +140,3 @@ Write-Verbose "Build Doc Content"
 
 Write-Verbose "Copy over site Logo"
 Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
-
-Write-Verbose "Compress and copy HTML into the staging Area"
-Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest
