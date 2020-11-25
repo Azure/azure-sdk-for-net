@@ -101,7 +101,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
                 },
                 transmitter: transmitter));
 
-            Sdk.CreateTracerProviderBuilder()
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
                 .AddSource(ActivitySourceName)
                 .AddProcessor(processor)
@@ -176,7 +176,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
                 },
                 transmitter: transmitter));
 
-            Sdk.CreateTracerProviderBuilder()
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
                 .AddSource(ActivitySourceName)
                 .AddProcessor(processor1)
