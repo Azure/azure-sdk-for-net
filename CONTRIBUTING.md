@@ -79,8 +79,12 @@ dotnet tool restore
 dotnet test /p:CollectCoverage=true
 ```
 
-On developers' machines, you can open `index.html` from within the `TestResults` directory in your test projects.
+On developers' machines, you can open `index.html` from within the `TestResults` directory in each of your test projects.
 Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
+All covered projects should have 70% or better test coverage.
+
+By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
+To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
 
 ### Update build tools
 
