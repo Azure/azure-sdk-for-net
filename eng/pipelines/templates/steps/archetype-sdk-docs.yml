@@ -36,6 +36,6 @@ steps:
         pwsh: true
         filePath: $(Build.SourcesDirectory)/doc/ApiDocGeneration/Mashup-sdk-docindex.ps1
         arguments: >
-          -DocHtmlDir $(DocHtmlDir)
+          -DocOutHtmlDir $(DocHtmlDir)
           -ArtifactName '${{artifact.name}}'
           -ArtifactStagingDirectory '$(Build.ArtifactStagingDirectory)'
