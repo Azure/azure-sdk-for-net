@@ -82,8 +82,7 @@ try {
             $mataPath += $path
         }
     }
-    Write-Output "MetaPath is"$mataPath
-    Write-Output "MataPath End"
+
     $mataPath | ForEach-Object {
         $metaData = Get-Content $mataPath
         $commit = ''
@@ -134,11 +133,14 @@ try {
             $diffResult | ForEach-Object {
                 Write-Output $_
             }
-            LogError "Generated code is not up to date. You may need to run eng\scripts\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\scripts\Export-API.ps1"
+            LogError "Generated code is manually altered, you may need to re-run sdk\<RP Name>\generate.ps1"
         }
     }
 }
 finally {
+    Write-Output "IF you need a result, here is it."
+    $result=''
+    $result
     Write-Host ""
     Write-Host "Summary:"
     Write-Host ""
