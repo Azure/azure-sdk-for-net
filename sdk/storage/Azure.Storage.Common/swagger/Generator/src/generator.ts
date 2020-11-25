@@ -902,12 +902,17 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// <summary>`);
                 w.line(`/// ${property.description || property.model.description || property.name}`);
                 w.line(`/// </summary>`);
+                let internalSetter = !property.isNullable && (property.readonly || property.model.type === `array`);
+                let isCollection = isPrimitiveType(property.model) && property.model.itemType && !type.struct;
                 if (property.model.type === `byte`) {
                     w.line(`#pragma warning disable CA1819 // Properties should not return arrays`);
                 }
+                if (isCollection && !internalSetter) {
+                    w.line(`#pragma warning disable CA2227 // Collection properties should be readonly`);
+                }
                 w.write(`public ${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.property(property.clientName)} { get; `);
                 if (!type.struct) {
-                    if (!property.isNullable && (property.readonly || property.model.type === `array`)) {
+                    if (internalSetter) {
                         w.write(`internal `);
                     }
                     w.write(`set; `);
@@ -916,6 +921,9 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line();
                 if (property.model.type === `byte`) {
                     w.line(`#pragma warning restore CA1819 // Properties should not return arrays`);
+                }
+                if (isCollection && !internalSetter) {
+                    w.line(`#pragma warning restore CA2227 // Collection properties should be readonly`);
                 }
             }
 
