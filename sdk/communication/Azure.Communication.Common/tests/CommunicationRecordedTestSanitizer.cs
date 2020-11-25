@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -9,14 +11,20 @@ namespace Azure.Communication.Pipeline
 {
     public class CommunicationRecordedTestSanitizer : RecordedTestSanitizer
     {
-        private static readonly Regex s_azureResourceRegEx = new Regex(@"[^/]+?(?=(.communication.azure))", RegexOptions.Compiled);
-        private static readonly Regex s_identityInRouteRegEx = new Regex(@"(?<=identities/)([^/]+)", RegexOptions.Compiled);
+        private static readonly Regex _azureResourceRegEx = new Regex(@"[^/]+?(?=(.communication.azure))", RegexOptions.Compiled);
+        private static readonly Regex _identityInRouteRegEx = new Regex(@"(?<=identities/)([^/]+)", RegexOptions.Compiled);
+        private static readonly Regex _phoneNumberRegEx = new Regex(@"[\\+]?[0-9]{11,15}", RegexOptions.Compiled);
+        private static readonly Regex _guidRegEx = new Regex(@"(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}", RegexOptions.Compiled);
+
         internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
 
         public CommunicationRecordedTestSanitizer() : base()
         {
             JsonPathSanitizers.Add("$..token");
             JsonPathSanitizers.Add("$..id");
+            JsonPathSanitizers.Add("$..phonePlanId");
+            JsonPathSanitizers.Add("$..phonePlanGroupId");
+            JsonPathSanitizers.Add("$..phonePlanIds[:]");
         }
 
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
@@ -31,6 +39,14 @@ namespace Azure.Communication.Pipeline
             }
         }
 
+        public override string SanitizeTextBody(string contentType, string body)
+        {
+            body = base.SanitizeTextBody(contentType, body);
+            body = _phoneNumberRegEx.Replace(body, SanitizeValue);
+
+            return body;
+        }
+
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
             => variableName switch
             {
@@ -38,7 +54,7 @@ namespace Azure.Communication.Pipeline
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
 
-        private static string SanitizeAzureResource(string uri) => s_azureResourceRegEx.Replace(uri, SanitizeValue).ToLower();
+        private static string SanitizeAzureResource(string uri) => _azureResourceRegEx.Replace(uri, SanitizeValue.ToLower());
 
         internal static string SanitizeConnectionString(string connectionString)
         {
@@ -54,6 +70,9 @@ namespace Azure.Communication.Pipeline
         }
 
         public override string SanitizeUri(string uri)
-            => SanitizeAzureResource(s_identityInRouteRegEx.Replace(uri, SanitizeValue).ToLower());
+        {
+            uri = SanitizeAzureResource(_identityInRouteRegEx.Replace(uri, SanitizeValue.ToLower()));
+            return _guidRegEx.Replace(uri, SanitizeValue);
+        }
     }
 }
