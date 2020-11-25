@@ -93,13 +93,13 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             var ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
             using var activitySource = new ActivitySource(ActivitySourceName);
 
-            var transmitter = new MockTransmitter();
+            var mockTransmitter = new MockTransmitter();
             var processor = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
                 options: new AzureMonitorExporterOptions
                 {
                     ConnectionString = EmptyConnectionString,
                 },
-                transmitter: transmitter));
+                transmitter: mockTransmitter));
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
@@ -113,26 +113,26 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             // CLEANUP
             processor.ForceFlush();
 
-            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
-            return transmitter.TelemetryItems.Single();
+            Assert.True(mockTransmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            return mockTransmitter.TelemetryItems.Single();
         }
 
         private TelemetryItem RunLoggerTest(Action<ILogger<TelemetryItemTests>> testScenario)
         {
             // SETUP
-            var transmitter = new MockTransmitter();
+            var mockTransmitter = new MockTransmitter();
             var processor = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(
                 options: new AzureMonitorExporterOptions
                 {
                     ConnectionString = EmptyConnectionString,
                 },
-                transmitter: transmitter));
+                transmitter: mockTransmitter));
 
             var serviceCollection = new ServiceCollection().AddLogging(builder =>
             {
                 builder.SetMinimumLevel(LogLevel.Trace)
                     .AddOpenTelemetry(options => options
-                    .AddProcessor(processor));
+                        .AddProcessor(processor));
             });
 
             using var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -144,8 +144,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             // CLEANUP
             processor.ForceFlush();
 
-            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
-            return transmitter.TelemetryItems.Single();
+            Assert.True(mockTransmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            return mockTransmitter.TelemetryItems.Single();
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             var ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
             using var activitySource = new ActivitySource(ActivitySourceName);
 
-            var transmitter = new MockTransmitter();
+            var mockTransmitter = new MockTransmitter();
 
             var azureMonitorExporterOptions = new AzureMonitorExporterOptions
             {
@@ -169,11 +169,11 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 
             var processor1 = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
                 options: azureMonitorExporterOptions,
-                transmitter: transmitter));
+                transmitter: mockTransmitter));
 
             var processor2 = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(
                 options: azureMonitorExporterOptions,
-                transmitter: transmitter));
+                transmitter: mockTransmitter));
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
@@ -185,7 +185,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             {
                 builder.SetMinimumLevel(LogLevel.Trace)
                     .AddOpenTelemetry(options => options
-                    .AddProcessor(processor2));
+                        .AddProcessor(processor2));
             });
 
             using var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -204,11 +204,11 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             processor2.ForceFlush();
 
             // VERIFY
-            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
-            Assert.Equal(2, transmitter.TelemetryItems.Count);
+            Assert.True(mockTransmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            Assert.Equal(2, mockTransmitter.TelemetryItems.Count);
 
-            var logTelemetry = transmitter.TelemetryItems.Single(x => x.Name == "Message");
-            var activityTelemetry = transmitter.TelemetryItems.Single(x => x.Name == "Request");
+            var logTelemetry = mockTransmitter.TelemetryItems.Single(x => x.Name == "Message");
+            var activityTelemetry = mockTransmitter.TelemetryItems.Single(x => x.Name == "Request");
 
             var activityId = ((RequestData)activityTelemetry.Data.BaseData).Id;
             var operationId = activityTelemetry.Tags["ai.operation.id"];
