@@ -104,13 +104,9 @@ try {
             & npm install -g autorest
         }
 
-        Invoke-Block {
-            & autorest --reset
-        }
-        
         Write-Output "Ready to execute code: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path"
         Invoke-Block {
-            & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path
+            & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90 
         }
 
         # prevent warning related to EOL differences which triggers an exception for some reason
