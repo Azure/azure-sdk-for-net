@@ -12,14 +12,13 @@ namespace Microsoft.Azure.Management.Marketplace.Models
 {
 
     /// <summary>
-    /// Defines values for IconKind.
+    /// Defines values for Accessibility.
     /// </summary>
-    public static class IconKind
+    public static class Accessibility
     {
-        public const string Small = "Small";
-        public const string Medium = "Medium";
-        public const string Large = "Large";
-        public const string Wide = "Wide";
-        public const string Hero = "Hero";
+        public const string Unknown = "Unknown";
+        public const string Public = "Public";
+        public const string PrivateTenantOnLevel = "PrivateTenantOnLevel";
+        public const string PrivateSubscriptionOnLevel = "PrivateSubscriptionOnLevel";
     }
 }
