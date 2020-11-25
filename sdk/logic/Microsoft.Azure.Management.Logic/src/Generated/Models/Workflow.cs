@@ -43,7 +43,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Possible values include: 'NotSpecified', 'Accepted', 'Running',
         /// 'Ready', 'Creating', 'Created', 'Deleting', 'Deleted', 'Canceled',
         /// 'Failed', 'Succeeded', 'Moving', 'Updating', 'Registering',
-        /// 'Registered', 'Unregistering', 'Unregistered', 'Completed'</param>
+        /// 'Registered', 'Unregistering', 'Unregistered', 'Completed',
+        /// 'Renewing', 'Pending', 'Waiting', 'InProgress'</param>
         /// <param name="createdTime">Gets the created time.</param>
         /// <param name="changedTime">Gets the changed time.</param>
         /// <param name="state">The state. Possible values include:
@@ -53,12 +54,15 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="accessEndpoint">Gets the access endpoint.</param>
         /// <param name="endpointsConfiguration">The endpoints
         /// configuration.</param>
+        /// <param name="accessControl">The access control
+        /// configuration.</param>
         /// <param name="sku">The sku.</param>
         /// <param name="integrationAccount">The integration account.</param>
-        /// <param name="integrationServiceEnvironment">The integration service environment.</param>
+        /// <param name="integrationServiceEnvironment">The integration service
+        /// environment.</param>
         /// <param name="definition">The definition.</param>
         /// <param name="parameters">The parameters.</param>
-        public Workflow(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? changedTime = default(System.DateTime?), string state = default(string), string version = default(string), string accessEndpoint = default(string), FlowEndpointsConfiguration endpointsConfiguration = default(FlowEndpointsConfiguration), Sku sku = default(Sku), ResourceReference integrationAccount = default(ResourceReference), ResourceReference integrationServiceEnvironment = default(ResourceReference), object definition = default(object), IDictionary<string, WorkflowParameter> parameters = default(IDictionary<string, WorkflowParameter>))
+        public Workflow(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? changedTime = default(System.DateTime?), string state = default(string), string version = default(string), string accessEndpoint = default(string), FlowEndpointsConfiguration endpointsConfiguration = default(FlowEndpointsConfiguration), FlowAccessControlConfiguration accessControl = default(FlowAccessControlConfiguration), Sku sku = default(Sku), ResourceReference integrationAccount = default(ResourceReference), ResourceReference integrationServiceEnvironment = default(ResourceReference), object definition = default(object), IDictionary<string, WorkflowParameter> parameters = default(IDictionary<string, WorkflowParameter>))
             : base(id, name, type, location, tags)
         {
             ProvisioningState = provisioningState;
@@ -68,6 +72,7 @@ namespace Microsoft.Azure.Management.Logic.Models
             Version = version;
             AccessEndpoint = accessEndpoint;
             EndpointsConfiguration = endpointsConfiguration;
+            AccessControl = accessControl;
             Sku = sku;
             IntegrationAccount = integrationAccount;
             IntegrationServiceEnvironment = integrationServiceEnvironment;
@@ -86,7 +91,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'Accepted', 'Running', 'Ready', 'Creating',
         /// 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
         /// 'Succeeded', 'Moving', 'Updating', 'Registering', 'Registered',
-        /// 'Unregistering', 'Unregistered', 'Completed'
+        /// 'Unregistering', 'Unregistered', 'Completed', 'Renewing',
+        /// 'Pending', 'Waiting', 'InProgress'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -129,10 +135,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         public FlowEndpointsConfiguration EndpointsConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the sku.
+        /// Gets or sets the access control configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accessControl")]
+        public FlowAccessControlConfiguration AccessControl { get; set; }
+
+        /// <summary>
+        /// Gets the sku.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sku")]
-        public Sku Sku { get; set; }
+        public Sku Sku { get; private set; }
 
         /// <summary>
         /// Gets or sets the integration account.

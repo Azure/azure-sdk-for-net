@@ -172,9 +172,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='triggerName'>
             /// The workflow trigger name.
             /// </param>
-            public static object Run(this IWorkflowTriggersOperations operations, string resourceGroupName, string workflowName, string triggerName)
+            public static void Run(this IWorkflowTriggersOperations operations, string resourceGroupName, string workflowName, string triggerName)
             {
-                return operations.RunAsync(resourceGroupName, workflowName, triggerName).GetAwaiter().GetResult();
+                operations.RunAsync(resourceGroupName, workflowName, triggerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -195,12 +195,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> RunAsync(this IWorkflowTriggersOperations operations, string resourceGroupName, string workflowName, string triggerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RunAsync(this IWorkflowTriggersOperations operations, string resourceGroupName, string workflowName, string triggerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RunWithHttpMessagesAsync(resourceGroupName, workflowName, triggerName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.RunWithHttpMessagesAsync(resourceGroupName, workflowName, triggerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
