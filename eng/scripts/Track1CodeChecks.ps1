@@ -140,6 +140,7 @@ try {
         )
         foreach ($metaString in $metaDataContent) {
             if ($metaString -notin $changeContent) {
+                Write-Output "Diff in" $metaString
                 $exitCode ++
                 break
             }
