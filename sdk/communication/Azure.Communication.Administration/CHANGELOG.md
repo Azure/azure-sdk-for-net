@@ -3,7 +3,9 @@
 ## 1.0.0-beta.3 (Unreleased)
 ### Added
 - Support for mocking all client methods that use models with internal constructors
-- Fixed issue with paging results not pulling next pages
+
+### Fixed
+- Issue with paging results not pulling next pages
 
 ## 1.0.0-beta.2 (2020-10-06)
 Added phone number administration. For more information, please see the [README][read_me] and [documentation][documentation].
