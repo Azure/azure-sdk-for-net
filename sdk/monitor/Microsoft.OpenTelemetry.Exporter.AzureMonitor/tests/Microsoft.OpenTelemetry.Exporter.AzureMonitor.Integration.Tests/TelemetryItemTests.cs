@@ -162,18 +162,17 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 
             var transmitter = new MockTransmitter();
 
+            var azureMonitorExporterOptions = new AzureMonitorExporterOptions
+            {
+                ConnectionString = EmptyConnectionString,
+            };
+
             var processor1 = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
-                options: new AzureMonitorExporterOptions
-                {
-                    ConnectionString = EmptyConnectionString,
-                },
+                options: azureMonitorExporterOptions,
                 transmitter: transmitter));
 
             var processor2 = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(
-                options: new AzureMonitorExporterOptions
-                {
-                    ConnectionString = EmptyConnectionString,
-                },
+                options: azureMonitorExporterOptions,
                 transmitter: transmitter));
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
