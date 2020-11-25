@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -113,7 +112,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 
             // CLEANUP
             processor.ForceFlush();
-            //Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
 
             Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
             return transmitter.TelemetryItems.Single();
@@ -137,19 +135,87 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
                     .AddProcessor(processor));
             });
 
-            // ACT
             using var serviceProvider = serviceCollection.BuildServiceProvider();
             var logger = serviceProvider.GetRequiredService<ILogger<TelemetryItemTests>>();
+
+            // ACT
             testScenario(logger);
 
             // CLEANUP
             processor.ForceFlush();
-            //Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
 
             Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
             return transmitter.TelemetryItems.Single();
         }
 
-        // TODO: INCLUDE ADDITIONAL TESTS VALIDATING ILOGGER + ACTIVITY
+        /// <summary>
+        /// This test is to verify that the correlation Ids from Activity are set on Log Telemetry.
+        /// This test will generate two telemetry items and their Ids are expected to match.
+        /// This test does not inspect any other fields.
+        /// </summary>
+        [Fact]
+        public void VerifyLoggerWithActivity()
+        {
+            // SETUP
+            var ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
+            using var activitySource = new ActivitySource(ActivitySourceName);
+
+            var transmitter = new MockTransmitter();
+
+            var processor1 = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
+                options: new AzureMonitorExporterOptions
+                {
+                    ConnectionString = EmptyConnectionString,
+                },
+                transmitter: transmitter));
+
+            var processor2 = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(
+                options: new AzureMonitorExporterOptions
+                {
+                    ConnectionString = EmptyConnectionString,
+                },
+                transmitter: transmitter));
+
+            Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .AddSource(ActivitySourceName)
+                .AddProcessor(processor1)
+                .Build();
+
+            var serviceCollection = new ServiceCollection().AddLogging(builder =>
+            {
+                builder.SetMinimumLevel(LogLevel.Trace)
+                    .AddOpenTelemetry(options => options
+                    .AddProcessor(processor2));
+            });
+
+            using var serviceProvider = serviceCollection.BuildServiceProvider();
+            var logger = serviceProvider.GetRequiredService<ILogger<TelemetryItemTests>>();
+
+            // ACT
+            using (var activity = activitySource.StartActivity(name: "test activity", kind: ActivityKind.Server))
+            {
+                activity.SetTag("message", "hello activity!");
+
+                logger.LogWarning("hello ilogger");
+            }
+
+            // CLEANUP
+            processor1.ForceFlush();
+            processor2.ForceFlush();
+
+            // VERIFY
+            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            Assert.Equal(2, transmitter.TelemetryItems.Count);
+
+            var logTelemetry = transmitter.TelemetryItems.Single(x => x.Name == "Message");
+            var activityTelemetry = transmitter.TelemetryItems.Single(x => x.Name == "Request");
+
+            var activityId = ((RequestData)activityTelemetry.Data.BaseData).Id;
+            var operationId = activityTelemetry.Tags["ai.operation.id"];
+
+            Assert.Equal(activityId, logTelemetry.Tags["ai.operation.parentId"]);
+            Assert.Equal(operationId, logTelemetry.Tags["ai.operation.id"]);
+        }
     }
 }
