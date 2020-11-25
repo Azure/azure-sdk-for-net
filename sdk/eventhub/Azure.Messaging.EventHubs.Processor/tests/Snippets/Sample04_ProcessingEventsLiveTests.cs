@@ -295,7 +295,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     // as part of the configured TryTimeout of the processor;
                     // by default, this is 60 seconds.
 
-                    await processor.StopProcessingAsync();
+                    //await processor.StopProcessingAsync();
                 }
             }
             catch
