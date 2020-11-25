@@ -120,7 +120,7 @@ foreach ($sdkPath in $sdksInfo.Keys)
   } 
   else 
   {
-    Write-Host "Error occurred while generating code for" $packageName "`n"
+    Write-Error "Error occurred while generating code for" $packageName "`n"
   }
 
   $path = @()
