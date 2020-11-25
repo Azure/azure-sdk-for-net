@@ -6,13 +6,13 @@ using System;
 namespace Azure.Communication.Chat
 {
     /// <summary> A member of the chat thread. </summary>
-    public partial class ChatThreadMember
+    public partial class ChatParticipant
     {
         /// <summary>
         ///  A member of the chat thread.
         /// </summary>
         /// <param name="communicationUser">Instance of <see cref="CommunicationUser"/>.</param>
-        public ChatThreadMember(CommunicationUser communicationUser)
+        public ChatParticipant(CommunicationUser communicationUser)
         {
             if (communicationUser == null || communicationUser.Id == null)
             {
@@ -20,7 +20,8 @@ namespace Azure.Communication.Chat
             }
             User = communicationUser;
         }
-        internal ChatThreadMember(ChatThreadMemberInternal chatThreadMemberInternal)
+
+        internal ChatParticipant(ChatParticipantInternal chatThreadMemberInternal)
         {
             User = new CommunicationUser(chatThreadMemberInternal.Id);
             DisplayName = chatThreadMemberInternal.DisplayName;
@@ -34,9 +35,9 @@ namespace Azure.Communication.Chat
         /// <summary> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ShareHistoryTime { get; set; }
 
-        internal ChatThreadMemberInternal ToChatThreadMemberInternal()
+        internal ChatParticipantInternal ToChatParticipantInternal()
         {
-            return new ChatThreadMemberInternal(User.Id, DisplayName, ShareHistoryTime);
+            return new ChatParticipantInternal(User.Id, DisplayName, ShareHistoryTime);
         }
     }
 }

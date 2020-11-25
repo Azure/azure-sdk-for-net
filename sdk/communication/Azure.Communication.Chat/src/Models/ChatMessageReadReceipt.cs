@@ -6,10 +6,10 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    [CodeGenModel("ReadReceipt")]
-    public partial class ReadReceipt
+    [CodeGenModel("ChatMessageReadReceipt")]
+    public partial class ChatMessageReadReceipt
     {
-        internal ReadReceipt(string senderId, string chatMessageId, DateTimeOffset? readOn)
+        internal ChatMessageReadReceipt(string senderId, string chatMessageId, DateTimeOffset? readOn)
         {
             SenderId = senderId;
             Sender = new CommunicationUser(senderId);
