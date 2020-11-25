@@ -5,5 +5,4 @@ extends:
   parameters:
     ServiceDirectory: timeseriesinsights
     Location: westus2
-    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
     Clouds: Preview
