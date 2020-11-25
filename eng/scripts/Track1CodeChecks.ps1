@@ -112,19 +112,18 @@ try {
         # prevent warning related to EOL differences which triggers an exception for some reason
         & git add -A
         $diffResult=@()
-        $diffResult = git -c core.safecrlf=false diff HEAD --name-only --ignore-space-at-eol
+        $diffResult += git -c core.safecrlf=false diff HEAD --name-only --ignore-space-at-eol
         Write-Output "Length is "$diffResult.Length
         if($diffResult.Length -gt 1){
             $exitCode ++
         } elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')){
-            # $content = git -c core.safecrlf=false diff HEAD --ignore-space-at-eol $result[0]
-            # $content[0..($content.Length-1)] | ForEach-Object {
-            #     if($_.StartsWith('+')){
-            #         $exitCode ++
-            #         break
-            #     }
-            # }
-            Write-Output "Git diff on sdkinfo"
+            $content = git -c core.safecrlf=false diff HEAD --ignore-space-at-eol $result[0]
+            $content[0..($content.Length-1)] | ForEach-Object {
+                if($_.StartsWith('+')){
+                    $exitCode ++
+                    break
+                }
+            }
         } elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -notmatch 'SdkInfo_')) {
             $exitCode ++
         }
