@@ -83,6 +83,7 @@ try {
         }
     }
     Write-Output "MetaPath is"$mataPath
+    Write-Output "MataPath End"
     $mataPath | ForEach-Object {
         $metaData = Get-Content $mataPath
         $commit = ''
@@ -104,7 +105,7 @@ try {
             & npm install -g autorest
         }
 
-        Write-Output "Ready to execute code: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90"
+        Write-Output "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90"
         Invoke-Block {
             & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90 
         }
