@@ -202,7 +202,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        [Ignore("Debugging Potential Hang")]
         public async Task CheckpointByEventCount()
         {
             #region Snippet:EventHubs_Processor_Sample04_CheckpointByEventCount
@@ -308,8 +307,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                // It is encouraged that you unregister your handlers when you have
                // finished using the Event Processor to ensure proper cleanup
 
-               processor.ProcessEventAsync -= processEventHandler;
-               processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+               //processor.ProcessEventAsync -= processEventHandler;
+               //processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
             }
 
             #endregion
