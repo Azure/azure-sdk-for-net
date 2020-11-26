@@ -6,18 +6,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using NUnit.Framework;
-using Azure.WebJobs.Extensions.Storage.Queues.Tests;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class QueueTriggerTests
     {
@@ -34,14 +33,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private async Task SetupAsync(QueueServiceClient client, object contents)
         {
-            string message;
+            BinaryData message;
             if (contents is string str)
             {
-                message = str;
+                message = BinaryData.FromString(str);
             }
-            else if (contents is byte[] bytearray) // TODO (kasobol-msft) revisit this when we have Base64/BinaryData
+            else if (contents is byte[] bytearray)
             {
-                message = Encoding.UTF8.GetString(bytearray);
+                message = BinaryData.FromBytes(bytearray);
             }
             else
             {
@@ -98,13 +97,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [Ignore("TODO (kasobol-msft) reenable when we get base64/BinaryData in SDK")]
         public async Task QueueTrigger_IfBoundToStringAndMessageIsNotUtf8ByteArray_DoesNotBind()
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
             var queue = await CreateQueue(queueServiceClient, QueueName);
-            await queue.SendMessageAsync(Convert.ToBase64String(content));
+            await queue.SendMessageAsync(BinaryData.FromBytes(content));
 
             // Act
             Exception exception = await RunTriggerFailureAsync<string>(typeof(BindToStringProgram),
@@ -115,12 +113,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.AreEqual("Exception binding parameter 'message'", exception.Message);
             Exception innerException = exception.InnerException;
             Assert.IsInstanceOf<DecoderFallbackException>(innerException);
-            Assert.AreEqual("Unable to translate bytes [FF] at index -1 from specified code page to Unicode.",
+            StringAssert.IsMatch("Unable to translate bytes \\[FF\\] at index .*? from specified code page to Unicode.",
                 innerException.Message);
         }
 
         [Test]
-        [Ignore("TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK")]
         public async Task QueueTrigger_IfBoundToByteArray_Binds()
         {
             byte[] expectedContent = new byte[] { 0x31, 0x32, 0x33 };
@@ -135,18 +132,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [Ignore("TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK")]
         public async Task QueueTrigger_IfBoundToByteArrayAndMessageIsNonUtf8_Binds()
         {
             byte[] expectedContent = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
             await TestBindToByteArray(expectedContent);
         }
 
-        private async Task TestBindToByteArray(byte[] expectedContent) // TODO (kasobol-msft) Revisit base64 encoding story
+        private async Task TestBindToByteArray(byte[] expectedContent)
         {
             // Arrange
             var queue = await CreateQueue(queueServiceClient, QueueName);
-            await queue.SendMessageAsync(Convert.ToBase64String(expectedContent));
+            await queue.SendMessageAsync(BinaryData.FromBytes(expectedContent));
 
             // Act
             byte[] result = await RunTriggerAsync<byte[]>(typeof(BindToByteArrayProgram),
@@ -154,6 +150,43 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.AreEqual(expectedContent, result);
+        }
+
+
+
+        [Test]
+        public async Task QueueTrigger_IfBoundToBinaryData_Binds()
+        {
+            byte[] expectedContent = new byte[] { 0x31, 0x32, 0x33 };
+            await TestBindToBinaryData(expectedContent);
+        }
+
+        [Test]
+        public async Task QueueTrigger_IfBoundToBinaryDataAndMessageIsEmpty_Binds()
+        {
+            byte[] expectedContent = new byte[0];
+            await TestBindToBinaryData(expectedContent);
+        }
+
+        [Test]
+        public async Task QueueTrigger_IfBoundToBinaryDataAndMessageIsNonUtf8_Binds()
+        {
+            byte[] expectedContent = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
+            await TestBindToBinaryData(expectedContent);
+        }
+
+        private async Task TestBindToBinaryData(byte[] expectedContent)
+        {
+            // Arrange
+            var queue = await CreateQueue(queueServiceClient, QueueName);
+            await queue.SendMessageAsync(BinaryData.FromBytes(expectedContent));
+
+            // Act
+            BinaryData result = await RunTriggerAsync<BinaryData>(typeof(BindToBinaryDataProgram),
+                (s) => BindToBinaryDataProgram.TaskSource = s);
+
+            // Assert
+            Assert.AreEqual(expectedContent, result.ToArray());
         }
 
         [Test]
@@ -288,9 +321,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedQueueTrigger = "abc";
-            byte[] content = Encoding.UTF8.GetBytes(expectedQueueTrigger); // TODO (kasobol-msft) Revisit base64 encoding story
+            byte[] content = Encoding.UTF8.GetBytes(expectedQueueTrigger);
             var queue = await CreateQueue(queueServiceClient, QueueName);
-            await queue.SendMessageAsync(expectedQueueTrigger);
+            await queue.SendMessageAsync(BinaryData.FromBytes(content));
 
             // Act
             string result = await RunTriggerAsync<string>(typeof(BindToQueueTriggerBindingDataProgram),
@@ -301,13 +334,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [Ignore("TODO (kasobol-msft) revisit that when we get base64/BinaryData in the SDK")]
         public async Task QueueTrigger_IfMessageIsNonUtf8ByteArray_DoesNotProvideQueueTriggerBindingData()
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
             var queue = await CreateQueue(queueServiceClient, QueueName);
-            await queue.SendMessageAsync(Convert.ToBase64String(content));
+            await queue.SendMessageAsync(BinaryData.FromBytes(content));
 
             // Act
             Exception exception = await RunTriggerFailureAsync<string>(typeof(BindToQueueTriggerBindingDataProgram),
@@ -754,6 +786,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public static TaskCompletionSource<byte[]> TaskSource { get; set; }
 
             public static void Run([QueueTrigger(QueueName)] byte[] message)
+            {
+                TaskSource.TrySetResult(message);
+            }
+        }
+
+        private class BindToBinaryDataProgram
+        {
+            public static TaskCompletionSource<BinaryData> TaskSource { get; set; }
+
+            public static void Run([QueueTrigger(QueueName)] BinaryData message)
             {
                 TaskSource.TrySetResult(message);
             }

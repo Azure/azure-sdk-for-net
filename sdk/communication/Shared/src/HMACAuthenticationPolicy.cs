@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Azure.Communication.Pipeline
 {
-    // This file lovingly copied from https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/src/AuthenticationPolicy.cs
     internal class HMACAuthenticationPolicy : HttpPipelinePolicy
     {
         private readonly byte[] _secret;
@@ -46,7 +45,7 @@ namespace Azure.Communication.Pipeline
                 message.Request.Content?.WriteTo(contentHashStream, message.CancellationToken);
             }
 
-            return Convert.ToBase64String(alg.Hash);
+            return Convert.ToBase64String(alg.Hash!);
         }
 
         private static async ValueTask<string> CreateContentHashAsync(HttpMessage message)
@@ -60,7 +59,7 @@ namespace Azure.Communication.Pipeline
                     await message.Request.Content.WriteToAsync(contentHashStream, message.CancellationToken).ConfigureAwait(false);
             }
 
-            return Convert.ToBase64String(alg.Hash);
+            return Convert.ToBase64String(alg.Hash!);
         }
 
         private void AddHeaders(HttpMessage message, string contentHash)

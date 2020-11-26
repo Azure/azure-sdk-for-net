@@ -16,7 +16,9 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Optional custom metadata to set for this share.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata Metadata { get; set; }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Optional. Maximum size of the share in gigabytes.  If unspecified, use the service's default value.

@@ -17,7 +17,7 @@ namespace Azure.Data.Tables
     /// This type can be used with any of the generic entity interaction methods in <see cref="TableClient"/> where entity model type flexibility is desired.
     /// For example, if your table contains a jagged schema, or you need to precisely update a subset of properties in a <see cref="TableUpdateMode.Merge"/> mode operation.
     /// </remarks>
-    public partial class TableEntity : ITableEntity
+    public sealed partial class TableEntity : ITableEntity
     {
         private readonly IDictionary<string, object> _properties;
 
@@ -190,7 +190,7 @@ namespace Azure.Data.Tables
         /// <param name="key">The property name.</param>
         /// <param name="value">The property value.</param>
         /// <exception cref="InvalidOperationException">The given <paramref name="value"/> does not match the type of the existing value associated with given <paramref name="key"/>.</exception>
-        private protected void SetValue(string key, object value)
+        private void SetValue(string key, object value)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -208,7 +208,7 @@ namespace Azure.Data.Tables
         /// <param name="key">The property name.</param>
         /// <returns>The value of the property.</returns>
         /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of given type <typeparamref name="T"/>.</exception>
-        private protected T GetValue<T>(string key) => (T)GetValue(key, typeof(T));
+        private T GetValue<T>(string key) => (T)GetValue(key, typeof(T));
 
         /// <summary>
         /// Get an entity property.
@@ -217,7 +217,7 @@ namespace Azure.Data.Tables
         /// <param name="type">The expected type of the property value.</param>
         /// <returns>The value of the property.</returns>
         /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <paramref name="type"/>.</exception>
-        private protected object GetValue(string key, Type type = null)
+        private object GetValue(string key, Type type = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
             if (!_properties.TryGetValue(key, out object value) || value == null)

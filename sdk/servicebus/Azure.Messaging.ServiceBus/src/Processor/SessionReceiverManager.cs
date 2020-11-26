@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus
     internal class SessionReceiverManager : ReceiverManager
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
-        private int _threadCount = 0;
+        private int _threadCount;
         private readonly Func<ProcessSessionEventArgs, Task> _sessionInitHandler;
         private readonly Func<ProcessSessionEventArgs, Task> _sessionCloseHandler;
         private readonly Func<ProcessSessionMessageEventArgs, Task> _messageHandler;
@@ -229,9 +229,10 @@ namespace Azure.Messaging.ServiceBus
                 await RaiseExceptionReceived(
                     new ProcessErrorEventArgs(
                         exception,
-                        ServiceBusErrorSource.CloseMessageSession,
+                        ServiceBusErrorSource.CloseSession,
                         _fullyQualifiedNamespace,
-                        _entityPath))
+                        _entityPath,
+                        cancellationToken))
                     .ConfigureAwait(false);
             }
             finally
@@ -248,7 +249,7 @@ namespace Azure.Messaging.ServiceBus
 
         public override async Task ReceiveAndProcessMessagesAsync(CancellationToken processorCancellationToken)
         {
-            ServiceBusErrorSource errorSource = ServiceBusErrorSource.AcceptMessageSession;
+            ServiceBusErrorSource errorSource = ServiceBusErrorSource.AcceptSession;
             bool canProcess = false;
             try
             {
@@ -314,7 +315,8 @@ namespace Azure.Messaging.ServiceBus
                         ex,
                         errorSource,
                         _fullyQualifiedNamespace,
-                        _entityPath))
+                        _entityPath,
+                        processorCancellationToken))
                     .ConfigureAwait(false);
             }
             finally

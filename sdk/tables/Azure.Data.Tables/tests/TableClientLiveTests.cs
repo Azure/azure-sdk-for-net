@@ -20,6 +20,7 @@ namespace Azure.Data.Tables.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16964")]
     public class TableClientLiveTests : TableServiceLiveTestsBase
     {
 
@@ -888,6 +889,7 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
                 Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
                 Assert.That(entityResults[i].StringTypeProperty, Is.EqualTo(entitiesToCreate[i].StringTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].ETag, Is.Not.EqualTo(default(ETag)), $"ETag value should not be default: {entityResults[i].ETag}");
             }
         }
 
@@ -1046,6 +1048,12 @@ namespace Azure.Data.Tables.Tests
             // Submit the batch.
             TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
 
+            // Validate that the batch throws if we try to send it again.
+            Assert.ThrowsAsync<InvalidOperationException>(() => batch.SubmitBatchAsync());
+
+            // Validate that adding more operations to the batch throws.
+            Assert.Throws<InvalidOperationException>(() => batch.AddEntity(new TableEntity()));
+
             foreach (var entity in entitiesToCreate)
             {
                 Assert.That(response.GetResponseForEntity(entity.RowKey).Status, Is.EqualTo((int)HttpStatusCode.NoContent));
@@ -1089,7 +1097,9 @@ namespace Azure.Data.Tables.Tests
             {
                 Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
                 Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
-                Assert.That(ex.Message.Contains(entitiesToCreate.Last().RowKey), $"Exception message should have contained {entitiesToCreate.Last().RowKey}.\n\n Actual: {ex.Message}");
+                Assert.That(batch.TryGetFailedEntityFromException(ex, out ITableEntity failedEntity), Is.True);
+                Assert.That(failedEntity.RowKey, Is.EqualTo(entitiesToCreate.Last().RowKey));
+                Assert.That(ex.Message.Contains(nameof(TableTransactionalBatch.TryGetFailedEntityFromException)));
             }
         }
     }

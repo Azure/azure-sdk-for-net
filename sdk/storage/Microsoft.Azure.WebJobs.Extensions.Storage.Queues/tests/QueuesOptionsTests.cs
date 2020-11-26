@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
+using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class QueuesOptionsTests
     {
@@ -19,6 +21,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
             Assert.AreEqual(16, options.BatchSize);
             Assert.AreEqual(8 * processorCount, options.NewBatchThreshold);
             Assert.AreEqual(QueuePollingIntervals.DefaultMaximum, options.MaxPollingInterval);
+            Assert.AreEqual(QueueMessageEncoding.Base64, options.MessageEncoding);
         }
 
         [Test]
@@ -64,10 +67,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
         {
             var jo = new JObject
             {
-                { "MaxPollingInterval", "00:00:05" }
+                { "MaxPollingInterval", "00:00:05" },
+                { "MessageEncoding", "Base64" }
             };
             var options = jo.ToObject<QueuesOptions>();
             Assert.AreEqual(TimeSpan.FromMilliseconds(5000), options.MaxPollingInterval);
+            Assert.AreEqual(QueueMessageEncoding.Base64, options.MessageEncoding);
         }
     }
 }

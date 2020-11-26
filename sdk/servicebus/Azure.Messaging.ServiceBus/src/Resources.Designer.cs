@@ -511,15 +511,6 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The operation is not supported for peeked message. Only received message can be settled..
-        /// </summary>
-        internal static string SettlementOperationNotSupported {
-            get {
-                return ResourceManager.GetString("SettlementOperationNotSupported", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to In order to update the signature, a shared access key must have been provided when the shared access signature was created..
         /// </summary>
         internal static string SharedAccessKeyIsRequired {

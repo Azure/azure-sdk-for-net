@@ -60,7 +60,7 @@
             "name": "[variables('uniqueSubDomainName')]",
             "location":"[parameters('location')]",
             "sku": {
-                "name": "S0"
+                "name": "S"
             },
             "kind": "TextAnalytics",
             "properties": {

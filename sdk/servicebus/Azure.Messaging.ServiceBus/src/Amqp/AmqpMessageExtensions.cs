@@ -15,9 +15,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
         {
-            if (message.AmqpMessage.Body is AmqpDataMessageBody dataBody)
+            if (message.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
             {
-                return AmqpMessage.Create(dataBody.Data.AsAmqpData());
+                return AmqpMessage.Create(dataBody.AsAmqpData());
             }
             throw new NotSupportedException($"{message.AmqpMessage.Body.GetType()} is not a supported message body type.");
         }
@@ -130,11 +130,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static BinaryData GetBody(this AmqpAnnotatedMessage message)
         {
-            if (message.Body is AmqpDataMessageBody dataBody)
+            if (message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
             {
-                return dataBody.Data.ConvertAndFlattenData();
+                return dataBody.ConvertAndFlattenData();
             }
-            throw new NotSupportedException($"{message.Body.GetType()} is not a supported message body type.");
+            throw new NotSupportedException($"{message.Body.BodyType} is not a supported message body type.");
         }
     }
 }

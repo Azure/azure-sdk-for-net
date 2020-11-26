@@ -7,17 +7,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Azure.Storage.Blobs.Specialized;
+using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
+using Microsoft.Azure.WebJobs.Host.Executors;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     internal sealed class ScanContainersStrategy : IBlobListenerStrategy
     {
@@ -108,7 +107,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
 
             // Run subsequent iterations at 2 second intervals.
-            return new TaskSeriesCommandResult(wait: Task.Delay(TwoSeconds));
+            return new TaskSeriesCommandResult(wait: Task.Delay(TwoSeconds, CancellationToken.None));
         }
 
         public void Cancel()

@@ -70,13 +70,13 @@ if ($LASTEXITCODE -ne 0)
 
 if (!$SkipCommit) {
     if ($AmendCommit) {
-        Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -am `"$($CommitMsg)`""
-        git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit --amend -am "$($CommitMsg)"
+        $amendOption = "--amend"
     }
     else {
-        Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit --amend -am `"$($CommitMsg)`""
-        git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -am "$($CommitMsg)"
+        $amendOption = ""
     }
+    Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit $amendOption -am `"$($CommitMsg)`""
+    git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit $amendOption -am "$($CommitMsg)"
     if ($LASTEXITCODE -ne 0)
     {
         Write-Error "Unable to add files and create commit LASTEXITCODE=$($LASTEXITCODE), see command output above."

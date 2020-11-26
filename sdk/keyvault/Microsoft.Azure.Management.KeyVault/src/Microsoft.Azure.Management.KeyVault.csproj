@@ -11,12 +11,11 @@
 		</Description>
 		<AssemblyTitle>Microsoft Azure Key Vault Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.KeyVault</AssemblyName>
-		<Version>3.1.0-preview.2</Version>
+		<Version>3.1.0</Version>
 		<PackageTags>Microsoft Azure key vault management;Key Vault;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-				- Support CRUD operations to managed HSM
-				- Fixed hsmUri property name and removed regex pattern for name validation
+				- Support to specify "All" as an option when assigning permissions
 			]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

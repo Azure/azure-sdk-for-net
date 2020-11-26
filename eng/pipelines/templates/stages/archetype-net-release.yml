@@ -63,6 +63,7 @@ stages:
                           pwsh: true
                           workingDirectory: $(Build.SourcesDirectory)
                           filePath: eng/scripts/SetTestPipelineVersion.ps1
+                          arguments: '-BuildID $(Build.BuildId)'
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}
@@ -219,6 +220,7 @@ stages:
                           PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
                           CommitMsg: "Increment package version after release of ${{ artifact.name }}"
                           PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
+                          PRLabels: "auto-merge"
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
   - stage: Integration

@@ -8,13 +8,13 @@
         "Authorization": "Sanitized",
         "Content-Length": "52",
         "Content-Type": "application/json",
-        "Date": "Sun, 20 Sep 2020 21:40:02 GMT",
-        "traceparent": "00-e8b82ecba8fd6d48847ce908be2a5838-e7db268d284c5445-00",
+        "Date": "Tue, 10 Nov 2020 23:51:34 GMT",
+        "traceparent": "00-f7defb4361a9844d9521c6aadd5d1418-c1ff3ec5475ae249-00",
         "User-Agent": [
-          "azsdk-net-Communication.Sms/1.0.0-alpha.20200920.1",
-          "(.NET Core 4.6.29220.03; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Thu Jun 18 20:49:00 PDT 2020; root:xnu-6153.141.1~1/RELEASE_X86_64)"
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20201110.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "0b9f1ebe8c4821765e0267d236a04c78",
+        "x-ms-client-request-id": "502c14eada64473d9335b07c59ac6bf4",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -26,11 +26,11 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 20 Sep 2020 21:40:04 GMT",
-        "MS-CV": "2ThzG9UpeUG6pn9dHPiaNA.0",
+        "Date": "Tue, 10 Nov 2020 23:51:35 GMT",
+        "MS-CV": "ve2uWfjNcEiPGbYCNuRQEw.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0MsxnXwAAAAAeFnmqJ1yTRrKrKzc0MbH9WVZSMzBFREdFMDQxNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "1054ms"
+        "X-Azure-Ref": "0hierXwAAAACfIn4t4LjSR4b9wyIW6Qt3WVRPMDFFREdFMDYxNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "582ms"
       },
       "ResponseBody": {
         "messageId": "Sanitized"
@@ -38,9 +38,9 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==;",
-    "FROM_PHONE_NUMBER": "\u002B18005551234",
-    "RandomSeed": "23717882",
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==;",
+    "AZURE_PHONE_NUMBER": "\u002B18005551234",
+    "RandomSeed": "2069880153",
     "TO_PHONE_NUMBER": "\u002B18005555555"
   }
 }

@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="restorePointInTime">Snapshot time to restore</param>
         /// <param name="createMode">What is this?</param>
         /// <param name="creationDate">Date the SQL pool was created</param>
-        public SqlPoolPatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Sku sku = default(Sku), long? maxSizeBytes = default(long?), string collation = default(string), string sourceDatabaseId = default(string), string recoverableDatabaseId = default(string), string provisioningState = default(string), string status = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string createMode = default(string), System.DateTime? creationDate = default(System.DateTime?))
+        public SqlPoolPatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Sku sku = default(Sku), long? maxSizeBytes = default(long?), string collation = default(string), string sourceDatabaseId = default(string), string recoverableDatabaseId = default(string), string provisioningState = default(string), string status = default(string), string restorePointInTime = default(string), string createMode = default(string), System.DateTime? creationDate = default(System.DateTime?))
         {
             Tags = tags;
             Location = location;
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Gets or sets snapshot time to restore
         /// </summary>
         [JsonProperty(PropertyName = "properties.restorePointInTime")]
-        public System.DateTime? RestorePointInTime { get; set; }
+        public string RestorePointInTime { get; set; }
 
         /// <summary>
         /// Gets or sets what is this?

@@ -47,14 +47,14 @@ namespace Azure.Identity
         }
 
         internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline)
-            : this(pipeline, new ManagedIdentityClient(pipeline, clientId))
+            : this(new ManagedIdentityClient(pipeline, clientId))
         {
         }
 
-        internal ManagedIdentityCredential(CredentialPipeline pipeline, ManagedIdentityClient client)
+        internal ManagedIdentityCredential(ManagedIdentityClient client)
         {
 
-            _pipeline = pipeline;
+            _pipeline = client.Pipeline;
 
             _client = client;
         }
@@ -87,7 +87,7 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken result = await _client.AuthenticateAsync(async, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+                AccessToken result = await _client.AuthenticateAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(result);
             }
             catch (Exception e)

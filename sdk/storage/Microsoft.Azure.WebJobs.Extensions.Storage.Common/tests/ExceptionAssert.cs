@@ -4,7 +4,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public static class ExceptionAssert
     {

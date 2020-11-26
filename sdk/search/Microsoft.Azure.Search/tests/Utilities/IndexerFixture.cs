@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
     using System.Collections.Generic;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Index = Microsoft.Azure.Search.Models.Index;
 
     public class IndexerFixture : SearchServiceFixture
     {
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             searchClient.Indexes.Create(index);
 
-            var dataSource = 
+            var dataSource =
                 DataSource.AzureSql(
                     name: DataSourceName,
                     sqlConnectionString: AzureSqlReadOnlyConnectionString,

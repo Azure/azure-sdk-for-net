@@ -5,7 +5,7 @@ using System;
 using System.Text;
 using Azure.Storage.Queues.Models;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
     internal class StorageQueueMessageToByteArrayConverter : IConverter<QueueMessage, byte[]>
     {
@@ -16,8 +16,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                 throw new ArgumentNullException(nameof(input));
             }
 
-            // TODO (kasobol-msft) revisit this base64/BinaryData
-            return Encoding.UTF8.GetBytes(input.MessageText);
+            return input.Body.ToArray();
         }
     }
 }

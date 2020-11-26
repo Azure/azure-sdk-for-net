@@ -16,7 +16,7 @@ Use the client library for Azure Event Grid to:
 Install the client library from [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.EventGrid --version 4.0.0-beta.1
+dotnet add package Azure.Messaging.EventGrid --version 4.0.0-beta.4
 ```
 
 ### Prerequisites

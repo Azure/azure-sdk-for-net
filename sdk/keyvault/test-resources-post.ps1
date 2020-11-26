@@ -93,11 +93,16 @@ $wrappingFiles = foreach ($i in 0..2) {
 
 # TODO: Use Az module when available; for now, assumes Azure CLI is installed and in $Env:PATH.
 Log "Logging '$username' into the Azure CLI"
-az login --service-principal --tenant $tenant --username $username --password $password
+az login --service-principal --tenant "$tenant" --username "$username" --password="$password"
 
 Log "Downloading security domain from '$hsmUrl'"
 
 $sdPath = "$PSScriptRoot\$hsmName-security-domain.key"
+if (Test-Path $sdpath) {
+    Log "Deleting old security domain: $sdPath"
+    Remove-Item $sdPath -Force
+}
+
 az keyvault security-domain download --hsm-name $hsmName --security-domain-file $sdPath --sd-quorum 2 --sd-wrapping-keys $wrappingFiles
 
 Log "Security domain downloaded to '$sdPath'; Managed HSM is now active at '$hsmUrl'"

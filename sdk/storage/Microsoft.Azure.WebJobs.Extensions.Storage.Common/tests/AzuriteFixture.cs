@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     /// <summary>
     /// This class manages Azurite Lifecycle for a test class.
@@ -140,13 +140,18 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             });
         }
 
-        public QueueServiceClient GetQueueServiceClient()
+        public QueueServiceClient GetQueueServiceClient(QueueClientOptions queueClientOptions = default)
         {
-            var transport = GetTransport();
-            return new QueueServiceClient(account.ConnectionString, new QueueClientOptions()
+            if (queueClientOptions == default)
             {
-                Transport = transport
-            });
+                queueClientOptions = new QueueClientOptions()
+                {
+                    MessageEncoding = QueueMessageEncoding.Base64
+                };
+            }
+
+            queueClientOptions.Transport = GetTransport();
+            return new QueueServiceClient(account.ConnectionString, queueClientOptions);
         }
 
         public HttpClientTransport GetTransport()
