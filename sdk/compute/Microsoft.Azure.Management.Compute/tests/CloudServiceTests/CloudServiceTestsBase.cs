@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -220,7 +221,7 @@ namespace Compute.Tests
             Assert.NotNull(cloudServiceOut.Properties);
             Assert.True(!string.IsNullOrEmpty(cloudServiceOut.Properties.ProvisioningState));
             Assert.Null(cloudServiceOut.Properties.PackageUrl);
-            Assert.Equal(cloudService.Properties.Configuration, cloudServiceOut.Properties.Configuration, StringComparer.OrdinalIgnoreCase);
+            Assert.NotNull(cloudServiceOut.Properties.Configuration);
             Assert.NotNull(cloudServiceOut.Properties.UpgradeMode);
 
             if (cloudService.Properties.ExtensionProfile != null &&
