@@ -9,18 +9,18 @@
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>1.7.0</Version>
+    <Version>1.8.0</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.7.0 relates to NetApp Files (ANF) 2020-06-01.
-          - Added support for Azure NetAppFiles data protection features snapshotpolicy, backuppolicy and backups.  
-          - Added BreakReplicationRequest body property to BreakReplication operation to force break a replication
-          - Added reinitializeReplication. Re-Initializes the replication connection on the destination volume
-					- Added PoolChange operation to volumes. Moves volume to another pool
-					- Added status enum to ActiveDirectory
-					- Added adName, kdcIP, serverRootCACertificate optional parameters to Activedirectory.
-					- Added totalThroughputMibps, utilizedThroughputMibps, qosType to Pool properties					
+        Version 1.8.0 relates to NetApp Files (ANF) 2020-07-01.
+          - Added aesEncryption, ldapSigning properties to ActiveDirectory
+          - Removed constraints on baremetalTenantId
+					- Added id, Name  Type, Tags to backupPolicyPatch
+					- Breaking changes: 
+					  1. Added backupId to Backup and BackupPatch, this value is needed for restore operation
+						    Backup contructor now accepts BackupId. Users do not need to provide this value as it has a default value and is returned by the service. 
+								But they will need to recompile for binary compatabiltiy due to changed constructor signature.
 					
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.

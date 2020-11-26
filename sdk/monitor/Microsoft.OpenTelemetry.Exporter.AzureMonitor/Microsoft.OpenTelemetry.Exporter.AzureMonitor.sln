@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration.Tests.AspNetCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration.Tests", "tests\Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests\Integration.Tests.csproj", "{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks", "tests\Benchmarks\Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks.csproj", "{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

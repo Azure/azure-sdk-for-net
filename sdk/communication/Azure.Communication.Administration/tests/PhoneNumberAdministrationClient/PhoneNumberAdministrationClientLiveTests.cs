@@ -166,9 +166,12 @@ namespace Azure.Communication.Administration.Tests
             string phonePlanGroupId = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.TollFree).PhonePlanGroupId;
             var pageablePhonePlans = client.GetPhonePlansAsync(countryCode, phonePlanGroupId, locale);
             var phonePlan = (await pageablePhonePlans.ToEnumerableAsync()).First();
-            var areaCode = phonePlan.AreaCodes.First();
+            var tollFreeAreaCode = phonePlan.AreaCodes.First();
 
-            var reservationOptions = new CreateReservationOptions("My reservation", "my description", new[] { phonePlan.PhonePlanId }, areaCode);
+            string geographicPhonePlanGroupId = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.Geographic).PhonePlanGroupId;
+            var geographicPhonePlanId = (await client.GetPhonePlansAsync(countryCode, geographicPhonePlanGroupId, locale).ToEnumerableAsync()).First().PhonePlanId;
+
+            var reservationOptions = new CreateReservationOptions("My reservation", "my description", new[] { geographicPhonePlanId }, tollFreeAreaCode);
             reservationOptions.Quantity = 1;
             var reservationOperation = await client.StartReservationAsync(reservationOptions);
 

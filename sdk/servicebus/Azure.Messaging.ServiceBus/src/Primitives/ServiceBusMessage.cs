@@ -200,7 +200,7 @@ namespace Azure.Messaging.ServiceBus
         ///    messages are kept together and in order as they are transferred.
         ///    See <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</see>.
         /// </remarks>
-        public string TransactionPartitionKey
+        internal string TransactionPartitionKey
         {
             get
             {
@@ -405,7 +405,7 @@ namespace Azure.Messaging.ServiceBus
         /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
         /// </summary>
         /// <returns>The raw Amqp message.</returns>
-        public AmqpAnnotatedMessage GetRawMessage() => AmqpMessage;
+        public AmqpAnnotatedMessage GetRawAmqpMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the application properties bag, which can be used for custom message metadata.

@@ -28,7 +28,7 @@ namespace Azure.Core
         /// <summary>
         /// The Response <see cref="ReasonPhrase"/>.
         /// </summary>
-        private string _reasonPhrase = null;
+        private string _reasonPhrase;
 
         /// <summary>
         /// The <see cref="Response.Headers"/>.

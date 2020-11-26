@@ -8,4 +8,8 @@
     <Reference Include="System.Net.Http" Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\PerfStressShared\PerfStressUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
 </Project>
