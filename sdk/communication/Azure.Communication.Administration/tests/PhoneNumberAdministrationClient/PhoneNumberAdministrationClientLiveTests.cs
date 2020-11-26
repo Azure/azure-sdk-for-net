@@ -56,7 +56,6 @@ namespace Azure.Communication.Administration.Tests
             var numbers = await numbersPagable.ToEnumerableAsync();
 
             Assert.IsNotNull(numbers);
-            Assert.IsNotEmpty(numbers);
         }
 
         [Test]
