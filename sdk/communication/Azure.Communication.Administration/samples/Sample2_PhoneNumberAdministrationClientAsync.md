@@ -142,7 +142,7 @@ var newPhoneNumberReservationOperation = new PhoneNumberReservationOperation(cli
 await newPhoneNumberReservationOperation.WaitForCompletionAsync();
 ```
 
-## Purchase reservation
+## Purchase phone numbers
 
 Phone numbers can be acquired by purchasing reservation.
 

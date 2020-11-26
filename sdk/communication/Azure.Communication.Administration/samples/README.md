@@ -20,7 +20,7 @@ This client library allows to do following operations:
 
  #### You can find samples for each of these functions below.
  - Generate user tokens [synchronously][sample_identity] or [asynchronously][sample_identity_async]
- - Purchase and release phone numbers [synchronously][sample_admin] or [asynchronously][sample_admin_async]
+ - Manage phone numbers [synchronously][sample_admin] or [asynchronously][sample_admin_async]
 
 <!-- LINKS -->
 [sample_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Administration/samples/Sample1_CommunicationIdentityClient.md

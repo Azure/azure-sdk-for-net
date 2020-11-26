@@ -162,7 +162,7 @@ while (true)
 }
 ```
 
-## Purchase reservation
+## Purchase phone numbers
 
 Phone numbers can be acquired by purchasing reservation.
 
