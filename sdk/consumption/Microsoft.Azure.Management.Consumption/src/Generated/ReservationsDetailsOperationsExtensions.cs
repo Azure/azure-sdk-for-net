@@ -116,6 +116,90 @@ namespace Microsoft.Azure.Management.Consumption
             }
 
             /// <summary>
+            /// Lists the reservations details for the defined scope and provided date
+            /// range.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope associated with reservations details operations. This includes
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// BillingAccount scope (legacy), and
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for BillingProfile scope (modern).
+            /// </param>
+            /// <param name='startDate'>
+            /// Start date. Only applicable when querying with billing profile
+            /// </param>
+            /// <param name='endDate'>
+            /// End date. Only applicable when querying with billing profile
+            /// </param>
+            /// <param name='filter'>
+            /// Filter reservation details by date range. The properties/UsageDate for
+            /// start date and end date. The filter supports 'le' and  'ge'. Not applicable
+            /// when querying with billing profile
+            /// </param>
+            /// <param name='reservationId'>
+            /// Reservation Id GUID. Only valid if reservationOrderId is also provided.
+            /// Filter to a specific reservation
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Reservation Order Id GUID. Required if reservationId is provided. Filter to
+            /// a specific reservation order
+            /// </param>
+            public static IPage<ReservationDetail> List(this IReservationsDetailsOperations operations, string scope, string startDate = default(string), string endDate = default(string), string filter = default(string), string reservationId = default(string), string reservationOrderId = default(string))
+            {
+                return operations.ListAsync(scope, startDate, endDate, filter, reservationId, reservationOrderId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the reservations details for the defined scope and provided date
+            /// range.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope associated with reservations details operations. This includes
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// BillingAccount scope (legacy), and
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for BillingProfile scope (modern).
+            /// </param>
+            /// <param name='startDate'>
+            /// Start date. Only applicable when querying with billing profile
+            /// </param>
+            /// <param name='endDate'>
+            /// End date. Only applicable when querying with billing profile
+            /// </param>
+            /// <param name='filter'>
+            /// Filter reservation details by date range. The properties/UsageDate for
+            /// start date and end date. The filter supports 'le' and  'ge'. Not applicable
+            /// when querying with billing profile
+            /// </param>
+            /// <param name='reservationId'>
+            /// Reservation Id GUID. Only valid if reservationOrderId is also provided.
+            /// Filter to a specific reservation
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Reservation Order Id GUID. Required if reservationId is provided. Filter to
+            /// a specific reservation order
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReservationDetail>> ListAsync(this IReservationsDetailsOperations operations, string scope, string startDate = default(string), string endDate = default(string), string filter = default(string), string reservationId = default(string), string reservationOrderId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(scope, startDate, endDate, filter, reservationId, reservationOrderId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the reservations details for provided date range.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
@@ -182,6 +266,44 @@ namespace Microsoft.Azure.Management.Consumption
             public static async Task<IPage<ReservationDetail>> ListByReservationOrderAndReservationNextAsync(this IReservationsDetailsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByReservationOrderAndReservationNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the reservations details for the defined scope and provided date
+            /// range.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ReservationDetail> ListNext(this IReservationsDetailsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the reservations details for the defined scope and provided date
+            /// range.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReservationDetail>> ListNextAsync(this IReservationsDetailsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

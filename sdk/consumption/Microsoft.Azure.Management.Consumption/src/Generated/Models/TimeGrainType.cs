@@ -19,5 +19,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public const string Monthly = "Monthly";
         public const string Quarterly = "Quarterly";
         public const string Annually = "Annually";
+        public const string BillingMonth = "BillingMonth";
+        public const string BillingQuarter = "BillingQuarter";
+        public const string BillingAnnual = "BillingAnnual";
     }
 }

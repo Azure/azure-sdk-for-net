@@ -10,17 +10,14 @@
 
 namespace Microsoft.Azure.Management.Consumption.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Reservation recommendation resource.
+    /// A reservation recommendation resource.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class ReservationRecommendation
     {
         /// <summary>
@@ -40,23 +37,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">Resource location</param>
         /// <param name="sku">Resource sku</param>
-        /// <param name="lookBackPeriod">The number of days of usage to look
-        /// back for recommendation.</param>
-        /// <param name="meterId">The meter id (GUID)</param>
-        /// <param name="term">RI recommendations in one or three year
-        /// terms.</param>
-        /// <param name="costWithNoReservedInstances">The total amount of cost
-        /// without reserved instances.</param>
-        /// <param name="recommendedQuantity">Recommended quality for reserved
-        /// instances.</param>
-        /// <param name="totalCostWithReservedInstances">The total amount of
-        /// cost with reserved instances.</param>
-        /// <param name="netSavings">Total estimated savings with reserved
-        /// instances.</param>
-        /// <param name="firstUsageDate">The usage date for looking
-        /// back.</param>
-        /// <param name="scope">Shared or single recommendation.</param>
-        public ReservationRecommendation(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string sku = default(string), string lookBackPeriod = default(string), System.Guid? meterId = default(System.Guid?), string term = default(string), decimal? costWithNoReservedInstances = default(decimal?), decimal? recommendedQuantity = default(decimal?), decimal? totalCostWithReservedInstances = default(decimal?), decimal? netSavings = default(decimal?), System.DateTime? firstUsageDate = default(System.DateTime?), string scope = default(string))
+        public ReservationRecommendation(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string sku = default(string))
         {
             Id = id;
             Name = name;
@@ -64,15 +45,6 @@ namespace Microsoft.Azure.Management.Consumption.Models
             Tags = tags;
             Location = location;
             Sku = sku;
-            LookBackPeriod = lookBackPeriod;
-            MeterId = meterId;
-            Term = term;
-            CostWithNoReservedInstances = costWithNoReservedInstances;
-            RecommendedQuantity = recommendedQuantity;
-            TotalCostWithReservedInstances = totalCostWithReservedInstances;
-            NetSavings = netSavings;
-            FirstUsageDate = firstUsageDate;
-            Scope = scope;
             CustomInit();
         }
 
@@ -116,60 +88,6 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public string Sku { get; private set; }
-
-        /// <summary>
-        /// Gets the number of days of usage to look back for recommendation.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.lookBackPeriod")]
-        public string LookBackPeriod { get; private set; }
-
-        /// <summary>
-        /// Gets the meter id (GUID)
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.meterId")]
-        public System.Guid? MeterId { get; private set; }
-
-        /// <summary>
-        /// Gets RI recommendations in one or three year terms.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.term")]
-        public string Term { get; private set; }
-
-        /// <summary>
-        /// Gets the total amount of cost without reserved instances.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.costWithNoReservedInstances")]
-        public decimal? CostWithNoReservedInstances { get; private set; }
-
-        /// <summary>
-        /// Gets recommended quality for reserved instances.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.recommendedQuantity")]
-        public decimal? RecommendedQuantity { get; private set; }
-
-        /// <summary>
-        /// Gets the total amount of cost with reserved instances.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.totalCostWithReservedInstances")]
-        public decimal? TotalCostWithReservedInstances { get; private set; }
-
-        /// <summary>
-        /// Gets total estimated savings with reserved instances.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.netSavings")]
-        public decimal? NetSavings { get; private set; }
-
-        /// <summary>
-        /// Gets the usage date for looking back.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.firstUsageDate")]
-        public System.DateTime? FirstUsageDate { get; private set; }
-
-        /// <summary>
-        /// Gets shared or single recommendation.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.scope")]
-        public string Scope { get; private set; }
 
     }
 }
