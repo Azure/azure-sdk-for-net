@@ -88,7 +88,7 @@ namespace Compute.Tests
             string storageAccountName = ComputeManagementTestUtilities.GenerateName("saforcspkg");
             string asName = ComputeManagementTestUtilities.GenerateName("asforcspkg");
             StorageAccount storageAccountOutput = CreateStorageAccount(rgName, storageAccountName); // resource group is also created in this method.
-            string applicationMediaLink = @"https://saforcspkg1969.blob.core.windows.net/sascontainer/"+fileName;
+            string applicationMediaLink = @"https://saforcspkg1969.blob.core.windows.net/sascontainer/" + fileName;
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 var accountKeyResult = m_SrpClient.StorageAccounts.ListKeysWithHttpMessagesAsync(rgName, storageAccountName).Result;
@@ -100,7 +100,7 @@ namespace Compute.Tests
 
                 CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
                 blockBlob.UploadFromFileAsync(Path.Combine(Directory.GetCurrentDirectory(), "Resources", fileName)).Wait();
-                
+
                 SharedAccessBlobPolicy sasConstraints = new SharedAccessBlobPolicy();
                 sasConstraints.SharedAccessStartTime = DateTime.UtcNow.AddDays(-1);
                 sasConstraints.SharedAccessExpiryTime = DateTime.UtcNow.AddDays(2);
@@ -120,25 +120,18 @@ namespace Compute.Tests
             string csName,
             CloudService cloudService)
         {
-            try
-            {
-                var createOrUpdateResponse = CreateCloudServiceGetOperationResponse(rgName,
-                                                                                     csName,
-                                                                                     cloudService);
-                ValidateCloudService(cloudService, createOrUpdateResponse, rgName, csName);
 
-                // Validate Get response
-                var getResponse = m_CrpClient.CloudServices.Get(rgName, csName);
-                ValidateCloudService(cloudService, getResponse, rgName, csName);
+            var createOrUpdateResponse = CreateCloudServiceGetOperationResponse(rgName,
+                                                                                 csName,
+                                                                                 cloudService);
+            ValidateCloudService(cloudService, createOrUpdateResponse, rgName, csName);
 
-                return getResponse;
-            }
-            catch
-            {
-                // TODO: It is better to issue Delete and forget.
-                m_ResourcesClient.ResourceGroups.Delete(rgName);
-                throw;
-            }
+            // Validate Get response
+            var getResponse = m_CrpClient.CloudServices.Get(rgName, csName);
+            ValidateCloudService(cloudService, getResponse, rgName, csName);
+
+            return getResponse;
+
         }
 
         protected void UpdateCloudService(string rgName, string csName, CloudService cloudService)
@@ -159,26 +152,10 @@ namespace Compute.Tests
                     Location = m_location
                 });
 
-            CloudService createOrUpdateResponse = null;
+            CloudService createOrUpdateResponse = m_CrpClient.CloudServices.CreateOrUpdate(rgName, csName, cloudService);
 
-            try
-            {
-                createOrUpdateResponse = m_CrpClient.CloudServices.CreateOrUpdate(rgName, csName, cloudService);
-
-                Assert.True(createOrUpdateResponse.Name == csName);
-                Assert.True(createOrUpdateResponse.Location.ToLower() == cloudService.Location.ToLower().Replace(" ", ""));
-            }
-            catch (CloudException e)
-            {
-                if (e.Message.Contains("the allotted time"))
-                {
-                    createOrUpdateResponse = m_CrpClient.CloudServices.Get(rgName, csName);
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            Assert.True(createOrUpdateResponse.Name == csName);
+            Assert.True(createOrUpdateResponse.Location.ToLower() == cloudService.Location.ToLower().Replace(" ", ""));
 
             return createOrUpdateResponse;
         }
@@ -521,4 +498,3 @@ namespace Compute.Tests
 
     }
 }
-
