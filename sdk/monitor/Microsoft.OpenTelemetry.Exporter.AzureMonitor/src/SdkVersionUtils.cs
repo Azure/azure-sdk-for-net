@@ -5,8 +5,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-
-using OpenTelemetrySdk = OpenTelemetry.Sdk;
+using OpenTelemetry;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
@@ -19,14 +18,14 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             try
             {
                 Version dotnetSdkVersion = GetVersion(typeof(object));
-                Version otelSdkVersion = GetVersion(typeof(OpenTelemetrySdk));
+                Version otelSdkVersion = GetVersion(typeof(Sdk));
                 Version extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
 
                 return string.Format(CultureInfo.InvariantCulture, $"dotnet{dotnetSdkVersion.ToString(2)}:otel{otelSdkVersion.ToString(3)}:ext{extensionVersion.ToString(3)}");
             }
             catch (Exception ex)
             {
-                AzureMonitorTraceExporterEventSource.Log.Write($"SdkVersionCreateFailed{EventLevelSuffix.Warning}", ex);
+                AzureMonitorExporterEventSource.Log.Write($"SdkVersionCreateFailed{EventLevelSuffix.Warning}", ex);
                 return null;
             }
         }

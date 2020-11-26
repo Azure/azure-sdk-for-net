@@ -19,11 +19,6 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal TaskState(DateTimeOffset lastUpdateDateTime, string name, JobStatus status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
             LastUpdateDateTime = lastUpdateDateTime;
             Name = name;
             Status = status;

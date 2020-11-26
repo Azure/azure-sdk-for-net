@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.Compute.Tests
                 passed = true;
                 Assert.True(passed);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
     }

@@ -1,7 +1,14 @@
 # Release History
 
-## 7.0.0-preview.10 (Unreleased)
+## 7.1.0-beta.1 (Unreleased)
 
+
+## 7.0.0 (2020-11-23)
+### Breaking Changes
+- Renamed GetRawMessage method to GetRawAmqpMessage.
+- Removed LinkCloseMode.
+- Rename ReceiveMode type to ServiceBusReceiveMode.
+- Remove ServiceBusFailureReason of Unauthorized in favor of using UnauthorizedAccessException.
 
 ## 7.0.0-preview.9 (2020-11-04)
 

@@ -7,20 +7,16 @@
 		<PackageId>Microsoft.Azure.Management.DataBox</PackageId>
 		<Description>Microsoft Azure Management DataBox library</Description>
 		<AssemblyName>Microsoft.Azure.Management.DataBox</AssemblyName>
-		<Version>1.2.0</Version>
+		<Version>1.3.0</Version>
 		<PackageTags>AzureDataBox;DataBox;</PackageTags>
     <PackageReleaseNotes>
 
       <![CDATA[
                 Changes:
                 
-                1) Adding support of transfer type ExportFromAzure by Azure DataBox Service. 
+                1) Adding support of double encryption. 
                 
-                2) Adding support of Customer Managed Key by Azure DataBox Service.
-                
-                3) Fetching region configuration details supported by Azure Data Box service at resource group level.
-                
-                4) Deprecating availableSkus API at subscription level.
+                2) Adding support of user assigned identity in create/update order.
 
             ]]>
 

@@ -131,15 +131,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var client = new ServiceBusClient(connString);
             var options = new ServiceBusProcessorOptions
             {
-                AutoComplete = false,
+                AutoCompleteMessages = false,
                 MaxConcurrentCalls = 10,
                 PrefetchCount = 5,
-                ReceiveMode = ReceiveMode.ReceiveAndDelete,
+                ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
                 MaxReceiveWaitTime = TimeSpan.FromSeconds(10)
             };
             var processor = client.CreateProcessor("queueName", options);
-            Assert.AreEqual(options.AutoComplete, processor.AutoComplete);
+            Assert.AreEqual(options.AutoCompleteMessages, processor.AutoCompleteMessages);
             Assert.AreEqual(options.MaxConcurrentCalls, processor.MaxConcurrentCalls);
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
             Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);

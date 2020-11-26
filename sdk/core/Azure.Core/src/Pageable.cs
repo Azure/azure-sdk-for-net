@@ -65,7 +65,7 @@ namespace Azure
         /// A string representation of an <see cref="Pageable{T}"/>.
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string? ToString() => base.ToString();
 
         IEnumerator IEnumerable.GetEnumerator()
         {

@@ -12,6 +12,21 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("TasksStateTasksEntityRecognitionPiiTasksItem")]
     public partial class EntityRecognitionPiiTasksItem
     {
-        internal PiiEntitiesResult Results { get; }
+        /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
+        internal EntityRecognitionPiiTasksItem(EntityRecognitionPiiTasksItem task, IDictionary<string, int> idToIndexMap) : base(task.LastUpdateDateTime, task.Name, task.Status)
+        {
+            Results = Transforms.ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap);
+        }
+
+        /// <summary>
+        /// RecognizePiiEntitiesResultCollection Result
+        /// </summary>
+        public RecognizePiiEntitiesResultCollection Results { get; }
+
+        /// <summary>
+        /// Results for EntityRecognitionPiiTasksItem
+        /// </summary>
+        [CodeGenMember("Results")]
+        internal PiiEntitiesResult ResultsInternal { get; }
     }
 }

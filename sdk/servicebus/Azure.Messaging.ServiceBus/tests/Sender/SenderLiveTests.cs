@@ -407,7 +407,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
                 var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions()
                 {
-                    ReceiveMode = ReceiveMode.ReceiveAndDelete
+                    ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete
                 });
 
                 var remainingMessages = messageCt;

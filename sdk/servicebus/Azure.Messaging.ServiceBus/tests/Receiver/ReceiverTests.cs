@@ -19,14 +19,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
             var options = new ServiceBusReceiverOptions()
             {
-                ReceiveMode = ReceiveMode.ReceiveAndDelete
+                ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete
             };
             var receiver = new ServiceBusClient(connString).CreateReceiver(queueName, options);
             Assert.AreEqual(queueName, receiver.EntityPath);
             Assert.AreEqual(fullyQualifiedNamespace, receiver.FullyQualifiedNamespace);
             Assert.IsNotNull(receiver.Identifier);
             Assert.IsFalse(receiver.IsSessionReceiver);
-            Assert.AreEqual(ReceiveMode.ReceiveAndDelete, receiver.ReceiveMode);
+            Assert.AreEqual(ServiceBusReceiveMode.ReceiveAndDelete, receiver.ReceiveMode);
         }
 
         [Test]

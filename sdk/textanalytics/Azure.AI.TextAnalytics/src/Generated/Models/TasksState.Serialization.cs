@@ -15,12 +15,12 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static TasksState DeserializeTasksState(JsonElement element)
         {
-            TasksStateTasks tasks = default;
+            AnalyzeTasks tasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tasks"))
                 {
-                    tasks = TasksStateTasks.DeserializeTasksStateTasks(property.Value);
+                    tasks = AnalyzeTasks.DeserializeAnalyzeTasks(property.Value);
                     continue;
                 }
             }

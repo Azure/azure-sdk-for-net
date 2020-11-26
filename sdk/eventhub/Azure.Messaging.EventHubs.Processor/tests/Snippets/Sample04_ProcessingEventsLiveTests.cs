@@ -24,6 +24,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     /// </summary>
     ///
     [TestFixture]
+    [Ignore("Debugging Potential Hang")]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
@@ -242,7 +243,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         args.Data,
                         args.Partition,
                         args.CancellationToken);
-
 
                     // If the number of events that have been processed
                     // since the last checkpoint was created exceeds the
