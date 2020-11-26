@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Compute;
@@ -99,9 +100,16 @@ namespace Compute.Tests
                 }
                 finally
                 {
-                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
-                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
-                    m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                    // Fire and forget. No need to wait for RG deletion completion
+                    try
+                    {
+                        m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                    }
+                    catch (Exception e)
+                    {
+                        // Swallow this exception so that the original exception is thrown
+                        Console.WriteLine(e);
+                    }
                 }
             }
         }

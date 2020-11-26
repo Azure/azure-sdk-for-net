@@ -94,9 +94,16 @@ namespace Compute.Tests
                 }
                 finally
                 {
-                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
-                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
-                    m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                    // Fire and forget. No need to wait for RG deletion completion
+                    try
+                    {
+                        m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                    }
+                    catch (Exception e)
+                    {
+                        // Swallow this exception so that the original exception is thrown
+                        Console.WriteLine(e);
+                    }
                 }
             }
         }
@@ -244,10 +251,17 @@ namespace Compute.Tests
                 }
                 finally
                 {
-                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
-                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
-                    m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
-                    m_ResourcesClient.ResourceGroups.BeginDelete(rgName2);
+                    // Fire and forget. No need to wait for RG deletion completion
+                    try
+                    {
+                        m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                        m_ResourcesClient.ResourceGroups.BeginDelete(rgName2);
+                    }
+                    catch (Exception e)
+                    {
+                        // Swallow this exception so that the original exception is thrown
+                        Console.WriteLine(e);
+                    }
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -141,7 +142,15 @@ namespace Compute.Tests
             finally
             {
                 // Fire and forget. No need to wait for RG deletion completion
-                m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                }
+                catch (Exception e)
+                {
+                    // Swallow this exception so that the original exception is thrown
+                    Console.WriteLine(e);
+                }
             }
         }
     }

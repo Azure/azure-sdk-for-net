@@ -52,5 +52,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public LoadBalancerConfigurationProperties Properties { get; set; }
+
     }
 }
