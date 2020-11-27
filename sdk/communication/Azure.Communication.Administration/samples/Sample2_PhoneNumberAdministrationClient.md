@@ -59,7 +59,7 @@ For Geographic phone plans, you can query the available geographic locations. Th
 ```C# Snippet:GetPhonePlanLocationOptions
 var locationOptionsResponse = client.GetPhonePlanLocationOptions(countryCode, geographicPhonePlanGroup.PhonePlanGroupId, phonePlanId);
 
-void printLocationOption(LocationOptions locationOptions)
+void PrintLocationOption(LocationOptions locationOptions)
 {
     Console.WriteLine($"LabelId: {locationOptions.LabelId}, LabelName: {locationOptions.LabelName}");
 
@@ -68,10 +68,10 @@ void printLocationOption(LocationOptions locationOptions)
         Console.WriteLine($"Name: {locationOption.Name}, Value: {locationOption.Value}");
 
         foreach (var subLocationOption in locationOption.LocationOptions)
-            printLocationOption(subLocationOption);
+            PrintLocationOption(subLocationOption);
     }
 }
-printLocationOption(locationOptionsResponse.Value.LocationOptions);
+PrintLocationOption(locationOptionsResponse.Value.LocationOptions);
 ```
 
 ## Get area codes
@@ -82,7 +82,8 @@ Fetching area codes for geographic phone plans will require the the location opt
 var locationOptionsResponse = client.GetPhonePlanLocationOptions(countryCode, geographicPhonePlanGroupId, geographicPhonePlanId);
 var state = locationOptionsResponse.Value.LocationOptions.Options.First();
 
-var locationOptionsQueries = new List<LocationOptionsQuery>{
+var locationOptionsQueries = new List<LocationOptionsQuery>
+{
     new LocationOptionsQuery
     {
         LabelId = "state",
