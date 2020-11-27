@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BMSPrepareDataMoveOperationResultOperations operations.
+    /// BackupResourceEncryptionConfigsOperations operations.
     /// </summary>
-    public partial interface IBMSPrepareDataMoveOperationResultOperations
+    public partial interface IBackupResourceEncryptionConfigsOperations
     {
         /// <summary>
-        /// Fetches Operation Result for Prepare Data Move
+        /// Fetches Vault Encryption config.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -32,8 +32,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the recovery services vault is
         /// present.
-        /// </param>
-        /// <param name='operationId'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,9 +48,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VaultStorageConfigOperationResultResponse>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupResourceEncryptionConfigResource>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Fetches Operation Result for Prepare Data Move
+        /// Updates Vault encryption config.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -61,7 +59,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The name of the resource group where the recovery services vault is
         /// present.
         /// </param>
-        /// <param name='operationId'>
+        /// <param name='parameters'>
+        /// Vault encryption input config request
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,12 +71,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <exception cref="NewErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VaultStorageConfigOperationResultResponse>> BeginGetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, BackupResourceEncryptionConfigResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
