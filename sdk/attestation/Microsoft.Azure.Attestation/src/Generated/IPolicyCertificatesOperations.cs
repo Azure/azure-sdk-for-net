@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Attestation
         /// </param>
         /// <param name='policyCertificateToAdd'>
         /// An RFC7519 JSON Web Token containing a claim named
-        /// "aas-policyCertificate" whose value is an RFC7517 JSON Web Key
+        /// "maa-policyCertificate" whose value is an RFC7517 JSON Web Key
         /// which specifies a new key to add. The RFC7519 JWT must be signed
         /// with one of the existing signing certificates
         /// </param>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Attestation
         /// </param>
         /// <param name='policyCertificateToRemove'>
         /// An RFC7519 JSON Web Token containing a claim named
-        /// "aas-policyCertificate" whose value is an RFC7517 JSON Web Key
+        /// "maa-policyCertificate" whose value is an RFC7517 JSON Web Key
         /// which specifies a new key to update. The RFC7519 JWT must be signed
         /// with one of the existing signing certificates
         /// </param>

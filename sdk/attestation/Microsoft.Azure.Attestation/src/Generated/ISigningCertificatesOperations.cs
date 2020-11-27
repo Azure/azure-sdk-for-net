@@ -24,11 +24,11 @@ namespace Microsoft.Azure.Attestation
     public partial interface ISigningCertificatesOperations
     {
         /// <summary>
-        /// Retrieves the OpenID Configuration data for the Azure Attestation
-        /// Service
+        /// Retrieves the attestation signing keys in use by the attestation
+        /// service
         /// </summary>
         /// <remarks>
-        /// Retrieves attestation signing keys in use by the attestation
+        /// Retrieves metadata signing certificates in use by the attestation
         /// service
         /// </remarks>
         /// <param name='tenantBaseUrl'>
