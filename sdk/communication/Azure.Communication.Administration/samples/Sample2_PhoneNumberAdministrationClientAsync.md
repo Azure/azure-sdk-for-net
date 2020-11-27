@@ -117,7 +117,7 @@ foreach (var areaCode in tollFreePhonePlan.AreaCodes)
 
 ## Reserve phone numbers
 
-Phone numbers need to be reserved for purchase. Reservation is a long running operation that can be started by CreateReservationOptions function that returns an PhoneNumberReservationOperation object. PhoneNumberReservationOperation can be used to update status of the operation and to check whether if is completed.
+Phone numbers need to be reserved for purchase. Reservation is a long running operation that can be started by CreateReservationOptions function that returns an PhoneNumberReservationOperation object. PhoneNumberReservationOperation can be used to update status of the operation and to check for completeness.
 
 ```C# Snippet:ReservePhoneNumbersAsync
 var reservationName = "My reservation";
