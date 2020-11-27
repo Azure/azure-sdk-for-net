@@ -26,7 +26,7 @@ namespace Azure.Communication.Administration.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task CreateReservationAsync()
+        public async Task PurchaseAndReleaseAsync()
         {
             if (!IncludePhoneNumberLiveTests)
                 Assert.Ignore("Include phone number live tests flag is off.");
@@ -107,7 +107,7 @@ namespace Azure.Communication.Administration.Samples
 
         [Test]
         [SyncOnly]
-        public void CreateReservation()
+        public void PurchaseAndRelease()
         {
             if (!IncludePhoneNumberLiveTests)
                 Assert.Ignore("Include phone number live tests flag is off.");
