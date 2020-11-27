@@ -31,11 +31,11 @@ namespace Azure.Communication.Administration.Samples
             if (!IncludePhoneNumberLiveTests)
                 Assert.Ignore("Include phone number live tests flag is off.");
 
-            var locale = "en-US";
+            const string locale = "en-US";
             var connectionString = TestEnvironment.ConnectionString;
             var client = CreateClient(false);
 
-            var countryCode = "US";
+            const string countryCode = "US";
 
             #region Snippet:GetPhonePlanGroupsAsync
             var phonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
@@ -112,7 +112,7 @@ namespace Azure.Communication.Administration.Samples
             if (!IncludePhoneNumberLiveTests)
                 Assert.Ignore("Include phone number live tests flag is off.");
 
-            var locale = "en-US";
+            const string locale = "en-US";
             var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:CreatePhoneNumberAdministrationClient
@@ -123,7 +123,7 @@ namespace Azure.Communication.Administration.Samples
 
             client = CreateClient(false);
 
-            var countryCode = "US";
+            const string countryCode = "US";
 
             #region Snippet:GetPhonePlanGroups
             var phonePlanGroups = client.GetPhonePlanGroups(countryCode, locale);
@@ -238,7 +238,7 @@ namespace Azure.Communication.Administration.Samples
         public void GetAllSupportedCountries()
         {
             var client = CreateClient(false);
-            var locale = "en-US";
+            const string locale = "en-US";
 
             #region Snippet:GetAllSupportedCountries
             var supportedCountries = client.GetAllSupportedCountries(locale);
@@ -254,7 +254,7 @@ namespace Azure.Communication.Administration.Samples
         public async Task GetAllSupportedCountriesAsync()
         {
             var client = CreateClient(false);
-            var locale = "en-US";
+            const string locale = "en-US";
 
             #region Snippet:GetAllSupportedCountriesAsync
             var supportedCountries = client.GetAllSupportedCountriesAsync(locale);
@@ -270,8 +270,8 @@ namespace Azure.Communication.Administration.Samples
         public void GetPhonePlanLocationOptions()
         {
             var client = CreateClient(false);
-            var locale = "en-US";
-            var countryCode = "US";
+            const string locale = "en-US";
+            const string countryCode = "US";
 
             var phonePlanGroups = client.GetPhonePlanGroups(countryCode, locale);
             var geographicPhonePlanGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.Geographic);
@@ -283,7 +283,7 @@ namespace Azure.Communication.Administration.Samples
 
             var locationOptionsResponse = client.GetPhonePlanLocationOptions(countryCode, geographicPhonePlanGroup.PhonePlanGroupId, phonePlanId);
 
-            void printLocationOption(LocationOptions locationOptions)
+            void PrintLocationOption(LocationOptions locationOptions)
             {
                 Console.WriteLine($"LabelId: {locationOptions.LabelId}, LabelName: {locationOptions.LabelName}");
 
@@ -292,10 +292,10 @@ namespace Azure.Communication.Administration.Samples
                     Console.WriteLine($"Name: {locationOption.Name}, Value: {locationOption.Value}");
 
                     foreach (var subLocationOption in locationOption.LocationOptions)
-                        printLocationOption(subLocationOption);
+                        PrintLocationOption(subLocationOption);
                 }
             }
-            printLocationOption(locationOptionsResponse.Value.LocationOptions);
+            PrintLocationOption(locationOptionsResponse.Value.LocationOptions);
 
             #endregion Snippet:GetPhonePlanLocationOptions
         }
@@ -305,8 +305,8 @@ namespace Azure.Communication.Administration.Samples
         public async Task GetPhonePlanLocationOptionsAsync()
         {
             var client = CreateClient(false);
-            var locale = "en-US";
-            var countryCode = "US";
+            const string locale = "en-US";
+            const string countryCode = "US";
 
             var phonePlanGroups = client.GetPhonePlanGroups(countryCode, locale);
             var geographicPhonePlanGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.Geographic);
@@ -341,8 +341,8 @@ namespace Azure.Communication.Administration.Samples
         public void GeographicalAreaCodes()
         {
             var client = CreateClient(false);
-            var locale = "en-US";
-            var countryCode = "US";
+            const string locale = "en-US";
+            const string countryCode = "US";
 
             var phonePlanGroups = client.GetPhonePlanGroups(countryCode, locale);
             var geographicPhonePlanGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.Geographic);
@@ -356,7 +356,8 @@ namespace Azure.Communication.Administration.Samples
             var locationOptionsResponse = client.GetPhonePlanLocationOptions(countryCode, geographicPhonePlanGroupId, geographicPhonePlanId);
             var state = locationOptionsResponse.Value.LocationOptions.Options.First();
 
-            var locationOptionsQueries = new List<LocationOptionsQuery>{
+            var locationOptionsQueries = new List<LocationOptionsQuery>
+            {
                 new LocationOptionsQuery
                 {
                     LabelId = "state",
@@ -383,8 +384,8 @@ namespace Azure.Communication.Administration.Samples
         public async Task GeographicalAreaCodesAsync()
         {
             var client = CreateClient(false);
-            var locale = "en-US";
-            var countryCode = "US";
+            const string locale = "en-US";
+            const string countryCode = "US";
 
             var phonePlanGroups = client.GetPhonePlanGroups(countryCode, locale);
             var geographicPhonePlanGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.Geographic);
@@ -425,8 +426,8 @@ namespace Azure.Communication.Administration.Samples
         public void TollFreePlanAreCodes()
         {
             var client = CreateClient(false);
-            var locale = "en-US";
-            var countryCode = "US";
+            const string locale = "en-US";
+            const string countryCode = "US";
 
             var phonePlanGroups = client.GetPhonePlanGroups(countryCode, locale);
             var tollFreePhonePlanGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.TollFree);
@@ -449,8 +450,8 @@ namespace Azure.Communication.Administration.Samples
         public async Task TollFreePlanAreCodesAsync()
         {
             var client = CreateClient(false);
-            var locale = "en-US";
-            var countryCode = "US";
+            const string locale = "en-US";
+            const string countryCode = "US";
 
             var phonePlanGroups = client.GetPhonePlanGroups(countryCode, locale);
             var tollFreePhonePlanGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.TollFree);

@@ -67,7 +67,7 @@ namespace Azure.Communication.Administration.Tests
         public async Task GetPlanGroups(string? locale, bool? includeRateInformation)
         {
             var client = CreateClient();
-            var countryCode = "US";
+            const string countryCode = "US";
 
             var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale, includeRateInformation);
 
@@ -97,7 +97,7 @@ namespace Azure.Communication.Administration.Tests
         public async Task GetPhonePlans(string? locale)
         {
             var client = CreateClient();
-            var countryCode = "US";
+            const string countryCode = "US";
 
             var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
             var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync().ConfigureAwait(false);
@@ -115,7 +115,7 @@ namespace Azure.Communication.Administration.Tests
         public async Task GetAreaCodesForPlan(string? locale)
         {
             var client = CreateClient();
-            var countryCode = "US";
+            const string countryCode = "US";
 
             var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
             var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync().ConfigureAwait(false);
@@ -156,9 +156,8 @@ namespace Azure.Communication.Administration.Tests
             if (!IncludePhoneNumberLiveTests)
                 Assert.Ignore("Include phone number live tests flag is off.");
 
-
             var client = CreateClient();
-            var countryCode = "US";
+            const string countryCode = "US";
 
             var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
             var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync().ConfigureAwait(false);
@@ -198,7 +197,7 @@ namespace Azure.Communication.Administration.Tests
                 Assert.Ignore("Include phone number live tests flag is off.");
 
             var client = CreateClient();
-            var countryCode = "US";
+            const string countryCode = "US";
 
             var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
             var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync().ConfigureAwait(false);
