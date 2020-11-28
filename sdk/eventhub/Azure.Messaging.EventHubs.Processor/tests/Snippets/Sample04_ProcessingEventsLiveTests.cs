@@ -204,13 +204,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task CheckpointByEventCount()
         {
+            await using var storageScope = await StorageScope.CreateAsync();
+
             #region Snippet:EventHubs_Processor_Sample04_CheckpointByEventCount
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
@@ -256,7 +258,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                     if (eventsSinceLastCheckpoint >= EventsBeforeCheckpoint)
                     {
-                        //await args.UpdateCheckpointAsync();
+                        await args.UpdateCheckpointAsync();
                         partitionEventCount[partition] = 0;
                     }
                 }
