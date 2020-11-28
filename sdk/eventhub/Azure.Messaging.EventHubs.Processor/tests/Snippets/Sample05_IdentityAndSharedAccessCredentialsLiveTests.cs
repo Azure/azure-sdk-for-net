@@ -27,31 +27,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample05_IdentityAndSharedAccessCredentialsLiveTests
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _eventHubScope;
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
-        {
-            _eventHubScope = await EventHubScope.CreateAsync(2);
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
-        {
-            await _eventHubScope.DisposeAsync();
-        }
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -59,6 +34,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task DefaultAzureCredential()
         {
+            await using var eventHubScope = await EventHubScope.CreateAsync(1);
             await using var storageScope = await StorageScope.CreateAsync();
 
             #region Snippet:EventHubs_Processor_Sample05_DefaultAzureCredential
@@ -76,8 +52,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = eventHubScope.EventHubName;
+            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
             /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
 
             var blobUriBuilder = new BlobUriBuilder(new Uri(storageEndpoint));
@@ -149,6 +125,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ConnectionStringParse()
         {
+            await using var eventHubScope = await EventHubScope.CreateAsync(1);
             await using var storageScope = await StorageScope.CreateAsync();
 
             #region Snippet:EventHubs_Processor_Sample05_ConnectionStringParse
@@ -166,8 +143,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = eventHubScope.EventHubName;
+            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
             /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
 
             var storageEndpoint = new BlobServiceClient(storageConnectionString).Uri;
