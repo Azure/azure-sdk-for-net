@@ -94,7 +94,9 @@ namespace Azure.Communication.Administration.Samples
             }
             #endregion Snippet:ListAcquiredPhoneNumbersAsync
 
-            var acquiredPhoneNumber = reservationOperation.Value.PhoneNumbers.First();
+            var acquiredPhoneNumber = reservationOperation.Value.PhoneNumbers.Single();
+            acquiredPhoneNumbers = client.GetAllPhoneNumbersAsync(locale);
+            var beforeReleaseNumberCount = (await acquiredPhoneNumbers.ToEnumerableAsync()).Count;
 
             #region Snippet:ReleasePhoneNumbersAsync
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
@@ -102,8 +104,11 @@ namespace Azure.Communication.Administration.Samples
             var phoneNumberReleaseOperation = client.StartReleasePhoneNumbers(phoneNumbers);
             await phoneNumberReleaseOperation.WaitForCompletionAsync();
             #endregion Snippet:ReleasePhoneNumbersAsync
-        }
 
+            acquiredPhoneNumbers = client.GetAllPhoneNumbersAsync(locale);
+            var afterReleaseNumberCount = (await acquiredPhoneNumbers.ToEnumerableAsync()).Count;
+            Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
+        }
 
         [Test]
         [SyncOnly]
@@ -213,7 +218,9 @@ namespace Azure.Communication.Administration.Samples
             }
             #endregion Snippet:ListAcquiredPhoneNumbers
 
-            var acquiredPhoneNumber = reservationOperation.Value.PhoneNumbers.First();
+            var acquiredPhoneNumber = reservationOperation.Value.PhoneNumbers.Single();
+            acquiredPhoneNumbers = client.GetAllPhoneNumbers(locale);
+            var beforeReleaseNumberCount = acquiredPhoneNumbers.Count();
 
             #region Snippet:ReleasePhoneNumbers
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
@@ -231,6 +238,10 @@ namespace Azure.Communication.Administration.Samples
                 Thread.Sleep(1000);
             }
             #endregion Snippet:ReleasePhoneNumbers
+
+            acquiredPhoneNumbers = client.GetAllPhoneNumbers(locale);
+            var afterReleaseNumberCount = acquiredPhoneNumbers.Count();
+            Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
         }
 
         [Test]
