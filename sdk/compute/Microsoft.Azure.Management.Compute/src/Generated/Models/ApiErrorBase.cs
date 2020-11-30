@@ -30,13 +30,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ApiErrorBase class.
         /// </summary>
         /// <param name="code">The error code.</param>
-        /// <param name="target">The target of the particular error.</param>
         /// <param name="message">The error message.</param>
-        public ApiErrorBase(string code = default(string), string target = default(string), string message = default(string))
+        /// <param name="target">The target of the particular error.</param>
+        public ApiErrorBase(string code = default(string), string message = default(string), string target = default(string))
         {
             Code = code;
-            Target = target;
             Message = message;
+            Target = target;
             CustomInit();
         }
 
@@ -52,16 +52,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the target of the particular error.
-        /// </summary>
-        [JsonProperty(PropertyName = "target")]
-        public string Target { get; set; }
-
-        /// <summary>
         /// Gets or sets the error message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target of the particular error.
+        /// </summary>
+        [JsonProperty(PropertyName = "target")]
+        public string Target { get; set; }
 
     }
 }
