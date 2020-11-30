@@ -199,8 +199,7 @@ If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbers
 var acquiredPhoneNumber = "<acquired_phone_number>";
-var phoneNumbers = new List<PhoneNumber> { new PhoneNumber(acquiredPhoneNumber) };
-var phoneNumberReleaseOperation = client.StartReleasePhoneNumbers(phoneNumbers);
+var phoneNumberReleaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
 
 while (true)
 {

@@ -100,8 +100,7 @@ namespace Azure.Communication.Administration.Samples
 
             #region Snippet:ReleasePhoneNumbersAsync
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
-            var phoneNumbers = new List<PhoneNumber> { new PhoneNumber(acquiredPhoneNumber) };
-            var phoneNumberReleaseOperation = client.StartReleasePhoneNumbers(phoneNumbers);
+            var phoneNumberReleaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
             await phoneNumberReleaseOperation.WaitForCompletionAsync();
             #endregion Snippet:ReleasePhoneNumbersAsync
 
@@ -224,8 +223,7 @@ namespace Azure.Communication.Administration.Samples
 
             #region Snippet:ReleasePhoneNumbers
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
-            var phoneNumbers = new List<PhoneNumber> { new PhoneNumber(acquiredPhoneNumber) };
-            var phoneNumberReleaseOperation = client.StartReleasePhoneNumbers(phoneNumbers);
+            var phoneNumberReleaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
 
             while (true)
             {
