@@ -117,6 +117,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineImagesOperations VirtualMachineImages { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachineImagesEdgeZoneOperations.
+        /// </summary>
+        public virtual IVirtualMachineImagesEdgeZoneOperations VirtualMachineImagesEdgeZone { get; private set; }
+
+        /// <summary>
         /// Gets the IUsageOperations.
         /// </summary>
         public virtual IUsageOperations Usage { get; private set; }
@@ -220,6 +225,26 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IGalleryApplicationVersionsOperations.
         /// </summary>
         public virtual IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; private set; }
+
+        /// <summary>
+        /// Gets the IGallerySharingProfileOperations.
+        /// </summary>
+        public virtual IGallerySharingProfileOperations GallerySharingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleriesOperations.
+        /// </summary>
+        public virtual ISharedGalleriesOperations SharedGalleries { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImagesOperations.
+        /// </summary>
+        public virtual ISharedGalleryImagesOperations SharedGalleryImages { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImageVersionsOperations.
+        /// </summary>
+        public virtual ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; private set; }
 
         /// <summary>
         /// Gets the IContainerServicesOperations.
@@ -476,6 +501,7 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);
+            VirtualMachineImagesEdgeZone = new VirtualMachineImagesEdgeZoneOperations(this);
             Usage = new UsageOperations(this);
             VirtualMachines = new VirtualMachinesOperations(this);
             VirtualMachineSizes = new VirtualMachineSizesOperations(this);
@@ -497,6 +523,10 @@ namespace Microsoft.Azure.Management.Compute
             GalleryImageVersions = new GalleryImageVersionsOperations(this);
             GalleryApplications = new GalleryApplicationsOperations(this);
             GalleryApplicationVersions = new GalleryApplicationVersionsOperations(this);
+            GallerySharingProfile = new GallerySharingProfileOperations(this);
+            SharedGalleries = new SharedGalleriesOperations(this);
+            SharedGalleryImages = new SharedGalleryImagesOperations(this);
+            SharedGalleryImageVersions = new SharedGalleryImageVersionsOperations(this);
             ContainerServices = new ContainerServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

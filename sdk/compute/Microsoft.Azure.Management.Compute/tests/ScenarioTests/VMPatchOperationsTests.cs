@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -69,6 +70,111 @@ namespace Compute.Tests
                 }
 
                 Assert.True(passed);
+            }
+        }
+
+        //How to re-record this test:
+        // 1. Manually create Resource group and VM
+        // update the constants for RgName and VmName
+        // 2. Then run this test
+        [Fact]
+        public void TestVMPatchOperations_InstallPatches_OnWindows()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+
+                string RgName = "PatchStatusRg";
+                string VmName = "testVm";
+
+                VirtualMachineInstallPatchesParameters installPatchesInput = new VirtualMachineInstallPatchesParameters
+                {
+                    MaximumDuration = "PT4H",
+                    RebootSetting = "IfRequired",
+                    WindowsParameters = new WindowsParameters
+                    {
+                        ClassificationsToInclude = new List<string>
+                        {
+                            "Critical", 
+                            "Security"
+                        },
+                        MaxPatchPublishDate = DateTime.UtcNow
+                    }
+                };
+
+                VirtualMachineInstallPatchesResult installPatchesResult = m_CrpClient.VirtualMachines.InstallPatches(RgName, VmName, installPatchesInput);
+
+                Assert.NotNull(installPatchesResult);
+                Assert.Equal("Succeeded", installPatchesResult.Status);
+                Assert.NotNull(installPatchesResult.StartDateTime);
+                Assert.NotNull(installPatchesResult.InstallationActivityId);
+                Assert.NotNull(installPatchesResult.RebootStatus);
+                Assert.NotNull(installPatchesResult.MaintenanceWindowExceeded);
+                Assert.NotNull(installPatchesResult.ExcludedPatchCount);
+                Assert.NotNull(installPatchesResult.NotSelectedPatchCount);
+                Assert.NotNull(installPatchesResult.PendingPatchCount);
+                Assert.NotNull(installPatchesResult.InstalledPatchCount);
+                Assert.NotNull(installPatchesResult.FailedPatchCount);
+                Assert.NotNull(installPatchesResult.Patches);
+                Assert.NotNull(installPatchesResult.Patches[0].PatchId);
+                Assert.NotNull(installPatchesResult.Patches[0].Name);
+                Assert.NotNull(installPatchesResult.Patches[0].KbId);
+                Assert.NotNull(installPatchesResult.Patches[0].Classifications);
+                Assert.NotNull(installPatchesResult.Patches[0].InstallationState);
+                // Add this check once windows solution for error objects content is fixed.
+                //Assert.NotNull(installPatchesResult.Error);
+            }
+        }
+
+        //How to re-record this test:
+        // 1. Manually create Resource group and VM
+        // update the constants for RgName and VmName
+        // 2. Then run this test
+        [Fact]
+        public void TestVMPatchOperations_InstallPatches_OnLinux()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+
+                string RgName = "PatchStatusRg";
+                string VmName = "testVmLinux";
+
+                VirtualMachineInstallPatchesParameters installPatchesInput = new VirtualMachineInstallPatchesParameters
+                {
+                    MaximumDuration = "PT4H",
+                    RebootSetting = "IfRequired",
+                    LinuxParameters = new LinuxParameters
+                    {
+                        ClassificationsToInclude = new List<string>
+                        {
+                            "Critical",
+                            "Security"
+                        },
+                        MaintenanceRunId = DateTime.UtcNow.ToString(),
+                    }
+                };
+
+                VirtualMachineInstallPatchesResult installPatchesResult = m_CrpClient.VirtualMachines.InstallPatches(RgName, VmName, installPatchesInput);
+
+                Assert.NotNull(installPatchesResult);
+                Assert.Equal("Succeeded", installPatchesResult.Status);
+                Assert.NotNull(installPatchesResult.StartDateTime);
+                Assert.NotNull(installPatchesResult.InstallationActivityId);
+                Assert.NotNull(installPatchesResult.RebootStatus);
+                Assert.NotNull(installPatchesResult.MaintenanceWindowExceeded);
+                Assert.NotNull(installPatchesResult.ExcludedPatchCount);
+                Assert.NotNull(installPatchesResult.NotSelectedPatchCount);
+                Assert.NotNull(installPatchesResult.PendingPatchCount);
+                Assert.NotNull(installPatchesResult.InstalledPatchCount);
+                Assert.NotNull(installPatchesResult.FailedPatchCount);
+                Assert.NotNull(installPatchesResult.Patches);
+                Assert.NotNull(installPatchesResult.Patches[0].PatchId);
+                Assert.NotNull(installPatchesResult.Patches[0].Name);
+                Assert.NotNull(installPatchesResult.Patches[0].Version);
+                Assert.NotNull(installPatchesResult.Patches[0].Classifications);
+                Assert.NotNull(installPatchesResult.Patches[0].InstallationState);
+                Assert.NotNull(installPatchesResult.Error);
             }
         }
     }
