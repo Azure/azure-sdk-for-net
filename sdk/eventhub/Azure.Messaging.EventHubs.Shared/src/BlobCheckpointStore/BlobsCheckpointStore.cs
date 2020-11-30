@@ -674,6 +674,10 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         partial void BlobsCheckpointStoreCreated(string typeName, string accountName, string containerName);
 
+        /// <summary>
+        ///   Contains the information to reflect the state of event processing for a given Event Hub partition.
+        ///   Provides access to the offset and the sequence number retrieved from the blob.
+        /// </summary>
         public class BlobEventProcessorCheckpoint : EventProcessorCheckpoint
         {
             public long? Offset { get; set; }
