@@ -11,7 +11,9 @@ namespace Azure
     /// </summary>
     /// <typeparam name="T">The type of returned value.</typeparam>
     [DebuggerTypeProxy(typeof(ResponseDebugView<>))]
+#pragma warning disable SA1649 // File name should match first type name
     public abstract class Response<T>
+#pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>
         /// Returns the HTTP response returned by the service.

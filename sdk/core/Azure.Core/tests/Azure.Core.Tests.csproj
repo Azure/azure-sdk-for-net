@@ -26,7 +26,7 @@
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" />
     <Compile Include="..\src\Shared\ConnectionString.cs" />
     <Compile Include="..\src\Shared\ForwardsClientCallsAttribute.cs" />
-    <Compile Include="..\src\Shared\NoBodyResponse{T}.cs" />
+    <Compile Include="..\src\Shared\NoBodyResponseOfT.cs" />
     <Compile Include="..\src\Shared\OperationHelpers.cs" />
     <Compile Include="..\src\Shared\PageResponseEnumerator.cs" />
     <Compile Include="..\src\Shared\RetriableStream.cs" />
