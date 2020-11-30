@@ -116,12 +116,10 @@ Write-Verbose "Copy over Package ReadMe"
 $PkgReadMePath = "${RepoRoot}/sdk/${PackageLocation}/README.md"
 if ([System.IO.File]::Exists($PkgReadMePath)) {
     Copy-Item $PkgReadMePath -Destination "${DocOutApiDir}/index.md" -Force
-    Copy-Item $PkgReadMePath -Destination "${DocOutDir}/index.md" -Force
 }
 else {
     New-Item "${DocOutApiDir}/index.md" -Force
     Add-Content -Path "${DocOutApiDir}/index.md" -Value "This Package Contains no Readme."
-    Copy-Item "${DocOutApiDir}/index.md" -Destination "${DocOutDir}/index.md" -Force
     Write-Verbose "Package ReadMe was not found"
 }
 
@@ -133,7 +131,6 @@ Copy-Item "${DocGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Rec
 
 Write-Verbose "Create Toc for Site Navigation"
 New-Item "${DocOutDir}/toc.yml" -Force
-Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: api/`r`n  homepage: api/index.md"
 
 Write-Verbose "Build Doc Content"
 & "${DocFxTool}" build "${DocOutDir}/docfx.json"
