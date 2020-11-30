@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Input definition for planned failover.
+    /// Input definition for unplanned failover.
     /// </summary>
     public partial class UnplannedFailoverInput
     {
@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the UnplannedFailoverInput class.
         /// </summary>
-        /// <param name="properties">Planned failover input properties</param>
+        /// <param name="properties">Unplanned failover input
+        /// properties.</param>
         public UnplannedFailoverInput(UnplannedFailoverInputProperties properties = default(UnplannedFailoverInputProperties))
         {
             Properties = properties;
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets planned failover input properties
+        /// Gets or sets unplanned failover input properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public UnplannedFailoverInputProperties Properties { get; set; }
