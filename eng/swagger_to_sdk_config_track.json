@@ -1,17 +1,13 @@
 {
   "$schema": "https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/sdkautomation/SwaggerToSdkConfigSchema.json",
-  "advancedOptions": {
-    "createSdkPullRequests": true,
-    "generationCallMode": "one-for-all-configs"
-  },
   "generateOptions": {
     "generateScript": {
-      "path": "pwsh ./eng/scripts/Automation-Sdk-Generate.ps1"
+      "path": "pwsh ./scripts/Automation-Sdk-Generate.ps1"
     }
   },
   "initOptions": {
     "initScript": {
-      "path": "pwsh ./eng/scripts/Automation-Sdk-Init.ps1"
+      "path": "pwsh ./scripts/Automation-Sdk-Init.ps1"
     }
   }
 }

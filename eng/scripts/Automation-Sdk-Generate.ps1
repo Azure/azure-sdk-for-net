@@ -67,14 +67,13 @@ foreach ($sdkPath in $sdksInfo.Keys) {
     $result = "succeeded"
     Write-Host "Successfully generated code for" $packageName "`n"
     
-    $csprojPath = Get-ChildItem $srcPath -Filter *.csproj -Recurse
-    dotnet pack $csprojPath /p:RunApiCompat=$false
+    dotnet pack $srcPath /p:RunApiCompat=$false
     if (!$LASTEXITCODE) {
       $result = "succeeded"
       $artifactsPath = "$RepoRoot/artifacts/packages/Debug/$packageName"
       $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
 
-      $logs = & dotnet build /nologo $csprojPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;
+      $logs = & dotnet build /nologo $srcPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;
       if (!$LASTEXITCODE) {
         $hasBreakingChange = $false
       }
