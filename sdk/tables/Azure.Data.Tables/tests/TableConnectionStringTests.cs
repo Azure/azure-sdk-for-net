@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using Azure.Data.Tables;
 using NUnit.Framework;
 
@@ -47,6 +49,7 @@ namespace Azure.Tables.Tests
             Assert.That(tcs.Credentials, Is.Not.Null);
             Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/")), "The PrimaryUri should have matched.");
+            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")), "The SecondaryUri should have matched.");
         }
 
         public static IEnumerable<object[]> ValidCosmosConnStrings()
@@ -66,6 +69,7 @@ namespace Azure.Tables.Tests
             Assert.That(tcs.Credentials, Is.Not.Null);
             Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.cosmos.azure.com:443/")), "The PrimaryUri should have matched.");
+            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com:443/")), "The SecondaryUri should have matched.");
         }
 
         /// <summary>
@@ -80,6 +84,7 @@ namespace Azure.Tables.Tests
             Assert.That(tcs.Credentials, Is.Not.Null);
             Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/?{SasToken}")), "The PrimaryUri should have matched.");
+            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/?{SasToken}")), "The SecondaryUri should have matched.");
         }
 
         public static IEnumerable<object[]> InvalidConnStrings()
@@ -99,6 +104,23 @@ namespace Azure.Tables.Tests
         public void ParseFailsWithInvalidConnString(string connString)
         {
             Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), Is.False, "Parsing should not have been successful");
+        }
+
+        public static IEnumerable<object[]> ValidPrimaryEndpointUris()
+        {
+            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/") };
+            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/") };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/") };
+        }
+
+        [Test]
+        [TestCaseSource(nameof(ValidPrimaryEndpointUris))]
+        public void GetSecondaryUriFromPrimary(Uri endpoint)
+        {
+            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint);
+
+            Assert.That(secondaryEndpoint, Is.Not.Null.Or.Empty, "Secondary endpoint should not be null or empty");
+            Assert.That(secondaryEndpoint.AbsoluteUri.IndexOf($"{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}", StringComparison.OrdinalIgnoreCase), Is.GreaterThanOrEqualTo(0), $"Secondary endpoint should contain '{AccountName}-secondary', but was {secondaryEndpoint.AbsoluteUri}");
         }
 
         private string GetExpectedHash(TableSharedKeyCredential cred) => cred.ComputeHMACSHA256("message");
