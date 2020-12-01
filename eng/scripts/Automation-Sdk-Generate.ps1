@@ -12,7 +12,7 @@ param(
 )
 
 $inputFileContent = Get-Content $InputJsonPath | ConvertFrom-Json
-$inputFilePaths = $inputFileContent.changedFiles;
+[string[]] $inputFilePaths = $inputFileContent.changedFiles;
 $inputFilePaths += $inputFileContent.relatedReadmeMdFiles;
 $inputFilePaths = $inputFilePaths | Select-Object -Unique
 
@@ -26,8 +26,8 @@ $sdksInfo = @{}
 $headSha = $inputFileContent.headSha
 $repoHttpsUrl = $inputFileContent.repoHttpsUrl
 foreach ($path in $autorestFilesPath) {
+  $fileContent = Get-Content $path
   foreach ($inputFilePath in $inputFilePaths) {
-    $fileContent = Get-Content $path
     $isUpdatedLines = $false
     $escapedInputFilePath = [System.Text.RegularExpressions.Regex]::Escape($inputFilePath)
     $regexForMatchingShaAndPath = "https:\/\/[^`"]*[\/][0-9a-f]{4,40}[\/]$escapedInputFilePath"
@@ -76,7 +76,6 @@ foreach ($sdkPath in $sdksInfo.Keys) {
 
       $logs = & dotnet build /nologo $csprojPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;
       if (!$LASTEXITCODE) {
-        $result = "succeeded"
         $hasBreakingChange = $false
       }
       else {
@@ -84,7 +83,6 @@ foreach ($sdkPath in $sdksInfo.Keys) {
         $breakingChanges = $logFile -join ",`n"
         $content = "Breaking Changes: $breakingChanges"
         $hasBreakingChange = $true
-        $result = "succeeded"
       }
     }
     else {
