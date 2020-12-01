@@ -196,16 +196,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var host = new EventProcessorHost(
                 eventHubName,
                 consumerGroup,
-                "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
-                "DefaultEndpointsProtocol=https;AccountName=EventHubScaleMonitorFakeTestAccount;AccountKey=ABCDEFG;EndpointSuffix=core.windows.net", null, null);
+                "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=", null);
+
+            var consumerClientMock = new Mock<IEventHubConsumerClient>();
+            consumerClientMock.SetupGet(c => c.ConsumerGroup).Returns(consumerGroup);
+            consumerClientMock.SetupGet(c => c.EventHubName).Returns(eventHubName);
+
             var listener = new EventHubListener(
                                     functionId,
-                                    new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict).Object,
+                                    Mock.Of<ITriggeredFunctionExecutor>(),
                                     host,
                                     false,
+                                    () => consumerClientMock.Object,
+                                    Mock.Of<BlobsCheckpointStore>(),
                                     new EventHubOptions(),
-                                    testLogger,
-                                    new Mock<BlobContainerClient>(MockBehavior.Strict).Object);
+                                    testLogger);
 
             IScaleMonitor scaleMonitor = listener.GetMonitor();
 

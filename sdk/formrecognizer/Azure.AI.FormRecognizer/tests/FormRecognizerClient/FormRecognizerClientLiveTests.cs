@@ -42,8 +42,10 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
+        #region StartRecognizeContent
+
         [Test]
-        public async Task FormRecognizerClientCanAuthenticateWithTokenCredential()
+        public async Task StartRecognizeContentCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
             RecognizeContentOperation operation;
@@ -62,8 +64,6 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Greater(formPage.Lines.Count, 0);
             Assert.AreEqual("Contoso", formPage.Lines[0].Text);
         }
-
-        #region StartRecognizeContent
 
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
@@ -521,6 +521,32 @@ namespace Azure.AI.FormRecognizer.Tests
 
         #region StartRecognizeReceipts
 
+        [Test]
+        public async Task StartRecognizeReceiptsCanAuthenticateWithTokenCredential()
+        {
+            var client = CreateFormRecognizerClient(useTokenCredential: true);
+            RecognizeReceiptsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeReceiptsAsync(stream);
+            }
+
+            // Sanity check to make sure we got an actual response back from the service.
+
+            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync(PollingInterval);
+
+            RecognizedForm form = formPage.Single();
+            Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+        }
+
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform analysis of receipts.
@@ -970,6 +996,32 @@ namespace Azure.AI.FormRecognizer.Tests
         #region StartRecognizeBusinessCards
 
         [Test]
+        public async Task StartRecognizeBusinessCardsCanAuthenticateWithTokenCredential()
+        {
+            var client = CreateFormRecognizerClient(useTokenCredential: true);
+            RecognizeBusinessCardsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeBusinessCardsAsync(stream);
+            }
+
+            // Sanity check to make sure we got an actual response back from the service.
+
+            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync(PollingInterval);
+
+            RecognizedForm form = formPage.Single();
+            Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+        }
+
+        [Test]
         [TestCase(true)]
         [TestCase(false) ]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedJpg(bool useStream)
@@ -1334,6 +1386,32 @@ namespace Azure.AI.FormRecognizer.Tests
         #region StartRecognizeInvoices
 
         [Test]
+        public async Task StartRecognizeInvoicesCanAuthenticateWithTokenCredential()
+        {
+            var client = CreateFormRecognizerClient(useTokenCredential: true);
+            RecognizeInvoicesOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoicePdf);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeInvoicesAsync(stream);
+            }
+
+            // Sanity check to make sure we got an actual response back from the service.
+
+            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync(PollingInterval);
+
+            RecognizedForm form = formPage.Single();
+            Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+        }
+
+        [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeInvoicesPopulatesExtractedPdf(bool useStream)
@@ -1670,6 +1748,49 @@ namespace Azure.AI.FormRecognizer.Tests
         #endregion
 
         #region StartRecognizeCustomForms
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeCustomFormsCanAuthenticateWithTokenCredential(bool useTrainingLabels)
+        {
+            var client = CreateFormRecognizerClient(useTokenCredential: true);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels);
+            RecognizeCustomFormsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
+            }
+
+            // Sanity check to make sure we got an actual response back from the service.
+
+            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync(PollingInterval);
+
+            RecognizedForm form = formPage.Single();
+            Assert.NotNull(form);
+
+            if (useTrainingLabels)
+            {
+                ValidateModelWithLabelsForm(
+                                form,
+                                trainedModel.ModelId,
+                                includeFieldElements: false,
+                                expectedFirstPageNumber: 1,
+                                expectedLastPageNumber: 1,
+                                isComposedModel: false);
+            }
+            else
+            {
+                ValidateModelWithNoLabelsForm(
+                                form,
+                                trainedModel.ModelId,
+                                includeFieldElements: false,
+                                expectedFirstPageNumber: 1,
+                                expectedLastPageNumber: 1);
+            }
+        }
 
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form

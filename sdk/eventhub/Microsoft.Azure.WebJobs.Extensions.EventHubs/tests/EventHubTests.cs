@@ -7,6 +7,7 @@ using System.Text;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host;
@@ -257,7 +258,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 null,
                 false,
                 null,
-                Mock.Of<BlobContainerClient>());
+                Mock.Of<BlobsCheckpointStore>());
             return new ProcessorPartitionContext(partitionId, processor, s => default);
         }
     }

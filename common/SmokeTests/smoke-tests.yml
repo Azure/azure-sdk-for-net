@@ -76,6 +76,8 @@ jobs:
       - pwsh: Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
         displayName: Show SmokeTest.csproj
 
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
       - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
         displayName: dotnet restore
 

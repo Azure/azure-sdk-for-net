@@ -190,7 +190,7 @@ namespace Azure.Data.Tables
 
             var matchesAutomaticEndpointsSpec = settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName) &&
                 settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey) &&
-                    (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out accountName) ||
+                    (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var primary) ||
                     settings.TryGetSegmentValue(TableConstants.ConnectionStrings.EndpointSuffixSetting, out var endpointSuffix));
 
             if (matchesAutomaticEndpointsSpec || matchesExplicitEndpointsSpec)
@@ -212,7 +212,10 @@ namespace Azure.Data.Tables
                 {
                     if (!string.IsNullOrWhiteSpace(primary))
                     {
-                        return (CreateUri(primary, sasToken), CreateUri(secondary, sasToken));
+                        Uri primaryUri = CreateUri(primary, sasToken);
+                        Uri secondaryUri = CreateUri(secondary, sasToken) ?? GetSecondaryUriFromPrimary(primaryUri, accountName);
+
+                        return (primaryUri, secondaryUri);
                     }
                     else if (matchesAutomaticEndpointsSpec && factory != null)
                     {
@@ -264,6 +267,44 @@ namespace Azure.Data.Tables
             accountInformation = null;
             error = "No valid combination of account information found.";
             return false;
+        }
+
+        internal static Uri GetSecondaryUriFromPrimary(Uri primaryUri, string accountName = null)
+        {
+            var secondaryUriBuilder = new UriBuilder(primaryUri);
+
+            if (!string.IsNullOrEmpty(accountName))
+            {
+                // We've been provided the accountName, so just insert the '-secondary' suffix after it
+                var indexOfAccountName = secondaryUriBuilder.Host.IndexOf(accountName, StringComparison.OrdinalIgnoreCase);
+                secondaryUriBuilder.Host = secondaryUriBuilder.Host.Insert(indexOfAccountName + accountName.Length, TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix);
+                return secondaryUriBuilder.Uri;
+            }
+
+            var indexOfDot = secondaryUriBuilder.Host.IndexOf('.');
+            if (indexOfDot >= 0 && Uri.CheckHostName(primaryUri.Host) == UriHostNameType.Dns)
+            {
+                // This is a dns name such as contoso.core.windows.net
+                // Insert the '-secondary' suffix after the first part of the host name
+                secondaryUriBuilder.Host = secondaryUriBuilder.Host.Insert(indexOfDot, TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix);
+            }
+            else if (primaryUri.IsLoopback)
+            {
+                // This is most likely Azurite, which looks like this: https://127.0.0.1:10002/contoso/
+                // Insert the '-secondary' suffix after the 2nd segment (the first segment is '/')
+                var segments = primaryUri.Segments;
+                var accountNameSegmentLength = segments[1].Length;
+                var insertIndex = segments[1].EndsWith("/", StringComparison.OrdinalIgnoreCase) ? accountNameSegmentLength - 1 : accountNameSegmentLength;
+                segments[1] = segments[1].Insert(insertIndex, TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix);
+                secondaryUriBuilder.Path = string.Join(string.Empty, segments);
+            }
+            else
+            {
+                // this is not a valid host name
+                return default;
+            }
+
+            return secondaryUriBuilder.Uri;
         }
 
         /// <summary>
@@ -403,7 +444,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Gets the default queue endpoint using the specified protocol and account name.
+        /// Gets the default table endpoint using the specified protocol and account name.
         /// </summary>
         /// <param name="scheme">The protocol to use.</param>
         /// <param name="accountName">The name of the storage account.</param>

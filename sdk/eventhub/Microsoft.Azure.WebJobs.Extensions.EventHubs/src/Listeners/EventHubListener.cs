@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -28,6 +27,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly EventProcessorHost _eventProcessorHost;
         private readonly bool _singleDispatch;
+        private readonly BlobsCheckpointStore _checkpointStore;
         private readonly EventHubOptions _options;
         private readonly ILogger _logger;
         private bool _started;
@@ -39,23 +39,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             ITriggeredFunctionExecutor executor,
             EventProcessorHost eventProcessorHost,
             bool singleDispatch,
+            Func<IEventHubConsumerClient> clientFactory,
+            BlobsCheckpointStore checkpointStore,
             EventHubOptions options,
-            ILogger logger,
-            BlobContainerClient blobContainer = null)
+            ILogger logger)
         {
+            _logger = logger;
             _executor = executor;
             _eventProcessorHost = eventProcessorHost;
             _singleDispatch = singleDispatch;
+            _checkpointStore = checkpointStore;
             _options = options;
-            _logger = logger;
-            _scaleMonitor = new Lazy<EventHubsScaleMonitor>(() => new EventHubsScaleMonitor(
-                functionId,
-                eventProcessorHost.EventHubName,
-                eventProcessorHost.ConsumerGroupName,
-                eventProcessorHost.EventHubConnectionString,
-                eventProcessorHost.StorageConnectionString,
-                _logger,
-                blobContainer));
+
+            _scaleMonitor = new Lazy<EventHubsScaleMonitor>(
+                () => new EventHubsScaleMonitor(
+                    functionId,
+                    clientFactory(),
+                    checkpointStore,
+                    _logger));
         }
 
         void IListener.Cancel()
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await _eventProcessorHost.RegisterEventProcessorFactoryAsync(this, _options.MaxBatchSize, _options.InvokeProcessorAfterReceiveTimeout, _options.EventProcessorOptions).ConfigureAwait(false);
+            await _eventProcessorHost.RegisterEventProcessorFactoryAsync(this, _options.MaxBatchSize, _options.InvokeProcessorAfterReceiveTimeout, _checkpointStore, _options.EventProcessorOptions).ConfigureAwait(false);
             _started = true;
         }
 

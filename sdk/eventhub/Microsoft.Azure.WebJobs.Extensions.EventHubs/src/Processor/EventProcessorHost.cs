@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
@@ -19,22 +18,18 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         public string EventHubName { get; }
         public string ConsumerGroupName { get; }
         public string EventHubConnectionString { get; }
-        public string StorageConnectionString { get; }
-        private string LeaseContainerName { get; }
         private Processor CurrentProcessor { get; set; }
         private Action<ExceptionReceivedEventArgs> ExceptionHandler { get; }
 
-        public EventProcessorHost(string eventHubName, string consumerGroupName, string eventHubConnectionString, string storageConnectionString, string leaseContainerName, Action<ExceptionReceivedEventArgs> exceptionHandler)
+        public EventProcessorHost(string eventHubName, string consumerGroupName, string eventHubConnectionString, Action<ExceptionReceivedEventArgs> exceptionHandler)
         {
             EventHubName = eventHubName;
             ConsumerGroupName = consumerGroupName;
             EventHubConnectionString = eventHubConnectionString;
-            StorageConnectionString = storageConnectionString;
-            LeaseContainerName = leaseContainerName;
             ExceptionHandler = exceptionHandler;
         }
 
-        public async Task RegisterEventProcessorFactoryAsync(IEventProcessorFactory factory, int maxBatchSize, bool invokeProcessorAfterReceiveTimeout, EventProcessorOptions options)
+        public async Task RegisterEventProcessorFactoryAsync(IEventProcessorFactory factory, int maxBatchSize, bool invokeProcessorAfterReceiveTimeout, BlobsCheckpointStore checkpointStore, EventProcessorOptions options)
         {
             if (CurrentProcessor != null)
             {
@@ -49,7 +44,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 factory,
                 invokeProcessorAfterReceiveTimeout,
                 ExceptionHandler,
-                new BlobContainerClient(StorageConnectionString, LeaseContainerName));
+                checkpointStore
+            );
             await CurrentProcessor.StartProcessingAsync().ConfigureAwait(false);
         }
 
@@ -76,16 +72,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             private bool InvokeProcessorAfterRecieveTimeout { get; }
             private Action<ExceptionReceivedEventArgs> ExceptionHandler { get; }
             private ConcurrentDictionary<string, LeaseInfo> LeaseInfos { get; }
-
             private BlobsCheckpointStore CheckpointStore { get; }
 
-            public Processor(int eventBatchMaximumCount, string consumerGroup, string connectionString, string eventHubName, EventProcessorOptions options, IEventProcessorFactory processorFactory, bool invokeProcessorAfterRecieveTimeout, Action<ExceptionReceivedEventArgs> exceptionHandler, BlobContainerClient containerClient) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options)
+            public Processor(int eventBatchMaximumCount, string consumerGroup, string connectionString, string eventHubName, EventProcessorOptions options, IEventProcessorFactory processorFactory, bool invokeProcessorAfterRecieveTimeout, Action<ExceptionReceivedEventArgs> exceptionHandler, BlobsCheckpointStore checkpointStore) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options)
             {
                 ProcessorFactory = processorFactory;
                 InvokeProcessorAfterRecieveTimeout = invokeProcessorAfterRecieveTimeout;
                 ExceptionHandler = exceptionHandler;
                 LeaseInfos = new ConcurrentDictionary<string, LeaseInfo>();
-                CheckpointStore = new BlobsCheckpointStore(containerClient, RetryPolicy);
+                CheckpointStore = checkpointStore;
             }
 
             protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken)
