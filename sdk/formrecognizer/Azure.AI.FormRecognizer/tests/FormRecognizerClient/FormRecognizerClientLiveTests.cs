@@ -1750,10 +1750,12 @@ namespace Azure.AI.FormRecognizer.Tests
         #region StartRecognizeCustomForms
 
         [Test]
-        public async Task StartRecognizeCustomFormsCanAuthenticateWithTokenCredential()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeCustomFormsCanAuthenticateWithTokenCredential(bool useTrainingLabels)
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels);
             RecognizeCustomFormsOperation operation;
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
@@ -1769,13 +1771,25 @@ namespace Azure.AI.FormRecognizer.Tests
             RecognizedForm form = formPage.Single();
             Assert.NotNull(form);
 
-            ValidateModelWithLabelsForm(
-                form,
-                trainedModel.ModelId,
-                includeFieldElements: false,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1,
-                isComposedModel: false);
+            if (useTrainingLabels)
+            {
+                ValidateModelWithLabelsForm(
+                                form,
+                                trainedModel.ModelId,
+                                includeFieldElements: false,
+                                expectedFirstPageNumber: 1,
+                                expectedLastPageNumber: 1,
+                                isComposedModel: false);
+            }
+            else
+            {
+                ValidateModelWithNoLabelsForm(
+                                form,
+                                trainedModel.ModelId,
+                                includeFieldElements: false,
+                                expectedFirstPageNumber: 1,
+                                expectedLastPageNumber: 1);
+            }
         }
 
         /// <summary>
