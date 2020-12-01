@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="uefiSettings">Specifies the security settings like
         /// secure boot and vTPM used while creating the virtual machine.
-        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01</param>
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01</param>
         /// <param name="encryptionAtHost">This property can be used by user in
         /// the request to enable or disable the Host Encryption for the
         /// virtual machine or virtual machine scale set. This will enable the
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the security settings like secure boot and
         /// vTPM used while creating the virtual machine.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version: 2020-06-01
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version: 2020-12-01
         /// </summary>
         [JsonProperty(PropertyName = "uefiSettings")]
         public UefiSettings UefiSettings { get; set; }

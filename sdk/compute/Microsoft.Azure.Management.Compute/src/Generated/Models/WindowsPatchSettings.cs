@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies settings related to in-guest patching (KBs).
+    /// Specifies settings related to VM Guest Patching on Windows.
     /// </summary>
     public partial class WindowsPatchSettings
     {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the WindowsPatchSettings class.
         /// </summary>
-        /// <param name="patchMode">Specifies the mode of in-guest patching to
+        /// <param name="patchMode">Specifies the mode of VM Guest Patching to
         /// IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values
         /// are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the
         /// application of patches to a virtual machine. You do this by
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the mode of in-guest patching to IaaS
+        /// Gets or sets specifies the mode of VM Guest Patching to IaaS
         /// virtual machine.&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt; Possible
         /// values are:&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt; **Manual** -
         /// You  control the application of patches to a virtual machine. You

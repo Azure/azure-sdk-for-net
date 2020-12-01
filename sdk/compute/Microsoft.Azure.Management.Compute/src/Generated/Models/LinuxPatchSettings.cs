@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the LinuxPatchSettings class.
         /// </summary>
-        /// <param name="patchMode">Specifies the mode of in-guest patching to
+        /// <param name="patchMode">Specifies the mode of VM Guest Patching to
         /// IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values
-        /// are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - This will be
-        /// whatever the image is configured by default with. &lt;br
-        /// /&gt;&lt;br /&gt; **AutomaticByPlatform** - the virtual machine
-        /// will automatically updated by the platform. The property
+        /// are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - The virtual
+        /// machine's default patching configuration is used. &lt;br
+        /// /&gt;&lt;br /&gt; **AutomaticByPlatform** - The virtual machine
+        /// will be automatically updated by the platform. The property
         /// provisionVMAgent must be true. Possible values include:
         /// 'ImageDefault', 'AutomaticByPlatform'</param>
         public LinuxPatchSettings(string patchMode = default(string))
@@ -49,12 +49,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the mode of in-guest patching to IaaS
+        /// Gets or sets specifies the mode of VM Guest Patching to IaaS
         /// virtual machine.&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt; Possible
         /// values are:&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;
-        /// **ImageDefault** - This will be whatever the image is configured by
-        /// default with. &amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;
-        /// **AutomaticByPlatform** - the virtual machine will automatically
+        /// **ImageDefault** - The virtual machine's default patching
+        /// configuration is used. &amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;
+        /// **AutomaticByPlatform** - The virtual machine will be automatically
         /// updated by the platform. The property provisionVMAgent must be
         /// true. Possible values include: 'ImageDefault',
         /// 'AutomaticByPlatform'

@@ -51,9 +51,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// published this patch.</param>
         /// <param name="lastModifiedDateTime">The UTC timestamp of the last
         /// update to this patch record.</param>
-        /// <param name="assessmentState">Describes the assessed installation
-        /// state of a given patch. Possible values include: 'Unknown',
-        /// 'Available'</param>
+        /// <param name="assessmentState">Describes the availability of a given
+        /// patch. Possible values include: 'Unknown', 'Available'</param>
         public VirtualMachineSoftwarePatchProperties(string patchId = default(string), string name = default(string), string version = default(string), string kbId = default(string), IList<string> classifications = default(IList<string>), string rebootBehavior = default(string), string activityId = default(string), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? lastModifiedDateTime = default(System.DateTime?), string assessmentState = default(string))
         {
             PatchId = patchId;
@@ -134,8 +133,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public System.DateTime? LastModifiedDateTime { get; private set; }
 
         /// <summary>
-        /// Gets describes the assessed installation state of a given patch.
-        /// Possible values include: 'Unknown', 'Available'
+        /// Gets describes the availability of a given patch. Possible values
+        /// include: 'Unknown', 'Available'
         /// </summary>
         [JsonProperty(PropertyName = "assessmentState")]
         public string AssessmentState { get; private set; }

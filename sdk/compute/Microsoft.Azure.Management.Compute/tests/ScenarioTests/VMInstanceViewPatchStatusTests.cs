@@ -74,12 +74,10 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.InstalledPatchCount);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.PendingPatchCount);
 
-                // NOTE: Hotpatching and configureStatus aren't available on Linux VM
+                // NOTE: ConfigureStatus is not available on Linux VM
                 Assert.NotNull(vmInstanceView.PatchStatus.ConfigurationStatuses);
                 Assert.NotNull(vmInstanceView.PatchStatus.ConfigurationStatuses[0].Code);
                 Assert.NotNull(vmInstanceView.PatchStatus.ConfigurationStatuses[0].Level);
-
-                // ToDo: Add hotpatching assertions once it is available globally
             }
             else
             {
@@ -89,8 +87,8 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.ExcludedPatchCount);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.FailedPatchCount);
                 Assert.Equal(11, vmInstanceView.PatchStatus.LastPatchInstallationSummary.NotSelectedPatchCount);
-                Assert.Equal(241, vmInstanceView.PatchStatus.LastPatchInstallationSummary.InstalledPatchCount);
-                Assert.Equal(41, vmInstanceView.PatchStatus.LastPatchInstallationSummary.PendingPatchCount);
+                Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.InstalledPatchCount);
+                Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.PendingPatchCount);
             }
         }
     }

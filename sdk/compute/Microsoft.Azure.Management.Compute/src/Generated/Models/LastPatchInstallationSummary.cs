@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The Hot Patch Status for the virtual machine.
+    /// Describes the properties of the last installed patch summary.
     /// </summary>
     public partial class LastPatchInstallationSummary
     {
