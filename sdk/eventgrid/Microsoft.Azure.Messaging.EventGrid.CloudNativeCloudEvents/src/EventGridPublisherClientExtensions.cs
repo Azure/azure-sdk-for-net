@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using CloudEvent = CloudNative.CloudEvents.CloudEvent;
 
 #pragma warning disable AZC0001 // Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.Iot, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
-namespace Microsoft.Azure.CloudNative.CloudEvents.EventGrid
+namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
 #pragma warning restore AZC0001 // Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.Iot, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
 {
     /// <summary>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.CloudNative.CloudEvents.EventGrid
             }
 
             using var stream = new MemoryStream();
-            var writer = new Utf8JsonWriter(stream);
+            using var writer = new Utf8JsonWriter(stream);
             writer.WriteStartArray();
             foreach (var cloudEvent in cloudEvents)
             {

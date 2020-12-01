@@ -17,7 +17,7 @@ using CloudNative.CloudEvents;
 using NUnit.Framework;
 using CloudEvent = CloudNative.CloudEvents.CloudEvent;
 
-namespace Microsoft.Azure.CloudNative.CloudEvents.EventGrid.Tests
+namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
 {
     public class CloudEventTests
     {
@@ -26,7 +26,6 @@ namespace Microsoft.Azure.CloudNative.CloudEvents.EventGrid.Tests
         private const string TraceStateHeaderName = "tracestate";
 
         private static readonly JsonEventFormatter s_eventFormatter = new JsonEventFormatter();
-
 
         [Test]
         [TestCase(false, false)]
@@ -117,20 +116,13 @@ namespace Microsoft.Azure.CloudNative.CloudEvents.EventGrid.Tests
             stream.Position = 0;
             JsonDocument requestDocument = JsonDocument.Parse(stream);
             var cloudEvents = new List<CloudEvent>();
-            // Parse JsonElement into separate events, deserialize event envelope properties
-            if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
+
+            foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
             {
-                var bytes = JsonSerializer.SerializeToUtf8Bytes(requestDocument.RootElement, typeof(JsonElement));
+                var bytes = JsonSerializer.SerializeToUtf8Bytes(property, typeof(JsonElement));
                 cloudEvents.Add(s_eventFormatter.DecodeStructuredEvent(bytes));
             }
-            else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
-            {
-                foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
-                {
-                    var bytes = JsonSerializer.SerializeToUtf8Bytes(property, typeof(JsonElement));
-                    cloudEvents.Add(s_eventFormatter.DecodeStructuredEvent(bytes));
-                }
-            }
+
             return cloudEvents;
         }
     }

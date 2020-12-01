@@ -6,18 +6,20 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
-  <!-- Reference the Client Library -->
-
   <!-- Add Test References -->
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="nunit" />
+    <PackageReference Include="Nunit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="System.Memory" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\..\eventgrid\Azure.Messaging.EventGrid\tests\Azure.Messaging.EventGrid.Tests.csproj" />
-    <ProjectReference Include="..\src\Microsoft.Azure.CloudNative.CloudEvents.EventGrid.csproj" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Reference the bridge library -->
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.csproj" />
   </ItemGroup>
 </Project>

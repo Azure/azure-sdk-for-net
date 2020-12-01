@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CloudEvent = CloudNative.CloudEvents.CloudEvent;
 
-namespace Microsoft.Azure.CloudNative.CloudEvents.EventGrid.Tests
+namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
 {
     public class CloudNativeLiveTests : EventGridLiveTestBase
     {
