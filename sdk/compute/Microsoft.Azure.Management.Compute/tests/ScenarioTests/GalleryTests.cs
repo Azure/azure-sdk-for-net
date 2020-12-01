@@ -565,8 +565,13 @@ namespace Compute.Tests
                 {
                     Source = new UserArtifactSource
                     {
-                        FileName = "test.zip",
                         MediaLink = applicationMediaLink
+                    },
+                    ManageActions = new UserArtifactManage()
+                    {
+                        Install = "install.cmd",
+                        Remove = "remove.cmd",
+                        Update = "update.cmd"
                     },
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
