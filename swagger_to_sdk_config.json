@@ -6,8 +6,8 @@
       "csharp": "",
       "reflect-api-versions": "",
       "license-header": "MICROSOFT_MIT_NO_VERSION",
-      "use": "@microsoft.azure/autorest.csharp@2.3.84",
-      "sdkrel:csharp-sdks-folder": "./sdk"
+      "sdkrel:csharp-sdks-folder": "./sdk",
+      "use": "@microsoft.azure/autorest.csharp@2.3.82"
     },
     "advanced_options": {
       "create_sdk_pull_requests": true,
@@ -15,10 +15,5 @@
       "main_branch": "master"
     },
     "version": "0.2.0"
-  },
-  "generateOptions": {
-    "genearteScript": {
-      "path": "autorest"
-    }
   }
 }

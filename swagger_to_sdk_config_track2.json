@@ -6,12 +6,12 @@
   },
   "generateOptions": {
     "generateScript": {
-      "path": "pwsh ./eng/scripts/Sdk-Generate.ps1"
+      "path": "pwsh ./eng/scripts/Automation-Sdk-Generate.ps1"
     }
   },
   "initOptions": {
     "initScript": {
-      "path": "pwsh ./eng/scripts/Sdk-init.ps1"
+      "path": "pwsh ./eng/scripts/Automation-Sdk-Init.ps1"
     }
   }
 }

@@ -1,6 +1,12 @@
+[CmdletBinding()]
 param(
+  [Parameter(Mandatory = $True)]
   [string] $InputJsonPath = $GenerateInput,
+
+  [Parameter()]
   [string] $OutputJsonPath = $GenerateOutput,
+
+  [Parameter()]
   [string] $RepoRoot = "${PSScriptRoot}/../.."
 )
 
@@ -18,14 +24,15 @@ Write-Host "Updating autorest.md files for all the changed swaggers."
 $sdksInfo = @{}
 $headSha = $inputFileContent.headSha
 $repoHttpsUrl = $inputFileContent.repoHttpsUrl
-foreach ($inputFilePath in $inputFilePaths) {
-  foreach ($path in $autorestFilesPath) {
+foreach ($path in $autorestFilesPath) {
+  foreach ($inputFilePath in $inputFilePaths) {
     $fileContent = Get-Content $path
     $isUpdatedLines = $false
+    $escapedInputFilePath = [System.Text.RegularExpressions.Regex]::Escape($inputFilePath)
+    $regexForMatchingShaAndPath = "https:\/\/[^`"]*[\/][0-9a-f]{4,40}[\/]$escapedInputFilePath"
     $updatedLines = foreach ($line in $fileContent) {
-      $regexForMatchingShaAndPath = "[\/][0-9a-f]{4,40}[\/]$inputFilePath"
       if ($line -match $regexForMatchingShaAndPath) {
-        $line -replace "https:\/\/[^`"]*$regexForMatchingShaAndPath", "$repoHttpsUrl/blob/$headSha/$inputFilePath"
+        $line -replace $regexForMatchingShaAndPath, "$repoHttpsUrl/blob/$headSha/$inputFilePath"
 
         $isUpdatedLines = $true
         $sdkpath = (get-item $path).Directory.Parent.FullName | Resolve-Path -Relative
@@ -46,71 +53,52 @@ foreach ($inputFilePath in $inputFilePaths) {
 
 Write-Host "Updated autorest.md files for all the changed swaggers. `n"
 
-function Test-PreviousScript() {
-  $result = $null
-  if ($LASTEXITCODE -eq 0) {
-    $result = "succeeded"
-  }
-  else {
-    $result = "failed"
-  }
-  Write-Host "Result: $result"
-  return $result
-}
-
 $packages = @()
 foreach ($sdkPath in $sdksInfo.Keys) {
   $packageName = Split-Path $sdkPath -Leaf
   Write-Host "Generating code for " $packageName
-  $srcPath = Join-Path $sdkPath 'src'
-  dotnet msbuild /restore /t:GenerateCode $srcPath
-
   $artifacts = @()
   $hasBreakingChange = $null
   $content = $null
-  $result = Test-PreviousScript
-  if ($result -eq "succeeded") {
+  $srcPath = Join-Path $sdkPath 'src'
+  dotnet msbuild /restore /t:GenerateCode $srcPath
+  if (!$LASTEXITCODE) {
+    $result = "succeeded"
     Write-Host "Successfully generated code for" $packageName "`n"
     
     $csprojPath = Get-ChildItem $srcPath -Filter *.csproj -Recurse
     dotnet pack $csprojPath /p:RunApiCompat=$false
-    $result = Test-PreviousScript
-    if ($result -eq "succeeded") {
+    if (!$LASTEXITCODE) {
+      $result = "succeeded"
       $artifactsPath = "$RepoRoot/artifacts/packages/Debug/$packageName"
       $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
 
-      $logFilePath = Join-Path "$srcPath" 'log.txt'
-      if (!(Test-Path $logFilePath)) {
-        New-Item $logFilePath
-      }
-      dotnet build $csprojPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
-      
-      $result = Test-PreviousScript
-      if ($result -eq "succeeded") {
+      $logs = & dotnet build /nologo $csprojPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;
+      if (!$LASTEXITCODE) {
+        $result = "succeeded"
         $hasBreakingChange = $false
       }
       else {
-        $logFile = Get-Content -Path $logFilePath | select-object -skip 2
+        $logFile = $logs | select-object -skip 2
         $breakingChanges = $logFile -join ",`n"
         $content = "Breaking Changes: $breakingChanges"
         $hasBreakingChange = $true
         $result = "succeeded"
       }
-
-      if (Test-Path $logFilePath) {
-        Remove-Item $logFilePath
-      }
+    }
+    else {
+      $result = "failed"
+      Write-Error "Error occurred while generating artifacts for $packageName `n"
     }
   } 
   else {
-    Write-Error "Error occurred while generating code for" $packageName "`n"
+    $result = "failed"
+    Write-Error "Error occurred while generating code for $packageName `n"
   }
 
-  $path = @()
-  $path += $sdkPath
+  $path = , $sdkPath
 
-  $readmeMd = @()
-  $readmeMd += $sdksInfo[$sdkPath]
+  $readmeMd = $sdksInfo[$sdkPath]
 
   $changelog = [PSCustomObject]@{
     content           = $content
@@ -118,10 +106,14 @@ foreach ($sdkPath in $sdksInfo.Keys) {
   }
 
   $downloadUrlPrefix = $inputFileContent.installInstructionInput.downloadUrlPrefix
-  $fileName = Split-Path $artifacts[0] -Leaf
+  $full = $null
+  if ($artifacts.count -gt 0) {
+    $fileName = Split-Path $artifacts[0] -Leaf
+    $full = "Download the $packageName package from [here]($downloadUrlPrefix/$fileName)"
+  }
   $installInstructions = [PSCustomObject]@{
-    full = "Download the $packageName package from [here]($downloadUrlPrefix/$fileName)"
-    lite = "Download the $packagename package from [here]($downloadUrlPrefix/$fileName)"
+    full = $full
+    lite = $full
   }
 
   $packageInfo = [PSCustomObject]@{
