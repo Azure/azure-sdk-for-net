@@ -6,7 +6,7 @@ extends:
     ServiceDirectory: storage
     BuildInParallel: true
     TimeoutInMinutes: 90
-    Location: canadacentral
+    Location: uswest2
     Clouds: Preview
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
