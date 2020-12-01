@@ -555,6 +555,25 @@ namespace Azure.Communication.Administration
         }
 
         /// <summary> Starts a release for the given phone numbers. </summary>
+        /// <param name="phoneNumber"> The phone number in the release request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
+        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumber)}");
+            scope.Start();
+            try
+            {
+                return await StartReleasePhoneNumbersAsync(new[] { phoneNumber }, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Starts a release for the given phone numbers. </summary>
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
@@ -570,6 +589,25 @@ namespace Azure.Communication.Administration
                        response.Value.ReleaseId,
                        response.GetRawResponse(),
                        cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Starts a release for the given phone number. </summary>
+        /// <param name="phoneNumber"> The phone number in the release request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
+        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumber)}");
+            scope.Start();
+            try
+            {
+                return StartReleasePhoneNumbers(new[] { phoneNumber }, cancellationToken);
             }
             catch (Exception ex)
             {

@@ -7,7 +7,7 @@ Identity client: 2020-07-20-preview2
 
 Azure Communication Administration is managing tokens and phone numbers for Azure Communication Services.
 
-[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs] | [Samples][source_samples]
 
 ## Getting started
 
@@ -205,19 +205,6 @@ Console.WriteLine($"ReservationId: {reservationResponse.Value.ReservationId}, St
 ```C#
 var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId).ConfigureAwait(false);
 await reservationPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
-
-// Ensure purchase has completed successfuly
-try
-{
-    var reservationStatus = reservationPurchaseOperation.Value;
-    // ...
-}
-catch (Exception ex)
-{
-    Console.WriteLine("Purchase failed");
-    Console.WriteLine(ex.Message);
-}
-
 ```
 
 ### Configure phone number
@@ -249,6 +236,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [azure_sub]: https://azure.microsoft.com/free/
 [azure_portal]: https://portal.azure.com
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Administration/src
+[source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Administration/samples
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
