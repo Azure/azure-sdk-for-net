@@ -2177,6 +2177,227 @@ namespace Azure.Storage.Blobs.Specialized
         /// shared access signature.  If the source blob is public, no authorization is required
         /// to perform the operation.
         /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> SyncUploadFromUri(Uri copySource)
+            => SyncUploadFromUri(
+                copySource,
+                overwrite: false,
+                CancellationToken.None);
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(Uri copySource)
+            => await SyncUploadFromUriAsync(
+                copySource,
+                CancellationToken.None)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> SyncUploadFromUri(
+            Uri copySource,
+            CancellationToken cancellationToken = default)
+            => SyncUploadFromUri(
+                copySource,
+                overwrite: false,
+                cancellationToken);
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
+            Uri copySource,
+            CancellationToken cancellationToken = default)
+            => await SyncUploadFromUriAsync(
+                copySource,
+                overwrite: false,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite the existing blob.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> SyncUploadFromUri(
+            Uri copySource,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default)
+            => SyncUploadFromUriInternal(
+                copySource,
+                overwrite ? null : new BlobUploadFromUriOptions{ DestinationConditions = new BlobRequestConditions
+                    { IfNoneMatch = new ETag(Constants.Wildcard) } },
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite the existing blob.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
+            Uri copySource,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default)
+            => await SyncUploadFromUriInternal(
+                copySource,
+                overwrite ? null : new BlobUploadFromUriOptions { DestinationConditions = new BlobRequestConditions
+                    { IfNoneMatch = new ETag(Constants.Wildcard) } },
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
