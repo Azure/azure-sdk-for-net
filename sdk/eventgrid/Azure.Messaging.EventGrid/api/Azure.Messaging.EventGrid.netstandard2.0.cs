@@ -49,6 +49,10 @@ namespace Azure.Messaging.EventGrid
         public EventGridPublisherClient(System.Uri endpoint, Azure.Messaging.EventGrid.EventGridSharedAccessSignatureCredential credential) { }
         public EventGridPublisherClient(System.Uri endpoint, Azure.Messaging.EventGrid.EventGridSharedAccessSignatureCredential credential, Azure.Messaging.EventGrid.EventGridPublisherClientOptions options) { }
         public static string BuildSharedAccessSignature(System.Uri endpoint, System.DateTimeOffset expirationUtc, Azure.AzureKeyCredential key, Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion apiVersion = Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion.V2018_01_01) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response SendEncodedCloudEvents(System.ReadOnlyMemory<byte> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendEncodedCloudEventsAsync(System.ReadOnlyMemory<byte> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.EventGridEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<object> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+
+    <!-- We don't care about XML doc comments on test methods -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Add Test References -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="System.Memory" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\..\eventgrid\Azure.Messaging.EventGrid\tests\Azure.Messaging.EventGrid.Tests.csproj" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Reference the bridge library -->
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.csproj" />
+  </ItemGroup>
+</Project>
