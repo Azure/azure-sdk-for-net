@@ -18,10 +18,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
-    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Processor/StorageManager.cs"/>
-    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/CancellationTokenExtensions.cs"/>
-    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/BlobCheckpointStore/*.cs"/>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Processor/StorageManager.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/CancellationTokenExtensions.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/BasicRetryPolicy.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/EventHubsRetryOptionsExtensions.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/BlobCheckpointStore/*.cs" LinkBase="SharedSource" />
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Azure.Messaging.EventHubs.Core</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

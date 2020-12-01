@@ -8,11 +8,15 @@ using System.Globalization;
 using System.Text;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
+using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -242,15 +246,49 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
 
         // Lookup a listener for receiving events given the name provided in the [EventHubTrigger] attribute.
-        internal EventProcessorHost GetEventProcessorHost(IConfiguration config, string eventHubName, string consumerGroup)
+        internal EventProcessorHost GetEventProcessorHost(string eventHubName, string consumerGroup)
         {
             ReceiverCreds creds;
             if (this._receiverCreds.TryGetValue(eventHubName, out creds))
             {
-                if (consumerGroup == null)
-                {
-                    consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-                }
+                consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
+
+                // Use blob prefix support available in EPH starting in 2.2.6
+                EventProcessorHost host = new EventProcessorHost(
+                    eventHubName: eventHubName,
+                    consumerGroupName: consumerGroup,
+                    eventHubConnectionString: creds.EventHubConnectionString,
+                    exceptionHandler: _exceptionHandler);
+
+                return host;
+            }
+
+            throw new InvalidOperationException("No event hub receiver named " + eventHubName);
+        }
+
+        internal IEventHubConsumerClient GetEventHubConsumerClient(string eventHubName, string consumerGroup)
+        {
+            ReceiverCreds creds;
+            if (this._receiverCreds.TryGetValue(eventHubName, out creds))
+            {
+                consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
+
+                // Use blob prefix support available in EPH starting in 2.2.6
+                return new EventHubConsumerClientImpl(new EventHubConsumerClient(
+                    consumerGroup,
+                    creds.EventHubConnectionString,
+                    eventHubName));
+            }
+
+            throw new InvalidOperationException("No event hub receiver named " + eventHubName);
+        }
+
+
+        internal string GetCheckpointStoreConnectionString(IConfiguration config, string eventHubName)
+        {
+            ReceiverCreds creds;
+            if (this._receiverCreds.TryGetValue(eventHubName, out creds))
+            {
                 var storageConnectionString = creds.StorageConnectionString;
                 if (storageConnectionString == null)
                 {
@@ -258,16 +296,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     storageConnectionString = defaultStorageString;
                 }
 
-                // Use blob prefix support available in EPH starting in 2.2.6
-                EventProcessorHost host = new EventProcessorHost(
-                    eventHubName: eventHubName,
-                    consumerGroupName: consumerGroup,
-                    eventHubConnectionString: creds.EventHubConnectionString,
-                    storageConnectionString: storageConnectionString,
-                    leaseContainerName: LeaseContainerName,
-                    exceptionHandler: _exceptionHandler);
-
-                return host;
+                return storageConnectionString;
             }
 
             throw new InvalidOperationException("No event hub receiver named " + eventHubName);
