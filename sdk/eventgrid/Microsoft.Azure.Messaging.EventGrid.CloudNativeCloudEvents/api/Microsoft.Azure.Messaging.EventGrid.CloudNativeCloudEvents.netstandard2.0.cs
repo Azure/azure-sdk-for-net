@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.CloudNative.CloudEvents.EventGrid
+namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
 {
     public static partial class EventGridPublisherClientExtensions
     {
