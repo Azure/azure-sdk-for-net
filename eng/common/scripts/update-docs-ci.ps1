@@ -50,7 +50,7 @@ foreach ($config in $targets) {
   if ($config.mode -eq "Preview") { $includePreview = $true } else { $includePreview = $false }
   $pkgsFiltered = $pkgs | ? { $_.IsPrerelease -eq $includePreview}
 
-  if ($pkgs) {
+  if ($pkgsFiltered) {
     Write-Host "Given the visible artifacts, CI updates against $($config.path_to_config) will be processed for the following packages."
     Write-Host ($pkgsFiltered | % { $_.PackageId + " " + $_.PackageVersion })
 

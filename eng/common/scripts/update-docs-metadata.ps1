@@ -10,8 +10,8 @@ param (
 
   # arguments necessary to power the docs release
   $DocRepoLocation, # the location on disk where we have cloned the documentation repository
-  $Language, # EG: js, java, dotnet. Used in language for the embedded readme.
-  $DocRepoContentLocation = "docs-ref-services/" # within the doc repo, where does our readme go?
+  $Language # EG: js, java, dotnet. Used in language for the embedded readme.
+  $Configs
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -80,41 +80,53 @@ $pkgs = VerifyPackages -artifactLocation $ArtifactLocation `
   -releaseSha $ReleaseSHA `
   -continueOnError $True
 
-if ($pkgs) {
-  Write-Host "Given the visible artifacts, readmes will be copied for the following packages"
-  Write-Host ($pkgs | % { $_.PackageId })
+$targets = ($Configs | ConvertFrom-Json).targets
 
-  foreach ($packageInfo in $pkgs) {
-    # sync the doc repo
-    $semVer = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.PackageVersion)
-    $rdSuffix = ""
-    if ($semVer.IsPreRelease) {
-      $rdSuffix = "-pre"
-    }
+foreach ($config in $targets) {
+  if ($config.mode -eq "Preview") { $includePreview = $true } else { $includePreview = $false }
+  $pkgsFiltered = $pkgs | ? { $_.IsPrerelease -eq $includePreview}
 
-    $readmeName = "$($packageInfo.PackageId.Replace('azure-','').Replace('Azure.', '').Replace('@azure/', '').ToLower())-readme$rdSuffix.md"
-    $readmeLocation = Join-Path $DocRepoLocation $DocRepoContentLocation $readmeName
-
-    if ($packageInfo.ReadmeContent) {
-      $adjustedContent = GetAdjustedReadmeContent -pkgInfo $packageInfo
-    }
-
-    if ($adjustedContent) {
-      try {
-        Push-Location $DocRepoLocation
-        Set-Content -Path $readmeLocation -Value $adjustedContent -Force
-
-        Write-Host "Updated readme for $readmeName."
-      } catch {
-        Write-Host $_
-      } finally {
-        Pop-Location
+  if ($pkgsFiltered) {
+    Write-Host "Given the visible artifacts, Readme updates against $($config.path_to_config) will be processed for the following packages."
+    Write-Host ($pkgsFiltered | % { $_.PackageId + " " + $_.PackageVersion })
+  
+    foreach ($packageInfo in $pkgsFiltered) {
+      # sync the doc repo
+      $semVer = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.PackageVersion)
+      $rdSuffix = ""
+      if ($semVer.IsPreRelease) {
+        $rdSuffix = "-pre"
       }
-    } else {
-      Write-Host "Unable to parse a header out of the readmecontent for PackageId $($packageInfo.PackageId)"
+  
+      $readmeName = "$($packageInfo.PackageId.Replace('azure-','').Replace('Azure.', '').Replace('@azure/', '').ToLower())-readme$rdSuffix.md"
+      $readmeLocation = Join-Path $CIRepository $config.metadata_folder
+  
+      if ($packageInfo.ReadmeContent) {
+        $adjustedContent = GetAdjustedReadmeContent -pkgInfo $packageInfo
+      }
+  
+      if ($adjustedContent) {
+        try {
+          Push-Location $CIRepository
+          Set-Content -Path $readmeLocation -Value $adjustedContent -Force
+  
+          Write-Host "Updated readme for $readmeName."
+        } catch {
+          Write-Host $_
+        } finally {
+          Pop-Location
+        }
+      } else {
+        Write-Host "Unable to parse a header out of the readmecontent for PackageId $($packageInfo.PackageId)"
+      }
     }
   }
+  else {
+    Write-Host "No readmes discovered for doc release under folder $ArtifactLocation."
+  }
+
+
 }
-else {
-  Write-Host "No readmes discovered for doc release under folder $ArtifactLocation."
-}
+
+
+
