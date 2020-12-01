@@ -5,7 +5,7 @@ To get started, you'll need a URI to an Azure Communication Services. See the [R
 
 ## Creating a PhoneNumberAdministrationClient
 
-To create a new `PhoneNumberAdministrationClient` you need a connection string to the Azure Communication Services resource that you can get from the Azure Portal once you create a relevant resource.
+To create a new `PhoneNumberAdministrationClient` you need a connection string to the Azure Communication Services resource that you can get from the Azure Portal once you have created the resource.
 
 You can set `connectionString` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -17,7 +17,7 @@ var client = new PhoneNumberAdministrationClient(connectionString);
 
 ## Listing all supported countries
 
-In order to acquire a phone number you will need to know if Azure Communication Services are available in particular country. You can do that by retrieving a list of supported countries.
+In order to acquire a phone number you will need to know if Azure Communication Services are available in a particular country. You can find out by retrieving a list of supported countries.
 
 ```C# Snippet:GetAllSupportedCountries
 var supportedCountries = client.GetAllSupportedCountries(locale);
@@ -42,7 +42,7 @@ foreach (var phonePlanGroup in phonePlanGroups)
 
 ## Listing phone plans
 
-Unlike Toll-Free phone plans, area codes for Geographic Phone Plans are empty. Area codes are found in the Area Codes API.
+Unlike Toll-Free phone plans, area codes for Geographic phone plans are empty. Area codes are found in the Area Codes API.
 
 ```C# Snippet:GetPhonePlans
 var phonePlans = client.GetPhonePlans(countryCode, phonePlanGroupId, locale);
@@ -76,7 +76,7 @@ PrintLocationOption(locationOptionsResponse.Value.LocationOptions);
 
 ## Get area codes
 
-Fetching area codes for geographic phone plans will require the the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetPhonePlanLocationOptions.
+Fetching area codes for geographic phone plans will require the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetPhonePlanLocationOptions.
 
 ```C# Snippet:GeographicalAreaCodes
 var locationOptionsResponse = client.GetPhonePlanLocationOptions(countryCode, geographicPhonePlanGroupId, geographicPhonePlanId);
@@ -104,9 +104,9 @@ foreach (var areaCode in areaCodes.Value.PrimaryAreaCodes)
 }
 ```
 
-Area codes for toll free phone plans can be found in the plan.
+Area codes for toll-free phone plans can be found in the plan.
 
-```C# Snippet:TollFreePlanAreCodes
+```C# Snippet:TollFreePlanAreaCodes
 var phonePlans = client.GetPhonePlans(countryCode, tollFreePhonePlanGroupId, locale);
 var tollFreePhonePlan = phonePlans.First();
 
@@ -118,7 +118,7 @@ foreach (var areaCode in tollFreePhonePlan.AreaCodes)
 
 ## Reserve phone numbers
 
-Phone numbers need to be reserved for purchase. Reservation is a long running operation that can be started by CreateReservationOptions function that returns an PhoneNumberReservationOperation object. PhoneNumberReservationOperation can be used to update status of the operation and to check for completeness.
+Phone numbers need to be reserved before they can be purchased. Reservation is a long running operation that can be started by `CreateReservationOptions` function that returns an `PhoneNumberReservationOperation` object. `PhoneNumberReservationOperation` can be used to update status of the operation and to check for completeness.
 
 ```C# Snippet:ReservePhoneNumbers
 var reservationName = "My reservation";
@@ -128,21 +128,17 @@ reservationOptions.Quantity = 1;
 
 var reservationOperation = client.StartReservation(reservationOptions);
 
-while (true)
+while (!reservationOperation.HasCompleted)
 {
-    reservationOperation.UpdateStatus();
-    if (reservationOperation.HasCompleted)
-    {
-        break;
-    }
+    Thread.Sleep(2000);
 
-    Thread.Sleep(1000);
+    reservationOperation.UpdateStatus();
 }
 ```
 
 ## Persist reserve phone numbers operation
 
-You can persist phone number reservation operation Id so that you can get back later to check operation status.
+You can persist the operation Id of the phone number reservation so that you can come back and check the operation status later.
 
 ```C# Snippet:PersistReservePhoneNumbersOperation
 var reservationId = reservationOperation.Id;
@@ -151,38 +147,32 @@ var reservationId = reservationOperation.Id;
 
 var newPhoneNumberReservationOperation = new PhoneNumberReservationOperation(client, reservationId);
 
-while (true)
+while (!newPhoneNumberReservationOperation.HasCompleted)
 {
-    newPhoneNumberReservationOperation.UpdateStatus();
-    if (newPhoneNumberReservationOperation.HasCompleted)
-    {
-        break;
-    }
+    Thread.Sleep(2000);
 
-    Thread.Sleep(1000);
+    newPhoneNumberReservationOperation.UpdateStatus();
 }
 ```
 
 ## Purchase phone numbers
 
-Phone numbers can be acquired by purchasing reservation.
+Phone numbers can be acquired through purchasing a reservation.
 
 ```C# Snippet:StartPurchaseReservation
 var reservationPurchaseOperation = client.StartPurchaseReservation(reservationId);
 
-while (true)
+while (!reservationPurchaseOperation.HasCompleted)
 {
-    reservationPurchaseOperation.UpdateStatus();
-    if (reservationPurchaseOperation.HasCompleted)
-    {
-        break;
-    }
+    Thread.Sleep(2000);
 
-    Thread.Sleep(1000);
+    reservationPurchaseOperation.UpdateStatus();
 }
 ```
 
 ## Listing acquired phone numbers
+
+You can list all phone numbers that have been acquired for your resource.
 
 ```C# Snippet:ListAcquiredPhoneNumbers
 var acquiredPhoneNumbers = client.GetAllPhoneNumbers(locale);
@@ -201,14 +191,10 @@ If you no longer need a phone number you can release it.
 var acquiredPhoneNumber = "<acquired_phone_number>";
 var phoneNumberReleaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
 
-while (true)
+while (!phoneNumberReleaseOperation.HasCompleted)
 {
-    phoneNumberReleaseOperation.UpdateStatus();
-    if (phoneNumberReleaseOperation.HasCompleted)
-    {
-        break;
-    }
+    Thread.Sleep(2000);
 
-    Thread.Sleep(1000);
+    phoneNumberReleaseOperation.UpdateStatus();
 }
 ```

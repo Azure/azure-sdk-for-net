@@ -67,17 +67,17 @@ namespace Azure.Communication.Administration.Samples
             var reservationOptions = new CreateReservationOptions(reservationName, reservationDescription, new[] { phonePlanId }, areaCode);
             reservationOptions.Quantity = 1;
 
-            var reservationOperation = await client.StartReservationAsync(reservationOptions);
-            await reservationOperation.WaitForCompletionAsync();
+            var reserveOperation = await client.StartReservationAsync(reservationOptions);
+            await reserveOperation.WaitForCompletionAsync();
             #endregion Snippet:ReservePhoneNumbersAsync
 
             #region Snippet:PersistReservePhoneNumbersOperationAsync
-            var reservationId = reservationOperation.Id;
+            var reservationId = reserveOperation.Id;
 
             // persist reservationOperationId and then continue with new operation
 
-            var newPhoneNumberReservationOperation = new PhoneNumberReservationOperation(client, reservationId);
-            await newPhoneNumberReservationOperation.WaitForCompletionAsync();
+            var newReserveOperation = new PhoneNumberReservationOperation(client, reservationId);
+            await newReserveOperation.WaitForCompletionAsync();
             #endregion Snippet:PersistReservePhoneNumbersOperationAsync
 
             #region Snippet:StartPurchaseReservationAsync
@@ -94,7 +94,7 @@ namespace Azure.Communication.Administration.Samples
             }
             #endregion Snippet:ListAcquiredPhoneNumbersAsync
 
-            var acquiredPhoneNumber = reservationOperation.Value.PhoneNumbers.Single();
+            var acquiredPhoneNumber = reserveOperation.Value.PhoneNumbers.Single();
             acquiredPhoneNumbers = client.GetAllPhoneNumbersAsync(locale);
             var beforeReleaseNumberCount = (await acquiredPhoneNumbers.ToEnumerableAsync()).Count;
 
@@ -161,15 +161,11 @@ namespace Azure.Communication.Administration.Samples
 
             var reservationOperation = client.StartReservation(reservationOptions);
 
-            while (true)
+            while (!reservationOperation.HasCompleted)
             {
-                reservationOperation.UpdateStatus();
-                if (reservationOperation.HasCompleted)
-                {
-                    break;
-                }
+                Thread.Sleep(2000);
 
-                Thread.Sleep(1000);
+                reservationOperation.UpdateStatus();
             }
 
             #endregion Snippet:ReservePhoneNumbers
@@ -181,30 +177,22 @@ namespace Azure.Communication.Administration.Samples
 
             var newPhoneNumberReservationOperation = new PhoneNumberReservationOperation(client, reservationId);
 
-            while (true)
+            while (!newPhoneNumberReservationOperation.HasCompleted)
             {
-                newPhoneNumberReservationOperation.UpdateStatus();
-                if (newPhoneNumberReservationOperation.HasCompleted)
-                {
-                    break;
-                }
+                Thread.Sleep(2000);
 
-                Thread.Sleep(1000);
+                newPhoneNumberReservationOperation.UpdateStatus();
             }
             #endregion Snippet:PersistReservePhoneNumbersOperation
 
             #region Snippet:StartPurchaseReservation
             var reservationPurchaseOperation = client.StartPurchaseReservation(reservationId);
 
-            while (true)
+            while (!reservationPurchaseOperation.HasCompleted)
             {
-                reservationPurchaseOperation.UpdateStatus();
-                if (reservationPurchaseOperation.HasCompleted)
-                {
-                    break;
-                }
+                Thread.Sleep(2000);
 
-                Thread.Sleep(1000);
+                reservationPurchaseOperation.UpdateStatus();
             }
             #endregion Snippet:StartPurchaseReservation
 
@@ -225,15 +213,11 @@ namespace Azure.Communication.Administration.Samples
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
             var phoneNumberReleaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
 
-            while (true)
+            while (!phoneNumberReleaseOperation.HasCompleted)
             {
-                phoneNumberReleaseOperation.UpdateStatus();
-                if (phoneNumberReleaseOperation.HasCompleted)
-                {
-                    break;
-                }
+                Thread.Sleep(2000);
 
-                Thread.Sleep(1000);
+                phoneNumberReleaseOperation.UpdateStatus();
             }
             #endregion Snippet:ReleasePhoneNumbers
 
@@ -408,7 +392,8 @@ namespace Azure.Communication.Administration.Samples
             var locationOptionsResponse = await client.GetPhonePlanLocationOptionsAsync(countryCode, geographicPhonePlanGroupId, geographicPhonePlanId);
             var state = locationOptionsResponse.Value.LocationOptions.Options.First();
 
-            var locationOptionsQueries = new List<LocationOptionsQuery>{
+            var locationOptionsQueries = new List<LocationOptionsQuery>
+            {
                 new LocationOptionsQuery
                 {
                     LabelId = "state",
@@ -432,7 +417,7 @@ namespace Azure.Communication.Administration.Samples
 
         [Test]
         [SyncOnly]
-        public void TollFreePlanAreCodes()
+        public void TollFreePlanAreaCodes()
         {
             var client = CreateClient(false);
             const string locale = "en-US";
@@ -441,7 +426,7 @@ namespace Azure.Communication.Administration.Samples
             var phonePlanGroups = client.GetPhonePlanGroups(countryCode, locale);
             var tollFreePhonePlanGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.TollFree);
             var tollFreePhonePlanGroupId = tollFreePhonePlanGroup.PhonePlanGroupId;
-            #region Snippet:TollFreePlanAreCodes
+            #region Snippet:TollFreePlanAreaCodes
 
             var phonePlans = client.GetPhonePlans(countryCode, tollFreePhonePlanGroupId, locale);
             var tollFreePhonePlan = phonePlans.First();
@@ -451,12 +436,12 @@ namespace Azure.Communication.Administration.Samples
                 Console.WriteLine($"Area code: {areaCode}");
             }
 
-            #endregion Snippet:TollFreePlanAreCodes
+            #endregion Snippet:TollFreePlanAreaCodes
         }
 
         [Test]
         [AsyncOnly]
-        public async Task TollFreePlanAreCodesAsync()
+        public async Task TollFreePlanAreaCodesAsync()
         {
             var client = CreateClient(false);
             const string locale = "en-US";
@@ -465,7 +450,7 @@ namespace Azure.Communication.Administration.Samples
             var phonePlanGroups = client.GetPhonePlanGroups(countryCode, locale);
             var tollFreePhonePlanGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.TollFree);
 
-            #region Snippet:TollFreePlanAreCodesAsync
+            #region Snippet:TollFreePlanAreaCodesAsync
 
             var phonePlans = client.GetPhonePlansAsync(countryCode, tollFreePhonePlanGroup.PhonePlanGroupId, locale);
             var tollFreePhonePlan = (await phonePlans.ToEnumerableAsync()).First();
@@ -475,7 +460,7 @@ namespace Azure.Communication.Administration.Samples
                 Console.WriteLine($"Area code: {areaCode}");
             }
 
-            #endregion Snippet:TollFreePlanAreCodesAsync
+            #endregion Snippet:TollFreePlanAreaCodesAsync
         }
     }
 }

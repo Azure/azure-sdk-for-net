@@ -5,7 +5,7 @@ To get started, you'll need a URI to an Azure Communication Services. See the [R
 
 ## Creating a PhoneNumberAdministrationClient
 
-To create a new `PhoneNumberAdministrationClient` you need a connection string to the Azure Communication Services resource that you can get from the Azure Portal once you create a relevant resource.
+To create a new `PhoneNumberAdministrationClient` you need a connection string to the Azure Communication Services resource that you can get from the Azure Portal once you have created the resource.
 
 You can set `connectionString` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -17,7 +17,7 @@ var client = new PhoneNumberAdministrationClient(connectionString);
 
 ## Listing all supported countries
 
-In order to acquire a phone number you will need to know if Azure Communication Services are available in particular country. You can do that by retrieving a list of supported countries.
+In order to acquire a phone number you will need to know if Azure Communication Services are available in a particular country. You can find out by retrieving a list of supported countries.
 
 ```C# Snippet:GetAllSupportedCountriesAsync
 var supportedCountries = client.GetAllSupportedCountriesAsync(locale);
@@ -42,7 +42,7 @@ await foreach (var phonePlanGroup in phonePlanGroups)
 
 ## Listing phone plans
 
-Unlike Toll-Free phone plans, area codes for Geographic Phone Plans are empty. Area codes are found in the Area Codes API.
+Unlike Toll-Free phone plans, area codes for Geographic phone plans are empty. Area codes are found in the Area Codes API.
 
 ```C# Snippet:GetPhonePlansAsync
 var phonePlans = client.GetPhonePlansAsync(countryCode, phonePlanGroupId, locale);
@@ -76,13 +76,14 @@ printLocationOption(locationOptionsResponse.Value.LocationOptions);
 
 ## Get area codes
 
-Fetching area codes for geographic phone plans will require the the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetPhonePlanLocationOptions.
+Fetching area codes for geographic phone plans will require the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetPhonePlanLocationOptions.
 
 ```C# Snippet:GeographicalAreaCodesAsync
 var locationOptionsResponse = await client.GetPhonePlanLocationOptionsAsync(countryCode, geographicPhonePlanGroupId, geographicPhonePlanId);
 var state = locationOptionsResponse.Value.LocationOptions.Options.First();
 
-var locationOptionsQueries = new List<LocationOptionsQuery>{
+var locationOptionsQueries = new List<LocationOptionsQuery>
+{
     new LocationOptionsQuery
     {
         LabelId = "state",
@@ -103,9 +104,9 @@ foreach (var areaCode in areaCodes.Value.PrimaryAreaCodes)
 }
 ```
 
-Area codes for toll free phone plans can be found in the plan.
+Area codes for toll-free phone plans can be found in the plan.
 
-```C# Snippet:TollFreePlanAreCodesAsync
+```C# Snippet:TollFreePlanAreaCodesAsync
 var phonePlans = client.GetPhonePlansAsync(countryCode, tollFreePhonePlanGroup.PhonePlanGroupId, locale);
 var tollFreePhonePlan = (await phonePlans.ToEnumerableAsync()).First();
 
@@ -117,7 +118,7 @@ foreach (var areaCode in tollFreePhonePlan.AreaCodes)
 
 ## Reserve phone numbers
 
-Phone numbers need to be reserved for purchase. Reservation is a long running operation that can be started by CreateReservationOptions function that returns an PhoneNumberReservationOperation object. PhoneNumberReservationOperation can be used to update status of the operation and to check for completeness.
+Phone numbers need to be reserved before they can be purchased. Reservation is a long running operation that can be started by `CreateReservationOptions` function that returns an `PhoneNumberReservationOperation` object. `PhoneNumberReservationOperation` can be used to update status of the operation and to check for completeness.
 
 ```C# Snippet:ReservePhoneNumbersAsync
 var reservationName = "My reservation";
@@ -125,26 +126,26 @@ var reservationDescription = "reservation description";
 var reservationOptions = new CreateReservationOptions(reservationName, reservationDescription, new[] { phonePlanId }, areaCode);
 reservationOptions.Quantity = 1;
 
-var reservationOperation = await client.StartReservationAsync(reservationOptions);
-await reservationOperation.WaitForCompletionAsync();
+var reserveOperation = await client.StartReservationAsync(reservationOptions);
+await reserveOperation.WaitForCompletionAsync();
 ```
 
 ## Persist reserve phone numbers operation
 
-You can persist phone number reservation operation Id so that you can get back later to check operation status.
+You can persist the operation Id of the phone number reservation so that you can come back and check the operation status later.
 
 ```C# Snippet:PersistReservePhoneNumbersOperationAsync
-var reservationId = reservationOperation.Id;
+var reservationId = reserveOperation.Id;
 
 // persist reservationOperationId and then continue with new operation
 
-var newPhoneNumberReservationOperation = new PhoneNumberReservationOperation(client, reservationId);
-await newPhoneNumberReservationOperation.WaitForCompletionAsync();
+var newReserveOperation = new PhoneNumberReservationOperation(client, reservationId);
+await newReserveOperation.WaitForCompletionAsync();
 ```
 
 ## Purchase phone numbers
 
-Phone numbers can be acquired by purchasing reservation.
+Phone numbers can be acquired through purchasing a reservation.
 
 ```C# Snippet:StartPurchaseReservationAsync
 var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId);
@@ -152,6 +153,8 @@ await reservationPurchaseOperation.WaitForCompletionAsync();
 ```
 
 ## Listing acquired phone numbers
+
+You can list all phone numbers that have been acquired for your resource.
 
 ```C# Snippet:ListAcquiredPhoneNumbersAsync
 var acquiredPhoneNumbers = client.GetAllPhoneNumbersAsync(locale);
