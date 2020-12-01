@@ -97,11 +97,6 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
-        /// Gets the IRedisEnterpriseDatabaseOperations.
-        /// </summary>
-        public virtual IRedisEnterpriseDatabaseOperations RedisEnterpriseDatabase { get; private set; }
-
-        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
@@ -356,7 +351,6 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             Get = new GetOperations(this);
             RedisEnterprise = new RedisEnterpriseOperations(this);
             Databases = new DatabasesOperations(this);
-            RedisEnterpriseDatabase = new RedisEnterpriseDatabaseOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
