@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task FormTrainingClientCanAuthenticateWithTokenCredential()
+        public async Task StartTrainingCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormTrainingClient(useTokenCredential: true);
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
@@ -133,9 +133,11 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task StartCreateComposedModel()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task StartCreateComposedModel(bool useTokenCredential)
         {
-            var client = CreateFormTrainingClient();
+            var client = CreateFormTrainingClient(useTokenCredential);
 
             await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
             await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
@@ -289,11 +291,13 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task TrainingOps(bool labeled)
+        [TestCase(true, true)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        public async Task TrainingOps(bool labeled, bool useTokenCredential)
         {
-            var client = CreateFormTrainingClient();
+            var client = CreateFormTrainingClient(useTokenCredential);
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
@@ -371,10 +375,12 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task CopyModel()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CopyModel(bool useTokenCredential)
         {
-            var sourceClient = CreateFormTrainingClient();
-            var targetClient = CreateFormTrainingClient();
+            var sourceClient = CreateFormTrainingClient(useTokenCredential);
+            var targetClient = CreateFormTrainingClient(useTokenCredential);
             var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
@@ -424,10 +430,12 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task CopyComposedModel()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CopyComposedModel(bool useTokenCredential)
         {
-            var sourceClient = CreateFormTrainingClient();
-            var targetClient = CreateFormTrainingClient();
+            var sourceClient = CreateFormTrainingClient(useTokenCredential);
+            var targetClient = CreateFormTrainingClient(useTokenCredential);
             var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
