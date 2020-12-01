@@ -10,31 +10,31 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class BabylonConfiguration : IUtf8JsonSerializable
+    public partial class PurviewConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BabylonResourceId))
+            if (Optional.IsDefined(PurviewResourceId))
             {
-                writer.WritePropertyName("babylonResourceId");
-                writer.WriteStringValue(BabylonResourceId);
+                writer.WritePropertyName("purviewResourceId");
+                writer.WriteStringValue(PurviewResourceId);
             }
             writer.WriteEndObject();
         }
 
-        internal static BabylonConfiguration DeserializeBabylonConfiguration(JsonElement element)
+        internal static PurviewConfiguration DeserializePurviewConfiguration(JsonElement element)
         {
-            Optional<string> babylonResourceId = default;
+            Optional<string> purviewResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("babylonResourceId"))
+                if (property.NameEquals("purviewResourceId"))
                 {
-                    babylonResourceId = property.Value.GetString();
+                    purviewResourceId = property.Value.GetString();
                     continue;
                 }
             }
-            return new BabylonConfiguration(babylonResourceId.Value);
+            return new PurviewConfiguration(purviewResourceId.Value);
         }
     }
 }
