@@ -12,7 +12,7 @@ namespace Azure.Tables.Tests
 {
     public class TableConnectionStringTests
     {
-        private const string AccountName = "accountName";
+        private const string AccountName = "accountname";
         private const string SasToken = "sv=2019-12-12&ss=t&srt=s&sp=rwdlacu&se=2020-08-28T23:45:30Z&st=2020-08-26T15:45:30Z&spr=https&sig=mySig";
         private const string Secret = "Kg==";
         private readonly TableSharedKeyCredential _expectedCred = new TableSharedKeyCredential(AccountName, Secret);
@@ -106,21 +106,31 @@ namespace Azure.Tables.Tests
             Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), Is.False, "Parsing should not have been successful");
         }
 
-        public static IEnumerable<object[]> ValidPrimaryEndpointUris()
+        [Test]
+        public void GetSecondaryUriFromPrimaryCosmos()
         {
-            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/") };
-            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/") };
+            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri($"https://{AccountName}.table.cosmos.azure.com:443/"));
+
+            Assert.That(secondaryEndpoint, Is.Not.Null.Or.Empty, "Secondary endpoint should not be null or empty");
+            Assert.That(secondaryEndpoint.AbsoluteUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com:443/").AbsoluteUri));
         }
 
         [Test]
-        [TestCaseSource(nameof(ValidPrimaryEndpointUris))]
-        public void GetSecondaryUriFromPrimary(Uri endpoint)
+        public void GetSecondaryUriFromPrimaryStorage()
         {
-            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint);
+            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri($"https://{AccountName}.table.core.windows.net/"));
 
             Assert.That(secondaryEndpoint, Is.Not.Null.Or.Empty, "Secondary endpoint should not be null or empty");
-            Assert.That(secondaryEndpoint.AbsoluteUri.IndexOf($"{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}", StringComparison.OrdinalIgnoreCase), Is.GreaterThanOrEqualTo(0), $"Secondary endpoint should contain '{AccountName}-secondary', but was {secondaryEndpoint.AbsoluteUri}");
+            Assert.That(secondaryEndpoint.AbsoluteUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")));
+        }
+
+        [Test]
+        public void GetSecondaryUriFromPrimaryAzurite()
+        {
+            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri($"https://127.0.0.1:10002/{AccountName}/"));
+
+            Assert.That(secondaryEndpoint, Is.Not.Null.Or.Empty, "Secondary endpoint should not be null or empty");
+            Assert.That(secondaryEndpoint.AbsoluteUri, Is.EqualTo(new Uri($"https://127.0.0.1:10002/{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}/")));
         }
 
         private string GetExpectedHash(TableSharedKeyCredential cred) => cred.ComputeHMACSHA256("message");
