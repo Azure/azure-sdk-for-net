@@ -2,10 +2,10 @@
 param(
   [Parameter()]
   [ValidateNotNullOrEmpty()]
-  [string] $InputJsonPath = $GenerateInput,
+  [string] $InputJsonPath,
 
   [Parameter()]
-  [string] $OutputJsonPath = $GenerateOutput,
+  [string] $OutputJsonPath,
 
   [Parameter()]
   [string] $RepoRoot = "${PSScriptRoot}/../.."
