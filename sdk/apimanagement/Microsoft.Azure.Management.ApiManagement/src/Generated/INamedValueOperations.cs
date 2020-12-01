@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface INamedValueOperations
     {
         /// <summary>
-        /// Lists a collection of NamedValues defined within a service
+        /// Lists a collection of named values defined within a service
         /// instance.
         /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
         /// </summary>
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<IPage<NamedValueContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<NamedValueContract> odataQuery = default(ODataQuery<NamedValueContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the entity state (Etag) version of the NamedValue specified by
-        /// its identifier.
+        /// Gets the entity state (Etag) version of the named value specified
+        /// by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationHeaderResponse<NamedValueGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the details of the NamedValue specified by its identifier.
+        /// Gets the details of the named value specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<NamedValueContract,NamedValueGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a NamedValue.
+        /// Creates or updates named value.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<NamedValueContract,NamedValueCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, NamedValueCreateContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the specific NamedValue.
+        /// Updates the specific named value.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<NamedValueContract,NamedValueUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, NamedValueUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes specific NamedValue from the API Management service
+        /// Deletes specific named value from the API Management service
         /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the secret value of the NamedValue.
+        /// Gets the secret of the named value specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -237,9 +237,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PropertyValueContract>> ListValueWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NamedValueSecretContract,NamedValueListValueHeaders>> ListValueWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a NamedValue.
+        /// Creates or updates named value.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<NamedValueContract,NamedValueCreateOrUpdateHeaders>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, NamedValueCreateContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the specific NamedValue.
+        /// Updates the specific named value.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<NamedValueContract,NamedValueUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, NamedValueUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists a collection of NamedValues defined within a service
+        /// Lists a collection of named values defined within a service
         /// instance.
         /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
         /// </summary>
