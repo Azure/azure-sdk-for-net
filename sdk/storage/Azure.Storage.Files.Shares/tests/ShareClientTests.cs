@@ -2096,6 +2096,51 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        public void CanGenerateSas_WithSnapshot_False()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var shareEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            // Create blob
+            ShareClient share = new ShareClient(
+                shareEndpoint,
+                GetOptions());
+            Assert.IsFalse(share.CanGenerateSasUri);
+
+            // Act
+            string snapshot = "2020-04-17T20:37:16.5129130Z";
+            ShareClient snapshotShare = share.WithSnapshot(snapshot);
+
+            // Assert
+            Assert.IsFalse(snapshotShare.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithSnapshot_True()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Create blob
+            ShareClient share = new ShareClient(
+                connectionString,
+                GetNewShareName());
+            Assert.IsTrue(share.CanGenerateSasUri);
+
+            // Act
+            string snapshot = "2020-04-17T20:37:16.5129130Z";
+            ShareClient snapshotShare = share.WithSnapshot(snapshot);
+
+            // Assert
+            Assert.IsTrue(snapshotShare.CanGenerateSasUri);
+        }
+
+        [Test]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
