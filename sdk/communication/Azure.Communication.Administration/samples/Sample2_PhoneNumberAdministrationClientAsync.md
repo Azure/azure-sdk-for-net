@@ -59,7 +59,7 @@ For Geographic phone plans, you can query the available geographic locations. Th
 ```C# Snippet:GetPhonePlanLocationOptionsAsync
 var locationOptionsResponse = await client.GetPhonePlanLocationOptionsAsync(countryCode, geographicPhonePlanGroupId, phonePlanId);
 
-void printLocationOption(LocationOptions locationOptions)
+void PrintLocationOption(LocationOptions locationOptions)
 {
     Console.WriteLine($"LabelId: {locationOptions.LabelId}, LabelName: {locationOptions.LabelName}");
 
@@ -68,15 +68,15 @@ void printLocationOption(LocationOptions locationOptions)
         Console.WriteLine($"Name: {locationOption.Name}, Value: {locationOption.Value}");
 
         foreach (var subLocationOption in locationOption.LocationOptions)
-            printLocationOption(subLocationOption);
+            PrintLocationOption(subLocationOption);
     }
 }
-printLocationOption(locationOptionsResponse.Value.LocationOptions);
+PrintLocationOption(locationOptionsResponse.Value.LocationOptions);
 ```
 
 ## Get area codes
 
-Fetching area codes for geographic phone plans will require the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetPhonePlanLocationOptions.
+Fetching area codes for geographic phone plans will require the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the `GetPhonePlanLocationOptions`.
 
 ```C# Snippet:GeographicalAreaCodesAsync
 var locationOptionsResponse = await client.GetPhonePlanLocationOptionsAsync(countryCode, geographicPhonePlanGroupId, geographicPhonePlanId);
@@ -137,10 +137,10 @@ You can persist the operation Id of the phone number reservation so that you can
 ```C# Snippet:PersistReservePhoneNumbersOperationAsync
 var reservationId = reserveOperation.Id;
 
-// persist reservationOperationId and then continue with new operation
+// persist reservationId and then continue with a new operation
 
-var newReserveOperation = new PhoneNumberReservationOperation(client, reservationId);
-await newReserveOperation.WaitForCompletionAsync();
+var reserveOperation = new PhoneNumberReservationOperation(client, reservationId);
+await reserveOperation.WaitForCompletionAsync();
 ```
 
 ## Purchase phone numbers
@@ -148,8 +148,8 @@ await newReserveOperation.WaitForCompletionAsync();
 Phone numbers can be acquired through purchasing a reservation.
 
 ```C# Snippet:StartPurchaseReservationAsync
-var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId);
-await reservationPurchaseOperation.WaitForCompletionAsync();
+var purchaseOperation = await client.StartPurchaseReservationAsync(reservationId);
+await purchaseOperation.WaitForCompletionAsync();
 ```
 
 ## Listing acquired phone numbers
@@ -171,6 +171,6 @@ If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbersAsync
 var acquiredPhoneNumber = "<acquired_phone_number>";
-var phoneNumberReleaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
-await phoneNumberReleaseOperation.WaitForCompletionAsync();
+var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
+await releaseOperation.WaitForCompletionAsync();
 ```

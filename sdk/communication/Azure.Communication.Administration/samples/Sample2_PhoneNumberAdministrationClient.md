@@ -76,7 +76,7 @@ PrintLocationOption(locationOptionsResponse.Value.LocationOptions);
 
 ## Get area codes
 
-Fetching area codes for geographic phone plans will require the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetPhonePlanLocationOptions.
+Fetching area codes for geographic phone plans will require the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the `GetPhonePlanLocationOptions`.
 
 ```C# Snippet:GeographicalAreaCodes
 var locationOptionsResponse = client.GetPhonePlanLocationOptions(countryCode, geographicPhonePlanGroupId, geographicPhonePlanId);
@@ -126,13 +126,13 @@ var reservationDescription = "reservation description";
 var reservationOptions = new CreateReservationOptions(reservationName, reservationDescription, new[] { phonePlanId }, areaCode);
 reservationOptions.Quantity = 1;
 
-var reservationOperation = client.StartReservation(reservationOptions);
+var reserveOperation = client.StartReservation(reservationOptions);
 
-while (!reservationOperation.HasCompleted)
+while (!reserveOperation.HasCompleted)
 {
     Thread.Sleep(2000);
 
-    reservationOperation.UpdateStatus();
+    reserveOperation.UpdateStatus();
 }
 ```
 
@@ -141,17 +141,17 @@ while (!reservationOperation.HasCompleted)
 You can persist the operation Id of the phone number reservation so that you can come back and check the operation status later.
 
 ```C# Snippet:PersistReservePhoneNumbersOperation
-var reservationId = reservationOperation.Id;
+var reservationId = reserveOperation.Id;
 
-// persist reservationOperationId and then continue with new operation
+// persist reservationId and then continue with a new operation
 
-var newPhoneNumberReservationOperation = new PhoneNumberReservationOperation(client, reservationId);
+var reserveOperation = new PhoneNumberReservationOperation(client, reservationId);
 
-while (!newPhoneNumberReservationOperation.HasCompleted)
+while (!reserveOperation.HasCompleted)
 {
     Thread.Sleep(2000);
 
-    newPhoneNumberReservationOperation.UpdateStatus();
+    reserveOperation.UpdateStatus();
 }
 ```
 
@@ -160,13 +160,13 @@ while (!newPhoneNumberReservationOperation.HasCompleted)
 Phone numbers can be acquired through purchasing a reservation.
 
 ```C# Snippet:StartPurchaseReservation
-var reservationPurchaseOperation = client.StartPurchaseReservation(reservationId);
+var purchaseOperation = client.StartPurchaseReservation(reservationId);
 
-while (!reservationPurchaseOperation.HasCompleted)
+while (!purchaseOperation.HasCompleted)
 {
     Thread.Sleep(2000);
 
-    reservationPurchaseOperation.UpdateStatus();
+    purchaseOperation.UpdateStatus();
 }
 ```
 
@@ -189,12 +189,12 @@ If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbers
 var acquiredPhoneNumber = "<acquired_phone_number>";
-var phoneNumberReleaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
+var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
 
-while (!phoneNumberReleaseOperation.HasCompleted)
+while (!releaseOperation.HasCompleted)
 {
     Thread.Sleep(2000);
 
-    phoneNumberReleaseOperation.UpdateStatus();
+    releaseOperation.UpdateStatus();
 }
 ```

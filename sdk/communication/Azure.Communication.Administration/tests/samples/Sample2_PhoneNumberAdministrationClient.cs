@@ -71,18 +71,20 @@ namespace Azure.Communication.Administration.Samples
             await reserveOperation.WaitForCompletionAsync();
             #endregion Snippet:ReservePhoneNumbersAsync
 
+            reserveOperation = new PhoneNumberReservationOperation(client, reserveOperation.Id);
+
             #region Snippet:PersistReservePhoneNumbersOperationAsync
             var reservationId = reserveOperation.Id;
 
-            // persist reservationOperationId and then continue with new operation
+            // persist reservationId and then continue with a new operation
 
-            var newReserveOperation = new PhoneNumberReservationOperation(client, reservationId);
-            await newReserveOperation.WaitForCompletionAsync();
+            //@@var reserveOperation = new PhoneNumberReservationOperation(client, reservationId);
+            await reserveOperation.WaitForCompletionAsync();
             #endregion Snippet:PersistReservePhoneNumbersOperationAsync
 
             #region Snippet:StartPurchaseReservationAsync
-            var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId);
-            await reservationPurchaseOperation.WaitForCompletionAsync();
+            var purchaseOperation = await client.StartPurchaseReservationAsync(reservationId);
+            await purchaseOperation.WaitForCompletionAsync();
             #endregion Snippet:StartPurchaseReservationAsync
 
             #region Snippet:ListAcquiredPhoneNumbersAsync
@@ -100,8 +102,8 @@ namespace Azure.Communication.Administration.Samples
 
             #region Snippet:ReleasePhoneNumbersAsync
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
-            var phoneNumberReleaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
-            await phoneNumberReleaseOperation.WaitForCompletionAsync();
+            var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
+            await releaseOperation.WaitForCompletionAsync();
             #endregion Snippet:ReleasePhoneNumbersAsync
 
             acquiredPhoneNumbers = client.GetAllPhoneNumbersAsync(locale);
@@ -159,40 +161,42 @@ namespace Azure.Communication.Administration.Samples
             var reservationOptions = new CreateReservationOptions(reservationName, reservationDescription, new[] { phonePlanId }, areaCode);
             reservationOptions.Quantity = 1;
 
-            var reservationOperation = client.StartReservation(reservationOptions);
+            var reserveOperation = client.StartReservation(reservationOptions);
 
-            while (!reservationOperation.HasCompleted)
+            while (!reserveOperation.HasCompleted)
             {
                 Thread.Sleep(2000);
 
-                reservationOperation.UpdateStatus();
+                reserveOperation.UpdateStatus();
             }
 
             #endregion Snippet:ReservePhoneNumbers
 
+            reserveOperation = new PhoneNumberReservationOperation(client, reserveOperation.Id);
+
             #region Snippet:PersistReservePhoneNumbersOperation
-            var reservationId = reservationOperation.Id;
+            var reservationId = reserveOperation.Id;
 
-            // persist reservationOperationId and then continue with new operation
+            // persist reservationId and then continue with a new operation
 
-            var newPhoneNumberReservationOperation = new PhoneNumberReservationOperation(client, reservationId);
+            //@@var reserveOperation = new PhoneNumberReservationOperation(client, reservationId);
 
-            while (!newPhoneNumberReservationOperation.HasCompleted)
+            while (!reserveOperation.HasCompleted)
             {
                 Thread.Sleep(2000);
 
-                newPhoneNumberReservationOperation.UpdateStatus();
+                reserveOperation.UpdateStatus();
             }
             #endregion Snippet:PersistReservePhoneNumbersOperation
 
             #region Snippet:StartPurchaseReservation
-            var reservationPurchaseOperation = client.StartPurchaseReservation(reservationId);
+            var purchaseOperation = client.StartPurchaseReservation(reservationId);
 
-            while (!reservationPurchaseOperation.HasCompleted)
+            while (!purchaseOperation.HasCompleted)
             {
                 Thread.Sleep(2000);
 
-                reservationPurchaseOperation.UpdateStatus();
+                purchaseOperation.UpdateStatus();
             }
             #endregion Snippet:StartPurchaseReservation
 
@@ -205,19 +209,19 @@ namespace Azure.Communication.Administration.Samples
             }
             #endregion Snippet:ListAcquiredPhoneNumbers
 
-            var acquiredPhoneNumber = reservationOperation.Value.PhoneNumbers.Single();
+            var acquiredPhoneNumber = reserveOperation.Value.PhoneNumbers.Single();
             acquiredPhoneNumbers = client.GetAllPhoneNumbers(locale);
             var beforeReleaseNumberCount = acquiredPhoneNumbers.Count();
 
             #region Snippet:ReleasePhoneNumbers
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
-            var phoneNumberReleaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
+            var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
 
-            while (!phoneNumberReleaseOperation.HasCompleted)
+            while (!releaseOperation.HasCompleted)
             {
                 Thread.Sleep(2000);
 
-                phoneNumberReleaseOperation.UpdateStatus();
+                releaseOperation.UpdateStatus();
             }
             #endregion Snippet:ReleasePhoneNumbers
 
@@ -312,7 +316,7 @@ namespace Azure.Communication.Administration.Samples
 
             var locationOptionsResponse = await client.GetPhonePlanLocationOptionsAsync(countryCode, geographicPhonePlanGroupId, phonePlanId);
 
-            void printLocationOption(LocationOptions locationOptions)
+            void PrintLocationOption(LocationOptions locationOptions)
             {
                 Console.WriteLine($"LabelId: {locationOptions.LabelId}, LabelName: {locationOptions.LabelName}");
 
@@ -321,10 +325,10 @@ namespace Azure.Communication.Administration.Samples
                     Console.WriteLine($"Name: {locationOption.Name}, Value: {locationOption.Value}");
 
                     foreach (var subLocationOption in locationOption.LocationOptions)
-                        printLocationOption(subLocationOption);
+                        PrintLocationOption(subLocationOption);
                 }
             }
-            printLocationOption(locationOptionsResponse.Value.LocationOptions);
+            PrintLocationOption(locationOptionsResponse.Value.LocationOptions);
 
             #endregion Snippet:GetPhonePlanLocationOptionsAsync
         }
