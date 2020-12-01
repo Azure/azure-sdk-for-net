@@ -306,6 +306,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/17262")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
         public async Task ListSharesSegmentAsync_EnabledProtocolsAndRootSquash()
         {

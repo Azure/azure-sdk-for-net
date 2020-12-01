@@ -315,6 +315,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/17262")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
         public async Task CreateAsync_EnabledProtocolsAndRootSquash()
         {
@@ -606,6 +607,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/17262")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
         public async Task GetPropertiesAsync_EnabledProtocolsAndRootSquash()
         {
@@ -1260,6 +1262,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/17262")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
         public async Task SetPropertiesAsync_RootSquash()
         {
