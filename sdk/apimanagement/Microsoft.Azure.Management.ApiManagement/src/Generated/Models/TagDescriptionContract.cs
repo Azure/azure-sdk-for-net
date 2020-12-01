@@ -91,5 +91,32 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ExternalDocsUrl != null)
+            {
+                if (ExternalDocsUrl.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ExternalDocsUrl", 2000);
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 160)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 160);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+            }
+        }
     }
 }

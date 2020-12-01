@@ -74,6 +74,28 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Parameter");
             }
+            if (Scheme != null)
+            {
+                if (Scheme.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Scheme", 100);
+                }
+                if (Scheme.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Scheme", 1);
+                }
+            }
+            if (Parameter != null)
+            {
+                if (Parameter.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Parameter", 300);
+                }
+                if (Parameter.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Parameter", 1);
+                }
+            }
         }
     }
 }
