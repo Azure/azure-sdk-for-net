@@ -2,6 +2,9 @@
 
 ## 3.0.0-beta.4 (Unreleased)
 
+### Fixed
+
+- Properly create secondary endpoint Uri for Azurite endpoints
 
 ## 3.0.0-beta.3 (2020-11-12)
 
