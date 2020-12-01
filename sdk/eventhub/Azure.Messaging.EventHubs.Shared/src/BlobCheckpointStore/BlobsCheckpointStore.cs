@@ -286,8 +286,8 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     var partitionId = blob.Name.Substring(prefix.Length);
                     var startingPosition = default(EventPosition?);
-                    long? offset = null;
-                    long? sequenceNumber = null;
+                    var offset = default(long?);
+                    var sequenceNumber = default(long?);
 
                     if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
                     {
@@ -305,7 +305,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     if (startingPosition.HasValue)
                     {
-                        checkpoints.Add(new BlobEventProcessorCheckpoint
+                        checkpoints.Add(new BlobStorageCheckpoint
                         {
                             FullyQualifiedNamespace = fullyQualifiedNamespace,
                             EventHubName = eventHubName,
@@ -678,7 +678,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Contains the information to reflect the state of event processing for a given Event Hub partition.
         ///   Provides access to the offset and the sequence number retrieved from the blob.
         /// </summary>
-        public class BlobEventProcessorCheckpoint : EventProcessorCheckpoint
+        public class BlobStorageCheckpoint : EventProcessorCheckpoint
         {
             public long? Offset { get; set; }
             public long? SequenceNumber { get; set; }

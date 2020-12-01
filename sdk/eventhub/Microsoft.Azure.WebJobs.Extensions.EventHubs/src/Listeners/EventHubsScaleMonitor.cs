@@ -91,7 +91,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 return metrics;
             }
 
-
             return CreateTriggerMetrics(tasks.Select(t => t.Result).ToList(), checkpoints.ToArray());
         }
 
@@ -109,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             {
                 var partitionProperties = partitionRuntimeInfo[i];
 
-                var checkpoint = (BlobsCheckpointStore.BlobEventProcessorCheckpoint)checkpoints.SingleOrDefault(c => c.PartitionId == partitionProperties.Id);
+                var checkpoint = (BlobsCheckpointStore.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c.PartitionId == partitionProperties.Id);
                 if (checkpoint == null)
                 {
                     partitionErrors.Add($"Unable to find a checkpoint information for partition: {partitionProperties.Id}");
@@ -150,7 +149,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
 
         // Get the number of unprocessed events by deriving the delta between the server side info and the partition lease info,
-        private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobsCheckpointStore.BlobEventProcessorCheckpoint partitionLeaseInfo)
+        private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobsCheckpointStore.BlobStorageCheckpoint partitionLeaseInfo)
         {
             long partitionLeaseInfoSequenceNumber = partitionLeaseInfo.SequenceNumber ?? 0;
 

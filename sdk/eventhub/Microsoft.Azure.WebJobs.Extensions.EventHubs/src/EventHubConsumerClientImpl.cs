@@ -7,7 +7,7 @@ using Azure.Messaging.EventHubs.Consumer;
 
 namespace Microsoft.Azure.WebJobs
 {
-    // TODO: remove when https://github.com/Azure/azure-sdk-for-net/issues/9117 if fixed
+    // TODO: remove when https://github.com/Azure/azure-sdk-for-net/issues/9117 is fixed
     internal class EventHubConsumerClientImpl : IEventHubConsumerClient
     {
         private readonly EventHubConsumerClient _client;

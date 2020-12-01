@@ -32,5 +32,15 @@ namespace Microsoft.Azure.WebJobs
             var eventDataBatch = ((EventDataBatchImpl) batch).Batch;
             await _client.SendAsync(eventDataBatch, cancellationToken).ConfigureAwait(false);
         }
+
+        public string EventHubName => _client.EventHubName;
+
+        public string FullyQualifiedNamespace => _client.FullyQualifiedNamespace;
+
+        public string ConsumerGroup => _client.ConsumerGroup;
+
+        public async Task<string[]> GetPartitionsAsync() => (await _client.GetEventHubPropertiesAsync().ConfigureAwait(false)).PartitionIds;
+
+        public Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId) => _client.GetPartitionPropertiesAsync(partitionId);
     }
 }

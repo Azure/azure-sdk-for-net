@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             _checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 0,  SequenceNumber = 0 }
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0 }
             };
 
             var metrics = await _scaleMonitor.GetMetricsAsync();
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Partition got its first message (Offset == null, LastEnqueued == 0)
             _checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = null,  SequenceNumber = 0 }
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = null,  SequenceNumber = 0 }
             };
 
             metrics = await _scaleMonitor.GetMetricsAsync();
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // No instances assigned to process events on partition (Offset == null, LastEnqueued > 0)
             _checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = null, SequenceNumber = 0 }
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = null, SequenceNumber = 0 }
             };
 
             _partitions = new List<PartitionProperties>
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Checkpointing is ahead of partition info (SequenceNumber > LastEnqueued)
             _checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 25, SequenceNumber = 11 }
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 25, SequenceNumber = 11 }
             };
 
             _partitions = new List<PartitionProperties>
@@ -142,9 +142,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // No messages processed, no messages in queue
             _checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "1" },
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "2" },
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "3" }
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "1" },
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "2" },
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "3" }
             };
 
             _partitions = new List<PartitionProperties>
@@ -163,9 +163,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Messages processed, Messages in queue
             _checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 0,  SequenceNumber = 2, PartitionId = "1" },
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 0,  SequenceNumber = 3, PartitionId = "2" },
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 0,  SequenceNumber = 4, PartitionId = "3" }
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 2, PartitionId = "1" },
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 3, PartitionId = "2" },
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 4, PartitionId = "3" }
             };
 
             _partitions = new List<PartitionProperties>
@@ -184,9 +184,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // One invalid sample
             _checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 0,  SequenceNumber = 2, PartitionId = "1" },
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 0,  SequenceNumber = 3, PartitionId = "2" },
-                new BlobsCheckpointStore.BlobEventProcessorCheckpoint { Offset = 0,  SequenceNumber = 4, PartitionId = "3" }
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 2, PartitionId = "1" },
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 3, PartitionId = "2" },
+                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 4, PartitionId = "3" }
             };
 
             _partitions = new List<PartitionProperties>
