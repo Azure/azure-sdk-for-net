@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
-  [Parameter(Mandatory = $True)]
+  [Parameter()]
+  [ValidateNotNullOrEmpty()]
   [string] $InputJsonPath = $GenerateInput,
 
   [Parameter()]
