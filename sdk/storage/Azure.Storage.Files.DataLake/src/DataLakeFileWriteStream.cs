@@ -65,6 +65,7 @@ namespace Azure.Storage.Files.DataLake
                 close: _closeEvent,
                 httpHeaders: default,
                 conditions: _conditions,
+                releaseLease: default,
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);

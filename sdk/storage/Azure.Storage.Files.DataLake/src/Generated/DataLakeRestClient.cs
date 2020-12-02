@@ -3231,6 +3231,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="position">This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request.</param>
             /// <param name="retainUncommittedData">Valid only for flush operations.  If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation.</param>
+            /// <param name="releaseLease">Optional. Default false. If true, will release the lease on the file using the lease id info from x-ms-lease-id header.</param>
             /// <param name="close">Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed."</param>
             /// <param name="contentLength">Required for "Append Data" and "Flush Data".  Must be 0 for "Flush Data".  Must be the length of the request content in bytes for "Append Data".</param>
             /// <param name="contentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
@@ -3257,6 +3258,7 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 long? position = default,
                 bool? retainUncommittedData = default,
+                bool? releaseLease = default,
                 bool? close = default,
                 long? contentLength = default,
                 byte[] contentHash = default,
@@ -3287,6 +3289,7 @@ namespace Azure.Storage.Files.DataLake
                         timeout,
                         position,
                         retainUncommittedData,
+                        releaseLease,
                         close,
                         contentLength,
                         contentHash,
@@ -3338,6 +3341,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="position">This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request.</param>
             /// <param name="retainUncommittedData">Valid only for flush operations.  If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation.</param>
+            /// <param name="releaseLease">Optional. Default false. If true, will release the lease on the file using the lease id info from x-ms-lease-id header.</param>
             /// <param name="close">Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed."</param>
             /// <param name="contentLength">Required for "Append Data" and "Flush Data".  Must be 0 for "Flush Data".  Must be the length of the request content in bytes for "Append Data".</param>
             /// <param name="contentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
@@ -3360,6 +3364,7 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 long? position = default,
                 bool? retainUncommittedData = default,
+                bool? releaseLease = default,
                 bool? close = default,
                 long? contentLength = default,
                 byte[] contentHash = default,
@@ -3398,6 +3403,11 @@ namespace Azure.Storage.Files.DataLake
                 if (retainUncommittedData != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
                 _request.Uri.AppendQuery("retainUncommittedData", retainUncommittedData.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+                }
+                if (releaseLease != null) {
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                _request.Uri.AppendQuery("releaseLease", releaseLease.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
                 #pragma warning restore CA1308 // Normalize strings to uppercase
                 }
                 if (close != null) {

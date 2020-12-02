@@ -1809,15 +1809,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateIfNotExistsAsync();
-            var data = GetRandomBuffer(Constants.KB);
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using Stream stream = new MemoryStream(data);
 
-            using (var stream = new MemoryStream(data))
-            {
-                await file.AppendAsync(stream, Constants.KB);
-            }
+            await file.AppendAsync(
+                content: stream,
+                offset: 0);
 
             // Act
-            Response<PathInfo> response = await file.FlushAsync(0);
+            Response<PathInfo> response = await file.FlushAsync(size);
 
             // Assert
             AssertValidStoragePathInfo(response.Value);
@@ -1831,7 +1832,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateIfNotExistsAsync();
-            byte[] data = GetRandomBuffer(Constants.KB);
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
             byte[] contentHash = MD5.Create().ComputeHash(data);
             PathHttpHeaders headers = new PathHttpHeaders
             {
@@ -1843,13 +1845,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 ContentHash = contentHash
             };
 
-            using (var stream = new MemoryStream(data))
+            using Stream stream = new MemoryStream(data);
+            await file.AppendAsync(
+                content: stream,
+                offset: 0);
+
+            DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                await file.AppendAsync(stream, 0);
-            }
+                HttpHeaders = headers
+            };
 
             // Act
-            await file.FlushAsync(Constants.KB, httpHeaders: headers);
+            await file.FlushAsync(Constants.KB, options);
 
             // Assert
             Response<PathProperties> response = await file.GetPropertiesAsync();
@@ -1869,15 +1876,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateIfNotExistsAsync();
-            var data = GetRandomBuffer(Constants.KB);
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
 
-            using (var stream = new MemoryStream(data))
-            {
-                await file.AppendAsync(stream, 0);
-            }
+            using Stream stream = new MemoryStream(data);
+            await file.AppendAsync(
+                content: stream,
+                offset: 0);
 
             // Act
-            Response<PathInfo> response = await file.FlushAsync(0);
+            Response<PathInfo> response = await file.FlushAsync(position: size);
 
             // Assert
             AssertValidStoragePathInfo(response.Value);
@@ -1891,15 +1899,24 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateIfNotExistsAsync();
-            var data = GetRandomBuffer(Constants.KB);
 
-            using (var stream = new MemoryStream(data))
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+
+            using Stream stream = new MemoryStream(data);
+            await file.AppendAsync(
+                content: stream,
+                offset: 0);
+
+            DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                await file.AppendAsync(stream, Constants.KB);
-            }
+                RetainUncommittedData = true
+            };
 
             // Act
-            Response<PathInfo> response = await file.FlushAsync(0, retainUncommittedData: true);
+            Response<PathInfo> response = await file.FlushAsync(
+                position: size,
+                options: options);
 
             // Assert
             AssertValidStoragePathInfo(response.Value);
@@ -1913,15 +1930,24 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateIfNotExistsAsync();
-            var data = GetRandomBuffer(Constants.KB);
 
-            using (var stream = new MemoryStream(data))
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+
+            using Stream stream = new MemoryStream(data);
+            await file.AppendAsync(
+                content: stream,
+                offset: 0);
+
+            DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                await file.AppendAsync(stream, Constants.KB);
-            }
+                Close = true
+            };
 
             // Act
-            Response<PathInfo> response = await file.FlushAsync(0, close: true);
+            Response<PathInfo> response = await file.FlushAsync(
+                position: size,
+                options: options);
 
             // Assert
             AssertValidStoragePathInfo(response.Value);
@@ -1935,14 +1961,25 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateAsync();
-            var data = GetRandomBuffer(Constants.KB);
+
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
 
             using Stream stream = new MemoryStream(data);
             await file.AppendAsync(stream, 0);
 
+            DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
+            {
+                Close = true
+            };
+
             // Act
-            await file.FlushAsync(Constants.KB, close: true);
-            Response<PathInfo> response = await file.FlushAsync(Constants.KB, close: true);
+            await file.FlushAsync(
+                position: Constants.KB,
+                options: options);
+            Response<PathInfo> response = await file.FlushAsync(
+                position: Constants.KB,
+                options: options);
 
             // Assert
             AssertValidStoragePathInfo(response.Value);
@@ -1959,12 +1996,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateIfNotExistsAsync();
-                var data = GetRandomBuffer(Constants.KB);
 
-                using (var stream = new MemoryStream(data))
-                {
-                    await file.AppendAsync(stream, 0);
-                }
+                long size = Constants.KB;
+                byte[]  data = GetRandomBuffer(size);
+
+                using Stream stream = new MemoryStream(data);
+                await file.AppendAsync(
+                   content: stream,
+                   offset: 0);
 
                 parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
                 parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
@@ -1972,8 +2011,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
+                {
+                    Conditions = conditions
+                };
+
                 // Act
-                await file.FlushAsync(Constants.KB, conditions: conditions);
+                await file.FlushAsync(
+                    position: Constants.KB,
+                    options: options);
             }
         }
 
@@ -1988,19 +2034,26 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateIfNotExistsAsync();
-                var data = GetRandomBuffer(Size);
+                byte[] data = GetRandomBuffer(Size);
 
-                using (var stream = new MemoryStream(data))
-                {
-                    await file.AppendAsync(stream, 0);
-                }
+                using Stream stream = new MemoryStream(data);
+                await file.AppendAsync(
+                    content: stream,
+                    offset: 0);
 
                 parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
                 DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
+                DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
+                {
+                    Conditions = conditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    file.FlushAsync(Constants.KB, conditions: conditions),
+                    file.FlushAsync(
+                        position: Constants.KB,
+                        options: options),
                     e => { });
             }
         }
@@ -2017,6 +2070,78 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.FlushAsync(0),
                     e => Assert.AreEqual("PathNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task FlushDataAsync_ReleaseLease()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateIfNotExistsAsync();
+
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using Stream stream = new MemoryStream(data);
+            await file.AppendAsync(
+                content: stream,
+                offset: 0);
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            DataLakeLeaseClient leaseClient = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
+            Response<DataLakeLease> leaseResponse = await leaseClient.AcquireAsync(duration);
+
+            DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
+            {
+                Conditions = new DataLakeRequestConditions
+                {
+                    LeaseId = leaseResponse.Value.LeaseId
+                },
+                ReleaseLease = true
+            };
+
+            // Act
+            Response<PathInfo> response = await file.FlushAsync(
+                position: size,
+                options: options);
+
+            // Assert
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+            Assert.AreEqual(DataLakeLeaseStatus.Unlocked, propertiesResponse.Value.LeaseStatus);
+            Assert.AreEqual(DataLakeLeaseState.Available, propertiesResponse.Value.LeaseState);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task FlushDataAsync_ReleaseLeaseFailed()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateIfNotExistsAsync();
+
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using Stream stream = new MemoryStream(data);
+            await file.AppendAsync(
+                content: stream,
+                offset: 0);
+
+            DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
+            {
+                ReleaseLease = true
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.FlushAsync(
+                    position: size,
+                    options: options),
+                e => Assert.AreEqual("MissingRequiredHeader", e.ErrorCode));
         }
 
         [Test]

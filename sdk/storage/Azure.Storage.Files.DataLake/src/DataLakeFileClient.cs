@@ -1861,7 +1861,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Flush Data
         /// <summary>
-        /// The <see cref="Flush"/> operation flushes (writes) previously
+        /// The <see cref="Flush(long, DataLakeFileFlushOptions, CancellationToken)"/> operation flushes (writes) previously
         /// appended data to a file.
         /// </summary>
         /// <param name="position">
@@ -1872,28 +1872,8 @@ namespace Azure.Storage.Files.DataLake
         /// equal to the length of the file after all data has been written, and there must not be a request entity body included
         /// with the request.
         /// </param>
-        /// <param name="retainUncommittedData">
-        /// If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted
-        /// after the flush operation. The default is false. Data at offsets less than the specified position are written to the
-        /// file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future
-        /// flush operation.
-        /// </param>
-        /// <param name="close">
-        /// Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled,
-        /// a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the
-        /// difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter
-        /// is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the
-        /// flush operation completes successfully, the service raises a file change notification with a property indicating that
-        /// this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the
-        /// file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that
-        /// the file stream has been closed."
-        /// </param>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the file.
-        ///</param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the flush of this file.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1909,42 +1889,64 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<PathInfo> Flush(
             long position,
-            bool? retainUncommittedData = default,
-            bool? close = default,
-            PathHttpHeaders httpHeaders = default,
-            DataLakeRequestConditions conditions = default,
+            DataLakeFileFlushOptions options,
             CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Flush)}");
-
-            try
-            {
-                scope.Start();
-
-                return FlushInternal(
+            => FlushInternal(
                     position,
-                    retainUncommittedData,
-                    close,
-                    httpHeaders,
-                    conditions,
+                    options?.RetainUncommittedData,
+                    options?.Close,
+                    options?.HttpHeaders,
+                    options?.Conditions,
+                    options?.ReleaseLease,
                     async: false,
                     cancellationToken)
                     .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
 
         /// <summary>
-        /// The <see cref="FlushAsync"/> operation flushes (writes) previously
+        /// The <see cref="FlushAsync(long, DataLakeFileFlushOptions, CancellationToken)"/> operation flushes (writes) previously
         /// appended data to a file.
+        /// </summary>
+        /// <param name="position">
+        /// This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.
+        /// It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.
+        /// The value must be the position where the data is to be appended. Uploaded data is not immediately flushed, or written,
+        /// to the file. To flush, the previously uploaded data must be contiguous, the position parameter must be specified and
+        /// equal to the length of the file after all data has been written, and there must not be a request entity body included
+        /// with the request.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> FlushAsync(
+            long position,
+            DataLakeFileFlushOptions options,
+            CancellationToken cancellationToken = default)
+            => await FlushInternal(
+                    position,
+                    options?.RetainUncommittedData,
+                    options?.Close,
+                    options?.HttpHeaders,
+                    options?.Conditions,
+                    options?.ReleaseLease,
+                    async: true,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="Flush(long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, CancellationToken)"/>
+        /// operation flushes (writes) previously appended data to a file.
         /// </summary>
         /// <param name="position">
         /// This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.
@@ -1989,6 +1991,73 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<PathInfo> Flush(
+            long position,
+            bool? retainUncommittedData = default,
+            bool? close = default,
+            PathHttpHeaders httpHeaders = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => FlushInternal(
+                    position,
+                    retainUncommittedData,
+                    close,
+                    httpHeaders,
+                    conditions,
+                    releaseLease: default,
+                    async: false,
+                    cancellationToken)
+                    .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="FlushAsync(long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, CancellationToken)"/>
+        /// operation flushes (writes) previously appended data to a file.
+        /// </summary>
+        /// <param name="position">
+        /// This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.
+        /// It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.
+        /// The value must be the position where the data is to be appended. Uploaded data is not immediately flushed, or written,
+        /// to the file. To flush, the previously uploaded data must be contiguous, the position parameter must be specified and
+        /// equal to the length of the file after all data has been written, and there must not be a request entity body included
+        /// with the request.
+        /// </param>
+        /// <param name="retainUncommittedData">
+        /// If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted
+        /// after the flush operation. The default is false. Data at offsets less than the specified position are written to the
+        /// file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future
+        /// flush operation.
+        /// </param>
+        /// <param name="close">
+        /// Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled,
+        /// a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the
+        /// difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter
+        /// is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the
+        /// flush operation completes successfully, the service raises a file change notification with a property indicating that
+        /// this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the
+        /// file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that
+        /// the file stream has been closed."
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        ///</param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the flush of this file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<PathInfo>> FlushAsync(
             long position,
             bool? retainUncommittedData = default,
@@ -1996,33 +2065,16 @@ namespace Azure.Storage.Files.DataLake
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Flush)}");
-
-            try
-            {
-                scope.Start();
-
-                return await FlushInternal(
+            => await FlushInternal(
                     position,
                     retainUncommittedData,
                     close,
                     httpHeaders,
                     conditions,
+                    releaseLease: default,
                     async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
 
         /// <summary>
         /// The <see cref="FlushInternal"/> operation flushes (writes) previously
@@ -2059,6 +2111,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the flush of this file.
         /// </param>
+        /// <param name="releaseLease">
+        /// Optional.  If true and conditions.LeaseId is specified, the lease will be released.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2080,6 +2135,7 @@ namespace Azure.Storage.Files.DataLake
             bool? close,
             PathHttpHeaders httpHeaders,
             DataLakeRequestConditions conditions,
+            bool? releaseLease,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2090,8 +2146,12 @@ namespace Azure.Storage.Files.DataLake
                 message:
                 $"{nameof(Uri)}: {Uri}");
 
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Flush)}");
+
                 try
                 {
+                    scope.Start();
+
                     Response<PathFlushDataResult> response = await DataLakeRestClient.Path.FlushDataAsync(
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
@@ -2099,6 +2159,7 @@ namespace Azure.Storage.Files.DataLake
                         version: Version.ToVersionString(),
                         position: position,
                         retainUncommittedData: retainUncommittedData,
+                        releaseLease: releaseLease,
                         close: close,
                         contentLength: 0,
                         contentHash: httpHeaders?.ContentHash,
@@ -2127,11 +2188,13 @@ namespace Azure.Storage.Files.DataLake
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(DataLakeFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -4209,6 +4272,7 @@ namespace Azure.Storage.Files.DataLake
                         close: args.Close,
                         args.HttpHeaders,
                         args.Conditions,
+                        releaseLease: default,
                         async,
                         cancellationToken)
                         .ConfigureAwait(false);
@@ -4236,6 +4300,7 @@ namespace Azure.Storage.Files.DataLake
                         close: args.Close,
                         httpHeaders: args.HttpHeaders,
                         conditions: args.Conditions,
+                        releaseLease: default,
                         async,
                         cancellationToken).ConfigureAwait(false);
                 },
