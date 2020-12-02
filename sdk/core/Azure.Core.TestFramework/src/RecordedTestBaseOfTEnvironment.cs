@@ -9,6 +9,7 @@ namespace Azure.Core.TestFramework
     public abstract class RecordedTestBase<TEnvironment> : RecordedTestBase where TEnvironment : TestEnvironment, new()
 #pragma warning restore SA1649 // File name should match first type name
     {
+        protected ResourceGroupCleanupPolicy CleanupPolicy { get; set; }
         protected RecordedTestBase(bool isAsync) : base(isAsync)
         {
             TestEnvironment = new TEnvironment();
