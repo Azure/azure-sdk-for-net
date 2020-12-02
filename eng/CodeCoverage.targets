@@ -24,16 +24,34 @@
   </ItemGroup>
 
   <!-- Clean up previous TestResults so reports are recent. -->
-  <Target Name="CleanPreviousCodeCoverage"
+  <Target Name="_CleanPreviousCodeCoverage"
           BeforeTargets="VSTest"
           Condition="'$(_CollectCoverage)' == 'true'">
     <RemoveDir Directories="$(_TestResultsDirectory)" />
   </Target>
 
+  <!-- Set a variable to indicate that a report can be generated. -->
+  <Target Name="_SetCoverageCollected"
+          AfterTargets="VSTest"
+          Condition="'$(_CollectCoverage)' == 'true'">
+    <ItemGroup>
+      <_CoverageFiles Include="$(_TestResultsDirectory)\**\coverage.cobertura.xml" />
+    </ItemGroup>
+    <PropertyGroup>
+      <_CoverageCollected Condition="'@(_CoverageFiles)' != ''">true</_CoverageCollected>
+    </PropertyGroup>
+
+    <!-- Indicate to the pipeline a report can be generated. -->
+    <Message Importance="high"
+             Condition="'$(_CoverageCollected)' == 'true' and '$(TF_BUILD)' == 'true'"
+             Text="##vso[task.setvariable variable=coverage.collected]true" />
+  </Target>
+
   <!-- Should be similar to what's in the pipelines, though generate a full HTML report. -->
   <Target Name="GenerateCodeCoverageReport"
           AfterTargets="VSTest"
-          Condition="'$(_CollectCoverage)' == 'true' and '$(SkipCoverageReport)' != 'true'">
+          DependsOnTargets="_SetCoverageCollected"
+          Condition="'$(_CollectCoverage)' == 'true' and '$(SkipCoverageReport)' != 'true' and '$(_CoverageCollected)' == 'true'">
     <PropertyGroup>
       <CoverageReportCommandLine>dotnet tool run reportgenerator --</CoverageReportCommandLine>
       <CoverageReportCommandLine>$(CoverageReportCommandLine) "-reports:$(_TestResultsDirectory)\**\coverage.cobertura.xml"</CoverageReportCommandLine>
