@@ -158,13 +158,13 @@ namespace Microsoft.Azure.Management.LabServices
             /// <param name='userName'>
             /// The name of the user.
             /// </param>
-            /// <param name='personalPerferencesOperationsPayload'>
+            /// <param name='personalPreferencesOperationsPayload'>
             /// Represents payload for any Environment operations like get, start, stop,
             /// connect
             /// </param>
-            public static GetPersonalPreferencesResponse GetPersonalPreferences(this IGlobalUsersOperations operations, string userName, PersonalPerferencesOperationsPayload personalPerferencesOperationsPayload)
+            public static GetPersonalPreferencesResponse GetPersonalPreferences(this IGlobalUsersOperations operations, string userName, PersonalPreferencesOperationsPayload personalPreferencesOperationsPayload)
             {
-                return operations.GetPersonalPreferencesAsync(userName, personalPerferencesOperationsPayload).GetAwaiter().GetResult();
+                return operations.GetPersonalPreferencesAsync(userName, personalPreferencesOperationsPayload).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -176,16 +176,16 @@ namespace Microsoft.Azure.Management.LabServices
             /// <param name='userName'>
             /// The name of the user.
             /// </param>
-            /// <param name='personalPerferencesOperationsPayload'>
+            /// <param name='personalPreferencesOperationsPayload'>
             /// Represents payload for any Environment operations like get, start, stop,
             /// connect
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GetPersonalPreferencesResponse> GetPersonalPreferencesAsync(this IGlobalUsersOperations operations, string userName, PersonalPerferencesOperationsPayload personalPerferencesOperationsPayload, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GetPersonalPreferencesResponse> GetPersonalPreferencesAsync(this IGlobalUsersOperations operations, string userName, PersonalPreferencesOperationsPayload personalPreferencesOperationsPayload, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPersonalPreferencesWithHttpMessagesAsync(userName, personalPerferencesOperationsPayload, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPersonalPreferencesWithHttpMessagesAsync(userName, personalPreferencesOperationsPayload, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
