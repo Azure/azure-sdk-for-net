@@ -17,6 +17,7 @@ extends:
         Container: 'ubuntu_netcore_keyring'
         SupportedClouds: 'Public,Canary,Preview'
     ServiceDirectory: identity
+    Clouds: 'Public,Preview,UsGov,China'
     PreSteps:
       - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
         displayName: Install Azure PowerShell module
