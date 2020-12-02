@@ -55,6 +55,16 @@ if (($ArtifactName -ne $PackageId) -or ($PackageName -ne "$PackageId.$PackageVer
 }
 
 LogDebug "Validating Package Configuration..."
+Push-Location $PSScriptRoot
+dotnet tool install dotnet-script
+foreach ($file in $PackageDlls) {
+    dotnet script IsOptimizedAssembly.csx -- $file.FullName # Using dotnet script to ensure it runs on .NET 5
+    if ($LASTEXITCODE -ne 0) {
+        LogError "Validation Failed. Configuration for [$($file.FullName)] is not release."
+        $IsValidPackage = $false
+    }
+}
+Pop-Location
 
 LogDebug "Validating Packages Descriptiion..."
 if ([string]::IsNullOrWhiteSpace($Description)) {
@@ -70,7 +80,7 @@ if ([string]::IsNullOrWhiteSpace($ProjectUrl)) {
 
 try {
     if ((Invoke-webrequest -method head -uri $ProjectUrl).StatusDescription -ne "OK") {
-        LogError "Validation Failed. Project URL is not valud"
+        LogError "Validation Failed. Project URL is not valid"
         $IsValidPackage = $false
     }
 } catch {
