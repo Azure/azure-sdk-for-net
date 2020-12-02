@@ -4,5 +4,6 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: eventgrid
+    Clouds: 'Public,Preview,UsGov,China'
     EnvVars:
       AZURE_EVENTGRID_TEST_MODE: Live
