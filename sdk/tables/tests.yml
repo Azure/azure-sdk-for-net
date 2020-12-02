@@ -5,3 +5,4 @@ extends:
   parameters:
     ServiceDirectory: tables
     TimeoutInMinutes: 120
+    Clouds: 'Public,Preview,UsGov,China'
