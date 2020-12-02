@@ -101,6 +101,12 @@ foreach ($config in $targets) {
       $readmeName = "$($packageInfo.PackageId.Replace('azure-','').Replace('Azure.', '').Replace('@azure/', '').ToLower())-readme$rdSuffix.md"
       $readmeLocation = Join-Path $CIRepository $config.metadata_folder
   
+      # what happens if this is the first time we've written to this folder? It won't exist. Resolve that.
+      if(!(test-path $readmeLocation))
+      {
+        New-Item -ItemType Directory -Force -Path $readmeLocation
+      }
+
       if ($packageInfo.ReadmeContent) {
         $adjustedContent = GetAdjustedReadmeContent -pkgInfo $packageInfo
       }
