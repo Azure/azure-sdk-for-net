@@ -17,7 +17,7 @@ param (
   [Parameter(Mandatory = $true)]
   $DocRepoLocation, # the location on disk where we have cloned the documentation repository
   [Parameter(Mandatory = $true)]
-  $Language # EG: js, java, dotnet. Used in language for the embedded readme.
+  $Language, # EG: js, java, dotnet. Used in language for the embedded readme.
   [Parameter(Mandatory = $true)]
   $Configs # The configuration elements informing important locations within the cloned doc repo
 )
