@@ -88,9 +88,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             {
                 _exceptionHandler(new ExceptionReceivedEventArgs(Identifier, operationDescription, null, exception));
             }
-            catch (Exception)
+            catch
             {
-                // Best effort logging.
+                // ignore
             }
 
             return Task.CompletedTask;
