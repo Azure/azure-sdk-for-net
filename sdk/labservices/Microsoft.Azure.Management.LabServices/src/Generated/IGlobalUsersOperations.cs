@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <param name='userName'>
         /// The name of the user.
         /// </param>
-        /// <param name='personalPerferencesOperationsPayload'>
+        /// <param name='personalPreferencesOperationsPayload'>
         /// Represents payload for any Environment operations like get, start,
         /// stop, connect
         /// </param>
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<GetPersonalPreferencesResponse>> GetPersonalPreferencesWithHttpMessagesAsync(string userName, PersonalPerferencesOperationsPayload personalPerferencesOperationsPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GetPersonalPreferencesResponse>> GetPersonalPreferencesWithHttpMessagesAsync(string userName, PersonalPreferencesOperationsPayload personalPreferencesOperationsPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List Environments for the user
         /// </summary>

@@ -665,7 +665,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <param name='userName'>
         /// The name of the user.
         /// </param>
-        /// <param name='personalPerferencesOperationsPayload'>
+        /// <param name='personalPreferencesOperationsPayload'>
         /// Represents payload for any Environment operations like get, start, stop,
         /// connect
         /// </param>
@@ -690,15 +690,15 @@ namespace Microsoft.Azure.Management.LabServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<GetPersonalPreferencesResponse>> GetPersonalPreferencesWithHttpMessagesAsync(string userName, PersonalPerferencesOperationsPayload personalPerferencesOperationsPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GetPersonalPreferencesResponse>> GetPersonalPreferencesWithHttpMessagesAsync(string userName, PersonalPreferencesOperationsPayload personalPreferencesOperationsPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (userName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "userName");
             }
-            if (personalPerferencesOperationsPayload == null)
+            if (personalPreferencesOperationsPayload == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personalPerferencesOperationsPayload");
+                throw new ValidationException(ValidationRules.CannotBeNull, "personalPreferencesOperationsPayload");
             }
             if (Client.ApiVersion == null)
             {
@@ -712,7 +712,7 @@ namespace Microsoft.Azure.Management.LabServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("userName", userName);
-                tracingParameters.Add("personalPerferencesOperationsPayload", personalPerferencesOperationsPayload);
+                tracingParameters.Add("personalPreferencesOperationsPayload", personalPreferencesOperationsPayload);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetPersonalPreferences", tracingParameters);
             }
@@ -763,9 +763,9 @@ namespace Microsoft.Azure.Management.LabServices
 
             // Serialize Request
             string _requestContent = null;
-            if(personalPerferencesOperationsPayload != null)
+            if(personalPreferencesOperationsPayload != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(personalPerferencesOperationsPayload, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(personalPreferencesOperationsPayload, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
