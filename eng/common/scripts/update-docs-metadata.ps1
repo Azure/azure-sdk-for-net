@@ -2,16 +2,24 @@
 # powershell core is a requirement for successful execution.
 param (
   # arguments leveraged to parse and identify artifacts
+  [Parameter(Mandatory = $true)]
   $ArtifactLocation, # the root of the artifact folder. DevOps $(System.ArtifactsDirectory)
+  [Parameter(Mandatory = $true)]
   $WorkDirectory, # a clean folder that we can work in
+  [Parameter(Mandatory = $true)]
   $ReleaseSHA, # the SHA for the artifacts. DevOps: $(Release.Artifacts.<artifactAlias>.SourceVersion) or $(Build.SourceVersion)
+  [Parameter(Mandatory = $true)]
   $RepoId, # full repo id. EG azure/azure-sdk-for-net  DevOps: $(Build.Repository.Id). Used as a part of VerifyPackages
+  [Parameter(Mandatory = $true)]
   $Repository, # EG: "Maven", "PyPI", "NPM"
 
   # arguments necessary to power the docs release
+  [Parameter(Mandatory = $true)]
   $DocRepoLocation, # the location on disk where we have cloned the documentation repository
+  [Parameter(Mandatory = $true)]
   $Language # EG: js, java, dotnet. Used in language for the embedded readme.
-  $Configs
+  [Parameter(Mandatory = $true)]
+  $Configs # The configuration elements informing important locations within the cloned doc repo
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -99,10 +107,10 @@ foreach ($config in $targets) {
       }
   
       $readmeName = "$($packageInfo.PackageId.Replace('azure-','').Replace('Azure.', '').Replace('@azure/', '').ToLower())-readme$rdSuffix.md"
-      $readmeLocation = Join-Path $CIRepository $config.metadata_folder
+      $readmeLocation = Join-Path $CIRepository $config.content_folder
   
       # what happens if this is the first time we've written to this folder? It won't exist. Resolve that.
-      if(!(test-path $readmeLocation))
+      if(!(Test-Path $readmeLocation))
       {
         New-Item -ItemType Directory -Force -Path $readmeLocation
       }
