@@ -12,6 +12,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
+using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -191,20 +192,25 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var functionId = "FunctionId";
             var eventHubName = "EventHubName";
             var consumerGroup = "ConsumerGroup";
-            var storageUri = new Uri("https://eventhubsteststorageaccount.blob.core.windows.net/");
             var testLogger = new TestLogger("Test");
+            var host = new EventProcessorHost(
+                eventHubName,
+                consumerGroup,
+                "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=", null);
+
+            var consumerClientMock = new Mock<IEventHubConsumerClient>();
+            consumerClientMock.SetupGet(c => c.ConsumerGroup).Returns(consumerGroup);
+            consumerClientMock.SetupGet(c => c.EventHubName).Returns(eventHubName);
+
             var listener = new EventHubListener(
                                     functionId,
-                                    eventHubName,
-                                    consumerGroup,
-                                    "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
-                                    "DefaultEndpointsProtocol=https;AccountName=EventHubScaleMonitorFakeTestAccount;AccountKey=ABCDEFG;EndpointSuffix=core.windows.net",
-                                    new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict).Object,
-                                    null,
+                                    Mock.Of<ITriggeredFunctionExecutor>(),
+                                    host,
                                     false,
+                                    () => consumerClientMock.Object,
+                                    Mock.Of<BlobsCheckpointStore>(),
                                     new EventHubOptions(),
-                                    testLogger,
-                                    new Mock<BlobContainerClient>(MockBehavior.Strict).Object);
+                                    testLogger);
 
             IScaleMonitor scaleMonitor = listener.GetMonitor();
 

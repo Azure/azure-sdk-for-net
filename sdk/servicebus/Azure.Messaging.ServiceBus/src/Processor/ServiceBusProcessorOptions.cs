@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus
                 _prefetchCount = value;
             }
         }
-        private int _prefetchCount = 0;
+        private int _prefetchCount;
 
         /// <summary>
         /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages

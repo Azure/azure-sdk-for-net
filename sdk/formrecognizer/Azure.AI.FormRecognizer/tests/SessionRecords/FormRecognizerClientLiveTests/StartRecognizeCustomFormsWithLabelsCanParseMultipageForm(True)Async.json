@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "42",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-544d659cbb9c1e409201ab18e7857802-108d92b016529b4d-00",
+        "traceparent": "00-f54f3c5cce12bc4181bef2e545525050-6964c0c5f805924f-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "3dab3dfb9023a4c657e3e434ce6e62c8",
         "x-ms-return-client-request-id": "true"
@@ -22,25 +22,25 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "f0489774-e456-42bb-90c7-a1cf055096d0",
+        "apim-request-id": "08cb05a0-a723-4e23-9a61-2b7d715860a5",
         "Content-Length": "0",
-        "Date": "Wed, 09 Sep 2020 22:36:03 GMT",
-        "Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10",
+        "Date": "Fri, 30 Oct 2020 12:59:43 GMT",
+        "Location": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "92"
+        "x-envoy-upstream-service-time": "67"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "f88b2271f7250f014801cb7242a3b420",
         "x-ms-return-client-request-id": "true"
@@ -48,32 +48,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bfa2e132-ee10-4dc6-a600-eda5db95614b",
+        "apim-request-id": "347d360f-6097-4b6e-b766-d66e55479d1e",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:03 GMT",
+        "Date": "Fri, 30 Oct 2020 12:59:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-envoy-upstream-service-time": "35"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
+          "modelId": "2bc78fbd-8f5c-40e4-82a4-9d4d44316050",
           "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
+          "createdDateTime": "2020-10-30T12:59:44Z",
+          "lastUpdatedDateTime": "2020-10-30T12:59:44Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "85e94adcc610b485552fc7ba87df7c16",
         "x-ms-return-client-request-id": "true"
@@ -81,306 +81,9 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "92736852-abd6-404f-bcb9-13fa10c18e49",
+        "apim-request-id": "3a41f13c-6580-46bd-bda3-3a79b79c3d7b",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:04 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
-          "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "1fc46a8673a803fd3c9bf422c55362b3",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "7bca8ff8-c9b8-4643-9091-056091710be8",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:06 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "29"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
-          "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "8358c42fdd85abb79cd6a3f62f468869",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "86c6b7c7-1443-48bc-9baf-921e36e4cee7",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:07 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
-          "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "d7ecb48494df68774ce54875d163ef01",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "d487223d-d4aa-431f-adc2-3ba2c1bd6c47",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:08 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
-          "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "c28b14ccf887a891b31982d2d007d3f5",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "a04a12fe-a7f5-4b46-b8f6-09fcfbf4c153",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:10 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
-          "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "109d8b138b679bd44cef369f9442d939",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "c7be51e1-f77d-44b7-91be-853612697576",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:11 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
-          "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "1b29a1e6c5bb8be2234324c511a59845",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "a6ae69d1-618f-494f-a22f-4f0df2b92172",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:12 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
-          "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "45625311dec541993ff07697c2f11470",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "12844cb4-9da6-42ce-a288-c352bbaeea6c",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:13 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
-          "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "2eeb493fb8de4d3aa912ed24670e89a6",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "ae40d118-daca-457e-89a2-cd7f1a9371c1",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:14 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
-          "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "418ef15694e0087408e7dbcb4f4ac932",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "31afd9a2-7b67-414e-9ad3-46359d473a4b",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:15 GMT",
+        "Date": "Fri, 30 Oct 2020 12:59:45 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
@@ -388,46 +91,46 @@
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
+          "modelId": "2bc78fbd-8f5c-40e4-82a4-9d4d44316050",
           "status": "creating",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:04Z"
+          "createdDateTime": "2020-10-30T12:59:44Z",
+          "lastUpdatedDateTime": "2020-10-30T12:59:44Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "c886b32e6aba596718149cb3f175da31",
+        "x-ms-client-request-id": "1fc46a8673a803fd3c9bf422c55362b3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2928fafb-090d-48b6-a44c-8edc0dfbb211",
+        "apim-request-id": "4a1af663-f8d6-4fa4-9f54-db0f27a90893",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:16 GMT",
+        "Date": "Fri, 30 Oct 2020 12:59:46 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "588c1f7e-ec05-45dc-90cf-da133fb7ed10",
+          "modelId": "2bc78fbd-8f5c-40e4-82a4-9d4d44316050",
           "attributes": {
             "isComposed": false
           },
           "status": "ready",
-          "createdDateTime": "2020-09-09T22:36:04Z",
-          "lastUpdatedDateTime": "2020-09-09T22:36:16Z"
+          "createdDateTime": "2020-10-30T12:59:44Z",
+          "lastUpdatedDateTime": "2020-10-30T12:59:46Z"
         },
         "trainResult": {
           "averageModelAccuracy": 0.971,
@@ -493,510 +196,300 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyze?includeTextDetails=true",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050/analyze?includeTextDetails=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "711607",
         "Content-Type": "application/pdf",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6c1ae13f9a43784484f5f583d2c34e7e-f2f028f1b5e9a24a-00",
+        "traceparent": "00-422519a244ba8242aab4fffe6e984756-e7706129283d754d-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "d041cf66d363ab90d4e326f6dc6ffd5e",
+        "x-ms-client-request-id": "8358c42fdd85abb79cd6a3f62f468869",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "49163638-2f3a-464c-a52e-b553abf05090",
+        "apim-request-id": "d0a42583-3d45-471c-b2f7-ac6bf958cda9",
         "Content-Length": "0",
-        "Date": "Wed, 09 Sep 2020 22:36:16 GMT",
-        "Operation-Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeresults/25463559-eb54-479a-8f49-b86f79c402e8",
+        "Date": "Fri, 30 Oct 2020 12:59:48 GMT",
+        "Operation-Location": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050/analyzeresults/2dbb14de-9416-4b87-af22-4b9b5a16bdea",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "269"
+        "x-envoy-upstream-service-time": "193"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050/analyzeResults/2dbb14de-9416-4b87-af22-4b9b5a16bdea",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "b4f5bb48c188ecec893428cbf8c11692",
+        "x-ms-client-request-id": "d7ecb48494df68774ce54875d163ef01",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4aa34972-8c14-4fe4-a02e-eaf2a584867e",
+        "apim-request-id": "32e78b48-7a72-4c2b-9d84-5e5d25269b98",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:17 GMT",
+        "Date": "Fri, 30 Oct 2020 12:59:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "30"
+        "x-envoy-upstream-service-time": "28"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:17Z"
+        "createdDateTime": "2020-10-30T12:59:48Z",
+        "lastUpdatedDateTime": "2020-10-30T12:59:48Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050/analyzeResults/2dbb14de-9416-4b87-af22-4b9b5a16bdea",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "7f64aa0df8095bcf22daf3d644707ca9",
+        "x-ms-client-request-id": "c28b14ccf887a891b31982d2d007d3f5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a388e29d-84d5-4d1a-b8e5-f6253a4bbf91",
+        "apim-request-id": "46d65e33-8d07-4fd5-9b37-597107c27f3d",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:18 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:17Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "366a3d172680a5a8e254462eaac5b313",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "234b11ea-8497-4d3b-82ae-6dae868efd92",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:19 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:17Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "32e993cc7d0a4f55eb9991adcd16a818",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "75cc3c38-b4ad-414d-81b7-5c7cebd3f754",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:20 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:17Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "bab47fb8e056e61201bf9db4b1a0b05d",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "0a9e5d6b-60de-4da9-af36-dd8735540d62",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:21 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:17Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "b00ae0274987999ee81a4ae694fad7cc",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "d573c827-f732-49f5-949f-d6e1570f3cba",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:22 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "27"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:17Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "2b762eacf811ecbc8102314be0a19d4b",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "fdecb43d-86c8-4d6b-912b-f4afec100a10",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:23 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:22Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "ec8634e9f70b6e91e11ad23b952c5106",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "c01d47aa-cd67-425e-937f-1d96e24a5b49",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:24 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:22Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "8307d0e7852a2f4b241e2f841852b846",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "1644360a-53bc-4e1c-9f13-dcc002dff0c3",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:25 GMT",
+        "Date": "Fri, 30 Oct 2020 12:59:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "29"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:25Z"
+        "createdDateTime": "2020-10-30T12:59:48Z",
+        "lastUpdatedDateTime": "2020-10-30T12:59:49Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050/analyzeResults/2dbb14de-9416-4b87-af22-4b9b5a16bdea",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "60fdff7deb74b4c09c0849f625805654",
+        "x-ms-client-request-id": "109d8b138b679bd44cef369f9442d939",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2e941f45-a9d1-499f-a89a-0eb7229cda76",
+        "apim-request-id": "f189fd37-15cd-4d84-88d6-6c7322dc1431",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:26 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:25Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "10632ab11a996321e856c8edc80d558e",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "3cb5a5a1-fd41-4e3f-9d91-237ddcfd52e2",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:27 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:25Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "96be8b61f12ffc920f52e7213c5409a3",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "e4618de8-9f63-4863-86b8-d3a2c01cdca9",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:28 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "29"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:28Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "eed3dac7a8ee63addd99771d22d3ec8f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "c9e1487c-639a-4673-acfb-2158a97f7167",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:29 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:28Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "9a94bab2bfc2bf259867014632ff2794",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "3ab0c667-22b7-4df7-985e-020d82efc021",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:30 GMT",
+        "Date": "Fri, 30 Oct 2020 12:59:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "26"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:36:17Z",
-        "lastUpdatedDateTime": "2020-09-09T22:36:28Z"
+        "createdDateTime": "2020-10-30T12:59:48Z",
+        "lastUpdatedDateTime": "2020-10-30T12:59:49Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10/analyzeResults/25463559-eb54-479a-8f49-b86f79c402e8",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050/analyzeResults/2dbb14de-9416-4b87-af22-4b9b5a16bdea",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "ed26244d6739b99fdd5bb8957a74d93c",
+        "x-ms-client-request-id": "1b29a1e6c5bb8be2234324c511a59845",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a543138a-1af3-4f21-bd3c-7a3dc831f699",
+        "apim-request-id": "0325d313-ad68-4c40-bc0f-6175f9474d2d",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 30 Oct 2020 12:59:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "30"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2020-10-30T12:59:48Z",
+        "lastUpdatedDateTime": "2020-10-30T12:59:49Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050/analyzeResults/2dbb14de-9416-4b87-af22-4b9b5a16bdea",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "45625311dec541993ff07697c2f11470",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "eec4a9b5-68ef-4832-b48a-c5321be849db",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 30 Oct 2020 12:59:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "26"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2020-10-30T12:59:48Z",
+        "lastUpdatedDateTime": "2020-10-30T12:59:52Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050/analyzeResults/2dbb14de-9416-4b87-af22-4b9b5a16bdea",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "2eeb493fb8de4d3aa912ed24670e89a6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "259a8bcc-033b-48ac-b181-51a541971c7e",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 30 Oct 2020 12:59:53 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2020-10-30T12:59:48Z",
+        "lastUpdatedDateTime": "2020-10-30T12:59:52Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050/analyzeResults/2dbb14de-9416-4b87-af22-4b9b5a16bdea",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "418ef15694e0087408e7dbcb4f4ac932",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "39813e56-344a-4976-af74-656b8cfe701d",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 30 Oct 2020 12:59:54 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2020-10-30T12:59:48Z",
+        "lastUpdatedDateTime": "2020-10-30T12:59:52Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050/analyzeResults/2dbb14de-9416-4b87-af22-4b9b5a16bdea",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "c886b32e6aba596718149cb3f175da31",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cddfb9dd-6854-49f3-8845-24ccddfe8126",
         "Content-Length": "34822",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:36:31 GMT",
+        "Date": "Fri, 30 Oct 2020 12:59:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "31"
       },
-      "ResponseBody": "{\u0022status\u0022:\u0022succeeded\u0022,\u0022createdDateTime\u0022:\u00222020-09-09T22:36:17Z\u0022,\u0022lastUpdatedDateTime\u0022:\u00222020-09-09T22:36:31Z\u0022,\u0022analyzeResult\u0022:{\u0022version\u0022:\u00222.1.0\u0022,\u0022readResults\u0022:[{\u0022page\u0022:1,\u0022angle\u0022:0,\u0022width\u0022:8.5,\u0022height\u0022:11,\u0022unit\u0022:\u0022inch\u0022,\u0022lines\u0022:[{\u0022boundingBox\u0022:[6.1276,1.0667,7.4833,1.0667,7.4833,1.2403,6.1276,1.2403],\u0022text\u0022:\u0022Vendor #:121\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[6.1276,1.0667,6.8657,1.0667,6.8657,1.2403,6.1276,1.2403],\u0022text\u0022:\u0022Vendor\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.9307,1.0759,7.4833,1.0759,7.4833,1.2391,6.9307,1.2391],\u0022text\u0022:\u0022#:121\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.2268,1.5733,6.2379,1.5733,6.2379,2.005,2.2268,2.005],\u0022text\u0022:\u0022Vendor Registration\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.2268,1.5733,3.703,1.5733,3.703,1.9207,2.2268,1.9207],\u0022text\u0022:\u0022Vendor\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.8661,1.5883,6.2379,1.5883,6.2379,2.005,3.8661,2.005],\u0022text\u0022:\u0022Registration\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0078,2.5846,7.0776,2.5846,7.0776,2.7293,1.0078,2.7293],\u0022text\u0022:\u0022Contoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0078,2.5919,1.5548,2.5919,1.5548,2.7013,1.0078,2.7013],\u0022text\u0022:\u0022Contoso\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.6125,2.5856,1.843,2.5856,1.843,2.7013,1.6125,2.7013],\u0022text\u0022:\u0022Ltd.\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.8996,2.5846,2.6636,2.5846,2.6636,2.7013,1.8996,2.7013],\u0022text\u0022:\u0022Conference\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.7122,2.5852,2.9307,2.5852,2.9307,2.7003,2.7122,2.7003],\u0022text\u0022:\u0022will\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.9922,2.5852,3.1419,2.5852,3.1419,2.7013,2.9922,2.7013],\u0022text\u0022:\u0022be\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.1987,2.5852,3.4704,2.5852,3.4704,2.7013,3.1987,2.7013],\u0022text\u0022:\u0022held\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.53,2.62,3.6846,2.62,3.6846,2.7013,3.53,2.7013],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.7498,2.5934,4.0422,2.5934,4.0422,2.7293,3.7498,2.7293],\u0022text\u0022:\u0022May\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.0877,2.5914,4.5042,2.5914,4.5042,2.7236,4.0877,2.7236],\u0022text\u0022:\u002228-29,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.5586,2.5914,4.884,2.5914,4.884,2.7017,4.5586,2.7017],\u0022text\u0022:\u00222020\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.9351,2.6014,5.0577,2.6014,5.0577,2.7013,4.9351,2.7013],\u0022text\u0022:\u0022at\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.1033,2.5852,5.3202,2.5852,5.3202,2.7013,5.1033,2.7013],\u0022text\u0022:\u0022the\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.3787,2.5852,5.6051,2.5852,5.6051,2.7003,5.3787,2.7003],\u0022text\u0022:\u0022Elm\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.6624,2.5846,6.4263,2.5846,6.4263,2.7013,5.6624,2.7013],\u0022text\u0022:\u0022Conference\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.4796,2.5919,6.9234,2.5919,6.9234,2.7013,6.4796,2.7013],\u0022text\u0022:\u0022Center\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.9765,2.5905,7.0776,2.5905,7.0776,2.7003,6.9765,2.7003],\u0022text\u0022:\u0022in\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.014,2.8029,7.3457,2.8029,7.3457,2.9478,1.014,2.9478],\u0022text\u0022:\u0022Maple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.014,2.8036,1.4242,2.8036,1.4242,2.9478,1.014,2.9478],\u0022text\u0022:\u0022Maple\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.4763,2.8089,1.7576,2.8089,1.7576,2.9478,1.4763,2.9478],\u0022text\u0022:\u0022City,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.8195,2.8036,2.8383,2.8036,2.8383,2.9197,1.8195,2.9197],\u0022text\u0022:\u0022Massachusetts.\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.8883,2.8036,3.1326,2.8036,3.1326,2.9197,2.8883,2.9197],\u0022text\u0022:\u0022The\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.1842,2.8029,3.9301,2.8029,3.9301,2.9197,3.1842,2.9197],\u0022text\u0022:\u0022conference\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.9871,2.8036,4.2019,2.8036,4.2019,2.9197,3.9871,2.9197],\u0022text\u0022:\u0022has\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.2529,2.8036,4.5104,2.8036,4.5104,2.9197,4.2529,2.9197],\u0022text\u0022:\u0022sold\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.5701,2.8197,4.7871,2.8197,4.7871,2.9197,4.5701,2.9197],\u0022text\u0022:\u0022out\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.8373,2.8029,4.9701,2.8029,4.9701,2.9197,4.8373,2.9197],\u0022text\u0022:\u0022of\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.0169,2.8089,5.1601,2.8089,5.1601,2.9197,5.0169,2.9197],\u0022text\u0022:\u0022its\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.2167,2.81,5.5766,2.81,5.5766,2.9418,5.2167,2.9418],\u0022text\u0022:\u00221,500\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.6227,2.8036,6.0928,2.8036,6.0928,2.9418,5.6227,2.9418],\u0022text\u0022:\u0022tickets,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.1461,2.8036,6.4308,2.8036,6.4308,2.9195,6.1461,2.9195],\u0022text\u0022:\u0022with\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.488,2.8383,6.548,2.8383,6.548,2.9197,6.488,2.9197],\u0022text\u0022:\u0022a\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.6016,2.81,6.8449,2.81,6.8449,2.9197,6.6016,2.9197],\u0022text\u0022:\u0022400\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.8998,2.8383,7.3457,2.8383,7.3457,2.9478,6.8998,2.9478],\u0022text\u0022:\u0022person\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0043,3.0229,7.2482,3.0229,7.2482,3.1678,1.0043,3.1678],\u0022text\u0022:\u0022waitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0043,3.0236,1.5194,3.0236,1.5194,3.1397,1.0043,3.1397],\u0022text\u0022:\u0022waitlist.\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.5733,3.0239,2.0654,3.0239,2.0654,3.1397,1.5733,3.1397],\u0022text\u0022:\u0022Vendor\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.1132,3.0236,2.9143,3.0236,2.9143,3.1678,2.1132,3.1678],\u0022text\u0022:\u0022applications\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.9675,3.0583,3.1726,3.0583,3.1726,3.1397,2.9675,3.1397],\u0022text\u0022:\u0022are\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.2306,3.0236,3.5889,3.0236,3.5889,3.1678,3.2306,3.1678],\u0022text\u0022:\u0022being\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.6388,3.0239,4.2336,3.0239,4.2336,3.1678,3.6388,3.1678],\u0022text\u0022:\u0022accepted\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.2862,3.0236,4.8127,3.0236,4.8127,3.1678,4.2862,3.1678],\u0022text\u0022:\u0022through\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.8815,3.0236,5.1133,3.0236,5.1133,3.14,4.8815,3.14],\u0022text\u0022:\u0022Feb\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.163,3.0297,5.361,3.0297,5.361,3.162,5.163,3.162],\u0022text\u0022:\u002228,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.413,3.0297,5.7774,3.0297,5.7774,3.14,5.413,3.14],\u0022text\u0022:\u00222020.\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.8406,3.0236,6.2537,3.0236,6.2537,3.1397,5.8406,3.1397],\u0022text\u0022:\u0022Please\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.3022,3.0229,6.4539,3.0229,6.4539,3.1387,6.3022,3.1387],\u0022text\u0022:\u0022fill\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.5131,3.0289,6.6158,3.0289,6.6158,3.1387,6.5131,3.1387],\u0022text\u0022:\u0022in\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.6673,3.0236,6.8842,3.0236,6.8842,3.1397,6.6673,3.1397],\u0022text\u0022:\u0022the\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.9317,3.0229,7.2482,3.0229,7.2482,3.1397,6.9317,3.1397],\u0022text\u0022:\u0022form\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0125,3.2436,3.6599,3.2436,3.6599,3.3818,1.0125,3.3818],\u0022text\u0022:\u0022below, and attach a check made out to:\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0125,3.2436,1.4459,3.2436,1.4459,3.3818,1.0125,3.3818],\u0022text\u0022:\u0022below,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.5024,3.2439,1.7371,3.2439,1.7371,3.3597,1.5024,3.3597],\u0022text\u0022:\u0022and\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.7968,3.2436,2.2047,3.2436,2.2047,3.3597,1.7968,3.3597],\u0022text\u0022:\u0022attach\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.2619,3.2783,2.3219,3.2783,2.3219,3.3597,2.2619,3.3597],\u0022text\u0022:\u0022a\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.379,3.2436,2.7529,3.2436,2.7529,3.3597,2.379,3.3597],\u0022text\u0022:\u0022check\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.8076,3.2439,3.17,3.2439,3.17,3.3597,2.8076,3.3597],\u0022text\u0022:\u0022made\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.2251,3.2597,3.4421,3.2597,3.4421,3.3597,3.2251,3.3597],\u0022text\u0022:\u0022out\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.4869,3.2597,3.6599,3.2597,3.6599,3.3597,3.4869,3.3597],\u0022text\u0022:\u0022to:\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0078,3.5739,1.843,3.5739,1.843,3.6897,1.0078,3.6897],\u0022text\u0022:\u0022Contoso Ltd.\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0078,3.5802,1.5548,3.5802,1.5548,3.6897,1.0078,3.6897],\u0022text\u0022:\u0022Contoso\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.6125,3.5739,1.843,3.5739,1.843,3.6897,1.6125,3.6897],\u0022text\u0022:\u0022Ltd.\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0093,3.7939,2.3768,3.7939,2.3768,3.9378,1.0093,3.9378],\u0022text\u0022:\u00222345 Dogwood Lane\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0093,3.8,1.3297,3.8,1.3297,3.9097,1.0093,3.9097],\u0022text\u0022:\u00222345\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.3899,3.7939,2.0149,3.7939,2.0149,3.9378,1.3899,3.9378],\u0022text\u0022:\u0022Dogwood\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.0788,3.8012,2.3768,3.8012,2.3768,3.9097,2.0788,3.9097],\u0022text\u0022:\u0022Lane\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.014,4.0136,2.3377,4.0136,2.3377,4.1518,1.014,4.1518],\u0022text\u0022:\u0022Birch, Kansas 98123\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.014,4.0136,1.3745,4.0136,1.3745,4.1518,1.014,4.1518],\u0022text\u0022:\u0022Birch,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.4375,4.0212,1.8819,4.0212,1.8819,4.1297,1.4375,4.1297],\u0022text\u0022:\u0022Kansas\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.9318,4.02,2.3377,4.02,2.3377,4.1297,1.9318,4.1297],\u0022text\u0022:\u002298123\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0204,4.4248,1.5303,4.4248,1.5303,4.5682,1.0204,4.5682],\u0022text\u0022:\u0022Rates:\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0204,4.4248,1.5303,4.4248,1.5303,4.5682,1.0204,4.5682],\u0022text\u0022:\u0022Rates:\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0923,4.6986,1.6232,4.6986,1.6232,4.8428,1.0923,4.8428],\u0022text\u0022:\u0022Package\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0923,4.6986,1.6232,4.6986,1.6232,4.8428,1.0923,4.8428],\u0022text\u0022:\u0022Package\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.713,4.6986,3.2707,4.6986,3.2707,4.8147,2.713,4.8147],\u0022text\u0022:\u0022Included\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.713,4.6986,3.2707,4.6986,3.2707,4.8147,2.713,4.8147],\u0022text\u0022:\u0022Included\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.838,4.7039,6.1513,4.7039,6.1513,4.8147,5.838,4.8147],\u0022text\u0022:\u0022Price\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.838,4.7039,6.1513,4.7039,6.1513,4.8147,5.838,4.8147],\u0022text\u0022:\u0022Price\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0857,4.9086,1.9831,4.9086,1.9831,5.0528,1.0857,5.0528],\u0022text\u0022:\u0022Gold Sponsor\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0857,4.9086,1.3842,4.9086,1.3842,5.0247,1.0857,5.0247],\u0022text\u0022:\u0022Gold\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.4423,4.915,1.9831,4.915,1.9831,5.0528,1.4423,5.0528],\u0022text\u0022:\u0022Sponsor\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,4.954,3.018,4.954,3.018,5.0145,2.9586,5.0145],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,4.954,3.018,4.954,3.018,5.0145,2.9586,5.0145],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,4.9169,3.8726,4.9169,3.8726,5.033,3.214,5.033],\u0022text\u0022:\u0022Full booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,4.9169,3.4295,4.9169,3.4295,5.033,3.214,5.033],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,4.9169,3.8726,4.9169,3.8726,5.033,3.492,5.033],\u0022text\u0022:\u0022booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.8328,4.8977,6.2829,4.8977,6.2829,5.0468,5.8328,5.0468],\u0022text\u0022:\u0022$1,500\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.8328,4.8977,6.2829,4.8977,6.2829,5.0468,5.8328,5.0468],\u0022text\u0022:\u0022$1,500\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,5.1673,3.018,5.1673,3.018,5.2279,2.9586,5.2279],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,5.1673,3.018,5.1673,3.018,5.2279,2.9586,5.2279],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,5.1302,4.7267,5.1302,4.7267,5.2744,3.214,5.2744],\u0022text\u0022:\u0022Pre-keynote thank you\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,5.1302,4.0183,5.1302,4.0183,5.2744,3.214,5.2744],\u0022text\u0022:\u0022Pre-keynote\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.0665,5.1302,4.4475,5.1302,4.4475,5.2463,4.0665,5.2463],\u0022text\u0022:\u0022thank\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.4903,5.165,4.7267,5.165,4.7267,5.2744,4.4903,5.2744],\u0022text\u0022:\u0022you\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,5.379,3.018,5.379,3.018,5.4395,2.9586,5.4395],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,5.379,3.018,5.379,3.018,5.4395,2.9586,5.4395],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,5.3495,4.2093,5.3495,4.2093,5.4861,3.214,5.4861],\u0022text\u0022:\u0022Logo on poster\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,5.3495,3.5163,5.3495,3.5163,5.4861,3.214,5.4861],\u0022text\u0022:\u0022Logo\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.5686,5.3767,3.7244,5.3767,3.7244,5.458,3.5686,5.458],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.7888,5.358,4.2093,5.358,4.2093,5.4861,3.7888,5.4861],\u0022text\u0022:\u0022poster\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,5.5923,3.018,5.5923,3.018,5.6529,2.9586,5.6529],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,5.5923,3.018,5.5923,3.018,5.6529,2.9586,5.6529],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,5.5552,5.201,5.5552,5.201,5.6994,3.214,5.6994],\u0022text\u0022:\u0022Full page ad in program guide\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,5.5552,3.4295,5.5552,3.4295,5.6713,3.214,5.6713],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,5.59,3.7989,5.59,3.7989,5.6994,3.492,5.6994],\u0022text\u0022:\u0022page\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.8519,5.5556,3.9991,5.5556,3.9991,5.6713,3.8519,5.6713],\u0022text\u0022:\u0022ad\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.0599,5.5605,4.1626,5.5605,4.1626,5.6703,4.0599,5.6703],\u0022text\u0022:\u0022in\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.2248,5.59,4.7839,5.59,4.7839,5.6994,4.2248,5.6994],\u0022text\u0022:\u0022program\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.8367,5.5556,5.201,5.5556,5.201,5.6994,4.8367,5.6994],\u0022text\u0022:\u0022guide\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,5.804,3.018,5.804,3.018,5.8645,2.9586,5.8645],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,5.804,3.018,5.804,3.018,5.8645,2.9586,5.8645],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0842,5.9786,2.0339,5.9786,2.0339,6.1228,1.0842,6.1228],\u0022text\u0022:\u0022Silver Sponsor\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0842,5.9786,1.4443,5.9786,1.4443,6.0947,1.0842,6.0947],\u0022text\u0022:\u0022Silver\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.4904,5.985,2.0339,5.985,2.0339,6.1228,1.4904,6.1228],\u0022text\u0022:\u0022Sponsor\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,6.024,3.018,6.024,3.018,6.0845,2.9586,6.0845],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,6.024,3.018,6.024,3.018,6.0845,2.9586,6.0845],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,5.9869,3.8726,5.9869,3.8726,6.103,3.214,6.103],\u0022text\u0022:\u0022Full booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,5.9869,3.4295,5.9869,3.4295,6.103,3.214,6.103],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,5.9869,3.8726,5.9869,3.8726,6.103,3.492,6.103],\u0022text\u0022:\u0022booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.8328,5.9677,6.2829,5.9677,6.2829,6.1168,5.8328,6.1168],\u0022text\u0022:\u0022$1,200\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.8328,5.9677,6.2829,5.9677,6.2829,6.1168,5.8328,6.1168],\u0022text\u0022:\u0022$1,200\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,6.2356,3.018,6.2356,3.018,6.2962,2.9586,6.2962],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,6.2356,3.018,6.2356,3.018,6.2962,2.9586,6.2962],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,6.1986,4.7938,6.1986,4.7938,6.3428,3.214,6.3428],\u0022text\u0022:\u0022Post-keynote thank you\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,6.1986,4.0878,6.1986,4.0878,6.3428,3.214,6.3428],\u0022text\u0022:\u0022Post-keynote\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.1348,6.1986,4.5158,6.1986,4.5158,6.3147,4.1348,6.3147],\u0022text\u0022:\u0022thank\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.5586,6.2333,4.7938,6.2333,4.7938,6.3428,4.5586,6.3428],\u0022text\u0022:\u0022you\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,6.4473,3.018,6.4473,3.018,6.5079,2.9586,6.5079],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,6.4473,3.018,6.4473,3.018,6.5079,2.9586,6.5079],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,6.4179,4.2093,6.4179,4.2093,6.5544,3.214,6.5544],\u0022text\u0022:\u0022Logo on poster\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,6.4179,3.5163,6.4179,3.5163,6.5544,3.214,6.5544],\u0022text\u0022:\u0022Logo\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.5686,6.445,3.7244,6.445,3.7244,6.5263,3.5686,6.5263],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.7888,6.4264,4.2093,6.4264,4.2093,6.5544,3.7888,6.5544],\u0022text\u0022:\u0022poster\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,6.6606,3.018,6.6606,3.018,6.7212,2.9586,6.7212],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,6.6606,3.018,6.6606,3.018,6.7212,2.9586,6.7212],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,6.6229,5.2314,6.6229,5.2314,6.7678,3.214,6.7678],\u0022text\u0022:\u0022Half page ad in program guide\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,6.6229,3.4739,6.6229,3.4739,6.7397,3.214,6.7397],\u0022text\u0022:\u0022Half\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.5224,6.6583,3.8326,6.6583,3.8326,6.7678,3.5224,6.7678],\u0022text\u0022:\u0022page\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.8843,6.6239,4.0315,6.6239,4.0315,6.7397,3.8843,6.7397],\u0022text\u0022:\u0022ad\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.0923,6.6289,4.195,6.6289,4.195,6.7387,4.0923,6.7387],\u0022text\u0022:\u0022in\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.2563,6.6583,4.8148,6.6583,4.8148,6.7678,4.2563,6.7678],\u0022text\u0022:\u0022program\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.8695,6.6239,5.2314,6.6239,5.2314,6.7678,4.8695,6.7678],\u0022text\u0022:\u0022guide\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0923,6.84,2.1362,6.84,2.1362,6.9778,1.0923,6.9778],\u0022text\u0022:\u0022Bronze Sponsor\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0923,6.8417,1.545,6.8417,1.545,6.9497,1.0923,6.9497],\u0022text\u0022:\u0022Bronze\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.5951,6.84,2.1362,6.84,2.1362,6.9778,1.5951,6.9778],\u0022text\u0022:\u0022Sponsor\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,6.879,3.018,6.879,3.018,6.9395,2.9586,6.9395],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,6.879,3.018,6.879,3.018,6.9395,2.9586,6.9395],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,6.8419,3.8726,6.8419,3.8726,6.958,3.214,6.958],\u0022text\u0022:\u0022Full booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,6.8419,3.4295,6.8419,3.4295,6.958,3.214,6.958],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,6.8419,3.8726,6.8419,3.8726,6.958,3.492,6.958],\u0022text\u0022:\u0022booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.8328,6.8227,6.2829,6.8227,6.2829,6.9718,5.8328,6.9718],\u0022text\u0022:\u0022$1,000\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.8328,6.8227,6.2829,6.8227,6.2829,6.9718,5.8328,6.9718],\u0022text\u0022:\u0022$1,000\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,7.0923,3.018,7.0923,3.018,7.1529,2.9586,7.1529],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,7.0923,3.018,7.0923,3.018,7.1529,2.9586,7.1529],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,7.0629,4.2093,7.0629,4.2093,7.1994,3.214,7.1994],\u0022text\u0022:\u0022Logo on poster\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,7.0629,3.5163,7.0629,3.5163,7.1994,3.214,7.1994],\u0022text\u0022:\u0022Logo\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.5686,7.09,3.7244,7.09,3.7244,7.1713,3.5686,7.1713],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.7888,7.0714,4.2093,7.0714,4.2093,7.1994,3.7888,7.1994],\u0022text\u0022:\u0022poster\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,7.304,3.018,7.304,3.018,7.3645,2.9586,7.3645],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,7.304,3.018,7.304,3.018,7.3645,2.9586,7.3645],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2082,7.2672,5.3419,7.2672,5.3419,7.4111,3.2082,7.4111],\u0022text\u0022:\u002250% discount on program guide\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2082,7.2717,3.4817,7.2717,3.4817,7.3845,3.2082,7.3845],\u0022text\u0022:\u002250%\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.533,7.2672,4.1018,7.2672,4.1018,7.383,3.533,7.383],\u0022text\u0022:\u0022discount\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.1512,7.3017,4.307,7.3017,4.307,7.383,4.1512,7.383],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.3682,7.3017,4.9253,7.3017,4.9253,7.4111,4.3682,7.4111],\u0022text\u0022:\u0022program\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.981,7.2672,5.3419,7.2672,5.3419,7.4111,4.981,7.4111],\u0022text\u0022:\u0022guide\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2075,7.4706,4.2429,7.4706,4.2429,7.5863,3.2075,7.5863],\u0022text\u0022:\u0022advertisements\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2075,7.4706,4.2429,7.4706,4.2429,7.5863,3.2075,7.5863],\u0022text\u0022:\u0022advertisements\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0923,7.6819,1.7537,7.6819,1.7537,7.798,1.0923,7.798],\u0022text\u0022:\u0022Full Booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0923,7.6819,1.3079,7.6819,1.3079,7.798,1.0923,7.798],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.3718,7.6819,1.7537,7.6819,1.7537,7.798,1.3718,7.798],\u0022text\u0022:\u0022Booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,7.7273,3.018,7.7273,3.018,7.7879,2.9586,7.7879],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,7.7273,3.018,7.7273,3.018,7.7879,2.9586,7.7879],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,7.6902,3.8726,7.6902,3.8726,7.8063,3.214,7.8063],\u0022text\u0022:\u0022Full booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,7.6902,3.4295,7.6902,3.4295,7.8063,3.214,7.8063],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,7.6902,3.8726,7.6902,3.8726,7.8063,3.492,7.8063],\u0022text\u0022:\u0022booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.8328,7.6711,6.1586,7.6711,6.1586,7.8165,5.8328,7.8165],\u0022text\u0022:\u0022$600\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.8328,7.6711,6.1586,7.6711,6.1586,7.8165,5.8328,7.8165],\u0022text\u0022:\u0022$600\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,7.939,3.018,7.939,3.018,7.9995,2.9586,7.9995],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,7.939,3.018,7.939,3.018,7.9995,2.9586,7.9995],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2082,7.9022,5.3419,7.9022,5.3419,8.0461,3.2082,8.0461],\u0022text\u0022:\u002250% discount on program guide\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2082,7.9067,3.4817,7.9067,3.4817,8.0195,3.2082,8.0195],\u0022text\u0022:\u002250%\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.533,7.9022,4.1018,7.9022,4.1018,8.018,3.533,8.018],\u0022text\u0022:\u0022discount\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.1512,7.9367,4.307,7.9367,4.307,8.018,4.1512,8.018],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.3682,7.9367,4.9253,7.9367,4.9253,8.0461,4.3682,8.0461],\u0022text\u0022:\u0022program\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.981,7.9022,5.3419,7.9022,5.3419,8.0461,4.981,8.0461],\u0022text\u0022:\u0022guide\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2075,8.1056,4.2429,8.1056,4.2429,8.2213,3.2075,8.2213],\u0022text\u0022:\u0022advertisements\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2075,8.1056,4.2429,8.1056,4.2429,8.2213,3.2075,8.2213],\u0022text\u0022:\u0022advertisements\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0923,8.3162,1.7854,8.3162,1.7854,8.433,1.0923,8.433],\u0022text\u0022:\u0022Half Booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0923,8.3162,1.3522,8.3162,1.3522,8.433,1.0923,8.433],\u0022text\u0022:\u0022Half\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.4022,8.3169,1.7854,8.3169,1.7854,8.433,1.4022,8.433],\u0022text\u0022:\u0022Booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,8.3623,3.018,8.3623,3.018,8.4229,2.9586,8.4229],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,8.3623,3.018,8.3623,3.018,8.4229,2.9586,8.4229],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,8.3252,3.8726,8.3252,3.8726,8.4413,3.214,8.4413],\u0022text\u0022:\u0022Full booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,8.3252,3.4295,8.3252,3.4295,8.4413,3.214,8.4413],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,8.3252,3.8726,8.3252,3.8726,8.4413,3.492,8.4413],\u0022text\u0022:\u0022booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.8328,8.3061,6.1586,8.3061,6.1586,8.4515,5.8328,8.4515],\u0022text\u0022:\u0022$350\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.8328,8.3061,6.1586,8.3061,6.1586,8.4515,5.8328,8.4515],\u0022text\u0022:\u0022$350\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,8.574,3.018,8.574,3.018,8.6345,2.9586,8.6345],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,8.574,3.018,8.574,3.018,8.6345,2.9586,8.6345],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2093,8.5372,5.3419,8.5372,5.3419,8.6811,3.2093,8.6811],\u0022text\u0022:\u002225% discount on program guide\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2093,8.5417,3.4817,8.5417,3.4817,8.6545,3.2093,8.6545],\u0022text\u0022:\u002225%\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.533,8.5372,4.1018,8.5372,4.1018,8.653,3.533,8.653],\u0022text\u0022:\u0022discount\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.1512,8.5717,4.307,8.5717,4.307,8.653,4.1512,8.653],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.3682,8.5717,4.9253,8.5717,4.9253,8.6811,4.3682,8.6811],\u0022text\u0022:\u0022program\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.981,8.5372,5.3419,8.5372,5.3419,8.6811,4.981,8.6811],\u0022text\u0022:\u0022guide\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2075,8.7406,4.2429,8.7406,4.2429,8.8563,3.2075,8.8563],\u0022text\u0022:\u0022advertisements\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2075,8.7406,4.2429,8.7406,4.2429,8.8563,3.2075,8.8563],\u0022text\u0022:\u0022advertisements\u0022,\u0022confidence\u0022:1}]}],\u0022selectionMarks\u0022:[{\u0022boundingBox\u0022:[0,10.2725,1.0372,10.2725,1.0372,10.9925,0,10.9925],\u0022confidence\u0022:0.69,\u0022state\u0022:\u0022unselected\u0022},{\u0022boundingBox\u0022:[0,10.6019,1.5095,10.6019,1.5095,10.9983,0,10.9983],\u0022confidence\u0022:0.69,\u0022state\u0022:\u0022unselected\u0022},{\u0022boundingBox\u0022:[2.9381,6.9634,3.0388,6.9634,3.0388,7.0736,2.9381,7.0736],\u0022confidence\u0022:0.553,\u0022state\u0022:\u0022unselected\u0022}]},{\u0022page\u0022:2,\u0022angle\u0022:0,\u0022width\u0022:8.5,\u0022height\u0022:11,\u0022unit\u0022:\u0022inch\u0022,\u0022lines\u0022:[{\u0022boundingBox\u0022:[6.1276,1.0667,7.4833,1.0667,7.4833,1.2403,6.1276,1.2403],\u0022text\u0022:\u0022Vendor #:121\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[6.1276,1.0667,6.8657,1.0667,6.8657,1.2403,6.1276,1.2403],\u0022text\u0022:\u0022Vendor\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.9307,1.0759,7.4833,1.0759,7.4833,1.2391,6.9307,1.2391],\u0022text\u0022:\u0022#:121\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0044,2.1771,2.35,2.1771,2.35,2.3315,1.0044,2.3315],\u0022text\u0022:\u0022Vendor Details:\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0044,2.1778,1.6496,2.1778,1.6496,2.3315,1.0044,2.3315],\u0022text\u0022:\u0022Vendor\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.7239,2.1771,2.35,2.1771,2.35,2.3315,1.7239,2.3315],\u0022text\u0022:\u0022Details:\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0065,2.7686,3.3477,2.7686,3.3477,2.9128,1.0065,2.9128],\u0022text\u0022:\u0022Company Name: Southridge Video\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0065,2.7749,1.651,2.7749,1.651,2.9126,1.0065,2.9126],\u0022text\u0022:\u0022Company\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.7019,2.7764,2.1376,2.7764,2.1376,2.885,1.7019,2.885],\u0022text\u0022:\u0022Name:\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.1925,2.7686,2.9184,2.7686,2.9184,2.9128,2.1925,2.9128],\u0022text\u0022:\u0022Southridge\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.9691,2.7689,3.3477,2.7689,3.3477,2.8847,2.9691,2.8847],\u0022text\u0022:\u0022Video\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0065,3.0986,3.5766,3.0986,3.5766,3.2428,1.0065,3.2428],\u0022text\u0022:\u0022Contact: Jamie@southridgevideo.com\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0065,3.1049,1.5706,3.1049,1.5706,3.215,1.0065,3.215],\u0022text\u0022:\u0022Contact:\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.6205,3.0986,3.5766,3.0986,3.5766,3.2428,1.6205,3.2428],\u0022text\u0022:\u0022Jamie@southridgevideo.com\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0115,3.4296,2.6542,3.4296,2.6542,3.5744,1.0115,3.5744],\u0022text\u0022:\u0022Preferred Package: Gold\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0115,3.4296,1.6499,3.4296,1.6499,3.5467,1.0115,3.5467],\u0022text\u0022:\u0022Preferred\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.7092,3.4302,2.2978,3.4302,2.2978,3.5744,1.7092,3.5744],\u0022text\u0022:\u0022Package:\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.3557,3.4302,2.6542,3.4302,2.6542,3.5463,2.3557,3.5463],\u0022text\u0022:\u0022Gold\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0052,3.7537,2.4783,3.7537,2.4783,3.9043,1.0052,3.9043],\u0022text\u0022:\u0022Special Requests: N/a\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0052,3.7602,1.475,3.7602,1.475,3.9043,1.0052,3.9043],\u0022text\u0022:\u0022Special\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.5342,3.7684,2.1899,3.7684,2.1899,3.9043,1.5342,3.9043],\u0022text\u0022:\u0022Requests:\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.254,3.7537,2.4783,3.7537,2.4783,3.8976,2.254,3.8976],\u0022text\u0022:\u0022N/a\u0022,\u0022confidence\u0022:1}]}],\u0022selectionMarks\u0022:[{\u0022boundingBox\u0022:[0.0024,9.869,1.0826,9.869,1.0826,10.9955,0.0024,10.9955],\u0022confidence\u0022:0.833,\u0022state\u0022:\u0022unselected\u0022},{\u0022boundingBox\u0022:[7.6562,1.0157,8.5,1.0157,8.5,2.8293,7.6562,2.8293],\u0022confidence\u0022:0.6,\u0022state\u0022:\u0022unselected\u0022},{\u0022boundingBox\u0022:[0.0008,10.4758,1.8164,10.4758,1.8164,10.9978,0.0008,10.9978],\u0022confidence\u0022:0.6,\u0022state\u0022:\u0022unselected\u0022}]}],\u0022pageResults\u0022:[{\u0022page\u0022:1,\u0022tables\u0022:[{\u0022rows\u0022:20,\u0022columns\u0022:3,\u0022cells\u0022:[{\u0022rowIndex\u0022:0,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Package\u0022,\u0022boundingBox\u0022:[1.0033,4.6517,2.625,4.6517,2.625,4.8617,1.0033,4.8617],\u0022elements\u0022:[\u0022#/readResults/0/lines/10/words/0\u0022]},{\u0022rowIndex\u0022:0,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022Included\u0022,\u0022boundingBox\u0022:[2.625,4.6517,5.75,4.6517,5.75,4.8617,2.625,4.8617],\u0022elements\u0022:[\u0022#/readResults/0/lines/11/words/0\u0022]},{\u0022rowIndex\u0022:0,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022Price\u0022,\u0022boundingBox\u0022:[5.75,4.6517,7.4967,4.6517,7.4967,4.8617,5.75,4.8617],\u0022elements\u0022:[\u0022#/readResults/0/lines/12/words/0\u0022]},{\u0022rowIndex\u0022:1,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Gold Sponsor\u0022,\u0022boundingBox\u0022:[1.0033,4.8617,2.625,4.8617,2.625,5.0833,1.0033,5.0833],\u0022elements\u0022:[\u0022#/readResults/0/lines/13/words/0\u0022,\u0022#/readResults/0/lines/13/words/1\u0022]},{\u0022rowIndex\u0022:1,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full booth\u0022,\u0022boundingBox\u0022:[2.625,4.8617,5.75,4.8617,5.75,5.0833,2.625,5.0833],\u0022elements\u0022:[\u0022#/readResults/0/lines/14/words/0\u0022,\u0022#/readResults/0/lines/15/words/0\u0022,\u0022#/readResults/0/lines/15/words/1\u0022]},{\u0022rowIndex\u0022:1,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022$1,500\u0022,\u0022boundingBox\u0022:[5.75,4.8617,7.4967,4.8617,7.4967,5.0833,5.75,5.0833],\u0022elements\u0022:[\u0022#/readResults/0/lines/16/words/0\u0022]},{\u0022rowIndex\u0022:2,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Pre-keynote thank you\u0022,\u0022boundingBox\u0022:[2.625,5.0833,5.75,5.0833,5.75,5.3056,2.625,5.3056],\u0022elements\u0022:[\u0022#/readResults/0/lines/17/words/0\u0022,\u0022#/readResults/0/lines/18/words/0\u0022,\u0022#/readResults/0/lines/18/words/1\u0022,\u0022#/readResults/0/lines/18/words/2\u0022]},{\u0022rowIndex\u0022:3,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Logo on poster\u0022,\u0022boundingBox\u0022:[2.625,5.3056,5.75,5.3056,5.75,5.5139,2.625,5.5139],\u0022elements\u0022:[\u0022#/readResults/0/lines/19/words/0\u0022,\u0022#/readResults/0/lines/20/words/0\u0022,\u0022#/readResults/0/lines/20/words/1\u0022,\u0022#/readResults/0/lines/20/words/2\u0022]},{\u0022rowIndex\u0022:4,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full page ad in program guide\u0022,\u0022boundingBox\u0022:[2.625,5.5139,5.75,5.5139,5.75,5.7361,2.625,5.7361],\u0022elements\u0022:[\u0022#/readResults/0/lines/21/words/0\u0022,\u0022#/readResults/0/lines/22/words/0\u0022,\u0022#/readResults/0/lines/22/words/1\u0022,\u0022#/readResults/0/lines/22/words/2\u0022,\u0022#/readResults/0/lines/22/words/3\u0022,\u0022#/readResults/0/lines/22/words/4\u0022,\u0022#/readResults/0/lines/22/words/5\u0022]},{\u0022rowIndex\u0022:5,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7\u0022,\u0022boundingBox\u0022:[2.625,5.7361,5.75,5.7361,5.75,5.93,2.625,5.93],\u0022elements\u0022:[\u0022#/readResults/0/lines/23/words/0\u0022]},{\u0022rowIndex\u0022:6,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Silver Sponsor\u0022,\u0022boundingBox\u0022:[1.0033,5.93,2.625,5.93,2.625,6.1528,1.0033,6.1528],\u0022elements\u0022:[\u0022#/readResults/0/lines/24/words/0\u0022,\u0022#/readResults/0/lines/24/words/1\u0022]},{\u0022rowIndex\u0022:6,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full booth\u0022,\u0022boundingBox\u0022:[2.625,5.93,5.75,5.93,5.75,6.1528,2.625,6.1528],\u0022elements\u0022:[\u0022#/readResults/0/lines/25/words/0\u0022,\u0022#/readResults/0/lines/26/words/0\u0022,\u0022#/readResults/0/lines/26/words/1\u0022]},{\u0022rowIndex\u0022:6,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022$1,200\u0022,\u0022boundingBox\u0022:[5.75,5.93,7.4967,5.93,7.4967,6.1528,5.75,6.1528],\u0022elements\u0022:[\u0022#/readResults/0/lines/27/words/0\u0022]},{\u0022rowIndex\u0022:7,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Post-keynote thank you\u0022,\u0022boundingBox\u0022:[2.625,6.1528,5.75,6.1528,5.75,6.375,2.625,6.375],\u0022elements\u0022:[\u0022#/readResults/0/lines/28/words/0\u0022,\u0022#/readResults/0/lines/29/words/0\u0022,\u0022#/readResults/0/lines/29/words/1\u0022,\u0022#/readResults/0/lines/29/words/2\u0022]},{\u0022rowIndex\u0022:8,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Logo on poster\u0022,\u0022boundingBox\u0022:[2.625,6.375,5.75,6.375,5.75,6.5833,2.625,6.5833],\u0022elements\u0022:[\u0022#/readResults/0/lines/30/words/0\u0022,\u0022#/readResults/0/lines/31/words/0\u0022,\u0022#/readResults/0/lines/31/words/1\u0022,\u0022#/readResults/0/lines/31/words/2\u0022]},{\u0022rowIndex\u0022:9,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Half page ad in program guide\u0022,\u0022boundingBox\u0022:[2.625,6.5833,5.75,6.5833,5.75,6.7867,2.625,6.7867],\u0022elements\u0022:[\u0022#/readResults/0/lines/32/words/0\u0022,\u0022#/readResults/0/lines/33/words/0\u0022,\u0022#/readResults/0/lines/33/words/1\u0022,\u0022#/readResults/0/lines/33/words/2\u0022,\u0022#/readResults/0/lines/33/words/3\u0022,\u0022#/readResults/0/lines/33/words/4\u0022,\u0022#/readResults/0/lines/33/words/5\u0022]},{\u0022rowIndex\u0022:10,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Bronze Sponsor\u0022,\u0022boundingBox\u0022:[1.0033,6.7867,2.625,6.7867,2.625,7.0139,1.0033,7.0139],\u0022elements\u0022:[\u0022#/readResults/0/lines/34/words/0\u0022,\u0022#/readResults/0/lines/34/words/1\u0022]},{\u0022rowIndex\u0022:10,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full booth\u0022,\u0022boundingBox\u0022:[2.625,6.7867,5.75,6.7867,5.75,7.0139,2.625,7.0139],\u0022elements\u0022:[\u0022#/readResults/0/lines/35/words/0\u0022,\u0022#/readResults/0/lines/36/words/0\u0022,\u0022#/readResults/0/lines/36/words/1\u0022]},{\u0022rowIndex\u0022:10,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022$1,000\u0022,\u0022boundingBox\u0022:[5.75,6.7867,7.4967,6.7867,7.4967,7.0139,5.75,7.0139],\u0022elements\u0022:[\u0022#/readResults/0/lines/37/words/0\u0022]},{\u0022rowIndex\u0022:11,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Logo on poster\u0022,\u0022boundingBox\u0022:[2.625,7.0139,5.75,7.0139,5.75,7.2222,2.625,7.2222],\u0022elements\u0022:[\u0022#/readResults/0/lines/38/words/0\u0022,\u0022#/readResults/0/lines/39/words/0\u0022,\u0022#/readResults/0/lines/39/words/1\u0022,\u0022#/readResults/0/lines/39/words/2\u0022]},{\u0022rowIndex\u0022:12,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 50% discount on program guide\u0022,\u0022boundingBox\u0022:[2.625,7.2222,5.75,7.2222,5.75,7.4306,2.625,7.4306],\u0022elements\u0022:[\u0022#/readResults/0/lines/40/words/0\u0022,\u0022#/readResults/0/lines/41/words/0\u0022,\u0022#/readResults/0/lines/41/words/1\u0022,\u0022#/readResults/0/lines/41/words/2\u0022,\u0022#/readResults/0/lines/41/words/3\u0022,\u0022#/readResults/0/lines/41/words/4\u0022]},{\u0022rowIndex\u0022:13,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022advertisements\u0022,\u0022boundingBox\u0022:[2.625,7.4306,5.75,7.4306,5.75,7.635,2.625,7.635],\u0022elements\u0022:[\u0022#/readResults/0/lines/42/words/0\u0022]},{\u0022rowIndex\u0022:14,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Full Booth\u0022,\u0022boundingBox\u0022:[1.0033,7.635,2.625,7.635,2.625,7.8611,1.0033,7.8611],\u0022elements\u0022:[\u0022#/readResults/0/lines/43/words/0\u0022,\u0022#/readResults/0/lines/43/words/1\u0022]},{\u0022rowIndex\u0022:14,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full booth\u0022,\u0022boundingBox\u0022:[2.625,7.635,5.75,7.635,5.75,7.8611,2.625,7.8611],\u0022elements\u0022:[\u0022#/readResults/0/lines/44/words/0\u0022,\u0022#/readResults/0/lines/45/words/0\u0022,\u0022#/readResults/0/lines/45/words/1\u0022]},{\u0022rowIndex\u0022:14,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022$600\u0022,\u0022boundingBox\u0022:[5.75,7.635,7.4967,7.635,7.4967,7.8611,5.75,7.8611],\u0022elements\u0022:[\u0022#/readResults/0/lines/46/words/0\u0022]},{\u0022rowIndex\u0022:15,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 50% discount on program guide\u0022,\u0022boundingBox\u0022:[2.625,7.8611,5.75,7.8611,5.75,8.0694,2.625,8.0694],\u0022elements\u0022:[\u0022#/readResults/0/lines/47/words/0\u0022,\u0022#/readResults/0/lines/48/words/0\u0022,\u0022#/readResults/0/lines/48/words/1\u0022,\u0022#/readResults/0/lines/48/words/2\u0022,\u0022#/readResults/0/lines/48/words/3\u0022,\u0022#/readResults/0/lines/48/words/4\u0022]},{\u0022rowIndex\u0022:16,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022advertisements\u0022,\u0022boundingBox\u0022:[2.625,8.0694,5.75,8.0694,5.75,8.27,2.625,8.27],\u0022elements\u0022:[\u0022#/readResults/0/lines/49/words/0\u0022]},{\u0022rowIndex\u0022:17,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Half Booth\u0022,\u0022boundingBox\u0022:[1.0033,8.27,2.625,8.27,2.625,8.4861,1.0033,8.4861],\u0022elements\u0022:[\u0022#/readResults/0/lines/50/words/0\u0022,\u0022#/readResults/0/lines/50/words/1\u0022]},{\u0022rowIndex\u0022:17,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full booth\u0022,\u0022boundingBox\u0022:[2.625,8.27,5.75,8.27,5.75,8.4861,2.625,8.4861],\u0022elements\u0022:[\u0022#/readResults/0/lines/51/words/0\u0022,\u0022#/readResults/0/lines/52/words/0\u0022,\u0022#/readResults/0/lines/52/words/1\u0022]},{\u0022rowIndex\u0022:17,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022$350\u0022,\u0022boundingBox\u0022:[5.75,8.27,7.4967,8.27,7.4967,8.4861,5.75,8.4861],\u0022elements\u0022:[\u0022#/readResults/0/lines/53/words/0\u0022]},{\u0022rowIndex\u0022:18,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 25% discount on program guide\u0022,\u0022boundingBox\u0022:[2.625,8.4861,5.75,8.4861,5.75,8.7083,2.625,8.7083],\u0022elements\u0022:[\u0022#/readResults/0/lines/54/words/0\u0022,\u0022#/readResults/0/lines/55/words/0\u0022,\u0022#/readResults/0/lines/55/words/1\u0022,\u0022#/readResults/0/lines/55/words/2\u0022,\u0022#/readResults/0/lines/55/words/3\u0022,\u0022#/readResults/0/lines/55/words/4\u0022]},{\u0022rowIndex\u0022:19,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022advertisements\u0022,\u0022boundingBox\u0022:[2.625,8.7083,5.75,8.7083,5.75,8.905,2.625,8.905],\u0022elements\u0022:[\u0022#/readResults/0/lines/56/words/0\u0022]}]}]},{\u0022page\u0022:2,\u0022tables\u0022:[]}],\u0022documentResults\u0022:[{\u0022docType\u0022:\u0022custom:588c1f7e-ec05-45dc-90cf-da133fb7ed10\u0022,\u0022modelId\u0022:\u0022588c1f7e-ec05-45dc-90cf-da133fb7ed10\u0022,\u0022pageRange\u0022:[1,2],\u0022fields\u0022:{\u0022CompanyName\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022Southridge Video\u0022,\u0022text\u0022:\u0022Southridge Video\u0022,\u0022page\u0022:2,\u0022boundingBox\u0022:[2.19,2.77,3.35,2.77,3.35,2.915,2.19,2.915],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/1/lines/2/words/2\u0022,\u0022#/readResults/1/lines/2/words/3\u0022]},\u0022Bronze\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022$1,000\u0022,\u0022text\u0022:\u0022$1,000\u0022,\u0022page\u0022:1,\u0022boundingBox\u0022:[5.835,6.825,6.285,6.825,6.285,6.97,5.835,6.97],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/0/lines/37/words/0\u0022]},\u0022Full\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022$600\u0022,\u0022text\u0022:\u0022$600\u0022,\u0022page\u0022:1,\u0022boundingBox\u0022:[5.835,7.67,6.16,7.67,6.16,7.815,5.835,7.815],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/0/lines/46/words/0\u0022]},\u0022Half\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022$350\u0022,\u0022text\u0022:\u0022$350\u0022,\u0022page\u0022:1,\u0022boundingBox\u0022:[5.835,8.305,6.16,8.305,6.16,8.45,5.835,8.45],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/0/lines/53/words/0\u0022]},\u0022Silver\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022$1,200\u0022,\u0022text\u0022:\u0022$1,200\u0022,\u0022page\u0022:1,\u0022boundingBox\u0022:[5.835,5.97,6.285,5.97,6.285,6.115,5.835,6.115],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/0/lines/27/words/0\u0022]},\u0022Contact\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022Jamie@southridgevideo.com\u0022,\u0022text\u0022:\u0022Jamie@southridgevideo.com\u0022,\u0022page\u0022:2,\u0022boundingBox\u0022:[1.62,3.1,3.575,3.1,3.575,3.245,1.62,3.245],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/1/lines/3/words/1\u0022]},\u0022Gold\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022$1,500\u0022,\u0022text\u0022:\u0022$1,500\u0022,\u0022page\u0022:1,\u0022boundingBox\u0022:[5.835,4.9,6.285,4.9,6.285,5.045,5.835,5.045],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/0/lines/16/words/0\u0022]}},\u0022docTypeConfidence\u0022:1.0}],\u0022errors\u0022:[]}}"
+      "ResponseBody": "{\u0022status\u0022:\u0022succeeded\u0022,\u0022createdDateTime\u0022:\u00222020-10-30T12:59:48Z\u0022,\u0022lastUpdatedDateTime\u0022:\u00222020-10-30T12:59:55Z\u0022,\u0022analyzeResult\u0022:{\u0022version\u0022:\u00222.1.0\u0022,\u0022readResults\u0022:[{\u0022page\u0022:1,\u0022angle\u0022:0,\u0022width\u0022:8.5,\u0022height\u0022:11,\u0022unit\u0022:\u0022inch\u0022,\u0022lines\u0022:[{\u0022boundingBox\u0022:[6.1276,1.0667,7.4833,1.0667,7.4833,1.2403,6.1276,1.2403],\u0022text\u0022:\u0022Vendor #:121\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[6.1276,1.0667,6.8657,1.0667,6.8657,1.2403,6.1276,1.2403],\u0022text\u0022:\u0022Vendor\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.9307,1.0759,7.4833,1.0759,7.4833,1.2391,6.9307,1.2391],\u0022text\u0022:\u0022#:121\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.2268,1.5733,6.2379,1.5733,6.2379,2.005,2.2268,2.005],\u0022text\u0022:\u0022Vendor Registration\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.2268,1.5733,3.703,1.5733,3.703,1.9207,2.2268,1.9207],\u0022text\u0022:\u0022Vendor\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.8661,1.5883,6.2379,1.5883,6.2379,2.005,3.8661,2.005],\u0022text\u0022:\u0022Registration\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0078,2.5846,7.0776,2.5846,7.0776,2.7293,1.0078,2.7293],\u0022text\u0022:\u0022Contoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0078,2.5919,1.5548,2.5919,1.5548,2.7013,1.0078,2.7013],\u0022text\u0022:\u0022Contoso\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.6125,2.5856,1.843,2.5856,1.843,2.7013,1.6125,2.7013],\u0022text\u0022:\u0022Ltd.\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.8996,2.5846,2.6636,2.5846,2.6636,2.7013,1.8996,2.7013],\u0022text\u0022:\u0022Conference\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.7122,2.5852,2.9307,2.5852,2.9307,2.7003,2.7122,2.7003],\u0022text\u0022:\u0022will\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.9922,2.5852,3.1419,2.5852,3.1419,2.7013,2.9922,2.7013],\u0022text\u0022:\u0022be\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.1987,2.5852,3.4704,2.5852,3.4704,2.7013,3.1987,2.7013],\u0022text\u0022:\u0022held\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.53,2.62,3.6846,2.62,3.6846,2.7013,3.53,2.7013],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.7498,2.5934,4.0422,2.5934,4.0422,2.7293,3.7498,2.7293],\u0022text\u0022:\u0022May\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.0877,2.5914,4.5042,2.5914,4.5042,2.7236,4.0877,2.7236],\u0022text\u0022:\u002228-29,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.5586,2.5914,4.884,2.5914,4.884,2.7017,4.5586,2.7017],\u0022text\u0022:\u00222020\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.9351,2.6014,5.0577,2.6014,5.0577,2.7013,4.9351,2.7013],\u0022text\u0022:\u0022at\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.1033,2.5852,5.3202,2.5852,5.3202,2.7013,5.1033,2.7013],\u0022text\u0022:\u0022the\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.3787,2.5852,5.6051,2.5852,5.6051,2.7003,5.3787,2.7003],\u0022text\u0022:\u0022Elm\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.6624,2.5846,6.4263,2.5846,6.4263,2.7013,5.6624,2.7013],\u0022text\u0022:\u0022Conference\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.4796,2.5919,6.9234,2.5919,6.9234,2.7013,6.4796,2.7013],\u0022text\u0022:\u0022Center\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.9765,2.5905,7.0776,2.5905,7.0776,2.7003,6.9765,2.7003],\u0022text\u0022:\u0022in\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.014,2.8029,7.3457,2.8029,7.3457,2.9478,1.014,2.9478],\u0022text\u0022:\u0022Maple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.014,2.8036,1.4242,2.8036,1.4242,2.9478,1.014,2.9478],\u0022text\u0022:\u0022Maple\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.4763,2.8089,1.7576,2.8089,1.7576,2.9478,1.4763,2.9478],\u0022text\u0022:\u0022City,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.8195,2.8036,2.8383,2.8036,2.8383,2.9197,1.8195,2.9197],\u0022text\u0022:\u0022Massachusetts.\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.8883,2.8036,3.1326,2.8036,3.1326,2.9197,2.8883,2.9197],\u0022text\u0022:\u0022The\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.1842,2.8029,3.9301,2.8029,3.9301,2.9197,3.1842,2.9197],\u0022text\u0022:\u0022conference\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.9871,2.8036,4.2019,2.8036,4.2019,2.9197,3.9871,2.9197],\u0022text\u0022:\u0022has\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.2529,2.8036,4.5104,2.8036,4.5104,2.9197,4.2529,2.9197],\u0022text\u0022:\u0022sold\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.5701,2.8197,4.7871,2.8197,4.7871,2.9197,4.5701,2.9197],\u0022text\u0022:\u0022out\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.8373,2.8029,4.9701,2.8029,4.9701,2.9197,4.8373,2.9197],\u0022text\u0022:\u0022of\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.0169,2.8089,5.1601,2.8089,5.1601,2.9197,5.0169,2.9197],\u0022text\u0022:\u0022its\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.2167,2.81,5.5766,2.81,5.5766,2.9418,5.2167,2.9418],\u0022text\u0022:\u00221,500\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.6227,2.8036,6.0928,2.8036,6.0928,2.9418,5.6227,2.9418],\u0022text\u0022:\u0022tickets,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.1461,2.8036,6.4308,2.8036,6.4308,2.9195,6.1461,2.9195],\u0022text\u0022:\u0022with\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.488,2.8383,6.548,2.8383,6.548,2.9197,6.488,2.9197],\u0022text\u0022:\u0022a\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.6016,2.81,6.8449,2.81,6.8449,2.9197,6.6016,2.9197],\u0022text\u0022:\u0022400\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.8998,2.8383,7.3457,2.8383,7.3457,2.9478,6.8998,2.9478],\u0022text\u0022:\u0022person\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0043,3.0229,7.2482,3.0229,7.2482,3.1678,1.0043,3.1678],\u0022text\u0022:\u0022waitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0043,3.0236,1.5194,3.0236,1.5194,3.1397,1.0043,3.1397],\u0022text\u0022:\u0022waitlist.\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.5733,3.0239,2.0654,3.0239,2.0654,3.1397,1.5733,3.1397],\u0022text\u0022:\u0022Vendor\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.1132,3.0236,2.9143,3.0236,2.9143,3.1678,2.1132,3.1678],\u0022text\u0022:\u0022applications\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.9675,3.0583,3.1726,3.0583,3.1726,3.1397,2.9675,3.1397],\u0022text\u0022:\u0022are\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.2306,3.0236,3.5889,3.0236,3.5889,3.1678,3.2306,3.1678],\u0022text\u0022:\u0022being\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.6388,3.0239,4.2336,3.0239,4.2336,3.1678,3.6388,3.1678],\u0022text\u0022:\u0022accepted\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.2862,3.0236,4.8127,3.0236,4.8127,3.1678,4.2862,3.1678],\u0022text\u0022:\u0022through\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.8815,3.0236,5.1133,3.0236,5.1133,3.14,4.8815,3.14],\u0022text\u0022:\u0022Feb\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.163,3.0297,5.361,3.0297,5.361,3.162,5.163,3.162],\u0022text\u0022:\u002228,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.413,3.0297,5.7774,3.0297,5.7774,3.14,5.413,3.14],\u0022text\u0022:\u00222020.\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[5.8406,3.0236,6.2537,3.0236,6.2537,3.1397,5.8406,3.1397],\u0022text\u0022:\u0022Please\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.3022,3.0229,6.4539,3.0229,6.4539,3.1387,6.3022,3.1387],\u0022text\u0022:\u0022fill\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.5131,3.0289,6.6158,3.0289,6.6158,3.1387,6.5131,3.1387],\u0022text\u0022:\u0022in\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.6673,3.0236,6.8842,3.0236,6.8842,3.1397,6.6673,3.1397],\u0022text\u0022:\u0022the\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.9317,3.0229,7.2482,3.0229,7.2482,3.1397,6.9317,3.1397],\u0022text\u0022:\u0022form\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0125,3.2436,3.6599,3.2436,3.6599,3.3818,1.0125,3.3818],\u0022text\u0022:\u0022below, and attach a check made out to:\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0125,3.2436,1.4459,3.2436,1.4459,3.3818,1.0125,3.3818],\u0022text\u0022:\u0022below,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.5024,3.2439,1.7371,3.2439,1.7371,3.3597,1.5024,3.3597],\u0022text\u0022:\u0022and\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.7968,3.2436,2.2047,3.2436,2.2047,3.3597,1.7968,3.3597],\u0022text\u0022:\u0022attach\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.2619,3.2783,2.3219,3.2783,2.3219,3.3597,2.2619,3.3597],\u0022text\u0022:\u0022a\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.379,3.2436,2.7529,3.2436,2.7529,3.3597,2.379,3.3597],\u0022text\u0022:\u0022check\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.8076,3.2439,3.17,3.2439,3.17,3.3597,2.8076,3.3597],\u0022text\u0022:\u0022made\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.2251,3.2597,3.4421,3.2597,3.4421,3.3597,3.2251,3.3597],\u0022text\u0022:\u0022out\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.4869,3.2597,3.6599,3.2597,3.6599,3.3597,3.4869,3.3597],\u0022text\u0022:\u0022to:\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0078,3.5739,1.843,3.5739,1.843,3.6897,1.0078,3.6897],\u0022text\u0022:\u0022Contoso Ltd.\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0078,3.5802,1.5548,3.5802,1.5548,3.6897,1.0078,3.6897],\u0022text\u0022:\u0022Contoso\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.6125,3.5739,1.843,3.5739,1.843,3.6897,1.6125,3.6897],\u0022text\u0022:\u0022Ltd.\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0093,3.7939,2.3768,3.7939,2.3768,3.9378,1.0093,3.9378],\u0022text\u0022:\u00222345 Dogwood Lane\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0093,3.8,1.3297,3.8,1.3297,3.9097,1.0093,3.9097],\u0022text\u0022:\u00222345\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.3899,3.7939,2.0149,3.7939,2.0149,3.9378,1.3899,3.9378],\u0022text\u0022:\u0022Dogwood\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.0788,3.8012,2.3768,3.8012,2.3768,3.9097,2.0788,3.9097],\u0022text\u0022:\u0022Lane\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.014,4.0136,2.3377,4.0136,2.3377,4.1518,1.014,4.1518],\u0022text\u0022:\u0022Birch, Kansas 98123\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.014,4.0136,1.3745,4.0136,1.3745,4.1518,1.014,4.1518],\u0022text\u0022:\u0022Birch,\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.4375,4.0212,1.8819,4.0212,1.8819,4.1297,1.4375,4.1297],\u0022text\u0022:\u0022Kansas\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.9318,4.02,2.3377,4.02,2.3377,4.1297,1.9318,4.1297],\u0022text\u0022:\u002298123\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0204,4.4248,1.5303,4.4248,1.5303,4.5682,1.0204,4.5682],\u0022text\u0022:\u0022Rates:\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0204,4.4248,1.5303,4.4248,1.5303,4.5682,1.0204,4.5682],\u0022text\u0022:\u0022Rates:\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0923,4.6986,1.6232,4.6986,1.6232,4.8428,1.0923,4.8428],\u0022text\u0022:\u0022Package\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0923,4.6986,1.6232,4.6986,1.6232,4.8428,1.0923,4.8428],\u0022text\u0022:\u0022Package\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.713,4.6986,3.2707,4.6986,3.2707,4.8147,2.713,4.8147],\u0022text\u0022:\u0022Included\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.713,4.6986,3.2707,4.6986,3.2707,4.8147,2.713,4.8147],\u0022text\u0022:\u0022Included\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.838,4.7039,6.1513,4.7039,6.1513,4.8147,5.838,4.8147],\u0022text\u0022:\u0022Price\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.838,4.7039,6.1513,4.7039,6.1513,4.8147,5.838,4.8147],\u0022text\u0022:\u0022Price\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0857,4.9086,1.9831,4.9086,1.9831,5.0528,1.0857,5.0528],\u0022text\u0022:\u0022Gold Sponsor\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0857,4.9086,1.3842,4.9086,1.3842,5.0247,1.0857,5.0247],\u0022text\u0022:\u0022Gold\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.4423,4.915,1.9831,4.915,1.9831,5.0528,1.4423,5.0528],\u0022text\u0022:\u0022Sponsor\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,4.954,3.018,4.954,3.018,5.0145,2.9586,5.0145],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,4.954,3.018,4.954,3.018,5.0145,2.9586,5.0145],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,4.9169,3.8726,4.9169,3.8726,5.033,3.214,5.033],\u0022text\u0022:\u0022Full booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,4.9169,3.4295,4.9169,3.4295,5.033,3.214,5.033],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,4.9169,3.8726,4.9169,3.8726,5.033,3.492,5.033],\u0022text\u0022:\u0022booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.8328,4.8977,6.2829,4.8977,6.2829,5.0468,5.8328,5.0468],\u0022text\u0022:\u0022$1,500\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.8328,4.8977,6.2829,4.8977,6.2829,5.0468,5.8328,5.0468],\u0022text\u0022:\u0022$1,500\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,5.1673,3.018,5.1673,3.018,5.2279,2.9586,5.2279],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,5.1673,3.018,5.1673,3.018,5.2279,2.9586,5.2279],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,5.1302,4.7267,5.1302,4.7267,5.2744,3.214,5.2744],\u0022text\u0022:\u0022Pre-keynote thank you\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,5.1302,4.0183,5.1302,4.0183,5.2744,3.214,5.2744],\u0022text\u0022:\u0022Pre-keynote\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.0665,5.1302,4.4475,5.1302,4.4475,5.2463,4.0665,5.2463],\u0022text\u0022:\u0022thank\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.4903,5.165,4.7267,5.165,4.7267,5.2744,4.4903,5.2744],\u0022text\u0022:\u0022you\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,5.379,3.018,5.379,3.018,5.4395,2.9586,5.4395],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,5.379,3.018,5.379,3.018,5.4395,2.9586,5.4395],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,5.3495,4.2093,5.3495,4.2093,5.4861,3.214,5.4861],\u0022text\u0022:\u0022Logo on poster\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,5.3495,3.5163,5.3495,3.5163,5.4861,3.214,5.4861],\u0022text\u0022:\u0022Logo\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.5686,5.3767,3.7244,5.3767,3.7244,5.458,3.5686,5.458],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.7888,5.358,4.2093,5.358,4.2093,5.4861,3.7888,5.4861],\u0022text\u0022:\u0022poster\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,5.5923,3.018,5.5923,3.018,5.6529,2.9586,5.6529],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,5.5923,3.018,5.5923,3.018,5.6529,2.9586,5.6529],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,5.5552,5.201,5.5552,5.201,5.6994,3.214,5.6994],\u0022text\u0022:\u0022Full page ad in program guide\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,5.5552,3.4295,5.5552,3.4295,5.6713,3.214,5.6713],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,5.59,3.7989,5.59,3.7989,5.6994,3.492,5.6994],\u0022text\u0022:\u0022page\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.8519,5.5556,3.9991,5.5556,3.9991,5.6713,3.8519,5.6713],\u0022text\u0022:\u0022ad\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.0599,5.5605,4.1626,5.5605,4.1626,5.6703,4.0599,5.6703],\u0022text\u0022:\u0022in\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.2248,5.59,4.7839,5.59,4.7839,5.6994,4.2248,5.6994],\u0022text\u0022:\u0022program\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.8367,5.5556,5.201,5.5556,5.201,5.6994,4.8367,5.6994],\u0022text\u0022:\u0022guide\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,5.804,3.018,5.804,3.018,5.8645,2.9586,5.8645],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,5.804,3.018,5.804,3.018,5.8645,2.9586,5.8645],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0842,5.9786,2.0339,5.9786,2.0339,6.1228,1.0842,6.1228],\u0022text\u0022:\u0022Silver Sponsor\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0842,5.9786,1.4443,5.9786,1.4443,6.0947,1.0842,6.0947],\u0022text\u0022:\u0022Silver\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.4904,5.985,2.0339,5.985,2.0339,6.1228,1.4904,6.1228],\u0022text\u0022:\u0022Sponsor\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,6.024,3.018,6.024,3.018,6.0845,2.9586,6.0845],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,6.024,3.018,6.024,3.018,6.0845,2.9586,6.0845],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,5.9869,3.8726,5.9869,3.8726,6.103,3.214,6.103],\u0022text\u0022:\u0022Full booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,5.9869,3.4295,5.9869,3.4295,6.103,3.214,6.103],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,5.9869,3.8726,5.9869,3.8726,6.103,3.492,6.103],\u0022text\u0022:\u0022booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.8328,5.9677,6.2829,5.9677,6.2829,6.1168,5.8328,6.1168],\u0022text\u0022:\u0022$1,200\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.8328,5.9677,6.2829,5.9677,6.2829,6.1168,5.8328,6.1168],\u0022text\u0022:\u0022$1,200\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,6.2356,3.018,6.2356,3.018,6.2962,2.9586,6.2962],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,6.2356,3.018,6.2356,3.018,6.2962,2.9586,6.2962],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,6.1986,4.7938,6.1986,4.7938,6.3428,3.214,6.3428],\u0022text\u0022:\u0022Post-keynote thank you\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,6.1986,4.0878,6.1986,4.0878,6.3428,3.214,6.3428],\u0022text\u0022:\u0022Post-keynote\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.1348,6.1986,4.5158,6.1986,4.5158,6.3147,4.1348,6.3147],\u0022text\u0022:\u0022thank\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.5586,6.2333,4.7938,6.2333,4.7938,6.3428,4.5586,6.3428],\u0022text\u0022:\u0022you\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,6.4473,3.018,6.4473,3.018,6.5079,2.9586,6.5079],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,6.4473,3.018,6.4473,3.018,6.5079,2.9586,6.5079],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,6.4179,4.2093,6.4179,4.2093,6.5544,3.214,6.5544],\u0022text\u0022:\u0022Logo on poster\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,6.4179,3.5163,6.4179,3.5163,6.5544,3.214,6.5544],\u0022text\u0022:\u0022Logo\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.5686,6.445,3.7244,6.445,3.7244,6.5263,3.5686,6.5263],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.7888,6.4264,4.2093,6.4264,4.2093,6.5544,3.7888,6.5544],\u0022text\u0022:\u0022poster\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,6.6606,3.018,6.6606,3.018,6.7212,2.9586,6.7212],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,6.6606,3.018,6.6606,3.018,6.7212,2.9586,6.7212],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,6.6229,5.2314,6.6229,5.2314,6.7678,3.214,6.7678],\u0022text\u0022:\u0022Half page ad in program guide\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,6.6229,3.4739,6.6229,3.4739,6.7397,3.214,6.7397],\u0022text\u0022:\u0022Half\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.5224,6.6583,3.8326,6.6583,3.8326,6.7678,3.5224,6.7678],\u0022text\u0022:\u0022page\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.8843,6.6239,4.0315,6.6239,4.0315,6.7397,3.8843,6.7397],\u0022text\u0022:\u0022ad\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.0923,6.6289,4.195,6.6289,4.195,6.7387,4.0923,6.7387],\u0022text\u0022:\u0022in\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.2563,6.6583,4.8148,6.6583,4.8148,6.7678,4.2563,6.7678],\u0022text\u0022:\u0022program\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.8695,6.6239,5.2314,6.6239,5.2314,6.7678,4.8695,6.7678],\u0022text\u0022:\u0022guide\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0923,6.84,2.1362,6.84,2.1362,6.9778,1.0923,6.9778],\u0022text\u0022:\u0022Bronze Sponsor\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0923,6.8417,1.545,6.8417,1.545,6.9497,1.0923,6.9497],\u0022text\u0022:\u0022Bronze\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.5951,6.84,2.1362,6.84,2.1362,6.9778,1.5951,6.9778],\u0022text\u0022:\u0022Sponsor\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,6.879,3.018,6.879,3.018,6.9395,2.9586,6.9395],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,6.879,3.018,6.879,3.018,6.9395,2.9586,6.9395],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,6.8419,3.8726,6.8419,3.8726,6.958,3.214,6.958],\u0022text\u0022:\u0022Full booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,6.8419,3.4295,6.8419,3.4295,6.958,3.214,6.958],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,6.8419,3.8726,6.8419,3.8726,6.958,3.492,6.958],\u0022text\u0022:\u0022booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.8328,6.8227,6.2829,6.8227,6.2829,6.9718,5.8328,6.9718],\u0022text\u0022:\u0022$1,000\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.8328,6.8227,6.2829,6.8227,6.2829,6.9718,5.8328,6.9718],\u0022text\u0022:\u0022$1,000\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,7.0923,3.018,7.0923,3.018,7.1529,2.9586,7.1529],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,7.0923,3.018,7.0923,3.018,7.1529,2.9586,7.1529],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,7.0629,4.2093,7.0629,4.2093,7.1994,3.214,7.1994],\u0022text\u0022:\u0022Logo on poster\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,7.0629,3.5163,7.0629,3.5163,7.1994,3.214,7.1994],\u0022text\u0022:\u0022Logo\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.5686,7.09,3.7244,7.09,3.7244,7.1713,3.5686,7.1713],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.7888,7.0714,4.2093,7.0714,4.2093,7.1994,3.7888,7.1994],\u0022text\u0022:\u0022poster\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,7.304,3.018,7.304,3.018,7.3645,2.9586,7.3645],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,7.304,3.018,7.304,3.018,7.3645,2.9586,7.3645],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2082,7.2672,5.3419,7.2672,5.3419,7.4111,3.2082,7.4111],\u0022text\u0022:\u002250% discount on program guide\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2082,7.2717,3.4817,7.2717,3.4817,7.3845,3.2082,7.3845],\u0022text\u0022:\u002250%\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.533,7.2672,4.1018,7.2672,4.1018,7.383,3.533,7.383],\u0022text\u0022:\u0022discount\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.1512,7.3017,4.307,7.3017,4.307,7.383,4.1512,7.383],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.3682,7.3017,4.9253,7.3017,4.9253,7.4111,4.3682,7.4111],\u0022text\u0022:\u0022program\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.981,7.2672,5.3419,7.2672,5.3419,7.4111,4.981,7.4111],\u0022text\u0022:\u0022guide\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2075,7.4706,4.2429,7.4706,4.2429,7.5863,3.2075,7.5863],\u0022text\u0022:\u0022advertisements\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2075,7.4706,4.2429,7.4706,4.2429,7.5863,3.2075,7.5863],\u0022text\u0022:\u0022advertisements\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0923,7.6819,1.7537,7.6819,1.7537,7.798,1.0923,7.798],\u0022text\u0022:\u0022Full Booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0923,7.6819,1.3079,7.6819,1.3079,7.798,1.0923,7.798],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.3718,7.6819,1.7537,7.6819,1.7537,7.798,1.3718,7.798],\u0022text\u0022:\u0022Booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,7.7273,3.018,7.7273,3.018,7.7879,2.9586,7.7879],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,7.7273,3.018,7.7273,3.018,7.7879,2.9586,7.7879],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,7.6902,3.8726,7.6902,3.8726,7.8063,3.214,7.8063],\u0022text\u0022:\u0022Full booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,7.6902,3.4295,7.6902,3.4295,7.8063,3.214,7.8063],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,7.6902,3.8726,7.6902,3.8726,7.8063,3.492,7.8063],\u0022text\u0022:\u0022booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.8328,7.6711,6.1586,7.6711,6.1586,7.8165,5.8328,7.8165],\u0022text\u0022:\u0022$600\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.8328,7.6711,6.1586,7.6711,6.1586,7.8165,5.8328,7.8165],\u0022text\u0022:\u0022$600\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,7.939,3.018,7.939,3.018,7.9995,2.9586,7.9995],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,7.939,3.018,7.939,3.018,7.9995,2.9586,7.9995],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2082,7.9022,5.3419,7.9022,5.3419,8.0461,3.2082,8.0461],\u0022text\u0022:\u002250% discount on program guide\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2082,7.9067,3.4817,7.9067,3.4817,8.0195,3.2082,8.0195],\u0022text\u0022:\u002250%\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.533,7.9022,4.1018,7.9022,4.1018,8.018,3.533,8.018],\u0022text\u0022:\u0022discount\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.1512,7.9367,4.307,7.9367,4.307,8.018,4.1512,8.018],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.3682,7.9367,4.9253,7.9367,4.9253,8.0461,4.3682,8.0461],\u0022text\u0022:\u0022program\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.981,7.9022,5.3419,7.9022,5.3419,8.0461,4.981,8.0461],\u0022text\u0022:\u0022guide\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2075,8.1056,4.2429,8.1056,4.2429,8.2213,3.2075,8.2213],\u0022text\u0022:\u0022advertisements\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2075,8.1056,4.2429,8.1056,4.2429,8.2213,3.2075,8.2213],\u0022text\u0022:\u0022advertisements\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0923,8.3162,1.7854,8.3162,1.7854,8.433,1.0923,8.433],\u0022text\u0022:\u0022Half Booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0923,8.3162,1.3522,8.3162,1.3522,8.433,1.0923,8.433],\u0022text\u0022:\u0022Half\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.4022,8.3169,1.7854,8.3169,1.7854,8.433,1.4022,8.433],\u0022text\u0022:\u0022Booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,8.3623,3.018,8.3623,3.018,8.4229,2.9586,8.4229],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,8.3623,3.018,8.3623,3.018,8.4229,2.9586,8.4229],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.214,8.3252,3.8726,8.3252,3.8726,8.4413,3.214,8.4413],\u0022text\u0022:\u0022Full booth\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.214,8.3252,3.4295,8.3252,3.4295,8.4413,3.214,8.4413],\u0022text\u0022:\u0022Full\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.492,8.3252,3.8726,8.3252,3.8726,8.4413,3.492,8.4413],\u0022text\u0022:\u0022booth\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[5.8328,8.3061,6.1586,8.3061,6.1586,8.4515,5.8328,8.4515],\u0022text\u0022:\u0022$350\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[5.8328,8.3061,6.1586,8.3061,6.1586,8.4515,5.8328,8.4515],\u0022text\u0022:\u0022$350\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[2.9586,8.574,3.018,8.574,3.018,8.6345,2.9586,8.6345],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[2.9586,8.574,3.018,8.574,3.018,8.6345,2.9586,8.6345],\u0022text\u0022:\u0022\uF0B7\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2093,8.5372,5.3419,8.5372,5.3419,8.6811,3.2093,8.6811],\u0022text\u0022:\u002225% discount on program guide\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2093,8.5417,3.4817,8.5417,3.4817,8.6545,3.2093,8.6545],\u0022text\u0022:\u002225%\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[3.533,8.5372,4.1018,8.5372,4.1018,8.653,3.533,8.653],\u0022text\u0022:\u0022discount\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.1512,8.5717,4.307,8.5717,4.307,8.653,4.1512,8.653],\u0022text\u0022:\u0022on\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.3682,8.5717,4.9253,8.5717,4.9253,8.6811,4.3682,8.6811],\u0022text\u0022:\u0022program\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[4.981,8.5372,5.3419,8.5372,5.3419,8.6811,4.981,8.6811],\u0022text\u0022:\u0022guide\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[3.2075,8.7406,4.2429,8.7406,4.2429,8.8563,3.2075,8.8563],\u0022text\u0022:\u0022advertisements\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[3.2075,8.7406,4.2429,8.7406,4.2429,8.8563,3.2075,8.8563],\u0022text\u0022:\u0022advertisements\u0022,\u0022confidence\u0022:1}]}],\u0022selectionMarks\u0022:[{\u0022boundingBox\u0022:[0,10.2725,1.0372,10.2725,1.0372,10.9925,0,10.9925],\u0022confidence\u0022:0.69,\u0022state\u0022:\u0022unselected\u0022},{\u0022boundingBox\u0022:[0,10.6019,1.5095,10.6019,1.5095,10.9983,0,10.9983],\u0022confidence\u0022:0.69,\u0022state\u0022:\u0022unselected\u0022},{\u0022boundingBox\u0022:[2.9381,6.9634,3.0388,6.9634,3.0388,7.0736,2.9381,7.0736],\u0022confidence\u0022:0.553,\u0022state\u0022:\u0022unselected\u0022}]},{\u0022page\u0022:2,\u0022angle\u0022:0,\u0022width\u0022:8.5,\u0022height\u0022:11,\u0022unit\u0022:\u0022inch\u0022,\u0022lines\u0022:[{\u0022boundingBox\u0022:[6.1276,1.0667,7.4833,1.0667,7.4833,1.2403,6.1276,1.2403],\u0022text\u0022:\u0022Vendor #:121\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[6.1276,1.0667,6.8657,1.0667,6.8657,1.2403,6.1276,1.2403],\u0022text\u0022:\u0022Vendor\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[6.9307,1.0759,7.4833,1.0759,7.4833,1.2391,6.9307,1.2391],\u0022text\u0022:\u0022#:121\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0044,2.1771,2.35,2.1771,2.35,2.3315,1.0044,2.3315],\u0022text\u0022:\u0022Vendor Details:\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0044,2.1778,1.6496,2.1778,1.6496,2.3315,1.0044,2.3315],\u0022text\u0022:\u0022Vendor\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.7239,2.1771,2.35,2.1771,2.35,2.3315,1.7239,2.3315],\u0022text\u0022:\u0022Details:\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0065,2.7686,3.3477,2.7686,3.3477,2.9128,1.0065,2.9128],\u0022text\u0022:\u0022Company Name: Southridge Video\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0065,2.7749,1.651,2.7749,1.651,2.9126,1.0065,2.9126],\u0022text\u0022:\u0022Company\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.7019,2.7764,2.1376,2.7764,2.1376,2.885,1.7019,2.885],\u0022text\u0022:\u0022Name:\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.1925,2.7686,2.9184,2.7686,2.9184,2.9128,2.1925,2.9128],\u0022text\u0022:\u0022Southridge\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.9691,2.7689,3.3477,2.7689,3.3477,2.8847,2.9691,2.8847],\u0022text\u0022:\u0022Video\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0065,3.0986,3.5766,3.0986,3.5766,3.2428,1.0065,3.2428],\u0022text\u0022:\u0022Contact: Jamie@southridgevideo.com\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0065,3.1049,1.5706,3.1049,1.5706,3.215,1.0065,3.215],\u0022text\u0022:\u0022Contact:\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.6205,3.0986,3.5766,3.0986,3.5766,3.2428,1.6205,3.2428],\u0022text\u0022:\u0022Jamie@southridgevideo.com\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0115,3.4296,2.6542,3.4296,2.6542,3.5744,1.0115,3.5744],\u0022text\u0022:\u0022Preferred Package: Gold\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0115,3.4296,1.6499,3.4296,1.6499,3.5467,1.0115,3.5467],\u0022text\u0022:\u0022Preferred\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.7092,3.4302,2.2978,3.4302,2.2978,3.5744,1.7092,3.5744],\u0022text\u0022:\u0022Package:\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.3557,3.4302,2.6542,3.4302,2.6542,3.5463,2.3557,3.5463],\u0022text\u0022:\u0022Gold\u0022,\u0022confidence\u0022:1}]},{\u0022boundingBox\u0022:[1.0052,3.7537,2.4783,3.7537,2.4783,3.9043,1.0052,3.9043],\u0022text\u0022:\u0022Special Requests: N/a\u0022,\u0022words\u0022:[{\u0022boundingBox\u0022:[1.0052,3.7602,1.475,3.7602,1.475,3.9043,1.0052,3.9043],\u0022text\u0022:\u0022Special\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[1.5342,3.7684,2.1899,3.7684,2.1899,3.9043,1.5342,3.9043],\u0022text\u0022:\u0022Requests:\u0022,\u0022confidence\u0022:1},{\u0022boundingBox\u0022:[2.254,3.7537,2.4783,3.7537,2.4783,3.8976,2.254,3.8976],\u0022text\u0022:\u0022N/a\u0022,\u0022confidence\u0022:1}]}],\u0022selectionMarks\u0022:[{\u0022boundingBox\u0022:[0.0024,9.869,1.0826,9.869,1.0826,10.9955,0.0024,10.9955],\u0022confidence\u0022:0.833,\u0022state\u0022:\u0022unselected\u0022},{\u0022boundingBox\u0022:[7.6562,1.0157,8.5,1.0157,8.5,2.8293,7.6562,2.8293],\u0022confidence\u0022:0.6,\u0022state\u0022:\u0022unselected\u0022},{\u0022boundingBox\u0022:[0.0008,10.4758,1.8164,10.4758,1.8164,10.9978,0.0008,10.9978],\u0022confidence\u0022:0.6,\u0022state\u0022:\u0022unselected\u0022}]}],\u0022pageResults\u0022:[{\u0022page\u0022:1,\u0022tables\u0022:[{\u0022rows\u0022:20,\u0022columns\u0022:3,\u0022cells\u0022:[{\u0022rowIndex\u0022:0,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Package\u0022,\u0022boundingBox\u0022:[1.0033,4.6517,2.625,4.6517,2.625,4.8617,1.0033,4.8617],\u0022elements\u0022:[\u0022#/readResults/0/lines/10/words/0\u0022]},{\u0022rowIndex\u0022:0,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022Included\u0022,\u0022boundingBox\u0022:[2.625,4.6517,5.75,4.6517,5.75,4.8617,2.625,4.8617],\u0022elements\u0022:[\u0022#/readResults/0/lines/11/words/0\u0022]},{\u0022rowIndex\u0022:0,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022Price\u0022,\u0022boundingBox\u0022:[5.75,4.6517,7.4967,4.6517,7.4967,4.8617,5.75,4.8617],\u0022elements\u0022:[\u0022#/readResults/0/lines/12/words/0\u0022]},{\u0022rowIndex\u0022:1,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Gold Sponsor\u0022,\u0022boundingBox\u0022:[1.0033,4.8617,2.625,4.8617,2.625,5.0833,1.0033,5.0833],\u0022elements\u0022:[\u0022#/readResults/0/lines/13/words/0\u0022,\u0022#/readResults/0/lines/13/words/1\u0022]},{\u0022rowIndex\u0022:1,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full booth\u0022,\u0022boundingBox\u0022:[2.625,4.8617,5.75,4.8617,5.75,5.0833,2.625,5.0833],\u0022elements\u0022:[\u0022#/readResults/0/lines/14/words/0\u0022,\u0022#/readResults/0/lines/15/words/0\u0022,\u0022#/readResults/0/lines/15/words/1\u0022]},{\u0022rowIndex\u0022:1,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022$1,500\u0022,\u0022boundingBox\u0022:[5.75,4.8617,7.4967,4.8617,7.4967,5.0833,5.75,5.0833],\u0022elements\u0022:[\u0022#/readResults/0/lines/16/words/0\u0022]},{\u0022rowIndex\u0022:2,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Pre-keynote thank you\u0022,\u0022boundingBox\u0022:[2.625,5.0833,5.75,5.0833,5.75,5.3056,2.625,5.3056],\u0022elements\u0022:[\u0022#/readResults/0/lines/17/words/0\u0022,\u0022#/readResults/0/lines/18/words/0\u0022,\u0022#/readResults/0/lines/18/words/1\u0022,\u0022#/readResults/0/lines/18/words/2\u0022]},{\u0022rowIndex\u0022:3,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Logo on poster\u0022,\u0022boundingBox\u0022:[2.625,5.3056,5.75,5.3056,5.75,5.5139,2.625,5.5139],\u0022elements\u0022:[\u0022#/readResults/0/lines/19/words/0\u0022,\u0022#/readResults/0/lines/20/words/0\u0022,\u0022#/readResults/0/lines/20/words/1\u0022,\u0022#/readResults/0/lines/20/words/2\u0022]},{\u0022rowIndex\u0022:4,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full page ad in program guide\u0022,\u0022boundingBox\u0022:[2.625,5.5139,5.75,5.5139,5.75,5.7361,2.625,5.7361],\u0022elements\u0022:[\u0022#/readResults/0/lines/21/words/0\u0022,\u0022#/readResults/0/lines/22/words/0\u0022,\u0022#/readResults/0/lines/22/words/1\u0022,\u0022#/readResults/0/lines/22/words/2\u0022,\u0022#/readResults/0/lines/22/words/3\u0022,\u0022#/readResults/0/lines/22/words/4\u0022,\u0022#/readResults/0/lines/22/words/5\u0022]},{\u0022rowIndex\u0022:5,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7\u0022,\u0022boundingBox\u0022:[2.625,5.7361,5.75,5.7361,5.75,5.93,2.625,5.93],\u0022elements\u0022:[\u0022#/readResults/0/lines/23/words/0\u0022]},{\u0022rowIndex\u0022:6,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Silver Sponsor\u0022,\u0022boundingBox\u0022:[1.0033,5.93,2.625,5.93,2.625,6.1528,1.0033,6.1528],\u0022elements\u0022:[\u0022#/readResults/0/lines/24/words/0\u0022,\u0022#/readResults/0/lines/24/words/1\u0022]},{\u0022rowIndex\u0022:6,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full booth\u0022,\u0022boundingBox\u0022:[2.625,5.93,5.75,5.93,5.75,6.1528,2.625,6.1528],\u0022elements\u0022:[\u0022#/readResults/0/lines/25/words/0\u0022,\u0022#/readResults/0/lines/26/words/0\u0022,\u0022#/readResults/0/lines/26/words/1\u0022]},{\u0022rowIndex\u0022:6,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022$1,200\u0022,\u0022boundingBox\u0022:[5.75,5.93,7.4967,5.93,7.4967,6.1528,5.75,6.1528],\u0022elements\u0022:[\u0022#/readResults/0/lines/27/words/0\u0022]},{\u0022rowIndex\u0022:7,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Post-keynote thank you\u0022,\u0022boundingBox\u0022:[2.625,6.1528,5.75,6.1528,5.75,6.375,2.625,6.375],\u0022elements\u0022:[\u0022#/readResults/0/lines/28/words/0\u0022,\u0022#/readResults/0/lines/29/words/0\u0022,\u0022#/readResults/0/lines/29/words/1\u0022,\u0022#/readResults/0/lines/29/words/2\u0022]},{\u0022rowIndex\u0022:8,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Logo on poster\u0022,\u0022boundingBox\u0022:[2.625,6.375,5.75,6.375,5.75,6.5833,2.625,6.5833],\u0022elements\u0022:[\u0022#/readResults/0/lines/30/words/0\u0022,\u0022#/readResults/0/lines/31/words/0\u0022,\u0022#/readResults/0/lines/31/words/1\u0022,\u0022#/readResults/0/lines/31/words/2\u0022]},{\u0022rowIndex\u0022:9,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Half page ad in program guide\u0022,\u0022boundingBox\u0022:[2.625,6.5833,5.75,6.5833,5.75,6.7867,2.625,6.7867],\u0022elements\u0022:[\u0022#/readResults/0/lines/32/words/0\u0022,\u0022#/readResults/0/lines/33/words/0\u0022,\u0022#/readResults/0/lines/33/words/1\u0022,\u0022#/readResults/0/lines/33/words/2\u0022,\u0022#/readResults/0/lines/33/words/3\u0022,\u0022#/readResults/0/lines/33/words/4\u0022,\u0022#/readResults/0/lines/33/words/5\u0022]},{\u0022rowIndex\u0022:10,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Bronze Sponsor\u0022,\u0022boundingBox\u0022:[1.0033,6.7867,2.625,6.7867,2.625,7.0139,1.0033,7.0139],\u0022elements\u0022:[\u0022#/readResults/0/lines/34/words/0\u0022,\u0022#/readResults/0/lines/34/words/1\u0022]},{\u0022rowIndex\u0022:10,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full booth\u0022,\u0022boundingBox\u0022:[2.625,6.7867,5.75,6.7867,5.75,7.0139,2.625,7.0139],\u0022elements\u0022:[\u0022#/readResults/0/lines/35/words/0\u0022,\u0022#/readResults/0/lines/36/words/0\u0022,\u0022#/readResults/0/lines/36/words/1\u0022]},{\u0022rowIndex\u0022:10,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022$1,000\u0022,\u0022boundingBox\u0022:[5.75,6.7867,7.4967,6.7867,7.4967,7.0139,5.75,7.0139],\u0022elements\u0022:[\u0022#/readResults/0/lines/37/words/0\u0022]},{\u0022rowIndex\u0022:11,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Logo on poster\u0022,\u0022boundingBox\u0022:[2.625,7.0139,5.75,7.0139,5.75,7.2222,2.625,7.2222],\u0022elements\u0022:[\u0022#/readResults/0/lines/38/words/0\u0022,\u0022#/readResults/0/lines/39/words/0\u0022,\u0022#/readResults/0/lines/39/words/1\u0022,\u0022#/readResults/0/lines/39/words/2\u0022]},{\u0022rowIndex\u0022:12,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 50% discount on program guide\u0022,\u0022boundingBox\u0022:[2.625,7.2222,5.75,7.2222,5.75,7.4306,2.625,7.4306],\u0022elements\u0022:[\u0022#/readResults/0/lines/40/words/0\u0022,\u0022#/readResults/0/lines/41/words/0\u0022,\u0022#/readResults/0/lines/41/words/1\u0022,\u0022#/readResults/0/lines/41/words/2\u0022,\u0022#/readResults/0/lines/41/words/3\u0022,\u0022#/readResults/0/lines/41/words/4\u0022]},{\u0022rowIndex\u0022:13,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022advertisements\u0022,\u0022boundingBox\u0022:[2.625,7.4306,5.75,7.4306,5.75,7.635,2.625,7.635],\u0022elements\u0022:[\u0022#/readResults/0/lines/42/words/0\u0022]},{\u0022rowIndex\u0022:14,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Full Booth\u0022,\u0022boundingBox\u0022:[1.0033,7.635,2.625,7.635,2.625,7.8611,1.0033,7.8611],\u0022elements\u0022:[\u0022#/readResults/0/lines/43/words/0\u0022,\u0022#/readResults/0/lines/43/words/1\u0022]},{\u0022rowIndex\u0022:14,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full booth\u0022,\u0022boundingBox\u0022:[2.625,7.635,5.75,7.635,5.75,7.8611,2.625,7.8611],\u0022elements\u0022:[\u0022#/readResults/0/lines/44/words/0\u0022,\u0022#/readResults/0/lines/45/words/0\u0022,\u0022#/readResults/0/lines/45/words/1\u0022]},{\u0022rowIndex\u0022:14,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022$600\u0022,\u0022boundingBox\u0022:[5.75,7.635,7.4967,7.635,7.4967,7.8611,5.75,7.8611],\u0022elements\u0022:[\u0022#/readResults/0/lines/46/words/0\u0022]},{\u0022rowIndex\u0022:15,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 50% discount on program guide\u0022,\u0022boundingBox\u0022:[2.625,7.8611,5.75,7.8611,5.75,8.0694,2.625,8.0694],\u0022elements\u0022:[\u0022#/readResults/0/lines/47/words/0\u0022,\u0022#/readResults/0/lines/48/words/0\u0022,\u0022#/readResults/0/lines/48/words/1\u0022,\u0022#/readResults/0/lines/48/words/2\u0022,\u0022#/readResults/0/lines/48/words/3\u0022,\u0022#/readResults/0/lines/48/words/4\u0022]},{\u0022rowIndex\u0022:16,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022advertisements\u0022,\u0022boundingBox\u0022:[2.625,8.0694,5.75,8.0694,5.75,8.27,2.625,8.27],\u0022elements\u0022:[\u0022#/readResults/0/lines/49/words/0\u0022]},{\u0022rowIndex\u0022:17,\u0022columnIndex\u0022:0,\u0022text\u0022:\u0022Half Booth\u0022,\u0022boundingBox\u0022:[1.0033,8.27,2.625,8.27,2.625,8.4861,1.0033,8.4861],\u0022elements\u0022:[\u0022#/readResults/0/lines/50/words/0\u0022,\u0022#/readResults/0/lines/50/words/1\u0022]},{\u0022rowIndex\u0022:17,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 Full booth\u0022,\u0022boundingBox\u0022:[2.625,8.27,5.75,8.27,5.75,8.4861,2.625,8.4861],\u0022elements\u0022:[\u0022#/readResults/0/lines/51/words/0\u0022,\u0022#/readResults/0/lines/52/words/0\u0022,\u0022#/readResults/0/lines/52/words/1\u0022]},{\u0022rowIndex\u0022:17,\u0022columnIndex\u0022:2,\u0022text\u0022:\u0022$350\u0022,\u0022boundingBox\u0022:[5.75,8.27,7.4967,8.27,7.4967,8.4861,5.75,8.4861],\u0022elements\u0022:[\u0022#/readResults/0/lines/53/words/0\u0022]},{\u0022rowIndex\u0022:18,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022\uF0B7 25% discount on program guide\u0022,\u0022boundingBox\u0022:[2.625,8.4861,5.75,8.4861,5.75,8.7083,2.625,8.7083],\u0022elements\u0022:[\u0022#/readResults/0/lines/54/words/0\u0022,\u0022#/readResults/0/lines/55/words/0\u0022,\u0022#/readResults/0/lines/55/words/1\u0022,\u0022#/readResults/0/lines/55/words/2\u0022,\u0022#/readResults/0/lines/55/words/3\u0022,\u0022#/readResults/0/lines/55/words/4\u0022]},{\u0022rowIndex\u0022:19,\u0022columnIndex\u0022:1,\u0022text\u0022:\u0022advertisements\u0022,\u0022boundingBox\u0022:[2.625,8.7083,5.75,8.7083,5.75,8.905,2.625,8.905],\u0022elements\u0022:[\u0022#/readResults/0/lines/56/words/0\u0022]}]}]},{\u0022page\u0022:2,\u0022tables\u0022:[]}],\u0022documentResults\u0022:[{\u0022docType\u0022:\u0022custom:2bc78fbd-8f5c-40e4-82a4-9d4d44316050\u0022,\u0022modelId\u0022:\u00222bc78fbd-8f5c-40e4-82a4-9d4d44316050\u0022,\u0022pageRange\u0022:[1,2],\u0022fields\u0022:{\u0022CompanyName\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022Southridge Video\u0022,\u0022text\u0022:\u0022Southridge Video\u0022,\u0022page\u0022:2,\u0022boundingBox\u0022:[2.19,2.77,3.35,2.77,3.35,2.915,2.19,2.915],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/1/lines/2/words/2\u0022,\u0022#/readResults/1/lines/2/words/3\u0022]},\u0022Half\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022$350\u0022,\u0022text\u0022:\u0022$350\u0022,\u0022page\u0022:1,\u0022boundingBox\u0022:[5.835,8.305,6.16,8.305,6.16,8.45,5.835,8.45],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/0/lines/53/words/0\u0022]},\u0022Bronze\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022$1,000\u0022,\u0022text\u0022:\u0022$1,000\u0022,\u0022page\u0022:1,\u0022boundingBox\u0022:[5.835,6.825,6.285,6.825,6.285,6.97,5.835,6.97],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/0/lines/37/words/0\u0022]},\u0022Gold\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022$1,500\u0022,\u0022text\u0022:\u0022$1,500\u0022,\u0022page\u0022:1,\u0022boundingBox\u0022:[5.835,4.9,6.285,4.9,6.285,5.045,5.835,5.045],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/0/lines/16/words/0\u0022]},\u0022Full\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022$600\u0022,\u0022text\u0022:\u0022$600\u0022,\u0022page\u0022:1,\u0022boundingBox\u0022:[5.835,7.67,6.16,7.67,6.16,7.815,5.835,7.815],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/0/lines/46/words/0\u0022]},\u0022Silver\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022$1,200\u0022,\u0022text\u0022:\u0022$1,200\u0022,\u0022page\u0022:1,\u0022boundingBox\u0022:[5.835,5.97,6.285,5.97,6.285,6.115,5.835,6.115],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/0/lines/27/words/0\u0022]},\u0022Contact\u0022:{\u0022type\u0022:\u0022string\u0022,\u0022valueString\u0022:\u0022Jamie@southridgevideo.com\u0022,\u0022text\u0022:\u0022Jamie@southridgevideo.com\u0022,\u0022page\u0022:2,\u0022boundingBox\u0022:[1.62,3.1,3.575,3.1,3.575,3.245,1.62,3.245],\u0022confidence\u0022:1.0,\u0022elements\u0022:[\u0022#/readResults/1/lines/3/words/1\u0022]}},\u0022docTypeConfidence\u0022:1.0}],\u0022errors\u0022:[]}}"
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/588c1f7e-ec05-45dc-90cf-da133fb7ed10",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/2bc78fbd-8f5c-40e4-82a4-9d4d44316050",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-dc7340672e1444499c592ecc153b7067-e5af2efeb38d134a-00",
+        "traceparent": "00-40b3bfcceb53ff49a14ab53a4f57145c-64bc1f8cea46ac4a-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "816e57666fbf08e1b5145687a66730de",
+        "x-ms-client-request-id": "d041cf66d363ab90d4e326f6dc6ffd5e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "c8efd5de-29aa-4dd2-b0fa-d9ea8adc139a",
+        "apim-request-id": "c84f8775-1b29-474a-b748-755cf2dd7352",
         "Content-Length": "0",
-        "Date": "Wed, 09 Sep 2020 22:36:31 GMT",
+        "Date": "Fri, 30 Oct 2020 12:59:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "101"
+        "x-envoy-upstream-service-time": "29"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/",
     "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL": "https://azuresdktrainingdata.blob.core.windows.net/multipage-vendor-forms?sp=rl\u0026st=2020-06-25T04:55:22Z\u0026se=2021-06-26T04:55:00Z\u0026sv=2019-10-10\u0026sr=c\u0026sig=Z25JFTIsP3tbxDjHP2CK05HxIS9uz1E%2FDaRfjeEUyaU%3D",
     "RandomSeed": "1101840301"
   }

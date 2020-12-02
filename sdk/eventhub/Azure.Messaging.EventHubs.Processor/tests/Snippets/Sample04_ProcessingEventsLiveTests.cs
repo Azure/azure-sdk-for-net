@@ -2,19 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
-using System.Diagnostics;
-using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Primitives;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
 {
@@ -29,39 +28,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample04_ProcessingEventsLiveTests
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _eventHubScope;
-
-        /// <summary>The active Blob storage resource scope for the test fixture.</summary>
-        private StorageScope _storageScope;
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
-        {
-            _eventHubScope = await EventHubScope.CreateAsync(2);
-            _storageScope = await StorageScope.CreateAsync();
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
-        {
-            await Task.WhenAll
-            (
-                _eventHubScope.DisposeAsync().AsTask(),
-                _storageScope.DisposeAsync().AsTask()
-            );
-        }
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -69,21 +35,24 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task BasicEventProcessing()
         {
+            await using var eventHubScope = await EventHubScope.CreateAsync(1);
+            await using var storageScope = await StorageScope.CreateAsync();
+
             #region Snippet:EventHubs_Processor_Sample04_BasicEventProcessing
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = eventHubScope.EventHubName;
+            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -205,21 +174,24 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task CheckpointByEventCount()
         {
+            await using var eventHubScope = await EventHubScope.CreateAsync(1);
+            await using var storageScope = await StorageScope.CreateAsync();
+
             #region Snippet:EventHubs_Processor_Sample04_CheckpointByEventCount
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = eventHubScope.EventHubName;
+            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -322,21 +294,24 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task InitializePartition()
         {
+            await using var eventHubScope = await EventHubScope.CreateAsync(1);
+            await using var storageScope = await StorageScope.CreateAsync();
+
             #region Snippet:EventHubs_Processor_Sample04_InitializePartition
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = eventHubScope.EventHubName;
+            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -430,21 +405,24 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ProcessByBatch()
         {
+            await using var eventHubScope = await EventHubScope.CreateAsync(1);
+            await using var storageScope = await StorageScope.CreateAsync();
+
             #region Snippet:EventHubs_Processor_Sample04_ProcessByBatch
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = eventHubScope.EventHubName;
+            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -551,21 +529,24 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ProcessWithHeartbeat()
         {
+            await using var eventHubScope = await EventHubScope.CreateAsync(1);
+            await using var storageScope = await StorageScope.CreateAsync();
+
             #region Snippet:EventHubs_Processor_Sample04_ProcessWithHeartbeat
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
+            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
             /*@@*/
             /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+            /*@@*/ eventHubName = eventHubScope.EventHubName;
+            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,

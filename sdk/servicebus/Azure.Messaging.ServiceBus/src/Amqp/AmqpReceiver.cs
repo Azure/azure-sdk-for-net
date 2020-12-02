@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed = false;
+        private bool _closed;
 
         /// <summary>
         /// Indicates whether or not this receiver has been closed.
@@ -649,7 +649,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 timeout);
         }
 
-        private Rejected GetRejectedOutcome(
+        private static Rejected GetRejectedOutcome(
             IDictionary<string, object> propertiesToModify,
             string deadLetterReason,
             string deadLetterErrorDescription)
