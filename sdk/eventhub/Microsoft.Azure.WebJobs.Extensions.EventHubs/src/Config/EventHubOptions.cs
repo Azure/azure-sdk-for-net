@@ -254,11 +254,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
 
                 // Use blob prefix support available in EPH starting in 2.2.6
-                EventProcessorHost host = new EventProcessorHost(
+                EventProcessorHost host = new EventProcessorHost(consumerGroup: consumerGroup,
+                    connectionString: creds.EventHubConnectionString,
                     eventHubName: eventHubName,
-                    consumerGroupName: consumerGroup,
-                    eventHubConnectionString: creds.EventHubConnectionString,
-                    exceptionHandler: _exceptionHandler);
+                    options: this.EventProcessorOptions,
+                    eventBatchMaximumCount: _maxBatchSize,
+                    invokeProcessorAfterReceiveTimeout: InvokeProcessorAfterReceiveTimeout, exceptionHandler: _exceptionHandler);
 
                 return host;
             }

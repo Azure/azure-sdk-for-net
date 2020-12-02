@@ -30,7 +30,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private readonly BlobsCheckpointStore _checkpointStore;
         private readonly EventHubOptions _options;
         private readonly ILogger _logger;
-        private bool _started;
 
         private Lazy<EventHubsScaleMonitor> _scaleMonitor;
 
@@ -70,17 +69,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await _eventProcessorHost.RegisterEventProcessorFactoryAsync(this, _options.MaxBatchSize, _options.InvokeProcessorAfterReceiveTimeout, _checkpointStore, _options.EventProcessorOptions).ConfigureAwait(false);
-            _started = true;
+            await _eventProcessorHost.StartProcessingAsync(this, _checkpointStore, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (_started)
-            {
-                await _eventProcessorHost.UnregisterEventProcessorAsync().ConfigureAwait(false);
-            }
-            _started = false;
+            await _eventProcessorHost.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
         }
 
         IEventProcessor IEventProcessorFactory.CreateEventProcessor()
@@ -93,37 +87,27 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return _scaleMonitor.Value;
         }
 
-        /// <summary>
-        /// Wrapper for un-mockable checkpoint APIs to aid in unit testing
-        /// </summary>
-        internal interface ICheckpointer
-        {
-            Task CheckpointAsync(ProcessorPartitionContext context);
-        }
-
         // We get a new instance each time Start() is called.
         // We'll get a listener per partition - so they can potentialy run in parallel even on a single machine.
-        internal class EventProcessor : IEventProcessor, IDisposable, ICheckpointer
+        internal class EventProcessor : IEventProcessor, IDisposable
         {
             private readonly ITriggeredFunctionExecutor _executor;
             private readonly bool _singleDispatch;
             private readonly ILogger _logger;
             private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-            private readonly ICheckpointer _checkpointer;
             private readonly int _batchCheckpointFrequency;
             private int _batchCounter;
             private bool _disposed;
 
-            public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch, ICheckpointer checkpointer = null)
+            public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
             {
-                _checkpointer = checkpointer ?? this;
                 _executor = executor;
                 _singleDispatch = singleDispatch;
                 _batchCheckpointFrequency = options.BatchCheckpointFrequency;
                 _logger = logger;
             }
 
-            public Task CloseAsync(ProcessorPartitionContext context, ProcessingStoppedReason reason)
+            public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
             {
                 // signal cancellation for any in progress executions
                 _cts.Cancel();
@@ -132,13 +116,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return Task.CompletedTask;
             }
 
-            public Task OpenAsync(ProcessorPartitionContext context)
+            public Task OpenAsync(EventProcessorHostPartition context)
             {
                 _logger.LogDebug(GetOperationDetails(context, "OpenAsync"));
                 return Task.CompletedTask;
             }
 
-            public Task ProcessErrorAsync(ProcessorPartitionContext context, Exception error)
+            public Task ProcessErrorAsync(EventProcessorHostPartition context, Exception error)
             {
                 string errorDetails = $"Processing error (Partition Id: '{context.PartitionId}', Owner: '{context.Owner}', EventHubPath: '{context.EventHubPath}').";
 
@@ -147,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return Task.CompletedTask;
             }
 
-            public async Task ProcessEventsAsync(ProcessorPartitionContext context, IEnumerable<EventData> messages)
+            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages)
             {
                 var triggerInput = new EventHubTriggerInput
                 {
@@ -209,8 +193,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 // code, and capture/log/persist failed events, since they won't be retried.
                 if (messages.Any())
                 {
-                    context.CheckpointEvent = messages.Last();
-                    await CheckpointAsync(context).ConfigureAwait(false);
+                    await CheckpointAsync(messages.Last(), context).ConfigureAwait(false);
                 }
             }
 
@@ -222,12 +205,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 }
             }
 
-            private async Task CheckpointAsync(ProcessorPartitionContext context)
+            private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
             {
                 bool checkpointed = false;
                 if (_batchCheckpointFrequency == 1)
                 {
-                    await _checkpointer.CheckpointAsync(context).ConfigureAwait(false);
+                    await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
                     checkpointed = true;
                 }
                 else
@@ -236,7 +219,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     if (++_batchCounter >= _batchCheckpointFrequency)
                     {
                         _batchCounter = 0;
-                        await _checkpointer.CheckpointAsync(context).ConfigureAwait(false);
+                        await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
                         checkpointed = true;
                     }
                 }
@@ -262,11 +245,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             public void Dispose()
             {
                 Dispose(true);
-            }
-
-            async Task ICheckpointer.CheckpointAsync(ProcessorPartitionContext context)
-            {
-                await context.CheckpointAsync().ConfigureAwait(false);
             }
 
             private static Dictionary<string, object> GetLinksScope(EventData message)
@@ -319,7 +297,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return false;
             }
 
-            private static string GetOperationDetails(ProcessorPartitionContext context, string operation)
+            private static string GetOperationDetails(EventProcessorHostPartition context, string operation)
             {
                 StringWriter sw = new StringWriter();
                 using (JsonTextWriter writer = new JsonTextWriter(sw) { Formatting = Formatting.None })

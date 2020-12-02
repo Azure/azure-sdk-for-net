@@ -247,19 +247,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Assert.AreEqual(21, options.PartitionManagerOptions.RenewInterval.TotalSeconds);
         }
 
-        internal static ProcessorPartitionContext GetPartitionContext(string partitionId = "0", string eventHubPath = "path",
+        internal static EventProcessorHostPartition GetPartitionContext(string partitionId = "0", string eventHubPath = "path",
             string consumerGroupName = "group", string owner = null)
         {
-            var processor = new EventProcessorHost.Processor(Int32.MaxValue,
-                consumerGroupName,
+            var processor = new EventProcessorHost(consumerGroupName,
                 "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
                 eventHubPath,
                 new EventProcessorOptions(),
-                null,
-                false,
-                null,
-                Mock.Of<BlobsCheckpointStore>());
-            return new ProcessorPartitionContext(partitionId, processor, s => default);
+                Int32.MaxValue,
+                false, null);
+            return new EventProcessorHostPartition(partitionId)
+            {
+                ProcessorHost = processor
+            };
         }
     }
 }
