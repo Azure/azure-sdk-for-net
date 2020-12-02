@@ -2415,7 +2415,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> SyncUploadFromUri(
             Uri copySource,
-            BlobUploadFromUriOptions options = default,
+            BlobUploadFromUriOptions options,
             CancellationToken cancellationToken = default)
             => SyncUploadFromUriInternal(
                 copySource,
@@ -2457,7 +2457,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
             Uri copySource,
-            BlobUploadFromUriOptions options = default,
+            BlobUploadFromUriOptions options,
             CancellationToken cancellationToken = default)
             => await SyncUploadFromUriInternal(
                 copySource,
