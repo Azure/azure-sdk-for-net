@@ -5,3 +5,4 @@ extends:
   parameters:
     ServiceDirectory: formrecognizer
     TimeoutInMinutes: 90
+    Clouds: 'Public,Preview,UsGov'
