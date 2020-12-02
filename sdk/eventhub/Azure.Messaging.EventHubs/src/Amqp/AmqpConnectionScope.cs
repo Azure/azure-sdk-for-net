@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private const string PartitionProducerPathSuffixMask = "{0}/Partitions/{1}";
 
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
-        private volatile bool _disposed = false;
+        private volatile bool _disposed;
 
         /// <summary>
         ///   The version of AMQP to use within the scope.
@@ -741,12 +741,16 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         /// <param name="expirationTimeUtc">The date/time, in UTC, that the current authorization is expected to expire.</param>
+        /// <param name="currentTimeUtc">The current date/time, in UTC.  If not specified, the system time will be used.</param>
         ///
         /// <returns>The interval after which authorization should be refreshed.</returns>
         ///
-        protected virtual TimeSpan CalculateLinkAuthorizationRefreshInterval(DateTime expirationTimeUtc)
+        protected virtual TimeSpan CalculateLinkAuthorizationRefreshInterval(DateTime expirationTimeUtc,
+                                                                             DateTime? currentTimeUtc = null)
         {
-            var refreshDueInterval = (expirationTimeUtc.Subtract(DateTime.UtcNow)).Add(AuthorizationRefreshBuffer);
+            currentTimeUtc ??= DateTime.UtcNow;
+
+            var refreshDueInterval = (expirationTimeUtc.Subtract(AuthorizationRefreshBuffer)).Subtract(currentTimeUtc.Value);
             return (refreshDueInterval < MinimumAuthorizationRefresh) ? MinimumAuthorizationRefresh : refreshDueInterval;
         }
 

@@ -1,4 +1,6 @@
 # Helper functions for retireving useful information from azure-sdk-for-* repo
+. "${PSScriptRoot}\logging.ps1"
+
 class PackageProps
 {
     [string]$Name
@@ -81,7 +83,7 @@ function Get-PkgProperties
     $serviceDirectoryPath = Join-Path $RepoRoot "sdk" $ServiceDirectory
     if (!(Test-Path $serviceDirectoryPath))
     {
-        Write-Error "Service Directory $ServiceDirectory does not exist"
+        LogError "Service Directory $ServiceDirectory does not exist"
         exit 1
     }
 
@@ -91,13 +93,13 @@ function Get-PkgProperties
     {
         $pkgDirectoryPath = Join-Path $serviceDirectoryPath $directory.Name
 
-        if ((Get-ChildItem -Path Function: | ? { $_.Name -eq $GetPackageInfoFromRepoFn }).Count -gt 0)
+        if ($GetPackageInfoFromRepoFn -and (Test-Path "Function:$GetPackageInfoFromRepoFn"))
         {
             $pkgProps = &$GetPackageInfoFromRepoFn -pkgPath $pkgDirectoryPath -serviceDirectory $ServiceDirectory -pkgName $PackageName
         }
         else
         {
-            Write-Error "The function '$GetPackageInfoFromRepoFn' was not found."
+            LogError "The function '$GetPackageInfoFromRepoFn' was not found."
         }
 
         if ($pkgProps -ne $null)
@@ -105,7 +107,7 @@ function Get-PkgProperties
             return $pkgProps
         }
     }
-    Write-Error "Failed to retrive Properties for $PackageName"
+    LogError "Failed to retrive Properties for $PackageName"
 }
 
 # Takes ServiceName and Repo Root Directory
@@ -175,7 +177,7 @@ function Get-PkgListFromYml ($ciYmlPath)
     }
     if ($artifactsInCI -eq $null)
     {
-        Write-Error "Failed to retrive package names in ci $ciYmlPath"
+        LogError "Failed to retrive package names in ci $ciYmlPath"
     }
     return $artifactsInCI
 }

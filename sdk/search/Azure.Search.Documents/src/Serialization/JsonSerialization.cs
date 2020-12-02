@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -23,6 +24,36 @@ namespace Azure.Search.Documents
     /// </summary>
     internal static class JsonSerialization
     {
+        /// <summary>
+        /// We serialize dates with the roundtrip format.
+        /// </summary>
+        private const string DateTimeOutputFormat = "o";
+
+        /// <summary>
+        /// We parse dates using variations of the roundtrip format with
+        /// different sub-second precision.
+        /// </summary>
+        private const string DateTimeInputFormatPrefix = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+        private static readonly string[] s_dateTimeInputFormats = new[]
+        {
+            DateTimeInputFormatPrefix + "zzz",
+            DateTimeInputFormatPrefix + "K",
+            DateTimeInputFormatPrefix + "'.'fzzz",
+            DateTimeInputFormatPrefix + "'.'fK",
+            DateTimeInputFormatPrefix + "'.'ffzzz",
+            DateTimeInputFormatPrefix + "'.'ffK",
+            DateTimeInputFormatPrefix + "'.'fffzzz",
+            DateTimeInputFormatPrefix + "'.'fffK",
+            DateTimeInputFormatPrefix + "'.'ffffzzz",
+            DateTimeInputFormatPrefix + "'.'ffffK",
+            DateTimeInputFormatPrefix + "'.'fffffzzz",
+            DateTimeInputFormatPrefix + "'.'fffffK",
+            DateTimeInputFormatPrefix + "'.'ffffffzzz",
+            DateTimeInputFormatPrefix + "'.'ffffffK",
+            DateTimeInputFormatPrefix + "'.'fffffffzzz",
+            DateTimeInputFormatPrefix + "'.'fffffffK"
+        };
+
         /// <summary>
         /// Default JsonSerializerOptions to use.
         /// </summary>
@@ -97,7 +128,7 @@ namespace Azure.Search.Documents
         /// <param name="formatProvider">Format Provider.</param>
         /// <returns>OData string.</returns>
         public static string Date(DateTimeOffset value, IFormatProvider formatProvider) =>
-            value.ToString("o", formatProvider);
+            value.ToString(DateTimeOutputFormat, formatProvider);
 
         /// <summary>
         /// Get a stream representation of a JsonElement.  This is an
@@ -129,7 +160,12 @@ namespace Azure.Search.Documents
                         Constants.InfValue => double.PositiveInfinity,
                         Constants.NegativeInfValue => double.NegativeInfinity,
                         string text =>
-                            DateTimeOffset.TryParse(text, out DateTimeOffset date) ?
+                            DateTimeOffset.TryParseExact(
+                                    text,
+                                    s_dateTimeInputFormats,
+                                    CultureInfo.InvariantCulture,
+                                    DateTimeStyles.RoundtripKind,
+                                    out DateTimeOffset date) ?
                                 (object)date :
                                 (object)text
                     };

@@ -70,13 +70,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Port > 64000)
+            if (Port != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Port", 64000);
-            }
-            if (Port < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Port", 0);
+                if (Port > 64000)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Port", 64000);
+                }
+                if (Port < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Port", 0);
+                }
             }
         }
     }

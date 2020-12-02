@@ -8,16 +8,11 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class GetDigitalTwinOptions
+    internal partial class GetDigitalTwinOptions
     {
         /// <summary> Initializes a new instance of GetDigitalTwinOptions. </summary>
         public GetDigitalTwinOptions()
         {
         }
-
-        /// <summary> Identifies the request in a distributed tracing system. </summary>
-        public string Traceparent { get; set; }
-        /// <summary> Provides vendor-specific trace identification information and is a companion to traceparent. </summary>
-        public string Tracestate { get; set; }
     }
 }

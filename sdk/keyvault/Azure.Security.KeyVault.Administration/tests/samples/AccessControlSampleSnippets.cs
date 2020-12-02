@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Administration.Models;
@@ -18,7 +17,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// </summary>
     public class AccessControlSampleSnippets : AccessControlTestBase
     {
-        public AccessControlSampleSnippets(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
+        public AccessControlSampleSnippets(bool isAsync)
+            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [SetUp]
@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
+            string keyVaultUrl = TestEnvironment.ManagedHsmUrl;
 
             #region Snippet:CreateKeyVaultAccessControlClient
             // Create a new access control client using the default credential from Azure.Identity using environment variables previously set,
@@ -87,10 +87,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Replace <objectId> with the service principal object id from the Create/Get credentials section above
             //@@string servicePrincipalObjectId = "<objectId>";
 
-            KeyVaultRoleAssignmentProperties properties = new KeyVaultRoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
             //@@RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
-            /*@@*/
-            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, properties, _roleAssignmentId);
+            /*@@*/ KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId);
 
             Console.WriteLine(createdAssignment.Name);
             Console.WriteLine(createdAssignment.Properties.PrincipalId);

@@ -103,7 +103,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.GetSessionStateStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.GetSessionStateActivityName,
-                sessionId: SessionId);
+                DiagnosticProperty.ClientKind);
             scope.Start();
 
             BinaryData sessionState;
@@ -142,7 +142,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.SetSessionStateStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.SetSessionStateActivityName,
-                sessionId: SessionId);
+                DiagnosticProperty.ClientKind);
             scope.Start();
 
             try
@@ -182,7 +182,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.RenewSessionLockStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.RenewSessionLockActivityName,
-                sessionId: SessionId);
+                DiagnosticProperty.ClientKind);
             scope.Start();
 
             try

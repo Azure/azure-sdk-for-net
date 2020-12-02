@@ -54,14 +54,16 @@ param(
 
   [string]$TeamReviewers,
 
-  [string]$Assignees
+  [string]$Assignees,
+
+  [boolean]$CloseAfterOpenForTesting=$false
 )
 
-. "${PSScriptRoot}\common.ps1"
+. (Join-Path $PSScriptRoot common.ps1)
 
 try {
   $resp = Get-GitHubPullRequests -RepoOwner $RepoOwner -RepoName $RepoName `
-  -Head "${PROwner}:${PRBranch}" -Base $BaseBranch
+  -Head "${PROwner}:${PRBranch}" -Base $BaseBranch -AuthToken $AuthToken
 }
 catch { 
   LogError "Get-GitHubPullRequests failed with exception:`n$_"
@@ -87,11 +89,21 @@ else {
     # setting variable to reference the pull request by number
     Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp.number)"
 
-    Update-GitHubIssue -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $resp.number `
-    -Labels $PRLabels -Assignees $Assignees -AuthToken $AuthToken
+    if ($UserReviewers -or $TeamReviewers) {
+      Add-GitHubPullRequestReviewers -RepoOwner $RepoOwner -RepoName $RepoName -PrNumber $resp.number `
+      -Users $UserReviewers -Teams $TeamReviewers -AuthToken $AuthToken
+    }
 
-    Add-GitHubPullRequestReviewers -RepoOwner $RepoOwner -RepoName $RepoName -PrNumber $resp.number `
-    -Users $UserReviewers -Teams $TeamReviewers -AuthToken $AuthToken
+    if ($CloseAfterOpenForTesting) {
+      $prState = "closed"
+      LogDebug "Updating https://github.com/$RepoOwner/$RepoName/pull/$($resp.number) state to closed because this was only testing."
+    }
+    else {
+      $prState = "open"
+    }
+
+    Update-GitHubIssue -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $resp.number `
+    -State $prState -Labels $PRLabels -Assignees $Assignees -AuthToken $AuthToken
   }
   catch {
     LogError "Call to GitHub API failed with exception:`n$_"

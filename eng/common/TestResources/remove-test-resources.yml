@@ -21,6 +21,8 @@ parameters:
 
 steps:
   - pwsh: |
+      eng/common/TestResources/Import-AzModules.ps1
+
       $subscriptionConfiguration = @"
         ${{ parameters.SubscriptionConfiguration }}
       "@ | ConvertFrom-Json -AsHashtable;

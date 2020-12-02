@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -49,6 +50,7 @@ namespace Azure.Identity
         /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string clientId)
             : this(null, clientId, null, null)
         {
@@ -62,8 +64,9 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         /// <param name="options">The client options for the newly created <see cref="InteractiveBrowserCredential"/>.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
-            : this(tenantId, clientId, options, null, null)
+            : this(Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull:true), clientId, options, null, null)
         {
         }
 

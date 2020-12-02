@@ -30,6 +30,7 @@ function NormalizeUrl([string]$url){
     $url = "file://" + (Resolve-Path $url).ToString();
   }
 
+  Write-Verbose "The url to check against: $url."
   $uri = [System.Uri]$url;
 
   if ($script:baseUrl -eq "") {
@@ -200,6 +201,10 @@ function CheckLink ([System.Uri]$linkUri)
   }
   
   if ($checkLinkGuidance) {
+    if ($linkUri.Scheme -eq 'http') {
+      LogWarning "DO NOT use 'http' in $linkUri. Please use secure link with https instead. Check here for more information: https://aka.ms/azsdk/guideline/links"
+      $linkValid = $false
+    }
     $link = $linkUri.ToString()
     # Check if the url is relative links, suppress the archor link validation.
     if (!$linkUri.IsAbsoluteUri -and !$link.StartsWith("#")) {

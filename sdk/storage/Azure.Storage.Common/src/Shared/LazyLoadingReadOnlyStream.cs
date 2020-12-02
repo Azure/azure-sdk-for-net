@@ -250,6 +250,7 @@ namespace Azure.Storage
 
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             // Return the buffer to the pool if we're called from Dispose or a finalizer
             if (_buffer != null)
             {
@@ -317,7 +318,7 @@ namespace Azure.Storage
         public override long Position
         {
             get => _position;
-            set => throw new NotSupportedException();
+            set => Seek(value, SeekOrigin.Begin);
         }
 
         public override long Seek(long offset, SeekOrigin origin)

@@ -7,6 +7,7 @@ namespace Azure.Data.Tables
     {
         Create,
         Update,
-        Delete
+        Delete,
+        Upsert
     }
 }
