@@ -21,7 +21,7 @@ namespace Azure.Core.TestFramework
         private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
         private static Dictionary<Type, Exception> s_clientValidation = new Dictionary<Type, Exception>();
         public bool IsAsync { get; }
-        
+
         public bool TestDiagnostics { get; set; } = true;
 
         public ClientTestBase(bool isAsync)
