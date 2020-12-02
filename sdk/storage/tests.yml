@@ -5,7 +5,7 @@ extends:
   parameters:
     ServiceDirectory: storage
     BuildInParallel: true
-    TimeoutInMinutes: 180
+    TimeoutInMinutes: 90
     Location: canadacentral
     Clouds: Preview
     TestSetupSteps:
