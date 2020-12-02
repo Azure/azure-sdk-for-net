@@ -6,4 +6,4 @@ extends:
     MaxParallel: 4
     ServiceDirectory: servicebus
     TimeoutInMinutes: 120
-    Clouds: 'Public,Canary'
+    Clouds: 'Public,Preview,UsGov,China,Canary'
