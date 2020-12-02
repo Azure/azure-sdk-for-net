@@ -13,155 +13,124 @@ using Azure.Messaging.EventHubs.Processor;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
-    internal class EventProcessorHost
+    internal class EventProcessorHost : EventProcessor<EventProcessorHostPartition>
     {
-        public string EventHubName { get; }
-        public string ConsumerGroupName { get; }
-        public string EventHubConnectionString { get; }
-        private Processor CurrentProcessor { get; set; }
-        private Action<ExceptionReceivedEventArgs> ExceptionHandler { get; }
+        private readonly bool _invokeProcessorAfterReceiveTimeout;
+        private readonly Action<ExceptionReceivedEventArgs> _exceptionHandler;
+        private readonly ConcurrentDictionary<string, LeaseInfo> _leaseInfos;
+        private IEventProcessorFactory _processorFactory;
+        private BlobsCheckpointStore _checkpointStore;
 
-        public EventProcessorHost(string eventHubName, string consumerGroupName, string eventHubConnectionString, Action<ExceptionReceivedEventArgs> exceptionHandler)
+        /// <summary>
+        /// Mocking constructor
+        /// </summary>
+        protected EventProcessorHost()
         {
-            EventHubName = eventHubName;
-            ConsumerGroupName = consumerGroupName;
-            EventHubConnectionString = eventHubConnectionString;
-            ExceptionHandler = exceptionHandler;
         }
 
-        public async Task RegisterEventProcessorFactoryAsync(IEventProcessorFactory factory, int maxBatchSize, bool invokeProcessorAfterReceiveTimeout, BlobsCheckpointStore checkpointStore, EventProcessorOptions options)
+        public EventProcessorHost(string consumerGroup,
+            string connectionString,
+            string eventHubName,
+            EventProcessorOptions options,
+            int eventBatchMaximumCount,
+            bool invokeProcessorAfterReceiveTimeout,
+            Action<ExceptionReceivedEventArgs> exceptionHandler) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options)
         {
-            if (CurrentProcessor != null)
-            {
-                throw new InvalidOperationException("Processor has already been started");
-            }
-
-            CurrentProcessor = new Processor(maxBatchSize,
-                ConsumerGroupName,
-                EventHubConnectionString,
-                EventHubName,
-                options,
-                factory,
-                invokeProcessorAfterReceiveTimeout,
-                ExceptionHandler,
-                checkpointStore
-            );
-            await CurrentProcessor.StartProcessingAsync().ConfigureAwait(false);
+            _invokeProcessorAfterReceiveTimeout = invokeProcessorAfterReceiveTimeout;
+            _exceptionHandler = exceptionHandler;
+            _leaseInfos = new ConcurrentDictionary<string, LeaseInfo>();
         }
 
-        public async Task UnregisterEventProcessorAsync()
+        protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken)
         {
-            if (CurrentProcessor == null)
-            {
-                throw new InvalidOperationException("Processor has not been started");
-            }
-
-            await CurrentProcessor.StopProcessingAsync().ConfigureAwait(false);
-            CurrentProcessor = null;
+            return await _checkpointStore.ClaimOwnershipAsync(desiredOwnership, cancellationToken).ConfigureAwait(false);
         }
 
-        internal class Partition : EventProcessorPartition
+        protected override async Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken)
         {
-            public IEventProcessor Processor { get; set; }
-            public ProcessorPartitionContext Context { get; set; }
+            return await _checkpointStore.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
         }
 
-        internal class Processor : EventProcessor<Partition>
+        protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken)
         {
-            private IEventProcessorFactory ProcessorFactory { get; }
-            private bool InvokeProcessorAfterRecieveTimeout { get; }
-            private Action<ExceptionReceivedEventArgs> ExceptionHandler { get; }
-            private ConcurrentDictionary<string, LeaseInfo> LeaseInfos { get; }
-            private BlobsCheckpointStore CheckpointStore { get; }
+            return await _checkpointStore.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
+        }
 
-            public Processor(int eventBatchMaximumCount, string consumerGroup, string connectionString, string eventHubName, EventProcessorOptions options, IEventProcessorFactory processorFactory, bool invokeProcessorAfterRecieveTimeout, Action<ExceptionReceivedEventArgs> exceptionHandler, BlobsCheckpointStore checkpointStore) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options)
+        internal virtual async Task CheckpointAsync(string partitionId, EventData checkpointEvent, CancellationToken cancellationToken = default)
+        {
+            await _checkpointStore.UpdateCheckpointAsync(new EventProcessorCheckpoint()
             {
-                ProcessorFactory = processorFactory;
-                InvokeProcessorAfterRecieveTimeout = invokeProcessorAfterRecieveTimeout;
-                ExceptionHandler = exceptionHandler;
-                LeaseInfos = new ConcurrentDictionary<string, LeaseInfo>();
-                CheckpointStore = checkpointStore;
+                PartitionId = partitionId,
+                ConsumerGroup = ConsumerGroup,
+                EventHubName = EventHubName,
+                FullyQualifiedNamespace = FullyQualifiedNamespace
+            }, checkpointEvent, cancellationToken).ConfigureAwait(false);
+        }
+
+        internal virtual LeaseInfo GetLeaseInfo(string partitionId)
+        {
+            if (_leaseInfos.TryGetValue(partitionId, out LeaseInfo lease))
+            {
+                return lease;
             }
 
-            protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken)
+            return null;
+        }
+
+        protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorHostPartition partition, string operationDescription, CancellationToken cancellationToken)
+        {
+            if (partition != null)
             {
-                return await CheckpointStore.ClaimOwnershipAsync(desiredOwnership, cancellationToken).ConfigureAwait(false);
+                return partition.EventProcessor.ProcessErrorAsync(partition, exception);
             }
 
-            protected override async Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken)
+            try
             {
-                return await CheckpointStore.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
+                _exceptionHandler(new ExceptionReceivedEventArgs(Identifier, operationDescription, null, exception));
+            }
+            catch
+            {
+                // ignore
             }
 
-            protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken)
+            return Task.CompletedTask;
+        }
+
+        protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorHostPartition partition, CancellationToken cancellationToken)
+        {
+            if ((events == null || !events.Any()) && !_invokeProcessorAfterReceiveTimeout)
             {
-                return await CheckpointStore.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
-            }
-
-            internal virtual async Task CheckpointAsync(string partitionId, EventData checkpointEvent, CancellationToken cancellationToken = default)
-            {
-                await CheckpointStore.UpdateCheckpointAsync(new EventProcessorCheckpoint()
-                {
-                    PartitionId = partitionId,
-                    ConsumerGroup = ConsumerGroup,
-                    EventHubName = EventHubName,
-                    FullyQualifiedNamespace = FullyQualifiedNamespace
-                }, checkpointEvent, cancellationToken).ConfigureAwait(false);
-            }
-
-            internal virtual LeaseInfo GetLeaseInfo(string partitionId)
-            {
-                if (LeaseInfos.TryGetValue(partitionId, out LeaseInfo lease)) {
-                    return lease;
-                }
-
-                return null;
-            }
-
-            protected override Task OnProcessingErrorAsync(Exception exception, Partition partition, string operationDescription, CancellationToken cancellationToken)
-            {
-                if (partition != null)
-                {
-                    return partition.Processor.ProcessErrorAsync(partition.Context, exception);
-                }
-
-                try
-                {
-                    ExceptionHandler(new ExceptionReceivedEventArgs(Identifier, operationDescription, null, exception));
-                }
-                catch (Exception)
-                {
-                    // Best effort logging.
-                }
-
                 return Task.CompletedTask;
             }
 
-            protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, Partition partition, CancellationToken cancellationToken)
-            {
-                if ((events == null || !events.Any()) && !InvokeProcessorAfterRecieveTimeout)
-                {
-                    return Task.CompletedTask;
-                }
+            return partition.EventProcessor.ProcessEventsAsync(partition, events);
+        }
 
-                return partition.Processor.ProcessEventsAsync(partition.Context, events);
-            }
+        protected override Task OnInitializingPartitionAsync(EventProcessorHostPartition partition, CancellationToken cancellationToken)
+        {
+            partition.ProcessorHost = this;
+            partition.EventProcessor = _processorFactory.CreateEventProcessor();
+            partition.ReadLastEnqueuedEventPropertiesFunc = ReadLastEnqueuedEventProperties;
 
-            protected override Task OnInitializingPartitionAsync(Partition partition, CancellationToken cancellationToken)
-            {
-                partition.Processor = ProcessorFactory.CreateEventProcessor();
-                partition.Context = new ProcessorPartitionContext(partition.PartitionId, this, ReadLastEnqueuedEventProperties);
+            // Since we are re-initializing this partition, any cached information we have about the parititon will be incorrect.
+            // Clear it out now, if there is any, we'll refresh it in ListCheckpointsAsync, which EventProcessor will call before starting to pump messages.
+            _leaseInfos.TryRemove(partition.PartitionId, out _);
+            return partition.EventProcessor.OpenAsync(partition);
+        }
 
-                // Since we are re-initializing this partition, any cached information we have about the parititon will be incorrect.
-                // Clear it out now, if there is any, we'll refresh it in ListCheckpointsAsync, which EventProcessor will call before starting to pump messages.
-                LeaseInfos.TryRemove(partition.PartitionId, out _);
-                return partition.Processor.OpenAsync(partition.Context);
-            }
+        protected override Task OnPartitionProcessingStoppedAsync(EventProcessorHostPartition partition, ProcessingStoppedReason reason, CancellationToken cancellationToken)
+        {
+            return partition.EventProcessor.CloseAsync(partition, reason);
+        }
 
-            protected override Task OnPartitionProcessingStoppedAsync(Partition partition, ProcessingStoppedReason reason, CancellationToken cancellationToken)
-            {
-                return partition.Processor.CloseAsync(partition.Context, reason);
-            }
+        public async Task StartProcessingAsync(
+            IEventProcessorFactory processorFactory,
+            BlobsCheckpointStore checkpointStore,
+            CancellationToken cancellationToken)
+        {
+            _processorFactory = processorFactory;
+            _checkpointStore = checkpointStore;
+            await StartProcessingAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }
