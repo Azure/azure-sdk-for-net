@@ -4867,6 +4867,70 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void CanGenerateSas_GetFileClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            // Act - DataLakeDirectoryClient(Uri blobContainerUri, fileClientOptions options = default)
+            DataLakeDirectoryClient directory = new DataLakeDirectoryClient(
+                blobEndpoint,
+                GetOptions());
+            DataLakeFileClient file = directory.GetFileClient(GetNewFileName());
+            Assert.IsFalse(file.CanGenerateSasUri);
+
+            // Act - DataLakeDirectoryClient(Uri blobContainerUri, StorageSharedKeyCredential credential, fileClientOptions options = default)
+            DataLakeDirectoryClient directory2 = new DataLakeDirectoryClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            DataLakeFileClient file2 = directory2.GetFileClient(GetNewFileName());
+            Assert.IsTrue(file2.CanGenerateSasUri);
+
+            // Act - DataLakeDirectoryClient(Uri blobContainerUri, TokenCredential credential, fileClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakeDirectoryClient directory3 = new DataLakeDirectoryClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions());
+            DataLakeFileClient file3 = directory3.GetFileClient(GetNewFileName());
+            Assert.IsFalse(file3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetSubDirectoryClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            // Act - DataLakeDirectoryClient(Uri blobContainerUri, fileClientOptions options = default)
+            DataLakeDirectoryClient directory = new DataLakeDirectoryClient(
+                blobEndpoint,
+                GetOptions());
+            DataLakeDirectoryClient subdirectory = directory.GetSubDirectoryClient(GetNewDirectoryName());
+            Assert.IsFalse(subdirectory.CanGenerateSasUri);
+
+            // Act - DataLakeDirectoryClient(Uri blobContainerUri, StorageSharedKeyCredential credential, fileClientOptions options = default)
+            DataLakeDirectoryClient directory2 = new DataLakeDirectoryClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            DataLakeDirectoryClient subdirectory2 = directory2.GetSubDirectoryClient(GetNewDirectoryName());
+            Assert.IsTrue(subdirectory2.CanGenerateSasUri);
+
+            // Act - DataLakeDirectoryClient(Uri blobContainerUri, TokenCredential credential, fileClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakeDirectoryClient directory3 = new DataLakeDirectoryClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions());
+            DataLakeDirectoryClient subdirectory3 = directory3.GetSubDirectoryClient(GetNewDirectoryName());
+            Assert.IsFalse(subdirectory3.CanGenerateSasUri);
+        }
+
+        [Test]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange

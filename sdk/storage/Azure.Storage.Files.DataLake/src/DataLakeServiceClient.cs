@@ -324,7 +324,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="DataLakeFileSystemClient"/> for the desired share.
         /// </returns>
         public virtual DataLakeFileSystemClient GetFileSystemClient(string fileSystemName)
-            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, _storageSharedKeyCredential, Version, ClientDiagnostics);
 
         #region Get User Delegation Key
         /// <summary>

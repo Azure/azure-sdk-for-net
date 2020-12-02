@@ -223,12 +223,14 @@ namespace Azure.Storage.Files.DataLake
             Uri fileSystemUri,
             string filePath,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             DataLakeClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics)
             : base(
                   fileSystemUri,
                   filePath,
                   pipeline,
+                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics)
         {

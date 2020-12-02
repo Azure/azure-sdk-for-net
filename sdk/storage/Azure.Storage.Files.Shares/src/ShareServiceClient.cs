@@ -235,7 +235,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="ShareClient"/> for the desired share.
         /// </returns>
         public virtual ShareClient GetShareClient(string shareName) =>
-            new ShareClient(Uri.AppendToPath(shareName), Pipeline, Version, ClientDiagnostics);
+            new ShareClient(Uri.AppendToPath(shareName), Pipeline, _storageSharedKeyCredential, Version, ClientDiagnostics);
 
         #region GetShares
         /// <summary>

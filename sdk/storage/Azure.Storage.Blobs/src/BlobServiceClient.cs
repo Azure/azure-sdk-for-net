@@ -330,7 +330,7 @@ namespace Azure.Storage.Blobs
             ClientSideEncryptionOptions clientSideEncryption,
             string encryptionScope,
             HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential = default)
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             _uri = serviceUri;
             _authenticationPolicy = authentication;
@@ -384,7 +384,8 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: null,
                 clientSideEncryption: null,
                 encryptionScope: null,
-                pipeline);
+                pipeline,
+                storageSharedKeyCredential: null);
         }
         #endregion ctors
 
@@ -401,7 +402,15 @@ namespace Azure.Storage.Blobs
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
-            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
+            new BlobContainerClient(
+                Uri.AppendToPath(blobContainerName),
+                Pipeline,
+                _storageSharedKeyCredential,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
 
         #region protected static accessors for Azure.Storage.Blobs.Batch
         /// <summary>

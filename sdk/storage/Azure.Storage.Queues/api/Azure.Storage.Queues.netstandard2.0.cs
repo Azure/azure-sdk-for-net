@@ -63,6 +63,7 @@ namespace Azure.Storage.Queues
         public virtual Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt> UpdateMessage(string messageId, string popReceipt, string messageText = null, System.TimeSpan visibilityTimeout = default(System.TimeSpan), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt>> UpdateMessageAsync(string messageId, string popReceipt, System.BinaryData message, System.TimeSpan visibilityTimeout = default(System.TimeSpan), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt>> UpdateMessageAsync(string messageId, string popReceipt, string messageText = null, System.TimeSpan visibilityTimeout = default(System.TimeSpan), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected internal virtual Azure.Storage.Queues.QueueClient WithClientSideEncryptionOptionsCore(Azure.Storage.ClientSideEncryptionOptions clientSideEncryptionOptions) { throw null; }
     }
     public partial class QueueClientOptions : Azure.Core.ClientOptions
     {

@@ -7,12 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
-using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Shares.Test
+namespace Azure.Storage.Files.Shares.Tests
 {
     public class ServiceClientTests : FileTestBase
     {
@@ -411,6 +410,45 @@ namespace Azure.Storage.Files.Shares.Test
                 constants.Sas.SharedKeyCredential,
                 GetOptions());
             Assert.IsTrue(share4.CanGenerateAccountSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetShareClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - ShareServiceClient(string connectionString)
+            ShareServiceClient service = new ShareServiceClient(
+                connectionString);
+            ShareClient share = service.GetShareClient(GetNewShareName());
+            Assert.IsTrue(share.CanGenerateSasUri);
+
+            // Act - ShareServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            ShareServiceClient service2 = new ShareServiceClient(
+                connectionString,
+                GetOptions());
+            ShareClient share2 = service2.GetShareClient(GetNewShareName());
+            Assert.IsTrue(share2.CanGenerateSasUri);
+
+            // Act - ShareServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
+            ShareServiceClient service3 = new ShareServiceClient(
+                blobEndpoint,
+                GetOptions());
+            ShareClient share3 = service3.GetShareClient(GetNewShareName());
+            Assert.IsFalse(share3.CanGenerateSasUri);
+
+            // Act - ShareServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            ShareServiceClient service4 = new ShareServiceClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            ShareClient share4 = service4.GetShareClient(GetNewShareName());
+            Assert.IsTrue(share4.CanGenerateSasUri);
         }
 
         [Test]

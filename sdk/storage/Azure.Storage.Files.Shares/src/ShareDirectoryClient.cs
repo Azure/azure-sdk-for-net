@@ -302,6 +302,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -309,11 +312,17 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal ShareDirectoryClient(Uri directoryUri, HttpPipeline pipeline, ShareClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        internal ShareDirectoryClient(
+            Uri directoryUri,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            ShareClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
         {
             _uri = directoryUri;
             _pipeline = pipeline;
             _version = version;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
@@ -339,7 +348,12 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareDirectoryClient WithSnapshot(string snapshot)
         {
             var p = new ShareUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareDirectoryClient(p.ToUri(), Pipeline, Version, ClientDiagnostics);
+            return new ShareDirectoryClient(
+                p.ToUri(),
+                Pipeline,
+                _storageSharedKeyCredential,
+                Version,
+                ClientDiagnostics);
         }
 
         /// <summary>
@@ -357,6 +371,7 @@ namespace Azure.Storage.Files.Shares
             return new ShareFileClient(
                 shareUriBuilder.ToUri(),
                 Pipeline,
+                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
         }
@@ -376,6 +391,7 @@ namespace Azure.Storage.Files.Shares
             return new ShareDirectoryClient(
                 shareUriBuilder.ToUri(),
                 Pipeline,
+                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
         }

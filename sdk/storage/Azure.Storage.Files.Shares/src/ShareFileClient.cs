@@ -312,6 +312,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -319,10 +322,16 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal ShareFileClient(Uri fileUri, HttpPipeline pipeline, ShareClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        internal ShareFileClient(
+            Uri fileUri,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            ShareClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
         {
             _uri = fileUri;
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
         }
@@ -349,7 +358,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareFileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new ShareUriBuilder(Uri) { Snapshot = shareSnapshot };
-            return new ShareFileClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics);
+            return new ShareFileClient(builder.ToUri(), Pipeline, _storageSharedKeyCredential, Version, ClientDiagnostics);
         }
 
         /// <summary>
