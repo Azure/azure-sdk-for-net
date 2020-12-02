@@ -16,8 +16,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.Core.TestFramework
 {
     [Category("Recorded")]
-    public abstract class RecordedTestBase<TEnvironment> : ClientTestBase
-    where TEnvironment : TestEnvironment, new()
+    public abstract class RecordedTestBase : ClientTestBase
     {
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
@@ -29,7 +28,8 @@ namespace Azure.Core.TestFramework
 
         protected ResourceGroupCleanupPolicy CleanupPolicy { get; set; }
 
-        public TEnvironment TestEnvironment { get; }
+        public RecordedTestMode Mode { get; set; }
+
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
         // as it is the most restrictive of all platforms
         private static readonly HashSet<char> s_invalidChars = new HashSet<char>(new char[]
@@ -72,8 +72,6 @@ namespace Azure.Core.TestFramework
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
             Mode = mode;
-            TestEnvironment = new TEnvironment();
-            TestEnvironment.Mode = Mode;
         }
 
         public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
@@ -103,7 +101,7 @@ namespace Azure.Core.TestFramework
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
 
-            string path = ((AssemblyMetadataAttribute) GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
+            string path = ((AssemblyMetadataAttribute)GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
 
             return Path.Combine(path,
                 "SessionRecords",
@@ -144,7 +142,6 @@ namespace Azure.Core.TestFramework
         [SetUp]
         public virtual void StartTestRecording()
         {
-            TestEnvironment.Mode = Mode;
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
@@ -153,8 +150,7 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
-                        // Set the TestEnvironment Mode here so that any Mode changes in RecordedTestBase are picked up here also.
-            TestEnvironment.SetRecording(Recording);
+            // Set the TestEnvironment Mode here so that any Mode changes in RecordedTestBase are picked up here also.
         }
 
         [TearDown]
@@ -176,33 +172,6 @@ namespace Azure.Core.TestFramework
             else
             {
                 return operation.WaitForCompletionAsync();
-            }
-        }
-
-        protected ResourcesManagementClient GetResourceManagementClient()
-        {
-            var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
-            CleanupPolicy = new ResourceGroupCleanupPolicy();
-            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
-
-            return CreateClient<ResourcesManagementClient>(
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                options);
-        }
-
-        protected async Task CleanupResourceGroupsAsync()
-        {
-            if (CleanupPolicy != null && Mode != RecordedTestMode.Playback)
-            {
-                var resourceGroupsClient = new ResourcesManagementClient(
-                    TestEnvironment.SubscriptionId,
-                    TestEnvironment.Credential,
-                    new ResourcesManagementClientOptions()).ResourceGroups;
-                foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
-                {
-                    await resourceGroupsClient.StartDeleteAsync(resourceGroup);
-                }
             }
         }
 
