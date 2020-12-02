@@ -39,17 +39,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// reference an artifact in the TemplateSpec.  If the parent was
         /// linked with a URI, the child deployment will be a combination of
         /// the parent and relativePath URIs</param>
-        /// <param name="queryString">The query string (for example, a SAS
-        /// token) to be used with the templateLink URI.</param>
         /// <param name="contentVersion">If included, must match the
         /// ContentVersion in the template.</param>
-        public TemplateLink(string uri = default(string), string id = default(string), string relativePath = default(string), string queryString = default(string), string contentVersion = default(string))
+        /// <param name="queryString">The query string (for example, a SAS
+        /// token) to be used with the templateLink URI.</param>
+        public TemplateLink(string uri = default(string), string id = default(string), string relativePath = default(string), string contentVersion = default(string), string queryString = default(string))
         {
             Uri = uri;
             Id = id;
             RelativePath = relativePath;
-            QueryString = queryString;
             ContentVersion = contentVersion;
+            QueryString = queryString;
             CustomInit();
         }
 
@@ -84,18 +84,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string RelativePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the query string (for example, a SAS token) to be used
-        /// with the templateLink URI.
-        /// </summary>
-        [JsonProperty(PropertyName = "queryString")]
-        public string QueryString { get; set; }
-
-        /// <summary>
         /// Gets or sets if included, must match the ContentVersion in the
         /// template.
         /// </summary>
         [JsonProperty(PropertyName = "contentVersion")]
         public string ContentVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the query string (for example, a SAS token) to be used
+        /// with the templateLink URI.
+        /// </summary>
+        [JsonProperty(PropertyName = "queryString")]
+        public string QueryString { get; set; }
 
     }
 }

@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         public virtual IProvidersOperations Providers { get; private set; }
 
         /// <summary>
+        /// Gets the IProviderResourceTypesOperations.
+        /// </summary>
+        public virtual IProviderResourceTypesOperations ProviderResourceTypes { get; private set; }
+
+        /// <summary>
         /// Gets the IResourcesOperations.
         /// </summary>
         public virtual IResourcesOperations Resources { get; private set; }
@@ -353,6 +358,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             Operations = new Operations(this);
             Deployments = new DeploymentsOperations(this);
             Providers = new ProvidersOperations(this);
+            ProviderResourceTypes = new ProviderResourceTypesOperations(this);
             Resources = new ResourcesOperations(this);
             ResourceGroups = new ResourceGroupsOperations(this);
             Tags = new TagsOperations(this);
