@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IEnumerable<MapsAccount> ListByResourceGroup(this IAccountsOperations operations, string resourceGroupName)
             {
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -259,43 +259,6 @@ namespace Microsoft.Azure.Management.Maps
             }
 
             /// <summary>
-            /// Moves Maps Accounts from one ResourceGroup (or Subscription) to another
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains Maps Account to move.
-            /// </param>
-            /// <param name='moveRequest'>
-            /// The details of the Maps Account move.
-            /// </param>
-            public static void Move(this IAccountsOperations operations, string resourceGroupName, MapsAccountsMoveRequest moveRequest)
-            {
-                operations.MoveAsync(resourceGroupName, moveRequest).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Moves Maps Accounts from one ResourceGroup (or Subscription) to another
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains Maps Account to move.
-            /// </param>
-            /// <param name='moveRequest'>
-            /// The details of the Maps Account move.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task MoveAsync(this IAccountsOperations operations, string resourceGroupName, MapsAccountsMoveRequest moveRequest, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.MoveWithHttpMessagesAsync(resourceGroupName, moveRequest, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Get the keys to use with the Maps APIs. A key is used to authenticate and
             /// authorize access to the Maps REST APIs. Only one key is needed at a time;
             /// two are given to provide seamless key regeneration.
@@ -304,7 +267,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -323,7 +286,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -347,7 +310,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -368,7 +331,7 @@ namespace Microsoft.Azure.Management.Maps
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure Resource Group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of the Maps Account.
@@ -382,34 +345,6 @@ namespace Microsoft.Azure.Management.Maps
             public static async Task<MapsAccountKeys> RegenerateKeysAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, MapsKeySpecification keySpecification, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, accountName, keySpecification, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List operations available for the Maps Resource Provider
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IEnumerable<MapsOperationsValueItem> ListOperations(this IAccountsOperations operations)
-            {
-                return operations.ListOperationsAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List operations available for the Maps Resource Provider
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IEnumerable<MapsOperationsValueItem>> ListOperationsAsync(this IAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListOperationsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
