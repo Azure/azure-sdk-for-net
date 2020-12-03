@@ -9,7 +9,7 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional parameters for <see cref="BlockBlobClient.SyncUploadFromUri"/>.
+    /// Optional parameters for <see cref="BlockBlobClient.SyncUploadFromUri(Uri)"/>.
     /// </summary>
     public class BlobUploadFromUriOptions
     {

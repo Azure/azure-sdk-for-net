@@ -396,7 +396,6 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
-
         /// <summary>
         ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
@@ -801,7 +800,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(100).ToList();
 
                 await using (var customConsumer = new EventHubConsumerClient(customConsumerGroup, connectionString))
                 await using (var defaultConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
@@ -848,7 +847,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var credential = EventHubsTestEnvironment.Instance.Credential;
-                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(100).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
@@ -888,7 +887,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateEvents(25).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(250).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
@@ -904,7 +903,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         if (state.Events.Count >= 2)
                         {
                             await consumer.CloseAsync(cancellationSource.Token);
-                            await Task.Delay(250);
+                            await Task.Yield();
                         }
 
                         return true;
