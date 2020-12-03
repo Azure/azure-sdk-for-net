@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             ITriggeredFunctionExecutor executor,
             EventProcessorHost eventProcessorHost,
             bool singleDispatch,
-            Func<IEventHubConsumerClient> clientFactory,
+            IEventHubConsumerClient consumerClient,
             BlobsCheckpointStore checkpointStore,
             EventHubOptions options,
             ILogger logger)
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             _scaleMonitor = new Lazy<EventHubsScaleMonitor>(
                 () => new EventHubsScaleMonitor(
                     functionId,
-                    clientFactory(),
+                    consumerClient,
                     checkpointStore,
                     _logger));
         }

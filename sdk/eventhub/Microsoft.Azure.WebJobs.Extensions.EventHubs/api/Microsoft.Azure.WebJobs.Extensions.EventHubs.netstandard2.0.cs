@@ -5,9 +5,8 @@ namespace Microsoft.Azure.WebJobs
     public sealed partial class EventHubAttribute : System.Attribute
     {
         public EventHubAttribute(string eventHubName) { }
-        [Microsoft.Azure.WebJobs.Description.ConnectionStringAttribute]
-        public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
+        public string Connection { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
@@ -15,7 +14,9 @@ namespace Microsoft.Azure.WebJobs
     public sealed partial class EventHubTriggerAttribute : System.Attribute
     {
         public EventHubTriggerAttribute(string eventHubName) { }
+        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Connection { get { throw null; } set { } }
+        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string ConsumerGroup { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
     }
@@ -30,8 +31,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public bool InvokeProcessorAfterReceiveTimeout { get { throw null; } set { } }
         public string LeaseContainerName { get { throw null; } set { } }
         public int MaxBatchSize { get { throw null; } set { } }
-        public void AddEventHubProducerClient(Azure.Messaging.EventHubs.Producer.EventHubProducerClient client) { }
-        public void AddEventHubProducerClient(string eventHubName, Azure.Messaging.EventHubs.Producer.EventHubProducerClient client) { }
         public void AddReceiver(string eventHubName, string receiverConnectionString) { }
         public void AddReceiver(string eventHubName, string receiverConnectionString, string storageConnectionString) { }
         public void AddSender(string eventHubName, string sendConnectionString) { }

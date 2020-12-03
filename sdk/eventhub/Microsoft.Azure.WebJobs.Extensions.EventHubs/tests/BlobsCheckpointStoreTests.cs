@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Models;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Moq;
 using NUnit.Framework;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 {
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await store.ListCheckpointsAsync(_namespace, _eventHubName, _consumerGroup, CancellationToken.None));
 
-            var warning = testLoggerProvider.GetAllLogMessages().Single(p => p.Level == Extensions.Logging.LogLevel.Warning);
+            var warning = testLoggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
             var expectedWarning = "Function 'EventHubsTriggerFunction': An exception occurred when listing checkpoints for " +
                                   "FullyQualifiedNamespace: 'TestNamespace'; EventHubName: 'TestEventHubName'; ConsumerGroup: 'TestConsumerGroup'.";
             Assert.AreEqual(expectedWarning, warning.FormattedMessage);
@@ -72,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             await store.ListCheckpointsAsync(_namespace, _eventHubName, _consumerGroup, CancellationToken.None);
 
-            var warning = testLoggerProvider.GetAllLogMessages().Single(p => p.Level == Extensions.Logging.LogLevel.Warning);
+            var warning = testLoggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
             var expectedWarning = "Function 'EventHubsTriggerFunction': An invalid checkpoint was found for partition: '0' of " +
                                   "FullyQualifiedNamespace: 'TestNamespace'; EventHubName: 'TestEventHubName'; ConsumerGroup: 'TestConsumerGroup'.  " +
                                   "This checkpoint is not valid and will be ignored.";
