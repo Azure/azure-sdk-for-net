@@ -489,7 +489,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @chlahav
 
 # PRLabel: %Search
-/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
+/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @Mohit-Chakraborty @tg-msft @heaths
 
 # ServiceLabel: %Search %Service Attention
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy @tjacobhi @markheff @miwelsh
@@ -562,7 +562,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/support/Microsoft.Azure.Management.Support/           @shahbj79 @mit2nil @aygoya @ganganarayanan
 
 # ServiceLabel: %Synapse %Service Attention
-/sdk/synapse/            @aim-for-better @idear1203
+/sdk/synapse/            @aim-for-better @idear1203 @chamons
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes

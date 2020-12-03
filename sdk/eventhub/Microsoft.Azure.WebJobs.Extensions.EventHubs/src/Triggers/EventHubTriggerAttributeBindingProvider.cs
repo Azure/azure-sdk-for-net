@@ -5,6 +5,10 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
+using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
@@ -59,30 +63,32 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             string consumerGroup = attribute.ConsumerGroup ?? EventHubConsumerClient.DefaultConsumerGroupName;
             string resolvedConsumerGroup = _nameResolver.ResolveWholeString(consumerGroup);
 
-            string connectionString = null;
             if (!string.IsNullOrWhiteSpace(attribute.Connection))
             {
-                attribute.Connection = _nameResolver.ResolveWholeString(attribute.Connection);
-                connectionString = _config.GetConnectionStringOrSetting(attribute.Connection);
+                var connection = _nameResolver.ResolveWholeString(attribute.Connection);
+                var connectionString = _config.GetConnectionStringOrSetting(connection);
                 _options.Value.AddReceiver(resolvedEventHubName, connectionString);
             }
 
-            var eventHostListener = _options.Value.GetEventProcessorHost(_config, resolvedEventHubName, resolvedConsumerGroup);
-
-            string storageConnectionString = _config.GetWebJobsConnectionString(ConnectionStringNames.Storage);
+            var eventHostListener = _options.Value.GetEventProcessorHost(resolvedEventHubName, resolvedConsumerGroup);
+            var checkpointStoreConnectionString = _options.Value.GetCheckpointStoreConnectionString(_config, resolvedEventHubName);
 
             Func<ListenerFactoryContext, bool, Task<IListener>> createListener =
              (factoryContext, singleDispatch) =>
              {
+                 var checkpointStore = new BlobsCheckpointStore(
+                     new BlobContainerClient(checkpointStoreConnectionString, _options.Value.LeaseContainerName),
+                     _options.Value.EventProcessorOptions.RetryOptions.ToRetryPolicy(),
+                     factoryContext.Descriptor.Id,
+                     _logger);
+
                  IListener listener = new EventHubListener(
                                                 factoryContext.Descriptor.Id,
-                                                resolvedEventHubName,
-                                                resolvedConsumerGroup,
-                                                connectionString,
-                                                storageConnectionString,
                                                 factoryContext.Executor,
                                                 eventHostListener,
                                                 singleDispatch,
+                                                () => _options.Value.GetEventHubConsumerClient(resolvedEventHubName, consumerGroup),
+                                                checkpointStore,
                                                 _options.Value,
                                                 _logger);
                  return Task.FromResult(listener);
@@ -91,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 #pragma warning disable 618
             ITriggerBinding binding = BindingFactory.GetTriggerBinding(new EventHubTriggerBindingStrategy(), parameter, _converterManager, createListener);
 #pragma warning restore 618
-            return Task.FromResult<ITriggerBinding>(binding);
+            return Task.FromResult(binding);
         }
     } // end class
 }

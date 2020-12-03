@@ -1975,25 +1975,95 @@ namespace Azure.Storage.Files.DataLake.Tests
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - DataLakeFileSystemClient(Uri blobContainerUri, BlobClientOptions options = default)
-            DataLakeFileSystemClient container3 = new DataLakeFileSystemClient(
+            DataLakeFileSystemClient filesystem = new DataLakeFileSystemClient(
                 blobEndpoint,
                 GetOptions());
-            Assert.IsFalse(container3.CanGenerateSasUri);
+            Assert.IsFalse(filesystem.CanGenerateSasUri);
 
             // Act - DataLakeFileSystemClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            DataLakeFileSystemClient container4 = new DataLakeFileSystemClient(
+            DataLakeFileSystemClient filesystem2 = new DataLakeFileSystemClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions());
-            Assert.IsTrue(container4.CanGenerateSasUri);
+            Assert.IsTrue(filesystem2.CanGenerateSasUri);
 
             // Act - DataLakeFileSystemClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
-            DataLakeFileSystemClient container5 = new DataLakeFileSystemClient(
+            DataLakeFileSystemClient filesystem3 = new DataLakeFileSystemClient(
                 blobEndpoint,
                 tokenCredentials,
                 GetOptions());
-            Assert.IsFalse(container5.CanGenerateSasUri);
+            Assert.IsFalse(filesystem3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetFileClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, BlobClientOptions options = default)
+            DataLakeFileSystemClient filesystem = new DataLakeFileSystemClient(
+                blobEndpoint,
+                GetOptions());
+            DataLakeFileClient file = filesystem.GetFileClient(GetNewFileName());
+            Assert.IsFalse(file.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            DataLakeFileSystemClient filesystem2 = new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            DataLakeFileClient file2 = filesystem2.GetFileClient(GetNewFileName());
+            Assert.IsTrue(file2.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakeFileSystemClient filesystem3 = new DataLakeFileSystemClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions());
+            DataLakeFileClient file3 = filesystem3.GetFileClient(GetNewFileName());
+            Assert.IsFalse(file3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetDirectoryClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, BlobClientOptions options = default)
+            DataLakeFileSystemClient filesystem = new DataLakeFileSystemClient(
+                blobEndpoint,
+                GetOptions());
+            DataLakeDirectoryClient directory = filesystem.GetDirectoryClient(GetNewDirectoryName());
+            Assert.IsFalse(directory.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            DataLakeFileSystemClient filesystem2 = new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            DataLakeDirectoryClient directory2 = filesystem2.GetDirectoryClient(GetNewDirectoryName());
+            Assert.IsTrue(directory2.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakeFileSystemClient filesystem3 = new DataLakeFileSystemClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions());
+            DataLakeDirectoryClient directory3 = filesystem3.GetDirectoryClient(GetNewDirectoryName());
+            Assert.IsFalse(directory3.CanGenerateSasUri);
         }
 
         [Test]

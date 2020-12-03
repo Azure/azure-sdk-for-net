@@ -341,28 +341,67 @@ namespace Azure.Storage.Queues.Test
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - QueueServiceClient(string connectionString)
-            QueueServiceClient share = new QueueServiceClient(
+            QueueServiceClient serviceClient = new QueueServiceClient(
                 connectionString);
-            Assert.IsTrue(share.CanGenerateAccountSasUri);
+            Assert.IsTrue(serviceClient.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            QueueServiceClient share2 = new QueueServiceClient(
+            QueueServiceClient serviceClient2 = new QueueServiceClient(
                 connectionString,
                 GetOptions());
-            Assert.IsTrue(share2.CanGenerateAccountSasUri);
+            Assert.IsTrue(serviceClient2.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
-            QueueServiceClient share3 = new QueueServiceClient(
+            QueueServiceClient serviceClient3 = new QueueServiceClient(
                 blobEndpoint,
                 GetOptions());
-            Assert.IsFalse(share3.CanGenerateAccountSasUri);
+            Assert.IsFalse(serviceClient3.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            QueueServiceClient share4 = new QueueServiceClient(
+            QueueServiceClient serviceClient4 = new QueueServiceClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions());
-            Assert.IsTrue(share4.CanGenerateAccountSasUri);
+            Assert.IsTrue(serviceClient4.CanGenerateAccountSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetQueueClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - QueueServiceClient(string connectionString)
+            QueueServiceClient serviceClient = new QueueServiceClient(
+                connectionString);
+            QueueClient queueClient = serviceClient.GetQueueClient(GetNewQueueName());
+            Assert.IsTrue(queueClient.CanGenerateSasUri);
+
+            // Act - QueueServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            QueueServiceClient serviceClient2 = new QueueServiceClient(
+                connectionString,
+                GetOptions());
+            QueueClient queueClient2 = serviceClient2.GetQueueClient(GetNewQueueName());
+            Assert.IsTrue(queueClient2.CanGenerateSasUri);
+
+            // Act - QueueServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
+            QueueServiceClient serviceClient3 = new QueueServiceClient(
+                blobEndpoint,
+                GetOptions());
+            QueueClient queueClient3 = serviceClient3.GetQueueClient(GetNewQueueName());
+            Assert.IsFalse(queueClient3.CanGenerateSasUri);
+
+            // Act - QueueServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            QueueServiceClient serviceClient4 = new QueueServiceClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            QueueClient queueClient4 = serviceClient4.GetQueueClient(GetNewQueueName());
+            Assert.IsTrue(queueClient4.CanGenerateSasUri);
         }
 
         [Test]
