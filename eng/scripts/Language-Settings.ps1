@@ -198,7 +198,6 @@ function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$
   Set-Content -Path $csvLoc -Value $allCSVRows
 }
 
-
 # function is used to auto generate API View
 function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName = "")
 {
@@ -211,4 +210,15 @@ function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName = "")
   }
   $packages = @{ $pkg.Name = $pkg.FullName }
   return $packages
+}
+
+function GetExistingPackageVersions ($PackageName, $GroupId=$null) {
+  try {
+    $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
+    return $existingVersion.versions
+  }
+  catch {
+    LogError "Failed to retrieve package versions. `n$_"
+    return $null
+  }
 }
