@@ -27,7 +27,8 @@
       "maxLength": 90,
       "metadata": {
         "description": "Name of the environment. The name cannot include: '<', '>', '%', '&', ':', '\\', '?', '/' and any control characters. All other characters are allowed."
-      }
+      },
+      "defaultValue": "[concat(resourceGroup().name, '-TSI')]"
     },
     "consumerGroupName": {
       "type": "string",
@@ -190,7 +191,7 @@
     }
   ],
   "outputs": {
-    "dataAccessFQDN": {
+    "TIMESERIESINSIGHTS_URL": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.TimeSeriesInsights/environments', parameters('environmentName'))).dataAccessFqdn]"
     }
