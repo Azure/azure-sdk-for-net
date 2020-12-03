@@ -56,7 +56,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             _leaseInfos = new ConcurrentDictionary<string, LeaseInfo>();
         }
 
-
         protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken)
         {
             return await _checkpointStore.ClaimOwnershipAsync(desiredOwnership, cancellationToken).ConfigureAwait(false);

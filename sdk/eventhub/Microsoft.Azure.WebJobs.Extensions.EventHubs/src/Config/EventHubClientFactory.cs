@@ -68,8 +68,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             if (_options.RegisteredConsumerCredentials.TryGetValue(eventHubName, out var creds))
             {
-                consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
-
                 return new EventProcessorHost(consumerGroup: consumerGroup,
                     connectionString: creds.EventHubConnectionString,
                     eventHubName: eventHubName,

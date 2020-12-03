@@ -135,7 +135,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 && x.FormattedMessage.Contains("Sending events to EventHub")).Count() > 0);
         }
 
-
         [Test]
         public async Task CanSendAndReceive_ConnectionStringUsingAddMethods()
         {
