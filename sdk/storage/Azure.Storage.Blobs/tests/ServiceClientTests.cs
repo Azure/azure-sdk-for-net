@@ -323,6 +323,34 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetAccountInfoAsync_HnsFalse()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+
+            // Act
+            Response<AccountInfo> response = await service.GetAccountInfoAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value.IsHierarchicalNamespaceEnabled);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetAccountInfoAsync_HnsTrue()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_Hns();
+
+            // Act
+            Response<AccountInfo> response = await service.GetAccountInfoAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value.IsHierarchicalNamespaceEnabled);
+        }
+
+        [Test]
         public async Task GetAccountInfoAsync_Error()
         {
             // Arrange

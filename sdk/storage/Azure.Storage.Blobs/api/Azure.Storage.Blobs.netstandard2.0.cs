@@ -209,6 +209,7 @@ namespace Azure.Storage.Blobs.Models
     {
         internal AccountInfo() { }
         public Azure.Storage.Blobs.Models.AccountKind AccountKind { get { throw null; } }
+        public bool IsHierarchicalNamespaceEnabled { get { throw null; } }
         public Azure.Storage.Blobs.Models.SkuName SkuName { get { throw null; } }
     }
     public enum AccountKind
@@ -827,7 +828,9 @@ namespace Azure.Storage.Blobs.Models
     }
     public static partial class BlobsModelFactory
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.AccountInfo AccountInfo(Azure.Storage.Blobs.Models.SkuName skuName, Azure.Storage.Blobs.Models.AccountKind accountKind) { throw null; }
+        public static Azure.Storage.Blobs.Models.AccountInfo AccountInfo(Azure.Storage.Blobs.Models.SkuName skuName, Azure.Storage.Blobs.Models.AccountKind accountKind, bool isHierarchicalNamespaceEnabled) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobAppendInfo BlobAppendInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, byte[] contentCrc64, string blobAppendOffset, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobAppendInfo BlobAppendInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, byte[] contentCrc64, string blobAppendOffset, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope) { throw null; }
