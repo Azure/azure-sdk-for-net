@@ -2,11 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
 using System.Collections.Generic;
 using System.Globalization;
 using Azure.Messaging.EventHubs.Primitives;
-using Microsoft.Azure.WebJobs.EventHubs.Processor;
 
 namespace Microsoft.Azure.WebJobs.EventHubs
 {

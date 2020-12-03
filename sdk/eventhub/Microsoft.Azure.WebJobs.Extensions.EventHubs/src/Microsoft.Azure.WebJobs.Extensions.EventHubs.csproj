@@ -15,15 +15,18 @@
 
   <ItemGroup>
     <ProjectReference Include="../../Azure.Messaging.EventHubs/src/Azure.Messaging.EventHubs.csproj" />
+    <ProjectReference Include="../../../extensions/Microsoft.Extensions.Azure/src/Microsoft.Extensions.Azure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Processor/StorageManager.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/CancellationTokenExtensions.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/BasicRetryPolicy.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/EventHubsRetryOptionsExtensions.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/BlobCheckpointStore/*.cs" LinkBase="SharedSource" />
+    <Compile Include="../../../extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Shared/WebJobsConfigurationExtensions.cs" LinkBase="SharedSource" />
     <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
