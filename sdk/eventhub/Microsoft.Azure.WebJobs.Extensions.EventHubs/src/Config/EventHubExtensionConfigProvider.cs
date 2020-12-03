@@ -12,6 +12,7 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Configuration;
 using Microsoft.Azure.WebJobs.Logging;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -28,9 +29,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private readonly IConverterManager _converterManager;
         private readonly INameResolver _nameResolver;
         private readonly IWebJobsExtensionConfiguration<EventHubExtensionConfigProvider> _configuration;
+        private readonly AzureComponentFactory _componentFactory;
 
         public EventHubExtensionConfigProvider(IConfiguration config, IOptions<EventHubOptions> options, ILoggerFactory loggerFactory,
-            IConverterManager converterManager, INameResolver nameResolver, IWebJobsExtensionConfiguration<EventHubExtensionConfigProvider> configuration)
+            IConverterManager converterManager, INameResolver nameResolver, IWebJobsExtensionConfiguration<EventHubExtensionConfigProvider> configuration,
+            AzureComponentFactory componentFactory)
         {
             _config = config;
             _options = options;
@@ -38,6 +41,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             _converterManager = converterManager;
             _nameResolver = nameResolver;
             _configuration = configuration;
+            _componentFactory = componentFactory;
         }
 
         internal Action<ExceptionReceivedEventArgs> ExceptionHandler { get; set; }
@@ -65,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 .AddOpenConverter<OpenType.Poco, EventData>(ConvertPocoToEventData);
 
             // register our trigger binding provider
-            var triggerBindingProvider = new EventHubTriggerAttributeBindingProvider(_config, _nameResolver, _converterManager, _options, _loggerFactory);
+            var triggerBindingProvider = new EventHubTriggerAttributeBindingProvider(_config, _nameResolver, _converterManager, _options, _loggerFactory, _componentFactory);
             context.AddBindingRule<EventHubTriggerAttribute>()
                 .BindToTrigger(triggerBindingProvider);
 
@@ -76,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             context.AddBindingRule<EventHubAttribute>()
                 .BindToInput(attribute =>
             {
-                return _options.Value.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection);
+                return _options.Value.GetEventHubProducerClient(_config, attribute.EventHubName, attribute.Connection, _componentFactory);
             });
 
             ExceptionHandler = (e =>
@@ -112,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         private IAsyncCollector<EventData> BuildFromAttribute(EventHubAttribute attribute)
         {
-            EventHubProducerClient client = _options.Value.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection);
+            EventHubProducerClient client = _options.Value.GetEventHubProducerClient(_config, attribute.EventHubName, attribute.Connection, _componentFactory);
             return new EventHubAsyncCollector(new EventHubProducerClientImpl(client, _loggerFactory));
         }
 

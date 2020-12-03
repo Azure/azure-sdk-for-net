@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
@@ -40,6 +41,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             _exceptionHandler = exceptionHandler;
             _leaseInfos = new ConcurrentDictionary<string, LeaseInfo>();
         }
+
+        public EventProcessorHost(string consumerGroup,
+            string fullyQualifiedNamespace,
+            TokenCredential credential,
+            string eventHubName,
+            EventProcessorOptions options,
+            int eventBatchMaximumCount,
+            bool invokeProcessorAfterReceiveTimeout,
+            Action<ExceptionReceivedEventArgs> exceptionHandler) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+        {
+            _invokeProcessorAfterReceiveTimeout = invokeProcessorAfterReceiveTimeout;
+            _exceptionHandler = exceptionHandler;
+            _leaseInfos = new ConcurrentDictionary<string, LeaseInfo>();
+        }
+
 
         protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken)
         {

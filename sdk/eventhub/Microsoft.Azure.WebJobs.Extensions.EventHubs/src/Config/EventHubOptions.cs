@@ -6,17 +6,15 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using Azure.Messaging.EventHubs;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
-using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 using Microsoft.Azure.WebJobs.Hosting;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -58,10 +56,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// </summary>
         public int BatchCheckpointFrequency
         {
-            get
-            {
-                return _batchCheckpointFrequency;
-            }
+            get => _batchCheckpointFrequency;
 
             set
             {
@@ -80,10 +75,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// </summary>
         public int MaxBatchSize
         {
-            get
-            {
-                return _maxBatchSize;
-            }
+            get => _maxBatchSize;
 
             set
             {
@@ -114,23 +106,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// <summary>
         /// Add an existing client for sending messages to an event hub.  Infer the eventHub name from client.path
         /// </summary>
-        /// <param name="client"></param>
-        public void AddEventHubProducerClient(EventHubProducerClient client)
-        {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-            string eventHubName = client.EventHubName;
-            AddEventHubProducerClient(eventHubName, client);
-        }
-
-        /// <summary>
-        /// Add an existing client for sending messages to an event hub.  Infer the eventHub name from client.path
-        /// </summary>
         /// <param name="eventHubName">name of the event hub</param>
         /// <param name="client"></param>
-        public void AddEventHubProducerClient(string eventHubName, EventHubProducerClient client)
+        private void AddEventHubProducerClient(string eventHubName, EventHubProducerClient client)
         {
             if (eventHubName == null)
             {
@@ -160,13 +138,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 throw new ArgumentNullException(nameof(sendConnectionString));
             }
 
-            EventHubsConnectionStringBuilder sb = new EventHubsConnectionStringBuilder(sendConnectionString);
-            if (string.IsNullOrWhiteSpace(sb.EntityPath))
-            {
-                sb.EntityPath = eventHubName;
-            }
-
-            var client = new EventHubProducerClient(sb.ToString());
+            var client = new EventHubProducerClient(NormalizeConnectionString(sendConnectionString, eventHubName));
             AddEventHubProducerClient(eventHubName, client);
         }
 
@@ -220,15 +192,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             };
         }
 
-        internal EventHubProducerClient GetEventHubProducerClient(string eventHubName, string connection)
+        internal EventHubProducerClient GetEventHubProducerClient(IConfiguration configuration, string eventHubName, string connection, AzureComponentFactory componentFactory)
         {
             EventHubProducerClient client;
-
-            if (string.IsNullOrEmpty(eventHubName))
-            {
-                EventHubsConnectionStringBuilder builder = new EventHubsConnectionStringBuilder(connection);
-                eventHubName = builder.EntityPath;
-            }
 
             if (_clients.TryGetValue(eventHubName, out client))
             {
@@ -238,70 +204,149 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             {
                 return _clients.GetOrAdd(eventHubName, key =>
                 {
-                    AddSender(key, connection);
-                    return _clients[key];
+                    var info = ResolveConnectionInformation(connection, configuration, componentFactory);
+
+                    if (info.FullyQualifiedEndpoint != null &&
+                        info.TokenCredential != null)
+                    {
+                        return new EventHubProducerClient(info.FullyQualifiedEndpoint, eventHubName, info.TokenCredential);
+                    }
+
+                    return new EventHubProducerClient(NormalizeConnectionString(info.ConnectionString, eventHubName));
                 });
             }
+
             throw new InvalidOperationException("No event hub sender named " + eventHubName);
         }
 
         // Lookup a listener for receiving events given the name provided in the [EventHubTrigger] attribute.
-        internal EventProcessorHost GetEventProcessorHost(string eventHubName, string consumerGroup)
+        internal EventProcessorHost GetEventProcessorHost(IConfiguration configuration, string eventHubName, string connection, string consumerGroup, AzureComponentFactory componentFactory)
         {
             ReceiverCreds creds;
-            if (this._receiverCreds.TryGetValue(eventHubName, out creds))
+            if (_receiverCreds.TryGetValue(eventHubName, out creds))
             {
                 consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
 
-                // Use blob prefix support available in EPH starting in 2.2.6
-                EventProcessorHost host = new EventProcessorHost(consumerGroup: consumerGroup,
+                return new EventProcessorHost(consumerGroup: consumerGroup,
                     connectionString: creds.EventHubConnectionString,
                     eventHubName: eventHubName,
                     options: this.EventProcessorOptions,
                     eventBatchMaximumCount: _maxBatchSize,
-                    invokeProcessorAfterReceiveTimeout: InvokeProcessorAfterReceiveTimeout, exceptionHandler: _exceptionHandler);
-
-                return host;
+                    invokeProcessorAfterReceiveTimeout: InvokeProcessorAfterReceiveTimeout,
+                    exceptionHandler: _exceptionHandler);
             }
-
-            throw new InvalidOperationException("No event hub receiver named " + eventHubName);
-        }
-
-        internal IEventHubConsumerClient GetEventHubConsumerClient(string eventHubName, string consumerGroup)
-        {
-            ReceiverCreds creds;
-            if (this._receiverCreds.TryGetValue(eventHubName, out creds))
+            else if (!string.IsNullOrEmpty(connection))
             {
-                consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
+                var info = ResolveConnectionInformation(connection, configuration, componentFactory);
 
-                // Use blob prefix support available in EPH starting in 2.2.6
-                return new EventHubConsumerClientImpl(new EventHubConsumerClient(
-                    consumerGroup,
-                    creds.EventHubConnectionString,
-                    eventHubName));
+                if (info.FullyQualifiedEndpoint != null &&
+                    info.TokenCredential != null)
+                {
+                    return new EventProcessorHost(consumerGroup: consumerGroup,
+                        fullyQualifiedNamespace: info.FullyQualifiedEndpoint,
+                        eventHubName: eventHubName,
+                        credential: info.TokenCredential,
+                        options: this.EventProcessorOptions,
+                        eventBatchMaximumCount: _maxBatchSize,
+                        invokeProcessorAfterReceiveTimeout: InvokeProcessorAfterReceiveTimeout,
+                        exceptionHandler: _exceptionHandler);
+                }
+
+                return new EventProcessorHost(consumerGroup: consumerGroup,
+                    connectionString: NormalizeConnectionString(info.ConnectionString, eventHubName),
+                    eventHubName: eventHubName,
+                    options: this.EventProcessorOptions,
+                    eventBatchMaximumCount: _maxBatchSize,
+                    invokeProcessorAfterReceiveTimeout: InvokeProcessorAfterReceiveTimeout,
+                    exceptionHandler: _exceptionHandler);
             }
 
             throw new InvalidOperationException("No event hub receiver named " + eventHubName);
         }
 
+        internal IEventHubConsumerClient GetEventHubConsumerClient(IConfiguration configuration, string eventHubName, string connection, string consumerGroup, AzureComponentFactory componentFactory)
+        {
+            consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
+
+            EventHubConsumerClient client = null;
+            if (_receiverCreds.TryGetValue(eventHubName, out var creds))
+            {
+                client = new EventHubConsumerClient(consumerGroup, creds.EventHubConnectionString, eventHubName);
+            }
+            else if (!string.IsNullOrEmpty(connection))
+            {
+                var info = ResolveConnectionInformation(connection, configuration, componentFactory);
+
+                if (info.FullyQualifiedEndpoint != null &&
+                    info.TokenCredential != null)
+                {
+                    client = new EventHubConsumerClient(consumerGroup, info.FullyQualifiedEndpoint, eventHubName, info.TokenCredential);
+                }
+                else
+                {
+                    client = new EventHubConsumerClient(consumerGroup, NormalizeConnectionString(info.ConnectionString, eventHubName));
+                }
+            }
+
+            if (client != null)
+            {
+                return new EventHubConsumerClientImpl(client);
+            }
+
+            throw new InvalidOperationException("No event hub receiver named " + eventHubName);
+        }
 
         internal string GetCheckpointStoreConnectionString(IConfiguration config, string eventHubName)
         {
-            ReceiverCreds creds;
-            if (this._receiverCreds.TryGetValue(eventHubName, out creds))
+            string storageConnectionString = null;
+            if (_receiverCreds.TryGetValue(eventHubName, out var creds))
             {
-                var storageConnectionString = creds.StorageConnectionString;
-                if (storageConnectionString == null)
-                {
-                    string defaultStorageString = config.GetWebJobsConnectionString(ConnectionStringNames.Storage);
-                    storageConnectionString = defaultStorageString;
-                }
-
-                return storageConnectionString;
+                storageConnectionString = creds.StorageConnectionString;
             }
 
-            throw new InvalidOperationException("No event hub receiver named " + eventHubName);
+            // Fall back to default if not explicitly registered
+            return storageConnectionString ?? config.GetWebJobsConnectionString(ConnectionStringNames.Storage);
         }
+
+        private static string NormalizeConnectionString(string originalConnectionString, string eventHubName)
+        {
+            var connectionString = ConnectionString.Parse(originalConnectionString);
+
+            if (!connectionString.ContainsSegmentKey("EntityPath"))
+            {
+                connectionString.Add("EntityPath", eventHubName);
+            }
+
+            return connectionString.ToString();
+        }
+
+        private static EventHubsConnectionInformation ResolveConnectionInformation(string connection, IConfiguration configuration, AzureComponentFactory azureComponentFactory)
+        {
+            IConfigurationSection connectionSection = configuration.GetWebJobsConnectionStringSection(connection);
+            if (!connectionSection.Exists())
+            {
+                // Not found
+                throw new InvalidOperationException($"EventHub account connection string '{connection}' does not exist." +
+                                                    $"Make sure that it is a defined App Setting.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(connectionSection.Value))
+            {
+                return new EventHubsConnectionInformation(connectionSection.Value);
+            }
+
+            var fullyQualifiedNamespace = connectionSection["fullyQualifiedNamespace"];
+            if (string.IsNullOrWhiteSpace(fullyQualifiedNamespace))
+            {
+                // Not found
+                throw new InvalidOperationException($"Connection should have an 'fullyQualifiedNamespace' property or be a string representing a connection string.");
+            }
+
+            var credential = azureComponentFactory.CreateTokenCredential(connectionSection);
+
+            return new EventHubsConnectionInformation(fullyQualifiedNamespace, credential);
+        }
+
 
         private static string EscapeStorageCharacter(char character)
         {
@@ -350,14 +395,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
 
             return sb.ToString();
-        }
-
-        internal static string GetEventHubNamespace(EventHubsConnectionStringBuilder connectionString)
-        {
-            // EventHubs only have 1 endpoint.
-            var url = connectionString.Endpoint;
-            var @namespace = url.Host;
-            return @namespace;
         }
 
         /// <summary>
@@ -420,6 +457,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             // Optional. If not found, use the stroage from JobHostConfiguration
             public string StorageConnectionString { get; set; }
+        }
+
+        private class EventHubsConnectionInformation
+        {
+            public EventHubsConnectionInformation(string connectionString)
+            {
+                ConnectionString = connectionString;
+            }
+
+            public EventHubsConnectionInformation(string fullyQualifiedEndpoint, TokenCredential tokenCredential)
+            {
+                FullyQualifiedEndpoint = fullyQualifiedEndpoint;
+                TokenCredential = tokenCredential;
+            }
+
+            public string ConnectionString { get; }
+            public string FullyQualifiedEndpoint { get; }
+            public TokenCredential TokenCredential { get; }
         }
     }
 }

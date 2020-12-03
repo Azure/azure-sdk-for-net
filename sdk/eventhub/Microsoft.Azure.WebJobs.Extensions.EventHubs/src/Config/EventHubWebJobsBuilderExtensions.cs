@@ -4,6 +4,7 @@
 using System;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.EventHubs;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.Hosting
@@ -37,6 +38,7 @@ namespace Microsoft.Extensions.Hosting
             builder.AddExtension<EventHubExtensionConfigProvider>()
                 .BindOptions<EventHubOptions>();
 
+            builder.Services.AddAzureClientsCore();
             builder.Services.Configure<EventHubOptions>(options =>
             {
                 configure(options);

@@ -169,7 +169,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             // Test sender
             options.AddSender("k1", connectionString);
-            var client = options.GetEventHubProducerClient("k1", null);
+            var client = options.GetEventHubProducerClient(null, "k1", null, null);
             Assert.AreEqual(expectedPathName, client.EventHubName);
         }
 
@@ -179,7 +179,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         public void GetEventHubClient_AddsConnection(string expectedPathName, string connectionString)
         {
             EventHubOptions options = new EventHubOptions();
-            var client = options.GetEventHubProducerClient("k1", connectionString);
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection(new[]
+                {
+                    new KeyValuePair<string, string>("connection", connectionString)
+                });
+            var client = options.GetEventHubProducerClient(configuration.Build(), "k1", "connection", null);
             Assert.AreEqual(expectedPathName, client.EventHubName);
         }
 

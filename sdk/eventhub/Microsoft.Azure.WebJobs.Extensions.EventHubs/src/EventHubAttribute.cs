@@ -31,7 +31,6 @@ namespace Microsoft.Azure.WebJobs
         /// <summary>
         /// Gets or sets the optional connection string name that contains the Event Hub connection string. If missing, tries to use a registered event hub sender.
         /// </summary>
-        [ConnectionString]
         public string Connection { get; set; }
     }
 }
