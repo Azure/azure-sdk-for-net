@@ -333,6 +333,5 @@ namespace Microsoft.Extensions.Azure
 
             throw new InvalidOperationException($"Unable to convert section '{configuration.Path}' to parameter type '{type}', unable to find matching constructor.");
         }
-
     }
 }

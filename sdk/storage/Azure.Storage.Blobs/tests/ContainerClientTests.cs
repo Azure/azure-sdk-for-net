@@ -3028,7 +3028,6 @@ namespace Azure.Storage.Blobs.Test
             bool ifUnmodifiedSince,
             bool lease)
         {
-
             var accessConditions = new BlobRequestConditions { IfModifiedSince = parameters.IfModifiedSince };
             if (ifUnmodifiedSince)
             {

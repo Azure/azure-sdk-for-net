@@ -1069,7 +1069,6 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-
                 return _pipeline.SendRequest(RequestMethod.Put, importKeyOptions, () => new KeyVaultKey(importKeyOptions.Name), cancellationToken, KeysPath, importKeyOptions.Name);
             }
             catch (Exception e)

@@ -304,6 +304,5 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
 
             Assert.AreEqual(exp.Count, act.Count);
         }
-
     }
 }

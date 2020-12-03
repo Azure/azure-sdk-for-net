@@ -14,7 +14,6 @@ namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientTest
     {
-
         [TestCaseSource(nameof(TestData))]
         public async Task SendSmsAsyncOverload_PassesToGeneratedOne(PhoneNumber expectedFrom, PhoneNumber expectedTo, string expectedMessage, SendSmsOptions expectedOptions)
         {

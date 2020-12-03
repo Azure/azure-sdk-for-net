@@ -227,7 +227,6 @@ namespace Azure.Core.Tests
             List<Task> requests = new List<Task>();
             for (int i = 0; i < requestCount; i++)
             {
-
                 requests.Add(Task.Run(() => Connect()));
             }
 

@@ -623,7 +623,6 @@ namespace Azure.Storage.Blobs.Test
                     ToBase64(GetNewBlockName()),
                     sourceContentHash: MD5.Create().ComputeHash(data)),
                 _retryStageBlockFromUri);
-
         }
 
         [Test]

@@ -184,7 +184,6 @@ namespace ResourceGroups.Tests
             expectedUrl = expectedUrl.Replace(" ", "%20");
 
             Assert.AreEqual(expectedUrl, request.Uri.ToString());
-
         }
 
         [Test]

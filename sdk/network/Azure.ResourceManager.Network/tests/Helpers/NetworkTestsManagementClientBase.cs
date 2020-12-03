@@ -235,7 +235,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(string resourceGroupName, string circuitName,
             RouteFilter filter, NetworkManagementClient nrpClient)
         {
-
             ExpressRouteCircuitPeering peering = new ExpressRouteCircuitPeering()
             {
                 Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
@@ -402,6 +401,5 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     childResourceType,
                     childResourceName);
         }
-
     }
 }

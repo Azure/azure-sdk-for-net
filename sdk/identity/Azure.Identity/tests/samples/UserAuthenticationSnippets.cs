@@ -64,7 +64,6 @@ namespace Azure.Identity.Samples
         {
             if (!File.Exists(AUTH_RECORD_PATH))
             {
-
                 #region Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache
                 var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = new PersistentTokenCache() });
                 #endregion

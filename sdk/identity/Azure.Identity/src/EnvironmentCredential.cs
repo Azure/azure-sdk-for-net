@@ -78,7 +78,6 @@ namespace Azure.Identity
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, null, _pipeline, null);
                 }
             }
-
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)

@@ -26,7 +26,6 @@ namespace Azure.Core.TestFramework
                 if (value != null && value.TryComputeLength(out long length))
                 {
                     _headers["Content-Length"] = new List<string> { length.ToString() };
-
                 }
                 else
                 {

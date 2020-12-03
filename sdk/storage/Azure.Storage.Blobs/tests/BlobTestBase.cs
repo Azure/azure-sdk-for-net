@@ -272,7 +272,6 @@ namespace Azure.Storage.Test.Shared
             PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
-
             containerName ??= GetNewContainerName();
             service ??= GetServiceClient_SharedKey();
 

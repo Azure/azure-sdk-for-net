@@ -669,7 +669,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
             if (ppgId != null)
             {
-
                 Assert.AreEqual(ppgId.ToLower(), vmScaleSetOut.ProximityPlacementGroup.Id.ToLower());
             }
         }

@@ -416,7 +416,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var i = 0;
                 foreach (ArraySegment<byte> deliveryTag in deliveryTags)
                 {
-
                     disposeMessageTasks[i++] = receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
                 }
 
@@ -826,7 +825,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             int messageCount = 1,
             CancellationToken cancellationToken = default)
         {
-
             long seqNumber = sequenceNumber ?? LastPeekedSequenceNumber + 1;
             IReadOnlyList<ServiceBusReceivedMessage> messages = null;
 
@@ -1257,7 +1255,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _receiveLink?.Dispose();
             _managementLink?.Dispose();
-
         }
 
         private void OnReceiverLinkClosed(object receiver, EventArgs e)

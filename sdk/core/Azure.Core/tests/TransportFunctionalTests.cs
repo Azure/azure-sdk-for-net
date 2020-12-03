@@ -442,7 +442,6 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
         public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader)
         {
-
             StringValues httpHeaderValues = default;
 
             using TestServer testServer = new TestServer(

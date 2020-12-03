@@ -21,7 +21,6 @@ namespace Azure.Data.Tables.Tests
     [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16964")]
     public class TableClientQueryableLiveTests : TableServiceLiveTestsBase
     {
-
         public TableClientQueryableLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
@@ -262,7 +261,6 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entity, Is.Not.Null);
             Assert.That(entity.PartitionKey, Is.EqualTo(PartitionKeyValue));
             Assert.That(entity.RowKey, Is.EqualTo(entitiesToCreate[1].RowKey));
-
         }
 
         [RecordedTest]

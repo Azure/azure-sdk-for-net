@@ -155,8 +155,8 @@ namespace ResourceGroups.Tests
                     { "tagKey3", "tagValue3" }
                 }
             };
-
-            { // test for Merge operation
+            // test for Merge operation
+            {
                 var tagPatchRequest = new TagsPatchResource() { Operation = TagsPatchResourceOperation.Merge, Properties = putTags };
                 var patchResponse =(await TagsOperations.UpdateAtScopeAsync(resourceScope, tagPatchRequest)).Value;
 
@@ -172,8 +172,8 @@ namespace ResourceGroups.Tests
                 Assert.AreEqual(patchResponse.Properties.TagsValue.Count(), expectedResponse.Properties.TagsValue.Count());
                 Assert.IsTrue(this.CompareTagsResource(expectedResponse, patchResponse));
             }
-
-            { // test for Replace operation
+            // test for Replace operation
+            {
                 var tagPatchRequest = new TagsPatchResource() { Operation = TagsPatchResourceOperation.Replace, Properties = putTags };
                 var patchResponse = (await TagsOperations.UpdateAtScopeAsync(resourceScope, tagPatchRequest)).Value;
 
@@ -181,8 +181,8 @@ namespace ResourceGroups.Tests
                 Assert.AreEqual(patchResponse.Properties.TagsValue.Count(), expectedResponse.Properties.TagsValue.Count());
                 Assert.IsTrue(this.CompareTagsResource(expectedResponse, patchResponse));
             }
-
-            { // test for Delete operation
+            // test for Delete operation
+            {
                 var tagPatchRequest = new TagsPatchResource() { Operation = TagsPatchResourceOperation.Delete, Properties = putTags };
                 var patchResponse = (await TagsOperations.UpdateAtScopeAsync(resourceScope, tagPatchRequest)).Value;
                 Assert.IsEmpty(patchResponse.Properties.TagsValue);

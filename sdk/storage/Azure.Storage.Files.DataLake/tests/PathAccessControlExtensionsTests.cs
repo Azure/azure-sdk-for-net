@@ -11,7 +11,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class PathAccessControlExtensionsTests : PathAccessControlTestBase
     {
-
         [Test]
         public void ParseOctal()
         {

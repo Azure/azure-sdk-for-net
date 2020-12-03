@@ -143,7 +143,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             AreEqual(exp.Properties, act.Properties);
 
             AreEqual(exp.HttpRequest, act.HttpRequest);
-
         }
 
         private void AreEqual(SenderAuthorization exp, SenderAuthorization act)
@@ -171,6 +170,5 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             Assert.AreEqual(exp.Method, act.Method);
             Assert.AreEqual(exp.Uri, act.Uri);
         }
-
     }
 }

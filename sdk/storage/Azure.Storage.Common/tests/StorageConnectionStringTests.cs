@@ -628,7 +628,6 @@ namespace Azure.Storage.Test
         [Description("Custom endpoints")]
         public void DefaultEndpointOverride()
         {
-
             Assert.IsTrue(StorageConnectionString.TryParse("DefaultEndpointsProtocol=http;BlobEndpoint=http://customdomain.com/;AccountName=asdf;AccountKey=123=", out StorageConnectionString account));
             Assert.AreEqual(new Uri("http://customdomain.com/"), account.BlobEndpoint);
             Assert.IsNull(account.BlobStorageUri.SecondaryUri);
@@ -706,5 +705,4 @@ namespace Azure.Storage.Test
             TestHelper.AssertSequenceEqual(expectedKeyBytes, keyBytes);
         }
     }
-
 }

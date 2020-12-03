@@ -26,7 +26,6 @@ namespace Azure.Messaging.ServiceBus
     ///
     public abstract class ServiceBusRetryPolicy
     {
-
         private static readonly TimeSpan ServerBusyBaseSleepTime = TimeSpan.FromSeconds(10);
 
         private readonly object serverBusyLock = new object();

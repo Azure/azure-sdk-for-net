@@ -181,7 +181,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Assert.AreEqual(numThreads, sessionOpenEventCt);
                 Assert.AreEqual(sessionOpenEventCt, sessionCloseEventCt);
-
             }
         }
 
@@ -1330,7 +1329,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     finally
                     {
-
                         if (eventArgs.ErrorSource != ServiceBusErrorSource.CloseSession)
                         {
                             if (errorSource != ServiceBusErrorSource.Abandon ||
@@ -1464,7 +1462,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.IsTrue(sessionId.Contains(message.SessionId));
                         Assert.IsTrue(sessionId.Contains(args.SessionId));
                         Assert.IsNotNull(args.SessionLockedUntil);
-
                     }
                     finally
                     {

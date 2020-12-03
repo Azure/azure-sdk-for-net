@@ -135,7 +135,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             else
             {
                 Assert.AreEqual(getQueue, updatedQueue);
-
             }
             Response<bool> isExistsResponse = await client.QueueExistsAsync(queueName);
             rawResponse = createdQueueResponse.GetRawResponse();
@@ -203,7 +202,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 // when in playback mode.
                 Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { AuthorizationRules = options.AuthorizationRules.Clone() });
                 Assert.AreEqual(createdTopic, new TopicProperties(options) { AuthorizationRules = createdTopic.AuthorizationRules.Clone() });
-
             }
             else
             {

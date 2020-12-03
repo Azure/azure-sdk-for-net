@@ -31,7 +31,6 @@ namespace Azure.Identity
 
         internal AuthenticationRecord()
         {
-
         }
 
         internal AuthenticationRecord(AuthenticationResult authResult, string clientId)
@@ -131,7 +130,6 @@ namespace Azure.Identity
         {
             using (var json = new Utf8JsonWriter(stream))
             {
-
                 json.WriteStartObject();
 
                 json.WriteString(s_usernamePropertyNameBytes, Username);

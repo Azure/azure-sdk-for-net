@@ -715,7 +715,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SendIdempotentRequiresThePartition()
         {
-
             var events = EventGenerator.CreateEvents(5);
             var transportProducer = new ObservableTransportProducerMock();
             var connection = new MockConnection(() => transportProducer);

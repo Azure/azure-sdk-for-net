@@ -3314,7 +3314,6 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             for (int i = 0; i < size / readSize; i++)
             {
-
                 await outputStream.ReadAsync(actualData, 0, readSize);
                 for (int j = 0; j < readSize; j++)
                 {

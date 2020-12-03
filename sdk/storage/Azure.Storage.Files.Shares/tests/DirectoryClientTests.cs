@@ -104,7 +104,6 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertCacheableProperty(string.Empty, () => directoryClient4.Name);
             TestHelper.AssertCacheableProperty(string.Empty, () => directoryClient4.Path);
             Assert.AreEqual(string.Empty, builder4.LastDirectoryOrFileName);
-
         }
 
         [Test]

@@ -789,7 +789,6 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(umask)}: {umask}\n");
                 try
                 {
-
                     Response<PathCreateResult> createResponse = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
@@ -2616,7 +2615,6 @@ namespace Azure.Storage.Files.DataLake
                                 }
                             }
                             batchesCount++;
-
                         } while (!string.IsNullOrEmpty(continuationToken)
                             && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
 
@@ -2725,7 +2723,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
 
         /// <summary>

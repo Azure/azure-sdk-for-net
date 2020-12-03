@@ -206,7 +206,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             }
 
             return new HttpResponseMessage(HttpStatusCode.BadRequest);
-
         }
 
         private class JTokenToPocoConverter<T> : IConverter<JToken, T>

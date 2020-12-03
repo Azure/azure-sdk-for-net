@@ -4186,7 +4186,6 @@ namespace Azure.Storage.Files.Shares
                         async,
                         cancellationToken)
                         .ConfigureAwait(false);
-
                 }
             }
             finally
@@ -4930,7 +4929,6 @@ namespace Azure.Storage.Files.Shares
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
                 handlesFailed += response.Value.NumberOfHandlesFailedToClose;
-
             } while (!string.IsNullOrEmpty(marker));
 
             return new CloseHandlesResult()

@@ -260,7 +260,6 @@ namespace Azure.Storage.Tests
 
             protected override Task FlushInternal(bool async, CancellationToken cancellationToken)
             {
-
                 ApiCalls.Add(s_flush);
                 return Task.CompletedTask;
             }

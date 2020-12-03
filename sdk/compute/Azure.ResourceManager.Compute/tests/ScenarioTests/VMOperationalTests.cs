@@ -310,7 +310,6 @@ namespace Azure.ResourceManager.Compute.Tests
                 inputVM1Name = returnTwovm.Item3;
                 await WaitForCompletionAsync(await VirtualMachinesOperations.StartPerformMaintenanceAsync(rg1Name, vm1.Name));
                 passed = true;
-
             }
             catch (Exception cex)
             {

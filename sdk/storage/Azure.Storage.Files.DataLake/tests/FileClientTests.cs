@@ -142,7 +142,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             AssertValidStoragePathInfo(response.Value);
-
         }
 
         [Test]
@@ -1277,7 +1276,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
-
         }
 
         [Test]
@@ -1671,7 +1669,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(progress.List.Count == 0);
 
             Assert.AreEqual(Size, progress.List[progress.List.Count - 1]);
-
         }
 
         [Test]
@@ -2100,7 +2097,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.Value.ContentHash);
-
         }
 
         [Test]
@@ -3643,7 +3639,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 query,
                 options: options),
                 e => Assert.AreEqual($"{nameof(DataLakeQueryArrowOptions)} can only be used for output serialization.", e.Message));
-
         }
 
         private Stream CreateDataStream(long size)
@@ -4092,7 +4087,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             for (int i = 0; i < length / readSize; i++)
             {
-
                 await outputStream.ReadAsync(actualData, 0, readSize);
                 for (int j = 0; j < readSize; j++)
                 {
@@ -4416,7 +4410,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 overwrite: false,
                 options))
             {
-
                 await stream.WriteAsync(data, 0, 512);
                 await stream.WriteAsync(data, 512, 1024);
                 await stream.WriteAsync(data, 1536, 2048);

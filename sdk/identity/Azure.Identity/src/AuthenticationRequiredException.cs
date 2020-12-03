@@ -19,7 +19,6 @@ namespace Azure.Identity
         public AuthenticationRequiredException(string message, TokenRequestContext context)
             : this(message, context, default)
         {
-
         }
 
         /// <summary>

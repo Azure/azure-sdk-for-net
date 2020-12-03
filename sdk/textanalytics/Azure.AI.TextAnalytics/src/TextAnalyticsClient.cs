@@ -1355,7 +1355,6 @@ namespace Azure.AI.TextAnalytics
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await AnalyzeSentimentBatchAsync(documentInputs, analyzeSentimentOptions, cancellationToken).ConfigureAwait(false);
-
         }
 
         /// <summary>
@@ -1412,7 +1411,6 @@ namespace Azure.AI.TextAnalytics
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-
         }
 
         /// <summary>
@@ -2122,7 +2120,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-
         }
 
         /// <summary>
@@ -2369,7 +2366,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-
         }
 
         /// <summary> Runs the cancel job for healthcare operation which was initialized using <see cref="StartHealthcareBatch(IEnumerable{string}, string, HealthcareOptions, CancellationToken)"/> or <see cref="StartHealthcare"/> </summary>

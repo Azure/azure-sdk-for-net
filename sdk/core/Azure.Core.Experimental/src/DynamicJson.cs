@@ -257,7 +257,6 @@ namespace Azure.Core
 
         private DynamicJson GetPropertyValue(string propertyName)
         {
-
             if (EnsureObject().TryGetValue(propertyName, out DynamicJson element))
             {
                 return element;
@@ -583,6 +582,5 @@ namespace Azure.Core
                 return _double;
             }
         }
-
     }
 }

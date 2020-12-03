@@ -317,5 +317,4 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         {
         }
     }
-
 }

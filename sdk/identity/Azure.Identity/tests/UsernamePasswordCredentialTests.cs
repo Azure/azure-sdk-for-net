@@ -40,6 +40,5 @@ namespace Azure.Identity.Tests
 
             await Task.CompletedTask;
         }
-
     }
 }

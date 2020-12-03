@@ -203,7 +203,6 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(entitiesResult[0].Id);
             Assert.IsNotNull(entitiesResult[0].Entities);
             Assert.IsNotNull(entitiesResult[0].Error);
-
         }
 
         [Test]
@@ -301,7 +300,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsTrue(ex.ErrorCode.Equals("InvalidArgument"));
                 Assert.IsTrue(ex.Status.Equals(400));
             });
-
         }
 
         [Test]

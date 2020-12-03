@@ -335,7 +335,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerStartEvent);
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerExceptionEvent);
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorErrorHandlerThrewExceptionEvent);
-
             }
         }
     }

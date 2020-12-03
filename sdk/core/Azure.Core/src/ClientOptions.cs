@@ -106,6 +106,5 @@ namespace Azure.Core
 #endif
             return HttpClientTransport.Shared;
         }
-
     }
 }

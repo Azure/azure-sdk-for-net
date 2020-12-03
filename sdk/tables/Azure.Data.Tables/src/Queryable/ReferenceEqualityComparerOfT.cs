@@ -6,7 +6,6 @@ using System.Diagnostics;
 
 namespace Azure.Data.Tables.Queryable
 {
-
 #pragma warning disable SA1649 // File name should match first type name
     internal sealed class ReferenceEqualityComparer<T> : ReferenceEqualityComparer, IEqualityComparer<T>
 #pragma warning restore SA1649 // File name should match first type name
@@ -47,6 +46,5 @@ namespace Azure.Data.Tables.Queryable
 
             return obj.GetHashCode();
         }
-
     }
 }

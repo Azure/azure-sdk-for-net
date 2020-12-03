@@ -233,7 +233,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(1, page.Values.Count());
-
         }
 
         [Test]

@@ -1203,7 +1203,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
 
         /// <summary>
@@ -3547,7 +3546,6 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}");
                 try
                 {
-
                     PathExpiryOptions blobExpiryOptions;
                     string expiresOn = null;
 
