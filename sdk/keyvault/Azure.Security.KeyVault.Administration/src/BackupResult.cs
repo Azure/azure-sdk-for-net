@@ -9,29 +9,18 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// The result of a backup operation.
     /// </summary>
-    public class BackupResult
+    public class BackupResult : BackupRestoreResult
     {
-        internal BackupResult(Uri backupFolderUri, DateTimeOffset startTime, DateTimeOffset endTime)
+        internal BackupResult(Uri folderUri, DateTimeOffset startTime, DateTimeOffset endTime) : base(startTime, endTime)
         {
-            Argument.AssertNotNull(backupFolderUri, nameof(backupFolderUri));
+            Argument.AssertNotNull(folderUri, nameof(folderUri));
 
-            this.BackupFolderUri = backupFolderUri;
-            StartTime = startTime;
-            EndTime = endTime;
+            this.folderUri = folderUri;
         }
+
         /// <summary>
         /// Gets the location of the full backup.
         /// </summary>
-        public Uri BackupFolderUri { get; }
-
-        /// <summary>
-        /// Gets the start time of the backup operation.
-        /// </summary>
-        public DateTimeOffset StartTime { get; }
-
-        /// <summary>
-        /// Gets the end time of the backup operation.
-        /// </summary>
-        public DateTimeOffset EndTime { get; }
+        public Uri folderUri { get; }
     }
 }
