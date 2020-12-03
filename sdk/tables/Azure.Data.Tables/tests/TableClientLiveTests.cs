@@ -371,7 +371,6 @@ namespace Azure.Data.Tables.Tests
                     {mergepropertyName, mergeValue}
                 };
 
-
             // Create the new entity.
 
             await client.UpsertEntityAsync(entity, TableUpdateMode.Replace).ConfigureAwait(false);

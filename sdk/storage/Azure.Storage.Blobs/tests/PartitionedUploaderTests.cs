@@ -192,7 +192,6 @@ namespace Azure.Storage.Blobs.Test
             AssertStaged(sink, content);
         }
 
-
         [Test]
         public async Task BlockIdsAre64BytesUniqueBase64Strings()
         {

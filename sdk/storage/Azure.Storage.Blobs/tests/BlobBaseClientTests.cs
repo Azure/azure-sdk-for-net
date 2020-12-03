@@ -1770,7 +1770,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
 
-
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
                 BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -1813,7 +1812,6 @@ namespace Azure.Storage.Blobs.Test
             foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
-
 
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
@@ -2120,7 +2118,6 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient secondaryService = GetServiceClient_SecondaryAccount_SharedKey();
             await using DisposingContainer destTest = await GetTestContainerAsync(service: secondaryService);
 
-
             {
                 BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
 
@@ -2159,7 +2156,6 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient secondaryService = GetServiceClient_SecondaryAccount_SharedKey();
             await using DisposingContainer destTest = await GetTestContainerAsync(service: secondaryService);
 
-
             BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
             using (var stream = new MemoryStream(data))
             {
@@ -2173,7 +2169,6 @@ namespace Azure.Storage.Blobs.Test
             Operation<long> operation = await destBlob.StartCopyFromUriAsync(
                 source: srcBlob.Uri,
                 destinationConditions: new BlobRequestConditions { LeaseId = leaseResponse.Value.LeaseId });
-
 
             // Act
             try
@@ -2199,7 +2194,6 @@ namespace Azure.Storage.Blobs.Test
         public async Task AbortCopyFromUriAsync_LeaseFail()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
-
 
             // Arrange
             await test.Container.SetAccessPolicyAsync(PublicAccessType.Blob);
@@ -2410,7 +2404,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
 
-
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
                 BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2453,7 +2446,6 @@ namespace Azure.Storage.Blobs.Test
             foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
-
 
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
@@ -2623,7 +2615,6 @@ namespace Azure.Storage.Blobs.Test
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
@@ -2638,7 +2629,6 @@ namespace Azure.Storage.Blobs.Test
         public async Task DeleteAsync_Options()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
-
 
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);

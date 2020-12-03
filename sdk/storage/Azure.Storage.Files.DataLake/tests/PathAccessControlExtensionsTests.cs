@@ -155,7 +155,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("rwx", (RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute).ToSymbolicRolePermissions());
         }
 
-
         [Test]
         public void SerializeAccessControlList()
         {

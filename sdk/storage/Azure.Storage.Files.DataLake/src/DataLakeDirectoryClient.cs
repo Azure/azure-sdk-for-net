@@ -1339,7 +1339,6 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system

@@ -27,7 +27,6 @@ namespace Azure.Identity
         private readonly SecureString _password;
         private AuthenticationRecord _record;
 
-
         /// <summary>
         /// Protected constructor for mocking
         /// </summary>

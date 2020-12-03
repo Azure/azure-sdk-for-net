@@ -733,7 +733,6 @@ namespace Azure.AI.FormRecognizer
         }
         #endregion
 
-
         #region Custom Forms
 
         /// <summary>

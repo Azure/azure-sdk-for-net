@@ -448,7 +448,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
-
         [Test]
         public async Task DeleteAsync()
         {
@@ -2983,7 +2982,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             var data = GetRandomBuffer(300 * Constants.MB);
 
-
             using (var stream = new MemoryStream(data))
             {
                 var path = System.IO.Path.GetTempFileName();
@@ -3019,7 +3017,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
 
             var data = GetRandomBuffer(Constants.KB);
-
 
             using (var stream = new MemoryStream(data))
             {
@@ -3136,7 +3133,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
 
             var data = GetRandomBuffer(Constants.KB);
-
 
             using (var stream = new MemoryStream(data))
             {
@@ -3436,7 +3432,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<FileDownloadInfo> response = await file.QueryAsync(query);
             using StreamReader streamReader = new StreamReader(response.Value.Content);
             string s = await streamReader.ReadToEndAsync();
-
 
             // Act - with  IBlobQueryErrorReceiver
             DataLakeQueryError expectedBlobQueryError = new DataLakeQueryError
@@ -4584,7 +4579,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await file.CreateAsync();
             }
-
 
             byte[] data = GetRandomBuffer(Constants.KB);
             using Stream stream = new MemoryStream(data);

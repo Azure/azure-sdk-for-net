@@ -52,7 +52,6 @@ namespace Azure.Identity
         {
         }
 
-
         internal EnvironmentCredential(CredentialPipeline pipeline)
         {
             _pipeline = pipeline;

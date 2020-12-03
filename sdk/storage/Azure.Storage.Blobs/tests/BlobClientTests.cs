@@ -479,7 +479,6 @@ namespace Azure.Storage.Blobs.Test
                 Position = position
             };
 
-
             BlobUploadOptions options = new BlobUploadOptions
             {
                 TransferOptions = new StorageTransferOptions

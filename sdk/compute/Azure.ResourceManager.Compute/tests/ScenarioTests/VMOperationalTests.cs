@@ -361,7 +361,6 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachine vm1 = returnTwoVM.Item1;
             inputVM1 = returnTwoVM.Item2;
 
-
             await VirtualMachinesOperations.SimulateEvictionAsync(rg1Name, vm1.Name);
             passed = true;
             Assert.True(passed);

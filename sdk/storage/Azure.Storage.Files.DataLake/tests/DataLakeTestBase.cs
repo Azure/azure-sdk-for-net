@@ -183,7 +183,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.AreEqual(expected.Count, actual.Count, "Metadata counts are not equal");
             }
 
-
             foreach (KeyValuePair<string, string> kvp in expected)
             {
                 if (!actual.TryGetValue(kvp.Key, out var value) ||
@@ -248,7 +247,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new DataLakeServiceClient(
                     (new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceIdentitySasCredentialsPath(fileSystemName: fileSystemName, path: path, userDelegationKey: userDelegationKey, accountName: TestConfigHierarchicalNamespace.AccountName)}")).ToHttps(),
                     GetOptions()));
-
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(

@@ -414,7 +414,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 // otherwise the message completion may have been cancelled if it didn't finish
                 // before calling StopProcessingAsync.
 
-
                 if (!autoComplete)
                 {
                     Assert.That(async () =>

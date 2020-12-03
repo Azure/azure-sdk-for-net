@@ -425,6 +425,4 @@ namespace Azure.Identity.Tests
         }
     }
 
-
-
 }

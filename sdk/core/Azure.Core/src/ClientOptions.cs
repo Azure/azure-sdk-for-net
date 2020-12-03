@@ -81,7 +81,6 @@ namespace Azure.Core
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string? ToString() => base.ToString();
 
-
         private static HttpPipelineTransport GetDefaultTransport()
         {
 #if NETFRAMEWORK

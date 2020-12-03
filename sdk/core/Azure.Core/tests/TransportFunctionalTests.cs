@@ -68,7 +68,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expectedLength, contentLength);
         }
 
-
         [Test]
         public async Task SettingHeaderOverridesDefaultContentLength()
         {

@@ -134,7 +134,6 @@ namespace Microsoft.Extensions.Azure
             return null;
         }
 
-
         internal static object CreateClientOptions(object version, Type optionsType)
         {
             ConstructorInfo parameterlessConstructor = null;

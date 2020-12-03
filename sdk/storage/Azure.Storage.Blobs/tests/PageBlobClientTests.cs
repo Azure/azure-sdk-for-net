@@ -1075,7 +1075,6 @@ namespace Azure.Storage.Blobs.Test
 
             Response<PageRangesInfo> diff = await blob.GetPageRangesDiffAsync(range: new HttpRange(0, 6 * Constants.KB), previousSnapshot: snapshot.Value.Snapshot);
 
-
             // Assert
             Assert.AreEqual(2, result.Value.PageRanges.Count());
             HttpRange pageRange1 = result.Value.PageRanges.First();

@@ -1129,7 +1129,6 @@ namespace Azure.Security.KeyVault.Keys
         public virtual Response<KeyVaultKey> ExportKey(string name, string environment, CancellationToken cancellationToken = default) =>
             ExportKey(name, null, environment, cancellationToken);
 
-
         /// <summary>
         /// Exports the latest version of a <see cref="KeyVaultKey"/> including the private key if originally created with <see cref="CreateKeyOptions.Exportable"/> set to true,
         /// or imported with <see cref="KeyProperties.Exportable"/> in <see cref="ImportKeyOptions"/> set to true.

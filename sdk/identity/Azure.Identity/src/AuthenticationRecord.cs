@@ -103,7 +103,6 @@ namespace Azure.Identity
             await SerializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
 
-
         /// <summary>
         /// Deserializes the <see cref="AuthenticationRecord"/> from the specified <see cref="Stream"/>.
         /// </summary>

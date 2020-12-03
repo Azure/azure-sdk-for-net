@@ -10,7 +10,6 @@ using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-
 namespace Azure.ResourceManager.Compute.Tests
 {
     public class VMScaleSetRollingUpgradeTests : VMScaleSetTestsBase

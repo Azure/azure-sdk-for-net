@@ -1685,7 +1685,6 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync();
             }
 
-
             byte[] expectedData = GetRandomBuffer(Constants.KB);
             using Stream stream = new MemoryStream(expectedData);
 

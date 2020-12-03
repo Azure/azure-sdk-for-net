@@ -286,7 +286,6 @@ namespace Azure.Storage.Test.Shared
             return new DisposingContainer(container);
         }
 
-
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(
                     TestConfigDefault.AccountName,

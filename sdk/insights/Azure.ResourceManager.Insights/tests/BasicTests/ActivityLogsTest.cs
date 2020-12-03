@@ -148,7 +148,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             AreEqual(exp.Status, act.Status);
             AreEqual(exp.SubStatus, act.SubStatus);
 
-
             AreEqual(exp.Claims, act.Claims);
             AreEqual(exp.Properties, act.Properties);
 

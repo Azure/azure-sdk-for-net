@@ -244,7 +244,6 @@ namespace Azure.Core.Tests
                 return left;
             }
 
-
             public override void Close()
             {
                 IsClosed = true;

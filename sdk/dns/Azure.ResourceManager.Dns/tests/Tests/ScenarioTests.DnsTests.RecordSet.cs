@@ -27,7 +27,6 @@ namespace Azure.Management.Dns.Tests
         private Dictionary<string, string> metadata;
         private bool setupRun = false;
 
-
         public ScenarioTestsRecordSets()
             : base(true)
         {
@@ -313,7 +312,6 @@ namespace Azure.Management.Dns.Tests
             Assert.True(Helper.AreEqual(createRecordSetResponse, testPtrRecordSet, ignoreEtag: true));
         }
 
-
         [TestCase]
         public async Task CreateGetSrv()
         {
@@ -396,7 +394,6 @@ namespace Azure.Management.Dns.Tests
             Assert.NotNull(deleteRecordSetResponse);
         }
 
-
         [TestCase]
         public async Task UpdateRecordSetPreconditionFailed()
         {
@@ -429,8 +426,6 @@ namespace Azure.Management.Dns.Tests
             }
 
         }
-
-
 
     }
 }

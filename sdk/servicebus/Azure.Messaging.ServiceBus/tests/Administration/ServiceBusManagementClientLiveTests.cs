@@ -678,7 +678,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
                     And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
 
-
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
 

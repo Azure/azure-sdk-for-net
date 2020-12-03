@@ -83,7 +83,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 shardCursor)
                 .ConfigureAwait(false);
 
-
             ShardCursor cursor = shard.GetCursor();
 
             // Assert

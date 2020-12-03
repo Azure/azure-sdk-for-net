@@ -94,7 +94,6 @@ namespace Azure.Data.Tables.Tests
             client = service.GetTableClient(tableName);
         }
 
-
         [TearDown]
         public async Task TablesTeardown()
         {

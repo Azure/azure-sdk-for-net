@@ -66,7 +66,6 @@ namespace Azure.Identity
 
             request.Uri.AppendQuery("resource", resource);
 
-
             return request;
         }
 

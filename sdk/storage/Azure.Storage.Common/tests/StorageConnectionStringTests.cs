@@ -437,13 +437,11 @@ namespace Azure.Storage.Test
                         accountKeyParams
                         );
 
-
                 var accountStringKeyPrimarySecondary =
                     string.Format(
                         "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix={2};" + endpointCombination[2],
                         accountKeyParams
                         );
-
 
                 var conn = StorageConnectionString.Parse(accountStringKeyPrimary); // no exception expected
 
@@ -473,13 +471,11 @@ namespace Azure.Storage.Test
                         accountKeyParams
                         );
 
-
                 var accountStringKeyNoDefaultProtocolPrimarySecondary =
                     string.Format(
                         "AccountName={0};AccountKey={1};EndpointSuffix={2};" + endpointCombination[2],
                         accountKeyParams
                         );
-
 
                 StorageConnectionString.Parse(accountStringKeyNoDefaultProtocolPrimary); // no exception expected
 

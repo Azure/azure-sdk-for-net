@@ -84,7 +84,6 @@ namespace ResourceGroups.Tests
             }
         }
 
-
         /// <summary>
         /// Utility method to test Put request for Tags Operation within tracked resources and proxy resources
         /// </summary>

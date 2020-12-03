@@ -36,7 +36,6 @@ namespace Azure.Core.TestFramework
             }
         }
 
-
         protected override void AddHeader(string name, string value)
         {
             if (!_headers.TryGetValue(name, out List<string> values))

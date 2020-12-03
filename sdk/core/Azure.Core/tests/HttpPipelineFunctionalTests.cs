@@ -103,7 +103,6 @@ namespace Azure.Core.Tests
             }
         }
 
-
         [Test]
         public async Task NonBufferedFailedResponsesAreDisposedOf()
         {

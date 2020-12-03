@@ -60,7 +60,6 @@ namespace Azure.Identity.Samples
 
         private const string AUTH_RECORD_PATH = @".\Data\authrecord.bin";
 
-
         public static async Task<TokenCredential> GetUserCredentialAsync()
         {
             if (!File.Exists(AUTH_RECORD_PATH))
@@ -95,7 +94,6 @@ namespace Azure.Identity.Samples
                 return credential;
             }
         }
-
 
         public static async Task Main()
         {

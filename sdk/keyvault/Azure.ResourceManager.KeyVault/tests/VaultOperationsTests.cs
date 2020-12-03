@@ -211,7 +211,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 new[] { AccessPolicy },
                 Tags);
 
-
             // Delete
             await VaultsClient.DeleteAsync(
                 resourceGroupName: ResGroupName,

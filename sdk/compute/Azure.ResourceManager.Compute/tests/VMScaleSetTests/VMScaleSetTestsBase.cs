@@ -437,7 +437,6 @@ namespace Azure.ResourceManager.Compute.Tests
             return (createOrUpdateResponse, inputVMScaleSet);
         }
 
-
         protected void ValidateVMScaleSetInstanceView(VirtualMachineScaleSet vmScaleSet,
             VirtualMachineScaleSetInstanceView vmScaleSetInstanceView)
         {

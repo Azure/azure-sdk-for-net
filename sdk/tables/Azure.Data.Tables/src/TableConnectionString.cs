@@ -471,7 +471,6 @@ namespace Azure.Data.Tables
             return ConstructUris(scheme, accountName, TableConstants.ConnectionStrings.DefaultTableHostnamePrefix, endpointSuffix, sasToken);
         }
 
-
         /// <summary>
         /// Gets the default table endpoint using the specified settings.
         /// </summary>

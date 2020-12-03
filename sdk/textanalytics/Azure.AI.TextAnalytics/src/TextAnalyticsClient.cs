@@ -31,7 +31,6 @@ namespace Azure.AI.TextAnalytics
         // Specifies the method used to interpret string offsets. Default to <see cref="StringIndexType.Utf16CodeUnit"/>.
         private readonly StringIndexType _stringCodeUnit = StringIndexType.Utf16CodeUnit;
 
-
         /// <summary>
         /// Protected constructor to allow mocking.
         /// </summary>

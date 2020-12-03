@@ -167,8 +167,6 @@ namespace Azure.Storage.Blobs.Samples
             container.Delete();
         }
 
-
-
         /// <summary>
         /// Trigger a recoverable error.
         /// </summary>

@@ -284,7 +284,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             throw new InvalidOperationException("No event hub receiver named " + eventHubName);
         }
 
-
         internal string GetCheckpointStoreConnectionString(IConfiguration config, string eventHubName)
         {
             ReceiverCreds creds;

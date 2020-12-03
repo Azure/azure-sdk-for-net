@@ -184,7 +184,6 @@ namespace Azure.Storage.Tests
             int writeSize = 2000;
             int writeCount = 2;
 
-
             Mock<PooledMemoryStream> mockBuffer = new Mock<PooledMemoryStream>(MockBehavior.Strict);
             StorageWriteStreamImplementation stream = new StorageWriteStreamImplementation(
                 position: 0,

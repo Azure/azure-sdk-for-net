@@ -130,7 +130,6 @@ namespace Azure.Storage
             DefaultEndpoints = false;
         }
 
-
         /// <summary>
         /// Gets a <see cref="StorageConnectionString"/> object that references the well-known development storage account.
         /// </summary>

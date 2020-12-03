@@ -204,7 +204,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-
                 ServiceBusMessage message = GetMessage();
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))

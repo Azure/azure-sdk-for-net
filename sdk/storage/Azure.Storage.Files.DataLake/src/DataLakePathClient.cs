@@ -895,7 +895,6 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken)
                     .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="CreateIfNotExistsAsync(PathResourceType, PathHttpHeaders, Metadata, string, string, CancellationToken)"/>
         /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
@@ -955,7 +954,6 @@ namespace Azure.Storage.Files.DataLake
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
-
 
         /// <summary>
         /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, bool, CancellationToken)"/>

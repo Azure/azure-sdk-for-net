@@ -16,7 +16,6 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareStatistics
     {
 
-
         /// <summary>
         /// Warning: ShareUsageBytes may exceed int.MaxValue.  Use ShareUsageInBytes instead.
         /// </summary>

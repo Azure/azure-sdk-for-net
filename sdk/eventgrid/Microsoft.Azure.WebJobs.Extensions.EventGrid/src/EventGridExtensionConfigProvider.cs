@@ -75,7 +75,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 .AddOpenConverter<JToken, OpenType.Poco[]>(typeof(JTokenToPocoConverter<>))
                 .BindToTrigger<JToken>(new EventGridTriggerAttributeBindingProvider(this));
 
-
             // Register the output binding
             var rule = context
                 .AddBindingRule<EventGridAttribute>()

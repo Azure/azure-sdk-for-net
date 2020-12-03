@@ -524,7 +524,6 @@ namespace System.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => stream.Seek(0, (SeekOrigin)3));
         }
 
-
         [Fact]
         public async Task ValidatesReadArguments()
         {

@@ -3183,7 +3183,6 @@ namespace Azure.Storage.Files.Shares
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="ClearRangeAsync"/>
         /// operation clears the <paramref name="range"/> of a file.
@@ -3767,8 +3766,6 @@ namespace Azure.Storage.Files.Shares
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
-
-
 
         /// <summary>
         /// The <see cref="UploadRangeFromUriAsync(Uri, HttpRange, HttpRange, CancellationToken)"/>

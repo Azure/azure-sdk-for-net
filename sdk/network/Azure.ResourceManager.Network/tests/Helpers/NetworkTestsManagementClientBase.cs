@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public NetworkManagementOperations ServiceOperations { get; set; }
         public PrivateLinkServicesOperations PrivateLinkServicesOperations { get; set; }
 
-
         protected void Initialize()
         {
             ResourceManagementClient = GetResourceManagementClient();
@@ -262,7 +261,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             return getCircuitResponse;
         }
-
 
         public async Task<RouteFilter> CreateDefaultRouteFilter(string resourceGroupName, string filterName, string location,
             NetworkManagementClient nrpClient, bool containsRule = false)
