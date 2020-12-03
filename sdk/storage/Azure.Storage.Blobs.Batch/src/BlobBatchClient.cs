@@ -72,35 +72,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
         public BlobBatchClient(BlobServiceClient client)
-            : this(client, null)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlobBatchClient"/>
-        /// class for the same account as the <see cref="BlobServiceClient"/>.
-        /// The new <see cref="BlobBatchClient"/> uses the same request policy
-        /// pipeline as the <see cref="BlobServiceClient"/>.
-        /// </summary>
-        /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
-        /// <param name="containerName">
-        /// The name of the container to scope the batch requests to.
-        /// </param>
-        public BlobBatchClient(BlobServiceClient client, string containerName)
-        {
-            if (containerName != null)
-            {
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
-                {
-                    BlobContainerName = containerName
-                };
-                Uri = blobUriBuilder.ToUri();
-            }
-            else
-            {
-                Uri = client.Uri;
-            }
-
+            Uri = client.Uri;
             Pipeline = BlobServiceClientInternals.GetHttpPipeline(client);
             BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(client);
             Version = options.Version;
@@ -113,17 +86,33 @@ namespace Azure.Storage.Blobs.Specialized
                 BlobServiceClientInternals.GetAuthenticationPolicy(client),
                 Version);
 
-            if (containerName == null)
-            {
-                _isContainerScoped = false;
-            }
-            else
-            {
-                _isContainerScoped = true;
-            }
-
+            _isContainerScoped = false;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBatchClient"/>
+        /// class for container associated with the <see cref="BlobContainerClient"/>.
+        /// The new <see cref="BlobBatchClient"/> uses the same request policy
+        /// pipeline as the <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
+        public BlobBatchClient(BlobContainerClient client)
+        {
+            Uri = client.Uri;
+            Pipeline = BlobContainerClientInternals.GetHttpPipeline(client);
+            BlobClientOptions options = BlobContainerClientInternals.GetClientOptions(client);
+            Version = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options);
+
+            // Construct a dummy pipeline for processing batch sub-operations
+            // if we don't have one cached on the service
+            BatchOperationPipeline = CreateBatchPipeline(
+                Pipeline,
+                BlobContainerClientInternals.GetAuthenticationPolicy(client),
+                Version);
+
+            _isContainerScoped = true;
+        }
 
         /// <summary>
         /// Creates a pipeline to use for processing sub-operations before they
@@ -199,6 +188,45 @@ namespace Azure.Storage.Blobs.Specialized
             /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
             public static new BlobClientOptions GetClientOptions(BlobServiceClient client) =>
                 BlobServiceClient.GetClientOptions(client);
+        }
+
+        /// <summary>
+        /// Helper to access protected static members of BlobContainerClient
+        /// that should not be exposed directly to customers.
+        /// </summary>
+        private class BlobContainerClientInternals : BlobContainerClient
+        {
+            /// <summary>
+            /// Prevent instantiation.
+            /// </summary>
+            private BlobContainerClientInternals() { }
+
+            /// <summary>
+            /// Get a <see cref="BlobServiceClient"/>'s <see cref="HttpPipeline"/>
+            /// for creating child clients.
+            /// </summary>
+            /// <param name="client">The BlobServiceClient.</param>
+            /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+            public static new HttpPipeline GetHttpPipeline(BlobContainerClient client) =>
+                BlobContainerClient.GetHttpPipeline(client);
+
+            /// <summary>
+            /// Get a <see cref="BlobServiceClient"/>'s authentication
+            /// <see cref="HttpPipelinePolicy"/> for creating child clients.
+            /// </summary>
+            /// <param name="client">The BlobServiceClient.</param>
+            /// <returns>The BlobServiceClient's authentication policy.</returns>
+            public static new HttpPipelinePolicy GetAuthenticationPolicy(BlobContainerClient client) =>
+                BlobContainerClient.GetAuthenticationPolicy(client);
+
+            /// <summary>
+            /// Get a <see cref="BlobServiceClient"/>'s <see cref="BlobClientOptions"/>
+            /// for creating child clients.
+            /// </summary>
+            /// <param name="client">The BlobServiceClient.</param>
+            /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+            public static new BlobClientOptions GetClientOptions(BlobContainerClient client) =>
+                BlobContainerClient.GetClientOptions(client);
         }
         #endregion ctors
 
@@ -850,18 +878,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
         /// <returns>A new <see cref="BlobBatchClient"/> instance.</returns>
         public static BlobBatchClient GetBlobBatchClient(this BlobServiceClient client)
-            => GetBlobBatchClient(client, null);
+            => new BlobBatchClient(client);
 
         /// <summary>
-        /// Create a new <see cref="BlobBatchClient"/> object for the same
-        /// account as the <see cref="BlobServiceClient"/>.  The new
+        /// Create a new <see cref="BlobBatchClient"/> object for the
+        /// container associated with the  <see cref="BlobContainerClient"/>.  The new
         /// <see cref="BlobBatchClient"/> uses the same request policy pipeline
-        /// as the <see cref="BlobServiceClient"/>.
+        /// as the <see cref="BlobContainerClient"/>.
         /// </summary>
-        /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
-        /// <param name="containerName">The name of the container to scope the batch request to.</param>
+        /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
         /// <returns>A new <see cref="BlobBatchClient"/> instance.</returns>
-        public static BlobBatchClient GetBlobBatchClient(this BlobServiceClient client, string containerName)
-            => new BlobBatchClient(client, containerName);
+        public static BlobBatchClient GetBlobBatchClient(this BlobContainerClient client)
+            => new BlobBatchClient(client);
     }
 }
