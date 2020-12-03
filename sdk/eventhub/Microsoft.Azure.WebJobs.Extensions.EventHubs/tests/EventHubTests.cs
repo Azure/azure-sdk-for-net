@@ -7,6 +7,7 @@ using System.Text;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host;
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(evt.PartitionKey, bindingData["PartitionKey"]);
             Assert.AreEqual(evt.Offset, bindingData["Offset"]);
             Assert.AreEqual(evt.SequenceNumber, bindingData["SequenceNumber"]);
-            Assert.AreEqual(evt.EnqueuedTime, bindingData["EnqueuedTimeUtc"]);
+            Assert.AreEqual(evt.EnqueuedTime.DateTime, bindingData["EnqueuedTimeUtc"]);
             Assert.AreSame(evt.Properties, bindingData["Properties"]);
             IDictionary<string, object> bindingDataSysProps = bindingData["SystemProperties"] as Dictionary<string, object>;
             Assert.NotNull(bindingDataSysProps);
@@ -132,7 +133,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(events.Length, ((string[])bindingData["PartitionKeyArray"]).Length);
             Assert.AreEqual(events.Length, ((string[])bindingData["OffsetArray"]).Length);
             Assert.AreEqual(events.Length, ((long[])bindingData["SequenceNumberArray"]).Length);
-            Assert.AreEqual(events.Length, ((DateTimeOffset[])bindingData["EnqueuedTimeUtcArray"]).Length);
+            Assert.AreEqual(events.Length, ((DateTime[])bindingData["EnqueuedTimeUtcArray"]).Length);
             Assert.AreEqual(events.Length, ((IDictionary<string, object>[])bindingData["PropertiesArray"]).Length);
             Assert.AreEqual(events.Length, ((IDictionary<string, object>[])bindingData["SystemPropertiesArray"]).Length);
 
@@ -246,20 +247,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Assert.AreEqual(21, options.PartitionManagerOptions.RenewInterval.TotalSeconds);
         }
 
-        internal static ProcessorPartitionContext GetPartitionContext(string partitionId = "0", string eventHubPath = "path",
+        internal static EventProcessorHostPartition GetPartitionContext(string partitionId = "0", string eventHubPath = "path",
             string consumerGroupName = "group", string owner = null)
         {
-            var processor = new EventProcessorHost.Processor(Int32.MaxValue,
-                consumerGroupName,
+            var processor = new EventProcessorHost(consumerGroupName,
                 "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
-                "",
                 eventHubPath,
                 new EventProcessorOptions(),
-                null,
-                false,
-                null,
-                Mock.Of<BlobContainerClient>());
-            return new ProcessorPartitionContext(partitionId, processor, s => default);
+                Int32.MaxValue,
+                false, null);
+            return new EventProcessorHostPartition(partitionId)
+            {
+                ProcessorHost = processor
+            };
         }
     }
 }

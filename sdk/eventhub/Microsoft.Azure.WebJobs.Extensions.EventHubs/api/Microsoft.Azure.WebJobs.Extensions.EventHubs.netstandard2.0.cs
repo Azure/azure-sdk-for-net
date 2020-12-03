@@ -24,11 +24,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 {
     public partial class EventHubOptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
     {
-        public const string LeaseContainerName = "azure-webjobs-eventhub";
         public EventHubOptions() { }
         public int BatchCheckpointFrequency { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.Primitives.EventProcessorOptions EventProcessorOptions { get { throw null; } }
         public bool InvokeProcessorAfterReceiveTimeout { get { throw null; } set { } }
+        public string LeaseContainerName { get { throw null; } set { } }
         public int MaxBatchSize { get { throw null; } set { } }
         public void AddEventHubProducerClient(Azure.Messaging.EventHubs.Producer.EventHubProducerClient client) { }
         public void AddEventHubProducerClient(string eventHubName, Azure.Messaging.EventHubs.Producer.EventHubProducerClient client) { }

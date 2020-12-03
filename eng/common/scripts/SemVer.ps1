@@ -22,8 +22,10 @@ class AzureEngSemanticVersion {
   [string] $RawVersion
   [bool] $IsSemVerFormat
   [string] $DefaultPrereleaseLabel
+
   # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
   static [string] $SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:(?<presep>-?)(?<prelabel>[a-zA-Z-]*)(?<prenumsep>\.?)(?<prenumber>0|[1-9]\d*))?"
+  static [string] $ParseLanguage = $Language
 
   static [AzureEngSemanticVersion] ParseVersionString([string] $versionString)
   {
@@ -57,7 +59,12 @@ class AzureEngSemanticVersion {
       $this.Minor = [int]$matches.Minor
       $this.Patch = [int]$matches.Patch
 
-      $this.SetupDefaultConventions()
+      if ([AzureEngSemanticVersion]::ParseLanguage -eq "python") {
+        $this.SetupPythonConventions()
+      }
+      else {
+        $this.SetupDefaultConventions()
+      }
 
       if ($null -eq $matches['prelabel']) 
       {

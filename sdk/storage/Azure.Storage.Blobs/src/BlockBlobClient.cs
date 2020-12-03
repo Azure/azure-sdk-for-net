@@ -270,6 +270,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -279,6 +282,7 @@ namespace Azure.Storage.Blobs.Specialized
         internal BlockBlobClient(
             Uri blobUri,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
@@ -286,6 +290,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(
                   blobUri,
                   pipeline,
+                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics,
                   customerProvidedKey,
@@ -316,7 +321,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </returns>
         protected static BlockBlobClient CreateClient(Uri blobUri, BlobClientOptions options, HttpPipeline pipeline)
         {
-            return new BlockBlobClient(blobUri, pipeline, options.Version, new ClientDiagnostics(options), null, null);
+            return new BlockBlobClient(blobUri, pipeline, null, options.Version, new ClientDiagnostics(options), null, null);
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -360,7 +365,7 @@ namespace Azure.Storage.Blobs.Specialized
         public new BlockBlobClient WithVersion(string versionId)
         {
             var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
-            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlockBlobClient(builder.ToUri(), Pipeline, SharedKeyCredential, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         /// <summary>
@@ -374,7 +379,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
 
-            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlockBlobClient(builder.ToUri(), Pipeline, SharedKeyCredential, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         ///// <summary>

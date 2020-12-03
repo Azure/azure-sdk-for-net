@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Security/secureScoreControlDefinitions?api-version=2020-01-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2VjdXJlU2NvcmVDb250cm9sRGVmaW5pdGlvbnM/YXBpLXZlcnNpb249MjAyMC0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5213794c-95de-4f17-a15d-fdc835f5d547"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Connection": [
+          "close"
+        ],
+        "Date": [
+          "Sun, 25 Oct 2020 14:21:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "47cd45e7-9492-4cbf-beb7-192ea625467c"
+        ],
+        "x-ms-correlation-request-id": [
+          "47cd45e7-9492-4cbf-beb7-192ea625467c"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201025T142141Z:47cd45e7-9492-4cbf-beb7-192ea625467c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "391"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"AuthorizationFailed\",\r\n    \"message\": \"The client '77fa80cc-7824-4bcb-bb3f-17ae8436c1b6' with object id '77fa80cc-7824-4bcb-bb3f-17ae8436c1b6' does not have authorization to perform action 'Microsoft.Security/secureScoreControlDefinitions/read' over scope '/providers/Microsoft.Security' or the scope is invalid. If access was recently granted, please refresh your credentials.\"\r\n  }\r\n}",
+      "StatusCode": 403
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

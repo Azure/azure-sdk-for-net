@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly object _syncGuard = new object();
 
         /// <summary>A flag indicating that the batch is locked, such as when in use during a send batch operation.</summary>
-        private bool _locked = false;
+        private bool _locked;
 
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the messages in the batch as

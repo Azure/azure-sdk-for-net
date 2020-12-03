@@ -252,7 +252,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath">The entity path to receive from.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
-        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
+        /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to connect to.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -263,7 +263,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath,
             TimeSpan timeout,
             uint prefetchCount,
-            ReceiveMode receiveMode,
+            ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
             CancellationToken cancellationToken)
@@ -519,7 +519,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
-        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
+        /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to receive from.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
@@ -532,7 +532,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Uri endpoint,
             TimeSpan timeout,
             uint prefetchCount,
-             ReceiveMode receiveMode,
+             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
             CancellationToken cancellationToken)
@@ -563,7 +563,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
 
                 // This is the maximum number of unsettled transfers across all receive links on this session.
-                // This will allow the session to accept unlimited number of transfers, even if the recevier(s)
+                // This will allow the session to accept unlimited number of transfers, even if the receiver(s)
                 // are not settling any of the deliveries.
                 sessionSettings.IncomingWindow = uint.MaxValue;
 
@@ -585,7 +585,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Role = true,
                     TotalLinkCredit = prefetchCount,
                     AutoSendFlow = prefetchCount > 0,
-                    SettleType = (receiveMode == ReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
+                    SettleType = (receiveMode == ServiceBusReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
                     Target = new Target { Address = Guid.NewGuid().ToString() }
                 };
@@ -823,7 +823,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath"></param>
         ///
         /// <param name="connection">The AMQP connection to which the link being refreshed is bound to.</param>
-        /// <param name="amqpLink">The AMQO link to refresh authorization for.</param>
+        /// <param name="amqpLink">The AMQP link to refresh authorization for.</param>
         /// <param name="tokenProvider">The <see cref="CbsTokenProvider" /> to use for obtaining access tokens.</param>
         /// <param name="endpoint">The Service Bus service endpoint that the AMQP link is communicating with.</param>
         /// <param name="audience">The audience associated with the authorization.  This is likely the <paramref name="endpoint"/> absolute URI.</param>

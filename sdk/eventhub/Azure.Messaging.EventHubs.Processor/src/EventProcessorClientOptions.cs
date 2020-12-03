@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs
     public class EventProcessorClientOptions
     {
         /// <summary>The maximum amount of time to wait for an event to become available before emitting an <c>null</c> value.</summary>
-        private TimeSpan? _maximumWaitTime = null;
+        private TimeSpan? _maximumWaitTime;
 
         /// <summary>The event catch count to use when reading events.</summary>
         private int _cacheEventCount = 100;
@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs
         private int _prefetchCount = 300;
 
         /// <summary>The prefetch size limit to use for the partition receiver.</summary>
-        private long? _prefetchSizeInBytes = default;
+        private long? _prefetchSizeInBytes;
 
         /// <summary>The desired amount of time to allow between load balancing verification attempts.</summary>
         private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(10);
@@ -123,9 +123,9 @@ namespace Azure.Messaging.EventHubs
         ///   improve throughput.  This comes at the cost of additional memory use and potentially increases network I/O.
         ///
         ///   For scenarios where the size of events is small and many events are flowing through the system, using a larger
-        ///   <see cref="CacheEventCount"/> and <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
+        ///   <see cref="CacheEventCount" /> and <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
         ///   the size of events is larger or when processing of events is expected to be a heavier and slower operation, using
-        ///   a smaller size <see cref="CacheEventCount"/> and <see cref="PrefetchCount"/> may help manage resource use without
+        ///   a smaller size <see cref="CacheEventCount" /> and <see cref="PrefetchCount" /> may help manage resource use without
         ///   incurring a non-trivial cost to throughput.
         ///
         ///   Regardless of the values, it is generally recommended that the <see cref="PrefetchCount" /> be at least 2-3
@@ -161,9 +161,9 @@ namespace Azure.Messaging.EventHubs
         ///   improve throughput.  This comes at the cost of additional memory use and potentially increases network I/O.
         ///
         ///   For scenarios where the size of events is small and many events are flowing through the system, using a larger
-        ///   <see cref="CacheEventCount"/> and <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
+        ///   <see cref="CacheEventCount" /> and <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
         ///   the size of events is larger or when processing of events is expected to be a heavier and slower operation, using
-        ///   a smaller size <see cref="CacheEventCount"/> and <see cref="PrefetchCount"/> may help manage resource use without
+        ///   a smaller size <see cref="CacheEventCount" /> and <see cref="PrefetchCount" /> may help manage resource use without
         ///   incurring a non-trivial cost to throughput.
         ///
         ///   Regardless of the values, it is generally recommended that the <see cref="PrefetchCount" /> be at least 2-3

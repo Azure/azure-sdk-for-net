@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Administration
@@ -41,10 +43,11 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
         }
 
-        public static RuleProperties ParseFromContent(string xml)
+        public static async Task<RuleProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
+                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
@@ -58,13 +61,17 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 throw new ServiceBusException(isTransient: false, message: "An error occurred while attempting to parse the rule property.", innerException: ex);
             }
-            throw new ServiceBusException("Rule was not found", ServiceBusFailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException(
+                "Rule was not found",
+                ServiceBusFailureReason.MessagingEntityNotFound,
+                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
-        public static List<RuleProperties> ParseCollectionFromContent(string xml)
+        public static async Task<List<RuleProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
+                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
@@ -86,7 +93,10 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 throw new ServiceBusException(isTransient: false, message: "An error occurred while attempting to parse the collection of rule properties.", innerException: ex);
             }
-            throw new ServiceBusException("Rule was not found", ServiceBusFailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException(
+                "Rule was not found",
+                ServiceBusFailureReason.MessagingEntityNotFound,
+                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
         private static RuleProperties ParseFromEntryElement(XElement xEntry)
