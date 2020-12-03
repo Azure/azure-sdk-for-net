@@ -33,6 +33,13 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             return Stream.ToArray();
         }
 
+        public override string ToString()
+        {
+            Stream.Position = 0;
+            using var streamReader = new StreamReader(Stream);
+            return streamReader.ReadToEnd();
+        }
+
         public void Dispose()
         {
             Stream?.Dispose();

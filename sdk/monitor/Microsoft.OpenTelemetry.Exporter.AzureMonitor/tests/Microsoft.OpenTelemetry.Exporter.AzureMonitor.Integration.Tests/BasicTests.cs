@@ -4,7 +4,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-
+using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 using Xunit;
@@ -23,6 +23,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             this.factory = factory;
         }
 
+#if !NET5_0  // "https://github.com/Azure/azure-sdk-for-net/issues/16961")]
         [Theory]
         [InlineData(HttpStatusCode.OK)]
         [InlineData(HttpStatusCode.BadRequest)]
@@ -38,5 +39,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             // Assert
             Assert.Equal(httpStatusCode, response.StatusCode);
         }
+#endif
     }
 }

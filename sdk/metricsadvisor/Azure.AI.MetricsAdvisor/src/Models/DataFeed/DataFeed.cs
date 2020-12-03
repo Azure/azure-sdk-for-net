@@ -167,6 +167,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// credentials used to authenticate to the data source.
         /// </summary>
         /// <exception cref="ArgumentNullException">The value assigned to <see cref="Administrators"/> is null.</exception>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<string> Administrators
         {
             get => _administrators;
@@ -176,12 +177,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                 _administrators = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
         /// do not have access to the credentials used to authenticate to the data source.
         /// </summary>
         /// <exception cref="ArgumentNullException">The value assigned to <see cref="Viewers"/> is null.</exception>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<string> Viewers
         {
             get => _viewers;
@@ -191,6 +194,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 _viewers = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         internal DataFeedDetail GetDataFeedDetail()
         {

@@ -3021,7 +3021,7 @@ namespace Azure.Storage.Files.Shares
                     writer.WriteEndObject();
                     if (async)
                     {
-                        await writer.FlushAsync().ConfigureAwait(false);
+                        await writer.FlushAsync(cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {

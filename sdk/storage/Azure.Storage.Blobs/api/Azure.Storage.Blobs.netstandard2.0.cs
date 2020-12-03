@@ -800,6 +800,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobRetentionPolicy
     {
         public BlobRetentionPolicy() { }
+        public bool? AllowPermanentDelete { get { throw null; } set { } }
         public int? Days { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
     }
@@ -950,6 +951,7 @@ namespace Azure.Storage.Blobs.Models
     {
         public BlobUploadFromUriOptions() { }
         public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
+        public byte[] ContentMd5 { get { throw null; } set { } }
         public bool? CopySourceBlobProperties { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions DestinationConditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }

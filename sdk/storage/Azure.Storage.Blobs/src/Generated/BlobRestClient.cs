@@ -13164,6 +13164,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="sourceIfTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="sourceContentHash">Specify the md5 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="copySourceBlobProperties">Optional, default is true.  Indicates if properties from the source blob should be copied.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
@@ -13203,6 +13204,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? sourceIfNoneMatch = default,
                 string sourceIfTags = default,
                 string requestId = default,
+                byte[] sourceContentHash = default,
                 string blobTagsString = default,
                 bool? copySourceBlobProperties = default,
                 bool async = true,
@@ -13246,6 +13248,7 @@ namespace Azure.Storage.Blobs
                         sourceIfNoneMatch,
                         sourceIfTags,
                         requestId,
+                        sourceContentHash,
                         blobTagsString,
                         copySourceBlobProperties))
                     {
@@ -13310,6 +13313,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="sourceIfTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="sourceContentHash">Specify the md5 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="copySourceBlobProperties">Optional, default is true.  Indicates if properties from the source blob should be copied.</param>
             /// <returns>The BlockBlob.PutBlobFromUrlAsync Message.</returns>
@@ -13345,6 +13349,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? sourceIfNoneMatch = default,
                 string sourceIfTags = default,
                 string requestId = default,
+                byte[] sourceContentHash = default,
                 string blobTagsString = default,
                 bool? copySourceBlobProperties = default)
             {
@@ -13406,6 +13411,7 @@ namespace Azure.Storage.Blobs
                 if (sourceIfNoneMatch != null) { _request.Headers.SetValue("x-ms-source-if-none-match", sourceIfNoneMatch.Value.ToString()); }
                 if (sourceIfTags != null) { _request.Headers.SetValue("x-ms-source-if-tags", sourceIfTags); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash)); }
                 if (blobTagsString != null) { _request.Headers.SetValue("x-ms-tags", blobTagsString); }
                 if (copySourceBlobProperties != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
@@ -19777,7 +19783,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
+        #pragma warning disable CA2227 // Collection properties should be readonly
         public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobCorsRule> Cors { get; set; }
+        #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions

@@ -895,16 +895,16 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                     await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
 
-                    // Read the events and validate the resulting state.
-
                     // Create a local function that will close the consumer after five events have
-                    // been read.
+                    // been read.  Because the close happens in the middle of iteration, allow for a short
+                    // delay to ensure that the state transition has been fully captured.
 
                     async Task<bool> closeAfterRead(ReadState state)
                     {
                         if (state.Events.Count >= 2)
                         {
-                            await consumer.CloseAsync(cancellationSource.Token).ConfigureAwait(false);
+                            await consumer.CloseAsync(cancellationSource.Token);
+                            await Task.Delay(250);
                         }
 
                         return true;
