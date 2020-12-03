@@ -10,9 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -26,44 +24,38 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     internal sealed class EventHubListener : IListener, IEventProcessorFactory, IScaleMonitorProvider
     {
         private static readonly Dictionary<string, object> EmptyScope = new Dictionary<string, object>();
-        private readonly string _functionId;
-        private readonly string _eventHubName;
-        private readonly string _consumerGroup;
-        private readonly string _connectionString;
-        private readonly string _storageConnectionString;
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly EventProcessorHost _eventProcessorHost;
         private readonly bool _singleDispatch;
+        private readonly BlobsCheckpointStore _checkpointStore;
         private readonly EventHubOptions _options;
         private readonly ILogger _logger;
-        private bool _started;
 
         private Lazy<EventHubsScaleMonitor> _scaleMonitor;
 
         public EventHubListener(
             string functionId,
-            string eventHubName,
-            string consumerGroup,
-            string connectionString,
-            string storageConnectionString,
             ITriggeredFunctionExecutor executor,
             EventProcessorHost eventProcessorHost,
             bool singleDispatch,
+            Func<IEventHubConsumerClient> clientFactory,
+            BlobsCheckpointStore checkpointStore,
             EventHubOptions options,
-            ILogger logger,
-            BlobContainerClient blobContainer = null)
+            ILogger logger)
         {
-            _functionId = functionId;
-            _eventHubName = eventHubName;
-            _consumerGroup = consumerGroup;
-            _connectionString = connectionString;
-            _storageConnectionString = storageConnectionString;
+            _logger = logger;
             _executor = executor;
             _eventProcessorHost = eventProcessorHost;
             _singleDispatch = singleDispatch;
+            _checkpointStore = checkpointStore;
             _options = options;
-            _logger = logger;
-            _scaleMonitor = new Lazy<EventHubsScaleMonitor>(() => new EventHubsScaleMonitor(_functionId, _eventHubName, _consumerGroup, _connectionString, _storageConnectionString, _logger, blobContainer));
+
+            _scaleMonitor = new Lazy<EventHubsScaleMonitor>(
+                () => new EventHubsScaleMonitor(
+                    functionId,
+                    clientFactory(),
+                    checkpointStore,
+                    _logger));
         }
 
         void IListener.Cancel()
@@ -77,17 +69,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await _eventProcessorHost.RegisterEventProcessorFactoryAsync(this, _options.MaxBatchSize, _options.InvokeProcessorAfterReceiveTimeout, _options.EventProcessorOptions).ConfigureAwait(false);
-            _started = true;
+            await _eventProcessorHost.StartProcessingAsync(this, _checkpointStore, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (_started)
-            {
-                await _eventProcessorHost.UnregisterEventProcessorAsync().ConfigureAwait(false);
-            }
-            _started = false;
+            await _eventProcessorHost.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
         }
 
         IEventProcessor IEventProcessorFactory.CreateEventProcessor()
@@ -100,37 +87,27 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return _scaleMonitor.Value;
         }
 
-        /// <summary>
-        /// Wrapper for un-mockable checkpoint APIs to aid in unit testing
-        /// </summary>
-        internal interface ICheckpointer
-        {
-            Task CheckpointAsync(ProcessorPartitionContext context);
-        }
-
         // We get a new instance each time Start() is called.
         // We'll get a listener per partition - so they can potentialy run in parallel even on a single machine.
-        internal class EventProcessor : IEventProcessor, IDisposable, ICheckpointer
+        internal class EventProcessor : IEventProcessor, IDisposable
         {
             private readonly ITriggeredFunctionExecutor _executor;
             private readonly bool _singleDispatch;
             private readonly ILogger _logger;
             private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-            private readonly ICheckpointer _checkpointer;
             private readonly int _batchCheckpointFrequency;
-            private int _batchCounter = 0;
-            private bool _disposed = false;
+            private int _batchCounter;
+            private bool _disposed;
 
-            public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch, ICheckpointer checkpointer = null)
+            public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
             {
-                _checkpointer = checkpointer ?? this;
                 _executor = executor;
                 _singleDispatch = singleDispatch;
                 _batchCheckpointFrequency = options.BatchCheckpointFrequency;
                 _logger = logger;
             }
 
-            public Task CloseAsync(ProcessorPartitionContext context, ProcessingStoppedReason reason)
+            public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
             {
                 // signal cancellation for any in progress executions
                 _cts.Cancel();
@@ -139,13 +116,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return Task.CompletedTask;
             }
 
-            public Task OpenAsync(ProcessorPartitionContext context)
+            public Task OpenAsync(EventProcessorHostPartition context)
             {
                 _logger.LogDebug(GetOperationDetails(context, "OpenAsync"));
                 return Task.CompletedTask;
             }
 
-            public Task ProcessErrorAsync(ProcessorPartitionContext context, Exception error)
+            public Task ProcessErrorAsync(EventProcessorHostPartition context, Exception error)
             {
                 string errorDetails = $"Processing error (Partition Id: '{context.PartitionId}', Owner: '{context.Owner}', EventHubPath: '{context.EventHubPath}').";
 
@@ -154,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return Task.CompletedTask;
             }
 
-            public async Task ProcessEventsAsync(ProcessorPartitionContext context, IEnumerable<EventData> messages)
+            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages)
             {
                 var triggerInput = new EventHubTriggerInput
                 {
@@ -216,7 +193,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 // code, and capture/log/persist failed events, since they won't be retried.
                 if (messages.Any())
                 {
-                    await CheckpointAsync(context).ConfigureAwait(false);
+                    await CheckpointAsync(messages.Last(), context).ConfigureAwait(false);
                 }
             }
 
@@ -228,12 +205,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 }
             }
 
-            private async Task CheckpointAsync(ProcessorPartitionContext context)
+            private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
             {
                 bool checkpointed = false;
                 if (_batchCheckpointFrequency == 1)
                 {
-                    await _checkpointer.CheckpointAsync(context).ConfigureAwait(false);
+                    await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
                     checkpointed = true;
                 }
                 else
@@ -242,7 +219,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     if (++_batchCounter >= _batchCheckpointFrequency)
                     {
                         _batchCounter = 0;
-                        await _checkpointer.CheckpointAsync(context).ConfigureAwait(false);
+                        await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
                         checkpointed = true;
                     }
                 }
@@ -270,12 +247,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 Dispose(true);
             }
 
-            async Task ICheckpointer.CheckpointAsync(ProcessorPartitionContext context)
-            {
-                await context.CheckpointAsync().ConfigureAwait(false);
-            }
-
-            private Dictionary<string, object> GetLinksScope(EventData message)
+            private static Dictionary<string, object> GetLinksScope(EventData message)
             {
                 if (TryGetLinkedActivity(message, out var link))
                 {
@@ -285,7 +257,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return EmptyScope;
             }
 
-            private Dictionary<string, object> GetLinksScope(EventData[] messages)
+            private static Dictionary<string, object> GetLinksScope(EventData[] messages)
             {
                 List<Activity> links = null;
 
@@ -325,7 +297,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return false;
             }
 
-            private string GetOperationDetails(ProcessorPartitionContext context, string operation)
+            private static string GetOperationDetails(EventProcessorHostPartition context, string operation)
             {
                 StringWriter sw = new StringWriter();
                 using (JsonTextWriter writer = new JsonTextWriter(sw) { Formatting = Formatting.None })

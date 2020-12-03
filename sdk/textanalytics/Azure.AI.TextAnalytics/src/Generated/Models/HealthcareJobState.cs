@@ -20,8 +20,14 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="jobId"> . </param>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        internal HealthcareJobState(DateTimeOffset createdDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status) : base(createdDateTime, jobId, lastUpdateDateTime, status)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        internal HealthcareJobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdateDateTime, JobStatus status) : base(createdDateTime, jobId, lastUpdateDateTime, status)
         {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+
             Errors = new ChangeTrackingList<TextAnalyticsErrorInternal>();
         }
 
@@ -35,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="results"> . </param>
         /// <param name="errors"> . </param>
         /// <param name="nextLink"> . </param>
-        internal HealthcareJobState(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, HealthcareResult results, IReadOnlyList<TextAnalyticsErrorInternal> errors, string nextLink) : base(createdDateTime, displayName, expirationDateTime, jobId, lastUpdateDateTime, status)
+        internal HealthcareJobState(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, HealthcareResult results, IReadOnlyList<TextAnalyticsErrorInternal> errors, string nextLink) : base(createdDateTime, displayName, expirationDateTime, jobId, lastUpdateDateTime, status)
         {
             Results = results;
             Errors = errors;

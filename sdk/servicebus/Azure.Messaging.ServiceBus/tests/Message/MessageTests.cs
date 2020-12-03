@@ -181,7 +181,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.IsTrue(receivedMessage.Body.ToMemory().IsEmpty);
             Assert.AreEqual(default(string), receivedMessage.MessageId);
             Assert.AreEqual(default(string), receivedMessage.PartitionKey);
-            Assert.AreEqual(default(string), receivedMessage.ViaPartitionKey);
+            Assert.AreEqual(default(string), receivedMessage.TransactionPartitionKey);
             Assert.AreEqual(default(string), receivedMessage.SessionId);
             Assert.AreEqual(default(string), receivedMessage.ReplyToSessionId);
             Assert.AreEqual(TimeSpan.MaxValue, receivedMessage.TimeToLive);
@@ -231,7 +231,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.AreEqual("binaryData2468", receivedMessage.Body.ToString());
             Assert.AreEqual("messageId12345", receivedMessage.MessageId);
             Assert.AreEqual("partitionKey98765", receivedMessage.PartitionKey);
-            Assert.AreEqual("viaPartitionKey8765", receivedMessage.ViaPartitionKey);
+            Assert.AreEqual("viaPartitionKey8765", receivedMessage.TransactionPartitionKey);
             Assert.AreEqual("sessionId8877", receivedMessage.SessionId);
             Assert.AreEqual("replyToSessionId4556", receivedMessage.ReplyToSessionId);
             Assert.AreEqual(TimeSpan.FromMinutes(5).ToString(), receivedMessage.TimeToLive.ToString());

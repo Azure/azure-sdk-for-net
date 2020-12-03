@@ -339,6 +339,9 @@ namespace Azure.Storage.Blobs
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="clientDiagnostics"></param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
         /// <param name="clientSideEncryption"></param>
@@ -346,6 +349,7 @@ namespace Azure.Storage.Blobs
         internal BlobContainerClient(
             Uri containerUri,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
@@ -354,6 +358,7 @@ namespace Azure.Storage.Blobs
         {
             _uri = containerUri;
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
@@ -388,6 +393,7 @@ namespace Azure.Storage.Blobs
             return new BlobContainerClient(
                 containerUri,
                 pipeline,
+                null,
                 options.Version,
                 new ClientDiagnostics(options),
                 customerProvidedKey: null,
@@ -395,6 +401,32 @@ namespace Azure.Storage.Blobs
                 encryptionScope: null);
         }
         #endregion ctor
+
+        /// <summary>
+        /// Create a new <see cref="BlobBaseClient"/> object by appending
+        /// <paramref name="blobName"/> to the end of <see cref="Uri"/>.  The
+        /// new <see cref="BlobBaseClient"/> uses the same request policy
+        /// pipeline as the <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob.</param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        protected internal virtual BlobBaseClient GetBlobBaseClientCore(string blobName)
+        {
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                BlobName = blobName
+            };
+
+            return new BlobBaseClient(
+                blobUriBuilder.ToUri(),
+                _pipeline,
+                _storageSharedKeyCredential,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
+        }
 
         /// <summary>
         /// Create a new <see cref="BlobClient"/> object by appending
@@ -414,6 +446,7 @@ namespace Azure.Storage.Blobs
             return new BlobClient(
                 blobUriBuilder.ToUri(),
                 _pipeline,
+                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -446,6 +479,7 @@ namespace Azure.Storage.Blobs
             return new BlockBlobClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
+                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -477,6 +511,7 @@ namespace Azure.Storage.Blobs
             return new AppendBlobClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
+                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -508,6 +543,7 @@ namespace Azure.Storage.Blobs
             return new PageBlobClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
+                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -3002,7 +3038,8 @@ namespace Azure.Storage.Blobs
                     CustomerProvidedKey,
                     ClientSideEncryption,
                     EncryptionScope,
-                    Pipeline);
+                    Pipeline,
+                    _storageSharedKeyCredential);
             }
 
             return _parentBlobServiceClient;

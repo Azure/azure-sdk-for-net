@@ -425,7 +425,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
-        [Ignore("TODO (kasobol-msft) revisit this test if we put recordings in place, we don't use stateful message in V12")]
         public async Task RenewedQueueMessage_DeletesCorrectly()
         {
             QueueClient queue = Fixture.CreateNewQueue();
@@ -434,7 +433,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             string messageContent = Guid.NewGuid().ToString();
             await queue.SendMessageAsync(messageContent);
-            QueueMessage messageFromCloud = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
+            QueueMessage messageFromCloud = await queue.ReceiveMessageAsync();
 
             var queuesOptions = new QueuesOptions();
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
@@ -453,19 +452,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                     return new FunctionResult(true);
                 });
 
-            var previousNextVisibleTime = messageFromCloud.NextVisibleOn;
-            var previousPopReceipt = messageFromCloud.PopReceipt;
-
             // Renewal should happen at 2 seconds
             await listener.ProcessMessageAsync(messageFromCloud, TimeSpan.FromSeconds(4), CancellationToken.None);
 
-            // Check to make sure the renewal occurred.
-            Assert.AreNotEqual(messageFromCloud.NextVisibleOn, previousNextVisibleTime);
-            Assert.AreNotEqual(messageFromCloud.PopReceipt, previousPopReceipt);
-
             // Make sure the message was processed and deleted.
-            QueueProperties queueProperties = await queue.GetPropertiesAsync();
-            Assert.AreEqual(0, queueProperties.ApproximateMessagesCount);
+            await Task.Delay(TimeSpan.FromSeconds(10));
+            messageFromCloud = await queue.ReceiveMessageAsync();
+            Assert.IsNull(messageFromCloud);
         }
 
         [Test]

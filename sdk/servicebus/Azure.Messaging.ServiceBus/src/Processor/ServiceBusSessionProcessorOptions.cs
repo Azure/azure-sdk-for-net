@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -26,10 +27,10 @@ namespace Azure.Messaging.ServiceBus
                 _prefetchCount = value;
             }
         }
-        private int _prefetchCount = 0;
+        private int _prefetchCount;
 
         /// <inheritdoc cref="ServiceBusProcessorOptions.ReceiveMode"/>
-        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
+        public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
         /// <summary>Gets or sets a value that indicates whether the processor
         /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/>
@@ -39,7 +40,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>true to complete the message automatically on successful execution of the event handler;
         /// otherwise, false.</value>
-        public bool AutoComplete { get; set; } = true;
+        public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the maximum duration within which the session lock will be renewed automatically. This value
@@ -126,12 +127,12 @@ namespace Azure.Messaging.ServiceBus
         private int _maxConcurrentCallsPerSessions = 1;
 
         /// <summary>
-        /// Gets or sets an optional list of session IDs to scope
-        /// the <see cref="ServiceBusSessionProcessor"/> to. If left
-        /// blank, the processor will not be limited to any specific
+        /// Gets an optional list of session IDs to scope
+        /// the <see cref="ServiceBusSessionProcessor"/> to. If the list is
+        /// left empty, the processor will not be limited to any specific
         /// session IDs.
         /// </summary>
-        public string[] SessionIds { get; set; }
+        public IList<string> SessionIds { get; } = new List<string>();
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -164,7 +165,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
-                AutoComplete = AutoComplete,
+                AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime
             };

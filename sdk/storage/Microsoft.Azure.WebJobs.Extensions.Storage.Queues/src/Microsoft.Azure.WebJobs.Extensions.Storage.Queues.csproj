@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>5.0.0-beta.1</Version>
+    <Version>5.0.0-beta.2</Version>
     <Description>This extension adds bindings for Storage</Description>
   </PropertyGroup>
 

@@ -2081,10 +2081,14 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2130,7 +2134,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2175,7 +2183,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2201,7 +2213,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -2234,7 +2250,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
@@ -2260,7 +2280,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
@@ -2375,8 +2399,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets collection of healthcare entities from the HealthOperation using async pageable.
-        /// This method is used if the number of documents are greater than 20
-        /// Otherwise, use the StartHealthcareAsync and StartHealthcareBatchAsync for less than 20 documents.
         /// </summary>
         /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -2390,7 +2412,7 @@ namespace Azure.AI.TextAnalytics
 
                 try
                 {
-                    Response<RecognizeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                    Response<RecognizeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
                     RecognizeHealthcareEntitiesResultCollection result = operation.Value;
                     return Page.FromValues(result.AsEnumerable(), operation.NextLink, response.GetRawResponse());
@@ -2422,7 +2444,7 @@ namespace Azure.AI.TextAnalytics
                     string[] jobIdParams = nextLinkSplit.Last().Split('?');
                     // jobIdParams = ['8002878d-2e43-4675-ad20-455fe004641b', '$skip=20&$top=0']
 
-                    if (jobIdParams.Count() != 2)
+                    if (jobIdParams.Length != 2)
                     {
                         throw new InvalidOperationException($"Failed to parse element reference: {nextLink}");
                     }
@@ -2454,7 +2476,7 @@ namespace Azure.AI.TextAnalytics
                         }
                     }
 
-                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, showStats).ConfigureAwait(false);
+                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, showStats, cancellationToken).ConfigureAwait(false);
 
                     RecognizeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, operation._idToIndexMap);
                     return Page.FromValues(result.AsEnumerable(), jobState.Value.NextLink, jobState.GetRawResponse());
@@ -2467,6 +2489,238 @@ namespace Azure.AI.TextAnalytics
             }
 
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        #endregion
+
+        #region Analyze Operation
+
+        /// <summary>
+        /// StartAnalyzeOperationBatchAsync enables the application to have multiple tasks including NER, PII and KPE.
+        /// Accepts a list of strings which are analyzed asynchronously.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options"> The different operations to pass as options.
+        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
+        /// For example -
+        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+        ///    {
+        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        ///        PiiTaskParameters = new PiiTaskParameters(),
+        ///        DisplayName = "AnalyzeOperation"
+        ///    };
+        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
+        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
+        /// {
+        ///     ModelVersion = "latest"
+        /// },
+        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(IEnumerable<string> documents, AnalyzeOperationOptions options, string language = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNull(options, nameof(options));
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            return await StartAnalyzeOperationBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// Accepts a list of strings which are analyzed asynchronously.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options"> The different operations to pass as options.
+        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
+        /// For example -
+        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+        ///    {
+        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        ///        PiiTaskParameters = new PiiTaskParameters(),
+        ///        DisplayName = "AnalyzeOperation"
+        ///    };
+        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
+        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
+        /// {
+        ///     ModelVersion = "latest"
+        /// },
+        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<string> documents, AnalyzeOperationOptions options, string language = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNull(options, nameof(options));
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            return StartAnalyzeOperationBatch(documentInputs, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// Accepts a list of strings which are analyzed asynchronously.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="options"> The different operations to pass as options.
+        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
+        /// For example -
+        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+        ///    {
+        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        ///        PiiTaskParameters = new PiiTaskParameters(),
+        ///        DisplayName = "AnalyzeOperation"
+        ///    };
+        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
+        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
+        /// {
+        ///     ModelVersion = "latest"
+        /// },
+        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<TextDocumentInput> documents, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNull(options, nameof(options));
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            return StartAnalyzeOperationBatch(documentInputs, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// Accepts a list of strings which are analyzed asynchronously.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="options"> The different operations to pass as options.
+        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
+        /// For example -
+        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+        ///    {
+        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        ///        PiiTaskParameters = new PiiTaskParameters(),
+        ///        DisplayName = "AnalyzeOperation"
+        ///    };
+        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
+        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
+        /// {
+        ///     ModelVersion = "latest"
+        /// },
+        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNull(options, nameof(options));
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            return await StartAnalyzeOperationBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        private AnalyzeOperation StartAnalyzeOperationBatch(MultiLanguageBatchInput batchInput, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        {
+            JobManifestTasks tasks = new JobManifestTasks();
+
+            if (options.PiiTaskParameters != null)
+            {
+                tasks.EntityRecognitionPiiTasks = new List<PiiTask>() { new PiiTask() { Parameters = options.PiiTaskParameters } };
+            }
+            if (options.EntitiesTaskParameters != null)
+            {
+                tasks.EntityRecognitionTasks = new List<EntitiesTask>() { new EntitiesTask() { Parameters = options.EntitiesTaskParameters } };
+            }
+            if (options.KeyPhrasesTaskParameters != null)
+            {
+                tasks.KeyPhraseExtractionTasks = new List<KeyPhrasesTask>() { new KeyPhrasesTask() { Parameters = options.KeyPhrasesTaskParameters } };
+            }
+
+            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, options.DisplayName);
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeOperationBatch)}");
+            scope.Start();
+
+            try
+            {
+                // TODO - Add Top and Skip once pagination is implemented for Analyze operation
+                // Github issue - https://github.com/Azure/azure-sdk-for-net/issues/16958
+                int _top = default;
+                int _skip = default;
+
+                ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> response = _serviceRestClient.Analyze(analyzeDocumentInputs, cancellationToken);
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+
+                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, _top, _skip, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(MultiLanguageBatchInput batchInput, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        {
+            JobManifestTasks tasks = new JobManifestTasks();
+
+            if (options.PiiTaskParameters != null)
+            {
+                tasks.EntityRecognitionPiiTasks = new List<PiiTask>() { new PiiTask() { Parameters = options.PiiTaskParameters } };
+            }
+            if (options.EntitiesTaskParameters != null)
+            {
+                tasks.EntityRecognitionTasks = new List<EntitiesTask>() { new EntitiesTask() { Parameters = options.EntitiesTaskParameters } };
+            }
+            if (options.KeyPhrasesTaskParameters != null)
+            {
+                tasks.KeyPhraseExtractionTasks = new List<KeyPhrasesTask>() { new KeyPhrasesTask() { Parameters = options.KeyPhrasesTaskParameters } };
+            }
+
+            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, options.DisplayName);
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeOperationBatch)}");
+            scope.Start();
+
+            try
+            {
+                // TODO - Add Top and Skip once pagination is implemented for Analyze operation
+                // Github issue - https://github.com/Azure/azure-sdk-for-net/issues/16958
+                int _top = default;
+                int _skip = default;
+
+                ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> response = await _serviceRestClient.AnalyzeAsync(analyzeDocumentInputs, cancellationToken).ConfigureAwait(false);
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+
+                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, _top, _skip, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
@@ -2511,7 +2765,7 @@ namespace Azure.AI.TextAnalytics
         private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<DetectLanguageInput> documents)
             => new LanguageBatchInput(documents.Select((document) => new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? _options.DefaultCountryHint }).ToList());
 
-        private IDictionary<string,string> CreateAdditionalInformation(TextAnalyticsError error)
+        private static IDictionary<string,string> CreateAdditionalInformation(TextAnalyticsError error)
         {
             if (string.IsNullOrEmpty(error.Target))
                 return null;

@@ -11,8 +11,18 @@ namespace Azure.Core.Amqp.Tests
         [Test]
         public void CanCreateDataBody()
         {
-            var body = new AmqpDataMessageBody(Array.Empty<ReadOnlyMemory<byte>>());
+            var body = new AmqpMessageBody(Array.Empty<ReadOnlyMemory<byte>>());
             Assert.AreEqual(AmqpMessageBodyType.Data, body.BodyType);
+            Assert.IsTrue(body.TryGetData(out var data));
+            Assert.NotNull(data);
+        }
+
+        [Test]
+        public void CannotCreateFromNullBody()
+        {
+            Assert.That(
+                () => new AmqpMessageBody(null),
+                Throws.InstanceOf<ArgumentNullException>());
         }
     }
 }

@@ -31,13 +31,13 @@ namespace Azure.Messaging.ServiceBus
                 _prefetchCount = value;
             }
         }
-        private int _prefetchCount = 0;
+        private int _prefetchCount;
 
         /// <summary>
         /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages
         /// are received. Defaults to PeekLock mode.
         /// </summary>
-        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
+        public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
         /// <summary>
         /// Gets or sets a value that indicates whether the processor
@@ -47,7 +47,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>true to complete the message automatically on successful execution of the message handler; otherwise, false.</value>
-        public bool AutoComplete { get; set; } = true;
+        public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
@@ -147,7 +147,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
-                AutoComplete = AutoComplete,
+                AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime,
                 MaxConcurrentCalls = MaxConcurrentCalls

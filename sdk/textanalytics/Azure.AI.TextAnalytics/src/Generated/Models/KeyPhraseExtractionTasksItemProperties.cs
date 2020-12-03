@@ -5,20 +5,23 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The Components1D9IzucSchemasTasksstatePropertiesTasksPropertiesKeyphraseextractiontasksItemsAllof1. </summary>
     internal partial class KeyPhraseExtractionTasksItemProperties
     {
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItemProperties. </summary>
-        internal KeyPhraseExtractionTasksItemProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItemProperties. </summary>
         /// <param name="results"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal KeyPhraseExtractionTasksItemProperties(KeyPhraseResult results)
         {
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
+
             Results = results;
         }
 

@@ -1,11 +1,16 @@
 # Release History
-## 4.0.0-beta.4 (Unreleased)
+## 4.0.0-beta.5 (Unreleased)
 
+
+## 4.0.0-beta.4 (2020-11-10)
+
+### Fixed
+- Fixed bug where missing required properties on CloudEvent would cause deserialization to fail.
 
 ## 4.0.0-beta.3 (2020-10-06)
 
 ### Fixed
-- Fix bug where we were not parsing the Topic when parsing into EventGridEvents.
+- Fixed bug where we were not parsing the Topic when parsing into EventGridEvents.
 
 ### Added
 

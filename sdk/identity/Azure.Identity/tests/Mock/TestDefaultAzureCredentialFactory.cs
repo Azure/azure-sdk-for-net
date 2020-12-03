@@ -20,19 +20,19 @@ namespace Azure.Identity.Tests.Mock
             _vscAdapter = vscAdapter;
         }
 
-        public Func<IManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
+        public Func<ManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
 
         public override TokenCredential CreateEnvironmentCredential()
             => new EnvironmentCredential(Pipeline);
 
         public override TokenCredential CreateManagedIdentityCredential(string clientId)
-            => new ManagedIdentityCredential(Pipeline, CreateManagedIdentityClient(clientId));
+            => new ManagedIdentityCredential(CreateManagedIdentityClient(clientId));
 
         public override TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
             => new SharedTokenCacheCredential(tenantId, username, default, Pipeline);
 
         public override TokenCredential CreateInteractiveBrowserCredential(string tenantId)
-            => new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions { EnablePersistentCache = true }, Pipeline);
+            => new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions(), Pipeline);
 
         public override TokenCredential CreateAzureCliCredential()
             => new AzureCliCredential(Pipeline, _processService);
