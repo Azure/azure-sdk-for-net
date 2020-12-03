@@ -174,4 +174,4 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2018-11-01' = {
     properties: {}
 }
 
-output dataAccessFQDN string = '${environment.properties.dataAccessFqdn}'
+output TIMESERIESINSIGHTS_URL string = '${environment.properties.dataAccessFqdn}'

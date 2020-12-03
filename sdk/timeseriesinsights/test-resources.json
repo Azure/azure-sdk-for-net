@@ -191,7 +191,7 @@
     }
   ],
   "outputs": {
-    "dataAccessFQDN": {
+    "TIMESERIESINSIGHTS_URL": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.TimeSeriesInsights/environments', parameters('environmentName'))).dataAccessFqdn]"
     }
