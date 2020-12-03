@@ -1002,5 +1002,20 @@ namespace Azure.Storage.Blobs.Models
                 Metadata = metadata,
                 HasImmutabilityPolicy = hasImmutabilityPolicy,
             };
+
+        /// <summary>
+        /// Creates a new AccountInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AccountInfo AccountInfo(
+            Azure.Storage.Blobs.Models.SkuName skuName,
+            Azure.Storage.Blobs.Models.AccountKind accountKind)
+        {
+            return new AccountInfo()
+            {
+                SkuName = skuName,
+                AccountKind = accountKind,
+            };
+        }
     }
 }
