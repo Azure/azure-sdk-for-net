@@ -295,22 +295,28 @@ namespace Azure.Storage.Blobs.Test
 
             string containerName = scenario.Containers[0].Container.Name;
 
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1));
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            {
+                BlobContainerName = containerName
+            };
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
+            {
+                BlobContainerName = containerName,
+                Sas = sasQueryParameters
+            };
 
+            BlobContainerClient sasContainerClient = InstrumentClient(new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions()));
+            BlobBatchClient blobBatchClient = sasContainerClient.GetBlobBatchClient();
 
-            BlobBatchClient blobBatchClient = new BlobBatchClient(scenario.Service, containerName, sasQueryParameters);
-
-            BlobBatchClient client = scenario.GetBlobBatchClient();
-
-            using BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = blobBatchClient.CreateBatch();
             Response[] responses = new Response[]
             {
-                batch.DeleteBlob(blobs[0].Uri),
-                batch.DeleteBlob(blobs[1].Uri),
-                batch.DeleteBlob(blobs[2].Uri)
+                batch.DeleteBlob(new Uri($"{blobs[0].Uri}?{sasQueryParameters}")),
+                batch.DeleteBlob(new Uri($"{blobs[1].Uri}?{sasQueryParameters}")),
+                batch.DeleteBlob(new Uri($"{blobs[2].Uri}?{sasQueryParameters}"))
             };
-            Response response = await client.SubmitBatchAsync(batch);
+            Response response = await blobBatchClient.SubmitBatchAsync(batch);
 
             scenario.AssertStatus(202, response);
             scenario.AssertStatus(202, responses);
@@ -864,8 +870,11 @@ namespace Azure.Storage.Blobs.Test
             public Uri[] GetInvalidBlobUris(int count) =>
                 GetInvalidBlobUris(Service.GetBlobContainerClient("invalidcontainer"), count);
 
-            public BlobBatchClient GetBlobBatchClient(string containerName = null)
-                => _test.InstrumentClient(Service.GetBlobBatchClient(containerName));
+            public BlobBatchClient GetBlobBatchClient(string containerName)
+                => _test.InstrumentClient(Service.GetBlobContainerClient(containerName).GetBlobBatchClient());
+
+            public BlobBatchClient GetBlobBatchClient()
+                => _test.InstrumentClient(Service.GetBlobBatchClient());
 
 
             public async Task AssertDeleted(BlobClient blob)
