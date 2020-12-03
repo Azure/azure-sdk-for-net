@@ -4,7 +4,7 @@
 param(
     [Parameter(Mandatory=$true)]
     [string]$packageName,
-    [string]$serviceName,
+    [string]$serviceDirectoryName,
     [string]$ReleaseDate
 )
 
@@ -108,21 +108,19 @@ if (!$?){
   throw 'You must have the azure-devops extension run `az extension add --name azure-devops`'
 }
 
-$packageProperties = Get-PkgProperties -PackageName $package -ServiceDirectory $serviceName
-$packageDirectory = Get-ChildItem "$repoRoot/sdk" -Directory -Recurse -Depth 2 -Filter $package
-$serviceDirectory = $packageDirectory.Parent.Name
+$packageProperties = Get-PkgProperties -PackageName $packageName -ServiceDirectory $serviceDirectoryName
 
-Write-Host "Source directory $serviceDirectory"
+Write-Host "Source directory $serviceDirectoryName"
 
-try
+if ($GetExistingPackageVersions -and (Test-Path "Function:$GetExistingPackageVersions"))
 {
-    $existing = Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/$($package.ToLower())/index.json" | ConvertFrom-Json;
+    $existing = &$GetExistingPackageVersions -PackageName $packageProperties.Name -GroupId $packageProperties.Group
+    if ($null -eq $existing) { $existing = @() }
 }
-catch
+else
 {
-    $existing = @()
+    LogError "The function '$GetExistingPackageVersions' was not found."
 }
-
 
 if (!$ReleaseDate)
 {
@@ -160,7 +158,7 @@ Write-Host "Assuming release is in $month with release date $releaseDateString" 
 $isNew = "True";
 $libraryType = "Beta";
 $latestVersion = $null;
-foreach ($existingVersion in $existing.versions)
+foreach ($existingVersion in $existing)
 {
     $isNew = "False"
     $parsedVersion = [AzureEngSemanticVersion]::new($existingVersion)
@@ -172,8 +170,7 @@ foreach ($existingVersion in $existing.versions)
     $latestVersion = $existingVersion;
 }
 
-$currentProjectVersion = ([xml](Get-Content "$packageDirectory/src/*.csproj")).Project.PropertyGroup.Version
-$currentProjectVersion = "$currentProjectVersion".Trim()
+$currentProjectVersion = $packageProperties.Version
 
 if ($latestVersion)
 {
