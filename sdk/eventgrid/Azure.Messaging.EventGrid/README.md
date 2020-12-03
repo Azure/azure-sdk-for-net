@@ -43,18 +43,18 @@ az eventgrid topic key list --name <your-resource-name> --resource-group <your-r
 Once you have your access key and topic endpoint, you can create the publisher client as follows:
 ```C#
 EventGridPublisherClient client = new EventGridPublisherClient(
-    "<endpoint>",
+    new Uri("<endpoint>"),
     new AzureKeyCredential("<access-key>"));
 ```
 You can also create a **Shared Access Signature** to authenticate the client using the same access key. The signature can be generated using the endpoint, access key, and the time at which the signature becomes invalid for authentication. Create the client using the `EventGridSharedAccessSignatureCredential` type:
 ```C#
 string sasToken = EventGridPublisherClient.BuildSharedAccessSignature(
-    "<endpoint>",
+    new Uri("<endpoint>"),
     DateTimeOffset.UtcNow.AddMinutes(60),
     new AzureKeyCredential("<access-key>"));
 
 EventGridPublisherClient client = new EventGridPublisherClient(
-    "<endpoint>",
+    new Uri("<endpoint>"),
     new EventGridSharedAccessSignatureCredential(sasToken));
 ```
 
