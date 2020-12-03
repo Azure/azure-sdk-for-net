@@ -36,7 +36,6 @@ if (!$ReleaseDate)
     $currentDate = Get-Date
     $thisMonthReleaseDate = Get-ReleaseDay((Get-Date -Day 1));
     $nextMonthReleaseDate = Get-ReleaseDay((Get-Date -Day 1).AddMonths(1));
-
     if ($thisMonthReleaseDate -ge $currentDate)
     {
         # On track for this month release
