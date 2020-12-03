@@ -95,24 +95,17 @@ foreach ($config in $targets) {
   $pkgsFiltered = $pkgs | ? { $_.IsPrerelease -eq $includePreview}
 
   if ($pkgsFiltered) {
-    Write-Host "Given the visible artifacts, Readme updates against $($config.path_to_config) will be processed for the following packages."
+    Write-Host "Given the visible artifacts, $($config.mode) Readme updates against $($config.path_to_config) will be processed for the following packages."
     Write-Host ($pkgsFiltered | % { $_.PackageId + " " + $_.PackageVersion })
   
     foreach ($packageInfo in $pkgsFiltered) {
-      # sync the doc repo
-      $semVer = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.PackageVersion)
-      $rdSuffix = ""
-      if ($semVer.IsPreRelease) {
-        $rdSuffix = "-pre"
-      }
-  
-      $readmeName = "$($packageInfo.PackageId.Replace('azure-','').Replace('Azure.', '').Replace('@azure/', '').ToLower())-readme$rdSuffix.md"
-      $readmeLocation = Join-Path $CIRepository $config.content_folder
-  
+      $readmeName = "$($packageInfo.PackageId.Replace('azure-','').Replace('Azure.', '').Replace('@azure/', '').ToLower())-readme.md"
+      $readmeFolder = Join-Path $DocRepoLocation $config.content_folder
+      $readmeLocation = Join-Path $readmeFolder $readmeName
+
       # what happens if this is the first time we've written to this folder? It won't exist. Resolve that.
-      if(!(Test-Path $readmeLocation))
-      {
-        New-Item -ItemType Directory -Force -Path $readmeLocation
+      if(!(Test-Path $readmeFolder)) {
+        New-Item -ItemType Directory -Force -Path $readmeFolder
       }
 
       if ($packageInfo.ReadmeContent) {
@@ -121,7 +114,7 @@ foreach ($config in $targets) {
   
       if ($adjustedContent) {
         try {
-          Push-Location $CIRepository
+          Push-Location $DocRepoLocation
           Set-Content -Path $readmeLocation -Value $adjustedContent -Force
   
           Write-Host "Updated readme for $readmeName."
@@ -136,7 +129,7 @@ foreach ($config in $targets) {
     }
   }
   else {
-    Write-Host "No readmes discovered for doc release under folder $ArtifactLocation."
+    Write-Host "No readmes discovered for $($config.mode) doc release under folder $ArtifactLocation."
   }
 
 
