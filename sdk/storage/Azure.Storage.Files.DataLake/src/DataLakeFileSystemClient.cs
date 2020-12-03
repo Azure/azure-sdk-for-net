@@ -298,6 +298,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -305,13 +308,19 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        internal DataLakeFileSystemClient(
+            Uri fileSystemUri,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
             _uri = fileSystemUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _containerClient = BlobContainerClientInternals.Create(_blobUri, pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
@@ -360,6 +369,7 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 directoryName,
                 Pipeline,
+                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
             }
@@ -389,6 +399,7 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 fileName,
                 Pipeline,
+                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
 

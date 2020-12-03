@@ -22,22 +22,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     [Extension("EventHubs", configurationSection: "EventHubs")]
     internal class EventHubExtensionConfigProvider : IExtensionConfigProvider
     {
-        private IConfiguration _config;
         private readonly IOptions<EventHubOptions> _options;
         private readonly ILoggerFactory _loggerFactory;
         private readonly IConverterManager _converterManager;
-        private readonly INameResolver _nameResolver;
         private readonly IWebJobsExtensionConfiguration<EventHubExtensionConfigProvider> _configuration;
+        private readonly EventHubClientFactory _clientFactory;
 
-        public EventHubExtensionConfigProvider(IConfiguration config, IOptions<EventHubOptions> options, ILoggerFactory loggerFactory,
-            IConverterManager converterManager, INameResolver nameResolver, IWebJobsExtensionConfiguration<EventHubExtensionConfigProvider> configuration)
+        public EventHubExtensionConfigProvider(
+            IOptions<EventHubOptions> options,
+            ILoggerFactory loggerFactory,
+            IConverterManager converterManager,
+            IWebJobsExtensionConfiguration<EventHubExtensionConfigProvider> configuration,
+            EventHubClientFactory clientFactory)
         {
-            _config = config;
             _options = options;
             _loggerFactory = loggerFactory;
             _converterManager = converterManager;
-            _nameResolver = nameResolver;
             _configuration = configuration;
+            _clientFactory = clientFactory;
         }
 
         internal Action<ExceptionReceivedEventArgs> ExceptionHandler { get; set; }
@@ -54,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 throw new ArgumentNullException(nameof(context));
             }
 
-            _options.Value.SetExceptionHandler(ExceptionReceivedHandler);
+            _options.Value.ExceptionHandler = ExceptionReceivedHandler;
             _configuration.ConfigurationSection.Bind(_options);
 
             context
@@ -65,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 .AddOpenConverter<OpenType.Poco, EventData>(ConvertPocoToEventData);
 
             // register our trigger binding provider
-            var triggerBindingProvider = new EventHubTriggerAttributeBindingProvider(_config, _nameResolver, _converterManager, _options, _loggerFactory);
+            var triggerBindingProvider = new EventHubTriggerAttributeBindingProvider(_converterManager, _options, _loggerFactory, _clientFactory);
             context.AddBindingRule<EventHubTriggerAttribute>()
                 .BindToTrigger(triggerBindingProvider);
 
@@ -74,10 +76,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 .BindToCollector(BuildFromAttribute);
 
             context.AddBindingRule<EventHubAttribute>()
-                .BindToInput(attribute =>
-            {
-                return _options.Value.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection);
-            });
+                .BindToInput(attribute => _clientFactory.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection));
 
             ExceptionHandler = (e =>
             {
@@ -93,26 +92,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             Utility.LogException(e.Exception, message, logger);
         }
 
-        private static LogLevel GetLogLevel(Exception ex)
-        {
-            var ehex = ex as EventHubsException;
-            if (!(ex is OperationCanceledException) && (ehex == null || !ehex.IsTransient))
-            {
-                // any non-transient exceptions or unknown exception types
-                // we want to log as errors
-                return LogLevel.Error;
-            }
-            else
-            {
-                // transient messaging errors we log as info so we have a record
-                // of them, but we don't treat them as actual errors
-                return LogLevel.Information;
-            }
-        }
-
         private IAsyncCollector<EventData> BuildFromAttribute(EventHubAttribute attribute)
         {
-            EventHubProducerClient client = _options.Value.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection);
+            EventHubProducerClient client = _clientFactory.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection);
             return new EventHubAsyncCollector(new EventHubProducerClientImpl(client, _loggerFactory));
         }
 
