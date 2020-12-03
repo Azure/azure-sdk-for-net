@@ -4,18 +4,13 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Azure.WebJobs.Logging;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -23,26 +18,20 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 {
     internal class EventHubTriggerAttributeBindingProvider : ITriggerBindingProvider
     {
-        private readonly INameResolver _nameResolver;
         private readonly ILogger _logger;
-        private readonly IConfiguration _config;
         private readonly IOptions<EventHubOptions> _options;
-        private readonly AzureComponentFactory _componentFactory;
+        private readonly EventHubClientFactory _clientFactory;
         private readonly IConverterManager _converterManager;
 
         public EventHubTriggerAttributeBindingProvider(
-            IConfiguration configuration,
-            INameResolver nameResolver,
             IConverterManager converterManager,
             IOptions<EventHubOptions> options,
             ILoggerFactory loggerFactory,
-            AzureComponentFactory componentFactory)
+            EventHubClientFactory clientFactory)
         {
-            _config = configuration;
-            _nameResolver = nameResolver;
             _converterManager = converterManager;
             _options = options;
-            _componentFactory = componentFactory;
+            _clientFactory = clientFactory;
             _logger = loggerFactory?.CreateLogger(LogCategories.CreateTriggerCategory("EventHub"));
         }
 
@@ -62,25 +51,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return Task.FromResult<ITriggerBinding>(null);
             }
 
-            string resolvedEventHubName = _nameResolver.ResolveWholeString(attribute.EventHubName);
-
-            string consumerGroup = attribute.ConsumerGroup ?? EventHubConsumerClient.DefaultConsumerGroupName;
-            string resolvedConsumerGroup = _nameResolver.ResolveWholeString(consumerGroup);
-
-            string connection = null;
-            if (!string.IsNullOrWhiteSpace(attribute.Connection))
-            {
-                connection = _nameResolver.ResolveWholeString(attribute.Connection);
-            }
-
-            var eventHostListener = _options.Value.GetEventProcessorHost(_config, resolvedEventHubName,  connection, resolvedConsumerGroup, _componentFactory);
-            var checkpointStoreConnectionString = _options.Value.GetCheckpointStoreConnectionString(_config, resolvedEventHubName);
-
             Func<ListenerFactoryContext, bool, Task<IListener>> createListener =
              (factoryContext, singleDispatch) =>
              {
                  var checkpointStore = new BlobsCheckpointStore(
-                     new BlobContainerClient(checkpointStoreConnectionString, _options.Value.LeaseContainerName),
+                     _clientFactory.GetCheckpointStoreClient(attribute.EventHubName),
                      _options.Value.EventProcessorOptions.RetryOptions.ToRetryPolicy(),
                      factoryContext.Descriptor.Id,
                      _logger);
@@ -88,9 +63,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                  IListener listener = new EventHubListener(
                                                 factoryContext.Descriptor.Id,
                                                 factoryContext.Executor,
-                                                eventHostListener,
+                                                _clientFactory.GetEventProcessorHost(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup),
                                                 singleDispatch,
-                                                () => _options.Value.GetEventHubConsumerClient(_config, resolvedEventHubName, connection, consumerGroup, _componentFactory),
+                                                _clientFactory.GetEventHubConsumerClient(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup),
                                                 checkpointStore,
                                                 _options.Value,
                                                 _logger);

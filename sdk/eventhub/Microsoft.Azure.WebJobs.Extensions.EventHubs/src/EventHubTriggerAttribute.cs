@@ -25,11 +25,13 @@ namespace Microsoft.Azure.WebJobs
         /// <summary>
         /// Name of the event hub.
         /// </summary>
+        [AutoResolve]
         public string EventHubName { get; private set; }
 
         /// <summary>
         /// Optional Name of the consumer group. If missing, then use the default name, "$Default"
         /// </summary>
+        [AutoResolve]
         public string ConsumerGroup { get; set; }
 
         /// <summary>
