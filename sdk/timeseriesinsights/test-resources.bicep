@@ -23,7 +23,7 @@ param environmentName string {
         description: 'Name of the environment. The name cannot include: \'<\', \'>\', \'%\', \'&\', \':\', \'\\\', \'?\', \'/\' and any control characters. All other characters are allowed.'
     }
     maxLength: 90
-    default: concat(az.resourceGroup().name, 'TSI')
+    default: concat(az.resourceGroup().name, '-TSI')
 }
 
 param consumerGroupName string {

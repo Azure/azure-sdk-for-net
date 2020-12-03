@@ -28,7 +28,7 @@
       "metadata": {
         "description": "Name of the environment. The name cannot include: '<', '>', '%', '&', ':', '\\', '?', '/' and any control characters. All other characters are allowed."
       },
-      "defaultValue": "[concat(resourceGroup().name, 'TSI')]"
+      "defaultValue": "[concat(resourceGroup().name, '-TSI')]"
     },
     "consumerGroupName": {
       "type": "string",
