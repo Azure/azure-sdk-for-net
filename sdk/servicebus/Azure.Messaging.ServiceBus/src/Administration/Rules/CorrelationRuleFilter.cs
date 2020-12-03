@@ -265,7 +265,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return false;
         }
 
-        /// <summary>Compares two cref="CorrelationRuleFilter" values for equality<summary/>
+        /// <summary>Compares two <see cref="CorrelationRuleFilter"/> values for equality<summary/>
         public static bool operator ==(CorrelationRuleFilter left, CorrelationRuleFilter right)
         {
             if (ReferenceEquals(left, right))
@@ -281,7 +281,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <summary>Compares two cref="CorrelationRuleFilter" values for inequality<summary/>
+        /// <summary>Compares two <see cref="CorrelationRuleFilter"/> values for inequality<summary/>
         public static bool operator !=(CorrelationRuleFilter left, CorrelationRuleFilter right)
         {
             return !(left == right);
