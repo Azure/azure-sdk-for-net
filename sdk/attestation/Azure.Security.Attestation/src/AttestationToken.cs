@@ -120,6 +120,8 @@ namespace Azure.Security.Attestation
         {
             Argument.AssertNotNull(attestationSigningCertificates, nameof(attestationSigningCertificates));
             Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
+            Argument.AssertInRange(attestationSigningCertificates.Count, 1, int.MaxValue, nameof(attestationSigningCertificates));
+
             if (validationCallback != null)
             {
                 return validationCallback(this, attestationSigningCertificates[0]);
