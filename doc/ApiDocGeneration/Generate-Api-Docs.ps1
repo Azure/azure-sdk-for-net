@@ -62,6 +62,7 @@ $DocOutApiDir = "${DocOutDir}/api"
 $DocOutHtmlDir = "${DocOutDir}/_site"
 $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
 $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
+$DocCommonGenDir = "$RepoRoot/eng/common/docgeneration"
 
 if ($LibType -eq 'management') {
     $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
@@ -128,7 +129,7 @@ Write-Verbose "Copy over generated yml and other assets"
 Copy-Item "${YamlOutDir}/*"-Destination "${DocOutApiDir}" -Recurse -Force
 Copy-Item "${DocGenDir}/assets/docfx.json" -Destination "${DocOutDir}" -Recurse -Force
 New-Item -Path "${DocOutDir}" -Name templates -ItemType directory
-Copy-Item "${DocGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
+Copy-Item "${DocCommonGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
 
 Write-Verbose "Create Toc for Site Navigation"
 New-Item "${DocOutDir}/toc.yml" -Force
@@ -138,7 +139,7 @@ Write-Verbose "Build Doc Content"
 & "${DocFxTool}" build "${DocOutDir}/docfx.json"
 
 Write-Verbose "Copy over site Logo"
-Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
+Copy-Item "${DocCommonGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
 
 Write-Verbose "Compress and copy HTML into the staging Area"
 Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest
