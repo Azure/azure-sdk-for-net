@@ -338,6 +338,22 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task Delete_Basic_Convenience_AccountSas()
+        {
+            BlobServiceClient blobServiceClient = InstrumentClient(GetServiceClient_AccountSas());
+            await using TestScenario scenario = Scenario(blobServiceClient);
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            Response[] responses = await client.DeleteBlobsAsync(uris);
+
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
+        }
+
+        [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task Delete_ContainerScoped_Basic_Convenience()
         {
@@ -347,6 +363,37 @@ namespace Azure.Storage.Blobs.Test
 
             BlobBatchClient client = scenario.GetBlobBatchClient(scenario.Containers[0].Container.Name);
             Response[] responses = await client.DeleteBlobsAsync(uris);
+
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task Delete_ContainerScoped_Basic_Convenience_ContainerSas()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            string containerName = scenario.Containers[0].Container.Name;
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            {
+                BlobContainerName = containerName
+            };
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
+            {
+                BlobContainerName = containerName,
+                Sas = sasQueryParameters
+            };
+
+            BlobContainerClient sasContainerClient = InstrumentClient(new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions()));
+            BlobBatchClient blobBatchClient = sasContainerClient.GetBlobBatchClient();
+
+            Uri[] uris = blobs.Select(b => new Uri($"{b.Uri}?{sasQueryParameters}")).ToArray();
+
+            Response[] responses = await blobBatchClient.DeleteBlobsAsync(uris);
 
             scenario.AssertStatus(202, responses);
             await scenario.AssertDeleted(blobs);
@@ -514,6 +561,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetBlobAccessTier_Basic_AccountSas()
+        {
+            BlobServiceClient blobServiceClient = InstrumentClient(GetServiceClient_AccountSas());
+            await using TestScenario scenario = Scenario(blobServiceClient);
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            using BlobBatch batch = client.CreateBatch();
+            Response[] responses = new Response[]
+            {
+                batch.SetBlobAccessTier(blobs[0].Uri, AccessTier.Cool),
+                batch.SetBlobAccessTier(blobs[1].Uri, AccessTier.Cool),
+                batch.SetBlobAccessTier(blobs[2].Uri, AccessTier.Cool)
+            };
+            Response response = await client.SubmitBatchAsync(batch);
+
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
+
+        [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task SetBlobAccessTier_ContainerScoped_Basic()
         {
@@ -536,9 +606,62 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SetBlobAccessTier_ContainerScoped_Basic_ContainerSas()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            string containerName = scenario.Containers[0].Container.Name;
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            {
+                BlobContainerName = containerName
+            };
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
+            {
+                BlobContainerName = containerName,
+                Sas = sasQueryParameters
+            };
+
+            BlobContainerClient sasContainerClient = InstrumentClient(new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions()));
+            BlobBatchClient blobBatchClient = sasContainerClient.GetBlobBatchClient();
+
+            using BlobBatch batch = blobBatchClient.CreateBatch();
+            Response[] responses = new Response[]
+            {
+                batch.SetBlobAccessTier(new Uri($"{blobs[0].Uri}?{sasQueryParameters}"), AccessTier.Cool),
+                batch.SetBlobAccessTier(new Uri($"{blobs[1].Uri}?{sasQueryParameters}"), AccessTier.Cool),
+                batch.SetBlobAccessTier(new Uri($"{blobs[2].Uri}?{sasQueryParameters}"), AccessTier.Cool)
+            };
+            Response response = await blobBatchClient.SubmitBatchAsync(batch);
+
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
+
+        [Test]
         public async Task SetBlobAccessTier_Basic_Convenience()
         {
             await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            Response[] responses = await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool);
+
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetBlobAccessTier_Basic_Convenience_AccountSas()
+        {
+            BlobServiceClient blobServiceClient = InstrumentClient(GetServiceClient_AccountSas());
+            await using TestScenario scenario = Scenario(blobServiceClient);
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
             Uri[] uris = blobs.Select(b => b.Uri).ToArray();
 
@@ -559,6 +682,37 @@ namespace Azure.Storage.Blobs.Test
 
             BlobBatchClient client = scenario.GetBlobBatchClient(scenario.Containers[0].Container.Name);
             Response[] responses = await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool);
+
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SetBlobAccessTier_ContainerScoped_Basic_Convenience_ContainerSas()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            string containerName = scenario.Containers[0].Container.Name;
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            {
+                BlobContainerName = containerName
+            };
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
+            {
+                BlobContainerName = containerName,
+                Sas = sasQueryParameters
+            };
+
+            BlobContainerClient sasContainerClient = InstrumentClient(new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions()));
+            BlobBatchClient blobBatchClient = sasContainerClient.GetBlobBatchClient();
+
+            Uri[] uris = blobs.Select(b => new Uri($"{b.Uri}?{sasQueryParameters}")).ToArray();
+
+            Response[] responses = await blobBatchClient.SetBlobsAccessTierAsync(uris, AccessTier.Cool);
 
             scenario.AssertStatus(200, responses);
             await scenario.AssertTiers(AccessTier.Cool, blobs);
