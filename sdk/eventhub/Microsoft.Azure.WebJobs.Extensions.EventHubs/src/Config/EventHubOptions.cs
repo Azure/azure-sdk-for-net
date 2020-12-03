@@ -87,25 +87,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         internal Dictionary<string, ReceiverCredentials> RegisteredConsumerCredentials { get; } = new ();
 
         /// <summary>
-        /// Add an existing client for sending messages to an event hub.  Infer the eventHub name from the EventHubName
-        /// </summary>
-        /// <param name="client"></param>
-        public void AddEventHubProducerClient(EventHubProducerClient client)
-        {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-
-            AddEventHubProducerClient(client.EventHubName, client);
-        }
-
-        /// <summary>
         /// Add an existing client for sending messages to an event hub.
         /// </summary>
         /// <param name="eventHubName">name of the event hub</param>
         /// <param name="client"></param>
-        public void AddEventHubProducerClient(string eventHubName, EventHubProducerClient client)
+        internal void AddEventHubProducerClient(string eventHubName, EventHubProducerClient client)
         {
             if (eventHubName == null)
             {
