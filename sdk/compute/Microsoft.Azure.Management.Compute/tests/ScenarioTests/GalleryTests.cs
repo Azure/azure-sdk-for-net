@@ -353,7 +353,6 @@ namespace Compute.Tests
             {
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
-                string rgName2 = rgName + "New";
 
                 m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = galleryHomeLocation });
                 Trace.TraceInformation("Created the resource group: " + rgName);
@@ -409,7 +408,7 @@ namespace Compute.Tests
                 };
 
                 m_CrpClient.GallerySharingProfile.Update(rgName, galleryName, resetPrivateUpdate);
-
+                
                 Trace.TraceInformation("Deleting this gallery.");
                 m_CrpClient.Galleries.Delete(rgName, galleryName);
                 // resource groups cleanup is taken cared by MockContext.Dispose() method.
