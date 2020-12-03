@@ -12,6 +12,7 @@ using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebJobs.EventHubs
 {
@@ -27,19 +28,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubClientFactory(
             IConfiguration configuration,
             AzureComponentFactory componentFactory,
-            EventHubOptions options,
+            IOptions<EventHubOptions> options,
             INameResolver nameResolver)
         {
             _configuration = configuration;
             _componentFactory = componentFactory;
-            _options = options;
+            _options = options.Value;
             _nameResolver = nameResolver;
-            _producerCache = new ConcurrentDictionary<string, EventHubProducerClient>(options.RegisteredProducers);
+            _producerCache = new ConcurrentDictionary<string, EventHubProducerClient>(_options.RegisteredProducers);
         }
 
         internal EventHubProducerClient GetEventHubProducerClient(string eventHubName, string connection)
         {
-            connection = _nameResolver.ResolveWholeString(connection);
+            eventHubName = _nameResolver.ResolveWholeString(eventHubName);
 
             return _producerCache.GetOrAdd(eventHubName, key =>
             {
@@ -62,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal EventProcessorHost GetEventProcessorHost(string eventHubName, string connection, string consumerGroup)
         {
-            connection = _nameResolver.ResolveWholeString(connection);
+            eventHubName = _nameResolver.ResolveWholeString(eventHubName);
             consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
 
             if (_options.RegisteredConsumerCredentials.TryGetValue(eventHubName, out var creds))
@@ -108,7 +109,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal IEventHubConsumerClient GetEventHubConsumerClient(string eventHubName, string connection, string consumerGroup)
         {
-            connection = _nameResolver.ResolveWholeString(connection);
+            eventHubName = _nameResolver.ResolveWholeString(eventHubName);
             consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
 
             return _consumerCache.GetOrAdd(eventHubName, name =>

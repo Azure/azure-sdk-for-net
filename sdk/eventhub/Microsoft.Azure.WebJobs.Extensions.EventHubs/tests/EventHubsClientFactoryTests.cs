@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             options.AddSender("k1", connectionString);
 
             var configuration = CreateConfiguration();
-            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), options, new DefaultNameResolver(configuration));
+            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
 
             var client = factory.GetEventHubProducerClient("k1", null);
             Assert.AreEqual(expectedPathName, client.EventHubName);
@@ -41,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubOptions options = new EventHubOptions();
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString));
 
-            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), options, new DefaultNameResolver(configuration));
+            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
 
             var client = factory.GetEventHubProducerClient("k1", "connection");
             Assert.AreEqual(expectedPathName, client.EventHubName);
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubOptions options = new EventHubOptions();
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", ConnectionString));
 
-            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), options, new DefaultNameResolver(configuration));
+            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
             var producer = factory.GetEventHubProducerClient("k1", "connection");
             var consumer = factory.GetEventHubConsumerClient("k1", "connection", null);
             var host = factory.GetEventProcessorHost("k1", "connection", null);
@@ -78,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection:fullyQualifiedNamespace", "test89123-ns-x.servicebus.windows.net"));
 
-            var factory = new EventHubClientFactory(configuration, componentFactoryMock.Object, options, new DefaultNameResolver(configuration));
+            var factory = new EventHubClientFactory(configuration, componentFactoryMock.Object, Options.Create(options), new DefaultNameResolver(configuration));
             var producer = factory.GetEventHubProducerClient("k1", "connection");
             var consumer = factory.GetEventHubConsumerClient("k1", "connection", null);
             var host = factory.GetEventProcessorHost("k1", "connection", null);
@@ -98,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubOptions options = new EventHubOptions();
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", ConnectionString));
 
-            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), options, new DefaultNameResolver(configuration));
+            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
             var producer = factory.GetEventHubProducerClient("k1", "connection");
             var consumer = factory.GetEventHubConsumerClient("k1", "connection", null);
             var producer2 = factory.GetEventHubProducerClient("k1", "connection");
@@ -118,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("AzureWebJobsStorage", "UseDevelopmentStorage=true"));
 
-            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), options, new DefaultNameResolver(configuration));
+            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
 
             var client = factory.GetCheckpointStoreClient("k1");
             Assert.AreEqual("azure-webjobs-eventhub", client.Name);
@@ -137,7 +138,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var configuration = CreateConfiguration();
 
-            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), options, new DefaultNameResolver(configuration));
+            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
 
             var client = factory.GetCheckpointStoreClient("k1");
             Assert.AreEqual("azure-webjobs-eventhub", client.Name);

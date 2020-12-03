@@ -39,10 +39,8 @@ namespace Microsoft.Extensions.Hosting
                 .BindOptions<EventHubOptions>();
 
             builder.Services.AddAzureClientsCore();
-            builder.Services.Configure<EventHubOptions>(options =>
-            {
-                configure(options);
-            });
+            builder.Services.AddSingleton<EventHubClientFactory>();
+            builder.Services.Configure<EventHubOptions>(configure);
 
             return builder;
         }
