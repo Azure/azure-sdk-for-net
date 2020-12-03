@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
@@ -220,6 +221,33 @@ namespace Azure.Storage.Blobs.Test
         public async Task Delete_Basic()
         {
             await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+
+            using BlobBatch batch = client.CreateBatch();
+            Response[] responses = new Response[]
+            {
+                batch.DeleteBlob(blobs[0].Uri),
+                batch.DeleteBlob(blobs[1].Uri),
+                batch.DeleteBlob(blobs[2].Uri)
+            };
+            Response response = await client.SubmitBatchAsync(batch);
+
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
+        }
+
+        [Test]
+        public async Task Delete_Basic_AccountSas()
+        {
+            Uri sasUri = GetServiceClient_SharedKey().GenerateAccountSasUri(
+                AccountSasPermissions.All,
+                Recording.Now.AddDays(1),
+                AccountSasResourceTypes.All);
+            BlobServiceClient blobServiceClient = InstrumentClient(new BlobServiceClient(sasUri, GetOptions()));
+            await using TestScenario scenario = Scenario(blobServiceClient);
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
