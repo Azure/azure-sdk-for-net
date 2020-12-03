@@ -67,7 +67,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
                 {
-                    Response<AcquiredPhoneNumbers> response = string.IsNullOrEmpty(nextLink)
+                    Response<AcquiredPhoneNumbers> response = nextLink is null
                         ? await RestClient.GetAllPhoneNumbersAsync(locale, skip: null, take: null, cancellationToken).ConfigureAwait(false)
                         : await RestClient.GetAllPhoneNumbersNextPageAsync(nextLink, locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
 
@@ -94,7 +94,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateEnumerable(nextLink =>
                 {
-                    Response<AcquiredPhoneNumbers> response = string.IsNullOrEmpty(nextLink)
+                    Response<AcquiredPhoneNumbers> response = nextLink is null
                         ? RestClient.GetAllPhoneNumbers(locale, skip: null, take: null, cancellationToken)
                         : RestClient.GetAllPhoneNumbersNextPage(nextLink, locale, skip: null, take: null, cancellationToken);
 
@@ -240,7 +240,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
                 {
-                    Response<PhoneNumberCountries> response = string.IsNullOrEmpty(nextLink)
+                    Response<PhoneNumberCountries> response = nextLink is null
                         ? await RestClient.GetAllSupportedCountriesAsync(locale, skip: null, take: null, cancellationToken).ConfigureAwait(false)
                         : await RestClient.GetAllSupportedCountriesNextPageAsync(nextLink, locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
 
@@ -266,7 +266,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateEnumerable(nextLink =>
                 {
-                    Response<PhoneNumberCountries> response = string.IsNullOrEmpty(nextLink)
+                    Response<PhoneNumberCountries> response = nextLink is null
                         ? RestClient.GetAllSupportedCountries(locale, skip: null, take: null, cancellationToken)
                         : RestClient.GetAllSupportedCountriesNextPage(nextLink, locale, skip: null, take: null, cancellationToken);
 
@@ -410,7 +410,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
                 {
-                    Response<PhonePlanGroups> response = string.IsNullOrEmpty(nextLink)
+                    Response<PhonePlanGroups> response = nextLink is null
                         ? await RestClient.GetPhonePlanGroupsAsync(countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken).ConfigureAwait(false)
                         : await RestClient.GetPhonePlanGroupsNextPageAsync(nextLink, countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken).ConfigureAwait(false);
 
@@ -438,7 +438,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateEnumerable(nextLink =>
                 {
-                    Response<PhonePlanGroups> response = string.IsNullOrEmpty(nextLink)
+                    Response<PhonePlanGroups> response = nextLink is null
                         ? RestClient.GetPhonePlanGroups(countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken)
                         : RestClient.GetPhonePlanGroupsNextPage(nextLink, countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken);
 
@@ -466,7 +466,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
                 {
-                    Response<PhonePlansResponse> response = string.IsNullOrEmpty(nextLink)
+                    Response<PhonePlansResponse> response = nextLink is null
                         ? await RestClient.GetPhonePlansAsync(countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken).ConfigureAwait(false)
                         : await RestClient.GetPhonePlansNextPageAsync(nextLink, countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
 
@@ -494,7 +494,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateEnumerable(nextLink =>
                 {
-                    Response<PhonePlansResponse> response = string.IsNullOrEmpty(nextLink)
+                    Response<PhonePlansResponse> response = nextLink is null
                         ? RestClient.GetPhonePlans(countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken)
                         : RestClient.GetPhonePlansNextPage(nextLink, countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken);
 
@@ -687,7 +687,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
                 {
-                    Response<PhoneNumberEntities> response = string.IsNullOrEmpty(nextLink)
+                    Response<PhoneNumberEntities> response = nextLink is null
                         ? await RestClient.GetAllReleasesAsync(skip: null, take: null, cancellationToken).ConfigureAwait(false)
                         : await RestClient.GetAllReleasesNextPageAsync(nextLink, skip: null, take: null, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse());
@@ -711,7 +711,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateEnumerable(nextLink =>
                 {
-                    Response<PhoneNumberEntities> response = string.IsNullOrEmpty(nextLink)
+                    Response<PhoneNumberEntities> response = nextLink is null
                         ? RestClient.GetAllReleases(skip: null, take: null, cancellationToken)
                         : RestClient.GetAllReleasesNextPage(nextLink, skip: null, take: null, cancellationToken);
 
@@ -822,7 +822,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
                 {
-                    Response<PhoneNumberEntities> response = string.IsNullOrEmpty(nextLink)
+                    Response<PhoneNumberEntities> response = nextLink is null
                         ? await RestClient.GetAllSearchesAsync(skip: null, take: null, cancellationToken).ConfigureAwait(false)
                         : await RestClient.GetAllSearchesNextPageAsync(nextLink, skip: null, take: null, cancellationToken).ConfigureAwait(false);
 
@@ -847,7 +847,7 @@ namespace Azure.Communication.Administration
             {
                 return PageResponseEnumerator.CreateEnumerable(nextLink =>
                 {
-                    Response<PhoneNumberEntities> response = string.IsNullOrEmpty(nextLink)
+                    Response<PhoneNumberEntities> response = nextLink is null
                         ? RestClient.GetAllSearches(skip: null, take: null, cancellationToken)
                         : RestClient.GetAllSearchesNextPage(nextLink, skip: null, take: null, cancellationToken);
 
