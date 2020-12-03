@@ -5,4 +5,3 @@ extends:
   parameters:
     ServiceDirectory: timeseriesinsights
     Location: westus2
-    Clouds: Preview
