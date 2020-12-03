@@ -16,15 +16,14 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            writer.WritePropertyName("endpoint");
+            writer.WriteObjectValue(Endpoint);
+            writer.WritePropertyName("image");
+            writer.WriteObjectValue(Image);
+            if (Optional.IsDefined(SamplingOptions))
             {
-                writer.WritePropertyName("endpoint");
-                writer.WriteObjectValue(Endpoint);
-            }
-            if (Optional.IsDefined(Image))
-            {
-                writer.WritePropertyName("image");
-                writer.WriteObjectValue(Image);
+                writer.WritePropertyName("samplingOptions");
+                writer.WriteObjectValue(SamplingOptions);
             }
             writer.WritePropertyName("@type");
             writer.WriteStringValue(Type);
@@ -51,8 +50,9 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     case "#Microsoft.Media.MediaGraphHttpExtension": return MediaGraphHttpExtension.DeserializeMediaGraphHttpExtension(element);
                 }
             }
-            Optional<MediaGraphEndpoint> endpoint = default;
-            Optional<MediaGraphImage> image = default;
+            MediaGraphEndpoint endpoint = default;
+            MediaGraphImage image = default;
+            Optional<MediaGraphSamplingOptions> samplingOptions = default;
             string type = default;
             string name = default;
             IList<MediaGraphNodeInput> inputs = default;
@@ -66,6 +66,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 if (property.NameEquals("image"))
                 {
                     image = MediaGraphImage.DeserializeMediaGraphImage(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("samplingOptions"))
+                {
+                    samplingOptions = MediaGraphSamplingOptions.DeserializeMediaGraphSamplingOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@type"))
@@ -89,7 +94,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphExtensionProcessorBase(type, name, inputs, endpoint.Value, image.Value);
+            return new MediaGraphExtensionProcessorBase(type, name, inputs, endpoint, image, samplingOptions.Value);
         }
     }
 }

@@ -16,9 +16,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <summary> Initializes a new instance of MediaGraphFileSink. </summary>
         /// <param name="name"> Name to be used for the media graph sink. </param>
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this sink node. </param>
-        /// <param name="filePathPattern"> Absolute file path pattern for creating new files on the Edge device. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, or <paramref name="filePathPattern"/> is null. </exception>
-        public MediaGraphFileSink(string name, IEnumerable<MediaGraphNodeInput> inputs, string filePathPattern) : base(name, inputs)
+        /// <param name="baseDirectoryPath"> Absolute directory for all outputs to the Edge device from this sink. </param>
+        /// <param name="fileNamePattern"> File name pattern for creating new files on the Edge device. </param>
+        /// <param name="maximumSizeMiB"> Maximum amount of disk space that can be used for storing files from this sink. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="baseDirectoryPath"/>, <paramref name="fileNamePattern"/>, or <paramref name="maximumSizeMiB"/> is null. </exception>
+        public MediaGraphFileSink(string name, IEnumerable<MediaGraphNodeInput> inputs, string baseDirectoryPath, string fileNamePattern, string maximumSizeMiB) : base(name, inputs)
         {
             if (name == null)
             {
@@ -28,12 +30,22 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             {
                 throw new ArgumentNullException(nameof(inputs));
             }
-            if (filePathPattern == null)
+            if (baseDirectoryPath == null)
             {
-                throw new ArgumentNullException(nameof(filePathPattern));
+                throw new ArgumentNullException(nameof(baseDirectoryPath));
+            }
+            if (fileNamePattern == null)
+            {
+                throw new ArgumentNullException(nameof(fileNamePattern));
+            }
+            if (maximumSizeMiB == null)
+            {
+                throw new ArgumentNullException(nameof(maximumSizeMiB));
             }
 
-            FilePathPattern = filePathPattern;
+            BaseDirectoryPath = baseDirectoryPath;
+            FileNamePattern = fileNamePattern;
+            MaximumSizeMiB = maximumSizeMiB;
             Type = "#Microsoft.Media.MediaGraphFileSink";
         }
 
@@ -41,14 +53,22 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <param name="type"> The discriminator for derived types. </param>
         /// <param name="name"> Name to be used for the media graph sink. </param>
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this sink node. </param>
-        /// <param name="filePathPattern"> Absolute file path pattern for creating new files on the Edge device. </param>
-        internal MediaGraphFileSink(string type, string name, IList<MediaGraphNodeInput> inputs, string filePathPattern) : base(type, name, inputs)
+        /// <param name="baseDirectoryPath"> Absolute directory for all outputs to the Edge device from this sink. </param>
+        /// <param name="fileNamePattern"> File name pattern for creating new files on the Edge device. </param>
+        /// <param name="maximumSizeMiB"> Maximum amount of disk space that can be used for storing files from this sink. </param>
+        internal MediaGraphFileSink(string type, string name, IList<MediaGraphNodeInput> inputs, string baseDirectoryPath, string fileNamePattern, string maximumSizeMiB) : base(type, name, inputs)
         {
-            FilePathPattern = filePathPattern;
+            BaseDirectoryPath = baseDirectoryPath;
+            FileNamePattern = fileNamePattern;
+            MaximumSizeMiB = maximumSizeMiB;
             Type = type ?? "#Microsoft.Media.MediaGraphFileSink";
         }
 
-        /// <summary> Absolute file path pattern for creating new files on the Edge device. </summary>
-        public string FilePathPattern { get; set; }
+        /// <summary> Absolute directory for all outputs to the Edge device from this sink. </summary>
+        public string BaseDirectoryPath { get; set; }
+        /// <summary> File name pattern for creating new files on the Edge device. </summary>
+        public string FileNamePattern { get; set; }
+        /// <summary> Maximum amount of disk space that can be used for storing files from this sink. </summary>
+        public string MaximumSizeMiB { get; set; }
     }
 }

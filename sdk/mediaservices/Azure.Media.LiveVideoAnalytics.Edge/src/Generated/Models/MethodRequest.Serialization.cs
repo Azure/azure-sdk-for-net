@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    public partial class OperationBase : IUtf8JsonSerializable
+    public partial class MethodRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             writer.WriteEndObject();
         }
 
-        internal static OperationBase DeserializeOperationBase(JsonElement element)
+        internal static MethodRequest DeserializeMethodRequest(JsonElement element)
         {
             if (element.TryGetProperty("methodName", out JsonElement discriminator))
             {
@@ -59,7 +59,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new OperationBase(methodName.Value, apiVersion.Value);
+            return new MethodRequest(methodName.Value, apiVersion.Value);
         }
     }
 }

@@ -37,10 +37,12 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this processor node. </param>
         /// <param name="sensitivity"> Enumeration that specifies the sensitivity of the motion detection processor. </param>
         /// <param name="outputMotionRegion"> Indicates whether the processor should detect and output the regions, within the video frame, where motion was detected. Default is true. </param>
-        internal MediaGraphMotionDetectionProcessor(string type, string name, IList<MediaGraphNodeInput> inputs, MediaGraphMotionDetectionSensitivity? sensitivity, bool? outputMotionRegion) : base(type, name, inputs)
+        /// <param name="eventAggregationWindow"> Event aggregation window duration, or 0 for no aggregation. </param>
+        internal MediaGraphMotionDetectionProcessor(string type, string name, IList<MediaGraphNodeInput> inputs, MediaGraphMotionDetectionSensitivity? sensitivity, bool? outputMotionRegion, string eventAggregationWindow) : base(type, name, inputs)
         {
             Sensitivity = sensitivity;
             OutputMotionRegion = outputMotionRegion;
+            EventAggregationWindow = eventAggregationWindow;
             Type = type ?? "#Microsoft.Media.MediaGraphMotionDetectionProcessor";
         }
 
@@ -48,5 +50,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         public MediaGraphMotionDetectionSensitivity? Sensitivity { get; set; }
         /// <summary> Indicates whether the processor should detect and output the regions, within the video frame, where motion was detected. Default is true. </summary>
         public bool? OutputMotionRegion { get; set; }
+        /// <summary> Event aggregation window duration, or 0 for no aggregation. </summary>
+        public string EventAggregationWindow { get; set; }
     }
 }

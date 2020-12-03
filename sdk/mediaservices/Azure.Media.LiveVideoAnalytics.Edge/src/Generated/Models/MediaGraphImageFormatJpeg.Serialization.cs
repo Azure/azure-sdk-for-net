@@ -10,16 +10,11 @@ using Azure.Core;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    public partial class MediaGraphImageFormatEncoded : IUtf8JsonSerializable
+    public partial class MediaGraphImageFormatJpeg : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Encoding))
-            {
-                writer.WritePropertyName("encoding");
-                writer.WriteStringValue(Encoding.Value.ToString());
-            }
             if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality");
@@ -30,18 +25,12 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             writer.WriteEndObject();
         }
 
-        internal static MediaGraphImageFormatEncoded DeserializeMediaGraphImageFormatEncoded(JsonElement element)
+        internal static MediaGraphImageFormatJpeg DeserializeMediaGraphImageFormatJpeg(JsonElement element)
         {
-            Optional<MediaGraphImageEncodingFormat> encoding = default;
             Optional<string> quality = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encoding"))
-                {
-                    encoding = new MediaGraphImageEncodingFormat(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("quality"))
                 {
                     quality = property.Value.GetString();
@@ -53,7 +42,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphImageFormatEncoded(type, Optional.ToNullable(encoding), quality.Value);
+            return new MediaGraphImageFormatJpeg(type, quality.Value);
         }
     }
 }

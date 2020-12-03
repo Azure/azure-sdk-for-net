@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Collection of graph instances. </summary>
+    /// <summary> A collection of media graph instances. </summary>
     public partial class MediaGraphInstanceCollection
     {
         /// <summary> Initializes a new instance of MediaGraphInstanceCollection. </summary>
@@ -20,17 +20,17 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         }
 
         /// <summary> Initializes a new instance of MediaGraphInstanceCollection. </summary>
-        /// <param name="value"> Collection of graph instances. </param>
-        /// <param name="continuationToken"> Continuation token to use in subsequent calls to enumerate through the graph instance collection (when the collection contains too many results to return in one response). </param>
+        /// <param name="value"> A collection of media graph instances. </param>
+        /// <param name="continuationToken"> A continuation token to use in subsequent calls to enumerate through the graph instance collection. This is used when the collection contains too many results to return in one response. </param>
         internal MediaGraphInstanceCollection(IList<MediaGraphInstance> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
         }
 
-        /// <summary> Collection of graph instances. </summary>
+        /// <summary> A collection of media graph instances. </summary>
         public IList<MediaGraphInstance> Value { get; }
-        /// <summary> Continuation token to use in subsequent calls to enumerate through the graph instance collection (when the collection contains too many results to return in one response). </summary>
+        /// <summary> A continuation token to use in subsequent calls to enumerate through the graph instance collection. This is used when the collection contains too many results to return in one response. </summary>
         public string ContinuationToken { get; set; }
     }
 }

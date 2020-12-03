@@ -8,7 +8,7 @@
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     /// <summary> The MediaGraphTopologyListRequest. </summary>
-    public partial class MediaGraphTopologyListRequest : OperationBase
+    public partial class MediaGraphTopologyListRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of MediaGraphTopologyListRequest. </summary>
         public MediaGraphTopologyListRequest()

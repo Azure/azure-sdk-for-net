@@ -29,7 +29,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <summary> Initializes a new instance of MediaGraphUsernamePasswordCredentials. </summary>
         /// <param name="type"> The discriminator for derived types. </param>
         /// <param name="username"> Username for a username/password pair. </param>
-        /// <param name="password"> Password for a username/password pair. </param>
+        /// <param name="password"> Password for a username/password pair. Please use a parameter so that the actual value is not returned on PUT or GET requests. </param>
         internal MediaGraphUsernamePasswordCredentials(string type, string username, string password) : base(type)
         {
             Username = username;
@@ -39,7 +39,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> Username for a username/password pair. </summary>
         public string Username { get; set; }
-        /// <summary> Password for a username/password pair. </summary>
+        /// <summary> Password for a username/password pair. Please use a parameter so that the actual value is not returned on PUT or GET requests. </summary>
         public string Password { get; set; }
     }
 }

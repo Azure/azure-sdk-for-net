@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    public partial class OperationBase
+    public partial class MethodRequest
     {
         /// <summary>
         /// Method name

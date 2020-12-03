@@ -8,7 +8,7 @@
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     /// <summary> The MediaGraphInstanceListRequest. </summary>
-    public partial class MediaGraphInstanceListRequest : OperationBase
+    public partial class MediaGraphInstanceListRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of MediaGraphInstanceListRequest. </summary>
         public MediaGraphInstanceListRequest()

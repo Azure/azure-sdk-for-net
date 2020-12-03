@@ -7,16 +7,16 @@
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Allowed states for a graph Instance. </summary>
+    /// <summary> Allowed states for a graph instance. </summary>
     public enum MediaGraphInstanceState
     {
-        /// <summary> Inactive state. </summary>
+        /// <summary> The media graph instance is idle and not processing media. </summary>
         Inactive,
-        /// <summary> Activating state. </summary>
+        /// <summary> The media graph instance is transitioning into the active state. </summary>
         Activating,
-        /// <summary> Active state. </summary>
+        /// <summary> The media graph instance is active and processing media. </summary>
         Active,
-        /// <summary> Deactivating state. </summary>
+        /// <summary> The media graph instance is transitioning into the inactive state. </summary>
         Deactivating
     }
 }

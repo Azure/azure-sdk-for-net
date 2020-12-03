@@ -9,12 +9,12 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> The declaration of a parameter in the graph topology. A graph topology can be authored with parameters. Then, during graph instance creation, the value for those parameters can be specified. This allows the same graph topology to be used as a blueprint for multiple graph instances with different values for the parameters. </summary>
+    /// <summary> The declaration of a parameter in the media graph topology. A media graph topology can be authored with parameters. Then, during graph instance creation, the value for those parameters can be specified. This allows the same graph topology to be used as a blueprint for multiple graph instances with different values for the parameters. </summary>
     public partial class MediaGraphParameterDeclaration
     {
         /// <summary> Initializes a new instance of MediaGraphParameterDeclaration. </summary>
         /// <param name="name"> The name of the parameter. </param>
-        /// <param name="type"> name. </param>
+        /// <param name="type"> type of the parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MediaGraphParameterDeclaration(string name, MediaGraphParameterType type)
         {
@@ -29,9 +29,9 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> Initializes a new instance of MediaGraphParameterDeclaration. </summary>
         /// <param name="name"> The name of the parameter. </param>
-        /// <param name="type"> name. </param>
+        /// <param name="type"> type of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>
-        /// <param name="default"> The default value for the parameter, to be used if the graph instance does not specify a value. </param>
+        /// <param name="default"> The default value for the parameter to be used if the media graph instance does not specify a value. </param>
         internal MediaGraphParameterDeclaration(string name, MediaGraphParameterType type, string description, string @default)
         {
             Name = name;
@@ -42,11 +42,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> The name of the parameter. </summary>
         public string Name { get; set; }
-        /// <summary> name. </summary>
+        /// <summary> type of the parameter. </summary>
         public MediaGraphParameterType Type { get; set; }
         /// <summary> Description of the parameter. </summary>
         public string Description { get; set; }
-        /// <summary> The default value for the parameter, to be used if the graph instance does not specify a value. </summary>
+        /// <summary> The default value for the parameter to be used if the media graph instance does not specify a value. </summary>
         public string Default { get; set; }
     }
 }

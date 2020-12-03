@@ -10,36 +10,28 @@ using Azure.Core;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    public partial class MediaGraphImageFormatRaw : IUtf8JsonSerializable
+    public partial class MediaGraphImageFormatPng : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("pixelFormat");
-            writer.WriteStringValue(PixelFormat.ToString());
             writer.WritePropertyName("@type");
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
 
-        internal static MediaGraphImageFormatRaw DeserializeMediaGraphImageFormatRaw(JsonElement element)
+        internal static MediaGraphImageFormatPng DeserializeMediaGraphImageFormatPng(JsonElement element)
         {
-            MediaGraphImageFormatRawPixelFormat pixelFormat = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pixelFormat"))
-                {
-                    pixelFormat = new MediaGraphImageFormatRawPixelFormat(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("@type"))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
             }
-            return new MediaGraphImageFormatRaw(type, pixelFormat);
+            return new MediaGraphImageFormatPng(type);
         }
     }
 }

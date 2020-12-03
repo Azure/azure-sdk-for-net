@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -17,26 +16,17 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssetNamePattern))
-            {
-                writer.WritePropertyName("assetNamePattern");
-                writer.WriteStringValue(AssetNamePattern);
-            }
+            writer.WritePropertyName("assetNamePattern");
+            writer.WriteStringValue(AssetNamePattern);
             if (Optional.IsDefined(SegmentLength))
             {
                 writer.WritePropertyName("segmentLength");
-                writer.WriteStringValue(SegmentLength.Value, "P");
+                writer.WriteStringValue(SegmentLength);
             }
-            if (Optional.IsDefined(LocalMediaCachePath))
-            {
-                writer.WritePropertyName("localMediaCachePath");
-                writer.WriteStringValue(LocalMediaCachePath);
-            }
-            if (Optional.IsDefined(LocalMediaCacheMaximumSizeMiB))
-            {
-                writer.WritePropertyName("localMediaCacheMaximumSizeMiB");
-                writer.WriteStringValue(LocalMediaCacheMaximumSizeMiB);
-            }
+            writer.WritePropertyName("localMediaCachePath");
+            writer.WriteStringValue(LocalMediaCachePath);
+            writer.WritePropertyName("localMediaCacheMaximumSizeMiB");
+            writer.WriteStringValue(LocalMediaCacheMaximumSizeMiB);
             writer.WritePropertyName("@type");
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name");
@@ -53,10 +43,10 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         internal static MediaGraphAssetSink DeserializeMediaGraphAssetSink(JsonElement element)
         {
-            Optional<string> assetNamePattern = default;
-            Optional<TimeSpan> segmentLength = default;
-            Optional<string> localMediaCachePath = default;
-            Optional<string> localMediaCacheMaximumSizeMiB = default;
+            string assetNamePattern = default;
+            Optional<string> segmentLength = default;
+            string localMediaCachePath = default;
+            string localMediaCacheMaximumSizeMiB = default;
             string type = default;
             string name = default;
             IList<MediaGraphNodeInput> inputs = default;
@@ -69,7 +59,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("segmentLength"))
                 {
-                    segmentLength = property.Value.GetTimeSpan("P");
+                    segmentLength = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("localMediaCachePath"))
@@ -103,7 +93,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphAssetSink(type, name, inputs, assetNamePattern.Value, Optional.ToNullable(segmentLength), localMediaCachePath.Value, localMediaCacheMaximumSizeMiB.Value);
+            return new MediaGraphAssetSink(type, name, inputs, assetNamePattern, segmentLength.Value, localMediaCachePath, localMediaCacheMaximumSizeMiB);
         }
     }
 }

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Graph system data. </summary>
+    /// <summary> The system data for a resource. This is used by both topologies and instances. </summary>
     public partial class MediaGraphSystemData
     {
         /// <summary> Initializes a new instance of MediaGraphSystemData. </summary>

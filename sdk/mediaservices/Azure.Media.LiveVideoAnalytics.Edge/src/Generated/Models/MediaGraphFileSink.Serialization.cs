@@ -16,8 +16,12 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("filePathPattern");
-            writer.WriteStringValue(FilePathPattern);
+            writer.WritePropertyName("baseDirectoryPath");
+            writer.WriteStringValue(BaseDirectoryPath);
+            writer.WritePropertyName("fileNamePattern");
+            writer.WriteStringValue(FileNamePattern);
+            writer.WritePropertyName("maximumSizeMiB");
+            writer.WriteStringValue(MaximumSizeMiB);
             writer.WritePropertyName("@type");
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name");
@@ -34,15 +38,27 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         internal static MediaGraphFileSink DeserializeMediaGraphFileSink(JsonElement element)
         {
-            string filePathPattern = default;
+            string baseDirectoryPath = default;
+            string fileNamePattern = default;
+            string maximumSizeMiB = default;
             string type = default;
             string name = default;
             IList<MediaGraphNodeInput> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filePathPattern"))
+                if (property.NameEquals("baseDirectoryPath"))
                 {
-                    filePathPattern = property.Value.GetString();
+                    baseDirectoryPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fileNamePattern"))
+                {
+                    fileNamePattern = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maximumSizeMiB"))
+                {
+                    maximumSizeMiB = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@type"))
@@ -66,7 +82,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphFileSink(type, name, inputs, filePathPattern);
+            return new MediaGraphFileSink(type, name, inputs, baseDirectoryPath, fileNamePattern, maximumSizeMiB);
         }
     }
 }

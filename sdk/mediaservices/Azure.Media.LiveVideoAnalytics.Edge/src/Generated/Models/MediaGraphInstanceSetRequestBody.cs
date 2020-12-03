@@ -10,10 +10,10 @@ using System;
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     /// <summary> The MediaGraphInstanceSetRequestBody. </summary>
-    internal partial class MediaGraphInstanceSetRequestBody : OperationBase
+    internal partial class MediaGraphInstanceSetRequestBody : MethodRequest
     {
         /// <summary> Initializes a new instance of MediaGraphInstanceSetRequestBody. </summary>
-        /// <param name="name"> name. </param>
+        /// <param name="name"> name of the instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MediaGraphInstanceSetRequestBody(string name)
         {
@@ -29,9 +29,9 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <summary> Initializes a new instance of MediaGraphInstanceSetRequestBody. </summary>
         /// <param name="methodName"> method name. </param>
         /// <param name="apiVersion"> api version. </param>
-        /// <param name="name"> name. </param>
-        /// <param name="systemData"> Graph system data. </param>
-        /// <param name="properties"> Properties of a Media Graph instance. </param>
+        /// <param name="name"> name of the instance. </param>
+        /// <param name="systemData"> The system data for a resource. This is used by both topologies and instances. </param>
+        /// <param name="properties"> Properties of a media graph instance. </param>
         internal MediaGraphInstanceSetRequestBody(string methodName, string apiVersion, string name, MediaGraphSystemData systemData, MediaGraphInstanceProperties properties) : base(methodName, apiVersion)
         {
             Name = name;
@@ -40,11 +40,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             MethodName = methodName ?? "MediaGraphInstanceSetRequestBody";
         }
 
-        /// <summary> name. </summary>
+        /// <summary> name of the instance. </summary>
         public string Name { get; set; }
-        /// <summary> Graph system data. </summary>
+        /// <summary> The system data for a resource. This is used by both topologies and instances. </summary>
         public MediaGraphSystemData SystemData { get; set; }
-        /// <summary> Properties of a Media Graph instance. </summary>
+        /// <summary> Properties of a media graph instance. </summary>
         public MediaGraphInstanceProperties Properties { get; set; }
     }
 }

@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Represents a Media Graph instance. </summary>
+    /// <summary> Represents an instance of a media graph. </summary>
     public partial class MediaGraphInstance
     {
         /// <summary> Initializes a new instance of MediaGraphInstance. </summary>
-        /// <param name="name"> name. </param>
+        /// <param name="name"> name of the instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MediaGraphInstance(string name)
         {
@@ -26,9 +26,9 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         }
 
         /// <summary> Initializes a new instance of MediaGraphInstance. </summary>
-        /// <param name="name"> name. </param>
-        /// <param name="systemData"> Graph system data. </param>
-        /// <param name="properties"> Properties of a Media Graph instance. </param>
+        /// <param name="name"> name of the instance. </param>
+        /// <param name="systemData"> The system data for a resource. This is used by both topologies and instances. </param>
+        /// <param name="properties"> Properties of a media graph instance. </param>
         internal MediaGraphInstance(string name, MediaGraphSystemData systemData, MediaGraphInstanceProperties properties)
         {
             Name = name;
@@ -36,11 +36,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             Properties = properties;
         }
 
-        /// <summary> name. </summary>
+        /// <summary> name of the instance. </summary>
         public string Name { get; set; }
-        /// <summary> Graph system data. </summary>
+        /// <summary> The system data for a resource. This is used by both topologies and instances. </summary>
         public MediaGraphSystemData SystemData { get; set; }
-        /// <summary> Properties of a Media Graph instance. </summary>
+        /// <summary> Properties of a media graph instance. </summary>
         public MediaGraphInstanceProperties Properties { get; set; }
     }
 }

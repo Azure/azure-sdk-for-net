@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Enables a graph to receive messages via routes declared in the IoT Edge deployment manifest. </summary>
+    /// <summary> Enables a media graph to receive messages via routes declared in the IoT Edge deployment manifest. </summary>
     public partial class MediaGraphIoTHubMessageSource : MediaGraphSource
     {
         /// <summary> Initializes a new instance of MediaGraphIoTHubMessageSource. </summary>

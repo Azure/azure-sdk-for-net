@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> A key, value pair. The graph topology can be authored with certain values with parameters. Then, during graph instance creation, the value for that parameters can be specified. This allows the same graph topology to be used as a blueprint for multiple graph instances with different values for the parameters. </summary>
+    /// <summary> A key-value pair. A media graph topology allows certain values to be parameterized. When an instance is created, the parameters are supplied with arguments specific to that instance. This allows the same graph topology to be used as a blueprint for multiple graph instances with different values for the parameters. </summary>
     public partial class MediaGraphParameterDefinition
     {
         /// <summary> Initializes a new instance of MediaGraphParameterDefinition. </summary>
-        /// <param name="name"> Name of parameter as defined in the graph topology. </param>
+        /// <param name="name"> Name of parameter as defined in the media graph topology. </param>
         /// <param name="value"> Value of parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public MediaGraphParameterDefinition(string name, string value)
@@ -31,7 +31,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             Value = value;
         }
 
-        /// <summary> Name of parameter as defined in the graph topology. </summary>
+        /// <summary> Name of parameter as defined in the media graph topology. </summary>
         public string Name { get; set; }
         /// <summary> Value of parameter. </summary>
         public string Value { get; set; }

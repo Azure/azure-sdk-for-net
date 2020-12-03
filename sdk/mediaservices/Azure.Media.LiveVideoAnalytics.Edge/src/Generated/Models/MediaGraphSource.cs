@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Media graph source. </summary>
+    /// <summary> A source node in a media graph. </summary>
     public partial class MediaGraphSource
     {
         /// <summary> Initializes a new instance of MediaGraphSource. </summary>

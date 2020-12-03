@@ -10,10 +10,10 @@ using System;
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     /// <summary> The MediaGraphTopologySetRequest. </summary>
-    public partial class MediaGraphTopologySetRequest : OperationBase
+    public partial class MediaGraphTopologySetRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of MediaGraphTopologySetRequest. </summary>
-        /// <param name="graph"> Describes a graph topology. </param>
+        /// <param name="graph"> A description of a media graph topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="graph"/> is null. </exception>
         public MediaGraphTopologySetRequest(MediaGraphTopology graph)
         {
@@ -29,14 +29,14 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <summary> Initializes a new instance of MediaGraphTopologySetRequest. </summary>
         /// <param name="methodName"> method name. </param>
         /// <param name="apiVersion"> api version. </param>
-        /// <param name="graph"> Describes a graph topology. </param>
+        /// <param name="graph"> A description of a media graph topology. </param>
         internal MediaGraphTopologySetRequest(string methodName, string apiVersion, MediaGraphTopology graph) : base(methodName, apiVersion)
         {
             Graph = graph;
             MethodName = methodName ?? "GraphTopologySet";
         }
 
-        /// <summary> Describes a graph topology. </summary>
+        /// <summary> A description of a media graph topology. </summary>
         public MediaGraphTopology Graph { get; set; }
     }
 }

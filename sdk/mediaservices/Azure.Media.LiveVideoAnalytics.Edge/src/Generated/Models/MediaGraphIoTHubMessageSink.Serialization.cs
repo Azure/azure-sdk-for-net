@@ -16,11 +16,8 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HubOutputName))
-            {
-                writer.WritePropertyName("hubOutputName");
-                writer.WriteStringValue(HubOutputName);
-            }
+            writer.WritePropertyName("hubOutputName");
+            writer.WriteStringValue(HubOutputName);
             writer.WritePropertyName("@type");
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name");
@@ -37,7 +34,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         internal static MediaGraphIoTHubMessageSink DeserializeMediaGraphIoTHubMessageSink(JsonElement element)
         {
-            Optional<string> hubOutputName = default;
+            string hubOutputName = default;
             string type = default;
             string name = default;
             IList<MediaGraphNodeInput> inputs = default;
@@ -69,7 +66,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphIoTHubMessageSink(type, name, inputs, hubOutputName.Value);
+            return new MediaGraphIoTHubMessageSink(type, name, inputs, hubOutputName);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
     {
         /// <summary> Initializes a new instance of MediaGraphHttpHeaderCredentials. </summary>
         /// <param name="headerName"> HTTP header name. </param>
-        /// <param name="headerValue"> HTTP header value. </param>
+        /// <param name="headerValue"> HTTP header value. Please use a parameter so that the actual value is not returned on PUT or GET requests. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> or <paramref name="headerValue"/> is null. </exception>
         public MediaGraphHttpHeaderCredentials(string headerName, string headerValue)
         {
@@ -35,7 +35,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <summary> Initializes a new instance of MediaGraphHttpHeaderCredentials. </summary>
         /// <param name="type"> The discriminator for derived types. </param>
         /// <param name="headerName"> HTTP header name. </param>
-        /// <param name="headerValue"> HTTP header value. </param>
+        /// <param name="headerValue"> HTTP header value. Please use a parameter so that the actual value is not returned on PUT or GET requests. </param>
         internal MediaGraphHttpHeaderCredentials(string type, string headerName, string headerValue) : base(type)
         {
             HeaderName = headerName;
@@ -45,7 +45,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> HTTP header name. </summary>
         public string HeaderName { get; set; }
-        /// <summary> HTTP header value. </summary>
+        /// <summary> HTTP header value. Please use a parameter so that the actual value is not returned on PUT or GET requests. </summary>
         public string HeaderValue { get; set; }
     }
 }

@@ -16,8 +16,10 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <summary> Initializes a new instance of MediaGraphCognitiveServicesVisionExtension. </summary>
         /// <param name="name"> The name for this processor node. </param>
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this processor node. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
-        public MediaGraphCognitiveServicesVisionExtension(string name, IEnumerable<MediaGraphNodeInput> inputs) : base(name, inputs)
+        /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
+        /// <param name="image"> Describes the parameters of the image that is sent as input to the endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, or <paramref name="image"/> is null. </exception>
+        public MediaGraphCognitiveServicesVisionExtension(string name, IEnumerable<MediaGraphNodeInput> inputs, MediaGraphEndpoint endpoint, MediaGraphImage image) : base(name, inputs, endpoint, image)
         {
             if (name == null)
             {
@@ -26,6 +28,14 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             if (inputs == null)
             {
                 throw new ArgumentNullException(nameof(inputs));
+            }
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (image == null)
+            {
+                throw new ArgumentNullException(nameof(image));
             }
 
             Type = "#Microsoft.Media.MediaGraphCognitiveServicesVisionExtension";
@@ -37,7 +47,8 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this processor node. </param>
         /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
         /// <param name="image"> Describes the parameters of the image that is sent as input to the endpoint. </param>
-        internal MediaGraphCognitiveServicesVisionExtension(string type, string name, IList<MediaGraphNodeInput> inputs, MediaGraphEndpoint endpoint, MediaGraphImage image) : base(type, name, inputs, endpoint, image)
+        /// <param name="samplingOptions"> Describes the sampling options to be applied when forwarding samples to the extension. </param>
+        internal MediaGraphCognitiveServicesVisionExtension(string type, string name, IList<MediaGraphNodeInput> inputs, MediaGraphEndpoint endpoint, MediaGraphImage image, MediaGraphSamplingOptions samplingOptions) : base(type, name, inputs, endpoint, image, samplingOptions)
         {
             Type = type ?? "#Microsoft.Media.MediaGraphCognitiveServicesVisionExtension";
         }

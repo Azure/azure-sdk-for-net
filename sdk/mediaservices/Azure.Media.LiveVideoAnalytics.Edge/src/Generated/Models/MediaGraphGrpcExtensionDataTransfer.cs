@@ -18,7 +18,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         }
 
         /// <summary> Initializes a new instance of MediaGraphGrpcExtensionDataTransfer. </summary>
-        /// <param name="sharedMemorySizeMiB"> The size of the buffer for all in-flight frames in mebibytes if mode is SharedMemory. Should not be specificed otherwise. </param>
+        /// <param name="sharedMemorySizeMiB"> The size of the buffer for all in-flight frames in mebibytes if mode is SharedMemory. Should not be specified otherwise. </param>
         /// <param name="mode"> How frame data should be transmitted to the inferencing engine. </param>
         internal MediaGraphGrpcExtensionDataTransfer(string sharedMemorySizeMiB, MediaGraphGrpcExtensionDataTransferMode mode)
         {
@@ -26,7 +26,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             Mode = mode;
         }
 
-        /// <summary> The size of the buffer for all in-flight frames in mebibytes if mode is SharedMemory. Should not be specificed otherwise. </summary>
+        /// <summary> The size of the buffer for all in-flight frames in mebibytes if mode is SharedMemory. Should not be specified otherwise. </summary>
         public string SharedMemorySizeMiB { get; set; }
         /// <summary> How frame data should be transmitted to the inferencing engine. </summary>
         public MediaGraphGrpcExtensionDataTransferMode Mode { get; set; }

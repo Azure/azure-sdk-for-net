@@ -18,15 +18,19 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataTransfer");
             writer.WriteObjectValue(DataTransfer);
-            if (Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(ExtensionConfiguration))
             {
-                writer.WritePropertyName("endpoint");
-                writer.WriteObjectValue(Endpoint);
+                writer.WritePropertyName("extensionConfiguration");
+                writer.WriteStringValue(ExtensionConfiguration);
             }
-            if (Optional.IsDefined(Image))
+            writer.WritePropertyName("endpoint");
+            writer.WriteObjectValue(Endpoint);
+            writer.WritePropertyName("image");
+            writer.WriteObjectValue(Image);
+            if (Optional.IsDefined(SamplingOptions))
             {
-                writer.WritePropertyName("image");
-                writer.WriteObjectValue(Image);
+                writer.WritePropertyName("samplingOptions");
+                writer.WriteObjectValue(SamplingOptions);
             }
             writer.WritePropertyName("@type");
             writer.WriteStringValue(Type);
@@ -45,8 +49,10 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         internal static MediaGraphGrpcExtension DeserializeMediaGraphGrpcExtension(JsonElement element)
         {
             MediaGraphGrpcExtensionDataTransfer dataTransfer = default;
-            Optional<MediaGraphEndpoint> endpoint = default;
-            Optional<MediaGraphImage> image = default;
+            Optional<string> extensionConfiguration = default;
+            MediaGraphEndpoint endpoint = default;
+            MediaGraphImage image = default;
+            Optional<MediaGraphSamplingOptions> samplingOptions = default;
             string type = default;
             string name = default;
             IList<MediaGraphNodeInput> inputs = default;
@@ -57,6 +63,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     dataTransfer = MediaGraphGrpcExtensionDataTransfer.DeserializeMediaGraphGrpcExtensionDataTransfer(property.Value);
                     continue;
                 }
+                if (property.NameEquals("extensionConfiguration"))
+                {
+                    extensionConfiguration = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("endpoint"))
                 {
                     endpoint = MediaGraphEndpoint.DeserializeMediaGraphEndpoint(property.Value);
@@ -65,6 +76,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 if (property.NameEquals("image"))
                 {
                     image = MediaGraphImage.DeserializeMediaGraphImage(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("samplingOptions"))
+                {
+                    samplingOptions = MediaGraphSamplingOptions.DeserializeMediaGraphSamplingOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@type"))
@@ -88,7 +104,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphGrpcExtension(type, name, inputs, endpoint.Value, image.Value, dataTransfer);
+            return new MediaGraphGrpcExtension(type, name, inputs, endpoint, image, samplingOptions.Value, dataTransfer, extensionConfiguration.Value);
         }
     }
 }

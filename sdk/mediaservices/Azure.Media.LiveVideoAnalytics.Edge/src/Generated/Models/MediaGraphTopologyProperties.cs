@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Describes the properties of a graph topology. </summary>
+    /// <summary> A description of the properties of a media graph topology. </summary>
     public partial class MediaGraphTopologyProperties
     {
         /// <summary> Initializes a new instance of MediaGraphTopologyProperties. </summary>
@@ -23,11 +23,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         }
 
         /// <summary> Initializes a new instance of MediaGraphTopologyProperties. </summary>
-        /// <param name="description"> An optional description for the instance. </param>
-        /// <param name="parameters"> An optional description for the instance. </param>
-        /// <param name="sources"> An optional description for the instance. </param>
-        /// <param name="processors"> An optional description for the instance. </param>
-        /// <param name="sinks"> name. </param>
+        /// <param name="description"> . </param>
+        /// <param name="parameters"> list of parameters. </param>
+        /// <param name="sources"> list of sources. </param>
+        /// <param name="processors"> list of processors. </param>
+        /// <param name="sinks"> list of sinks. </param>
         internal MediaGraphTopologyProperties(string description, IList<MediaGraphParameterDeclaration> parameters, IList<MediaGraphSource> sources, IList<MediaGraphProcessor> processors, IList<MediaGraphSink> sinks)
         {
             Description = description;
@@ -37,15 +37,15 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             Sinks = sinks;
         }
 
-        /// <summary> An optional description for the instance. </summary>
+        /// <summary> description of graph topology. </summary>
         public string Description { get; set; }
-        /// <summary> An optional description for the instance. </summary>
+        /// <summary> list of parameters. </summary>
         public IList<MediaGraphParameterDeclaration> Parameters { get; }
-        /// <summary> An optional description for the instance. </summary>
+        /// <summary> list of sources. </summary>
         public IList<MediaGraphSource> Sources { get; }
-        /// <summary> An optional description for the instance. </summary>
+        /// <summary> list of processors. </summary>
         public IList<MediaGraphProcessor> Processors { get; }
-        /// <summary> name. </summary>
+        /// <summary> list of sinks. </summary>
         public IList<MediaGraphSink> Sinks { get; }
     }
 }

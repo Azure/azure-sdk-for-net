@@ -15,11 +15,8 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode");
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
+            writer.WritePropertyName("mode");
+            writer.WriteStringValue(Mode.ToString());
             if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width");
@@ -35,7 +32,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         internal static MediaGraphImageScale DeserializeMediaGraphImageScale(JsonElement element)
         {
-            Optional<MediaGraphImageScaleMode> mode = default;
+            MediaGraphImageScaleMode mode = default;
             Optional<string> width = default;
             Optional<string> height = default;
             foreach (var property in element.EnumerateObject())
@@ -56,7 +53,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphImageScale(Optional.ToNullable(mode), width.Value, height.Value);
+            return new MediaGraphImageScale(mode, width.Value, height.Value);
         }
     }
 }

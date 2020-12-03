@@ -1,104 +1,187 @@
-# README.md template
+# Azure Live Video Analytics for IoT Edge client library for C#
 
-Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See [Azure.Template/README.md](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/README.md) for an example following this template.
+Live Video Analytics on IoT Edge provides a platform to build intelligent video applications that span the edge and the cloud. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services in the cloud or the edge. It is designed to be an extensible platform, enabling you to connect different video analysis edge modules (such as Cognitive services containers, custom edge modules built by you with open-source machine learning models or custom models trained with your own data) to it and use them to analyze live video without worrying about the complexity of building and running a live video pipeline.
 
-**Title**: The H1 of your README should be in the format: `# [Product Name] client library for [Language]`
+Use the client library for Live Video Analytics on IoT Edge to:
 
-* All headings, including the H1, should use **sentence-style capitalization**. Refer to the [Microsoft Style Guide][style-guide-msft] and [Microsoft Cloud Style Guide][style-guide-cloud] for more information.
-* Example: `# Azure Batch client library for Python`
+- Simplify interactions with the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks) 
+- Programatically construct media graph topologies and instances
 
-# Azure Template client library for .NET
-
-**Introduction**: The introduction appears directly under the title (H1) of your README.
-
-* **DO NOT** use an "Introduction" or "Overview" heading (H2) for this section.
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
-* Include this single line of links targeting your product's content at the bottom of the introduction, making any adjustments as necessary (for example, NuGet instead of PyPi):
-
-  [Source code](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/batch/azure-batch) | [Package (PyPi)](https://pypi.org/project/azure-batch/) | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/batch?view=azure-python) | [Product documentation](https://docs.microsoft.com/azure/batch/)
-
-> TIP: Your README should be as **brief** as possible but **no more brief** than necessary to get a developer new to Azure, the service, or the package up and running quickly. Keep it brief, but include everything a developer needs to make their first API call successfully.
+[Product documentation][doc_product] | [Direct methods][doc_direct_methods] | [Media graphs][doc_media_graph] | [Source code][source] | [Samples][samples]
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
-
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `pip install package-name`, but should enable a developer to successfully install the package from NuGet, pip, npm, Maven, or even cloning a GitHub repository.
+Install the Live Video Analytics client library for C# with pip:
+
 
 ### Prerequisites
 
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+* C# is required to use this package.
+* You need an active [Azure subscription][azure_sub], and a [IoT device connection string][iot_device_connection_string] to use this package.
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
-
-### Authenticate the client
-
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
-
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
-
+### Creating a graph topology and making requests
+Please visit the [Examples](#examples) for starter code
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+### MediaGraph Topology vs MediaGraph Instance
+A _graph topology_ is a blueprint or template of a graph. It defines the parameters of the graph using placeholders as values for them. A _graph instance_ references a graph topology and specifies the parameters. This way you are able to have multiple graph instances referencing the same topology but with different values for parameters. For more information please visit [Media graph topologies and instances][doc_media_graph] 
+
+### CloudToDeviceMethod
+
+The `CloudToDeviceMethod` is part of the [azure-iot-hub SDk][iot-hub-sdk]. This method allows you to communicate one way notifications to a device in your IoT hub. In our case, we want to communicate various graph methods such as `MediaGraphTopologySetRequest` and `MediaGraphTopologyGetRequest`. To use `CloudToDeviceMethod` you need to pass in two parameters: `method_name` and `payload`. 
+
+The first parameter, `method_name`, is the name of the media graph request you are sending. Make sure to use each method's predefined `method_name` property. For example, `MediaGraphTopologySetRequest.method_name`. 
+
+The second parameter, `payload`, sends the entire serialization of the media graph request. For example, `MediaGraphTopologySetRequest.serialize()`
 
 ## Examples
 
-Include code snippets and short descriptions for each task you listed in the [Introduction](#introduction) (the bulleted list). Briefly explain each operation, but include enough clarity to explain complex or otherwise tricky operations.
+### Creating a graph topology
+To create a graph topology you need to define parameters, sources, and sinks.
+```
+// Parameters
+private void SetParameters(MediaGraphTopologyProperties graphProperties)
+        {
+            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUserName", MediaGraphParameterType.String)
+            {
+                Description = "rtsp source user name.",
+                Default = "dummyUserName"
+            });
+            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspPassword", MediaGraphParameterType.SecretString)
+            {
+                Description = "rtsp source password.",
+                Default = "dummyPassword"
+            });
+            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUrl", MediaGraphParameterType.String)
+            {
+                Description = "rtsp Url"
+            });
+        }
 
-If possible, use the same example snippets that your in-code documentation uses. For example, use the snippets in your `examples.py` that Sphinx ingests via its [literalinclude](https://www.sphinx-doc.org/en/1.5/markup/code.html?highlight=code%20examples#includes) directive. The `examples.py` file containing the snippets should reside alongside your package's code, and should be tested in an automated fashion.
+// Source and Sink
+private void SetSources(MediaGraphTopologyProperties graphProperties)
+{
+    graphProperties.Sources.Add(new MediaGraphRtspSource("rtspSource", new MediaGraphUnsecuredEndpoint("${rtspUrl}")
+    {
+        Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}")
+        {
+            Password = "${rtspPassword}"
+        }
+    })
+        );
+}
 
-Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
+private void SetSinks(MediaGraphTopologyProperties graphProperties)
+{
+    graphProperties.Sinks.Add(new MediaGraphAssetSink("assetSink", new List<MediaGraphNodeInput> {
+                { new MediaGraphNodeInput{NodeName = "rtspSource" } }
+            }, "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}", "/var/lib/azuremediaservices/tmp/", "2048")
+    {
+        SegmentLength = System.Xml.XmlConvert.ToString(TimeSpan.FromSeconds(30)),
+    });
+}
 
-* [Create the thing](#create-the-thing)
-* [Get the thing](#get-the-thing)
-* [List the things](#list-the-things)
+private MediaGraphTopology BuildGraphTopology()
+{
+    var graphProperties = new MediaGraphTopologyProperties
+    {
+        Description = "Continuous video recording to an Azure Media Services Asset",
+    };
+    SetParameters(graphProperties);
+    SetSources(graphProperties);
+    SetSinks(graphProperties);
+    return new MediaGraphTopology("ContinuousRecording")
+    {
+        Properties = graphProperties
+    };
+}
 
-### Create the thing
-
-Use the `create_thing` method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call `Thing.save`.
-
-```Python
-thing = client.create_thing(id, name)
-thing.save()
 ```
 
-### Get the thing
-
-The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
-
-```C# Snippet:GetSecret
-var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
-
-SecretBundle secret = client.GetSecret("TestSecret");
-
-Console.WriteLine(secret.Value);
-```Python
-things = client.list_things()
+### Creating a graph instance 
+To create a graph instance, you need to have an existing graph topology.
 ```
+private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
+{
+    var graphInstanceProperties = new MediaGraphInstanceProperties
+    {
+        Description = "Sample graph description",
+        TopologyName = graphTopologyName,
+    };
+
+    graphInstanceProperties.Parameters.Add(new MediaGraphParameterDefinition("rtspUrl", "rtsp://sample.com"));
+
+    return new MediaGraphInstance("graphInstance1")
+    {
+        Properties = graphInstanceProperties
+    };
+}
+```
+
+### Invoking a graph method request
+To invoke a graph method on your device you need to first define the request using the lva sdk. Then send that method request using the iot sdk's `CloudToDeviceMethod`
+```
+var setGraphRequest = new MediaGraphTopologySetRequest(graphTopology);
+
+var directMethod = new CloudToDeviceMethod(setGraphRequest.MethodName);
+directMethod.SetPayloadJson(bc.GetPayloadAsJSON());
+
+await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+```
+
+To try different media graph topologies with the SDK, please see the official [Samples][samples].
 
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
-
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
-
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+- When sending a method request using the IoT Hub's `CloudToDeviceMethod` remember to not type in the method request name directly. Instead use `[MethodRequestName.method_name]`
+- Make sure to serialize the entire method request before passing it to `CloudToDeviceMethod`
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+- [Samples][samples]
+- [Azure IoT Device SDK][iot-device-sdk]
+- [Azure IoTHub Service SDK][iot-hub-sdk]
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+This project welcomes contributions and suggestions. Most contributions require
+you to agree to a Contributor License Agreement (CLA) declaring that you have
+the right to, and actually do, grant us the rights to use your contribution.
+For details, visit https://cla.microsoft.com.
+
+If you encounter any issues, please open an issue on our [Github][github-page-issues].
+
+When you submit a pull request, a CLA-bot will automatically determine whether
+you need to provide a CLA and decorate the PR appropriately (e.g., label,
+comment). Simply follow the instructions provided by the bot. You will only
+need to do this once across all repos using our CLA.
+
+This project has adopted the
+[Microsoft Open Source Code of Conduct][code_of_conduct]. For more information,
+see the Code of Conduct FAQ or contact opencode@microsoft.com with any
+additional questions or comments.
 
 <!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_sub]: https://azure.microsoft.com/free/
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+[cla]: https://cla.microsoft.com
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[coc_contact]: mailto:opencode@microsoft.com
+
+[package]: TODO://link-to-published-package
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mediaservices
+[samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
+
+[doc_direct_methods]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/direct-methods
+[doc_media_graph]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/media-graph-concept#media-graph-topologies-and-instances
+[doc_product]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/
+
+[iot-device-sdk]: https://pypi.org/project/azure-iot-device/
+[iot-hub-sdk]: https://pypi.org/project/azure-iot-hub/
+[iot_device_connection_string]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/get-started-detect-motion-emit-events-quickstart
+
+[github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues

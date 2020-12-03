@@ -21,21 +21,12 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 writer.WritePropertyName("activationEvaluationWindow");
                 writer.WriteStringValue(ActivationEvaluationWindow);
             }
-            if (Optional.IsDefined(ActivationSignalOffset))
-            {
-                writer.WritePropertyName("activationSignalOffset");
-                writer.WriteStringValue(ActivationSignalOffset);
-            }
-            if (Optional.IsDefined(MinimumActivationTime))
-            {
-                writer.WritePropertyName("minimumActivationTime");
-                writer.WriteStringValue(MinimumActivationTime);
-            }
-            if (Optional.IsDefined(MaximumActivationTime))
-            {
-                writer.WritePropertyName("maximumActivationTime");
-                writer.WriteStringValue(MaximumActivationTime);
-            }
+            writer.WritePropertyName("activationSignalOffset");
+            writer.WriteStringValue(ActivationSignalOffset);
+            writer.WritePropertyName("minimumActivationTime");
+            writer.WriteStringValue(MinimumActivationTime);
+            writer.WritePropertyName("maximumActivationTime");
+            writer.WriteStringValue(MaximumActivationTime);
             writer.WritePropertyName("@type");
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name");
@@ -53,9 +44,9 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         internal static MediaGraphSignalGateProcessor DeserializeMediaGraphSignalGateProcessor(JsonElement element)
         {
             Optional<string> activationEvaluationWindow = default;
-            Optional<string> activationSignalOffset = default;
-            Optional<string> minimumActivationTime = default;
-            Optional<string> maximumActivationTime = default;
+            string activationSignalOffset = default;
+            string minimumActivationTime = default;
+            string maximumActivationTime = default;
             string type = default;
             string name = default;
             IList<MediaGraphNodeInput> inputs = default;
@@ -102,7 +93,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphSignalGateProcessor(type, name, inputs, activationEvaluationWindow.Value, activationSignalOffset.Value, minimumActivationTime.Value, maximumActivationTime.Value);
+            return new MediaGraphSignalGateProcessor(type, name, inputs, activationEvaluationWindow.Value, activationSignalOffset, minimumActivationTime, maximumActivationTime);
         }
     }
 }

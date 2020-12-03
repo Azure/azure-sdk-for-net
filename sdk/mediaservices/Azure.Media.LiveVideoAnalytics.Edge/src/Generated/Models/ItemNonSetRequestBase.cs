@@ -10,7 +10,7 @@ using System;
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     /// <summary> The ItemNonSetRequestBase. </summary>
-    public partial class ItemNonSetRequestBase : OperationBase
+    public partial class ItemNonSetRequestBase : MethodRequest
     {
         /// <summary> Initializes a new instance of ItemNonSetRequestBase. </summary>
         /// <param name="name"> method name. </param>

@@ -10,10 +10,10 @@ using System;
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     /// <summary> The MediaGraphInstanceSetRequest. </summary>
-    public partial class MediaGraphInstanceSetRequest : OperationBase
+    public partial class MediaGraphInstanceSetRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of MediaGraphInstanceSetRequest. </summary>
-        /// <param name="instance"> Represents a Media Graph instance. </param>
+        /// <param name="instance"> Represents an instance of a media graph. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
         public MediaGraphInstanceSetRequest(MediaGraphInstance instance)
         {
@@ -29,14 +29,14 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <summary> Initializes a new instance of MediaGraphInstanceSetRequest. </summary>
         /// <param name="methodName"> method name. </param>
         /// <param name="apiVersion"> api version. </param>
-        /// <param name="instance"> Represents a Media Graph instance. </param>
+        /// <param name="instance"> Represents an instance of a media graph. </param>
         internal MediaGraphInstanceSetRequest(string methodName, string apiVersion, MediaGraphInstance instance) : base(methodName, apiVersion)
         {
             Instance = instance;
             MethodName = methodName ?? "GraphInstanceSet";
         }
 
-        /// <summary> Represents a Media Graph instance. </summary>
+        /// <summary> Represents an instance of a media graph. </summary>
         public MediaGraphInstance Instance { get; set; }
     }
 }

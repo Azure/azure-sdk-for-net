@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Properties of a Media Graph instance. </summary>
+    /// <summary> Properties of a media graph instance. </summary>
     public partial class MediaGraphInstanceProperties
     {
         /// <summary> Initializes a new instance of MediaGraphInstanceProperties. </summary>
@@ -21,9 +21,9 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> Initializes a new instance of MediaGraphInstanceProperties. </summary>
         /// <param name="description"> An optional description for the instance. </param>
-        /// <param name="topologyName"> The name of the graph topology that this instance will run. A topology with this name should already have been set in the Edge module. </param>
+        /// <param name="topologyName"> The name of the media graph topology that this instance will run. A topology with this name should already have been set in the Edge module. </param>
         /// <param name="parameters"> List of one or more graph instance parameters. </param>
-        /// <param name="state"> Allowed states for a graph Instance. </param>
+        /// <param name="state"> Allowed states for a graph instance. </param>
         internal MediaGraphInstanceProperties(string description, string topologyName, IList<MediaGraphParameterDefinition> parameters, MediaGraphInstanceState? state)
         {
             Description = description;
@@ -34,11 +34,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> An optional description for the instance. </summary>
         public string Description { get; set; }
-        /// <summary> The name of the graph topology that this instance will run. A topology with this name should already have been set in the Edge module. </summary>
+        /// <summary> The name of the media graph topology that this instance will run. A topology with this name should already have been set in the Edge module. </summary>
         public string TopologyName { get; set; }
         /// <summary> List of one or more graph instance parameters. </summary>
         public IList<MediaGraphParameterDefinition> Parameters { get; }
-        /// <summary> Allowed states for a graph Instance. </summary>
+        /// <summary> Allowed states for a graph instance. </summary>
         public MediaGraphInstanceState? State { get; set; }
     }
 }

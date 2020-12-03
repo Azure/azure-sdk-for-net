@@ -26,6 +26,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 writer.WritePropertyName("outputMotionRegion");
                 writer.WriteBooleanValue(OutputMotionRegion.Value);
             }
+            if (Optional.IsDefined(EventAggregationWindow))
+            {
+                writer.WritePropertyName("eventAggregationWindow");
+                writer.WriteStringValue(EventAggregationWindow);
+            }
             writer.WritePropertyName("@type");
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name");
@@ -44,6 +49,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         {
             Optional<MediaGraphMotionDetectionSensitivity> sensitivity = default;
             Optional<bool> outputMotionRegion = default;
+            Optional<string> eventAggregationWindow = default;
             string type = default;
             string name = default;
             IList<MediaGraphNodeInput> inputs = default;
@@ -57,6 +63,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 if (property.NameEquals("outputMotionRegion"))
                 {
                     outputMotionRegion = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("eventAggregationWindow"))
+                {
+                    eventAggregationWindow = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@type"))
@@ -80,7 +91,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphMotionDetectionProcessor(type, name, inputs, Optional.ToNullable(sensitivity), Optional.ToNullable(outputMotionRegion));
+            return new MediaGraphMotionDetectionProcessor(type, name, inputs, Optional.ToNullable(sensitivity), Optional.ToNullable(outputMotionRegion), eventAggregationWindow.Value);
         }
     }
 }

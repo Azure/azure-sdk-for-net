@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> An endpoint that the graph can connect to, which must be connected over TLS/SSL. </summary>
+    /// <summary> A TLS endpoint for media graph external connections. </summary>
     public partial class MediaGraphTlsEndpoint : MediaGraphEndpoint
     {
         /// <summary> Initializes a new instance of MediaGraphTlsEndpoint. </summary>

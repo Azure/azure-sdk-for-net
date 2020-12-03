@@ -16,9 +16,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <summary> Initializes a new instance of MediaGraphGrpcExtension. </summary>
         /// <param name="name"> The name for this processor node. </param>
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this processor node. </param>
+        /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
+        /// <param name="image"> Describes the parameters of the image that is sent as input to the endpoint. </param>
         /// <param name="dataTransfer"> How media should be transferred to the inferencing engine. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, or <paramref name="dataTransfer"/> is null. </exception>
-        public MediaGraphGrpcExtension(string name, IEnumerable<MediaGraphNodeInput> inputs, MediaGraphGrpcExtensionDataTransfer dataTransfer) : base(name, inputs)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, <paramref name="image"/>, or <paramref name="dataTransfer"/> is null. </exception>
+        public MediaGraphGrpcExtension(string name, IEnumerable<MediaGraphNodeInput> inputs, MediaGraphEndpoint endpoint, MediaGraphImage image, MediaGraphGrpcExtensionDataTransfer dataTransfer) : base(name, inputs, endpoint, image)
         {
             if (name == null)
             {
@@ -27,6 +29,14 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             if (inputs == null)
             {
                 throw new ArgumentNullException(nameof(inputs));
+            }
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (image == null)
+            {
+                throw new ArgumentNullException(nameof(image));
             }
             if (dataTransfer == null)
             {
@@ -43,14 +53,19 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this processor node. </param>
         /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
         /// <param name="image"> Describes the parameters of the image that is sent as input to the endpoint. </param>
+        /// <param name="samplingOptions"> Describes the sampling options to be applied when forwarding samples to the extension. </param>
         /// <param name="dataTransfer"> How media should be transferred to the inferencing engine. </param>
-        internal MediaGraphGrpcExtension(string type, string name, IList<MediaGraphNodeInput> inputs, MediaGraphEndpoint endpoint, MediaGraphImage image, MediaGraphGrpcExtensionDataTransfer dataTransfer) : base(type, name, inputs, endpoint, image)
+        /// <param name="extensionConfiguration"> Optional configuration to pass to the gRPC extension. </param>
+        internal MediaGraphGrpcExtension(string type, string name, IList<MediaGraphNodeInput> inputs, MediaGraphEndpoint endpoint, MediaGraphImage image, MediaGraphSamplingOptions samplingOptions, MediaGraphGrpcExtensionDataTransfer dataTransfer, string extensionConfiguration) : base(type, name, inputs, endpoint, image, samplingOptions)
         {
             DataTransfer = dataTransfer;
+            ExtensionConfiguration = extensionConfiguration;
             Type = type ?? "#Microsoft.Media.MediaGraphGrpcExtension";
         }
 
         /// <summary> How media should be transferred to the inferencing engine. </summary>
         public MediaGraphGrpcExtensionDataTransfer DataTransfer { get; set; }
+        /// <summary> Optional configuration to pass to the gRPC extension. </summary>
+        public string ExtensionConfiguration { get; set; }
     }
 }

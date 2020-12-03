@@ -26,7 +26,9 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.MediaGraphImageFormatEncoded": return MediaGraphImageFormatEncoded.DeserializeMediaGraphImageFormatEncoded(element);
+                    case "#Microsoft.Media.MediaGraphImageFormatBmp": return MediaGraphImageFormatBmp.DeserializeMediaGraphImageFormatBmp(element);
+                    case "#Microsoft.Media.MediaGraphImageFormatJpeg": return MediaGraphImageFormatJpeg.DeserializeMediaGraphImageFormatJpeg(element);
+                    case "#Microsoft.Media.MediaGraphImageFormatPng": return MediaGraphImageFormatPng.DeserializeMediaGraphImageFormatPng(element);
                     case "#Microsoft.Media.MediaGraphImageFormatRaw": return MediaGraphImageFormatRaw.DeserializeMediaGraphImageFormatRaw(element);
                 }
             }

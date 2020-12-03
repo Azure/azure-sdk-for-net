@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Enables a graph to capture media from a RTSP server. </summary>
+    /// <summary> Enables a media graph to capture media from a RTSP server. </summary>
     public partial class MediaGraphRtspSource : MediaGraphSource
     {
         /// <summary> Initializes a new instance of MediaGraphRtspSource. </summary>

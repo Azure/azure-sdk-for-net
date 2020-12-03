@@ -38,7 +38,6 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 {
                     case "#Microsoft.Media.MediaGraphCognitiveServicesVisionExtension": return MediaGraphCognitiveServicesVisionExtension.DeserializeMediaGraphCognitiveServicesVisionExtension(element);
                     case "#Microsoft.Media.MediaGraphExtensionProcessorBase": return MediaGraphExtensionProcessorBase.DeserializeMediaGraphExtensionProcessorBase(element);
-                    case "#Microsoft.Media.MediaGraphFrameRateFilterProcessor": return MediaGraphFrameRateFilterProcessor.DeserializeMediaGraphFrameRateFilterProcessor(element);
                     case "#Microsoft.Media.MediaGraphGrpcExtension": return MediaGraphGrpcExtension.DeserializeMediaGraphGrpcExtension(element);
                     case "#Microsoft.Media.MediaGraphHttpExtension": return MediaGraphHttpExtension.DeserializeMediaGraphHttpExtension(element);
                     case "#Microsoft.Media.MediaGraphMotionDetectionProcessor": return MediaGraphMotionDetectionProcessor.DeserializeMediaGraphMotionDetectionProcessor(element);
