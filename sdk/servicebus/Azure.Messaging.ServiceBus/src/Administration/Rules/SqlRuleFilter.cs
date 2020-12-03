@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return false;
         }
 
-        /// <inheritdoc/>
+        /// <summary>Compares two cref="SqlRuleFilter" values for equality<summary/>
         public static bool operator ==(SqlRuleFilter left, SqlRuleFilter right)
         {
             if (ReferenceEquals(left, right))
@@ -121,7 +121,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <inheritdoc/>
+        /// <summary>Compares two cref="SqlRuleFilter" values for inequality<summary/>
         public static bool operator !=(SqlRuleFilter left, SqlRuleFilter right)
         {
             return !(left == right);
