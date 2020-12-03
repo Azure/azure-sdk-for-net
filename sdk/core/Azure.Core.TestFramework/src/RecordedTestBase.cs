@@ -26,8 +26,6 @@ namespace Azure.Core.TestFramework
 
         private static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
 
-        protected ResourceGroupCleanupPolicy CleanupPolicy { get; set; }
-
         public RecordedTestMode Mode { get; set; }
 
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
@@ -150,7 +148,6 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
-            // Set the TestEnvironment Mode here so that any Mode changes in RecordedTestBase are picked up here also.
         }
 
         [TearDown]
