@@ -128,7 +128,12 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential StorageSharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
         /// </summary>
         private StorageSharedKeyCredential _storageSharedKeyCredential;
 
@@ -1859,7 +1864,7 @@ namespace Azure.Storage.Blobs
                     nameof(AccountSasServices.Blobs));
             }
             UriBuilder sasUri = new UriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(StorageSharedKeyCredential).ToString();
             return sasUri.Uri;
         }
         #endregion

@@ -240,13 +240,10 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task Delete_Basic_AccountSas()
         {
-            Uri sasUri = GetServiceClient_SharedKey().GenerateAccountSasUri(
-                AccountSasPermissions.All,
-                Recording.Now.AddDays(1),
-                AccountSasResourceTypes.All);
-            BlobServiceClient blobServiceClient = InstrumentClient(new BlobServiceClient(sasUri, GetOptions()));
+            BlobServiceClient blobServiceClient = InstrumentClient(GetServiceClient_AccountSas());
             await using TestScenario scenario = Scenario(blobServiceClient);
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
 
@@ -274,6 +271,37 @@ namespace Azure.Storage.Blobs.Test
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
 
             BlobBatchClient client = scenario.GetBlobBatchClient(scenario.Containers[0].Container.Name);
+
+            using BlobBatch batch = client.CreateBatch();
+            Response[] responses = new Response[]
+            {
+                batch.DeleteBlob(blobs[0].Uri),
+                batch.DeleteBlob(blobs[1].Uri),
+                batch.DeleteBlob(blobs[2].Uri)
+            };
+            Response response = await client.SubmitBatchAsync(batch);
+
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task Delete_ContainerScoped_Basic_ContainerSas()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            string containerName = scenario.Containers[0].Container.Name;
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1));
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+
+
+            BlobBatchClient blobBatchClient = new BlobBatchClient(scenario.Service, containerName, sasQueryParameters);
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
 
             using BlobBatch batch = client.CreateBatch();
             Response[] responses = new Response[]
