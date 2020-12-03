@@ -66,7 +66,7 @@ namespace Azure.Communication.Administration.Tests
             var reservationsPagable = client.GetAllReservationsAsync();
             var reservations = await reservationsPagable.ToEnumerableAsync();
 
-            Assert.IsNotEmpty(reservations);
+            Assert.IsNotNull(reservations);
         }
 
         [Test]
