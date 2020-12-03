@@ -12,7 +12,7 @@ namespace Azure.Identity
     /// </summary>
     public class VisualStudioCodeCredentialOptions : TokenCredentialOptions
     {
-        private string _tenantId = null;
+        private string _tenantId;
 
         /// <summary>
         /// The tenant ID the user will be authenticated to. If not specified the user will be authenticated to the tenant the user originally authenticated to via the Visual Studio Code Azure Account plugin.

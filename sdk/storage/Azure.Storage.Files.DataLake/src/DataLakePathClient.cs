@@ -373,12 +373,19 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions options = default)
+        internal DataLakePathClient(
+            Uri pathUri,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            DataLakeClientOptions options = default)
         {
             options ??= new DataLakeClientOptions();
             var uriBuilder = new DataLakeUriBuilder(pathUri);
@@ -386,6 +393,7 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
@@ -394,6 +402,7 @@ namespace Azure.Storage.Files.DataLake
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 _pipeline,
+                storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
         }
@@ -440,6 +449,7 @@ namespace Azure.Storage.Files.DataLake
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 pipeline,
+                null,
                 version,
                 clientDiagnostics);
         }
@@ -448,6 +458,7 @@ namespace Azure.Storage.Files.DataLake
             Uri fileSystemUri,
             string directoryOrFilePath,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             DataLakeClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics)
         {
@@ -459,6 +470,7 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _blockBlobClient = BlockBlobClientInternals.Create(
@@ -471,6 +483,7 @@ namespace Azure.Storage.Files.DataLake
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 pipeline,
+                storageSharedKeyCredential,
                 version,
                 clientDiagnostics);
         }
@@ -507,10 +520,10 @@ namespace Azure.Storage.Files.DataLake
             foreach (KeyValuePair<string, string> kv in metadata)
             {
                 sb.Append(kv.Key);
-                sb.Append("=");
+                sb.Append('=');
                 byte[] valueBytes = Encoding.UTF8.GetBytes(kv.Value);
                 sb.Append(Convert.ToBase64String(valueBytes));
-                sb.Append(",");
+                sb.Append(',');
             }
             sb.Remove(sb.Length - 1, 1);
             return sb.ToString();
@@ -1685,7 +1698,7 @@ namespace Azure.Storage.Files.DataLake
                     }
 
                     // Build destPathClient
-                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline);
+                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline, _storageSharedKeyCredential);
 
                     Response<PathCreateResult> response = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,
@@ -3151,7 +3164,8 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetMetadata(
                     metadata,
-                    conditions.ToBlobRequestConditions());
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
 
                 return Response.FromValue(
                     response.Value.ToPathInfo(),
@@ -3208,7 +3222,8 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetMetadataAsync(
                     metadata,
-                    conditions.ToBlobRequestConditions())
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken)
                     .ConfigureAwait(false);
 
                 return Response.FromValue(

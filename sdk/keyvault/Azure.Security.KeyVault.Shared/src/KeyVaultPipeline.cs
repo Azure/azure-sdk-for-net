@@ -91,12 +91,14 @@ namespace Azure.Security.KeyVault
             return request;
         }
 
+#pragma warning disable CA1822 // Member can be static
         public Response<T> CreateResponse<T>(Response response, T result)
             where T : IJsonDeserializable
         {
             result.Deserialize(response.ContentStream);
             return Response.FromValue(result, response);
         }
+#pragma warning restore CA1822 // Member can be static
 
         public DiagnosticScope CreateScope(string name)
         {

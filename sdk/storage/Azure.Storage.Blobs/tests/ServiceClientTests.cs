@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -321,6 +320,34 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetAccountInfoAsync_HnsFalse()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+
+            // Act
+            Response<AccountInfo> response = await service.GetAccountInfoAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value.IsHierarchicalNamespaceEnabled);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetAccountInfoAsync_HnsTrue()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_Hns();
+
+            // Act
+            Response<AccountInfo> response = await service.GetAccountInfoAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value.IsHierarchicalNamespaceEnabled);
         }
 
         [Test]
@@ -727,6 +754,55 @@ namespace Azure.Storage.Blobs.Test
                 tokenCredentials,
                 GetOptions());
             Assert.IsFalse(container5.CanGenerateAccountSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetContainerClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Check if we're passing the SharedKeyCredential correctly to the containerClient
+            // Act - BlobServiceClient(string connectionString)
+            BlobServiceClient serviceClient = new BlobServiceClient(
+                connectionString);
+            BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(GetNewContainerName());
+            Assert.IsTrue(containerClient.CanGenerateSasUri);
+
+            // Act - BlobServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            BlobServiceClient serviceClient2 = new BlobServiceClient(
+                connectionString,
+                GetOptions());
+            BlobContainerClient containerClient2 = serviceClient2.GetBlobContainerClient(GetNewContainerName());
+            Assert.IsTrue(containerClient2.CanGenerateSasUri);
+
+            // Act - BlobServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
+            BlobServiceClient serviceClient3 = new BlobServiceClient(
+                blobEndpoint,
+                GetOptions());
+            BlobContainerClient containerClient3 = serviceClient3.GetBlobContainerClient(GetNewContainerName());
+            Assert.IsFalse(containerClient3.CanGenerateSasUri);
+
+            // Act - BlobServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            BlobServiceClient serviceClient4 = new BlobServiceClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            BlobContainerClient containerClient4 = serviceClient4.GetBlobContainerClient(GetNewContainerName());
+            Assert.IsTrue(containerClient4.CanGenerateSasUri);
+
+            // Act - BlobServiceClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            BlobServiceClient serviceClient5 = new BlobServiceClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions());
+            BlobContainerClient containerClient5 = serviceClient5.GetBlobContainerClient(GetNewContainerName());
+            Assert.IsFalse(containerClient5.CanGenerateSasUri);
         }
 
         [Test]
