@@ -15,7 +15,6 @@ namespace Azure.Security.Attestation.Models
 
             using var document = JsonDocument.Parse(serializedReader);
             return PolicyCertificatesResult.DeserializePolicyCertificatesResult(document.RootElement);
-
         }
 
         public override void Write(Utf8JsonWriter writer, PolicyCertificatesResult value, JsonSerializerOptions options)

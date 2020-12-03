@@ -100,21 +100,15 @@ namespace Azure.Security.Attestation
         /// </summary>
         public DateTimeOffset IssuedAtTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.IssuedAtTime); }
 
+        /// <summary>
+        /// Represents the body of the token encoded as a string.
+        /// </summary>
+        public string TokenBody  { get => Encoding.UTF8.GetString(TokenBodyBytes.ToArray()); }
 
         /// <summary>
         /// Represents the body of the token encoded as a string.
         /// </summary>
-        public string TokenBody {
-            get => Encoding.UTF8.GetString(TokenBodyBytes.ToArray());
-        }
-
-        /// <summary>
-        /// Represents the body of the token encoded as a string.
-        /// </summary>
-        public string TokenHeader
-        {
-            get => Encoding.UTF8.GetString(TokenHeaderBytes.ToArray());
-        }
+        public string TokenHeader { get => Encoding.UTF8.GetString(TokenHeaderBytes.ToArray()); }
 
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.

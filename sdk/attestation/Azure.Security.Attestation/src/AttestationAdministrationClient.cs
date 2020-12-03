@@ -81,7 +81,7 @@ namespace Azure.Security.Attestation
             // Initialize the Certificates Rest Client.
             _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
 
-            // Initialize the Certificates Rest Client.
+            // Initialize the Attestation Rest Client.
             _attestationClient = new AttestationClient(endpoint, credential, options);
         }
 #pragma warning restore

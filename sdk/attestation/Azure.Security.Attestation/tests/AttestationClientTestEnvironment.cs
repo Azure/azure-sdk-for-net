@@ -11,9 +11,6 @@ using Azure.Core.TestFramework;
 using Azure.Identity;
 
 
-// licy":"CnZlcnNpb249MS4 => version=1.
-// licy":"DQp2ZXJzaW9uPTE => version=1
-
 namespace Azure.Security.Attestation.Tests
 {
     public class AttestationClientTestEnvironment : TestEnvironment
@@ -40,10 +37,6 @@ namespace Azure.Security.Attestation.Tests
 
         public string SharedEusTest => "https://sharedeus.eus.test.attest.azure.net";
         public string SharedUkSouth => "https://shareduks.uks.test.attest.azure.net";
-
-        public string ActiveDirectoryTenantId => GetRecordedVariable("TENANT_ID");
-        public string ActiveDirectoryApplicationId => GetRecordedVariable("CLIENT_ID");
-        public string ActiveDirectoryClientSecret => GetRecordedVariable("CLIENT_SECRET");
 
         private static Uri DataPlaneScope => new Uri($"https://attest.azure.net");
 

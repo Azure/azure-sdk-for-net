@@ -27,8 +27,8 @@ namespace Azure.Security.Attestation.Tests
         {
             var adminclient = GetSharedAdministrationClient();
 
-            var policyResult = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
-            var result = policyResult.Value.AttestationPolicy;
+            StoredAttestationPolicy policyResult = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
+            var result = policyResult.AttestationPolicy;
 
             var policyRaw = Base64Url.Decode(result);
             var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
@@ -41,8 +41,8 @@ namespace Azure.Security.Attestation.Tests
         {
             var adminclient = GetAadAdministrationClient();
 
-            var policyResult = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
-            var result = policyResult.Value.AttestationPolicy;
+            StoredAttestationPolicy policyResult = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
+            var result = policyResult.AttestationPolicy;
 
             var policyRaw = Base64Url.Decode(result);
             var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
@@ -55,8 +55,8 @@ namespace Azure.Security.Attestation.Tests
         {
             var adminclient = GetIsolatedAdministrationClient();
 
-            var policyResult = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
-            var result = policyResult.Value.AttestationPolicy;
+            StoredAttestationPolicy policyResult = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
+            var result = policyResult.AttestationPolicy;
 
             var policyRaw = Base64Url.Decode(result);
             var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
