@@ -2870,7 +2870,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options);
+            await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options);
 
             // Assert
 
@@ -2920,7 +2920,7 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options);
+                await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options);
 
                 // Assert
 
@@ -2960,7 +2960,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options),
+                    destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options),
                     e => Assert.IsTrue(BlobErrorCode.TargetConditionNotMet.ToString() == e.ErrorCode
                         || BlobErrorCode.ConditionNotMet.ToString() == e.ErrorCode));
             }
@@ -2991,7 +2991,7 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options);
+                await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options);
 
                 // Assert
 
@@ -3029,7 +3029,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options),
+                    destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options),
                     e => Assert.IsTrue(BlobErrorCode.CannotVerifyCopySource.ToString() == e.ErrorCode
                         || BlobErrorCode.SourceConditionNotMet.ToString() == e.ErrorCode));
             }
@@ -3070,7 +3070,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options);
+            await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options);
 
             // Assert
 
@@ -3109,7 +3109,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options),
+                destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options),
                 e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
         }
 
@@ -3142,7 +3142,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options);
+            await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options);
 
             // Assert
 
@@ -3180,7 +3180,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options),
+                destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options),
                 e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithBlobOperation.ToString(), e.ErrorCode));
         }
 
@@ -3253,7 +3253,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            Response<BlobContentInfo> response = await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options);
+            Response<BlobContentInfo> response = await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options);
 
             // Assert
             Assert.AreEqual(sourceContentMd5, response.Value.ContentHash);
@@ -3283,8 +3283,57 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options),
+                destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options: options),
                 e => Assert.AreEqual(BlobErrorCode.Md5Mismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SyncUploadFromUriAsync_Overwrite()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await destBlob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            // Act
+            await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, overwrite: true);
+
+            // Assert
+
+            // Validate source and destination blob content matches
+            Response<BlobDownloadInfo> result = await destBlob.DownloadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SyncUploadFromUriAsync_OverwriteFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await destBlob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, overwrite: false),
+                e => Assert.AreEqual(BlobErrorCode.BlobAlreadyExists.ToString(), e.ErrorCode));
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)

@@ -206,12 +206,14 @@ namespace Azure.Storage.Files.DataLake
             Uri fileSystemUri,
             string directoryPath,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             DataLakeClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics)
             : base(
                   fileSystemUri,
                   directoryPath,
                   pipeline,
+                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics)
         {
@@ -231,6 +233,7 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 $"{Path}/{fileName}",
                 Pipeline,
+                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
 
@@ -247,6 +250,7 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 $"{Path}/{subdirectoryName}",
                 Pipeline,
+                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
 

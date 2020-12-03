@@ -56,7 +56,6 @@ namespace Azure.Communication.Administration.Tests
             var numbers = await numbersPagable.ToEnumerableAsync();
 
             Assert.IsNotNull(numbers);
-            Assert.IsNotEmpty(numbers);
         }
 
         [Test]
@@ -67,14 +66,14 @@ namespace Azure.Communication.Administration.Tests
         public async Task GetPlanGroups(string? locale, bool? includeRateInformation)
         {
             var client = CreateClient();
-            var countryCode = "US";
+            const string countryCode = "US";
 
             var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale, includeRateInformation);
 
             var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync();
 
             Assert.IsNotNull(phonePlanGroups);
-            Assert.AreEqual(3, phonePlanGroups.Count);
+            Assert.IsNotEmpty(phonePlanGroups);
 
             var firstGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.Geographic);
 
@@ -97,7 +96,7 @@ namespace Azure.Communication.Administration.Tests
         public async Task GetPhonePlans(string? locale)
         {
             var client = CreateClient();
-            var countryCode = "US";
+            const string countryCode = "US";
 
             var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
             var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync().ConfigureAwait(false);
@@ -115,7 +114,7 @@ namespace Azure.Communication.Administration.Tests
         public async Task GetAreaCodesForPlan(string? locale)
         {
             var client = CreateClient();
-            var countryCode = "US";
+            const string countryCode = "US";
 
             var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
             var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync().ConfigureAwait(false);
@@ -153,8 +152,11 @@ namespace Azure.Communication.Administration.Tests
         [AsyncOnly]
         public async Task CreateReservationErrorState(string? locale)
         {
+            if (!IncludePhoneNumberLiveTests)
+                Assert.Ignore("Include phone number live tests flag is off.");
+
             var client = CreateClient();
-            var countryCode = "US";
+            const string countryCode = "US";
 
             var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
             var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync().ConfigureAwait(false);
@@ -190,8 +192,11 @@ namespace Azure.Communication.Administration.Tests
         [AsyncOnly]
         public async Task CreateReservation(string? locale)
         {
+            if (!IncludePhoneNumberLiveTests)
+                Assert.Ignore("Include phone number live tests flag is off.");
+
             var client = CreateClient();
-            var countryCode = "US";
+            const string countryCode = "US";
 
             var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
             var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync().ConfigureAwait(false);

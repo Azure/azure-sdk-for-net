@@ -5,16 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
     internal interface IEventProcessor
     {
-        Task CloseAsync(ProcessorPartitionContext context, ProcessingStoppedReason reason);
-        Task OpenAsync(ProcessorPartitionContext context);
-        Task ProcessErrorAsync(ProcessorPartitionContext context, Exception error);
-        Task ProcessEventsAsync(ProcessorPartitionContext context, IEnumerable<EventData> messages);
+        Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason);
+        Task OpenAsync(EventProcessorHostPartition context);
+        Task ProcessErrorAsync(EventProcessorHostPartition context, Exception error);
+        Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages);
     }
 }
