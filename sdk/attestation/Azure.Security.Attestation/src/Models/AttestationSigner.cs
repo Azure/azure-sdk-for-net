@@ -41,7 +41,6 @@ namespace Azure.Security.Attestation.Models
             foreach (var key in keys.Keys)
             {
                 returnedCertificates.Add(FromJsonWebKey(key));
-
             }
             return returnedCertificates.ToArray();
         }

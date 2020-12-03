@@ -41,7 +41,7 @@ namespace Azure.Security.Attestation.Models
                         if (key.X5C == null)
                         {
                             // the key returned must have a X5c property.
-                            throw new InvalidOperationException();
+                            throw new InvalidOperationException(Azure_Security_Attestation.PolicyCertificatesRequireX5C);
                         }
                         certificates.Add(new X509Certificate2(Convert.FromBase64String(key.X5C[0])));
                     }

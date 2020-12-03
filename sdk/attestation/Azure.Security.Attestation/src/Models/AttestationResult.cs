@@ -19,7 +19,7 @@ namespace Azure.Security.Attestation.Models
         }
 
         /// <summary>
-        /// Returns the time when this attestation token was issued.
+        /// Gets the time when this attestation token was issued.
         /// </summary>
         public DateTimeOffset IssuedAt
         {
@@ -27,7 +27,7 @@ namespace Azure.Security.Attestation.Models
         }
 
         /// <summary>
-        /// Returns the time when this attestation token will expire.
+        /// Gets the time when this attestation token will expire.
         /// </summary>
         public DateTimeOffset Expiration
         {
@@ -35,7 +35,7 @@ namespace Azure.Security.Attestation.Models
         }
 
         /// <summary>
-        /// Returns the time before which this token is invalid.
+        /// Gets the time before which this token is invalid.
         /// </summary>
         public DateTimeOffset NotBefore
         {
@@ -43,7 +43,7 @@ namespace Azure.Security.Attestation.Models
         }
 
         /// <summary>
-        /// Returns the base URI which issued this token.
+        /// Gets the base URI which issued this token.
         /// </summary>
         public Uri Issuer
         {
@@ -51,7 +51,7 @@ namespace Azure.Security.Attestation.Models
         }
 
         /// <summary>
-        /// RFC 7800 (https://tools.ietf.org/html/rfc7800) "cnf" claim (see also https://tools.ietf.org/html/rfc7800#section-3.1).
+        /// Gets the RFC 7800 (https://tools.ietf.org/html/rfc7800) "cnf" claim (see also https://tools.ietf.org/html/rfc7800#section-3.1).
         /// </summary>
         public object Confirmation
         {
@@ -59,7 +59,7 @@ namespace Azure.Security.Attestation.Models
         }
 
         /// <summary>
-        /// Represents the RFC 7519 "jti" claim name (https://tools.ietf.org/html/rfc7519#section-4)
+        /// Gets the RFC 7519 "jti" claim name (https://tools.ietf.org/html/rfc7519#section-4)
         /// </summary>
         public string UniqueIdentifier { get => InternalJti; }
 

@@ -119,6 +119,7 @@ namespace Azure.Security.Attestation
         public virtual bool ValidateToken(IReadOnlyList<AttestationSigner> attestationSigningCertificates, Func<AttestationToken, AttestationSigner, bool> validationCallback = default)
         {
             Argument.AssertNotNull(attestationSigningCertificates, nameof(attestationSigningCertificates));
+            Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
             if (validationCallback != null)
             {
                 return validationCallback(this, attestationSigningCertificates[0]);
