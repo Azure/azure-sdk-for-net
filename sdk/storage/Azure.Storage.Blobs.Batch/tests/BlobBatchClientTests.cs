@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -451,6 +452,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SetBlobAccessTier_ContainerScoped_Basic()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            BlobBatchClient client = scenario.GetBlobBatchClient(scenario.Containers[0].Container.Name);
+            using BlobBatch batch = client.CreateBatch();
+            Response[] responses = new Response[]
+            {
+                batch.SetBlobAccessTier(blobs[0].Uri, AccessTier.Cool),
+                batch.SetBlobAccessTier(blobs[1].Uri, AccessTier.Cool),
+                batch.SetBlobAccessTier(blobs[2].Uri, AccessTier.Cool)
+            };
+            Response response = await client.SubmitBatchAsync(batch);
+
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
+
+        [Test]
         public async Task SetBlobAccessTier_Basic_Convenience()
         {
             await using TestScenario scenario = Scenario();
@@ -458,6 +481,21 @@ namespace Azure.Storage.Blobs.Test
             Uri[] uris = blobs.Select(b => b.Uri).ToArray();
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
+            Response[] responses = await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool);
+
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SetBlobAccessTier_ContainerScoped_Basic_Convenience()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
+
+            BlobBatchClient client = scenario.GetBlobBatchClient(scenario.Containers[0].Container.Name);
             Response[] responses = await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool);
 
             scenario.AssertStatus(200, responses);
