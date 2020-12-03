@@ -242,10 +242,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual(LogLevel.Information, log.Level);
             Assert.AreEqual("WorkerCount (17) > PartitionCount (16).", log.FormattedMessage);
             log = logs[1];
-            Assert.AreEqual(Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual(LogLevel.Information, log.Level);
             Assert.AreEqual($"Number of instances (17) is too high relative to number of partitions (16) for EventHubs entity ({_eventHubName}, {_consumerGroup}).", log.FormattedMessage);
 
             // verify again with a non generic context instance
@@ -282,10 +282,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual(LogLevel.Information, log.Level);
             Assert.AreEqual("EventCount (2900) > WorkerCount (1) * 1,000.", log.FormattedMessage);
             log = logs[1];
-            Assert.AreEqual(Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual(LogLevel.Information, log.Level);
             Assert.AreEqual($"Event count (2900) for EventHubs entity ({_eventHubName}, {_consumerGroup}) " +
                          $"is too high relative to the number of instances (1).", log.FormattedMessage);
 
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual(LogLevel.Information, log.Level);
             Assert.AreEqual($"'{_eventHubName}' is idle.", log.FormattedMessage);
         }
 
@@ -349,7 +349,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual(LogLevel.Information, log.Level);
             Assert.AreEqual($"Event count is increasing for '{_eventHubName}'.", log.FormattedMessage);
         }
 
@@ -376,7 +376,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual(LogLevel.Information, log.Level);
             Assert.AreEqual($"Event count is decreasing for '{_eventHubName}'.", log.FormattedMessage);
         }
 
@@ -403,7 +403,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual(LogLevel.Information, log.Level);
             Assert.AreEqual($"EventHubs entity '{_eventHubName}' is steady.", log.FormattedMessage);
         }
         [Test]
