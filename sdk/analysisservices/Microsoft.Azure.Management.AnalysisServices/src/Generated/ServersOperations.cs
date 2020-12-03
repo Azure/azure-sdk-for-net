@@ -362,7 +362,7 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Supends operation of the specified Analysis Services server instance.
+        /// Suspends operation of the specified Analysis Services server instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource group of which a given Analysis Services
@@ -2962,7 +2962,7 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Supends operation of the specified Analysis Services server instance.
+        /// Suspends operation of the specified Analysis Services server instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource group of which a given Analysis Services
