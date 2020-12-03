@@ -24,10 +24,10 @@ param (
   $Repository, # EG: "Maven", "PyPI", "NPM"
 
   [Parameter(Mandatory = $true)]
-  $CIRepository,
+  $DocRepoLocation, # the location of the cloned doc repo
 
   [Parameter(Mandatory = $true)]
-  $Configs
+  $Configs # The configuration elements informing important locations within the cloned doc repo
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -37,7 +37,8 @@ $targets = ($Configs | ConvertFrom-Json).targets
 #{
 # path_to_config:
 # mode:
-# monikerid
+# monikerid:
+# content_folder:
 #}
 
 $apiUrl = "https://api.github.com/repos/$repoId"
@@ -50,13 +51,13 @@ foreach ($config in $targets) {
   if ($config.mode -eq "Preview") { $includePreview = $true } else { $includePreview = $false }
   $pkgsFiltered = $pkgs | ? { $_.IsPrerelease -eq $includePreview}
 
-  if ($pkgs) {
+  if ($pkgsFiltered) {
     Write-Host "Given the visible artifacts, CI updates against $($config.path_to_config) will be processed for the following packages."
     Write-Host ($pkgsFiltered | % { $_.PackageId + " " + $_.PackageVersion })
 
     if ($UpdateDocCIFn -and (Test-Path "Function:$UpdateDocCIFn"))
     {
-      &$UpdateDocCIFn -pkgs $pkgsFiltered -ciRepo $CIRepository -locationInDocRepo $config.path_to_config -monikerId $config.monikerid
+      &$UpdateDocCIFn -pkgs $pkgsFiltered -ciRepo $DocRepoLocation -locationInDocRepo $config.path_to_config -monikerId $config.monikerid
     }
     else
     {
