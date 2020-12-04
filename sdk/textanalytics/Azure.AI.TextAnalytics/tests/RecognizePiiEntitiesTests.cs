@@ -34,6 +34,18 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [Test]
+        public async Task RecognizePiiEntitiesWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            string document = singleEnglish;
+
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document);
+
+            Assert.AreEqual(2, entities.Count);
+            Assert.IsNotNull(entities.RedactedText);
+        }
+
+        [Test]
         public async Task RecognizePiiEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();

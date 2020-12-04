@@ -32,6 +32,33 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [Test]
+        public async Task AnalyzeOperationWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+
+            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            {
+                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+            };
+
+            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions);
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            AnalyzeOperationResult resultCollection = operation.Value;
+
+            IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasksItemCollection = resultCollection.Tasks.EntityRecognitionTasks;
+            IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasksItemCollection = resultCollection.Tasks.EntityRecognitionPiiTasks;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+
+            Assert.IsNotNull(keyPhrasesResult);
+            Assert.IsNotNull(entityRecognitionTasksItemCollection);
+            Assert.IsNotNull(entityRecognitionPiiTasksItemCollection);
+
+            Assert.AreEqual(2, keyPhrasesResult.Count);
+        }
+
+        [Test]
         public async Task AnalyzeOperationTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -43,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -97,7 +124,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -150,7 +177,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -220,7 +247,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -253,7 +280,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -323,7 +350,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(documents, operationOptions, "en");
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -368,7 +395,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 

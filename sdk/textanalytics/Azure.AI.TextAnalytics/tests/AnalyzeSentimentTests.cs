@@ -35,6 +35,19 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [Test]
+        public async Task AnalyzeSentimentWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            string document = singleEnglish;
+
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document);
+
+            CheckAnalyzeSentimentProperties(docSentiment);
+            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+            Assert.AreEqual("Positive", docSentiment.Sentences.FirstOrDefault().Sentiment.ToString());
+        }
+
+        [Test]
         public async Task AnalyzeSentimentTest()
         {
             TextAnalyticsClient client = GetClient();

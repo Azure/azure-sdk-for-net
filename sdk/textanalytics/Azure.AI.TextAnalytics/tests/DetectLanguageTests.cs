@@ -42,7 +42,20 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
-    [Test]
+        [Test]
+        public async Task DetectLanguageWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            string document = singleEnglish;
+
+            DetectedLanguage language = await client.DetectLanguageAsync(document);
+
+            Assert.IsNotNull(language.Name);
+            Assert.IsNotNull(language.Iso6391Name);
+            Assert.Greater(language.ConfidenceScore, 0.0);
+        }
+
+        [Test]
         public async Task DetectLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
