@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Azure.Core.GeoJson;
@@ -74,7 +75,11 @@ namespace Azure.Core.Tests
                         $" \"additionalString\": \"hello\", " +
                         $" \"additionalBool\": true, " +
                         $" \"additionalNull\": null, " +
-                        $" \"additionalArray\": [1, 2.2, 9999999999999999999, \"hello\", true, null]" +
+                        $" \"additionalArray\": [1, 2.2, 9999999999999999999, \"hello\", true, null]," +
+                        $" \"additionalObject\": {{ " +
+                        $"    \"additionalNumber\": 1," +
+                        $"    \"additionalNumber2\": 2.2" +
+                        $" }}" +
                         $" }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
@@ -86,6 +91,12 @@ namespace Azure.Core.Tests
             Assert.AreEqual(null, point.CustomProperties["additionalNull"]);
             Assert.AreEqual(true, point.CustomProperties["additionalBool"]);
             Assert.AreEqual(new object[] {1, 2.2, 9999999999999999999L, "hello", true, null}, point.CustomProperties["additionalArray"]);
+
+            Assert.AreEqual(true, point.TryGetCustomProperty("additionalObject", out var obj));
+            Assert.True(obj is IReadOnlyDictionary<string, object>);
+            var dictionary = (IReadOnlyDictionary<string, object>) obj;
+            Assert.AreEqual(1, dictionary["additionalNumber"]);
+            Assert.AreEqual(2.2, dictionary["additionalNumber2"]);
         }
 
         [Test]
