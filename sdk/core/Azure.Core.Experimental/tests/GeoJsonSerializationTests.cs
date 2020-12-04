@@ -10,11 +10,11 @@ namespace Azure.Core.Tests
 {
     [TestFixture(2)]
     [TestFixture(3)]
-    public class SpatialSerializationTests
+    public class GeoJsonSerializationTests
     {
         private readonly int _points;
 
-        public SpatialSerializationTests(int points)
+        public GeoJsonSerializationTests(int points)
         {
             _points = points;
         }
@@ -43,6 +43,25 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(P(1).Altitude, point.BoundingBox.MinAltitude);
             Assert.AreEqual(P(2).Altitude, point.BoundingBox.MaxAltitude);
+
+            if (_points == 2)
+            {
+                Assert.AreEqual(P(1).Longitude, point.BoundingBox[0]);
+                Assert.AreEqual(P(1).Latitude, point.BoundingBox[1]);
+
+                Assert.AreEqual(P(2).Longitude, point.BoundingBox[2]);
+                Assert.AreEqual(P(2).Latitude, point.BoundingBox[3]);
+            }
+            else
+            {
+                Assert.AreEqual(P(1).Longitude, point.BoundingBox[0]);
+                Assert.AreEqual(P(1).Latitude, point.BoundingBox[1]);
+                Assert.AreEqual(P(1).Altitude, point.BoundingBox[2]);
+
+                Assert.AreEqual(P(2).Longitude, point.BoundingBox[3]);
+                Assert.AreEqual(P(2).Latitude, point.BoundingBox[4]);
+                Assert.AreEqual(P(2).Altitude, point.BoundingBox[5]);
+            }
         }
 
         [Test]

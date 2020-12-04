@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Core.GeoJson
 {
     /// <summary>
-    /// Represents a of geometry coordinates array
+    /// Represents a geometry coordinates array
     /// </summary>
     /// <typeparam name="T">The type of the value.</typeparam>
     public readonly struct GeoArray<T>: IEnumerable<T>

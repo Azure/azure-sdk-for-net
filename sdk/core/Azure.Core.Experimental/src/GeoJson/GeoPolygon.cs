@@ -14,7 +14,7 @@ namespace Azure.Core.GeoJson
         /// <summary>
         /// Initializes new instance of <see cref="GeoPolygon"/>.
         /// </summary>
-        /// <param name="positions">The collection of rings that make up the polygon, first ring is the outer ring others are inner rings.</param>
+        /// <param name="positions">The positions that make up the outer ring of the polygon.</param>
         public GeoPolygon(IEnumerable<GeoPosition> positions): this(new[] { new GeoLinearRing(positions) }, null, DefaultProperties)
         {
         }
