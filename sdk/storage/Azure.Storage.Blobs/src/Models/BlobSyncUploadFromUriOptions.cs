@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Storage.Blobs.Specialized;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -9,9 +10,9 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional parameters for <see cref="BlockBlobClient.SyncUploadFromUri(Uri)"/>.
+    /// Optional parameters for <see cref="BlockBlobClient.SyncUploadFromUri(Uri, bool, CancellationToken)"/>.
     /// </summary>
-    public class BlobUploadFromUriOptions
+    public class BlobSyncUploadFromUriOptions
     {
         /// <summary>
         /// The copy source blob properties behavior.  If true, the properties
@@ -62,6 +63,6 @@ namespace Azure.Storage.Blobs.Models
         /// with this header value. Note that this MD5 hash is not stored with the blob.If the two hashes do not match, the
         /// operation will fail.
         /// </summary>
-        public byte[] ContentMd5 { get; set; }
+        public byte[] ContentHash { get; set; }
     }
 }

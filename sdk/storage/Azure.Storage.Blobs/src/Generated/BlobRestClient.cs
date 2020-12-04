@@ -19515,11 +19515,6 @@ namespace Azure.Storage.Blobs.Models
         public int? Days { get; set; }
 
         /// <summary>
-        /// Indicates whether permanent delete is allowed on this storage account.
-        /// </summary>
-        public bool? AllowPermanentDelete { get; set; }
-
-        /// <summary>
         /// Creates a new BlobRetentionPolicy instance
         /// </summary>
         public BlobRetentionPolicy() { }
@@ -19546,14 +19541,6 @@ namespace Azure.Storage.Blobs.Models
                     System.Xml.Linq.XName.Get("Days", ""),
                     value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
             }
-            if (value.AllowPermanentDelete != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("AllowPermanentDelete", ""),
-                    #pragma warning disable CA1308 // Normalize strings to uppercase
-                    value.AllowPermanentDelete.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                    #pragma warning restore CA1308 // Normalize strings to uppercase
-            }
             return _element;
         }
 
@@ -19576,11 +19563,6 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("AllowPermanentDelete", ""));
-            if (_child != null)
-            {
-                _value.AllowPermanentDelete = bool.Parse(_child.Value);
             }
             CustomizeFromXml(element, _value);
             return _value;
