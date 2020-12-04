@@ -43,7 +43,7 @@ while (!backupOperation.HasCompleted)
 }
 
 // Get the Uri for the location of you backup blob.
-Uri backupFolderUri = backupOperation.Value.BackupFolderUri;
+Uri folderUri = backupOperation.Value.FolderUri;
 ```
 
 ## Performing a full key restore
@@ -54,7 +54,7 @@ Alternatively, it is possible to [generate a SAS token in Storage Explorer](http
 
 ```C# Snippet:HelloFullRestoreSync
 // Start the restore using the backupBlobUri returned from a previous BackupOperation.
-RestoreOperation restoreOperation = Client.StartRestore(backupFolderUri, sasToken);
+RestoreOperation restoreOperation = Client.StartRestore(folderUri, sasToken);
 
 // Wait for completion of the RestoreOperation.
 while (!restoreOperation.HasCompleted)
@@ -62,7 +62,7 @@ while (!restoreOperation.HasCompleted)
     restoreOperation.UpdateStatus();
     Thread.Sleep(3000);
 }
-Uri restoreResult = backupOperation.Value.BackupFolderUri;
+Uri restoreResult = backupOperation.Value.FolderUri;
 ```
 
 <!-- LINKS -->
