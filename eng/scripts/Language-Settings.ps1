@@ -234,3 +234,12 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null) {
     return $null
   }
 }
+
+function SetPackageVersion ($PackageName, $Version, $ServiceName, $ReleaseDate, $BuildType=$null, $GroupName=$null) {
+  if($null -eq $ReleaseDate)
+  {
+    $ReleaseDate = Get-Date -Format "yyy-MM-dd"
+  }
+  & "$EngDir/scripts/Update-PkgVersion.ps1" -ServiceDirectory $ServiceName -PackageName $PackageName `
+  -NewVersionString $Version -ReleaseDate $ReleaseDate
+}
