@@ -822,7 +822,6 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("3557", eventData.EncoderPort);
         }
 
-
         [Test]
         public void ConsumeMediaLiveEventConnectionRejectedEvent()
         {
@@ -877,7 +876,6 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("1950", eventData.Duration);
             Assert.AreEqual("1000", eventData.Timescale);
         }
-
 
         [Test]
         public void ConsumeMediaLiveEventIncomingStreamsOutOfSyncEvent()
@@ -2229,7 +2227,6 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("3557", eventData.EncoderPort);
         }
 
-
         [Test]
         public void ConsumeCloudEventMediaLiveEventConnectionRejectedEvent()
         {
@@ -2284,7 +2281,6 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("1950", eventData.Duration);
             Assert.AreEqual("1000", eventData.Timescale);
         }
-
 
         [Test]
         public void ConsumeCloudEventMediaLiveEventIncomingStreamsOutOfSyncEvent()

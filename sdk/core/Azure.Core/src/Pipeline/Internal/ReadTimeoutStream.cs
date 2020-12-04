@@ -49,7 +49,6 @@ namespace Azure.Core.Pipeline
             var source = StartTimeout(cancellationToken, out bool dispose);
             try
             {
-
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 return await _stream.ReadAsync(buffer, offset, count, source.Token).ConfigureAwait(false);
 #pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets

@@ -48,7 +48,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
             ? TimeSpan.Zero
             : TimeSpan.FromSeconds(2);
 
-
         [TearDown]
         public virtual async Task Cleanup()
         {

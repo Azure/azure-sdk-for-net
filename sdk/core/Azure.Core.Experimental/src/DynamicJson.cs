@@ -257,7 +257,6 @@ namespace Azure.Core
 
         private DynamicJson GetPropertyValue(string propertyName)
         {
-
             if (EnsureObject().TryGetValue(propertyName, out DynamicJson element))
             {
                 return element;
@@ -371,7 +370,6 @@ namespace Azure.Core
             }
         }
 
-
         /// <summary>
         ///
         /// </summary>
@@ -444,7 +442,6 @@ namespace Azure.Core
         public static explicit operator string?(DynamicJson json) => json.GetString();
         public static explicit operator float(DynamicJson json) => json.GetFloat();
         public static explicit operator double(DynamicJson json) => json.GetDouble();
-
 
         public static explicit operator bool?(DynamicJson json) => json._kind == JsonValueKind.Null ? (bool?)null : json.GetBoolean();
         public static explicit operator int?(DynamicJson json) => json._kind == JsonValueKind.Null ? (int?)null : json.GetIn32();
@@ -585,6 +582,5 @@ namespace Azure.Core
                 return _double;
             }
         }
-
     }
 }

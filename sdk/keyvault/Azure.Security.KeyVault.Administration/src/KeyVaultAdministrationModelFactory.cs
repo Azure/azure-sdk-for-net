@@ -84,7 +84,6 @@ namespace Azure.Security.KeyVault.Administration
         public static BackupResult BackupResult(Uri folderUri, DateTimeOffset startTime, DateTimeOffset endTime) =>
             new BackupResult(folderUri, startTime, endTime);
 
-
         /// <summary>
         /// Initializes a new instance of a <see cref="RestoreResult"/> for mocking purposes.
         /// </summary>

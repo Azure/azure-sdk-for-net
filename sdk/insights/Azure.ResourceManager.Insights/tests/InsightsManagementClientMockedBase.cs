@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.Insights.Tests
     {
         protected InsightsManagementClientMockedBase(bool isAsync) : base(isAsync) { }
 
-
         public InsightsManagementClient GetInsightsManagementClient(HttpPipelineTransport transport)
         {
             InsightsManagementClientOptions options = new InsightsManagementClientOptions();

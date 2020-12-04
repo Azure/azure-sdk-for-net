@@ -31,7 +31,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 })
                 .Build();
 
-
             var jobHost = host.GetJobHost<InvalidQueueNameProgram>();
 
             string expectedMessage = "The dash (-) character may not be the first or last letter - \"-illegalname-\"";

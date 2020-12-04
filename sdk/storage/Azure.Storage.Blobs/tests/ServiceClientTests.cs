@@ -233,7 +233,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(1, page.Values.Count());
-
         }
 
         [Test]
@@ -650,7 +649,6 @@ namespace Azure.Storage.Blobs.Test
             TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
             Assert.IsNotNull(filterBlob);
         }
-
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]

@@ -43,6 +43,5 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                  TestEnvironment.Credential,
                  InstrumentClientOptions(new DigitalTwinsManagementClientOptions()));
         }
-
     }
 }

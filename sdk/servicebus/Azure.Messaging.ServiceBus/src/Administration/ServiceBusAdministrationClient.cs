@@ -1609,5 +1609,4 @@ namespace Azure.Messaging.ServiceBus.Administration
             return builder.Uri.AbsoluteUri.ToLowerInvariant();
         }
     }
-
 }

@@ -96,7 +96,6 @@ namespace Azure.Test.Perf
 
             try
             {
-
                 try
                 {
                     await tests[0].GlobalSetupAsync();

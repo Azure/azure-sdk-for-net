@@ -268,7 +268,6 @@ namespace Azure.Security.KeyVault.Certificates
                             LifetimeActions.Add(LifetimeAction.FromJsonObject(actionElem));
                         }
                         break;
-
                 }
             }
         }

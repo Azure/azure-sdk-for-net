@@ -212,7 +212,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-
         [Test]
         public void BlobUriBuilder_RegularUrl_CNAME()
         {

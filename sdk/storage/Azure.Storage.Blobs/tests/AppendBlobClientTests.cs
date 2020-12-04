@@ -299,7 +299,6 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreateAsync_Headers()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-
         }
 
         [Test]
@@ -1684,7 +1683,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 await blob.CreateAsync();
             }
-
 
             byte[] expectedData = GetRandomBuffer(Constants.KB);
             using Stream stream = new MemoryStream(expectedData);

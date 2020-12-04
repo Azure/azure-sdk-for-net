@@ -336,7 +336,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
         {
-
             Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
             return await Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
@@ -1049,7 +1048,6 @@ namespace Azure.Messaging.EventHubs.Consumer
                     channel.Writer.TryComplete(activeException);
                     notifyException(activeException);
                 }
-
             }, cancellationToken);
 
         /// <summary>

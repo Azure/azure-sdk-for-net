@@ -130,7 +130,6 @@ namespace Azure.Core
                 }
 
                 queryIndex += valueLength;
-
             } while (queryIndex < query.Length);
 
             return stringBuilder.ToString();

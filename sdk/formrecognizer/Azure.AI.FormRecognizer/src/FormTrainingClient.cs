@@ -189,7 +189,6 @@ namespace Azure.AI.FormRecognizer.Training
             }
         }
 
-
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>

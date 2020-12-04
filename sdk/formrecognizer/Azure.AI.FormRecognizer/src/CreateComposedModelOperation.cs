@@ -12,7 +12,6 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal CreateComposedModelOperation(string location, FormRecognizerRestClient allOperations, ClientDiagnostics diagnostics) : base(location, allOperations, diagnostics) { }
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TrainingOperation"/> class.
         /// </summary>

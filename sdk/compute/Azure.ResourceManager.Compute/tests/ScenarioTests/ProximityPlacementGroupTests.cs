@@ -12,7 +12,6 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-
 namespace Azure.ResourceManager.Compute.Tests
 {
     [AsyncOnly]
@@ -402,7 +401,6 @@ namespace Azure.ResourceManager.Compute.Tests
         private void ValidateProximityPlacementGroup(ProximityPlacementGroup expectedProximityPlacementGroup, ProximityPlacementGroup outputProximityPlacementGroup,
             string expectedProximityPlacementGroupName)
         {
-
             Assert.True(outputProximityPlacementGroup != null, "ProximityPlacementGroup is null in response.");
             Assert.True(expectedProximityPlacementGroupName == outputProximityPlacementGroup.Name, "ProximityPlacementGroup.Name in response mismatch with expected value.");
             Assert.True(

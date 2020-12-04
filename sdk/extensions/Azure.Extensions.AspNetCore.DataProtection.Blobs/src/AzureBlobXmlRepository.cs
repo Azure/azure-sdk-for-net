@@ -144,7 +144,6 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
                         BlobContents = memoryStream.ToArray(),
                         ETag = response.Headers.ETag
                     };
-
                 }
                 Volatile.Write(ref _cachedBlobData, latestCachedData);
             }

@@ -12,7 +12,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFr
 {
     internal static class VerifyTelemetryItem
     {
-
         public static void Verify(TelemetryItem telemetryItem, ActivityKind activityKind, ExpectedTelemetryItemValues expectedVars)
         {
             switch (activityKind)

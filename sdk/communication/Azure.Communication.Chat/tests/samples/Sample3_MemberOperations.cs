@@ -69,7 +69,6 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_RemoveMember
 
             await chatClient.DeleteChatThreadAsync(threadId);
-
         }
     }
 }

@@ -68,7 +68,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     finally
                     {
-
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
                         if (setIndex < numThreads)
                         {
@@ -151,7 +150,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     finally
                     {
-
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
                         if (setIndex < numThreads)
                         {

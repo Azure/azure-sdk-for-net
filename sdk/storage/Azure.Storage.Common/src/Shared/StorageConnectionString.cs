@@ -130,7 +130,6 @@ namespace Azure.Storage
             DefaultEndpoints = false;
         }
 
-
         /// <summary>
         /// Gets a <see cref="StorageConnectionString"/> object that references the well-known development storage account.
         /// </summary>
@@ -238,7 +237,6 @@ namespace Azure.Storage
         /// <returns>A <see cref="StorageConnectionString"/> object constructed from the values provided in the connection string.</returns>
         public static StorageConnectionString Parse(string connectionString)
         {
-
             if (string.IsNullOrEmpty(connectionString))
             {
                 throw Errors.ArgumentNull(nameof(connectionString));
@@ -392,7 +390,6 @@ namespace Azure.Storage
                 AllRequired(s_useDevelopmentStorageSetting),
                 Optional(s_developmentStorageProxyUriSetting)))
             {
-
                 accountInformation =
                     settings.TryGetValue(Constants.ConnectionStrings.DevelopmentProxyUriSetting, out var proxyUri)
                     ? GetDevelopmentStorageAccount(new Uri(proxyUri))
@@ -815,7 +812,6 @@ namespace Azure.Storage
         /// <returns>The StorageCredentials object specified in the settings.</returns>
         private static object GetCredentials(IDictionary<string, string> settings)
         {
-
             settings.TryGetValue(Constants.ConnectionStrings.AccountNameSetting, out var accountName);
             settings.TryGetValue(Constants.ConnectionStrings.AccountKeySetting, out var accountKey);
             settings.TryGetValue(Constants.ConnectionStrings.SharedAccessSignatureSetting, out var sharedAccessSignature);

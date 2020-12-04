@@ -687,7 +687,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             public static void HandleInitializeException(PartitionInitializingEventArgs eventArgs,
                                                          Exception exception) {}
 
-
             /// <summary>
             ///   A simulated method for handling an exception that occurs during
             ///   event processing.

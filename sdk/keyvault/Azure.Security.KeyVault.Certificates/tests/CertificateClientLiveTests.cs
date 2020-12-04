@@ -293,7 +293,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.NotNull(certificate);
 
             Assert.AreEqual(certificate.Name, certName);
-
         }
 
         [Test]

@@ -102,8 +102,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             return exception.ErrorCode == "ContainerNotFound";
         }
 
-
-
         /// <summary>
         /// Determines whether the exception is due to a 404 Not Found error with the error code BlobNotFound or
         /// ContainerNotFound.

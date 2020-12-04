@@ -2206,7 +2206,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             bool ifUnmodifiedSince,
             bool lease)
         {
-
             DataLakeRequestConditions conditions = new DataLakeRequestConditions()
             {
                 IfModifiedSince = parameters.IfModifiedSince

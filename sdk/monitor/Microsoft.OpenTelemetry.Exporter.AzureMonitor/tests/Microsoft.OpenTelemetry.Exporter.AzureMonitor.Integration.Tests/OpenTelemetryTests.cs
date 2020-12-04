@@ -24,7 +24,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             this.output = output;
         }
 
-
 #if !NET5_0  // "https://github.com/Azure/azure-sdk-for-net/issues/16961")]
         /// <summary>
         /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,

@@ -47,7 +47,6 @@ namespace Azure.Core.GeoJson
             Altitude = altitude;
         }
 
-
         /// <inheritdoc />
         public bool Equals(GeoPosition other)
         {

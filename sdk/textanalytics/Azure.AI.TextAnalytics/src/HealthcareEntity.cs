@@ -16,6 +16,5 @@ namespace Azure.AI.TextAnalytics
         /// IsNegated
         /// </summary>
         public bool IsNegated { get; }
-
     }
 }

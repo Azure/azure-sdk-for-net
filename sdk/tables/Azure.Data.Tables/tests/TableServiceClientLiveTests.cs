@@ -22,7 +22,6 @@ namespace Azure.Data.Tables.Tests
     /// </remarks>
     public class TableServiceClientLiveTests : TableServiceLiveTestsBase
     {
-
         public TableServiceClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 

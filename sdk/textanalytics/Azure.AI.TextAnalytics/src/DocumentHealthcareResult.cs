@@ -86,6 +86,5 @@ namespace Azure.AI.TextAnalytics
 
             throw new InvalidOperationException($"Failed to parse element reference: {reference}");
         }
-
     }
 }

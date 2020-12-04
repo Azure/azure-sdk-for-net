@@ -83,7 +83,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         [GlobalCleanup]
         public void Cleanup()
         {
-
         }
 
         [Benchmark]

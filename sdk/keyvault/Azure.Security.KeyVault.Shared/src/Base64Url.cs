@@ -19,6 +19,5 @@ namespace Azure.Security.KeyVault
         {
             return new StringBuilder(Convert.ToBase64String(bytes)).Replace('+', '-').Replace('/', '_').Replace("=", "").ToString();
         }
-
     }
 }

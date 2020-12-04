@@ -20,7 +20,6 @@ namespace Azure.Identity
             return new StringBuilder(Convert.ToBase64String(bytes)).Replace('+', '-').Replace('/', '_').Replace("=", "").ToString();
         }
 
-
         public static string HexToBase64Url(string hex)
         {
             byte[] bytes = new byte[hex.Length / 2];

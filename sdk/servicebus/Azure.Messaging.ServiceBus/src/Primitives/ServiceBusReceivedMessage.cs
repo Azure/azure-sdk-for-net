@@ -16,7 +16,6 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusReceivedMessage
     {
-
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>

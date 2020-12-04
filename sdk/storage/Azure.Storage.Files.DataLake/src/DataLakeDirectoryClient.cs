@@ -1216,7 +1216,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
 
         /// <summary>
@@ -1338,7 +1337,6 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
-
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all

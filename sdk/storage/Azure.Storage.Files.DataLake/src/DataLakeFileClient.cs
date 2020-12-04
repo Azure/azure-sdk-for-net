@@ -1203,7 +1203,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
 
         /// <summary>
@@ -1325,7 +1324,6 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
-
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -3548,7 +3546,6 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}");
                 try
                 {
-
                     PathExpiryOptions blobExpiryOptions;
                     string expiresOn = null;
 

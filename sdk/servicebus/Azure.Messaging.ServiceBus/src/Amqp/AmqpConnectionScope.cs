@@ -293,7 +293,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             return link;
-
         }
 
         /// <summary>

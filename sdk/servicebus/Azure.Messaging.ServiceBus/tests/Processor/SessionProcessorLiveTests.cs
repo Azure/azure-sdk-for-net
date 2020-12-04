@@ -181,7 +181,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Assert.AreEqual(numThreads, sessionOpenEventCt);
                 Assert.AreEqual(sessionOpenEventCt, sessionCloseEventCt);
-
             }
         }
 
@@ -413,7 +412,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 // only do this assertion when we complete the message ourselves,
                 // otherwise the message completion may have been cancelled if it didn't finish
                 // before calling StopProcessingAsync.
-
 
                 if (!autoComplete)
                 {
@@ -1331,7 +1329,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     finally
                     {
-
                         if (eventArgs.ErrorSource != ServiceBusErrorSource.CloseSession)
                         {
                             if (errorSource != ServiceBusErrorSource.Abandon ||
@@ -1465,7 +1462,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.IsTrue(sessionId.Contains(message.SessionId));
                         Assert.IsTrue(sessionId.Contains(args.SessionId));
                         Assert.IsNotNull(args.SessionLockedUntil);
-
                     }
                     finally
                     {

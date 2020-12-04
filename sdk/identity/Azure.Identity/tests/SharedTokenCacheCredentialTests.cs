@@ -100,7 +100,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expExpiresOn, token.ExpiresOn);
         }
 
-
         [Test]
         public async Task OneMatchingAccountUsernameDifferentCasing()
         {
@@ -190,7 +189,6 @@ namespace Azure.Identity.Tests
             var ex2 = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential2.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             Assert.AreEqual(SharedTokenCacheCredential.NoAccountsInCacheMessage, ex2.Message);
-
 
             // with tenantId
             var credential3 = InstrumentClient(new SharedTokenCacheCredential(Guid.NewGuid().ToString(), null, null, null, mockMsalClient));
@@ -434,7 +432,6 @@ namespace Azure.Identity.Tests
                 Accounts = new List<IAccount> { new MockAccount("mockuser@mockdomain.com", Guid.NewGuid().ToString()), new MockAccount("fakeuser@fakedomain.com", Guid.NewGuid().ToString()) },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
-
 
             var credential = InstrumentClient(new SharedTokenCacheCredential(tenantId, "mockuser@mockdomain.com", new SharedTokenCacheCredentialOptions { EnableGuestTenantAuthentication = true }, null, mockMsalClient));
 

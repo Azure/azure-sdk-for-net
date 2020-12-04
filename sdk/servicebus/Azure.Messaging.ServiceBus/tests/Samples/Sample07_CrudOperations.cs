@@ -81,7 +81,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                   Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
         }
 
-
         [Test]
         public async Task CreateTopicAndSubscription()
         {

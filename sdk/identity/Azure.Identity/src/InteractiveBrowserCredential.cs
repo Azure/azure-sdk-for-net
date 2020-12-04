@@ -32,7 +32,6 @@ namespace Azure.Identity
         public InteractiveBrowserCredential()
             : this(null, Constants.DeveloperSignOnClientId, null, null)
         {
-
         }
 
         /// <summary>
@@ -54,7 +53,6 @@ namespace Azure.Identity
         public InteractiveBrowserCredential(string clientId)
             : this(null, clientId, null, null)
         {
-
         }
 
         /// <summary>

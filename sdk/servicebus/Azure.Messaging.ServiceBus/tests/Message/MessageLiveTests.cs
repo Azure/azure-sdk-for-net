@@ -273,8 +273,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             }
         }
 
-
-
         private class TestBody
         {
             public string A { get; set; }

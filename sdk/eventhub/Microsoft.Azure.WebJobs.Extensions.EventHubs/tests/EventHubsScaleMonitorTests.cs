@@ -138,7 +138,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [Test]
         public async Task CreateTriggerMetrics_MultiplePartitions_ReturnsExpectedResult()
         {
-
             // No messages processed, no messages in queue
             _checkpoints = new EventProcessorCheckpoint[]
             {
@@ -444,6 +443,5 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             _loggerProvider.ClearAllLogMessages();
         }
-
     }
 }

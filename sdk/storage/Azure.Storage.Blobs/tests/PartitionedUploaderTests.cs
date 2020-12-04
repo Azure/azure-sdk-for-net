@@ -58,7 +58,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertStaged(sink, content);
-
         }
 
         [Test]
@@ -191,7 +190,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertStaged(sink, content);
         }
-
 
         [Test]
         public async Task BlockIdsAre64BytesUniqueBase64Strings()

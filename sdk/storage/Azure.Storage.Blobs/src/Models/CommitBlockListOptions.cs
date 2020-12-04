@@ -5,7 +5,6 @@ using System;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>

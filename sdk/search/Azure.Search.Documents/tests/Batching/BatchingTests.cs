@@ -166,7 +166,6 @@ namespace Azure.Search.Documents.Tests
                     response = Response.FromValue(
                         new IndexDocumentsResult(results),
                         response.GetRawResponse());
-
                 }
                 return response;
             }

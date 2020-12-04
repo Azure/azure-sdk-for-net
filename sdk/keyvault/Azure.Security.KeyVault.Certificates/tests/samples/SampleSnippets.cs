@@ -224,7 +224,6 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             //@@CertificatePolicy policy = CertificatePolicy.Default;
             /*@@*/ policy = CertificatePolicy.Default;
             #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
-
             {
                 #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateCertificate
                 // Start certificate creation.

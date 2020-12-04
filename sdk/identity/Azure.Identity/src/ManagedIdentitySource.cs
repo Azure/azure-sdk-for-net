@@ -72,7 +72,6 @@ namespace Azure.Identity
             return accessToken != null && expiresOn.HasValue
                 ? new AccessToken(accessToken, expiresOn.Value)
                 : throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
-
         }
 
         private static DateTimeOffset? TryParseExpiresOn(JsonElement jsonExpiresOn)

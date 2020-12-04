@@ -229,7 +229,6 @@ namespace Azure.Messaging.ServiceBus.Administration
 
                 EntityNameFormatter.CheckValidQueueName(value, nameof(ForwardTo));
                 if (Name.Equals(value, StringComparison.CurrentCultureIgnoreCase))
-
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }

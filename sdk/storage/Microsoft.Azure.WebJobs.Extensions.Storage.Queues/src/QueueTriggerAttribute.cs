@@ -8,7 +8,6 @@ using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs
 {
-
 #pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
     /// Attribute used to bind a parameter to an Azure Queue message, causing the function to run when a

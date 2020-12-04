@@ -837,7 +837,6 @@ namespace Azure.Data.Tables
             }
         }
 
-
         /// <summary>
         /// Queries entities in the table.
         /// </summary>

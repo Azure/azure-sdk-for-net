@@ -42,7 +42,6 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultAccessControlClient(Uri vaultUri, TokenCredential credential)
             : this(vaultUri, credential, null)
         {
-
         }
 
         /// <summary>

@@ -280,7 +280,6 @@ namespace Azure.Messaging.ServiceBus
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 EnsureNotRunningAndInvoke(() => _processMessageAsync = value);
-
             }
 
             remove
@@ -315,7 +314,6 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _processSessionMessageAsync = value);
-
             }
 
             remove
@@ -385,7 +383,6 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _sessionInitializingAsync = value);
-
             }
 
             remove
@@ -417,7 +414,6 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _sessionClosingAsync = value);
-
             }
 
             remove

@@ -60,12 +60,10 @@ namespace Azure.Identity.Samples
 
         private const string AUTH_RECORD_PATH = @".\Data\authrecord.bin";
 
-
         public static async Task<TokenCredential> GetUserCredentialAsync()
         {
             if (!File.Exists(AUTH_RECORD_PATH))
             {
-
                 #region Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache
                 var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = new PersistentTokenCache() });
                 #endregion
@@ -95,7 +93,6 @@ namespace Azure.Identity.Samples
                 return credential;
             }
         }
-
 
         public static async Task Main()
         {

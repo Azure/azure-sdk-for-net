@@ -141,7 +141,6 @@ namespace Azure.Storage.Shared
                     {
                         await AppendInternal(async, cancellationToken).ConfigureAwait(false);
                     }
-
                 }
             }
         }

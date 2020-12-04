@@ -242,7 +242,6 @@ namespace Azure.Storage.Files.DataLake
             StorageSharedKeyCredential storageSharedKeyCredential)
             : this(serviceUri, authentication, options, null, storageSharedKeyCredential)
         {
-
         }
 
         /// <summary>

@@ -159,7 +159,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
         }
 
-
         [Test]
         public void IntOverflowThrows()
         {

@@ -271,7 +271,6 @@ namespace Azure.Core.Pipeline
 
                 var bytes = await FormatAsync(stream, async).ConfigureAwait(false).EnsureCompleted(async);
                 Log(requestId, eventType, bytes, textEncoding);
-
             }
 
             public async ValueTask LogAsync(string requestId, RequestContent? content, Encoding? textEncoding, bool async)

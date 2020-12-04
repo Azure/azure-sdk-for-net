@@ -991,7 +991,6 @@ namespace Azure.Storage.Files.Shares.Tests
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
             };
 
-
             await file.CreateAsync(maxSize: Constants.KB);
 
             // Act
@@ -1215,8 +1214,6 @@ namespace Azure.Storage.Files.Shares.Tests
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero)
             };
             string filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-
-
 
             // Act
             await dest.StartCopyAsync(
@@ -2207,7 +2204,6 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertSequenceEqual(expectedData, actualData);
         }
 
-
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UploadRangeAsync_4TB()
@@ -2840,7 +2836,6 @@ namespace Azure.Storage.Files.Shares.Tests
             var destRange = new HttpRange(256, 256);
             var sourceRange = new HttpRange(512, 256);
 
-
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destFile.UploadRangeFromUriAsync(
@@ -2914,7 +2909,6 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             await using DisposingDirectory test = await GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
-
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
 
@@ -3320,7 +3314,6 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             for (int i = 0; i < size / readSize; i++)
             {
-
                 await outputStream.ReadAsync(actualData, 0, readSize);
                 for (int j = 0; j < readSize; j++)
                 {

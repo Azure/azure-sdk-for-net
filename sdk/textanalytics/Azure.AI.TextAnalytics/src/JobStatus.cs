@@ -12,6 +12,5 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("State")]
     public partial struct JobStatus
     {
-
     }
 }

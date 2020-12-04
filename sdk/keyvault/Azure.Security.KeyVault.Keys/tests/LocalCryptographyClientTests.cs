@@ -142,7 +142,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignAsync(new SignatureAlgorithm("ignored"), TestData));
         }
 
-
         [Test]
         public void VerifyOperationNotSupported()
         {
@@ -204,7 +203,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestData));
         }
 
-
         [Test]
         public void VerifyDataOperationNotSupported()
         {
@@ -264,7 +262,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestStream));
         }
 
-
         [Test]
         public void VerifyDataStreamOperationNotSupported()
         {
@@ -323,7 +320,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.WrapKeyAsync(new KeyWrapAlgorithm("ignored"), TestData));
         }
-
 
         [Test]
         public void UnwrapKeyOperationNotSupported()

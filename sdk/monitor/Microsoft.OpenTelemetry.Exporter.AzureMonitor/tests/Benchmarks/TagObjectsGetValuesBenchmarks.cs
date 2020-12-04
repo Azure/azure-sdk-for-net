@@ -62,7 +62,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
                 ["somekey"] = "value"
             };
 
-
             using var activitySource = new ActivitySource("test");
             this.ItemActivity = activitySource.StartActivity("WithTags");
             this.ItemActivity.AddTag("intKey", 1);

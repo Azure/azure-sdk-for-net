@@ -27,7 +27,6 @@ namespace Azure.Storage.Queues.Test
 {
     public class ClientSideEncryptionTests : QueueTestBase
     {
-
         private const string s_algorithmName = "some algorithm name";
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
 

@@ -575,7 +575,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                     InitializedPartitionProperties = new PartitionPublishingProperties(false, producerGroup, ownerLevel, sequence);
                     partitionOptions.StartingSequenceNumber = null;
                 }
-
             }
             catch (Exception ex)
             {

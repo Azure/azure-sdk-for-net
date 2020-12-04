@@ -232,7 +232,6 @@ namespace Azure.Storage.Queues.Test
                 // Act
                 Response result = await queue.CreateAsync();
 
-
                 // Assert
                 Assert.Fail("CreateAsync unexpected success: queue service SAS should not be usable to create queue");
             }

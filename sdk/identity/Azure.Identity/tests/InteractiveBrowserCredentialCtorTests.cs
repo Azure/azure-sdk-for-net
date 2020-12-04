@@ -127,6 +127,5 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(Constants.DefaultRedirectUrl, credential.Client.RedirectUrl);
             }
         }
-
     }
 }

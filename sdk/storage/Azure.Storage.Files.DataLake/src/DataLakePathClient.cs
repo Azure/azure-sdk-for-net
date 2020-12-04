@@ -789,7 +789,6 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(umask)}: {umask}\n");
                 try
                 {
-
                     Response<PathCreateResult> createResponse = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
@@ -895,7 +894,6 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken)
                     .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="CreateIfNotExistsAsync(PathResourceType, PathHttpHeaders, Metadata, string, string, CancellationToken)"/>
         /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
@@ -955,7 +953,6 @@ namespace Azure.Storage.Files.DataLake
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
-
 
         /// <summary>
         /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, bool, CancellationToken)"/>
@@ -2618,7 +2615,6 @@ namespace Azure.Storage.Files.DataLake
                                 }
                             }
                             batchesCount++;
-
                         } while (!string.IsNullOrEmpty(continuationToken)
                             && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
 
@@ -2727,7 +2723,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
 
         /// <summary>

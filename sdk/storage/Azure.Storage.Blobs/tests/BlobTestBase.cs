@@ -273,7 +273,6 @@ namespace Azure.Storage.Test.Shared
             PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
-
             containerName ??= GetNewContainerName();
             service ??= GetServiceClient_SharedKey();
 
@@ -286,7 +285,6 @@ namespace Azure.Storage.Test.Shared
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
-
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(

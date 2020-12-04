@@ -171,6 +171,5 @@ namespace Azure.Security.KeyVault.Certificates
             Name = idToParse.Segments[2].Trim('/');
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
         }
-
     }
 }

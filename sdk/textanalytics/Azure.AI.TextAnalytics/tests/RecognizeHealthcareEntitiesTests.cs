@@ -77,7 +77,6 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(relation.Source.Length, 5);
                     Assert.AreEqual(relation.Source.Offset, 18);
 
-
                     Assert.AreEqual(relation.Target.Text, "ibuprofen");
                     Assert.AreEqual(relation.Target.Category, "MedicationName");
                     Assert.AreEqual(relation.Target.ConfidenceScore, 1);

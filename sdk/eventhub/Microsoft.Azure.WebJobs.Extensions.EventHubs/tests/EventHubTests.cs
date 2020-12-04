@@ -107,7 +107,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [Test]
         public void GetBindingData_MultipleDispatch_ReturnsExpectedValue()
         {
-
             var events = new EventData[3]
             {
                 GetSystemProperties(Encoding.UTF8.GetBytes("Event 1"), $"pk0"),

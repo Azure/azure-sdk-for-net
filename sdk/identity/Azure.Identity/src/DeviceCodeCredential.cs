@@ -33,7 +33,6 @@ namespace Azure.Identity
         public DeviceCodeCredential() :
             this(DefaultDeviceCodeHandler, null, Constants.DeveloperSignOnClientId, null, null)
         {
-
         }
 
         /// <summary>
@@ -55,7 +54,6 @@ namespace Azure.Identity
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, TokenCredentialOptions options = default)
             : this(deviceCodeCallback, null, clientId, options, null)
         {
-
         }
 
         /// <summary>
@@ -234,6 +232,5 @@ namespace Azure.Identity
         {
             return DeviceCodeCallback(new DeviceCodeInfo(deviceCode), cancellationToken);
         }
-
     }
 }

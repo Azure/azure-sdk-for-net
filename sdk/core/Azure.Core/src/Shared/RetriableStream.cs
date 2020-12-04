@@ -142,7 +142,6 @@ namespace Azure.Core.Pipeline
                         var result = _currentStream.Read(buffer, offset, count);
                         _position += result;
                         return result;
-
                     }
                     catch (Exception e)
                     {
