@@ -15,12 +15,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(folderUri, nameof(folderUri));
 
-            this.folderUri = folderUri;
+            this.FolderUri = folderUri;
         }
 
         /// <summary>
         /// Gets the location of the full backup.
         /// </summary>
-        public Uri folderUri { get; }
+        public Uri FolderUri { get; }
     }
 }

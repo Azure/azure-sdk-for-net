@@ -43,7 +43,7 @@ while (!backupOperation.HasCompleted)
 }
 
 // Get the Uri for the location of you backup blob.
-Uri folderUri = backupOperation.Value.folderUri;
+Uri folderUri = backupOperation.Value.FolderUri;
 ```
 
 ## Performing a full key restore
@@ -62,7 +62,7 @@ while (!restoreOperation.HasCompleted)
     restoreOperation.UpdateStatus();
     Thread.Sleep(3000);
 }
-Uri restoreResult = backupOperation.Value.folderUri;
+Uri restoreResult = backupOperation.Value.FolderUri;
 ```
 
 <!-- LINKS -->

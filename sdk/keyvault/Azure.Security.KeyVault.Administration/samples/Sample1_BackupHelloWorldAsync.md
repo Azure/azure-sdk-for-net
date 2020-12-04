@@ -39,7 +39,7 @@ BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sas
 Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
 // Get the Uri for the location of you backup blob.
-Uri folderUri = backupResult.Value.folderUri;
+Uri folderUri = backupResult.Value.FolderUri;
 ```
 
 ## Performing a full key restore

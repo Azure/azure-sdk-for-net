@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration
     public partial class BackupResult : Azure.Security.KeyVault.Administration.BackupRestoreResult
     {
         internal BackupResult() { }
-        public System.Uri folderUri { get { throw null; } }
+        public System.Uri FolderUri { get { throw null; } }
     }
     public partial class KeyVaultAccessControlClient
     {
