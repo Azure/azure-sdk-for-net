@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<RoleAssignment> ListForResourceGroup(this IRoleAssignmentsOperations operations, string resourceGroupName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>))
+            public static object ListForResourceGroup(this IRoleAssignmentsOperations operations, string resourceGroupName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>))
             {
                 return operations.ListForResourceGroupAsync(resourceGroupName, odataQuery).GetAwaiter().GetResult();
             }
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForResourceGroupAsync(this IRoleAssignmentsOperations operations, string resourceGroupName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ListForResourceGroupAsync(this IRoleAssignmentsOperations operations, string resourceGroupName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListForResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='parameters'>
             /// Parameters for the role assignment.
             /// </param>
-            public static RoleAssignment Create(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters)
+            public static object Create(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters)
             {
                 return operations.CreateAsync(scope, roleAssignmentName, parameters).GetAwaiter().GetResult();
             }
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RoleAssignment> CreateAsync(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> CreateAsync(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(scope, roleAssignmentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='roleAssignmentName'>
             /// The name of the role assignment to get.
             /// </param>
-            public static RoleAssignment Get(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName)
+            public static object Get(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName)
             {
                 return operations.GetAsync(scope, roleAssignmentName).GetAwaiter().GetResult();
             }
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RoleAssignment> GetAsync(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetAsync(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(scope, roleAssignmentName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -381,7 +381,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<RoleAssignment> List(this IRoleAssignmentsOperations operations, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>))
+            public static object List(this IRoleAssignmentsOperations operations, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>))
             {
                 return operations.ListAsync(odataQuery).GetAwaiter().GetResult();
             }
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListAsync(this IRoleAssignmentsOperations operations, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ListAsync(this IRoleAssignmentsOperations operations, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<RoleAssignment> ListForScope(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>))
+            public static object ListForScope(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>))
             {
                 return operations.ListForScopeAsync(scope, odataQuery).GetAwaiter().GetResult();
             }
@@ -438,7 +438,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForScopeAsync(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ListForScopeAsync(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListForScopeWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -489,7 +489,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RoleAssignment> ListForResourceGroupNext(this IRoleAssignmentsOperations operations, string nextPageLink)
+            public static object ListForResourceGroupNext(this IRoleAssignmentsOperations operations, string nextPageLink)
             {
                 return operations.ListForResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -506,7 +506,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForResourceGroupNextAsync(this IRoleAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ListForResourceGroupNextAsync(this IRoleAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListForResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -523,7 +523,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RoleAssignment> ListNext(this IRoleAssignmentsOperations operations, string nextPageLink)
+            public static object ListNext(this IRoleAssignmentsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -540,7 +540,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListNextAsync(this IRoleAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ListNextAsync(this IRoleAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -557,7 +557,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RoleAssignment> ListForScopeNext(this IRoleAssignmentsOperations operations, string nextPageLink)
+            public static object ListForScopeNext(this IRoleAssignmentsOperations operations, string nextPageLink)
             {
                 return operations.ListForScopeNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -574,7 +574,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForScopeNextAsync(this IRoleAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ListForScopeNextAsync(this IRoleAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListForScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
