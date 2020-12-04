@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
         /// <inheritdoc />
         public ICollection<string> Keys => _values.Keys;
 
-        /// <inheritdoc cref="ICollection{T}.Values" />
+        /// <inheritdoc cref="IDictionary{TKey, TValue}.Values" />
         ICollection<object> IDictionary<string, object>.Values => _values.Values;
 
         /// <inheritdoc />
