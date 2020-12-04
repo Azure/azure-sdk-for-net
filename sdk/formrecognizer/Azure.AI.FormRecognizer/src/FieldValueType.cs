@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Models
         Dictionary,
 
         /// <summary>
-        /// Used for <see cref="FieldValueSelectionMark"/> type.
+        /// Used for Selection Mark type.
         /// </summary>
         SelectionMark
     }

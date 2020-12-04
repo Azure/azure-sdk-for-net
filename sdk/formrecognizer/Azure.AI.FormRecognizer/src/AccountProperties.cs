@@ -6,7 +6,7 @@ using Azure.AI.FormRecognizer.Models;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
-    /// Contains general information about a Cognitive Services Account, such as the number
+    /// Contains general information about the Form Recognizer resource, such as the number
     /// of models and account limits.
     /// </summary>
     public class AccountProperties
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// The current count of trained custom models.
+        /// The current count of trained custom models in this subscription.
         /// </summary>
         public int CustomModelCount { get; }
 
