@@ -99,39 +99,45 @@ namespace Azure.Messaging.EventGrid
             ExtensionAttributes = new Dictionary<string, object>();
         }
 
-        /// <summary> An identifier for the event. The combination of id and source must be unique for each distinct event. </summary>
+        /// <summary>
+        /// Gets or sets an identifier for the event. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.
+        /// If not explicitly set, this will default to a <see cref="Guid"/>.
+        /// </summary>
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        /// <summary> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </summary>
+        /// <summary>Gets or sets the context in which an event happened. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.</summary>
         public string Source { get; set; }
 
-        /// <summary> Type of event related to the originating occurrence. </summary>
+        /// <summary>Gets or sets the type of event related to the originating occurrence.</summary>
         public string Type { get; set; }
 
-        /// <summary> The time (in UTC) the event was generated, in RFC3339 format. </summary>
+        /// <summary>
+        /// Gets or sets the time (in UTC) the event was generated, in RFC3339 format.
+        /// If not explicitly set, this will default to the time that the event is constructed.
+        /// </summary>
         public DateTimeOffset? Time { get; set; } = DateTimeOffset.UtcNow;
 
-        /// <summary> Identifies the schema that data adheres to. </summary>
+        /// <summary>Gets or sets the schema that the data adheres to.</summary>
         public string DataSchema { get; set; }
 
-        /// <summary> Content type of data value. </summary>
+        /// <summary>Gets or sets the content type of the data.</summary>
         public string DataContentType { get; set; }
 
-        /// <summary> This describes the subject of the event in the context of the event producer (identified by source). </summary>
+        /// <summary>Gets or sets the subject of the event in the context of the event producer (identified by source). </summary>
         public string Subject { get; set; }
 
         /// <summary>
-        /// Extension attributes that can be additionally added to the CloudEvent envelope.
+        /// Gets extension attributes that can be additionally added to the CloudEvent envelope.
         /// </summary>
         public Dictionary<string, object> ExtensionAttributes { get; }
 
-        /// <summary> Deserialized event data specific to the event type. </summary>
+        /// <summary>Gets or sets the deserialized event data specific to the event type.</summary>
         internal object Data { get; set; }
 
-        /// <summary> Serialized event data specific to the event type. </summary>
+        /// <summary>Gets or sets the serialized event data specific to the event type.</summary>
         internal JsonElement SerializedData { get; set; }
 
-        /// <summary> Event data specific to the event type, encoded as a base64 string. </summary>
+        /// <summary>Gets or sets the event data specific to the event type, encoded as a base64 string.</summary>
         internal byte[] DataBase64 { get; set; }
 
         private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
