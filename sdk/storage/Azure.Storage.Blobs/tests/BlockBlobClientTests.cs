@@ -2852,7 +2852,7 @@ namespace Azure.Storage.Blobs.Test
 
             Metadata metadata = BuildMetadata();
             Tags tags = BuildTags();
-            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {
                 CopySourceBlobProperties = false,
                 HttpHeaders = new BlobHttpHeaders
@@ -2914,7 +2914,7 @@ namespace Azure.Storage.Blobs.Test
                 parameters.SourceIfMatch = await SetupBlobMatchCondition(destBlob, parameters.SourceIfMatch);
                 BlobRequestConditions accessConditions = BuildBlobRequestConditions(parameters);
 
-                BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+                BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
                 {
                     DestinationConditions = accessConditions
                 };
@@ -2953,7 +2953,7 @@ namespace Azure.Storage.Blobs.Test
 
                 await sourceBlob.UploadAsync(stream);
 
-                BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+                BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
                 {
                     DestinationConditions = accessConditions
                 };
@@ -2985,7 +2985,7 @@ namespace Azure.Storage.Blobs.Test
                 parameters.SourceIfMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfMatch);
                 BlobRequestConditions accessConditions = BuildBlobRequestConditions(parameters);
 
-                BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+                BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
                 {
                     SourceConditions = accessConditions
                 };
@@ -3022,7 +3022,7 @@ namespace Azure.Storage.Blobs.Test
                 parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfNoneMatch);
                 BlobRequestConditions accessConditions = BuildBlobRequestConditions(parameters);
 
-                BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+                BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
                 {
                     SourceConditions = accessConditions
                 };
@@ -3064,7 +3064,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
-            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {
                 DestinationConditions = conditions
             };
@@ -3102,7 +3102,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
-            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {
                 DestinationConditions = conditions
             };
@@ -3133,7 +3133,7 @@ namespace Azure.Storage.Blobs.Test
             using Stream stream = new MemoryStream(data);
             await sourceBlob.UploadAsync(stream);
 
-            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {
                 DestinationConditions = new BlobRequestConditions
                 {
@@ -3170,7 +3170,7 @@ namespace Azure.Storage.Blobs.Test
             await sourceBlob.UploadAsync(stream);
 
             string leaseId = Recording.Random.NewGuid().ToString();
-            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {
                 DestinationConditions = new BlobRequestConditions
                 {
@@ -3247,9 +3247,9 @@ namespace Azure.Storage.Blobs.Test
             using Stream stream = new MemoryStream(data);
             await sourceBlob.UploadAsync(stream);
 
-            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {
-                ContentMd5 = sourceContentMd5
+                ContentHash = sourceContentMd5
             };
 
             // Act
@@ -3276,9 +3276,9 @@ namespace Azure.Storage.Blobs.Test
             await sourceBlob.UploadAsync(stream);
 
             string leaseId = Recording.Random.NewGuid().ToString();
-            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {
-                ContentMd5 = sourceContentMd5
+                ContentHash = sourceContentMd5
             };
 
             // Act
