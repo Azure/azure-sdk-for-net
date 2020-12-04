@@ -26,7 +26,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class ReadMeSnippetsLiveTests
-
     {
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.

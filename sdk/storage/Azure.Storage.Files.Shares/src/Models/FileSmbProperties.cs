@@ -68,7 +68,6 @@ namespace Azure.Storage.Files.Shares.Models
             FileChangedOn = rawStorageFileInfo.FileChangeTime;
             FileId = rawStorageFileInfo.FileId;
             ParentId = rawStorageFileInfo.FileParentId;
-
         }
 
         internal FileSmbProperties(RawStorageFileProperties rawStorageFileProperties)

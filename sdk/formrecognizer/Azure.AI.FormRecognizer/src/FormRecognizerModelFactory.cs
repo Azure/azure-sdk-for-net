@@ -127,7 +127,6 @@ namespace Azure.AI.FormRecognizer.Models
         public static CustomFormModelProperties CustomFormModelProperties(bool isComposedModel) =>
             new CustomFormModelProperties(isComposedModel);
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormSubmodel"/> class.
         /// </summary>

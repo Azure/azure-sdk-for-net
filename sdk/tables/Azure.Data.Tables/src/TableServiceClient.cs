@@ -260,7 +260,6 @@ namespace Azure.Data.Tables
         /// <returns>An <see cref="Pageable{T}"/> containing a collection of <see cref="TableItem"/>.</returns>
         public virtual Pageable<TableItem> GetTables(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-
             return PageableHelpers.CreateEnumerable(
                 pageSizeHint =>
                 {

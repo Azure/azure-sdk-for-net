@@ -173,7 +173,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key", indexException.InnerException.Message);
         }
 
-
         [Theory]
         [TestCase("SingleEvent", "0")]
         [TestCase("SingleReturnEvent", "0")]

@@ -329,7 +329,6 @@ namespace Azure.Storage.Files.Shares
                 ClientDiagnostics);
         }
 
-
         /// <summary>
         /// Create a <see cref="ShareDirectoryClient"/> object for the root of the
         /// share.  The new <see cref="ShareDirectoryClient"/> uses the same request

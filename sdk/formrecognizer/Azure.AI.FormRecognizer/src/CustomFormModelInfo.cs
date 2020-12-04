@@ -61,6 +61,5 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         [CodeGenMember("LastUpdatedDateTime")]
         public DateTimeOffset TrainingCompletedOn { get; }
-
     }
 }

@@ -10,7 +10,6 @@ namespace Azure.Security.KeyVault.Administration
     [CodeGenModel("Permission", Usage = new[] { "input", "output" })]
     public partial class KeyVaultPermission
     {
-
         /// <summary> Denied actions. </summary>
         [CodeGenMember("NotActions")]
         public IList<string> DenyActions { get; }

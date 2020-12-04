@@ -375,7 +375,6 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-
         /// <summary>
         /// Creates a new <see cref="DataLakeDirectoryClient"/> for the
         /// root directory of the file system.
@@ -765,7 +764,6 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified
         /// file system for deletion. The file system and any paths contained
@@ -866,7 +864,6 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
-
 
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified

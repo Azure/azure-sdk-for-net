@@ -64,7 +64,6 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
         }
 
-
         [Test]
         [NonParallelizable]
         public void ActivityShouldBeStoppedWhenTransportThrows()

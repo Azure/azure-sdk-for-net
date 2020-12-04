@@ -168,7 +168,6 @@ namespace Azure.Communication.Administration.Models
         public override ValueTask<Response<ReservationStatus>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
             => this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-
         private static string GetErrorMessage(ReservationStatus? reservationStatus)
         {
             if (reservationStatus == ReservationStatus.Cancelled)

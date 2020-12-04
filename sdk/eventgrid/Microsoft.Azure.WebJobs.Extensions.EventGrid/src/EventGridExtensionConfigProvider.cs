@@ -75,7 +75,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 .AddOpenConverter<JToken, OpenType.Poco[]>(typeof(JTokenToPocoConverter<>))
                 .BindToTrigger<JToken>(new EventGridTriggerAttributeBindingProvider(this));
 
-
             // Register the output binding
             var rule = context
                 .AddBindingRule<EventGridAttribute>()
@@ -207,7 +206,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             }
 
             return new HttpResponseMessage(HttpStatusCode.BadRequest);
-
         }
 
         private class JTokenToPocoConverter<T> : IConverter<JToken, T>

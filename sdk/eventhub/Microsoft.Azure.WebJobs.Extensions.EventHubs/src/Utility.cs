@@ -42,7 +42,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 throw new ArgumentNullException(nameof(ex));
             }
 
-
             if (IsConflictLeaseIdMismatchWithLeaseOperation(ex))
             {
                 // For EventProcessorHost these exceptions can happen as part
