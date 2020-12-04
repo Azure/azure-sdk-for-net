@@ -55,6 +55,8 @@ foreach ($path in $autorestFilesPath) {
 Write-Host "Updated autorest.md files for all the changed swaggers. `n"
 
 $packages = @()
+$dotnet = Join-Path $RepoRoot ".dotnet"
+$env:PATH = "$dotnet`:" + $env:PATH
 foreach ($sdkPath in $sdksInfo.Keys) {
   $packageName = Split-Path $sdkPath -Leaf
   Write-Host "Generating code for " $packageName
@@ -72,16 +74,24 @@ foreach ($sdkPath in $sdksInfo.Keys) {
       $result = "succeeded"
       $artifactsPath = "$RepoRoot/artifacts/packages/Debug/$packageName"
       $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
-
-      $logs = & dotnet build /nologo $srcPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;
+      
+      $logFilePath = Join-Path "$srcPath" 'log.txt'
+      if (!(Test-Path $logFilePath)) {
+        New-Item $logFilePath
+      }
+      dotnet build $srcPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
       if (!$LASTEXITCODE) {
         $hasBreakingChange = $false
       }
       else {
-        $logFile = $logs | select-object -skip 2
+        $logFile = Get-Content -Path $logFilePath | select-object -skip 2
         $breakingChanges = $logFile -join ",`n"
         $content = "Breaking Changes: $breakingChanges"
         $hasBreakingChange = $true
+      }
+
+      if (Test-Path $logFilePath) {
+        Remove-Item $logFilePath
       }
     }
     else {
