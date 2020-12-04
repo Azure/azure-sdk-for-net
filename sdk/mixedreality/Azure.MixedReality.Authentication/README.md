@@ -19,11 +19,9 @@ token from the STS that can be used to access Mixed Reality services.
         - [Authenticating a user using device code authentication](#authenticating-a-user-using-device-code-authentication)
         - [Interactive authentication with DefaultAzureCredential](#interactive-authentication-with-defaultazurecredential)
   - [Key concepts](#key-concepts)
-    - [MixedRealityCredential](#mixedrealitycredential)
     - [MixedRealityStsClient](#mixedrealitystsclient)
   - [Examples](#examples)
     - [Retrieve an access token](#retrieve-an-access-token)
-    - [Authenticating a Mixed Reality client using an `AccessToken`](#authenticating-a-mixed-reality-client-using-an-accesstoken)
   - [Troubleshooting](#troubleshooting)
   - [Next steps](#next-steps)
     - [Client libraries supporting authentication with Mixed Reality Authentication](#client-libraries-supporting-authentication-with-mixed-reality-authentication)
@@ -85,15 +83,10 @@ Below are some examples of some common authentication scenarios, but more exampl
 
 ##### Authenticating with account key authentication
 
-Use the `MixedRealityStsClient` constructor overload accepting an account key to configure account key authentication
-with the Mixed Reality STS:
+Use the `MixedRealityStsClient` constructor overload accepting an `AzureKeyCredential` to configure account key
+authentication with the Mixed Reality STS:
 
 ```csharp
-MixedRealityStsClient client = new MixedRealityStsClient(accountId, accountDomain, accountKey);
-```
-
-```csharp
-// Useful when you may need to update long lived account keys.
 AzureKeyCredential keyCredential = new AzureKeyCredential(accountKey);
 MixedRealityStsClient client = new MixedRealityStsClient(accountId, accountDomain, keyCredential);
 ```
@@ -147,58 +140,24 @@ MixedRealityStsClient client = new MixedRealityStsClient(accountId, accountDomai
 
 ## Key concepts
 
-### MixedRealityCredential
-
-The `MixedRealityCredential` is used to define a credential that can be consumed by other Mixed Reality client libraries.
-
-Example:
-
-```csharp
-MixedRealityCredential credential = new MixedRealityCredential(accountId, accountDomain, accountKey);
-SpatialAnchorsClient client = new SpatialAnchorsClient(credential);
-```
-
 ### MixedRealityStsClient
 
 The `MixedRealityStsClient` is the client library used to access the Mixed Reality STS to get an access token.
 
-Tokens obtained from the Mixed Reality STS have a lifetime of 24 hours.
-
-Example:
-
-```csharp
-MixedRealityStsClient client = new MixedRealityStsClient(accountId, accountDomain, accountKey);
-
-AccessToken token = await client.GetTokenAsync(accountId);
-```
+Tokens obtained from the Mixed Reality STS have a lifetime of **24 hours**.
 
 ## Examples
 
 ### Retrieve an access token
 
 ```csharp
-MixedRealityStsClient client = new MixedRealityStsClient(accountId, accountDomain, accountKey);
+AzureKeyCredential keyCredential = new AzureKeyCredential(accountKey);
+MixedRealityStsClient client = new MixedRealityStsClient(accountId, accountDomain, keyCredential);
 
 AccessToken token = await client.GetTokenAsync(accountId);
 ```
 
 See the authentication examples [above](#authenticate-the-client) for more complex authentication scenarios.
-
-### Authenticating a Mixed Reality client using an `AccessToken`
-
-This scenario can be useful when you want to avoid putting any credentials in your client application and intend to
-retrieve all access tokens from a web service that supports your app after authenticating a user.
-
-```csharp
-// GetMixedRealityAccessTokenFromWebService is a hypothetical method that retrieves
-// a Mixed Reality access token from a web service. The web service would use the
-// MixedRealityStsClient and credentials to obtain an access token to be returned
-// to the client.
-AccessToken accessToken = GetMixedRealityAccessTokenFromWebService();
-MixedRealityCredential credential = new MixedRealityCredential(accountId, accountDomain, accessToken);
-
-SpatialAnchorsClient client = new SpatialAnchorsClient(credential);
-```
 
 ## Troubleshooting
 

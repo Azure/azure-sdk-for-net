@@ -12,7 +12,7 @@ namespace Azure.MixedReality.Authentication
     /// Represents an object used for Mixed Reality account key authentication.
     /// </summary>
     /// <seealso cref="TokenCredential" />
-    internal class MixedRealityAccountKeyCredential : MixedRealityTokenCredential
+    internal class MixedRealityAccountKeyCredential : TokenCredential
     {
         private readonly string _accountId;
 

@@ -24,7 +24,7 @@ namespace Azure.Template.Tests.Samples
 
             #region Snippet:GetTokenUsingAccountKeyCredential
 
-            MixedRealityStsClient client = new MixedRealityStsClient(mixedRealityAccountId, mixedRealityAccountDomain, mixedRealityAccountKey);
+            MixedRealityStsClient client = new MixedRealityStsClient(mixedRealityAccountId, mixedRealityAccountDomain, new AzureKeyCredential(mixedRealityAccountKey));
 
             AccessToken token = client.GetToken();
 

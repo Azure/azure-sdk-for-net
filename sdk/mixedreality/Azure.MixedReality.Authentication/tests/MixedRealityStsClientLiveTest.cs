@@ -27,7 +27,7 @@ namespace Azure.Template.Tests
             return InstrumentClient(new MixedRealityStsClient(
                 mixedRealityAccountId,
                 mixedRealityAccountDomain,
-                mixedRealityAccountKey,
+                new AzureKeyCredential(mixedRealityAccountKey),
                 InstrumentClientOptions(new MixedRealityStsClientOptions())
             ));
         }
