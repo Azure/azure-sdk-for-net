@@ -5,7 +5,8 @@ param(
     [Parameter(Mandatory=$true)]
     [string]$packageName,
     [string]$serviceDirectoryName,
-    [string]$ReleaseDate
+    [string]$ReleaseDate,
+    [string]$BuildType # For Java
 )
 
 . ${PSScriptRoot}\common.ps1
@@ -230,7 +231,8 @@ if ($releasing)
     Write-Host
     Write-Host "Updating versions to $newVersion with date $releaseDateString" -ForegroundColor Green
 
-    & "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion -ReleaseDate $releaseDateString
+    SetPackageVersion -PackageName $package -Version $newVersion -ServiceName $serviceDirectory -ReleaseDate $releaseDateString `
+    -BuildType $BuildType $GroupName $packageProperties.Group
 
     $fields = @{
         "Permalink usetag"="https://github.com/Azure/azure-sdk-for-net/sdk/$serviceDirectory/$package/README.md"
