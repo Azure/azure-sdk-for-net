@@ -11,7 +11,7 @@ using Azure.AI.FormRecognizer.Training;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// A factory that builds Azure.AI.FormRecognizer model types for mocking.
+    /// A factory that builds Azure.AI.FormRecognizer model types used for mocking.
     /// </summary>
     public static class FormRecognizerModelFactory
     {
@@ -287,7 +287,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="width">The width of the image/PDF in pixels/inches, respectively.</param>
         /// <param name="height">The height of the image/PDF in pixels/inches, respectively.</param>
         /// <param name="textAngle">The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].</param>
-        /// <param name="unit">The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.</param>
+        /// <param name="unit">The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is "pixel". For PDF, the unit is "inch".</param>
         /// <param name="lines">A list of recognized lines of text.</param>
         /// <param name="tables">A list of recognized tables contained in this page.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormPage"/> instance for mocking.</returns>
@@ -307,7 +307,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="width">The width of the image/PDF in pixels/inches, respectively.</param>
         /// <param name="height">The height of the image/PDF in pixels/inches, respectively.</param>
         /// <param name="textAngle">The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].</param>
-        /// <param name="unit">The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.</param>
+        /// <param name="unit">The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is "pixel". For PDF, the unit is "inch".</param>
         /// <param name="lines">A list of recognized lines of text.</param>
         /// <param name="tables">A list of recognized tables contained in this page.</param>
         /// <param name="selectionMarks">A list of recognized selection marks contained in this page.</param>

@@ -70,7 +70,8 @@ namespace Azure.AI.FormRecognizer.Models
         public override bool HasValue => _value != null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class.
+        /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class which
+        /// tracks the status of a long-running operation for recognizing layout elements from forms.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>

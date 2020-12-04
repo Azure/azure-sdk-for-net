@@ -4,13 +4,17 @@
 namespace Azure.AI.FormRecognizer
 {
     /// <summary>
-    /// The set of options that can be specified when calling a recognize invoices method
-    /// to configure the behavior of the request.
+    /// The set of options that can be specified when calling a Recognize Invoices method
+    /// to configure the behavior of the request. For example, specify the content type of the
+    /// form, the locale of the form, or whether or not to include form elements.
     /// </summary>
     public class RecognizeInvoicesOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeInvoicesOptions"/> class.
+        /// Initializes a new instance of the <see cref="RecognizeInvoicesOptions"/> class which
+        /// allows to set options that can be specified when calling a Recognize Invoices method
+        /// to configure the behavior of the request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.
         /// </summary>
         public RecognizeInvoicesOptions()
         {
