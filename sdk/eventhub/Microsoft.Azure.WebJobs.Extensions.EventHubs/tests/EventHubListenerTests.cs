@@ -4,14 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -229,7 +226,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                                     Mock.Of<ITriggeredFunctionExecutor>(),
                                     host,
                                     false,
-                                    () => consumerClientMock.Object,
+                                    consumerClientMock.Object,
                                     Mock.Of<BlobsCheckpointStore>(),
                                     new EventHubOptions(),
                                     testLogger);

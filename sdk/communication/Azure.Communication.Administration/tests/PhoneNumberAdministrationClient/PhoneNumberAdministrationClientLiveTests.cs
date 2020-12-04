@@ -59,6 +59,36 @@ namespace Azure.Communication.Administration.Tests
         }
 
         [Test]
+        public async Task GetAllReservations()
+        {
+            // Arrange
+            var client = CreateClient();
+
+            const string locale = "en-US";
+            const string countryCode = "US";
+
+            var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
+            var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync().ConfigureAwait(false);
+
+            string phonePlanGroupId = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.TollFree).PhonePlanGroupId;
+            var pageablePhonePlans = client.GetPhonePlansAsync(countryCode, phonePlanGroupId, locale);
+            var phonePlan = (await pageablePhonePlans.ToEnumerableAsync()).First();
+            var areaCode = phonePlan.AreaCodes.First();
+
+            var reservationOptions = new CreateReservationOptions("My reservation", "my description", new[] { phonePlan.PhonePlanId }, areaCode);
+            reservationOptions.Quantity = 1;
+            var reservationOperation = await client.StartReservationAsync(reservationOptions);
+
+            await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
+
+            // Act
+            var reservationsPagable = client.GetAllReservationsAsync();
+            var reservations = await reservationsPagable.ToEnumerableAsync();
+
+            Assert.IsNotEmpty(reservations);
+        }
+
+        [Test]
         [TestCase(null, null)]
         [TestCase("en-US", null)]
         [TestCase("en-US", false)]

@@ -918,6 +918,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.AccountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
                         }
+                        if (response.Headers.TryGetValue("x-ms-is-hns-enabled", out _header))
+                        {
+                            _value.IsHierarchicalNamespaceEnabled = bool.Parse(_header);
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -15245,6 +15249,11 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; internal set; }
 
         /// <summary>
+        /// Version 2019-07-07 and newer. Indicates if the account has a hierarchical namespace enabled.
+        /// </summary>
+        public bool IsHierarchicalNamespaceEnabled { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of AccountInfo instances.
         /// You can use BlobsModelFactory.AccountInfo instead.
         /// </summary>
@@ -15261,12 +15270,14 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static AccountInfo AccountInfo(
             Azure.Storage.Blobs.Models.SkuName skuName,
-            Azure.Storage.Blobs.Models.AccountKind accountKind)
+            Azure.Storage.Blobs.Models.AccountKind accountKind,
+            bool isHierarchicalNamespaceEnabled)
         {
             return new AccountInfo()
             {
                 SkuName = skuName,
                 AccountKind = accountKind,
+                IsHierarchicalNamespaceEnabled = isHierarchicalNamespaceEnabled,
             };
         }
     }
