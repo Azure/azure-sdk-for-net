@@ -300,7 +300,7 @@ namespace Azure.Data.Tables
         /// Builds an ordered list of <see cref="HttpMessage"/>s containing the batch sub-requests.
         /// </summary>
         /// <returns></returns>
-        internal virtual List<(ITableEntity entity, HttpMessage HttpMessage)> BuildOrderedBatchRequests()
+        private List<(ITableEntity entity, HttpMessage HttpMessage)> BuildOrderedBatchRequests()
         {
             var orderedList = _requestMessages.ToList();
             foreach (var item in orderedList)
