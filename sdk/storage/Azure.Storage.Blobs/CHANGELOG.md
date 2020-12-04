@@ -1,6 +1,10 @@
 # Release History
 
 ## 12.8.0-beta.1 (Unreleased)
+- Added support for service version 2020-04-08.
+- Added BlockBlobClient.SyncUploadFromUri().
+- Added support for LeaseId parameter for BlobBaseClient.Get/SetTags().
+- Added Tags to BlobTaggedItem
 - Fixed bug where BlobContainerClient.GetBlobClient(), BlobContainerClient.GetParentServiceClient(), BlobServiceClient.GetBlobContainerClient(), BlobBaseClient.WithClientSideEncryptionOptions(), BlobBaseClient.GetParentBlobContainerClient(), BlobBaseClient.WithSnapshot() and BlobBaseClient.WithVersion() created clients that could not generate a SAS from clients that could generate a SAS
 - Added IsHierarchicalNamespaceEnabled to AccountInfo.
 
