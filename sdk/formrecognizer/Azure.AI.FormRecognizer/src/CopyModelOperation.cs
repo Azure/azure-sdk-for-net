@@ -86,6 +86,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="client">The client used to check for completion.</param>
         public CopyModelOperation(string operationId, string targetModelId, FormTrainingClient client)
         {
+            // We can't check if `targetModelId` is empty because it will create a breaking change for
+            // released version 3.0.0 of the SDK which works if value is == `string.Empty`.
+            Argument.AssertNotNull(targetModelId, nameof(targetModelId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
+
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
             _targetModelId = targetModelId;

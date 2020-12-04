@@ -145,6 +145,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="client">The client used to check for completion.</param>
         public RecognizeCustomFormsOperation(string operationId, FormRecognizerClient client)
         {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
+
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
 

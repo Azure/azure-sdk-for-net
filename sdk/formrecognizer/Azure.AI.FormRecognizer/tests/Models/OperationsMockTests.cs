@@ -78,6 +78,18 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         }
 
         [Test]
+        public void RecognizeContentOperationRequiredParameters()
+        {
+            FormRecognizerClient client = CreateFormRecognizerClient();
+
+            Assert.Throws<ArgumentNullException>(() => new RecognizeContentOperation(null, client));
+            Assert.Throws<ArgumentNullException>(() => new RecognizeContentOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
+
+            var operation = new RecognizeContentOperation(string.Empty, client);
+            Assert.ThrowsAsync<FormatException>(async () => await operation.UpdateStatusAsync());
+        }
+
+        [Test]
         public async Task RecognizeReceiptsOperationCreatesDiagnosticScopeOnUpdate()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
@@ -98,6 +110,38 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         }
 
         [Test]
+        public void RecognizeReceiptsOperationRequiredParameters()
+        {
+            FormRecognizerClient client = CreateFormRecognizerClient();
+
+            Assert.Throws<ArgumentNullException>(() => new RecognizeReceiptsOperation(null, client));
+            Assert.Throws<ArgumentNullException>(() => new RecognizeReceiptsOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
+
+            var operation = new RecognizeReceiptsOperation(string.Empty, client);
+            Assert.ThrowsAsync<FormatException>(async () => await operation.UpdateStatusAsync());
+        }
+
+        [Test]
+        public void RecognizeBusinessCardsOperationRequiredParameters()
+        {
+            FormRecognizerClient client = CreateFormRecognizerClient();
+
+            Assert.Throws<ArgumentNullException>(() => new RecognizeBusinessCardsOperation(null, client));
+            Assert.Throws<ArgumentException>(() => new RecognizeBusinessCardsOperation(string.Empty, client));
+            Assert.Throws<ArgumentNullException>(() => new RecognizeBusinessCardsOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
+        }
+
+        [Test]
+        public void RecognizeInvoicesOperationRequiredParameters()
+        {
+            FormRecognizerClient client = CreateFormRecognizerClient();
+
+            Assert.Throws<ArgumentNullException>(() => new RecognizeInvoicesOperation(null, client));
+            Assert.Throws<ArgumentException>(() => new RecognizeInvoicesOperation(string.Empty, client));
+            Assert.Throws<ArgumentNullException>(() => new RecognizeInvoicesOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
+        }
+
+        [Test]
         public async Task RecognizeCustomFormsOperationCreatesDiagnosticScopeOnUpdate()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
@@ -115,6 +159,16 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
 
             testListener.AssertScope($"{nameof(RecognizeCustomFormsOperation)}.{nameof(RecognizeCustomFormsOperation.UpdateStatus)}");
+        }
+
+        [Test]
+        public void RecognizeCustomFormsOperationRequiredParameters()
+        {
+            FormRecognizerClient client = CreateFormRecognizerClient();
+
+            Assert.Throws<ArgumentNullException>(() => new RecognizeCustomFormsOperation(null, client));
+            Assert.Throws<ArgumentException>(() => new RecognizeCustomFormsOperation(string.Empty, client));
+            Assert.Throws<ArgumentNullException>(() => new RecognizeCustomFormsOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
         }
 
         [Test]
@@ -144,6 +198,30 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         }
 
         [Test]
+        public void TrainingOperationRequiredParameters()
+        {
+            FormTrainingClient client = CreateFormTrainingClient();
+
+            Assert.Throws<ArgumentNullException>(() => new TrainingOperation(null, client));
+            Assert.Throws<ArgumentNullException>(() => new TrainingOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
+
+            var operation = new TrainingOperation(string.Empty, client);
+            Assert.ThrowsAsync<FormatException>(async () => await operation.UpdateStatusAsync());
+        }
+
+        [Test]
+        public void CreateComposedModelOperationRequiredParameters()
+        {
+            FormTrainingClient client = CreateFormTrainingClient();
+
+            Assert.Throws<ArgumentNullException>(() => new CreateComposedModelOperation(null, client));
+            Assert.Throws<ArgumentNullException>(() => new CreateComposedModelOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
+
+            var operation = new CreateComposedModelOperation(string.Empty, client);
+            Assert.ThrowsAsync<FormatException>(async () => await operation.UpdateStatusAsync());
+        }
+
+        [Test]
         public async Task CopyModelOperationCreatesDiagnosticScopeOnUpdate()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
@@ -161,6 +239,19 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
 
             testListener.AssertScope($"{nameof(CopyModelOperation)}.{nameof(CopyModelOperation.UpdateStatus)}");
+        }
+
+        [Test]
+        public void CopyModelOperationRequiredParameters()
+        {
+            FormTrainingClient client = CreateFormTrainingClient();
+            string operationId = "00000000-0000-0000-0000-000000000000/copyresults/00000000-0000-0000-0000-000000000000";
+            string targetId = "00000000-0000-0000-0000-000000000000";
+
+            Assert.Throws<ArgumentNullException>(() => new CopyModelOperation(null, targetId, client));
+            Assert.Throws<ArgumentException>(() => new CopyModelOperation(string.Empty, targetId, client));
+            Assert.Throws<ArgumentNullException>(() => new CopyModelOperation(operationId, null, client));
+            Assert.Throws<ArgumentNullException>(() => new CopyModelOperation(operationId, targetId, null));
         }
     }
 }

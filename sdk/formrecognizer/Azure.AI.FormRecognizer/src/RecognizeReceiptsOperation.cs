@@ -85,7 +85,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="client">The client used to check for completion.</param>
         public RecognizeReceiptsOperation(string operationId, FormRecognizerClient client)
         {
-            // TODO: Add argument validation here.
+            // We can't check if `operationId` is empty because it will create a breaking change for
+            // released version 3.0.0 of the SDK which throws a FormatException.
+            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
 
             Id = operationId;
             _serviceClient = client.ServiceClient;
