@@ -409,7 +409,8 @@ namespace Azure.Storage.Queues
                 Version,
                 ClientDiagnostics,
                 clientSideEncryptionOptions,
-                MessageEncoding);
+                MessageEncoding,
+                InvalidQueueMessageHandler);
         }
 
         #region Create
