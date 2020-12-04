@@ -1612,8 +1612,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             internal BlobInfo BlobInfo;
             internal Exception BlobClientUploadBlobException;
             internal Exception BlobClientSetMetadataException;
-            private byte[] Content;
 
+            private byte[] Content;
             private Action<Stream, BlobHttpHeaders, IDictionary<string, string>, BlobRequestConditions, IProgress<long>, AccessTier?, StorageTransferOptions, CancellationToken> UploadAsyncCallback;
             private Action<IDictionary<string, string>, BlobRequestConditions, CancellationToken> SetMetadataAsyncCallback;
 

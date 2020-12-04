@@ -565,11 +565,10 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        /// Attempts to read a legacy checkpoint JSON format
+        /// Attempts to read a legacy checkpoint JSON format and extract an offset and a sequence number
         /// {"PartitionId":"0","Owner":"681d365b-de1b-4288-9733-76294e17daf0","Token":"2d0c4276-827d-4ca4-a345-729caeca3b82","Epoch":386,"Offset":"8591964920","SequenceNumber":960180}
         /// </summary>
-        /// <returns><code>true</code> if either offset or sequence number was extracted from the checkpoint</returns>
-        private static bool TryReadLegacyCheckpoint(Span<byte> data, out long? offset, out long? sequenceNumber)
+        private static void TryReadLegacyCheckpoint(Span<byte> data, out long? offset, out long? sequenceNumber)
         {
             offset = null;
             sequenceNumber = null;
@@ -577,29 +576,27 @@ namespace Azure.Messaging.EventHubs.Processor
             var jsonReader = new Utf8JsonReader(data);
             try
             {
-                if (!jsonReader.Read() || jsonReader.TokenType != JsonTokenType.StartObject) return false;
+                if (!jsonReader.Read() || jsonReader.TokenType != JsonTokenType.StartObject) return;
 
                 while (jsonReader.Read() && jsonReader.TokenType == JsonTokenType.PropertyName)
                 {
                     switch (jsonReader.GetString())
                     {
                         case "Offset":
-                            jsonReader.Read();
-                            string offsetString = jsonReader.GetString();
-
-                            if (offsetString == null || !long.TryParse(offsetString, out long offsetValue))
+                            if (!jsonReader.Read() ||
+                                jsonReader.GetString() is not string offsetString ||
+                                !long.TryParse(offsetString, out long offsetValue))
                             {
-                                return false;
+                                return;
                             }
 
                             offset = offsetValue;
                             break;
                         case "SequenceNumber":
-                            jsonReader.Read();
-
-                            if (!jsonReader.TryGetInt64(out long sequenceNumberValue))
+                            if (!jsonReader.Read() ||
+                                !jsonReader.TryGetInt64(out long sequenceNumberValue))
                             {
-                                return false;
+                                return;
                             }
 
                             sequenceNumber = sequenceNumberValue;
@@ -612,10 +609,8 @@ namespace Azure.Messaging.EventHubs.Processor
             }
             catch (JsonException)
             {
-                return false;
+                // ignore
             }
-
-            return offset != null || sequenceNumber != null;
         }
 
         /// <summary>
