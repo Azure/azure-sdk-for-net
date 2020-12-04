@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "9cc7ad29-2022-b879-70fd-268e87aed753",
         "x-ms-date": "Sat, 18 Apr 2020 00:14:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "9cc7ad29-2022-b879-70fd-268e87aed753",
         "x-ms-request-id": "8530ce5f-601e-009b-1316-151bc7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "856a018e-3f52-c120-42a7-0d020885d529",
         "x-ms-date": "Sat, 18 Apr 2020 00:14:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "cdTGL749vgPLB6woMZkhMLTUIfiHkXC0nXuI5W2jUtO4ux2z56iU/8bzPurI5xt6G4IikXtM4uBkEpFDtNiWKLTYcHV8bkgLPyExlFKF67ZfDsnqgMFXa9g8T9UXUUvuXRY18Hal/a06FlFaG06N3iba5KYOrKfygAScQB9y9O7WQjc8UPs/uRAcr2lw/U\u002BKrnCuPGyl37BvQm9yCL2OxyJig9gWUY4rmiqV8vw9goO0EpGuxLeBMWKGzQ2LzbBTjehHDXl2c1zig6JCD\u002B20McDrvfYr4ANq4VJ1kISAn8x5QmQU9XUJPZ81y0AVPyF10ptNoA\u002B6J63k3CwnAOLYYuPVyc2IoDtK4n9W9hXCVaIwAL7oM/\u002B8vhu3LxhI4Ty8XGldP3VU7DFfAr2QZDCYIoeK9wAk7y7jGAqy0XAiAgBCmZqrZBUs2xOMiDFCLFrrHg2Rvuo8mG06eSdqohvBPQC8TcqW7L1yXhvtl2b9oeuwx7JjkUQWBgAscevuwTn4y0swhd6QVDJPH1/OTwEHPNc7uttoXau7pkfJaXrSg5zh9MwazBwNH3KAFHLkR7b/JDQTsgZekG2gdd6Xxuu3fZvD7Fo07XC6Lppo50k5116QyUVFvtGWgmRfelc9dVmHyJbXIVtcyzfEWIRr9agjZp2ABv2lcb7JLWn21XIYfbhB4R6yYrYDNP4NgWVNKo28PBO6vW5c4VfXDfPxZfbErNvLKhSJcATmfdL\u002BmPBZfALcOphfXr9K5QDH21TCEc4ISNSJgQB4MssO0z\u002BcXUlmfpDxFCtdZU4cgUQTwZWvJGsE9k8b0PsCYwfNUIp/rYe3YFzE0f2iq\u002BOGbQC7ZXA2X6/UmGf5Sq6V77AkkBXDnNO8XGA46lJuYUprlWP7Rv6WlvDbqxUgvRauL\u002BJMfhvNw9As/wkP/nRcZTYcjrVKmamyjfkk6PG\u002BnJ5KibtwIeMvndKSzkb0h5h8fkXfAy9gY5U4mvEhqdrfbmNrxXS460RT7PDjuMtivQZgp2mr3phu6iUlN4fyDvT3s2DjicIkw5IBixc/favK1t3rwAFxM4/K/NpOk7S8Yd777AVqfjNDPOTWqlKBL216W2GqB03yhX/QGY3n1TDeRCo4Q5GmX1ipp4Qdmok8Scxt1DdTElqRCWaGmmWlXGez92UoSOvb0/sIAF/J1er1lM/AeQD4izHQpjoqIMXzBEocaaMjFADhkQE7ShL6yDN7kAaV5ONmu2s0V6KwsLM2FfsVrGtH0X/O3\u002Bf/vEEe1t4Hr4\u002B/XR9ntq43771eMOBNBTUW5BzHM76GxgT7Zv4qFYDDqQEjd7fcrva9D\u002BLCcK8GsbcLB/HCP3vROJcaa0\u002BvDdk8mobfKg==",
       "StatusCode": 201,
@@ -66,7 +66,7 @@
         "x-ms-content-crc64": "09CNsNf5aSg=",
         "x-ms-request-id": "8530ce70-601e-009b-1c16-151bc7000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-version-id": "2020-04-18T00:14:27.8930716Z"
       },
       "ResponseBody": []
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "98adccee-5a1b-4ed8-5e79-f47efd21d33e",
         "x-ms-date": "Sat, 18 Apr 2020 00:14:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -99,7 +99,7 @@
         "x-ms-client-request-id": "98adccee-5a1b-4ed8-5e79-f47efd21d33e",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "8530ce78-601e-009b-2316-151bc7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -120,7 +120,7 @@
         "x-ms-client-request-id": "3c13a40c-3cd8-cc0e-aedb-2f53c61d3736",
         "x-ms-date": "Sat, 18 Apr 2020 00:14:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -133,7 +133,7 @@
         ],
         "x-ms-client-request-id": "3c13a40c-3cd8-cc0e-aedb-2f53c61d3736",
         "x-ms-request-id": "8530ce85-601e-009b-2d16-151bc7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

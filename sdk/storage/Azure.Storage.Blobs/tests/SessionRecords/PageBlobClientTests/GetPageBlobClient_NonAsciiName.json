@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "b5f7b69b-cb27-30b9-9a18-35531c7570fe",
         "x-ms-date": "Wed, 10 Jun 2020 19:56:29 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "b5f7b69b-cb27-30b9-9a18-35531c7570fe",
         "x-ms-request-id": "aa734d47-301e-001d-5f61-3f401c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "39903910-cf3d-0c63-df22-254476bf91f3",
         "x-ms-date": "Wed, 10 Jun 2020 19:56:30 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "39903910-cf3d-0c63-df22-254476bf91f3",
         "x-ms-request-id": "aa734d9e-301e-001d-3361-3f401c000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-version-id": "2020-06-10T19:56:30.4453576Z"
       },
       "ResponseBody": []
@@ -81,7 +81,7 @@
         "x-ms-client-request-id": "66e8a808-a016-c6af-2b8e-69013e82b618",
         "x-ms-date": "Wed, 10 Jun 2020 19:56:30 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -95,7 +95,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "66e8a808-a016-c6af-2b8e-69013e82b618",
         "x-ms-request-id": "aa734dca-301e-001d-5e61-3f401c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanmcccanary.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-77d9c325-d77a-b629-dc8c-6937ff1b19ee\u0022\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Etest-\u03B2\u00A3\u00A9\u00FE\u203D%3A-25b1a2f2-8f75-d5d6-8fe3-55f99fa6daed\u003C/Name\u003E\u003CVersionId\u003E2020-06-10T19:56:30.4453576Z\u003C/VersionId\u003E\u003CIsCurrentVersion\u003Etrue\u003C/IsCurrentVersion\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 10 Jun 2020 19:56:30 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 10 Jun 2020 19:56:30 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D80D785E6E5FC8\u003C/Etag\u003E\u003CContent-Length\u003E1024\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/octet-stream\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003Cx-ms-blob-sequence-number\u003E0\u003C/x-ms-blob-sequence-number\u003E\u003CBlobType\u003EPageBlob\u003C/BlobType\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Etrue\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -112,7 +112,7 @@
         "x-ms-client-request-id": "cd3b7567-2bd7-9ddd-98f6-604abed95057",
         "x-ms-date": "Wed, 10 Jun 2020 19:56:30 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -125,7 +125,7 @@
         ],
         "x-ms-client-request-id": "cd3b7567-2bd7-9ddd-98f6-604abed95057",
         "x-ms-request-id": "aa734de4-301e-001d-7861-3f401c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

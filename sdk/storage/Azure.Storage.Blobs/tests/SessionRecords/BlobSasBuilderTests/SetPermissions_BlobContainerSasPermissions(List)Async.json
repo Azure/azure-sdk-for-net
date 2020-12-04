@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "dd993c83-e3a8-aa4b-1edb-bb84b0b99fc7",
         "x-ms-date": "Thu, 29 Oct 2020 21:53:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,12 +29,12 @@
         ],
         "x-ms-client-request-id": "dd993c83-e3a8-aa4b-1edb-bb84b0b99fc7",
         "x-ms-request-id": "4dfa6bd1-301e-0078-523d-aefaac000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://amandadev2.blob.core.windows.net/test-container-92fc8266-3fd4-ba40-1f47-ed9a987f6291?sv=2020-02-10\u0026st=2020-10-29T20%3A53%3A45Z\u0026se=2020-10-29T22%3A53%3A45Z\u0026sr=c\u0026sp=l\u0026sig=Sanitized\u0026restype=container\u0026comp=list",
+      "RequestUri": "https://amandadev2.blob.core.windows.net/test-container-92fc8266-3fd4-ba40-1f47-ed9a987f6291?sv=2020-04-08\u0026st=2020-10-29T20%3A53%3A45Z\u0026se=2020-10-29T22%3A53%3A45Z\u0026sr=c\u0026sp=l\u0026sig=Sanitized\u0026restype=container\u0026comp=list",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
@@ -43,7 +43,7 @@
         ],
         "x-ms-client-request-id": "5c160471-85e5-74e9-66a4-5f6e482dd720",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -57,7 +57,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "5c160471-85e5-74e9-66a4-5f6e482dd720",
         "x-ms-request-id": "ed187032-901e-00d4-3b3d-aedb3b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://amandadev2.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-92fc8266-3fd4-ba40-1f47-ed9a987f6291\u0022\u003E\u003CBlobs /\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -74,7 +74,7 @@
         "x-ms-client-request-id": "ab13746b-42a2-55e1-9572-f50b587a19a1",
         "x-ms-date": "Thu, 29 Oct 2020 21:53:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -87,7 +87,7 @@
         ],
         "x-ms-client-request-id": "ab13746b-42a2-55e1-9572-f50b587a19a1",
         "x-ms-request-id": "ed187045-901e-00d4-483d-aedb3b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

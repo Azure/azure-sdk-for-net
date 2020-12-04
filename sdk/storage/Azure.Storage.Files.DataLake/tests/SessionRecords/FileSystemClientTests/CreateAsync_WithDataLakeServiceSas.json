@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://amandaadlscanary2.blob.core.windows.net/test-filesystem-bf02e576-641e-4c8d-67e8-f2d02434fdab?sv=2020-02-10\u0026st=2020-10-29T20%3A48%3A09Z\u0026se=2020-10-29T22%3A48%3A09Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026restype=container",
+      "RequestUri": "http://amandaadlscanary2.blob.core.windows.net/test-filesystem-bf02e576-641e-4c8d-67e8-f2d02434fdab?sv=2020-04-08\u0026st=2020-10-29T20%3A48%3A09Z\u0026se=2020-10-29T22%3A48%3A09Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-0daad445954e4b4fa627d58a8363d074-cc33c4355e02d049-00",
@@ -11,7 +11,7 @@
         ],
         "x-ms-client-request-id": "ea27fcd9-a94b-2470-4eeb-318b672f593d",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -26,7 +26,7 @@
         "x-ms-client-request-id": "ea27fcd9-a94b-2470-4eeb-318b672f593d",
         "x-ms-error-code": "AuthorizationFailure",
         "x-ms-request-id": "9b24cf27-701e-001c-633d-aea441000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationFailure\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation.\n",

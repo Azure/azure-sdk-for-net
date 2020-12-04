@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "89588036-21f8-8e39-f082-65702f1b0d1f",
         "x-ms-date": "Wed, 05 Aug 2020 22:26:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "89588036-21f8-8e39-f082-65702f1b0d1f",
         "x-ms-request-id": "dc6fbe1b-401a-0025-0e77-6b73be000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:34 GMT",
         "x-ms-lease-id": "1c5c0d6d-5f45-d85f-4ce4-77fd40d985c2",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Evtfhqfqopiiahgujyybi\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2020-08-05T21:26:34.2999176Z\u003C/Start\u003E\u003CExpiry\u003E2020-08-05T23:26:34.2999176Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
       "StatusCode": 412,
@@ -63,7 +63,7 @@
         "x-ms-client-request-id": "894be632-7456-3e63-8a8b-0611c93a49e5",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "dc6fbe22-401a-0025-1377-6b73be000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ELeaseNotPresentWithContainerOperation\u003C/Code\u003E\u003CMessage\u003EThere is currently no lease on the file share.\n",
@@ -85,7 +85,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:34 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -98,7 +98,7 @@
         ],
         "x-ms-client-request-id": "cd0907cf-ed0f-8d39-6d17-4c94792b4a6f",
         "x-ms-request-id": "dc6fbe27-401a-0025-1877-6b73be000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

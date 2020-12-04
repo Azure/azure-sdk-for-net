@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "abd405be-7cd3-6b81-b82c-9a4e33160f5a",
         "x-ms-date": "Wed, 10 Jun 2020 19:57:20 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "abd405be-7cd3-6b81-b82c-9a4e33160f5a",
         "x-ms-request-id": "87b0309e-501e-009d-4b61-3fbf1a000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "ac2c952d-d985-c89e-c9f3-1a1e6c4d2b91",
         "x-ms-date": "Wed, 10 Jun 2020 19:57:20 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "pwBSoPyHFKMkkkjLiiUBnerPtfcEaP5\u002Bv\u002BLb\u002BhRZLiqSpKcyxG5dezvf9zX4emeq1so9bNii8T4C1OEarBmOy2MdOOV9z9l8cjm8JHDJhkR7MCNKHMJS8LNpMO\u002BMQ88hUCzR2kKBLAfwwfqe5s3OOU6cn3v2RK\u002Bhy0cyFJ/p7y9qmtNE96sC\u002BQQcWVvIswrlmveh8KRTKwx9MA/6ThdnBtHLNEv6iUGimqV32etT2Bg9TXqoSP\u002BKFm7Hx8acCKrstVKJ/H6\u002B6xG1/lX\u002B3FIgKVf3vQGdvr7SQB7dMsJ7BpL6iiSYytuZfmJo80mpjDocpp5upEqpT/aTtrxg4bhPOfjDA1Ith158XT\u002BfNMt0KbPkwIwkDGFHUTouBBMfOZypGblR5Yjo7x8/8kcLCRoqH40IeyEsKyyWfLEX/4JKXCSi9hsSI0Qr\u002B9Fs5BoaO0gfA\u002BWGFr16fe6MumjX0O\u002Bc9JUiaRP/GPtJ3X9Qv0YSe0Bp9/ycxEZmJ3gthWjbUyvh0PCF99I1IOvqPTg9Kr2oej8nbtnzADBPu0Ga0pKTbolUbu9VjYNuNNcRsoYNKfy7hAsps\u002BVR7tDANTyRmk1YV8\u002Bv6LzOUuy7uToC4U2pQpJE302GabqkAn8flVdH3ZmJuFu3XkBA7TIfbvmrTw2CF/OpTLsA0u0UCuU9rr2Vc9ygeCny8eRRBPIbZ/vA\u002BLNynH1knpDeiOZuo1NbAz50ifodCtbjkCYPWEjI5GrxUxEyyhE/MdVLwvBChE6Q9gCzpt0Bo\u002B7cjgxXVEZIFaN7fE9BKDgsNFgl0kjmoAzXfmFHFT6N8LAjVjwF6NyPAqxMxwf\u002BT83IhnKE29Cl9e0Af9XkAQBl7oyeHdL8J0x8ltCbmtkE2C\u002BUfo7LCBTgfmBOBGgGqgGs5tl7YDH7y18mCEUACVsU/KemUIJxmuV3vp9xriPjduvO77MAiXj\u002BmbIvpQDP33QFOgjBYFp\u002BOkzzA6KSiR07QpFZMRqnE3Iup7fPQvTlqN4qbHMbIhaRULRnDIbWbA\u002BV82Nuda5aXiaVkrijr/dXDlrDZx2qIB97yOFlPwbsWDunOk6RdjMvzw1NhZBd7aC8D/4sEgTy69ND8q3N9R8fqTp8\u002B3SpxZcmk5cPXJqPHdpAqC8IwEU3tE97ToOGYtruLdxV4fIsE0lmBX5s4444s9TSjE3vF\u002Bj0REYlLXcUoDC9IC\u002B\u002BOTzoFJTlobvGytHBQpuus9aM/xbzYZyrBubSUmRNrsJeenmY6ni4CXUtLXl1ZOrcZe1aMCEZytifPA2uEk9XeBwOYsghFchd0/WgxjQiNaL79ux2832hRbCh\u002Ba1rCvYl1rRdZgEiuk8l/V0reAOjfAdqshxj4IWebR0XgBwa8sj\u002BevB/xc6h2DucUfUgdcys/XymAFjawvUuv/nkCjozCguULf4TI7c4ydngxo\u002BQffdQa4Kfc/FwI7f6UQbUvM4BaUbqjEfOmNnFbjd\u002B\u002BfxmnkEClJ\u002B3k5caIwlGGdKxYw0L3l1IpvGvgtKo2gW68im7k7LF0iguStav0Gk\u002Bh38HFAopchufHvhPUhLNDriRXzDfioYf65Hl3JSHmdaIcfpSocb6kH8OHHW6dX8WYTsdHXA4Xvz55yh5RJWGGIQix\u002BEXem3yl8\u002Bx0G4RZHYRzntZaXtlTxP9WbmdgEvpiATwmK2e/ufNKoahh42O6IKxaHUaLK4JvHfNGiCzVBaDx0hqIMzIc9CTjD/1xMiGb3E36xjVzlxV5tw10OTHGtVwHb9EI8e26fWlh6BvFPevR6qufGn9rfjrFDrvkqLszHFphKcIQUuqgAIjMEe75tLlhog5GJ5scnDGWA\u002BMxlZSubouBY9QpgZfBPtm2X2xMC1nCgsZsrTT/BE2Qeg7Hbmr0XaMjeFClOCC2ROiBZnzFSjhJbxKOAYGWgh9GWQeI\u002BdBuggGJKJMJXUrl9igMfd4Qyy/Wvj9YZhwhTLYxHt8ZLYsYUqQ7PCGlf9GH6EtZikRBdU4XsnuQ1lvlZ9wc2D6rzIic8\u002Bs51Y7OcT4tkH3Qh8Ix7\u002BmRAXsPR3xIFZRFSGfTHBuC/JaZR1\u002B/CQE9owYeFOAZ6yhVGotNTWxu8YA6SOjWWrRiTYsrmGiJ0fg6EeQ2KgD0a50/vgFQdW8qKpWfhMBYZwiRu4dU7hL/ywjTE3uIOIe/Bd1Lltxy0hgbwa3S6k034aqbpK65n71Kf7M4vWIzofHOIH7jDNBsXumvOOyk7OD7mzHQ7JQYxaZfwRcpelT2KF\u002B7xMnOFNSabwWEymaQ5ZLSPOIwIrVd9RqYQwu5QySU\u002BNCNKOgXLYYdNr1OU/s/zxuEFz1yhcWqHg\u002BvNdHI4OwhMBGVw7yq\u002Bw9b0yv3z6EfmLQwNSwnIjMK4srYZ/e0VBWRbWPpqcte2VvuFrLZ8k6uj51d2OvAOc4eiyCx0pNXp77WJmJ9de6okVuQOQtAMTC8adhaVrtp0XNVix7qrMbIlm8zw4vscRmutUdQL8DCnlowNai6/RDDrFUu56rPveRUx6LcTG1kkDi\u002Bq\u002BFz2aFykuyE\u002BrdeDZkeMBc2vUlunvdjO2hd5lHsi6WwPFFvj5LzvFS\u002BCsMs9vnJvhwWbdKvD8zp0N45FKya2G8R7hFHrmCEAwD0sJQ0dgSuVCg1lh2SwOxEhf70uqfoI3KUGwiogg/7kirRul949ZqZioBEZQIRfy1lAyihz4hZDI1hYBs7xdIYegQygQZMy5BkGu/nY74wQtvbQ77nGcKiuK3SF1W/ncTuLCs93r3m2DdYfbSYcakPMR0/IEITcSBBkAiYevR6pL0rOXeTMmQd9KtHTtwNygbEwuZ4QH2CmvrKvE61Tl0DHZk3rThxfD65IWvWi\u002BJEc4XBk7fNwmR/aF68iHYVqGYOBDFC1lzOk0bnvx7R7A7YhkiIs/rldRs0\u002BETZ9LPIo7jFiEexAV1o8wBxJkNFbXxPpAHtTPSrKM8WDh3YNJ6THxumDCOHZ4UrH4C6dA7X74rISlBx2xaEGp\u002B4mvM/UP5hngcn3yEYyHy8gm10MLTAPl6TD6pOIQQE4fGEDoyR647CGNYHsBBpr4HT9VjpUCnq\u002BFxUrEEUE70DIv0vlPmwKpaecdfeuE5OKaAoemvrG5HH2RZwfX9NrgUZBI0TehrIY8qCCt4RzD/NxoLhK5kRF8crZ7ujf61XUIPShbPBOu9FH9ahKRCztg0WYna8bIJrx\u002ByGJ9JfJSQdKvoafwZMDIvTW8uCr\u002B72d7GuTN02muQBZv2HexLdJfryQ/4WWXbGilXq6RC2qVf9z7Bg8NhG5o/WGNhIhNF49jXQ0CvwoB56p4KHS7GTSv1lyWuivHUiq11uQEBevcWEcfLa5dkrzS\u002BR5gkVv5reAs4a4vtllnnA7mSOgl\u002Bd3Cm9Atm\u002B\u002BKTkOfx8EJYsDOvCUD1yQ5sKHpu42je0nUrP9AofWLzBH0ppNqk/KYXjlKF4zDJia5hOsuQ\u002BBd5tb5xxbFxMDLRuwTCzCQ0xyzUVlUVWO5EYrYhx0KWYwxlr\u002B8cMjb0pV4gtCgsBryJLHOfu6LCZF3QLGP7UGnvOlj4XR01GJT237D29KPGGFv5mJrP96dpo0qRTAbS\u002BVX1MHrPM6mfVBTeqNzxy3C5CRMIAbfOH0KwjrnSo8uOI\u002BVbAcMp9uWyWkSF8U7LeNfa10LyyvidJhA3H6XvzbBIT4X2lsmskBMuVadzSC7z5Rbi98yJnFntvduz8ddAwo2TPKHJ1OENLkcuxHRRKt3iQzmPDNXkv7MrCdnu\u002BZ487pIa3wyMKhE01MmEWtflnJL90K6esbW3r33unssIHjWo8tXhNkvRVhkoWjgMX2TbRm1G8SjwnT3cYi\u002BOnoxFK7WT3GcCA2VHK3qUdVZ9q1AZEldewS0Mt1SYBNQbQ7eN4i6CeIL82UMH/8WuWyjnX7bfdYw05mqIhyQTaf6RLOjCB5Mn\u002BzPNHDgUVsFnXlsssaUdO84rWPvE\u002BvBd6XBEdtPd61SUv2SDEVhTH5CoICjJ5rhZc/Aal66XYgBCbzPIz\u002BDuinIHl/FBmSl11zlrG9rIlAO36wLiw1Sl/VxjQKIki0\u002BvuZW1wU7GF9nGpL91K0YmetowEOTdC8ceYpqU3lmHUEzpu2FEEtO08dMpHB6UL9EWPMbH9Hpr0q7Ol160MTmAPlNzjHDl4mcHex8QtO\u002BoijPJfqGSwFzSfeizdXt0AMCaqN3LIaJgMFpewHhbWh6/Jgwr67KY7X73oQ6HMWzskntedgsR3GmQaE1GNP/jdiPK9E5uSRUNArtf1ICU2f/tcS38/OQTrUqjm4NkUbh\u002BEyrrvT0efUhmUXRQsQjo/I5OWcLR5no/t0YEy66SqLAC4MBVqBzCz/PklqpvwvtBup70Fvj2rCywrAX2GbKa1KnDTtFHk1NyjInP7FDPz/RKwxAPnZK4DDOTpfwWy7ZASsIBrHQq\u002BidKgoluJr/c4NwRq1aiijYXCkGds\u002B1XW8DTjqKNzSJ/IMjoxBsISuVzt8UfBCBfnr\u002BL6qIzjEY68ybJmpgdThK5kYuNucUaDr9cKfwoN1agdO/jAuOATJOCrtH1P7BMVmiyZnOV0uT5cdvi1mNJEbzPKCaoOkwvOEX3Cgr0Jc8PENKUddHjC6IK6ZEHnnYvOZ0UJhaKoxwbgy0tncfaBEwM0saQtJzr6x2EnlC7KJrPx9Ft3/65hWy2efKjtm3aMORE\u002B8uvn4QBKTv4BgXLX1qTXtX2bCRNUk1Z2jupRzWvqW1rdi3OHyhMbLbDwH9n6hmXEFeY5MO/96h\u002BVsVJV\u002BIFSFyYX\u002BktxD\u002BtqQBuipLO8u8iETbeF8SprH\u002BFT8hiAxTTvXgiz4owaUwX6zrDUW0VsGPWJ0WsJzGX7rNpqHR2Sqbrm8wZqyNk8ajqxiuK5loRb59kjNvPJ5VGiuDXxsDXoKGT17ag/ARAcTWdwWEFDQdYWDnVEb3LHHM30yBCjSvnEiWK9g\u002BkcHOaJBumMWU0QH3Zfm6HAo7kyLpCaSjj/uQKtq87exb4tOfGOu2iJOsOApKjaA\u002B8YBCXpi1UYgZKtiU3m3u2\u002BMRm4MqHwMihQqPPNGeVQJXVTVaepNXoo1HgfIPIaolvVwnNPIdFNZ9I9mSKhS2ftHaPYk4lF1TvfT14pkRE2dcaX9xdxwMNjxe2Vq5xXh4jQMcMOAg6Sj\u002B13r9KzI5bAxyMbyVRQuxygtI2bsGmfh4eVGZ8OKDO3xScqOlEwsOIWlKR5O/50v7ambY2BNx\u002BDmCgLHgo38t7vo8QtJoDLr8OrRRuFZkvJIFooZ7ql9s4HpmJo5ZKYHuHFSVf6B5j12v2J1fID/jGcAf2wD0tkSa02JUAeoopxE2Y5wBz0DxjBMoz82\u002BDcA\u002BgwjKOU589WoT\u002Bqg\u002BIYl3gzWMJLyf4UqDLk7xz\u002Bp22MGiGYLdXmnCuW418dCUs26FtUiYMekDnp2\u002BSw8DiymDnR3mnAQKliDPyW9SafN56ng==",
       "StatusCode": 201,
@@ -65,7 +65,7 @@
         "x-ms-content-crc64": "I98Eu4QYtfo=",
         "x-ms-request-id": "87b030be-501e-009d-6661-3fbf1a000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-version-id": "2020-06-10T19:57:21.2178195Z"
       },
       "ResponseBody": []
@@ -82,7 +82,7 @@
         "x-ms-client-request-id": "e76c438f-ceb1-de18-7c3d-dd838f98ba51",
         "x-ms-date": "Wed, 10 Jun 2020 19:57:21 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -96,7 +96,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "e76c438f-ceb1-de18-7c3d-dd838f98ba51",
         "x-ms-request-id": "87b030d4-501e-009d-7c61-3fbf1a000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanmcccanary.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-1c0d4417-6621-e146-7d2b-c711a6d132e7\u0022\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-1c834f03-40c7-f146-d0d8-68273c8d99f5\u003C/Name\u003E\u003CVersionId\u003E2020-06-10T19:57:21.2178195Z\u003C/VersionId\u003E\u003CIsCurrentVersion\u003Etrue\u003C/IsCurrentVersion\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 10 Jun 2020 19:57:21 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 10 Jun 2020 19:57:21 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D80D787CB1A313\u003C/Etag\u003E\u003CContent-Length\u003E4096\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/octet-stream\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EfI9Y/UyLGYzITtHztgNOZg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Etrue\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -113,7 +113,7 @@
         "x-ms-client-request-id": "298ed897-43e0-49e0-0c2a-4b87dbec0d2a",
         "x-ms-date": "Wed, 10 Jun 2020 19:57:21 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -126,7 +126,7 @@
         ],
         "x-ms-client-request-id": "298ed897-43e0-49e0-0c2a-4b87dbec0d2a",
         "x-ms-request-id": "87b030e3-501e-009d-0b61-3fbf1a000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

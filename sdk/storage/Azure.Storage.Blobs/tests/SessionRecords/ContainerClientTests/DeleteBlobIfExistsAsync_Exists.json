@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "8cf2769f-dd21-35e1-f199-7f8ea25255ee",
         "x-ms-date": "Thu, 02 Apr 2020 23:59:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "8cf2769f-dd21-35e1-f199-7f8ea25255ee",
         "x-ms-request-id": "ee0b6d7b-901e-0049-5c4a-090f4b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "49953292-97fa-80ea-e50d-90de790d2484",
         "x-ms-date": "Thu, 02 Apr 2020 23:59:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "wG0LyBpYwryqAu7hTbRAkAcKP0T0Vl7\u002BJJ2nW/L69uGKpM40R43TO8/NQeazcQYxhlrgNNDL5mkODKR8sGfKsAwMVqjlC0h5NgN0JxV4S7OXdtSYGsIRvr5lJTvpV4pnApDapg==",
       "StatusCode": 201,
@@ -66,7 +66,7 @@
         "x-ms-content-crc64": "wWLDRmp6DSw=",
         "x-ms-request-id": "ee0b6da6-901e-0049-7b4a-090f4b000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -83,7 +83,7 @@
         "x-ms-client-request-id": "d0d45072-90fb-83ac-73cb-9503d5205349",
         "x-ms-date": "Thu, 02 Apr 2020 23:59:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,7 +97,7 @@
         "x-ms-client-request-id": "d0d45072-90fb-83ac-73cb-9503d5205349",
         "x-ms-delete-type-permanent": "true",
         "x-ms-request-id": "ee0b6dbb-901e-0049-0c4a-090f4b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -114,7 +114,7 @@
         "x-ms-client-request-id": "296b9894-5338-0d89-f714-c45fc483dea3",
         "x-ms-date": "Thu, 02 Apr 2020 23:59:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -129,7 +129,7 @@
         "x-ms-client-request-id": "296b9894-5338-0d89-f714-c45fc483dea3",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "ee0b6dc9-901e-0049-194a-090f4b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -150,7 +150,7 @@
         "x-ms-client-request-id": "3c6f3f5d-2ab5-4610-45ea-2544e6b07427",
         "x-ms-date": "Thu, 02 Apr 2020 23:59:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -164,7 +164,7 @@
         "x-ms-client-request-id": "3c6f3f5d-2ab5-4610-45ea-2544e6b07427",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "ee0b6ddc-901e-0049-274a-090f4b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -181,7 +181,7 @@
         "x-ms-client-request-id": "85013bc0-a114-c7ed-0e1e-fcac365ae08f",
         "x-ms-date": "Thu, 02 Apr 2020 23:59:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -194,7 +194,7 @@
         ],
         "x-ms-client-request-id": "85013bc0-a114-c7ed-0e1e-fcac365ae08f",
         "x-ms-request-id": "ee0b6deb-901e-0049-354a-090f4b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

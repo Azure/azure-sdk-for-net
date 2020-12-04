@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "95ad28f0-d417-4a78-c115-0eb8bea64d1e",
         "x-ms-date": "Fri, 03 Apr 2020 20:55:27 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "95ad28f0-d417-4a78-c115-0eb8bea64d1e",
         "x-ms-request-id": "96219653-f01e-0012-0dfa-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-lease-action": "renew",
         "x-ms-lease-id": "6b885158-f819-f86c-56b8-6a67b6e4a15f",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -63,7 +63,7 @@
         "x-ms-client-request-id": "6c607fda-e21e-ec05-c5db-5396a2c6a3ac",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "96219665-f01e-0012-1cfa-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "368cfb5d-3583-a541-217a-c503f6134133",
         "x-ms-date": "Fri, 03 Apr 2020 20:55:27 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,7 +97,7 @@
         ],
         "x-ms-client-request-id": "368cfb5d-3583-a541-217a-c503f6134133",
         "x-ms-request-id": "96219670-f01e-0012-27fa-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

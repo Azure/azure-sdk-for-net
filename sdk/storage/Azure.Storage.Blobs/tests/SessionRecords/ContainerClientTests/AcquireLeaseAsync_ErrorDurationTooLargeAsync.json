@@ -16,7 +16,7 @@
         "x-ms-lease-duration": "922337203685",
         "x-ms-proposed-lease-id": "a0d72343-8f76-3adf-7f80-3fb70e4074cf",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -31,7 +31,7 @@
         "x-ms-client-request-id": "b2635346-49aa-a4d6-651d-857da0897d5d",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "2c132531-701e-0033-524a-09120b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",

@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "0ee20d45-79b2-5d50-c405-30cc836e8adb",
         "x-ms-date": "Tue, 13 Oct 2020 15:22:57 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "0ee20d45-79b2-5d50-c405-30cc836e8adb",
         "x-ms-request-id": "78d2c7c7-401a-0035-3574-a1b6d6000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-lease-duration": "-1",
         "x-ms-proposed-lease-id": "1a8a3462-0f9b-3c39-2b84-6fa57d1aca92",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "5dd7245a-718a-3528-d4a5-e32d09abe0aa",
         "x-ms-lease-id": "1a8a3462-0f9b-3c39-2b84-6fa57d1aca92",
         "x-ms-request-id": "78d2c7d3-401a-0035-3f74-a1b6d6000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -86,7 +86,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -101,7 +101,7 @@
         ],
         "x-ms-client-request-id": "584a3154-6d42-5c08-cdf7-f04bb6e988af",
         "x-ms-request-id": "78d2c814-401a-0035-7f74-a1b6d6000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -120,7 +120,7 @@
         "x-ms-delete-snapshots": "include",
         "x-ms-lease-id": "1a8a3462-0f9b-3c39-2b84-6fa57d1aca92",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -133,7 +133,7 @@
         ],
         "x-ms-client-request-id": "d8d8836f-8861-cd67-95a2-bf49d59f1133",
         "x-ms-request-id": "78d2c838-401a-0035-2274-a1b6d6000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

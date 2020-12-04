@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2020-02-10";
+        public const string DefaultSasVersion = "2020-04-08";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -235,6 +235,9 @@ namespace Azure.Storage
             public const int MaxFileUpdateRange = 4 * MB;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
             public const string SnapshotParameterName = "sharesnapshot";
+
+            public const string SmbProtocol = "SMB";
+            public const string NfsProtocol = "NFS";
 
             internal static class Lease
             {

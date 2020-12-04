@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "ae356ffa-c551-2bb9-f4e8-084899571ecd",
         "x-ms-date": "Sat, 25 Apr 2020 17:28:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "ae356ffa-c551-2bb9-f4e8-084899571ecd",
         "x-ms-request-id": "dbff2d55-d01e-002a-1726-1b92b0000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "4756e0bf-ec82-b572-b43c-03dcc0c598a2",
         "x-ms-date": "Sat, 25 Apr 2020 17:28:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "4756e0bf-ec82-b572-b43c-03dcc0c598a2",
         "x-ms-request-id": "dbff2d61-d01e-002a-1d26-1b92b0000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-version-id": "2020-04-25T17:28:11.6249400Z"
       },
       "ResponseBody": []
@@ -86,7 +86,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -102,13 +102,13 @@
         "x-ms-client-request-id": "b134ce70-03fb-917a-5f63-cb3af14cfde2",
         "x-ms-request-id": "dbff2d6b-d01e-002a-2726-1b92b0000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-version-id": "2020-04-25T17:28:11.7130020Z"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://blobindex1.blob.core.windows.net/test-container-9312b71c-40d1-59c7-077c-b313eeaba37a/test-blob-1289c71e-456f-f9ba-ab74-04f392524bfc?versionid=2020-04-25T17%3A28%3A11.6249400Z\u0026sv=2020-02-10\u0026st=2020-04-25T16%3A28%3A11Z\u0026se=2020-04-25T18%3A28%3A11Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized",
+      "RequestUri": "https://blobindex1.blob.core.windows.net/test-container-9312b71c-40d1-59c7-077c-b313eeaba37a/test-blob-1289c71e-456f-f9ba-ab74-04f392524bfc?versionid=2020-04-25T17%3A28%3A11.6249400Z\u0026sv=2020-04-08\u0026st=2020-04-25T16%3A28%3A11Z\u0026se=2020-04-25T18%3A28%3A11Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "User-Agent": [
@@ -117,7 +117,7 @@
         ],
         "x-ms-client-request-id": "f26b1c5c-e690-99a6-9139-68dad41d3751",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -132,7 +132,7 @@
         "x-ms-client-request-id": "f26b1c5c-e690-99a6-9139-68dad41d3751",
         "x-ms-error-code": "AuthorizationPermissionMismatch",
         "x-ms-request-id": "537a615c-701e-006e-7226-1b188f000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationPermissionMismatch\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation using this permission.\n",
@@ -153,7 +153,7 @@
         "x-ms-client-request-id": "d5dd828c-0ae0-5c51-1e19-7cbed31d4c6b",
         "x-ms-date": "Sat, 25 Apr 2020 17:28:12 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -166,7 +166,7 @@
         ],
         "x-ms-client-request-id": "d5dd828c-0ae0-5c51-1e19-7cbed31d4c6b",
         "x-ms-request-id": "537a6177-701e-006e-0626-1b188f000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-acd712f3-6660-2980-5638-1e0b5894e4d4?sv=2020-02-10\u0026ss=bfqt\u0026srt=s\u0026spr=https\u0026se=2020-06-24T23%3A01%3A37Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized\u0026restype=container",
+      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-acd712f3-6660-2980-5638-1e0b5894e4d4?sv=2020-04-08\u0026ss=bfqt\u0026srt=s\u0026spr=https\u0026se=2020-06-24T23%3A01%3A37Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized\u0026restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-3ab250fcc4b81e4fbecca9815a8bb530-ee0558312bdd6a4d-00",
@@ -11,7 +11,7 @@
         ],
         "x-ms-client-request-id": "c4a740a6-6648-24e0-29b4-86a03599c48d",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -26,7 +26,7 @@
         "x-ms-client-request-id": "c4a740a6-6648-24e0-29b4-86a03599c48d",
         "x-ms-error-code": "AuthorizationResourceTypeMismatch",
         "x-ms-request-id": "74a71161-c01e-0036-7b73-4ac0d0000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationResourceTypeMismatch\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation using this resource type.\n",

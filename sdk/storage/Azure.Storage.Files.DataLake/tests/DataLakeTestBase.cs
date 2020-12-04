@@ -21,7 +21,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         DataLakeClientOptions.ServiceVersion.V2019_02_02,
         DataLakeClientOptions.ServiceVersion.V2019_07_07,
         DataLakeClientOptions.ServiceVersion.V2019_12_12,
-        DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        DataLakeClientOptions.ServiceVersion.V2020_02_10,
+        DataLakeClientOptions.ServiceVersion.V2020_04_08)]
     public abstract class DataLakeTestBase : StorageTestBase
     {
         protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;

@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "0e4b6fe8-6fc0-35c0-5ff9-8798a11406cc",
         "x-ms-date": "Thu, 02 Apr 2020 23:57:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "0e4b6fe8-6fc0-35c0-5ff9-8798a11406cc",
         "x-ms-request-id": "07c6cfa3-801e-0055-624a-095d2b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-date": "Thu, 02 Apr 2020 23:57:42 GMT",
         "x-ms-lease-id": "c5ae04a7-27c7-69ff-1143-16f030af09ac",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "K8wD8vmyL8QicxOC/g5YcrbMISw3trNSP94OoVhAXF2WPWzUERPSz/b3K5KCrW7wxqPJDN83EnUYsLMbpI1s4Re17MCig2Gi\u002BlI1QIogz5FvHdu0d099Xyv3vGBgtypoi0p6zcGuTkNCJhKNAdHq\u002BOEhq4ayt2nHN42UqscBQkMnzbRApQLQwc6YclE98F5ZDMN\u002BPgukttTgs5U0GaR7QePOZTQdqlLfUem3GUQXikYvO50DggQ3gxbgX/JsnKgqHDBtb4spPGJxn\u002Bwh7ZyPyClOBd0GeL7fluEdPEpfc7VBjP0UqRq7Bf46keMXFZZ6UZbJHZfKJKRxjtiqDAAYESs24GCfex4Ok//fy\u002Bbbx4BLouqzllUedmhYohtCEPj\u002BIn\u002B34TU129Z4u4qX61i\u002BlsdXXmoVZXvWGGr4RtgDy4IH4KlmI\u002BZLFscUO9vLh4oPmgtT67KO6LwE4MjKPJT9dO8HjwqvWHLhC0ijACqgC5Df6azNsODQefjsYkIdgNkyF8brw/eAX0GZct9q6\u002BiSY9U361PoL8MONxYSw/Yvw4puceljtEeYXolqND4BZY4PWf5t5ZWFSecD3IzhbpxLaa5U\u002B3n/L66OnozKffuFDdGHAmn3wt716ScBYNi6t/DsHsqQrWoUECpP30YIu8vrfc\u002B7WWszVKfPXhJS/c/W0\u002Bec3V8x9WBnc/I\u002Bp\u002BOX7S1bFeII/12FucoiwE5XwhJbeQtfbN1suodvU\u002BZ49KzEOHDk9ufsztSJFiSUDjURELHf4y7XOIFQ71tamKt3DMQdXofdcssrb6s31VW516tSXkM0mRF\u002B7ADvlAaLkTUoEglfdq\u002BtM53ltHOCoGMrlxewCDpoQnOzn3GH7t3En951D8JLWWD7pSqlTuSd\u002B0ycw/3u24j6v8\u002BWrNc9JUS/IRWVDZGg3z23tGIPwvSPFqQl6yvg1cNVe0/ytayJvX/m5S3PB\u002B67/OO/Nycm6/3bBpYyGDoZ30tRQJFCrSqRLfbjKdzGvw61au5HIJ6cL5BRF64WVqVFzAXifcZceE65LgowQsEgFUaHfK1L0b\u002BstREB8JZ7etZRnVzW40JHWfGgjvGUbOzOMAFojtn3\u002BftGNce1Woi3PrMz3qRlSjEEQCO7q0PNGEklM7\u002BUE\u002Bz8WaRhkK16kv5p6FA\u002BYI1HaObQY062PE64eB1\u002BjyfIIyrGNoUABLqDia0kUsLyj7i83srZxK\u002BeRh1WqBeQ/ALXoMUldykHRmQsTNqgkemLxehkwrFc7197KPBoqlui842qTLL9zBiOtJdlrHfV/bQzyuMuKzlRe7Bmqk45npwJillM9kQ3jvjQ1g0Z9kLnpis7NOB4c8dTWdEBlyLJVBX7XCIeiAdw/A==",
       "StatusCode": 412,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "729df991-f735-06d5-82f7-1e9a1fc81d24",
         "x-ms-error-code": "LeaseNotPresentWithBlobOperation",
         "x-ms-request-id": "07c6cfb3-801e-0055-6d4a-095d2b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ELeaseNotPresentWithBlobOperation\u003C/Code\u003E\u003CMessage\u003EThere is currently no lease on the blob.\n",
@@ -85,7 +85,7 @@
         "x-ms-client-request-id": "8f8c0cca-fd69-44c6-1457-d33419e94eb6",
         "x-ms-date": "Thu, 02 Apr 2020 23:57:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -98,7 +98,7 @@
         ],
         "x-ms-client-request-id": "8f8c0cca-fd69-44c6-1457-d33419e94eb6",
         "x-ms-request-id": "07c6cfb9-801e-0055-734a-095d2b000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

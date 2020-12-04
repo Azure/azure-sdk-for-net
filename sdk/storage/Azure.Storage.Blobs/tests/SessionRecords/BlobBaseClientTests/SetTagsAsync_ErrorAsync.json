@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "5bf661a4-6e52-13dc-004b-7d7f212ebfeb",
         "x-ms-date": "Sun, 05 Apr 2020 23:23:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "5bf661a4-6e52-13dc-004b-7d7f212ebfeb",
         "x-ms-request-id": "382f43eb-b01e-0095-25a1-0ba515000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "383408da-11a8-f712-767d-418521590b01",
         "x-ms-date": "Sun, 05 Apr 2020 23:23:51 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EtagKey0\u003C/Key\u003E\u003CValue\u003EtagValue0\u003C/Value\u003E\u003C/Tag\u003E\u003CTag\u003E\u003CKey\u003EtagKey1\u003C/Key\u003E\u003CValue\u003EtagValue1\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E",
       "StatusCode": 404,
@@ -63,7 +63,7 @@
         "x-ms-client-request-id": "383408da-11a8-f712-767d-418521590b01",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "382f43f4-b01e-0095-29a1-0ba515000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
@@ -85,7 +85,7 @@
         "x-ms-client-request-id": "ffa9eac1-57ca-aea4-c3fa-e6c5bf495de6",
         "x-ms-date": "Sun, 05 Apr 2020 23:23:51 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -98,7 +98,7 @@
         ],
         "x-ms-client-request-id": "ffa9eac1-57ca-aea4-c3fa-e6c5bf495de6",
         "x-ms-request-id": "382f4423-b01e-0095-53a1-0ba515000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

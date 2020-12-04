@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "1b486c83-1271-a585-c4bd-c6ad611c913b",
         "x-ms-date": "Wed, 14 Oct 2020 22:57:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "1b486c83-1271-a585-c4bd-c6ad611c913b",
         "x-ms-request-id": "f073d83b-b01e-004e-197d-a26328000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-client-request-id": "a2fe4c6b-b581-20c7-f1b9-cac542324677",
         "x-ms-date": "Wed, 14 Oct 2020 22:57:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -61,7 +61,7 @@
         ],
         "x-ms-client-request-id": "a2fe4c6b-b581-20c7-f1b9-cac542324677",
         "x-ms-request-id": "42679fae-b01f-003c-687d-a26467000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -81,7 +81,7 @@
         "x-ms-lease-duration": "10",
         "x-ms-proposed-lease-id": "8a586bcb-b245-aa62-1385-baf705e60529",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -96,7 +96,7 @@
         "x-ms-client-request-id": "1ec9e5dd-adcf-b924-ea54-8efcfbcf1a0a",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "f073d918-b01e-004e-6e7d-a26328000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
@@ -117,7 +117,7 @@
         "x-ms-client-request-id": "201a16b9-e71c-c65a-402d-28fac2dca340",
         "x-ms-date": "Wed, 14 Oct 2020 22:57:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -130,7 +130,7 @@
         ],
         "x-ms-client-request-id": "201a16b9-e71c-c65a-402d-28fac2dca340",
         "x-ms-request-id": "f073d93c-b01e-004e-127d-a26328000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

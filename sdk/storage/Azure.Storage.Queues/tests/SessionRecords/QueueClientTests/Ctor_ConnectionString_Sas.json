@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-7be67cd1-76bd-5646-0131-700ecacbcbe1?sv=2020-02-10\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-7be67cd1-76bd-5646-0131-700ecacbcbe1?sv=2020-04-08\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-12718d3b13994e45ac84cb7884222c85-281fd858fcfbef4c-00",
@@ -28,7 +28,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-c2e56662-f51d-d8c6-eb59-3dc3ab944d77?sv=2020-02-10\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-c2e56662-f51d-d8c6-eb59-3dc3ab944d77?sv=2020-04-08\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-09c311d07ee4a24184ffd18f52decf79-3100ac7077717f4b-00",
@@ -55,7 +55,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-7be67cd1-76bd-5646-0131-700ecacbcbe1?sv=2020-02-10\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized\u0026comp=metadata",
+      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-7be67cd1-76bd-5646-0131-700ecacbcbe1?sv=2020-04-08\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized\u0026comp=metadata",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "traceparent": "00-5694e8304f47b4459686fcbb6fb1804c-0fa3548ad3c19549-00",
@@ -84,7 +84,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-c2e56662-f51d-d8c6-eb59-3dc3ab944d77?sv=2020-02-10\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized\u0026comp=metadata",
+      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-c2e56662-f51d-d8c6-eb59-3dc3ab944d77?sv=2020-04-08\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized\u0026comp=metadata",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "traceparent": "00-5176b97f5bdb2f4286de257ed0159c61-ebf1bfd098624740-00",
@@ -113,7 +113,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-7be67cd1-76bd-5646-0131-700ecacbcbe1?sv=2020-02-10\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-7be67cd1-76bd-5646-0131-700ecacbcbe1?sv=2020-04-08\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "traceparent": "00-b10b2dc66a756c4386edb799842034d4-e526faadeb8f864a-00",
@@ -140,7 +140,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-c2e56662-f51d-d8c6-eb59-3dc3ab944d77?sv=2020-02-10\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary.queue.core.windows.net/test-queue-c2e56662-f51d-d8c6-eb59-3dc3ab944d77?sv=2020-04-08\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2020-06-24T23%3A38%3A47Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "traceparent": "00-fba810204b1bd547942407197c0c2a9b-a9cbcb95108fa64a-00",

@@ -399,10 +399,10 @@ namespace Azure.Storage.Files.Shares
                         .ConfigureAwait(false);
                     if ((traits & ShareTraits.Metadata) != ShareTraits.Metadata)
                     {
-                        IEnumerable<ShareItem> shareItems = response.Value.ShareItems;
-                        foreach (ShareItem shareItem in shareItems)
+                        IEnumerable<ShareItemInternal> shareItemInternals = response.Value.ShareItems;
+                        foreach (ShareItemInternal shareItemInternal in shareItemInternals)
                         {
-                            shareItem.Properties.Metadata = null;
+                            shareItemInternal.Properties.Metadata = null;
                         }
                     }
                     return response;
@@ -704,6 +704,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.Protocols,
+                options?.RootSquash,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -750,6 +752,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.Protocols,
+                options?.RootSquash,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -801,6 +805,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                rootSquash: default,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -852,6 +858,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                rootSquash: default,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")

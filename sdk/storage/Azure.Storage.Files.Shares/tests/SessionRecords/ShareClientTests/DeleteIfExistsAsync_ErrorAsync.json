@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "933e61f3-80b7-1526-8fef-ced9a87b9dce",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -27,7 +27,7 @@
         "x-ms-client-request-id": "933e61f3-80b7-1526-8fef-ced9a87b9dce",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "781cb691-701a-0034-1480-a2a24a000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EResourceNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified resource does not exist.\n",
