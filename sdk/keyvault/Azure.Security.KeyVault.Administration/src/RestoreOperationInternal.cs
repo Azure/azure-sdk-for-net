@@ -9,7 +9,7 @@ using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal class RestoreOperationInternal<THeaders, TResult> : Operation<TResult> where TResult : BackupRestoreResult
+    internal class RestoreOperationInternal<THeaders, TResult> : Operation<TResult> where TResult : class
     {
         /// <summary>
         /// The number of seconds recommended by the service to delay before checking on completion status.

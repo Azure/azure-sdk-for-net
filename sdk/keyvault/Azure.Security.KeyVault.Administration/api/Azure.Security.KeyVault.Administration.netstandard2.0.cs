@@ -15,16 +15,12 @@ namespace Azure.Security.KeyVault.Administration
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.BackupResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.BackupResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class BackupRestoreResult
-    {
-        internal BackupRestoreResult() { }
-        public System.DateTimeOffset EndTime { get { throw null; } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
-    }
-    public partial class BackupResult : Azure.Security.KeyVault.Administration.BackupRestoreResult
+    public partial class BackupResult
     {
         internal BackupResult() { }
+        public System.DateTimeOffset EndTime { get { throw null; } }
         public System.Uri FolderUri { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
     }
     public partial class KeyVaultAccessControlClient
     {
@@ -144,9 +140,11 @@ namespace Azure.Security.KeyVault.Administration
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.RestoreResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.RestoreResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class RestoreResult : Azure.Security.KeyVault.Administration.BackupRestoreResult
+    public partial class RestoreResult
     {
         internal RestoreResult() { }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
     }
     public partial class SelectiveKeyRestoreOperation : Azure.Operation<Azure.Security.KeyVault.Administration.SelectiveKeyRestoreResult>
     {
@@ -163,8 +161,10 @@ namespace Azure.Security.KeyVault.Administration
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.SelectiveKeyRestoreResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.SelectiveKeyRestoreResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class SelectiveKeyRestoreResult : Azure.Security.KeyVault.Administration.BackupRestoreResult
+    public partial class SelectiveKeyRestoreResult
     {
         internal SelectiveKeyRestoreResult() { }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
     }
 }
