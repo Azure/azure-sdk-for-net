@@ -281,7 +281,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption, MessageEncoding, InvalidQueueMessageHandler);
+            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, _storageSharedKeyCredential, Version, ClientDiagnostics, ClientSideEncryption, MessageEncoding, InvalidQueueMessageHandler);
 
         #region GetQueues
         /// <summary>

@@ -1327,25 +1327,19 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                 stream.ReadAsync(buffer: null, offset: 0, count: 10),
-                e => Assert.AreEqual($"buffer cannot be null.{Environment.NewLine}Parameter name: buffer", e.Message));
+                new ArgumentNullException("buffer", $"buffer cannot be null."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot be less than 0.", "Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot exceed buffer length.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot exceed buffer length.", "Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: count cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("count cannot be less than 0.", "Specified argument was out of the range of valid values."));
         }
 
         [Test]
@@ -5774,6 +5768,150 @@ namespace Azure.Storage.Blobs.Test
                 tokenCredentials,
                 GetOptions());
             Assert.IsFalse(blob5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetParentBlobContainerClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - BlobBaseClient(string connectionString, string blobContainerName, string blobName)
+            BlobBaseClient blob = new BlobBaseClient(
+                connectionString,
+                GetNewContainerName(),
+                GetNewBlobName());
+            BlobContainerClient container = blob.GetParentBlobContainerClient();
+            Assert.IsTrue(container.CanGenerateSasUri);
+
+            // Act - BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            BlobBaseClient blob2 = new BlobBaseClient(
+                connectionString,
+                GetNewContainerName(),
+                GetNewBlobName(),
+                GetOptions());
+            BlobContainerClient container2 = blob2.GetParentBlobContainerClient();
+            Assert.IsTrue(container2.CanGenerateSasUri);
+
+            // Act - BlobBaseClient(Uri blobContainerUri, BlobClientOptions options = default)
+            BlobBaseClient blob3 = new BlobBaseClient(
+                blobEndpoint,
+                GetOptions());
+            BlobContainerClient container3 = blob3.GetParentBlobContainerClient();
+            Assert.IsFalse(container3.CanGenerateSasUri);
+
+            // Act - BlobBaseClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            BlobBaseClient blob4 = new BlobBaseClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            BlobContainerClient container4 = blob4.GetParentBlobContainerClient();
+            Assert.IsTrue(container4.CanGenerateSasUri);
+
+            // Act - BlobBaseClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            BlobBaseClient blob5 = new BlobBaseClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions());
+            BlobContainerClient container5 = blob5.GetParentBlobContainerClient();
+            Assert.IsFalse(container5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithSnapshot_True()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Create blob
+            BlobBaseClient blob = new BlobBaseClient(
+                connectionString,
+                GetNewContainerName(),
+                GetNewBlobName());
+            Assert.IsTrue(blob.CanGenerateSasUri);
+
+            // Act
+            string snapshot = "2020-04-17T20:37:16.5129130Z";
+            BlobBaseClient snapshotBlob = blob.WithSnapshot(snapshot);
+
+            // Assert
+            Assert.IsTrue(snapshotBlob.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithSnapshot_False()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            // Create blob
+            BlobBaseClient blob = new BlobBaseClient(
+                blobEndpoint,
+                GetOptions());
+            Assert.IsFalse(blob.CanGenerateSasUri);
+
+            // Act
+            string snapshot = "2020-04-17T20:37:16.5129130Z";
+            BlobBaseClient snapshotBlob = blob.WithSnapshot(snapshot);
+
+            // Assert
+            Assert.IsFalse(snapshotBlob.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithVersion_True()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Create blob
+            BlobBaseClient blob = new BlobBaseClient(
+                connectionString,
+                GetNewContainerName(),
+                GetNewBlobName());
+            Assert.IsTrue(blob.CanGenerateSasUri);
+
+            // Act
+            string version = "2020-04-17T21:55:48.6692074Z";
+            BlobBaseClient versionBlob = blob.WithVersion(version);
+
+            // Assert
+            Assert.IsTrue(versionBlob.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithVersion_False()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            // Create blob
+            BlobBaseClient blob = new BlobBaseClient(
+                blobEndpoint,
+                GetOptions());
+            Assert.IsFalse(blob.CanGenerateSasUri);
+
+            // Act
+            string version = "2020-04-17T21:55:48.6692074Z";
+            BlobBaseClient versionBlob = blob.WithVersion(version);
+
+            // Assert
+            Assert.IsFalse(versionBlob.CanGenerateSasUri);
         }
 
         [Test]

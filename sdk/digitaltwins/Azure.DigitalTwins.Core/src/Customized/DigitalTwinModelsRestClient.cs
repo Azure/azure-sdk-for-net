@@ -219,7 +219,7 @@ namespace Azure.DigitalTwins.Core
         // As such, these methods are declared here and made private, while the public method is declared above, too.
         // These methods should never be called.
 
-#pragma warning disable CA1801, IDE0051, IDE0060 // Remove unused parameter
+#pragma warning disable CA1801, IDE0051, IDE0060, CA1822 // Remove unused parameter
 
         // Original return type is Task<Response<IReadOnlyList<ModelData>>>. Changing to object to allow returning null.
         private object AddAsync(IEnumerable<object> models = null, CancellationToken cancellationToken = default) => null;

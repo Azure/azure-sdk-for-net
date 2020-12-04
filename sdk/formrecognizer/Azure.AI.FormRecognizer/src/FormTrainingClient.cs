@@ -137,7 +137,7 @@ namespace Azure.AI.FormRecognizer.Training
                     ModelName = modelName
                 };
 
-                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
+                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest, cancellationToken);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -179,7 +179,7 @@ namespace Azure.AI.FormRecognizer.Training
                     ModelName = modelName
                 };
 
-                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest, cancellationToken).ConfigureAwait(false);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -220,7 +220,7 @@ namespace Azure.AI.FormRecognizer.Training
                     UseLabelFile = useTrainingLabels
                 };
 
-                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
+                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest, cancellationToken);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -260,7 +260,7 @@ namespace Azure.AI.FormRecognizer.Training
                     UseLabelFile = useTrainingLabels
                 };
 
-                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest, cancellationToken).ConfigureAwait(false);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -302,7 +302,7 @@ namespace Azure.AI.FormRecognizer.Training
                 var composeRequest = new ComposeRequest(modelIdsGuid);
                 composeRequest.ModelName = modelName;
 
-                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest);
+                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest, cancellationToken);
                 return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -340,7 +340,7 @@ namespace Azure.AI.FormRecognizer.Training
                 var composeRequest = new ComposeRequest(modelIdsGuid);
                 composeRequest.ModelName = modelName;
 
-                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest).ConfigureAwait(false);
+                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest, cancellationToken).ConfigureAwait(false);
                 return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)

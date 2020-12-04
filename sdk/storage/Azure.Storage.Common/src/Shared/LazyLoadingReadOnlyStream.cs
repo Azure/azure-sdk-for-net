@@ -250,6 +250,7 @@ namespace Azure.Storage
 
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             // Return the buffer to the pool if we're called from Dispose or a finalizer
             if (_buffer != null)
             {

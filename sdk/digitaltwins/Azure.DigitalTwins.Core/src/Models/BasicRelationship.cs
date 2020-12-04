@@ -96,6 +96,8 @@ namespace Azure.DigitalTwins.Core
         /// This property will contain any relationship properties that are not already defined in this class.
         /// </summary>
         [JsonExtensionData]
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IDictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
+#pragma warning restore CA2227 // Collection properties should be readonly
     }
 }

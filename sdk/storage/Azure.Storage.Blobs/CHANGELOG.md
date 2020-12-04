@@ -1,7 +1,8 @@
 # Release History
 
 ## 12.8.0-beta.1 (Unreleased)
-
+- Fixed bug where BlobContainerClient.GetBlobClient(), BlobContainerClient.GetParentServiceClient(), BlobServiceClient.GetBlobContainerClient(), BlobBaseClient.WithClientSideEncryptionOptions(), BlobBaseClient.GetParentBlobContainerClient(), BlobBaseClient.WithSnapshot() and BlobBaseClient.WithVersion() created clients that could not generate a SAS from clients that could generate a SAS
+- Added IsHierarchicalNamespaceEnabled to AccountInfo.
 
 ## 12.7.0 (2020-11-10)
 - Includes all features from 12.7.0-preview.1

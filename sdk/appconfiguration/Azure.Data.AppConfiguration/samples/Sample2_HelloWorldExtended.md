@@ -51,7 +51,7 @@ await client.SetConfigurationSettingAsync(instancesToUpdate);
 
 ## Search by label filter
 
-To gather all the information available for the "production" environment, call `GetConfigurationSettingsAsync` with a setting selector that filters for settings with the "production" label.  This will retrieve all the Configuration Settings in the store that satisfy that condition. See App Configuration [REST API](https://github.com/Azure/AppConfiguration/blob/master/docs/REST/kv.md#filtering) for more information about filtering.
+To gather all the information available for the "production" environment, call `GetConfigurationSettingsAsync` with a setting selector that filters for settings with the "production" label.  This will retrieve all the Configuration Settings in the store that satisfy that condition. See App Configuration [REST API](https://docs.microsoft.com/azure/azure-app-configuration/rest-api-key-value#filtering) for more information about filtering.
 
 ```C# Snippet:AzConfigSample2_GetConfigurationSettingsAsync
 var selector = new SettingSelector { LabelFilter = "production" };
