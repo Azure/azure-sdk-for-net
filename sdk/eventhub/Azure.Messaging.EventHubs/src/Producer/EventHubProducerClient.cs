@@ -418,7 +418,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
         {
-
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             return await Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
@@ -465,7 +464,6 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (!partitionState.IsInitialized)
                 {
-
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                     await InitializePartitionStateAsync(partitionState, cancellationToken).ConfigureAwait(false);
                 }
@@ -1118,7 +1116,6 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             finally
             {
-
                 EventHubsEventSource.Log.IdempotentPublishComplete(EventHubName, options.PartitionId);
             }
         }

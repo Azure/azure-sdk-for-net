@@ -31,7 +31,6 @@ namespace Azure.AI.TextAnalytics
         // Specifies the method used to interpret string offsets. Default to <see cref="StringIndexType.Utf16CodeUnit"/>.
         private readonly StringIndexType _stringCodeUnit = StringIndexType.Utf16CodeUnit;
 
-
         /// <summary>
         /// Protected constructor to allow mocking.
         /// </summary>
@@ -1356,7 +1355,6 @@ namespace Azure.AI.TextAnalytics
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await AnalyzeSentimentBatchAsync(documentInputs, analyzeSentimentOptions, cancellationToken).ConfigureAwait(false);
-
         }
 
         /// <summary>
@@ -1413,7 +1411,6 @@ namespace Azure.AI.TextAnalytics
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-
         }
 
         /// <summary>
@@ -2123,7 +2120,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-
         }
 
         /// <summary>
@@ -2370,7 +2366,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-
         }
 
         /// <summary> Runs the cancel job for healthcare operation which was initialized using <see cref="StartHealthcareBatch(IEnumerable{string}, string, HealthcareOptions, CancellationToken)"/> or <see cref="StartHealthcare"/> </summary>

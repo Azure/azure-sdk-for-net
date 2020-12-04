@@ -127,6 +127,5 @@ namespace Azure.Core.Tests
             yield return new object[] {true, "true"};
             yield return new object[] {false, "false"};
         }
-
     }
 }

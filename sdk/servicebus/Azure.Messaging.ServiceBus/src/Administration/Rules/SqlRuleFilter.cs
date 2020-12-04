@@ -21,7 +21,6 @@ namespace Azure.Messaging.ServiceBus.Administration
     /// </remarks>
     public class SqlRuleFilter : RuleFilter
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlRuleFilter" /> class using the specified SQL expression.
         /// </summary>

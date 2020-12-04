@@ -11,7 +11,6 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Pipeline
 {
-
     internal sealed partial class HttpEnvironmentProxy : IWebProxy
     {
         private const string EnvAllProxyUC = "ALL_PROXY";
@@ -221,7 +220,6 @@ namespace Azure.Core.Pipeline
                         {
                             return true;
                         }
-
                     }
                     else
                     {

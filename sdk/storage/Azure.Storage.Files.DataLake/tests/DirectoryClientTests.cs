@@ -807,7 +807,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.AccessControlList);
         }
 
-
         [Test]
         public async Task GetAccessControlAsync_FileSystemSAS()
         {
@@ -2057,7 +2056,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Add directory as superuser
             DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
             string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
-
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {

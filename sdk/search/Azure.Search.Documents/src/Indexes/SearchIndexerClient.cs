@@ -28,7 +28,6 @@ namespace Azure.Search.Documents.Indexes
         private SkillsetsRestClient _skillsetsClient;
         private string _serviceName;
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchIndexerClient"/> class for mocking.
         /// </summary>

@@ -23,7 +23,6 @@ namespace Azure.Data.Tables.Tests
     [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16964")]
     public class TableClientLiveTests : TableServiceLiveTestsBase
     {
-
         public TableClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
@@ -370,7 +369,6 @@ namespace Azure.Data.Tables.Tests
                     {"RowKey", rowKeyValue},
                     {mergepropertyName, mergeValue}
                 };
-
 
             // Create the new entity.
 
@@ -952,7 +950,6 @@ namespace Azure.Data.Tables.Tests
             Assert.That(policies.Value[0].AccessPolicy.ExpiresOn, Is.EqualTo(policyToCreate[0].AccessPolicy.ExpiresOn));
             Assert.That(policies.Value[0].AccessPolicy.Permission, Is.EqualTo(policyToCreate[0].AccessPolicy.Permission));
             Assert.That(policies.Value[0].AccessPolicy.StartsOn, Is.EqualTo(policyToCreate[0].AccessPolicy.StartsOn));
-
         }
 
         /// <summary>

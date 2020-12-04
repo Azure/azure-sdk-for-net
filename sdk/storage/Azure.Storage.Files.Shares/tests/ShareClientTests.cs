@@ -1507,7 +1507,6 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient directoryFromShareClient = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
             Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.file.core.windows.net/{test.Share.Name}/{Uri.EscapeDataString(directoryName)}");
 
-
             // Act
             Response<ShareDirectoryInfo> createResponse = await directoryFromShareClient.CreateAsync();
 
@@ -1607,7 +1606,6 @@ namespace Azure.Storage.Files.Shares.Tests
 
             Response<ShareSnapshotInfo> snapshotResponse = await test.Share.CreateSnapshotAsync();
             ShareClient snapshotShare = test.Share.WithSnapshot(snapshotResponse.Value.Snapshot);
-
 
             string id = Recording.Random.NewGuid().ToString();
             TimeSpan duration = TimeSpan.FromSeconds(15);

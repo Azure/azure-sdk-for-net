@@ -336,7 +336,6 @@ namespace Azure.Storage.Blobs.Test
             const int blobSize = 1 * Constants.MB;
             await using DisposingContainer test = await GetTestContainerAsync();
 
-
             var credentials = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             BlobContainerClient containerFaulty = InstrumentClient(
                 new BlobContainerClient(
@@ -517,7 +516,6 @@ namespace Azure.Storage.Blobs.Test
                 _retryStageBlockFromUri);
         }
 
-
         [Test]
         public async Task StageBlockFromUriAsync_CPK()
         {
@@ -625,7 +623,6 @@ namespace Azure.Storage.Blobs.Test
                     ToBase64(GetNewBlockName()),
                     sourceContentHash: MD5.Create().ComputeHash(data)),
                 _retryStageBlockFromUri);
-
         }
 
         [Test]
@@ -2229,7 +2226,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 Position = position
             };
-
 
             BlobUploadOptions options = new BlobUploadOptions
             {

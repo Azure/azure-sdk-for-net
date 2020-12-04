@@ -108,7 +108,6 @@ namespace Azure.Core.Pipeline
                     contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
 #endif
 
-
                 }
             }
             catch (HttpRequestException e)
@@ -287,7 +286,6 @@ namespace Azure.Core.Pipeline
                 }
 
                 currentRequest.RequestUri = Uri.ToUri();
-
 
                 if (Content != null)
                 {
