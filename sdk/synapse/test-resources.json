@@ -181,7 +181,7 @@
         "uniqueDataLakeStorageFilesystemName": "[concat(parameters('defaultDataLakeStorageFilesystemNamePrefix'), parameters('baseName'))]",
         "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
         "defaultDataLakeStorageAccountUrl": "[concat('https://', variables('uniqueDataLakeStorageAccountName'), '.dfs.core.windows.net')]",
-        "uniqueSparkPoolName": "[concat(parameters('sparkPoolPrefix'), parameters('baseName'))]"
+        "uniqueSparkPoolName": "[take(concat(parameters('sparkPoolPrefix'), parameters('baseName')), 15)]"
     },
     "resources": [
         {

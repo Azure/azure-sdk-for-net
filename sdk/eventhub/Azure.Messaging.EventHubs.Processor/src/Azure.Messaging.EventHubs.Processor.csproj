@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This library extends its Event Processor with durable storage for checkpoint information using Azure Blob storage.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.3.0-beta.4</Version>
+    <Version>5.3.0-beta.5</Version>
     <ApiCompatVersion>5.2.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;Event Processor;EventProcessor;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -12,14 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-
     <!-- TEMP -->
-      <!--
-        Project reference is temporary, due to the changes to the EventData model. Don't forget to also remove the project reference in the
-        solution under the "External" folder.
-      -->
-      <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
-      <!--<PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.3.0-beta.4" /> --><!-- This override will be removed when v5.3.0 is released for GA -->
+      <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.3.0-beta.4" /><!-- This override will be removed when v5.3.0 is released for GA -->
     <!--END TEMP-->
 
     <PackageReference Include="Azure.Storage.Blobs" />
@@ -39,6 +33,7 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Diagnostics.projitems" Label="Diagnostics" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Authorization.projitems" Label="Authorization" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Processor.projitems" Label="Processor" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.BlobCheckpointStore.projitems" Label="CheckpointStore" />
 
   <!-- Import Azure.Core shared source -->
   <ItemGroup>

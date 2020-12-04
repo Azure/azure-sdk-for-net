@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='integrationRuntimeName'>
         /// Integration runtime name
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SsisObjectMetadataListResponse>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, GetSsisObjectMetadataRequest getMetadataRequest = default(GetSsisObjectMetadataRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SsisObjectMetadataListResponse>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, GetSsisObjectMetadataRequest getMetadataRequest = default(GetSsisObjectMetadataRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Synapse
                 tracingParameters.Add("integrationRuntimeName", integrationRuntimeName);
                 tracingParameters.Add("getMetadataRequest", getMetadataRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -307,7 +307,35 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
+        /// </param>
+        /// <param name='integrationRuntimeName'>
+        /// Integration runtime name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<SsisObjectMetadataStatusResponse>> RefreshWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<SsisObjectMetadataStatusResponse> _response = await BeginRefreshWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Refresh integration runtime object metadata
+        /// </summary>
+        /// <remarks>
+        /// Refresh the object metadata in an integration runtime
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace.
         /// </param>
         /// <param name='integrationRuntimeName'>
         /// Integration runtime name
@@ -333,7 +361,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SsisObjectMetadataStatusResponse>> RefreshWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SsisObjectMetadataStatusResponse>> BeginRefreshWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -395,7 +423,7 @@ namespace Microsoft.Azure.Management.Synapse
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("integrationRuntimeName", integrationRuntimeName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Refresh", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginRefresh", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;

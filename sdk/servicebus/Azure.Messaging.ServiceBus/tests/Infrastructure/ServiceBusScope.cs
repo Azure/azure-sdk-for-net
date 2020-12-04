@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
         private const double RetryExponentialBackoffSeconds = 3.0;
 
-        /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
+        /// <summary>The number of seconds to use as the basis for applying jitter to retry backoff calculations.</summary>
         private const double RetryBaseJitterSeconds = 60.0;
 
         /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
@@ -305,7 +305,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <param name="maxRetryAttempts">The maximum retry attempts to allow.</param>
         /// <param name="exponentialBackoffSeconds">The number of seconds to use as the basis for backing off on retry attempts.</param>
-        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry back-off calculations.</param>
+        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry backoff calculations.</param>
         ///
         /// <returns>The retry policy in which to execute the management operation.</returns>
         ///
@@ -322,7 +322,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <param name="maxRetryAttempts">The maximum retry attempts to allow.</param>
         /// <param name="exponentialBackoffSeconds">The number of seconds to use as the basis for backing off on retry attempts.</param>
-        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry back-off calculations.</param>
+        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry backoff calculations.</param>
         ///
         /// <returns>The retry policy in which to execute the management operation.</returns>
         ///
@@ -406,7 +406,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         /// <param name="attempt">The current attempt number.</param>
-        /// <param name="exponentialBackoffSeconds">The exponential back-off amount,, in seconds.</param>
+        /// <param name="exponentialBackoffSeconds">The exponential backoff amount, in seconds.</param>
         /// <param name="baseJitterSeconds">The amount of base jitter to include, in seconds.</param>
         ///
         /// <returns>The interval to wait before retrying the attempted operation.</returns>

@@ -94,15 +94,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         [Test]
-        public void ScheduleEmptyListShouldThrow()
+        public async Task ScheduleEmptyListShouldNotThrow()
         {
             var mock = new Mock<ServiceBusSender>()
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentException>(async () => await mock.Object.ScheduleMessagesAsync(
+
+            IReadOnlyList<long> sequenceNums = await mock.Object.ScheduleMessagesAsync(
                 new List<ServiceBusMessage>(),
-                default));
+                default);
+            Assert.IsEmpty(sequenceNums);
         }
 
         [Test]
@@ -119,57 +121,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         [Test]
-        public void CreateSenderUsingSendVia()
-        {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
-            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
-            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
-            var client = new ServiceBusClient(connString);
-            var sender = client.CreateSender(queueName,
-                new ServiceBusSenderOptions
-                {
-                    TransactionQueueOrTopicName = "sendViaName"
-                });
-        }
-
-        [Test]
-        public void CreateSenderUsingSendViaThrowsWhenEntityPath()
-        {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
-            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;EntityPath=something;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
-            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
-            var client = new ServiceBusClient(connString);
-            Assert.That(() => client.CreateSender(queueName,
-                new ServiceBusSenderOptions
-                {
-                    TransactionQueueOrTopicName = "sendViaName"
-                }),
-                Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.CreateSender(queueName,
-               new ServiceBusSenderOptions
-               {
-                   TransactionQueueOrTopicName = queueName
-               }),
-               Throws.InstanceOf<ArgumentException>());
-        }
-
-        [Test]
-        public void CreateSenderUsingSendViaDoesNotThrowWhenSameEntityPath()
-        {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
-            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;EntityPath=something;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
-            var client = new ServiceBusClient(connString);
-            client.CreateSender("something",
-                new ServiceBusSenderOptions
-                {
-                    TransactionQueueOrTopicName = "something"
-                });
-        }
-
-        [Test]
         public void CreateSenderUsingNullOptionsDoesNotThrow()
         {
             var account = Encoding.Default.GetString(GetRandomBuffer(12));
@@ -179,21 +130,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var client = new ServiceBusClient(connString);
             var sender = client.CreateSender(queueName,
                 null);
-        }
-
-        [Test]
-        public void CreateSenderUsingNullSendViaDoesNotThrow()
-        {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
-            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
-            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
-            var client = new ServiceBusClient(connString);
-            var sender = client.CreateSender(queueName,
-                new ServiceBusSenderOptions
-                {
-                    TransactionQueueOrTopicName = null
-                });
         }
 
         /// <summary>
@@ -218,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Returns(new ServiceBusRetryOptions());
 
             mockConnection
-                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<string>()))
+                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<string>()))
                 .Returns(mockTransportSender.Object);
 
             mockConnection

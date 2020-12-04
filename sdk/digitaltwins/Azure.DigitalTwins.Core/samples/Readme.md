@@ -22,6 +22,8 @@ The samples project demonstrates the following:
 
 ## Creating the digital twins client
 
+### Simple creation
+
 To create a new digital twins client, you need the endpoint to an Azure Digital Twin instance and credentials.
 In the sample below, you can set `AdtEndpoint`, `TenantId`, `ClientId`, and `ClientSecret` as command-line arguments.
 The client requires an instance of [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
@@ -40,13 +42,31 @@ var client = new DigitalTwinsClient(
     tokenCredential);
 ```
 
-Also, if you need to override pipeline behavior, such as provide your own HttpClient instance, you can do that via the other constructor that takes a client options.
+### Override options
+
+If you need to override pipeline behavior, such as provide your own HttpClient instance, you can do that via the other constructor that takes a
+[DigitalTwinsClientOptions](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/src/DigitalTwinsClientOptions.cs) parameter.
 It provides an opportunity to override default behavior including:
 
-- Specifying API version
 - Overriding [transport](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md)
 - Enabling [diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md)
 - Controlling [retry strategy](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md)
+- Specifying API version
+- Object serializer (see below)
+
+#### Object serializer
+
+The digital twins client has methods that will serialize your custom digital twins and relationship types for transport, and deserialize the response back to a type specified by you.
+The default object serializer, [JsonObjectSerializer](https://docs.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet),
+works using the `System.Text.Json` library.
+It uses a default [JsonSerializerOptions](https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions?view=net-5.0) instance.
+
+Set the `Serializer` property to a custom instance of `JsonObjectSerializer` or your own implementation that inherits from
+[ObjectSerializer](https://docs.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet).
+
+One reason for customizing would be to provide custom de/serialization settings, for example setting the `IgnoreNullValues` property to `true`.
+See more examples and options of working with `JsonSerializerOptions` [here](https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0#ignore-all-null-value-properties).
+This would prevent unset properties on your digital twin or relationship from being included in the payload sent to the service.
 
 ## Create, list, decommission, and delete models
 
@@ -185,22 +205,19 @@ It works well for basic stuff, but as you can see it gets more difficult when de
 
 ```C# Snippet:DigitalTwinsSampleGetBasicDigitalTwin
 Response<BasicDigitalTwin> getBasicDtResponse = await client.GetDigitalTwinAsync<BasicDigitalTwin>(basicDtId);
-if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
-{
-    BasicDigitalTwin basicDt = getBasicDtResponse.Value;
+BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
-    // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-    string component1RawText = ((JsonElement)basicDt.Contents["Component1"]).GetRawText();
-    IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
+// Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
+string component1RawText = ((JsonElement)basicDt.Contents["Component1"]).GetRawText();
+var component1 = JsonSerializer.Deserialize<BasicDigitalTwinComponent>(component1RawText);
 
-    Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
-        $"ETag: {basicDt.ETag}\n\t" +
-        $"Prop1: {basicDt.Contents["Prop1"]}\n\t" +
-        $"Prop2: {basicDt.Contents["Prop2"]}\n\t" +
-        $"Component1 metadata: {component1[DigitalTwinsJsonPropertyNames.DigitalTwinMetadata]}\n\t" +
-        $"Component1.Prop1: {component1["ComponentProp1"]}\n\t" +
-        $"ComponentProp2: {component1["ComponentProp2"]}");
-}
+Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
+    $"ETag: {basicDt.ETag}\n\t" +
+    $"ModelId: {basicDt.Metadata.ModelId}\n\t" +
+    $"Prop1: {basicDt.Contents["Prop1"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop1"].LastUpdatedOn}\n\t" +
+    $"Prop2: {basicDt.Contents["Prop2"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop2"].LastUpdatedOn}\n\t" +
+    $"Component1.Prop1: {component1.Contents["ComponentProp1"]} and  last updated on: {component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
+    $"Component1.Prop2: {component1.Contents["ComponentProp2"]} and last updated on: {component1.Metadata["ComponentProp2"].LastUpdatedOn}");
 ```
 
 Getting and deserializing a digital twin into a custom data type is extremely easy.
@@ -211,10 +228,11 @@ Response<CustomDigitalTwin> getCustomDtResponse = await client.GetDigitalTwinAsy
 CustomDigitalTwin customDt = getCustomDtResponse.Value;
 Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" +
     $"ETag: {customDt.ETag}\n\t" +
-    $"Prop1: {customDt.Prop1}\n\t" +
-    $"Prop2: {customDt.Prop2}\n\t" +
-    $"ComponentProp1: {customDt.Component1.ComponentProp1} last updated {customDt.Component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
-    $"ComponentProp2: {customDt.Component1.ComponentProp2}");
+    $"ModelId: {customDt.Metadata.ModelId}\n\t" +
+    $"Prop1: [{customDt.Prop1}] last updated on {customDt.Metadata.Prop1.LastUpdatedOn}\n\t" +
+    $"Prop2: [{customDt.Prop2}] last updated on {customDt.Metadata.Prop2.LastUpdatedOn}\n\t" +
+    $"ComponentProp1: [{customDt.Component1.ComponentProp1}] last updated {customDt.Component1.Metadata.ComponentProp1.LastUpdatedOn}\n\t" +
+    $"ComponentProp2: [{customDt.Component1.ComponentProp2}] last updated {customDt.Component1.Metadata.ComponentProp2.LastUpdatedOn}");
 ```
 
 ### Query digital twins

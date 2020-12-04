@@ -11683,7 +11683,9 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
+        #pragma warning disable CA2227 // Collection properties should be readonly
         public System.Collections.Generic.IList<Azure.Storage.Files.Shares.Models.ShareCorsRule> Cors { get; set; }
+        #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Protocol settings

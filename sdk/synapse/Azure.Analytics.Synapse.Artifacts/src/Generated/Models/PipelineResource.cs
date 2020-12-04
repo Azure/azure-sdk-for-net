@@ -26,9 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of PipelineResource. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="description"> The description of the pipeline. </param>
         /// <param name="activities"> List of activities in pipeline. </param>
@@ -81,23 +81,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public ICollection<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Count"/>
         int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public void Add(string key, object value) => AdditionalProperties.Add(key, value);
         /// <inheritdoc />
         public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
         bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Add"/>
         void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Remove"/>
         bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Contains"/>
         bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.CopyTo"/>
         void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Clear"/>
         void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
         /// <inheritdoc />
         public object this[string key]

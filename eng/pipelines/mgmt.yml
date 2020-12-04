@@ -117,6 +117,7 @@ pr:
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     - sdk/redis/Microsoft.Azure.Management.RedisCache
+    - sdk/redisenterprise/Microsoft.Azure.Management.RedisEnterpriseCache
     - sdk/relay/Microsoft.Azure.Management.Relay
     - sdk/reservations/Microsoft.Azure.Management.Reservations
     - sdk/resourcegraph/Microsoft.Azure.Management.ResourceGraph
@@ -125,6 +126,7 @@ pr:
     - sdk/scheduler/Microsoft.Azure.Management.Scheduler
     - sdk/search/Microsoft.Azure.Management.Search
     - sdk/securitycenter/Microsoft.Azure.Management.SecurityCenter
+    - sdk/securityinsights/Microsoft.Azure.Management.SecurityInsights
     - sdk/servermanagement/Microsoft.Azure.Management.ServerManagement
     - sdk/servicebus/Microsoft.Azure.Management.ServiceBus
     - sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric

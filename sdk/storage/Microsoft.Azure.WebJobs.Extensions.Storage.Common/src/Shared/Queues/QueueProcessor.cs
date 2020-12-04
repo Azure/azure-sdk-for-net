@@ -5,12 +5,12 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
-using Azure.Storage.Queues.Models;
-using Azure.Storage.Queues;
-using Azure;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             string msg = string.Format(CultureInfo.InvariantCulture, "Message has reached MaxDequeueCount of {0}. Moving message to queue '{1}'.", QueuesOptions.MaxDequeueCount, poisonQueue.Name);
             _logger?.LogWarning(msg);
 
-            await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message.MessageText, cancellationToken).ConfigureAwait(false);
+            await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message.Body, cancellationToken).ConfigureAwait(false);
 
             var eventArgs = new PoisonMessageEventArgs(message, poisonQueue);
             OnMessageAddedToPoisonQueue(eventArgs);

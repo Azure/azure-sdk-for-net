@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/validateInputs?api-version=2020-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3ZhbGlkYXRlSW5wdXRzP2FwaS12ZXJzaW9uPTIwMjAtMDQtMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/validateInputs?api-version=2020-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3ZhbGlkYXRlSW5wdXRzP2FwaS12ZXJzaW9uPTIwMjAtMTEtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"validationCategory\": \"JobCreationValidation\",\r\n  \"individualRequestDetails\": [\r\n    {\r\n      \"validationType\": \"ValidateDataTransferDetails\",\r\n      \"dataExportDetails\": [\r\n        {\r\n          \"transferConfiguration\": {\r\n            \"transferConfigurationType\": \"TransferAll\",\r\n            \"transferAllDetails\": {\r\n              \"include\": {\r\n                \"dataAccountType\": \"StorageAccount\",\r\n                \"transferAllBlobs\": true,\r\n                \"transferAllFiles\": true\r\n              }\r\n            }\r\n          },\r\n          \"accountDetails\": {\r\n            \"dataAccountType\": \"StorageAccount\",\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.Storage/storageAccounts/aaaaaa2\"\r\n          }\r\n        }\r\n      ],\r\n      \"deviceType\": \"DataBox\",\r\n      \"transferType\": \"ExportFromAzure\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateSkuAvailability\",\r\n      \"deviceType\": \"DataBox\",\r\n      \"transferType\": \"ExportFromAzure\",\r\n      \"country\": \"US\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e1d22a0e-0348-4687-9771-aac7463e9466"
+          "42234cc6-bc4e-4372-b897-1e417bc07d07"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29130.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,32 +32,32 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "33ae996a-431d-4158-be88-baa4e85ee771"
-        ],
-        "x-ms-client-request-id": [
-          "e1d22a0e-0348-4687-9771-aac7463e9466"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "33ae996a-431d-4158-be88-baa4e85ee771"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20200831T045549Z:33ae996a-431d-4158-be88-baa4e85ee771"
+          "1198"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "659757c5-0142-42b3-baa6-32f75ba85e00"
+        ],
+        "x-ms-client-request-id": [
+          "42234cc6-bc4e-4372-b897-1e417bc07d07"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-correlation-request-id": [
+          "659757c5-0142-42b3-baa6-32f75ba85e00"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20201110T132450Z:659757c5-0142-42b3-baa6-32f75ba85e00"
+        ],
         "Date": [
-          "Mon, 31 Aug 2020 04:55:48 GMT"
+          "Tue, 10 Nov 2020 13:24:50 GMT"
         ],
         "Content-Length": [
           "632"

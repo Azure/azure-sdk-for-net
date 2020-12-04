@@ -29,3 +29,10 @@ namespace Azure.Communication.Sms
         }
     }
 }
+namespace Azure.Communication.Sms.Models
+{
+    public static partial class SmsModelFactory
+    {
+        public static Azure.Communication.Sms.SendSmsResponse SendSmsResponse(string messageId) { throw null; }
+    }
+}

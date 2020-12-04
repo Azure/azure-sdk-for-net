@@ -176,6 +176,17 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
@@ -195,7 +206,7 @@ namespace Azure.Storage.Files.DataLake
         /// resource.
         /// </param>
         public DataLakePathClient(Uri pathUri)
-            : this(pathUri, (HttpPipelinePolicy)null, null)
+            : this(pathUri, (HttpPipelinePolicy)null, null, null)
         {
         }
 
@@ -214,7 +225,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, DataLakeClientOptions options)
-            : this(pathUri, (HttpPipelinePolicy)null, options)
+            : this(pathUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -231,7 +242,7 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakePathClient(Uri pathUri, StorageSharedKeyCredential credential)
-            : this(pathUri, credential.AsPolicy(), null)
+            : this(pathUri, credential.AsPolicy(), null, credential)
         {
         }
 
@@ -253,7 +264,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
-            : this(pathUri, credential.AsPolicy(), options)
+            : this(pathUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -270,7 +281,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential)
-            : this(pathUri, credential.AsPolicy(), null)
+            : this(pathUri, credential.AsPolicy(), null, null)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }
@@ -293,7 +304,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(pathUri, credential.AsPolicy(), options)
+            : this(pathUri, credential.AsPolicy(), options, null)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }
@@ -329,7 +340,14 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal DataLakePathClient(Uri pathUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakePathClient(
+            Uri pathUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
             options ??= new DataLakeClientOptions();
@@ -339,6 +357,7 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
         }
 
@@ -354,12 +373,19 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions options = default)
+        internal DataLakePathClient(
+            Uri pathUri,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            DataLakeClientOptions options = default)
         {
             options ??= new DataLakeClientOptions();
             var uriBuilder = new DataLakeUriBuilder(pathUri);
@@ -367,6 +393,7 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
@@ -375,6 +402,7 @@ namespace Azure.Storage.Files.DataLake
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 _pipeline,
+                storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
         }
@@ -421,6 +449,7 @@ namespace Azure.Storage.Files.DataLake
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 pipeline,
+                null,
                 version,
                 clientDiagnostics);
         }
@@ -429,6 +458,7 @@ namespace Azure.Storage.Files.DataLake
             Uri fileSystemUri,
             string directoryOrFilePath,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             DataLakeClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics)
         {
@@ -440,6 +470,7 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _blockBlobClient = BlockBlobClientInternals.Create(
@@ -452,6 +483,7 @@ namespace Azure.Storage.Files.DataLake
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 pipeline,
+                storageSharedKeyCredential,
                 version,
                 clientDiagnostics);
         }
@@ -488,10 +520,10 @@ namespace Azure.Storage.Files.DataLake
             foreach (KeyValuePair<string, string> kv in metadata)
             {
                 sb.Append(kv.Key);
-                sb.Append("=");
+                sb.Append('=');
                 byte[] valueBytes = Encoding.UTF8.GetBytes(kv.Value);
                 sb.Append(Convert.ToBase64String(valueBytes));
-                sb.Append(",");
+                sb.Append(',');
             }
             sb.Remove(sb.Length - 1, 1);
             return sb.ToString();
@@ -1666,7 +1698,7 @@ namespace Azure.Storage.Files.DataLake
                     }
 
                     // Build destPathClient
-                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline);
+                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline, _storageSharedKeyCredential);
 
                     Response<PathCreateResult> response = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,
@@ -3132,7 +3164,8 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetMetadata(
                     metadata,
-                    conditions.ToBlobRequestConditions());
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
 
                 return Response.FromValue(
                     response.Value.ToPathInfo(),
@@ -3189,7 +3222,8 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetMetadataAsync(
                     metadata,
-                    conditions.ToBlobRequestConditions())
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken)
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
@@ -3207,5 +3241,97 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Set Metadata
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateSasUri(DataLakeSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a DataLake Path Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties and
+        /// parameters passed. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="DataLakeSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(DataLakeSasPermissions permissions, DateTimeOffset expiresOn) =>
+            GenerateSasUri(new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = FileSystemName,
+                Path = Path
+            });
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(DataLakeSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a DataLake File Service Shared Access Signature (SAS) Uri
+        /// based on the Client properties and and builder. The SAS is signed
+        /// by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(DataLakeSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (builder.IsDirectory.GetValueOrDefault(false))
+            {
+                throw Errors.SasIncorrectResourceType(
+                    nameof(builder),
+                    nameof(builder.IsDirectory),
+                    nameof(Constants.FalseName),
+                    nameof(this.GetType));
+            }
+            if (!builder.FileSystemName.Equals(FileSystemName, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.FileSystemName),
+                    nameof(DataLakeSasBuilder),
+                    nameof(FileSystemName));
+            }
+            if (!builder.Path.Equals(Path, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.Path),
+                    nameof(DataLakeSasBuilder),
+                    nameof(Path));
+            }
+            DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri)
+            {
+                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
     }
 }

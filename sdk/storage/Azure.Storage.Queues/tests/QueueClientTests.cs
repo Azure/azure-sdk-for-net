@@ -12,6 +12,8 @@ using NUnit.Framework;
 using Azure.Core;
 using Azure.Storage.Sas;
 using Azure.Core.TestFramework;
+using System.Buffers.Text;
+using System.Text;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -650,6 +652,131 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task SendReceiveNullMessageAsync()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(messageText: null);
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            QueueMessage receivedMessage = (await test.Queue.ReceiveMessagesAsync()).Value.First();
+
+            Assert.AreEqual(string.Empty, receivedMessage.MessageText);
+        }
+
+        [Test]
+        public async Task EncodesOutgoingMessage()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var messageText = GetNewString();
+            var encodedText = Convert.ToBase64String(Encoding.UTF8.GetBytes(messageText));
+
+            // Act
+            Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(messageText: messageText);
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            QueueMessage receivedMessage = (await test.Queue.ReceiveMessagesAsync()).Value.First();
+
+            Assert.AreEqual(encodedText, receivedMessage.MessageText);
+        }
+
+        [Test]
+        public async Task EncodesOutgoingMessageAndRespectsSegmentBoundaries()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var payload = "pre payload post";
+            var bytes = Encoding.UTF8.GetBytes(payload);
+            var segment = new ArraySegment<byte>(bytes, 4, 7);
+            var data = BinaryData.FromBytes(segment);
+
+            // Act
+            Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(data);
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
+
+            Assert.AreEqual("payload", receivedMessage.Body.ToString());
+        }
+
+        [Test]
+        public async Task DecodesReceivedMessage()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var messageText = GetNewString();
+            var encodedText = Convert.ToBase64String(Encoding.UTF8.GetBytes(messageText));
+            // Act
+            Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(messageText: encodedText);
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
+
+            // Assert
+            Assert.AreEqual(messageText, receivedMessage.MessageText);
+        }
+
+        [Test]
+        public async Task DecodesPeekedMessage()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var messageText = GetNewString();
+            var encodedText = Convert.ToBase64String(Encoding.UTF8.GetBytes(messageText));
+            // Act
+            Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(messageText: encodedText);
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            PeekedMessage receivedMessage = (await encodingClient.PeekMessagesAsync()).Value.First();
+
+            // Assert
+            Assert.AreEqual(messageText, receivedMessage.MessageText);
+        }
+
+        [Test]
+        public async Task CanSendAndReceiveNonUTFBytes()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
+
+            // Act
+            Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(message: BinaryData.FromBytes(content));
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
+
+            // Assert
+            CollectionAssert.AreEqual(content, receivedMessage.Body.ToArray());
+        }
+
+        [Test]
         public async Task SendMessageAsync_SAS()
         {
             // Arrange
@@ -1209,5 +1336,144 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(enqueuedMessage.MessageId, receivedMessage.MessageId);
             Assert.AreEqual(message, receivedMessage.MessageText);
         }
+
+        #region GenerateSasTests
+        [Test]
+        public void CanGenerateSas_ClientConstructors()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - QueueClient(string connectionString, string blobContainerName)
+            QueueClient container = new QueueClient(
+                connectionString,
+                GetNewQueueName());
+            Assert.IsTrue(container.CanGenerateSasUri);
+
+            // Act - QueueClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            QueueClient container2 = new QueueClient(
+                connectionString,
+                GetNewQueueName(),
+                GetOptions());
+            Assert.IsTrue(container2.CanGenerateSasUri);
+
+            // Act - QueueClient(Uri blobContainerUri, BlobClientOptions options = default)
+            QueueClient container3 = new QueueClient(
+                blobEndpoint,
+                GetOptions());
+            Assert.IsFalse(container3.CanGenerateSasUri);
+
+            // Act - QueueClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            QueueClient container4 = new QueueClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            Assert.IsTrue(container4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void GenerateSas_RequiredParameters()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            string queueName = GetNewQueueName();
+            QueueSasPermissions permissions = QueueSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            QueueClient queueClient = new QueueClient(connectionString, queueName, GetOptions());
+
+            // Act
+            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn);
+
+            // Assert
+            QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = queueName
+            };
+            QueueUriBuilder expectedUri = new QueueUriBuilder(blobEndpoint)
+            {
+                QueueName = queueName,
+                Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_Builder()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            string queueName = GetNewQueueName();
+            QueueSasPermissions permissions = QueueSasPermissions.Read;
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            QueueClient queueClient = new QueueClient(connectionString, queueName, GetOptions());
+
+            QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = queueName,
+                StartsOn = startsOn
+            };
+
+            // Act
+            Uri sasUri = queueClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            QueueSasBuilder sasBuilder2 = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = queueName,
+                StartsOn = startsOn
+            };
+            QueueUriBuilder expectedUri = new QueueUriBuilder(blobEndpoint)
+            {
+                QueueName = queueName,
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_BuilderWrongName()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewQueueName();
+            QueueSasPermissions permissions = QueueSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            QueueClient queueClient = new QueueClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = GetNewQueueName() //different queueName
+            };
+
+            // Act
+            try
+            {
+                queueClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("QueueClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+        #endregion
     }
 }

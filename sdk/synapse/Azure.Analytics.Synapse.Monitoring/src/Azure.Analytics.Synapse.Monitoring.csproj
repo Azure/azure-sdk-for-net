@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Synapse Analytics Monitoring client library</Description>
     <AssemblyTitle>Azure.Analytics.Synapse.Monitoring</AssemblyTitle>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Microsoft Azure Synapse Monitoring;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 

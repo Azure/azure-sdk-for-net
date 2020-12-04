@@ -34,7 +34,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
         /// <summary>
         /// Gets the endpoint to connect. By default it is <see cref="KeyVaultTestEnvironment.ManagedHsmUrl"/>.
         /// </summary>
-        public virtual Uri Uri => new Uri(TestEnvironment.ManagedHsmUrl);
+        public Uri Uri =>
+            Uri.TryCreate(TestEnvironment.ManagedHsmUrl, UriKind.Absolute, out Uri uri)
+                ? uri
+                // If the AZURE_MANAGEDHSM_URL variable is not defined, we didn't provision one
+                // due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
+                : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
         /// <summary>
         /// Gets a polling interval based on whether we're playing back recorded tests (0s) or not (2s).

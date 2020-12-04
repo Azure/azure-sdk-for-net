@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     /// <summary>
     /// This class manages Azurite Lifecycle for a test class.
@@ -35,6 +35,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
         private AzuriteAccount account;
         private CountdownEvent countdownEvent = new CountdownEvent(2);
         private StringBuilder azuriteOutput = new StringBuilder();
+        private StringBuilder azuriteError = new StringBuilder();
         private int blobsPort;
         private int queuesPort;
 
@@ -79,6 +80,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardError = true;
             process.OutputDataReceived += delegate (object sender, DataReceivedEventArgs e)
             {
                 if (e.Data != null)
@@ -99,6 +101,16 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                     }
                 }
             };
+            process.ErrorDataReceived += delegate (object sender, DataReceivedEventArgs e)
+            {
+                if (e.Data != null)
+                {
+                    if (!countdownEvent.IsSet) // stop error collection if it started successfully.
+                    {
+                        azuriteError.AppendLine(e.Data);
+                    }
+                }
+            };
             try
             {
                 process.Start();
@@ -107,10 +119,11 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 throw new ArgumentException(ErrorMessage("could not run NodeJS, make sure it's installed"), e);
             }
             process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
             var didAzuriteStart = countdownEvent.Wait(TimeSpan.FromSeconds(15));
             if (!didAzuriteStart)
             {
-                throw new InvalidOperationException(ErrorMessage($"azurite process could not start with following output:\n{azuriteOutput}"));
+                throw new InvalidOperationException(ErrorMessage($"azurite process could not start with following output:\n{azuriteOutput}\nand error:\n{azuriteError}"));
             }
             account.BlobsPort = blobsPort;
             account.QueuesPort = queuesPort;
@@ -140,13 +153,18 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             });
         }
 
-        public QueueServiceClient GetQueueServiceClient()
+        public QueueServiceClient GetQueueServiceClient(QueueClientOptions queueClientOptions = default)
         {
-            var transport = GetTransport();
-            return new QueueServiceClient(account.ConnectionString, new QueueClientOptions()
+            if (queueClientOptions == default)
             {
-                Transport = transport
-            });
+                queueClientOptions = new QueueClientOptions()
+                {
+                    MessageEncoding = QueueMessageEncoding.Base64
+                };
+            }
+
+            queueClientOptions.Transport = GetTransport();
+            return new QueueServiceClient(account.ConnectionString, queueClientOptions);
         }
 
         public HttpClientTransport GetTransport()

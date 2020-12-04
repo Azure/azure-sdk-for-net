@@ -918,6 +918,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.AccountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
                         }
+                        if (response.Headers.TryGetValue("x-ms-is-hns-enabled", out _header))
+                        {
+                            _value.IsHierarchicalNamespaceEnabled = bool.Parse(_header);
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -15245,6 +15249,11 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; internal set; }
 
         /// <summary>
+        /// Version 2019-07-07 and newer. Indicates if the account has a hierarchical namespace enabled.
+        /// </summary>
+        public bool IsHierarchicalNamespaceEnabled { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of AccountInfo instances.
         /// You can use BlobsModelFactory.AccountInfo instead.
         /// </summary>
@@ -15261,12 +15270,14 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static AccountInfo AccountInfo(
             Azure.Storage.Blobs.Models.SkuName skuName,
-            Azure.Storage.Blobs.Models.AccountKind accountKind)
+            Azure.Storage.Blobs.Models.AccountKind accountKind,
+            bool isHierarchicalNamespaceEnabled)
         {
             return new AccountInfo()
             {
                 SkuName = skuName,
                 AccountKind = accountKind,
+                IsHierarchicalNamespaceEnabled = isHierarchicalNamespaceEnabled,
             };
         }
     }
@@ -19186,7 +19197,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
+        #pragma warning disable CA2227 // Collection properties should be readonly
         public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobCorsRule> Cors { get; set; }
+        #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions

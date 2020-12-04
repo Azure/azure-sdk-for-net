@@ -5,18 +5,19 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Linq;
-using Azure.Storage.Queues.Models;
-using Azure.Storage.Queues;
-using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
-namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 {
     public class MultipleStorageAccountsEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
     {
@@ -221,8 +222,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 BlobServiceClient1 = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
                 BlobServiceClient2 = new BlobServiceClient(testEnvironment.SecondaryStorageAccountConnectionString);
-                QueueServiceClient1 = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
-                QueueServiceClient2 = new QueueServiceClient(testEnvironment.SecondaryStorageAccountConnectionString);
+                var queueOptions = new QueueClientOptions() { MessageEncoding = QueueMessageEncoding.Base64 };
+                QueueServiceClient1 = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString, queueOptions);
+                QueueServiceClient2 = new QueueServiceClient(testEnvironment.SecondaryStorageAccountConnectionString, queueOptions);
 
                 await CleanContainersAsync();
 

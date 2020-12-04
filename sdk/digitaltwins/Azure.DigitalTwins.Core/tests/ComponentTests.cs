@@ -39,7 +39,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // create wifi model
                 string roomWithWifiModel = TestAssetsHelper.GetRoomWithWifiModelPayload(roomWithWifiModelId, wifiModelId, wifiComponentName);
 
-                await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
                 // create room digital twin
                 BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
@@ -69,6 +69,10 @@ namespace Azure.DigitalTwins.Core.Tests
                 // The response to the Patch request should be 204 (No content)
                 updateComponentResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
             }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+            }
             finally
             {
                 // clean up
@@ -94,7 +98,6 @@ namespace Azure.DigitalTwins.Core.Tests
             }
         }
 
-        [Ignore(reason: "Service doesn't return the expected 412 status code, so the client library doesn't fail in this scenario")]
         [Test]
         public async Task Component_UpdateComponentFailsWhenIfMatchHeaderOutOfDate()
         {
@@ -117,7 +120,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // create wifi model
                 string roomWithWifiModel = TestAssetsHelper.GetRoomWithWifiModelPayload(roomWithWifiModelId, wifiModelId, wifiComponentName);
 
-                await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
                 // create room digital twin
                 BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
@@ -145,7 +148,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Patch component again, but with the now out of date ETag
                 JsonPatchDocument secondComponentUpdatePatchDocument = new JsonPatchDocument();
-                componentUpdatePatchDocument.AppendReplace("/Network", "Even newer Network");
+                secondComponentUpdatePatchDocument.AppendReplace("/Network", "Even newer Network");
 
                 Func<Task> act = async () =>
                 {
@@ -160,6 +163,10 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 act.Should().Throw<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {
@@ -208,7 +215,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // create wifi model
                 string roomWithWifiModel = TestAssetsHelper.GetRoomWithWifiModelPayload(roomWithWifiModelId, wifiModelId, wifiComponentName);
 
-                await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
                 // create room digital twin
                 BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
@@ -254,6 +261,10 @@ namespace Azure.DigitalTwins.Core.Tests
                 {
                     throw new AssertionException("UpdateComponent should not have thrown PreconditionFailed because the ETag was up to date", ex);
                 }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {

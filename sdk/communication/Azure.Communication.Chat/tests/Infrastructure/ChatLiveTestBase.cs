@@ -13,9 +13,7 @@ namespace Azure.Communication.Chat.Tests
     public class ChatLiveTestBase : RecordedTestBase<ChatTestEnvironment>
     {
         public ChatLiveTestBase(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new ChatRecordedTestSanitizer();
-        }
+           => Sanitizer = new ChatRecordedTestSanitizer();
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
@@ -37,7 +35,7 @@ namespace Azure.Communication.Chat.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                token = ChatRecordedTestSanitizer.SanitizedChatAuthHeaderValue;
+                token = ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue;
             }
 
             CommunicationUserCredential communicationUserCredential = new CommunicationUserCredential(token);

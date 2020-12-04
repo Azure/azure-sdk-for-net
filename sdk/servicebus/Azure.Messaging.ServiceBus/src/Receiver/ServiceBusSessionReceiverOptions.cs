@@ -29,12 +29,12 @@ namespace Azure.Messaging.ServiceBus
                 _prefetchCount = value;
             }
         }
-        private int _prefetchCount = 0;
+        private int _prefetchCount;
 
         /// <summary>
         /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
-        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
+        public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
         /// <summary>
         /// Gets or sets an optional session ID to scope the <see cref="ServiceBusSessionReceiver"/> to. If left blank,
