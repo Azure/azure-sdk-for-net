@@ -984,7 +984,7 @@ namespace Azure.Data.Tables.Tests
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 5);
 
             // Create the batch.
-            var batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
+            var batch = InstrumentClient(client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey));
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
@@ -1022,7 +1022,7 @@ namespace Azure.Data.Tables.Tests
             await client.AddEntityAsync(entitiesToCreate[2]).ConfigureAwait(false);
 
             // Create the batch.
-            TableTransactionalBatch batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
+            TableTransactionalBatch batch = InstrumentClient(client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey));
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
@@ -1079,7 +1079,7 @@ namespace Azure.Data.Tables.Tests
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 4);
 
             // Create the batch.
-            var batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
+            var batch = InstrumentClient(client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey));
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
