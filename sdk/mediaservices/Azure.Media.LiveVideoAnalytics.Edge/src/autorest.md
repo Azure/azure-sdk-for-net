@@ -10,6 +10,6 @@ directive:
     $["x-csharp-usage"] = "model,input,output";
     $["x-csharp-formats"] = "json";
 
-require: C:\azure-rest-api-specs-pr\specification\mediaservices\data-plane\readme.md
+require: <<LocalPathToPrivateRepo--LVA-Release-do-not-delete--branch>>Azure\azure-rest-api-specs-pr\specification\mediaservices\data-plane\readme.md
 
 ```
