@@ -2,7 +2,7 @@ Set-StrictMode -Version Latest
 
 $RepoRoot = Resolve-Path $PSScriptRoot\..\..\..
 $ObjDirectory = "$RepoRoot\artifacts\obj";
-#dotnet restore $RepoRoot\eng\service.proj
+dotnet restore $RepoRoot\eng\service.proj
 
 pushd $PSScriptRoot
 
