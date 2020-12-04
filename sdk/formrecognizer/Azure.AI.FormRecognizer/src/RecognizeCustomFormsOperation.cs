@@ -208,8 +208,6 @@ namespace Azure.AI.FormRecognizer.Models
                         ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
                         : _serviceClient.GetAnalyzeFormResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
 
-                    // TODO: Add reasonable null checks.
-
                     _response = update.GetRawResponse();
 
                     if (update.Value.Status == OperationStatus.Succeeded)
