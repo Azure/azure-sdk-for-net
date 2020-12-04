@@ -2019,11 +2019,13 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         await _invalidQueueMessageHandler.OnInvalidMessageAsync(
+                            this,
                             QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
                             cancellationToken).ConfigureAwait(false);
                     } else
                     {
                         _invalidQueueMessageHandler.OnInvalidMessage(
+                            this,
                             QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
                             cancellationToken);
                     }
@@ -2360,12 +2362,14 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         await _invalidQueueMessageHandler.OnInvalidMessageAsync(
+                            this,
                             PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
                             cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
                         _invalidQueueMessageHandler.OnInvalidMessage(
+                            this,
                             PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
                             cancellationToken);
                     }

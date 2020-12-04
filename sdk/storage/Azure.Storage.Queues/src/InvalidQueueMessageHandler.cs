@@ -14,15 +14,17 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// TODO (kasobol-msft) add doc.
         /// </summary>
+        /// <param name="queueClient"></param>
         /// <param name="rawMessage"></param>
         /// <param name="cancellationToken"></param>
-        public abstract void OnInvalidMessage(object rawMessage, CancellationToken cancellationToken);
+        public abstract void OnInvalidMessage(QueueClient queueClient, object rawMessage, CancellationToken cancellationToken);
 
         /// <summary>
         /// TODO (kasobol-msft) add doc.
         /// </summary>
+        /// <param name="queueClient"></param>
         /// <param name="rawMessage"></param>
         /// <param name="cancellationToken"></param>
-        public abstract Task OnInvalidMessageAsync(object rawMessage, CancellationToken cancellationToken);
+        public abstract Task OnInvalidMessageAsync(QueueClient queueClient, object rawMessage, CancellationToken cancellationToken);
     }
 }

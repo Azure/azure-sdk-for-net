@@ -797,12 +797,12 @@ namespace Azure.Storage.Queues.Test
             if (IsAsync)
             {
                 invalidQueueMessageHandlerMock.Verify(
-                    m => m.OnInvalidMessageAsync(It.Is<object>(m => ((PeekedMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
+                    m => m.OnInvalidMessageAsync(It.IsAny<QueueClient>(), It.Is<object>(m => ((PeekedMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
             }
             else
             {
                 invalidQueueMessageHandlerMock.Verify(
-                    m => m.OnInvalidMessage(It.Is<object>(m => ((PeekedMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
+                    m => m.OnInvalidMessage(It.IsAny<QueueClient>(), It.Is<object>(m => ((PeekedMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
             }
         }
 
@@ -866,12 +866,12 @@ namespace Azure.Storage.Queues.Test
             if (IsAsync)
             {
                 invalidQueueMessageHandlerMock.Verify(
-                    m => m.OnInvalidMessageAsync(It.Is<object>(m => ((QueueMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
+                    m => m.OnInvalidMessageAsync(It.IsAny<QueueClient>(), It.Is<object>(m => ((QueueMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
             }
             else
             {
                 invalidQueueMessageHandlerMock.Verify(
-                    m => m.OnInvalidMessage(It.Is<object>(m => ((QueueMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
+                    m => m.OnInvalidMessage(It.IsAny<QueueClient>(), It.Is<object>(m => ((QueueMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
             }
         }
 
