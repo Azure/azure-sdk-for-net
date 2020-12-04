@@ -605,7 +605,16 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
-            Assert.IsNotNull(filterBlob);
+
+            if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2020_04_08)
+            {
+                Assert.AreEqual(1, filterBlob.Tags.Count);
+                Assert.AreEqual("myTagValue", filterBlob.Tags["myTagKey"]);
+            }
+            else
+            {
+                Assert.IsNotNull(filterBlob);
+            }
         }
 
         [Test]

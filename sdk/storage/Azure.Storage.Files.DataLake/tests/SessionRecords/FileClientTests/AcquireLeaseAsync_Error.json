@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "781622b9-ceef-3f97-d43e-cc3cb943f9c1",
         "x-ms-date": "Fri, 03 Apr 2020 20:58:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "781622b9-ceef-3f97-d43e-cc3cb943f9c1",
         "x-ms-request-id": "9621f61d-f01e-0012-76fa-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "86b8abf1-a5b5-0483-96c7-8989479065b6",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "0d4a16b5-738a-6d0c-eea2-01089edf736c",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "9621f628-f01e-0012-7ffa-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -85,7 +85,7 @@
         "x-ms-client-request-id": "30d3a545-5745-d62b-aff0-17478212f2da",
         "x-ms-date": "Fri, 03 Apr 2020 20:58:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -98,7 +98,7 @@
         ],
         "x-ms-client-request-id": "30d3a545-5745-d62b-aff0-17478212f2da",
         "x-ms-request-id": "9621f62d-f01e-0012-04fa-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

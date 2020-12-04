@@ -22,7 +22,8 @@ namespace Azure.Storage.Test.Shared
         BlobClientOptions.ServiceVersion.V2019_02_02,
         BlobClientOptions.ServiceVersion.V2019_07_07,
         BlobClientOptions.ServiceVersion.V2019_12_12,
-        BlobClientOptions.ServiceVersion.V2020_02_10)]
+        BlobClientOptions.ServiceVersion.V2020_02_10,
+        BlobClientOptions.ServiceVersion.V2020_04_08)]
     public abstract class BlobTestBase : StorageTestBase
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
@@ -454,7 +455,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
-                Version = sasVersion ?? ToSasVersion(BlobClientOptions.ServiceVersion.V2020_02_10)
+                Version = sasVersion ?? ToSasVersion(BlobClientOptions.ServiceVersion.V2020_04_08)
             };
 
         public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsBlob(string containerName, string blobName, UserDelegationKey userDelegationKey, string accountName)
@@ -494,6 +495,7 @@ namespace Azure.Storage.Test.Shared
                 BlobClientOptions.ServiceVersion.V2019_07_07 => "2019-07-07",
                 BlobClientOptions.ServiceVersion.V2019_12_12 => "2019-12-12",
                 BlobClientOptions.ServiceVersion.V2020_02_10 => "2020-02-10",
+                BlobClientOptions.ServiceVersion.V2020_04_08 => "2020-04-08",
                 _ => throw new ArgumentException("Invalid service version"),
             };
         }

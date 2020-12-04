@@ -877,6 +877,21 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static TaggedBlobItem TaggedBlobItem(
             string blobName = default,
+            string blobContainerName = default,
+            Tags tags = default)
+            => new TaggedBlobItem
+            {
+                BlobName = blobName,
+                BlobContainerName = blobContainerName,
+                Tags = tags
+            };
+
+        /// <summary>
+        /// Creates a new BlobTagItem instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static TaggedBlobItem TaggedBlobItem(
+            string blobName = default,
             string blobContainerName = default)
             => new TaggedBlobItem
             {

@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "dd681a83-58d4-a047-a121-af3166d2b9d2",
         "x-ms-date": "Thu, 02 Apr 2020 23:38:56 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "dd681a83-58d4-a047-a121-af3166d2b9d2",
         "x-ms-request-id": "c7ff2f89-d01e-0067-1b47-095d5c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "2d0e4397-50c0-5a26-93c6-31e01e2c5dfa",
         "x-ms-date": "Thu, 02 Apr 2020 23:38:56 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "wrxoU/iEwnYwS5\u002BqEk/qCzZ3iYwPR4DqpnR\u002BlRd6F6RRyG6qaWXZDCywde35yuIPVDSWEHND2Hs8fq2EBi1ftjT6WEngP6HQnn1gXtGS8NuSbkDi4wcwDvDzbuu4VAX/Ub\u002B5/3KYLxWTxnH243qpqY3R8pfsfNMtyUlZ7NG1GEp3YAwS2fFp\u002BT8rTx2VOit2ScRe5mJuEtXrizUoP0JD3a0nf4Jtl8\u002BcaPlYwSy2mI8e4qIMVzHoCU42Jk28QLn853FvbbqpCLH1wX1oFlGoNfOlClyfN4V7P3Y0N3GC4Cc/W9m7RirUdNrwF5a0f/P9jfBaFjZdXLDr8y1EddFAcuFWKbp37e7I0JWBryDvx8CCNqmAJ8nx4v4pz1P8kP8JsKS0XVU4haACkUag262Q\u002ByttwT4nv0sYZEe8Th6bzECWeP57O2lqSrEJfpaCUQZQmdMnj87A4fBZm/kOfDeCZ8UGCWKvFMDCAneNHkG0lRNAa7VKczxy1ZYNIp9wXM56hxfRfEejoYQTZYxWM8OvpAXlzRCBN/OIlDTMofIgUaapEpcp4xnLnMowNw6vG6HTXX2Zio\u002B9\u002BE8kSOgT1/\u002BS8hPmrSAshsDsGTBFUf/k2XiS\u002BUN0hscX6xpHBZswuMXLnkT7yG6Ap9e8rXBeeKdPP29vgN67HmxMz8EG5IAlu2FrerK76RAKEVJrt9hWuHNz98UswDjnD4DYrvmsesJWl/EP8/30lFZeZW6MUGaT9RdOku27\u002Bfoog2sy4zoXXpePFSDnRsV2f2NvzVvJW78ZRLjhXujVm5725m\u002BRwrEbRwfW/DpGrK9R2BKKTCufXiisGJ6BNf\u002BvuXqB8GBV5L2xU4VU8l6E05gJkIbVS09yV4hG5aoSmhIHJ0LAxLtO\u002B/NV2PilSmvKKEQGeKR52m4rD5jYD/8Tn7lzTMsbww7cupSSf3NWzAwce7xlCyFtjk3UlbUjduz0Qjg/Mv6gr2Q1Kr0Q5lr71EKLu5NCrZSXBb59Ry5ZuUOnnj06FpoOe8xYL\u002BBkXafz2cBzl7tZsZSkqC1AImg23HF5aUcdwL6ofUDG6n6zMqgWim5t5SGITu2olm5szlhkIVNv6/Ng1RgCyxl7ksYW8HWFKZj5yPZP8BpadClPO67nYsgrQ0e0trVVaxoIDbsmkqb556TAalhcIPrYBWDvso9rkzD96q0t0HPipF3bR\u002BNeM\u002BKDVlQJJvdwziNN27BUZriKnXmLKaf5yxYx3cX7gNkWetJ\u002Ba1s7YW04jRyK4PXCjj6kUapp0wo7ios92EgxdE1JNmHe1vpcTzsMU5uLbusgbk\u002BHVi8vrabIQ\u002BHQ/YgkBxjOQKmT5LhESAFuXIBurxufHWn4qR4eGg==",
       "StatusCode": 404,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "2d0e4397-50c0-5a26-93c6-31e01e2c5dfa",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "c7ff2f9a-d01e-0067-2847-095d5c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -83,7 +83,7 @@
         "x-ms-client-request-id": "6661e08f-f010-3859-93bb-00525a7094bb",
         "x-ms-date": "Thu, 02 Apr 2020 23:38:56 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -96,7 +96,7 @@
         ],
         "x-ms-client-request-id": "6661e08f-f010-3859-93bb-00525a7094bb",
         "x-ms-request-id": "c7ff2fa1-d01e-0067-2d47-095d5c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }
