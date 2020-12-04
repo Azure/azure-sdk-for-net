@@ -543,9 +543,9 @@ namespace Microsoft.Azure.Management.Sql
         IServerTrustGroupsOperations ServerTrustGroups { get; }
 
         /// <summary>
-        /// Gets the IServerDevOpsAuditPoliciesOperations.
+        /// Gets the IServerDevOpsAuditSettingsOperations.
         /// </summary>
-        IServerDevOpsAuditPoliciesOperations ServerDevOpsAuditPolicies { get; }
+        IServerDevOpsAuditSettingsOperations ServerDevOpsAuditSettings { get; }
 
     }
 }

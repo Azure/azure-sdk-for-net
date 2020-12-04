@@ -548,9 +548,9 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerTrustGroupsOperations ServerTrustGroups { get; private set; }
 
         /// <summary>
-        /// Gets the IServerDevOpsAuditPoliciesOperations.
+        /// Gets the IServerDevOpsAuditSettingsOperations.
         /// </summary>
-        public virtual IServerDevOpsAuditPoliciesOperations ServerDevOpsAuditPolicies { get; private set; }
+        public virtual IServerDevOpsAuditSettingsOperations ServerDevOpsAuditSettings { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -888,7 +888,7 @@ namespace Microsoft.Azure.Management.Sql
             ImportExport = new ImportExportOperations(this);
             ManagedInstanceAzureADOnlyAuthentications = new ManagedInstanceAzureADOnlyAuthenticationsOperations(this);
             ServerTrustGroups = new ServerTrustGroupsOperations(this);
-            ServerDevOpsAuditPolicies = new ServerDevOpsAuditPoliciesOperations(this);
+            ServerDevOpsAuditSettings = new ServerDevOpsAuditSettingsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

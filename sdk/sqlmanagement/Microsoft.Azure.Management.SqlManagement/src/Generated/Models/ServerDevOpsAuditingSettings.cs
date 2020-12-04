@@ -16,28 +16,32 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// A server DevOps auditing policy.
+    /// A server DevOps auditing settings.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ServerDevOpsAuditingPolicy : ProxyResource
+    public partial class ServerDevOpsAuditingSettings : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the ServerDevOpsAuditingPolicy class.
+        /// Initializes a new instance of the ServerDevOpsAuditingSettings
+        /// class.
         /// </summary>
-        public ServerDevOpsAuditingPolicy()
+        public ServerDevOpsAuditingSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServerDevOpsAuditingPolicy class.
+        /// Initializes a new instance of the ServerDevOpsAuditingSettings
+        /// class.
         /// </summary>
-        /// <param name="state">Specifies the state of the policy. If state is
+        /// <param name="state">Specifies the state of the audit. If state is
         /// Enabled, storageEndpoint or isAzureMonitorTargetEnabled are
         /// required. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="systemData">SystemData of
+        /// ServerDevOpsAuditSettingsResource.</param>
         /// <param name="isAzureMonitorTargetEnabled">Specifies whether DevOps
         /// audit events are sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as
@@ -76,9 +80,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// authentication](https://go.microsoft.com/fwlink/?linkid=2114355)</param>
         /// <param name="storageAccountSubscriptionId">Specifies the blob
         /// storage subscription Id.</param>
-        public ServerDevOpsAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), bool? isAzureMonitorTargetEnabled = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), System.Guid? storageAccountSubscriptionId = default(System.Guid?))
+        public ServerDevOpsAuditingSettings(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), bool? isAzureMonitorTargetEnabled = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), System.Guid? storageAccountSubscriptionId = default(System.Guid?))
             : base(id, name, type)
         {
+            SystemData = systemData;
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             State = state;
             StorageEndpoint = storageEndpoint;
@@ -91,6 +96,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets systemData of ServerDevOpsAuditSettingsResource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets specifies whether DevOps audit events are sent to
@@ -116,9 +127,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         public bool? IsAzureMonitorTargetEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the state of the policy. If state is
-        /// Enabled, storageEndpoint or isAzureMonitorTargetEnabled are
-        /// required. Possible values include: 'Enabled', 'Disabled'
+        /// Gets or sets specifies the state of the audit. If state is Enabled,
+        /// storageEndpoint or isAzureMonitorTargetEnabled are required.
+        /// Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public BlobAuditingPolicyState State { get; set; }

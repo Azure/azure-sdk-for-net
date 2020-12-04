@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ServerDevOpsAuditPoliciesOperations.
+    /// Extension methods for ServerDevOpsAuditSettingsOperations.
     /// </summary>
-    public static partial class ServerDevOpsAuditPoliciesOperationsExtensions
+    public static partial class ServerDevOpsAuditSettingsOperationsExtensions
     {
             /// <summary>
-            /// Gets a server's DevOps audit policy.
+            /// Gets a server's DevOps audit settings.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,16 +34,16 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='devOpsAuditPolicyName'>
-            /// The name of the devops audit policy. This should always be 'default'.
+            /// <param name='devOpsAuditingSettingsName'>
+            /// The name of the devops audit settings. This should always be 'default'.
             /// </param>
-            public static ServerDevOpsAuditingPolicy Get(this IServerDevOpsAuditPoliciesOperations operations, string resourceGroupName, string serverName, string devOpsAuditPolicyName)
+            public static ServerDevOpsAuditingSettings Get(this IServerDevOpsAuditSettingsOperations operations, string resourceGroupName, string serverName, string devOpsAuditingSettingsName)
             {
-                return operations.GetAsync(resourceGroupName, serverName, devOpsAuditPolicyName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serverName, devOpsAuditingSettingsName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a server's DevOps audit policy.
+            /// Gets a server's DevOps audit settings.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -55,22 +55,22 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='devOpsAuditPolicyName'>
-            /// The name of the devops audit policy. This should always be 'default'.
+            /// <param name='devOpsAuditingSettingsName'>
+            /// The name of the devops audit settings. This should always be 'default'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServerDevOpsAuditingPolicy> GetAsync(this IServerDevOpsAuditPoliciesOperations operations, string resourceGroupName, string serverName, string devOpsAuditPolicyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerDevOpsAuditingSettings> GetAsync(this IServerDevOpsAuditSettingsOperations operations, string resourceGroupName, string serverName, string devOpsAuditingSettingsName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, devOpsAuditPolicyName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, devOpsAuditingSettingsName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates or updates a server's DevOps audit policy.
+            /// Creates or updates a server's DevOps audit settings.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -82,19 +82,19 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='devOpsAuditPolicyName'>
-            /// The name of the devops audit policy. This should always be 'default'.
+            /// <param name='devOpsAuditingSettingsName'>
+            /// The name of the devops audit settings. This should always be 'default'.
             /// </param>
             /// <param name='parameters'>
-            /// Properties of DevOps audit policy
+            /// Properties of DevOps audit settings
             /// </param>
-            public static ServerDevOpsAuditingPolicy CreateOrUpdate(this IServerDevOpsAuditPoliciesOperations operations, string resourceGroupName, string serverName, string devOpsAuditPolicyName, ServerDevOpsAuditingPolicy parameters)
+            public static ServerDevOpsAuditingSettings CreateOrUpdate(this IServerDevOpsAuditSettingsOperations operations, string resourceGroupName, string serverName, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettings parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, devOpsAuditPolicyName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, devOpsAuditingSettingsName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates a server's DevOps audit policy.
+            /// Creates or updates a server's DevOps audit settings.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -106,18 +106,18 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='devOpsAuditPolicyName'>
-            /// The name of the devops audit policy. This should always be 'default'.
+            /// <param name='devOpsAuditingSettingsName'>
+            /// The name of the devops audit settings. This should always be 'default'.
             /// </param>
             /// <param name='parameters'>
-            /// Properties of DevOps audit policy
+            /// Properties of DevOps audit settings
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServerDevOpsAuditingPolicy> CreateOrUpdateAsync(this IServerDevOpsAuditPoliciesOperations operations, string resourceGroupName, string serverName, string devOpsAuditPolicyName, ServerDevOpsAuditingPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerDevOpsAuditingSettings> CreateOrUpdateAsync(this IServerDevOpsAuditSettingsOperations operations, string resourceGroupName, string serverName, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettings parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, devOpsAuditPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, devOpsAuditingSettingsName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IPage<ServerDevOpsAuditingPolicy> ListByServer(this IServerDevOpsAuditPoliciesOperations operations, string resourceGroupName, string serverName)
+            public static IPage<ServerDevOpsAuditingSettings> ListByServer(this IServerDevOpsAuditSettingsOperations operations, string resourceGroupName, string serverName)
             {
                 return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ServerDevOpsAuditingPolicy>> ListByServerAsync(this IServerDevOpsAuditPoliciesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ServerDevOpsAuditingSettings>> ListByServerAsync(this IServerDevOpsAuditSettingsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates a server's DevOps audit policy.
+            /// Creates or updates a server's DevOps audit settings.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -178,19 +178,19 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='devOpsAuditPolicyName'>
-            /// The name of the devops audit policy. This should always be 'default'.
+            /// <param name='devOpsAuditingSettingsName'>
+            /// The name of the devops audit settings. This should always be 'default'.
             /// </param>
             /// <param name='parameters'>
-            /// Properties of DevOps audit policy
+            /// Properties of DevOps audit settings
             /// </param>
-            public static ServerDevOpsAuditingPolicy BeginCreateOrUpdate(this IServerDevOpsAuditPoliciesOperations operations, string resourceGroupName, string serverName, string devOpsAuditPolicyName, ServerDevOpsAuditingPolicy parameters)
+            public static ServerDevOpsAuditingSettings BeginCreateOrUpdate(this IServerDevOpsAuditSettingsOperations operations, string resourceGroupName, string serverName, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettings parameters)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, devOpsAuditPolicyName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, devOpsAuditingSettingsName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates a server's DevOps audit policy.
+            /// Creates or updates a server's DevOps audit settings.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -202,18 +202,18 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='devOpsAuditPolicyName'>
-            /// The name of the devops audit policy. This should always be 'default'.
+            /// <param name='devOpsAuditingSettingsName'>
+            /// The name of the devops audit settings. This should always be 'default'.
             /// </param>
             /// <param name='parameters'>
-            /// Properties of DevOps audit policy
+            /// Properties of DevOps audit settings
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServerDevOpsAuditingPolicy> BeginCreateOrUpdateAsync(this IServerDevOpsAuditPoliciesOperations operations, string resourceGroupName, string serverName, string devOpsAuditPolicyName, ServerDevOpsAuditingPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerDevOpsAuditingSettings> BeginCreateOrUpdateAsync(this IServerDevOpsAuditSettingsOperations operations, string resourceGroupName, string serverName, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettings parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, devOpsAuditPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, devOpsAuditingSettingsName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ServerDevOpsAuditingPolicy> ListByServerNext(this IServerDevOpsAuditPoliciesOperations operations, string nextPageLink)
+            public static IPage<ServerDevOpsAuditingSettings> ListByServerNext(this IServerDevOpsAuditSettingsOperations operations, string nextPageLink)
             {
                 return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ServerDevOpsAuditingPolicy>> ListByServerNextAsync(this IServerDevOpsAuditPoliciesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ServerDevOpsAuditingSettings>> ListByServerNextAsync(this IServerDevOpsAuditSettingsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

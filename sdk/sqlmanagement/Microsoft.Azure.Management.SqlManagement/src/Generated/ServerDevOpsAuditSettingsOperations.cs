@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ServerDevOpsAuditPoliciesOperations operations.
+    /// ServerDevOpsAuditSettingsOperations operations.
     /// </summary>
-    internal partial class ServerDevOpsAuditPoliciesOperations : IServiceOperations<SqlManagementClient>, IServerDevOpsAuditPoliciesOperations
+    internal partial class ServerDevOpsAuditSettingsOperations : IServiceOperations<SqlManagementClient>, IServerDevOpsAuditSettingsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ServerDevOpsAuditPoliciesOperations class.
+        /// Initializes a new instance of the ServerDevOpsAuditSettingsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ServerDevOpsAuditPoliciesOperations(SqlManagementClient client)
+        internal ServerDevOpsAuditSettingsOperations(SqlManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a server's DevOps audit policy.
+        /// Gets a server's DevOps audit settings.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='devOpsAuditPolicyName'>
-        /// The name of the devops audit policy. This should always be 'default'.
+        /// <param name='devOpsAuditingSettingsName'>
+        /// The name of the devops audit settings. This should always be 'default'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ServerDevOpsAuditingPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerDevOpsAuditingSettings>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditingSettingsName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -94,15 +94,15 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
-            if (devOpsAuditPolicyName == null)
+            if (devOpsAuditingSettingsName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "devOpsAuditPolicyName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "devOpsAuditingSettingsName");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-02-02-preview";
+            string apiVersion = "2020-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -112,17 +112,17 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("devOpsAuditPolicyName", devOpsAuditPolicyName);
+                tracingParameters.Add("devOpsAuditingSettingsName", devOpsAuditingSettingsName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditPolicyName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
-            _url = _url.Replace("{devOpsAuditPolicyName}", System.Uri.EscapeDataString(devOpsAuditPolicyName));
+            _url = _url.Replace("{devOpsAuditingSettingsName}", System.Uri.EscapeDataString(devOpsAuditingSettingsName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ServerDevOpsAuditingPolicy>();
+            var _result = new AzureOperationResponse<ServerDevOpsAuditingSettings>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerDevOpsAuditingPolicy>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerDevOpsAuditingSettings>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates or updates a server's DevOps audit policy.
+        /// Creates or updates a server's DevOps audit settings.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -264,11 +264,11 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='devOpsAuditPolicyName'>
-        /// The name of the devops audit policy. This should always be 'default'.
+        /// <param name='devOpsAuditingSettingsName'>
+        /// The name of the devops audit settings. This should always be 'default'.
         /// </param>
         /// <param name='parameters'>
-        /// Properties of DevOps audit policy
+        /// Properties of DevOps audit settings
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -276,10 +276,10 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ServerDevOpsAuditingPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditPolicyName, ServerDevOpsAuditingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerDevOpsAuditingSettings>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettings parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ServerDevOpsAuditingPolicy> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, devOpsAuditPolicyName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ServerDevOpsAuditingSettings> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, devOpsAuditingSettingsName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ServerDevOpsAuditingPolicy>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ServerDevOpsAuditingSettings>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-02-02-preview";
+            string apiVersion = "2020-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ServerDevOpsAuditingPolicy>>();
+            var _result = new AzureOperationResponse<IPage<ServerDevOpsAuditingSettings>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ServerDevOpsAuditingPolicy>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ServerDevOpsAuditingSettings>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -479,7 +479,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates or updates a server's DevOps audit policy.
+        /// Creates or updates a server's DevOps audit settings.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -488,11 +488,11 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='devOpsAuditPolicyName'>
-        /// The name of the devops audit policy. This should always be 'default'.
+        /// <param name='devOpsAuditingSettingsName'>
+        /// The name of the devops audit settings. This should always be 'default'.
         /// </param>
         /// <param name='parameters'>
-        /// Properties of DevOps audit policy
+        /// Properties of DevOps audit settings
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ServerDevOpsAuditingPolicy>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditPolicyName, ServerDevOpsAuditingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerDevOpsAuditingSettings>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettings parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -525,9 +525,9 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
-            if (devOpsAuditPolicyName == null)
+            if (devOpsAuditingSettingsName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "devOpsAuditPolicyName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "devOpsAuditingSettingsName");
             }
             if (parameters == null)
             {
@@ -541,7 +541,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-02-02-preview";
+            string apiVersion = "2020-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -551,7 +551,7 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("devOpsAuditPolicyName", devOpsAuditPolicyName);
+                tracingParameters.Add("devOpsAuditingSettingsName", devOpsAuditingSettingsName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -559,10 +559,10 @@ namespace Microsoft.Azure.Management.Sql
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditPolicyName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
-            _url = _url.Replace("{devOpsAuditPolicyName}", System.Uri.EscapeDataString(devOpsAuditPolicyName));
+            _url = _url.Replace("{devOpsAuditingSettingsName}", System.Uri.EscapeDataString(devOpsAuditingSettingsName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -668,7 +668,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ServerDevOpsAuditingPolicy>();
+            var _result = new AzureOperationResponse<ServerDevOpsAuditingSettings>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -681,7 +681,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerDevOpsAuditingPolicy>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerDevOpsAuditingSettings>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -727,7 +727,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ServerDevOpsAuditingPolicy>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ServerDevOpsAuditingSettings>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -841,7 +841,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ServerDevOpsAuditingPolicy>>();
+            var _result = new AzureOperationResponse<IPage<ServerDevOpsAuditingSettings>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -854,7 +854,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ServerDevOpsAuditingPolicy>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ServerDevOpsAuditingSettings>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

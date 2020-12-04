@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ServerDevOpsAuditPoliciesOperations operations.
+    /// ServerDevOpsAuditSettingsOperations operations.
     /// </summary>
-    public partial interface IServerDevOpsAuditPoliciesOperations
+    public partial interface IServerDevOpsAuditSettingsOperations
     {
         /// <summary>
-        /// Gets a server's DevOps audit policy.
+        /// Gets a server's DevOps audit settings.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='devOpsAuditPolicyName'>
-        /// The name of the devops audit policy. This should always be
+        /// <param name='devOpsAuditingSettingsName'>
+        /// The name of the devops audit settings. This should always be
         /// 'default'.
         /// </param>
         /// <param name='customHeaders'>
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerDevOpsAuditingPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerDevOpsAuditingSettings>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditingSettingsName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a server's DevOps audit policy.
+        /// Creates or updates a server's DevOps audit settings.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -65,12 +65,12 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='devOpsAuditPolicyName'>
-        /// The name of the devops audit policy. This should always be
+        /// <param name='devOpsAuditingSettingsName'>
+        /// The name of the devops audit settings. This should always be
         /// 'default'.
         /// </param>
         /// <param name='parameters'>
-        /// Properties of DevOps audit policy
+        /// Properties of DevOps audit settings
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerDevOpsAuditingPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditPolicyName, ServerDevOpsAuditingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerDevOpsAuditingSettings>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettings parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists DevOps audit settings of a server.
         /// </summary>
@@ -114,9 +114,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ServerDevOpsAuditingPolicy>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ServerDevOpsAuditingSettings>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a server's DevOps audit policy.
+        /// Creates or updates a server's DevOps audit settings.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -126,12 +126,12 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='devOpsAuditPolicyName'>
-        /// The name of the devops audit policy. This should always be
+        /// <param name='devOpsAuditingSettingsName'>
+        /// The name of the devops audit settings. This should always be
         /// 'default'.
         /// </param>
         /// <param name='parameters'>
-        /// Properties of DevOps audit policy
+        /// Properties of DevOps audit settings
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerDevOpsAuditingPolicy>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditPolicyName, ServerDevOpsAuditingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerDevOpsAuditingSettings>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettings parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists DevOps audit settings of a server.
         /// </summary>
@@ -170,6 +170,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ServerDevOpsAuditingPolicy>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ServerDevOpsAuditingSettings>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -16,14 +16,14 @@ namespace Sql.Tests
     public class ServerDevOpsAuditingScenarioTests
     {
         [Fact]
-        public async void TestServerDevOpsAuditingPolicy()
+        public async void TestServerDevOpsAuditingSettings()
         {
             // Remove this flag once API is available in Prod
-            bool isProd = false;
+            bool isProd = true;
 
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                SqlManagementClient client = context.GetClient<SqlManagementClient>();                
+                SqlManagementClient client = context.GetClient<SqlManagementClient>();
                 StorageAccountInformation storageAccountInformation;
                 string resourceGroupName;
                 string serverName;
@@ -50,7 +50,7 @@ namespace Sql.Tests
                     };
                 }
 
-                ServerDevOpsAuditingPolicy policy = new ServerDevOpsAuditingPolicy
+                ServerDevOpsAuditingSettings devOpsSettings = new ServerDevOpsAuditingSettings
                 {
                     State = BlobAuditingPolicyState.Enabled,
                     StorageEndpoint = storageAccountInformation.Endpoint,
@@ -58,20 +58,20 @@ namespace Sql.Tests
                     IsAzureMonitorTargetEnabled = true
                 };
 
-                ServerDevOpsAuditingPolicy resultPolicy = await client.ServerDevOpsAuditPolicies.CreateOrUpdateAsync(resourceGroupName, serverName, PolicyName, policy);
-                VerifyPolicy(policy, resultPolicy);
+                ServerDevOpsAuditingSettings resultDevOpsSettings = await client.ServerDevOpsAuditSettings.CreateOrUpdateAsync(resourceGroupName, serverName, PolicyName, devOpsSettings);
+                VerifyPolicy(devOpsSettings, resultDevOpsSettings);
 
-                resultPolicy = await client.ServerDevOpsAuditPolicies.GetAsync(resourceGroupName, serverName, PolicyName);
-                VerifyPolicy(policy, resultPolicy);
+                resultDevOpsSettings = await client.ServerDevOpsAuditSettings.GetAsync(resourceGroupName, serverName, PolicyName);
+                VerifyPolicy(devOpsSettings, resultDevOpsSettings);
 
-                IPage<ServerDevOpsAuditingPolicy> resultPolicies = await client.ServerDevOpsAuditPolicies.ListByServerAsync(resourceGroupName, serverName);
+                IPage<ServerDevOpsAuditingSettings> resultItems = await client.ServerDevOpsAuditSettings.ListByServerAsync(resourceGroupName, serverName);
 
-                foreach (ServerDevOpsAuditingPolicy resultPolicyItem in resultPolicies)
+                foreach (ServerDevOpsAuditingSettings resultItem in resultItems)
                 {
-                    VerifyPolicy(policy, resultPolicyItem);
+                    VerifyPolicy(devOpsSettings, resultItem);
                 }
 
-                Assert.Null(resultPolicies.NextPageLink);
+                Assert.Null(resultItems.NextPageLink);
 
                 if (isProd)
                 {
@@ -81,12 +81,12 @@ namespace Sql.Tests
             }
         }
 
-        private static void VerifyPolicy(ServerDevOpsAuditingPolicy policy, ServerDevOpsAuditingPolicy resultPolicy)
+        private static void VerifyPolicy(ServerDevOpsAuditingSettings devOpsSettings, ServerDevOpsAuditingSettings resultDevOpsSettings)
         {
-            Assert.Equal(resultPolicy.State, policy.State);
-            Assert.Equal(resultPolicy.StorageEndpoint, policy.StorageEndpoint);
-            Assert.Null(resultPolicy.StorageAccountAccessKey);
-            Assert.Equal(resultPolicy.IsAzureMonitorTargetEnabled, policy.IsAzureMonitorTargetEnabled);
+            Assert.Equal(resultDevOpsSettings.State, devOpsSettings.State);
+            Assert.Equal(resultDevOpsSettings.StorageEndpoint, devOpsSettings.StorageEndpoint);
+            Assert.Null(resultDevOpsSettings.StorageAccountAccessKey);
+            Assert.Equal(resultDevOpsSettings.IsAzureMonitorTargetEnabled, devOpsSettings.IsAzureMonitorTargetEnabled);
         }
 
         private async Task<StorageAccountInformation> CreateStorageAccountAsync(SqlManagementTestContext context, ResourceGroup resourceGroup)
