@@ -109,12 +109,6 @@ namespace Azure.Communication.Administration.Models
         public string PhoneNumber { get { throw null; } }
         public string PlaceName { get { throw null; } }
     }
-    public partial class AcquiredPhoneNumbers
-    {
-        internal AcquiredPhoneNumbers() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.AcquiredPhoneNumber> PhoneNumbers { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ActivationState : System.IEquatable<Azure.Communication.Administration.Models.ActivationState>
     {
@@ -139,7 +133,6 @@ namespace Azure.Communication.Administration.Models
     public static partial class AdministrationModelFactory
     {
         public static Azure.Communication.Administration.Models.AcquiredPhoneNumber AcquiredPhoneNumber(string phoneNumber, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.PhoneNumberCapability> acquiredCapabilities, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.PhoneNumberCapability> availableCapabilities) { throw null; }
-        public static Azure.Communication.Administration.Models.AcquiredPhoneNumbers AcquiredPhoneNumbers(System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.AcquiredPhoneNumber> phoneNumbers, string nextLink) { throw null; }
         public static Azure.Communication.Administration.Models.AreaCodes AreaCodes(System.Collections.Generic.IReadOnlyList<string> primaryAreaCodes, System.Collections.Generic.IReadOnlyList<string> secondaryAreaCodes, string nextLink) { throw null; }
         public static Azure.Communication.Administration.Models.CarrierDetails CarrierDetails(string name, string localizedName) { throw null; }
         public static Azure.Communication.Administration.Models.CommunicationUserToken CommunicationUserToken(string id, string token, System.DateTimeOffset expiresOn) { throw null; }
@@ -148,9 +141,7 @@ namespace Azure.Communication.Administration.Models
         public static Azure.Communication.Administration.Models.LocationOptionsResponse LocationOptionsResponse(Azure.Communication.Administration.Models.LocationOptions locationOptions) { throw null; }
         public static Azure.Communication.Administration.Models.NumberConfigurationResponse NumberConfigurationResponse(Azure.Communication.Administration.Models.PstnConfiguration pstnConfiguration) { throw null; }
         public static Azure.Communication.Administration.Models.NumberUpdateCapabilities NumberUpdateCapabilities(System.Collections.Generic.IList<Azure.Communication.Administration.Models.PhoneNumberCapability> add, System.Collections.Generic.IList<Azure.Communication.Administration.Models.PhoneNumberCapability> remove) { throw null; }
-        public static Azure.Communication.Administration.Models.PhoneNumberCountries PhoneNumberCountries(System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhoneNumberCountry> countries, string nextLink) { throw null; }
         public static Azure.Communication.Administration.Models.PhoneNumberCountry PhoneNumberCountry(string localizedName, string countryCode) { throw null; }
-        public static Azure.Communication.Administration.Models.PhoneNumberEntities PhoneNumberEntities(System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhoneNumberEntity> entities, string nextLink) { throw null; }
         public static Azure.Communication.Administration.Models.PhoneNumberEntity PhoneNumberEntity(string id, System.DateTimeOffset? createdAt, string displayName, int? quantity, int? quantityObtained, string status, System.DateTimeOffset? focDate) { throw null; }
         public static Azure.Communication.Administration.Models.PhoneNumberRelease PhoneNumberRelease(string releaseId, System.DateTimeOffset? createdAt, Azure.Communication.Administration.Models.ReleaseStatus? status, string errorMessage, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Communication.Administration.Models.PhoneNumberReleaseDetails> phoneNumberReleaseStatusDetails) { throw null; }
         public static Azure.Communication.Administration.Models.PhoneNumberReleaseDetails PhoneNumberReleaseDetails(Azure.Communication.Administration.Models.PhoneNumberReleaseStatus? status, int? errorCode) { throw null; }
@@ -159,7 +150,6 @@ namespace Azure.Communication.Administration.Models
         public static Azure.Communication.Administration.Models.PhoneNumberReservationPurchaseOperation PhoneNumberReservationPurchaseOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string reservationId) { throw null; }
         public static Azure.Communication.Administration.Models.PhonePlan PhonePlan(string phonePlanId, string localizedName, Azure.Communication.Administration.Models.LocationType locationType) { throw null; }
         public static Azure.Communication.Administration.Models.PhonePlanGroup PhonePlanGroup(string phonePlanGroupId, string localizedName, string localizedDescription) { throw null; }
-        public static Azure.Communication.Administration.Models.PhonePlanGroups PhonePlanGroups(System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhonePlanGroup> phonePlanGroupsValue, string nextLink) { throw null; }
         public static Azure.Communication.Administration.Models.PhonePlansResponse PhonePlansResponse(System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhonePlan> phonePlans, string nextLink) { throw null; }
         public static Azure.Communication.Administration.Models.RateInformation RateInformation(double? monthlyRate, Azure.Communication.Administration.Models.CurrencyType? currencyType, string rateErrorMessage) { throw null; }
         public static Azure.Communication.Administration.Models.ReleasePhoneNumberOperation ReleasePhoneNumberOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string releaseId) { throw null; }
@@ -350,23 +340,11 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.PhoneNumberCapability left, Azure.Communication.Administration.Models.PhoneNumberCapability right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PhoneNumberCountries
-    {
-        internal PhoneNumberCountries() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhoneNumberCountry> Countries { get { throw null; } }
-        public string NextLink { get { throw null; } }
-    }
     public partial class PhoneNumberCountry
     {
         internal PhoneNumberCountry() { }
         public string CountryCode { get { throw null; } }
         public string LocalizedName { get { throw null; } }
-    }
-    public partial class PhoneNumberEntities
-    {
-        internal PhoneNumberEntities() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhoneNumberEntity> Entities { get { throw null; } }
-        public string NextLink { get { throw null; } }
     }
     public partial class PhoneNumberEntity
     {
@@ -495,12 +473,6 @@ namespace Azure.Communication.Administration.Models
         public Azure.Communication.Administration.Models.PhoneNumberType? PhoneNumberType { get { throw null; } }
         public string PhonePlanGroupId { get { throw null; } }
         public Azure.Communication.Administration.Models.RateInformation RateInformation { get { throw null; } }
-    }
-    public partial class PhonePlanGroups
-    {
-        internal PhonePlanGroups() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhonePlanGroup> PhonePlanGroupsValue { get { throw null; } }
     }
     public partial class PhonePlansResponse
     {
