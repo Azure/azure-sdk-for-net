@@ -46,6 +46,11 @@ namespace Azure.Core.GeoJson
         public IReadOnlyList<GeoLinearRing> Rings { get; }
 
         /// <summary>
+        /// Returns the outer right of the polygon
+        /// </summary>
+        public GeoLinearRing OuterRing => Rings[0];
+
+        /// <summary>
         /// Returns a view over the coordinates array that forms this geometry.
         /// </summary>
         public GeoArray<GeoArray<GeoPosition>> Coordinates => new GeoArray<GeoArray<GeoPosition>>(this);
