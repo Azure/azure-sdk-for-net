@@ -7,9 +7,7 @@ using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,12 +16,11 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// The client to use for interacting with the Azure Cognitive Service, Text Analytics.
     /// </summary>
-    public partial class TextAnalyticsClient
+    public class TextAnalyticsClient
     {
         private readonly Uri _baseUri;
         internal readonly TextAnalyticsRestClient _serviceRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
-        private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
@@ -68,7 +65,6 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
-            _apiVersion = options.GetVersionString();
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
 
@@ -108,7 +104,6 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
-            _apiVersion = options.GetVersionString();
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
 
