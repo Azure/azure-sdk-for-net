@@ -40,7 +40,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// available)</param>
         /// <param name="appliedBytes">Applied bytes</param>
         /// <param name="totalBytes">Total bytes (if available)</param>
-        public ServerEndpointSyncActivityStatus(System.DateTime? timestamp = default(System.DateTime?), long? perItemErrorCount = default(long?), long? appliedItemCount = default(long?), long? totalItemCount = default(long?), long? appliedBytes = default(long?), long? totalBytes = default(long?))
+        /// <param name="syncMode">Sync mode. Possible values include:
+        /// 'Regular', 'NamespaceDownload', 'InitialUpload', 'SnapshotUpload',
+        /// 'InitialFullDownload'</param>
+        public ServerEndpointSyncActivityStatus(System.DateTime? timestamp = default(System.DateTime?), long? perItemErrorCount = default(long?), long? appliedItemCount = default(long?), long? totalItemCount = default(long?), long? appliedBytes = default(long?), long? totalBytes = default(long?), string syncMode = default(string))
         {
             Timestamp = timestamp;
             PerItemErrorCount = perItemErrorCount;
@@ -48,6 +51,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             TotalItemCount = totalItemCount;
             AppliedBytes = appliedBytes;
             TotalBytes = totalBytes;
+            SyncMode = syncMode;
             CustomInit();
         }
 
@@ -91,6 +95,14 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "totalBytes")]
         public long? TotalBytes { get; private set; }
+
+        /// <summary>
+        /// Gets sync mode. Possible values include: 'Regular',
+        /// 'NamespaceDownload', 'InitialUpload', 'SnapshotUpload',
+        /// 'InitialFullDownload'
+        /// </summary>
+        [JsonProperty(PropertyName = "syncMode")]
+        public string SyncMode { get; private set; }
 
         /// <summary>
         /// Validate the object.
