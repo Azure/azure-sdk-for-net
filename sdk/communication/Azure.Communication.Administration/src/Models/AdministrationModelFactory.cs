@@ -22,15 +22,6 @@ namespace Azure.Communication.Administration.Models
             => new AcquiredPhoneNumber(phoneNumber, acquiredCapabilities, availableCapabilities);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AcquiredPhoneNumbers"/> class.
-        /// </summary>
-        /// <param name="phoneNumbers"> Represents a list of phone numbers. </param>
-        /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        /// <returns>A new <see cref="AcquiredPhoneNumbers"/> instance for mocking.</returns>
-        public static AcquiredPhoneNumbers AcquiredPhoneNumbers(IReadOnlyList<AcquiredPhoneNumber> phoneNumbers, string nextLink)
-            => new AcquiredPhoneNumbers(phoneNumbers, nextLink);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AreaCodes"/> class.
         /// </summary>
         /// <param name="primaryAreaCodes"> Represents the list of primary area codes. </param>
@@ -114,15 +105,6 @@ namespace Azure.Communication.Administration.Models
             => new NumberUpdateCapabilities(@add, @remove);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberCountries"/> class.
-        /// </summary>
-        /// <param name="countries"> Represents the underlying list of countries. </param>
-        /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        /// <returns>A new <see cref="PhoneNumberCountries"/> instance for mocking.</returns>
-        public static PhoneNumberCountries PhoneNumberCountries(IReadOnlyList<PhoneNumberCountry> countries, string nextLink)
-            => new PhoneNumberCountries(countries, nextLink);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberCountry"/> class.
         /// </summary>
         /// <param name="localizedName"> Represents the name of the country. </param>
@@ -130,15 +112,6 @@ namespace Azure.Communication.Administration.Models
         /// <returns>A new <see cref="PhoneNumberCountry"/> instance for mocking.</returns>
         public static PhoneNumberCountry PhoneNumberCountry(string localizedName, string countryCode)
             => new PhoneNumberCountry(localizedName, countryCode);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberEntities"/> class.
-        /// </summary>
-        /// <param name="entities"> The underlying list of entities. </param>
-        /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        /// <returns>A new <see cref="PhoneNumberEntities"/> instance for mocking.</returns>
-        public static PhoneNumberEntities PhoneNumberEntities(IReadOnlyList<PhoneNumberEntity> entities, string nextLink)
-            => new PhoneNumberEntities(entities, nextLink);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberEntity"/> class.
@@ -214,15 +187,6 @@ namespace Azure.Communication.Administration.Models
         /// <returns>A new <see cref="PhonePlanGroup"/> instance for mocking.</returns>
         public static PhonePlanGroup PhonePlanGroup(string phonePlanGroupId, string localizedName, string localizedDescription)
             => new PhonePlanGroup(phonePlanGroupId, localizedName, localizedDescription);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PhonePlanGroups"/> class.
-        /// </summary>
-        /// <param name="phonePlanGroupsValue"> The underlying list of phone plan groups. </param>
-        /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        /// <returns>A new <see cref="PhonePlanGroups"/> instance for mocking.</returns>
-        public static PhonePlanGroups PhonePlanGroups(IReadOnlyList<PhonePlanGroup> phonePlanGroupsValue, string nextLink)
-            => new PhonePlanGroups(phonePlanGroupsValue, nextLink);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhonePlansResponse"/> class.
