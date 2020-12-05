@@ -1,0 +1,41 @@
+parameters:
+  - name: ProductMatrix
+    type: string
+    default: 'matrix.json'
+  - name: MatrixSelection
+    type: string
+    default: sparse
+    values:
+      - sparse
+      - all
+
+jobs:
+  - job: generate_matrix
+    steps:
+    - pwsh: |
+        eng/common/matrix/Create-JobMatrix.ps1 `
+          -ConfigPath ${{ parameters.ProductMatrix }} `
+          -Selection ${{ parameters.MatrixSelection }}
+      name: generate_job_matrix
+      displayName: Generate Job Matrix
+
+  - job:
+    dependsOn: generate_matrix
+    strategy:
+      maxParallel: 0
+      matrix: $[ dependencies.generate_matrix.outputs['generate_job_matrix.matrix'] ]
+    steps:
+      - pwsh: |
+          Write-Output "SPARSE MATRIX JOB PARAMETERS"
+          Write-Output $(Agent.JobName)
+          Write-Output "-----------------"
+          Write-Output $(operatingSystem)
+          Write-Output $(framework)
+          try {
+            Write-Output $(additionalTestArguments)
+          } catch {}
+        displayName: Print matrix job variables
+      - pwsh: |
+          Write-Output "Success"
+        displayName: OS condition example
+        condition: and(succeededOrFailed(), contains(variables['operatingSystem'], 'windows'))
