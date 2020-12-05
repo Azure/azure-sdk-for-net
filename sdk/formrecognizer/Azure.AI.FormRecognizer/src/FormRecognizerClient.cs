@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer
     /// <summary>
     /// The client to use to connect to the Form Recognizer Azure Cognitive Service to recognize
     /// information from forms and images and extract it into structured data. It provides the ability to analyze receipts,
-    /// to recognize form content, and to extract fields from custom forms with models trained on custom form types.
+    /// business cards, and invoices, to recognize form content, and to extract fields from custom forms with models trained on custom form types.
     /// </summary>
     public class FormRecognizerClient
     {
@@ -120,7 +120,8 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -158,7 +159,8 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -196,7 +198,8 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -232,7 +235,8 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -273,7 +277,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
-        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
@@ -312,7 +317,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
-        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
@@ -351,7 +357,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receiptUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
@@ -388,7 +395,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receiptUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
@@ -429,7 +437,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCard">The stream containing the one or more business cards to recognize values from.</param>
-        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -468,7 +477,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCard">The stream containing the one or more business cards to recognize values from.</param>
-        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -507,7 +517,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCardUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -544,7 +555,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCardUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -585,7 +597,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
         /// </summary>
         /// <param name="invoice">The stream containing the one or more invoices to recognize values from.</param>
-        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
@@ -624,7 +637,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
         /// </summary>
         /// <param name="invoice">The stream containing the one or more invoices to recognize values from.</param>
-        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
@@ -663,7 +677,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
         /// </summary>
         /// <param name="invoiceUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
@@ -700,7 +715,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
         /// </summary>
         /// <param name="invoiceUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
@@ -740,7 +756,8 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
@@ -776,7 +793,8 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
@@ -812,7 +830,8 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
@@ -848,7 +867,8 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
