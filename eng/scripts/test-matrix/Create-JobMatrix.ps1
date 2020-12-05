@@ -13,7 +13,7 @@ param (
     [Parameter(Mandatory=$True)][string] $Selection
 )
 
-. $PSScriptRoot/functions.ps1
+. $PSScriptRoot/test-matrix-functions.ps1
 
 $config = Get-Content $ConfigPath | ConvertFrom-Json -AsHashtable
 

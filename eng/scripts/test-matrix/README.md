@@ -14,6 +14,7 @@
   * [displayNames](#displaynames-1)
   * [Filters](#filters)
   * [Under the hood](#under-the-hood)
+* [Testing](#testing)
 
 
 This directory contains scripts supporting dynamic, cross-product matrix generation for azure pipeline jobs.
@@ -26,33 +27,24 @@ for a job matrix definition](https://docs.microsoft.com/en-us/azure/devops/pipel
 ## Usage in a pipeline
 
 In order to use these scripts in a pipeline, you must provide a config file and call the matrix creation script within a powershell job.
-The job must then be marked as a dependency by a subsequent matrix job, and the matrix value pulled from a variable set by the powershell job.
-For example:
+
+For a single matrix, you can include the `eng/pipelines/templates/jobs/test-matrix.yml` template in a pipeline:
 
 ```
-parameters:
-  - name: ProductMatrix
-    type: string
-    default: 'matrix.json'
-
 jobs:
-  - job: generate_matrix
-    steps:
-    - pwsh: |
-        eng/common/matrix/Create-JobMatrix.ps1 -ConfigPath ${{ parameters.ProductMatrix }}
-      name: generate_job_matrix
-      displayName: Generate Job Matrix
-
-  - job:
-    dependsOn: generate_matrix
-    strategy:
-      maxParallel: 0
-      matrix: $[ dependencies.generate_matrix.outputs['generate_job_matrix.matrix'] ]
-    steps:
-        ...
+- template: /eng/pipelines/templates/jobs/test-matrix.yml
+  parameters:
+    MatrixConfigs:
+      - Name: base_product_matrix
+        Path: /eng/pipelines/matrix.json
+        Selection: sparse
+      - Name: sdk_specific_matrix
+        Path: /sdk/foobar/matrix.json
+        Selection: all
+	steps:
+	  - pwsh:
+          ...
 ```
-
-The generate_matrix job will log the matrix json for debugging, and run the task.setVariable vso command to add the generated matrix to the variable context.
 
 ## Matrix config file syntax
 

@@ -13,7 +13,7 @@ jobs:
   - job: generate_matrix
     steps:
     - pwsh: |
-        eng/common/matrix/Create-JobMatrix.ps1 `
+        eng/scripts/matrix/Create-JobMatrix.ps1 `
           -ConfigPath ${{ parameters.ProductMatrix }} `
           -Selection ${{ parameters.MatrixSelection }}
       name: generate_job_matrix
