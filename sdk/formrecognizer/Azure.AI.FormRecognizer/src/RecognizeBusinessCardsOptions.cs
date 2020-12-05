@@ -21,7 +21,8 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Whether or not to include form elements such as lines and words in addition to form fields.
+        /// Whether or not to include all lines per page and field elements such as lines, words,
+        /// and selection marks for each form field.
         /// </summary>
         public bool IncludeFieldElements { get; set; }
 

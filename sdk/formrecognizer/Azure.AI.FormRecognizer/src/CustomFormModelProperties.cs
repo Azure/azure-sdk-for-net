@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
-    /// Properties of a model like for example if the model is a composed model.
+    /// Properties of a model, such as whether the model is a composed model or not.
     /// </summary>
     [CodeGenModel("Attributes")]
     public partial class CustomFormModelProperties

@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// The client to use to connect with the Form Recognizer Azure Cognitive Service to train models from
-    /// custom forms. It also supports listing, copy, and deleting trained models, create composed models, and accessing account
+    /// custom forms. It also supports listing, copying, and deleting trained models, creating composed models, and accessing account
     /// properties.
     /// </summary>
     public class FormTrainingClient
@@ -279,7 +279,7 @@ namespace Azure.AI.FormRecognizer.Training
         #region Composed model
 
         /// <summary>
-        /// Creates a composed model from a collection of existing trained models with labels.
+        /// Creates a composed model from a collection of existing models trained with labels.
         /// </summary>
         /// <param name="modelIds">List of model ids to use in the composed model.</param>
         /// <param name="modelName">An optional, user-defined name to associate with the model.</param>

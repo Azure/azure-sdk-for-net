@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer
     /// <summary>
     /// The client to use to connect to the Form Recognizer Azure Cognitive Service to recognize
     /// information from forms and images and extract it into structured data. It provides the ability to analyze receipts,
-    /// business cards, invoices, to recognize form content, and to extract fields from custom forms with models trained on custom form types.
+    /// business cards, and invoices, to recognize form content, and to extract fields from custom forms with models trained on custom form types.
     /// </summary>
     public class FormRecognizerClient
     {
@@ -121,7 +121,7 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
         /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
-        /// form, the language of the form, and the custom page numbers in a multi-page document to analyze.</param>
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -160,7 +160,7 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
         /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
-        /// form, the language of the form, and the custom page numbers in a multi-page document to analyze.</param>
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -199,7 +199,7 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
         /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
-        /// form, the language of the form, and the custom page numbers in a multi-page document to analyze.</param>
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -236,7 +236,7 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
         /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
-        /// form, the language of the form, and the custom page numbers in a multi-page document to analyze.</param>
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>

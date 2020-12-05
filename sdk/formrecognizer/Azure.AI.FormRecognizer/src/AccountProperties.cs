@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Initializes a new instance of the <see cref="AccountProperties"/> class.
         /// </summary>
         /// <param name="customModelCount">The current count of trained custom models.</param>
-        /// <param name="customModelLimit">The maximum number of models that can be trained for this subscription.</param>
+        /// <param name="customModelLimit">The maximum number of models that can be trained for this account.</param>
         internal AccountProperties(int customModelCount, int customModelLimit)
         {
             CustomModelCount = customModelCount;
@@ -29,12 +29,12 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// The current count of trained custom models in this subscription.
+        /// The current count of trained custom models in this account.
         /// </summary>
         public int CustomModelCount { get; }
 
         /// <summary>
-        /// The maximum number of models that can be trained for this subscription.
+        /// The maximum number of models that can be trained for this account.
         /// </summary>
         public int CustomModelLimit { get; }
     }
