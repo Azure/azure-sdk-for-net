@@ -200,7 +200,7 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -273,13 +273,15 @@ await using var client = new ServiceBusClient(connectionString);
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
-// create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+// create a set of messages that we can send
+ServiceBusMessage[] messages = new ServiceBusMessage[]
+{
+    new ServiceBusMessage("First"),
+    new ServiceBusMessage("Second")
+};
 
 // send the message batch
-await sender.SendMessagesAsync(messageBatch);
+await sender.SendMessagesAsync(messages);
 
 // get the options to use for configuring the processor
 var options = new ServiceBusProcessorOptions

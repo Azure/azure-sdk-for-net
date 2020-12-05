@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -32,12 +31,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // create a message batch that we can send
                 ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
                 messageBatch.TryAddMessage(
-                    new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
+                    new ServiceBusMessage("First")
                     {
                         SessionId = "Session1"
                     });
                 messageBatch.TryAddMessage(
-                    new ServiceBusMessage(Encoding.UTF8.GetBytes("Second"))
+                    new ServiceBusMessage("Second")
                     {
                         SessionId = "Session2"
                     });
@@ -45,6 +44,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the message batch
                 await sender.SendMessagesAsync(messageBatch);
 
+                #region Snippet:ServiceBusConfigureSessionProcessor
                 // get the options to use for configuring the processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
@@ -57,11 +57,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                     // By default, there will be a single concurrent call per session. I can
                     // increase that here to enable parallel processing within each session.
-                    MaxConcurrentCallsPerSession = 2
+                    MaxConcurrentCallsPerSession = 2,
+
+                    // Processing can be optionally limited to a subset of session Ids.
+                    SessionIds = { "my-session", "your-session" },
                 };
 
                 // create a session processor that we can use to process the messages
                 ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
+                #endregion
 
                 // since the message handler will run in a background thread, in order to prevent
                 // this sample from terminating immediately, we can use a task completion source that

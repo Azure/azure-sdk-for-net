@@ -18,12 +18,12 @@ ServiceBusSender sender = client.CreateSender(queueName);
 // create a message batch that we can send
 ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
 messageBatch.TryAddMessage(
-    new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
+    new ServiceBusMessage("First")
     {
         SessionId = "Session1"
     });
 messageBatch.TryAddMessage(
-    new ServiceBusMessage(Encoding.UTF8.GetBytes("Second"))
+    new ServiceBusMessage("Second")
     {
         SessionId = "Session2"
     });
@@ -43,7 +43,10 @@ var options = new ServiceBusSessionProcessorOptions
 
     // By default, there will be a single concurrent call per session. I can
     // increase that here to enable parallel processing within each session.
-    MaxConcurrentCallsPerSession = 2
+    MaxConcurrentCallsPerSession = 2,
+
+    // Processing can be optionally limited to a subset of session Ids.
+    SessionIds = { "my-session", "your-session" },
 };
 
 // create a session processor that we can use to process the messages
