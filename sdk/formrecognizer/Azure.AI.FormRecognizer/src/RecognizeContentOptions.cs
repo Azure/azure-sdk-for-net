@@ -6,13 +6,17 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer
 {
     /// <summary>
-    /// The set of options that can be specified when calling a recognize content method
-    /// to configure the behavior of the request.
+    /// The set of options that can be specified when calling a Recognize Content method
+    /// to configure the behavior of the request. For example, specify the content type of the
+    /// form, the language of the form, and which pages in a multi-page document to analyze.
     /// </summary>
     public class RecognizeContentOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeContentOptions"/> class.
+        /// Initializes a new instance of the <see cref="RecognizeContentOptions"/> class which
+        /// allows to set options that can be specified when calling a Recognize Content method
+        /// to configure the behavior of the request. For example, specify the content type of the
+        /// form, the language of the form, and which pages in a multi-page document to analyze.
         /// </summary>
         public RecognizeContentOptions()
         {

@@ -16,7 +16,8 @@ namespace Azure.AI.FormRecognizer
         internal const ServiceVersion LatestVersion = ServiceVersion.V2_0;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormRecognizerClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizerClientOptions"/> class which allows
+        /// to configure the behavior of the <see cref="FormRecognizerClient" /> or <see cref="FormTrainingClient"/>.
         /// </summary>
         /// <param name="version">The version of the service to send requests to.</param>
         public FormRecognizerClientOptions(ServiceVersion version = LatestVersion)

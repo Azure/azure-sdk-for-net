@@ -12,7 +12,8 @@ namespace Azure.AI.FormRecognizer.Models
 #pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormField{T}"/> class.
+        /// Initializes a new instance of the <see cref="FormField{T}"/> class which
+        /// represents a field recognized in the input form, where the field's value is of a known type.
         /// </summary>
         /// <param name="field">The weakly-typed field this instance is associated with.</param>
         /// <param name="value">The strongly-typed value of this <see cref="FormField{T}"/>.</param>

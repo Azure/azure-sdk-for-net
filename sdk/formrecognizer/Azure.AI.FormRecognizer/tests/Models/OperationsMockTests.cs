@@ -140,7 +140,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             await operation.UpdateStatusAsync();
 
-            testListener.AssertScope($"{nameof(TrainingOperation)}.{nameof(TrainingOperation.UpdateStatus)}");
+            testListener.AssertScope($"{nameof(CreateCustomFormModelOperation)}.{nameof(CreateCustomFormModelOperation.UpdateStatus)}");
         }
 
         [Test]

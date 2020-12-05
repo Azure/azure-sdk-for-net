@@ -116,7 +116,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 - Training custom models to recognize specific fields and values you specify by labeling your custom forms.  A `CustomFormModel` is returned indicating the fields the model will extract, as well as the estimated accuracy for each field.
 - Managing models created in your account.
 - Copying a custom model from one Form Recognizer resource to another.
-- Creating a composed model from a collection of existing trained models with labels.
+- Creating a composed model from a collection of existing models trained with labels.
 
 See examples for [Train a Model](#train-a-model) and [Manage Custom Models](#manage-custom-models).
 

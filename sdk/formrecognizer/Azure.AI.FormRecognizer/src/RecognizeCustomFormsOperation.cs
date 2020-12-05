@@ -137,7 +137,9 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeCustomFormsOperation"/> class.
+        /// Initializes a new instance of the <see cref="RecognizeCustomFormsOperation"/> class which
+        /// tracks the status of a long-running operation for recognizing fields and other content from forms by using custom
+        /// trained models.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
