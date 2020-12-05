@@ -14,7 +14,7 @@ Familiarity with the `Microsoft.Azure.ServiceBus` library is assumed. For those 
   - [Sending messages](#sending-messages)
   - [Receiving messages](#receiving-messages)
   - [Working with sessions](#working-with-sessions)
-- [Known Gaps](#known-gaps-from-previous-library)
+- [Known gaps](#known-gaps-from-previous-library)
 - [Additional samples](#additional-samples)
 
 ## Migration benefits
