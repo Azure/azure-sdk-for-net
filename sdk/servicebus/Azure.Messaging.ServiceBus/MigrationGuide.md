@@ -113,6 +113,7 @@ await sender.SendMessageAsync(message);
 The feature to send a list of messages in a single call was implemented by batching all the messages into a single AMQP message and sending that to the service.
 
 While we continue to support this feature, it had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.
+While the below code sample uses a local queue as the source of messages to be safely batched and sent, your application may use a list or an array of messages that have accumulated from a different part of your code.
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 // add the messages that we plan to send to a local queue
