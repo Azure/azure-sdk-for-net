@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="blobContainerClient">The client used to interact with the Azure Blob Storage service.</param>
         /// <param name="retryPolicy">The retry policy to use as the basis for interacting with the Storage Blobs service.</param>
-        /// <param name="readLegacyCheckpoints">Indicates whether to read legacy checkpoints when no current version checkpoints are available.</param>
+        /// <param name="readLegacyCheckpoints">Indicates whether to read legacy checkpoint when no current version checkpoint is available for a partition.</param>
         ///
         public BlobsCheckpointStore(BlobContainerClient blobContainerClient,
                                     EventHubsRetryPolicy retryPolicy,
@@ -349,7 +349,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(prefix: legacyPrefix, cancellationToken: listCheckpointsToken).ConfigureAwait(false))
                 {
-                    // Skip empty blobs
+                    // Skip new checkpoints and empty blobs
                     if (blob.Properties.ContentLength == 0)
                     {
                         continue;

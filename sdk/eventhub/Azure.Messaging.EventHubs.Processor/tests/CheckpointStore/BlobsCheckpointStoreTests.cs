@@ -445,6 +445,101 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ListCheckpointsPreferredNewCheckpointOverLegacy()
+        {
+            string partitionId = Guid.NewGuid().ToString();
+            var blobList = new List<BlobItem>{
+
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId}",
+                                            false,
+                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag), contentLength: 0),
+                                            "snapshot",
+                                            new Dictionary<string, string>
+                                            {
+                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                                {BlobMetadataKey.SequenceNumber, "960182"},
+                                                {BlobMetadataKey.Offset, "14"}
+                                            }),
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/{partitionId}",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot")
+            };
+
+            var containerClient = new MockBlobContainerClient() { Blobs = blobList };
+            containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/{partitionId}", client =>
+            {
+                client.Content = Encoding.UTF8.GetBytes("{" +
+                                                            "\"PartitionId\":\"0\"," +
+                                                            "\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\"," +
+                                                            "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
+                                                            "\"Epoch\":386," +
+                                                            "\"Offset\":\"13\"," +
+                                                            "\"SequenceNumber\":960180}");
+            });
+
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
+            var checkpoints = await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
+
+            Assert.That(checkpoints, Has.One.Items, "A single checkpoint should have been returned.");
+            Assert.That(checkpoints.Single().StartingPosition, Is.EqualTo(EventPosition.FromOffset(14, false)));
+            Assert.That(checkpoints.Single().PartitionId, Is.EqualTo(partitionId));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of ListCheckpointsAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ListCheckpointsMergesNewAndLegacyCheckpoints()
+        {
+            string partitionId1 = Guid.NewGuid().ToString();
+            string partitionId2 = Guid.NewGuid().ToString();
+            var blobList = new List<BlobItem>{
+
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId1}",
+                                            false,
+                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag), contentLength: 0),
+                                            "snapshot",
+                                            new Dictionary<string, string>
+                                            {
+                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                                {BlobMetadataKey.SequenceNumber, "960182"},
+                                                {BlobMetadataKey.Offset, "14"}
+                                            }),
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/{partitionId2}",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot")
+            };
+
+            var containerClient = new MockBlobContainerClient() { Blobs = blobList };
+            containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/{partitionId2}", client =>
+            {
+                client.Content = Encoding.UTF8.GetBytes("{" +
+                                                            "\"PartitionId\":\"0\"," +
+                                                            "\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\"," +
+                                                            "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
+                                                            "\"Epoch\":386," +
+                                                            "\"Offset\":\"13\"," +
+                                                            "\"SequenceNumber\":960180}");
+            });
+
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
+            var checkpoints = (await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken())).ToArray();
+
+            Assert.That(checkpoints, Has.Exactly(2).Items, "Two checkpoints should have been returned.");
+            Assert.That(checkpoints[0].StartingPosition, Is.EqualTo(EventPosition.FromOffset(14, false)));
+            Assert.That(checkpoints[0].PartitionId, Is.EqualTo(partitionId1));
+            Assert.That(checkpoints[1].StartingPosition, Is.EqualTo(EventPosition.FromOffset(13, false)));
+            Assert.That(checkpoints[1].PartitionId, Is.EqualTo(partitionId2));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of ListCheckpointsAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
         public async Task ListCheckpointsUsesOffsetAsTheStartingPositionWhenPresentInLegacyCheckpoint()
         {
             var blobList = new List<BlobItem>{
