@@ -4,8 +4,8 @@ containers.removeClass("container");
 containers.addClass("container-fluid");
 
 WINDOW_CONTENTS = window.location.href.split('/')
-var SELECTED_LANGUAGE = ''
-var INDEX_HTML = ''
+var SELECTED_LANGUAGE = 'dotnet'
+var INDEX_HTML = 'index.html'
 var PACKAGE_REGEX = ''
 var PACKAGE_REPLACEMENT = ''
 
