@@ -626,7 +626,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                                             "\"Epoch\":386}");
             });
 
-
             var mockLogger = new Mock<BlobEventStoreEventSource>();
             var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
 
@@ -1051,7 +1050,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
                 .Returns(TimeSpan.FromMilliseconds(5));
 
-
             var mockContainerClient = new MockBlobContainerClient().AddBlobClient("ns/eh/cg/ownership/pid", client =>
             {
                 client.UploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
@@ -1232,7 +1230,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var stateAfterCancellation = default(bool?);
 
             // UploadAsync will be called if eTag is null; SetMetadataAsync is used otherwise.
-
 
             var mockContainerClient = new MockBlobContainerClient().AddBlobClient("ns/eh/cg/ownership/pid", client =>
             {
@@ -1494,7 +1491,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
                 .Returns(TimeSpan.FromMilliseconds(5));
 
-
             var mockContainerClient = new MockBlobContainerClient().AddBlobClient("ns/eh/cg/checkpoint/pid", client =>
             {
                 client.UploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
@@ -1639,7 +1635,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 PartitionId = "pid"
             };
 
-
             await checkpointStore.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), cancellationSource.Token);
 
             Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
@@ -1667,7 +1662,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             using var cancellationSource = new CancellationTokenSource();
             var stateBeforeCancellation = default(bool?);
             var stateAfterCancellation = default(bool?);
-
 
             var mockContainerClient = new MockBlobContainerClient().AddBlobClient("ns/eh/cg/checkpoint/pid", client =>
             {
