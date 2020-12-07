@@ -88,7 +88,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task ListOwnershipLogsStartAndComplete()
         {
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/ownership/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
