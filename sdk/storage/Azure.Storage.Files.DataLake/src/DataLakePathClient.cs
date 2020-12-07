@@ -179,13 +179,18 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
         /// </summary>
-        internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
 
         /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -1695,7 +1700,7 @@ namespace Azure.Storage.Files.DataLake
                     }
 
                     // Build destPathClient
-                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline, _storageSharedKeyCredential);
+                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline, SharedKeyCredential);
 
                     Response<PathCreateResult> response = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,
@@ -3323,7 +3328,7 @@ namespace Azure.Storage.Files.DataLake
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

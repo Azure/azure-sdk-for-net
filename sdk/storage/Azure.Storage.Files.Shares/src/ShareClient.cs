@@ -107,10 +107,15 @@ namespace Azure.Storage.Files.Shares
         private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -304,7 +309,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new ShareUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareClient(p.ToUri(), Pipeline, _storageSharedKeyCredential, Version, ClientDiagnostics);
+            return new ShareClient(p.ToUri(), Pipeline, SharedKeyCredential, Version, ClientDiagnostics);
         }
 
         /// <summary>
@@ -324,7 +329,7 @@ namespace Azure.Storage.Files.Shares
             return new ShareDirectoryClient(
                 shareUriBuilder.ToUri(),
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics);
         }
@@ -3302,7 +3307,7 @@ namespace Azure.Storage.Files.Shares
             }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

@@ -741,10 +741,10 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Create blob
-            BlobClient blob = new BlobClient(
+            BlobClient blob = InstrumentClient(new BlobClient(
                 connectionString,
                 GetNewContainerName(),
-                GetNewBlobName());
+                GetNewBlobName()));
             Assert.IsTrue(blob.CanGenerateSasUri);
 
             // Act
@@ -769,9 +769,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Create blob
-            BlobClient blob = new BlobClient(
+            BlobClient blob = InstrumentClient(new BlobClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(blob.CanGenerateSasUri);
 
             // Act

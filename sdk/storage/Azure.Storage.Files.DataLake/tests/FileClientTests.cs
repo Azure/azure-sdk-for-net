@@ -4700,24 +4700,24 @@ namespace Azure.Storage.Files.DataLake.Tests
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             // Act - DataLakeFileClient(Uri blobContainerUri, fileClientOptions options = default)
-            DataLakeFileClient file = new DataLakeFileClient(
+            DataLakeFileClient file = InstrumentClient(new DataLakeFileClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(file.CanGenerateSasUri);
 
             // Act - DataLakeFileClient(Uri blobContainerUri, StorageSharedKeyCredential credential, fileClientOptions options = default)
-            DataLakeFileClient file2 = new DataLakeFileClient(
+            DataLakeFileClient file2 = InstrumentClient(new DataLakeFileClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(file2.CanGenerateSasUri);
 
             // Act - DataLakeFileClient(Uri blobContainerUri, TokenCredential credential, fileClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
-            DataLakeFileClient file3 = new DataLakeFileClient(
+            DataLakeFileClient file3 = InstrumentClient(new DataLakeFileClient(
                 blobEndpoint,
                 tokenCredentials,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(file3.CanGenerateSasUri);
         }
 
@@ -4731,10 +4731,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName + "/" + path);
-            DataLakeFileClient fileClient = new DataLakeFileClient(
+            DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             // Act
             Uri sasUri = fileClient.GenerateSasUri(permissions, expiresOn);
@@ -4760,10 +4760,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName + "/" + path);
-            DataLakeFileClient fileClient = new DataLakeFileClient(
+            DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
             {
@@ -4798,10 +4798,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewFileSystemName() + "/" + path;
-            DataLakeFileClient fileClient = new DataLakeFileClient(
+            DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
             {
@@ -4833,10 +4833,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             blobUriBuilder.Path += constants.Sas.Account + "/" + fileSystemName + "/" + GetNewFileName();
-            DataLakeFileClient fileClient = new DataLakeFileClient(
+            DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
             {
@@ -4869,10 +4869,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             blobUriBuilder.Path += constants.Sas.Account + "/" + fileSystemName + "/" + fileName;
 
-            DataLakeFileClient fileClient = new DataLakeFileClient(
+            DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
             {

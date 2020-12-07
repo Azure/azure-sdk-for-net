@@ -177,7 +177,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -470,7 +470,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -510,7 +510,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -4266,7 +4266,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }
@@ -4298,7 +4298,7 @@ namespace Azure.Storage.Blobs.Specialized
                 _parentBlobContainerClient = new BlobContainerClient(
                     blobUriBuilder.ToUri(),
                     Pipeline,
-                    _storageSharedKeyCredential,
+                    SharedKeyCredential,
                     Version,
                     ClientDiagnostics,
                     CustomerProvidedKey,

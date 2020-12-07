@@ -156,10 +156,15 @@ namespace Azure.Storage.Blobs
         private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctor
         /// <summary>
@@ -420,7 +425,7 @@ namespace Azure.Storage.Blobs
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 _pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -446,7 +451,7 @@ namespace Azure.Storage.Blobs
             return new BlobClient(
                 blobUriBuilder.ToUri(),
                 _pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -479,7 +484,7 @@ namespace Azure.Storage.Blobs
             return new BlockBlobClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -511,7 +516,7 @@ namespace Azure.Storage.Blobs
             return new AppendBlobClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -543,7 +548,7 @@ namespace Azure.Storage.Blobs
             return new PageBlobClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -3000,7 +3005,7 @@ namespace Azure.Storage.Blobs
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }
@@ -3039,7 +3044,7 @@ namespace Azure.Storage.Blobs
                     ClientSideEncryption,
                     EncryptionScope,
                     Pipeline,
-                    _storageSharedKeyCredential);
+                    SharedKeyCredential);
             }
 
             return _parentBlobServiceClient;
