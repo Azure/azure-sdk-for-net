@@ -428,6 +428,7 @@ try {
         $deploymentOutputs = @{
             "$($serviceDirectoryPrefix)CLIENT_ID" = $TestApplicationId;
             "$($serviceDirectoryPrefix)CLIENT_SECRET" = $TestApplicationSecret;
+            "$($serviceDirectoryPrefix)PRINCIPAL_ID" = $TestApplicationOid;
             "$($serviceDirectoryPrefix)TENANT_ID" = $context.Tenant.Id;
             "$($serviceDirectoryPrefix)SUBSCRIPTION_ID" =  $context.Subscription.Id;
             "$($serviceDirectoryPrefix)RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
