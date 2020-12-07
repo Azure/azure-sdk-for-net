@@ -158,6 +158,7 @@ known_content_issues:
   - ['sdk/storage/Azure.Storage.Blobs.Cryptography/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Common/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Files.DataLake/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Files.DataLake/perf/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Files.Shares/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Queues/README.md','#11492']
   - ['sdk/synapse/Microsoft.Azure.Synapse/README.md','#11492']
