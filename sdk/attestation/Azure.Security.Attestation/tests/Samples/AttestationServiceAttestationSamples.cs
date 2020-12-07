@@ -104,8 +104,6 @@ namespace Azure.Security.Attestation.Tests.Samples
     "dOd2FRR1RjZHBhMEVDCklRQ1V0OFNHdnhLbWpwY00vejBXUDlEdm84aDJrNWR1MWlXRGRCa0FuKzBpaUE9" +
     "PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCgA";
 
-
-
         [RecordedTest]
         public async Task AttestingAnSgxEnclave()
         {
@@ -117,7 +115,6 @@ namespace Azure.Security.Attestation.Tests.Samples
             var client = GetAttestationClient();
 
             IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
-
             {
                 // Collect quote and enclave held data from OpenEnclave enclave.
 
@@ -140,7 +137,6 @@ namespace Azure.Security.Attestation.Tests.Samples
 
             var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
             var result = policyResult.Value.AttestationPolicy;
-
         }
 
         [RecordedTest]
@@ -173,7 +169,6 @@ namespace Azure.Security.Attestation.Tests.Samples
                 AttestationType.SgxEnclave,
                 new SecuredAttestationToken(policyTokenSigner));
             return;
-
         }
         private AttestationClient GetAttestationClient()
         {

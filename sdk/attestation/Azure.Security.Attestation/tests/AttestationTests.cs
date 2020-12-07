@@ -109,14 +109,12 @@ namespace Azure.Security.Attestation.Tests
         [RecordedTest]
         public async Task AttestSgxShared()
         {
-
             byte[] binaryQuote = Base64Url.Decode(_sgxQuote);
             byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
 
             var client = GetSharedAttestationClient();
 
             IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
-
             {
                 // Collect quote and enclave held data from an SGX enclave.
 

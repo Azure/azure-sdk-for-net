@@ -34,7 +34,6 @@ namespace Azure.Security.Attestation.Models
         /// </summary>
         public string CertificateKeyId { get; internal set; }
 
-
         internal static IReadOnlyList<AttestationSigner> FromJsonWebKeySet(JsonWebKeySet keys)
         {
             List<AttestationSigner> returnedCertificates = new List<AttestationSigner>();

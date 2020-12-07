@@ -23,7 +23,6 @@ namespace Azure.Security.Attestation
     /// </summary>
     public class AttestationClient
     {
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AttestationRestClient _restClient;
@@ -390,7 +389,6 @@ namespace Azure.Security.Attestation
                     }
 
                     returnedCertificates.Add(new AttestationSigner(certificates.ToArray(), keyId));
-
                 }
 
                 return Task.FromResult(Response.FromValue((IReadOnlyList<AttestationSigner>)returnedCertificates, keys.GetRawResponse()));
@@ -414,7 +412,5 @@ namespace Azure.Security.Attestation
                 return _signers;
             }
         }
-
-
     }
 }
