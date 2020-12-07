@@ -125,7 +125,7 @@ Write-Verbose "Generate YAML"
 & "${BinDirectory}/ECMA2Yml/ECMA2Yaml.exe" -s "${XmlOutDir}" -o "${YamlOutDir}"
 
 Write-Verbose "Provision DocFX Directory"
-docfx init -q -o "${DocOutDir}"
+& "${DocFxTool}" init -q -o "${DocOutDir}"
 
 Write-Verbose "Copy over Package ReadMe"
 $PkgReadMePath = "${RepoRoot}/sdk/${PackageLocation}/README.md"
@@ -149,7 +149,7 @@ Copy-Item "${DocCommonGenDir}/templates/**" -Destination "${DocOutDir}/templates
 Copy-Item "${DocCommonGenDir}/docfx.json" -Destination "${DocOutDir}" -Force
 
 Write-Verbose "Build Doc Content"
-docfx build "${DocOutDir}/docfx.json"
+& "${DocFxTool}" build "${DocOutDir}/docfx.json"
 
 Write-Verbose "Copy over site Logo"
 Copy-Item "${DocCommonGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
