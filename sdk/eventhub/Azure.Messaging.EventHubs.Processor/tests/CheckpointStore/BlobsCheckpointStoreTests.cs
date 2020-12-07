@@ -28,9 +28,12 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
     ///
     public class BlobsCheckpointStoreTests
     {
-        private const string FullyQualifiedNamespace = "fqns";
-        private const string EventHubName = "name";
-        private const string ConsumerGroup = "group";
+        private const string FullyQualifiedNamespace = "FqNs";
+        private const string EventHubName = "Name";
+        private const string ConsumerGroup = "Group";
+        private const string FullyQualifiedNamespaceLowercase = "fqns";
+        private const string EventHubNameLowercase = "name";
+        private const string ConsumerGroupLowercase = "group";
         private const string MatchingEtag = "etag";
         private const string WrongEtag = "wrongEtag";
         private const string PartitionId = "1";
@@ -90,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var blobList = new List<BlobItem>
             {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/ownership/{Guid.NewGuid().ToString()}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/ownership/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot",
@@ -331,7 +334,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var blobList = new List<BlobItem>
             {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{Guid.NewGuid().ToString()}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot",
@@ -364,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var blobList = new List<BlobItem>
             {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{Guid.NewGuid().ToString()}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot",
@@ -394,7 +397,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var blobList = new List<BlobItem>
             {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{Guid.NewGuid().ToString()}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot",
@@ -422,7 +425,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var blobList = new List<BlobItem>
             {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partitionId}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot",
@@ -455,7 +458,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             string partitionId = Guid.NewGuid().ToString();
             var blobList = new List<BlobItem>
             {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partitionId}",
                                             false,
                                             BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag), contentLength: 0),
                                             "snapshot",
@@ -465,14 +468,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                                 {BlobMetadataKey.SequenceNumber, "960182"},
                                                 {BlobMetadataKey.Offset, "14"}
                                             }),
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/{partitionId}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/{partitionId}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot")
             };
 
             var containerClient = new MockBlobContainerClient() { Blobs = blobList };
-            containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/{partitionId}", client =>
+            containerClient.AddBlobClient($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/{partitionId}", client =>
             {
                 client.Content = Encoding.UTF8.GetBytes("{" +
                                                             "\"PartitionId\":\"0\"," +
@@ -503,7 +506,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             string partitionId2 = Guid.NewGuid().ToString();
             var blobList = new List<BlobItem>
             {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId1}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partitionId1}",
                                             false,
                                             BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag), contentLength: 0),
                                             "snapshot",
@@ -717,7 +720,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var blobList = new List<BlobItem>
             {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partitionId}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot",
@@ -769,7 +772,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var blobList = new List<BlobItem>
             {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/ownership/{Guid.NewGuid().ToString()}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/ownership/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot",
@@ -810,7 +813,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var blobList = new List<BlobItem>
             {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/ownership/{Guid.NewGuid().ToString()}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/ownership/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot",
