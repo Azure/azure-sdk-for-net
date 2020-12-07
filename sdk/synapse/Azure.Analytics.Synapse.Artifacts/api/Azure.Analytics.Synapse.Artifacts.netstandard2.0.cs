@@ -1387,11 +1387,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.AzureKeyVaultSecretReference SasToken { get { throw null; } set { } }
         public object SasUri { get { throw null; } set { } }
     }
-    public partial class BabylonConfiguration
-    {
-        public BabylonConfiguration() { }
-        public string BabylonResourceId { get { throw null; } set { } }
-    }
     public partial class BigDataPoolReference
     {
         public BigDataPoolReference(Azure.Analytics.Synapse.Artifacts.Models.BigDataPoolReferenceType type, string referenceName) { }
@@ -1422,12 +1417,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.AutoScaleProperties AutoScale { get { throw null; } set { } }
         public System.DateTimeOffset? CreationDate { get { throw null; } set { } }
         public string DefaultSparkLogFolder { get { throw null; } set { } }
+        public bool? HaveLibraryRequirementsChanged { get { throw null; } set { } }
         public bool? IsComputeIsolationEnabled { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.LibraryRequirements LibraryRequirements { get { throw null; } set { } }
         public int? NodeCount { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.NodeSize? NodeSize { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.NodeSizeFamily? NodeSizeFamily { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
+        public bool? SessionLevelPackagesEnabled { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.LibraryRequirements SparkConfigProperties { get { throw null; } set { } }
         public string SparkEventsFolder { get { throw null; } set { } }
         public string SparkVersion { get { throw null; } set { } }
@@ -1456,29 +1453,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     }
     public partial class BlobEventsTrigger : Azure.Analytics.Synapse.Artifacts.Models.MultiplePipelineTrigger
     {
-        public BlobEventsTrigger(System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes> events, string scope) { }
+        public BlobEventsTrigger(System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.BlobEventType> events, string scope) { }
         public string BlobPathBeginsWith { get { throw null; } set { } }
         public string BlobPathEndsWith { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes> Events { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.BlobEventType> Events { get { throw null; } }
         public bool? IgnoreEmptyBlobs { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BlobEventTypes : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes>
+    public readonly partial struct BlobEventType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.BlobEventType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public BlobEventTypes(string value) { throw null; }
-        public static Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes MicrosoftStorageBlobCreated { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes MicrosoftStorageBlobDeleted { get { throw null; } }
-        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes other) { throw null; }
+        public BlobEventType(string value) { throw null; }
+        public static Azure.Analytics.Synapse.Artifacts.Models.BlobEventType MicrosoftStorageBlobCreated { get { throw null; } }
+        public static Azure.Analytics.Synapse.Artifacts.Models.BlobEventType MicrosoftStorageBlobDeleted { get { throw null; } }
+        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.BlobEventType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes left, Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes right) { throw null; }
-        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes (string value) { throw null; }
-        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes left, Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes right) { throw null; }
+        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.BlobEventType left, Azure.Analytics.Synapse.Artifacts.Models.BlobEventType right) { throw null; }
+        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.BlobEventType (string value) { throw null; }
+        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.BlobEventType left, Azure.Analytics.Synapse.Artifacts.Models.BlobEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class BlobSink : Azure.Analytics.Synapse.Artifacts.Models.CopySink
@@ -4994,6 +4991,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public ProxyResource() { }
     }
+    public partial class PurviewConfiguration
+    {
+        public PurviewConfiguration() { }
+        public string PurviewResourceId { get { throw null; } set { } }
+    }
     public partial class QueryDataFlowDebugSessionsResponse
     {
         internal QueryDataFlowDebugSessionsResponse() { }
@@ -6293,7 +6295,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public long? MaxSizeBytes { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
         public string RecoverableDatabaseId { get { throw null; } set { } }
-        public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
+        public string RestorePointInTime { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.Sku Sku { get { throw null; } set { } }
         public string SourceDatabaseId { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
@@ -6757,7 +6759,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SybaseTableDataset(Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference)) { }
         public object TableName { get { throw null; } set { } }
     }
-    public partial class SynapseNotebookActivity : Azure.Analytics.Synapse.Artifacts.Models.Activity
+    public partial class SynapseNotebookActivity : Azure.Analytics.Synapse.Artifacts.Models.ExecutionActivity
     {
         public SynapseNotebookActivity(string name, Azure.Analytics.Synapse.Artifacts.Models.SynapseNotebookReference notebook) : base (default(string)) { }
         public Azure.Analytics.Synapse.Artifacts.Models.SynapseNotebookReference Notebook { get { throw null; } set { } }
@@ -6769,7 +6771,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string ReferenceName { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.NotebookReferenceType Type { get { throw null; } set { } }
     }
-    public partial class SynapseSparkJobDefinitionActivity : Azure.Analytics.Synapse.Artifacts.Models.Activity
+    public partial class SynapseSparkJobDefinitionActivity : Azure.Analytics.Synapse.Artifacts.Models.ExecutionActivity
     {
         public SynapseSparkJobDefinitionActivity(string name, Azure.Analytics.Synapse.Artifacts.Models.SynapseSparkJobReference sparkJob) : base (default(string)) { }
         public Azure.Analytics.Synapse.Artifacts.Models.SynapseSparkJobReference SparkJob { get { throw null; } set { } }
@@ -7243,7 +7245,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class Workspace : Azure.Analytics.Synapse.Artifacts.Models.TrackedResource
     {
         public Workspace(string location) : base (default(string)) { }
-        public Azure.Analytics.Synapse.Artifacts.Models.BabylonConfiguration BabylonConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ConnectivityEndpoints { get { throw null; } }
         public Azure.Analytics.Synapse.Artifacts.Models.DataLakeStorageAccountDetails DefaultDataLakeStorage { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.EncryptionDetails Encryption { get { throw null; } set { } }
@@ -7254,6 +7255,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.PrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+        public Azure.Analytics.Synapse.Artifacts.Models.PurviewConfiguration PurviewConfiguration { get { throw null; } set { } }
         public string SqlAdministratorLogin { get { throw null; } set { } }
         public string SqlAdministratorLoginPassword { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.VirtualNetworkProfile VirtualNetworkProfile { get { throw null; } set { } }
