@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer
             V2_0 = 1,
 
             /// <summary>
-            /// Version 3.1-preview.2
+            /// Version 2.1-preview.2
             /// </summary>
             V2_1_Preview_2 = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
