@@ -358,10 +358,30 @@ namespace Microsoft.Azure.ContainerRegistry
             // Serialize Request
             string _requestContent = null;
             if(payload != null)
-            {
+            {              
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(payload, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/vnd.docker.distribution.manifest.v2+json");
+
+                switch (payload)
+                {
+                    case V2Manifest v2Manifest:
+                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(v2Manifest.MediaType);
+                        break;
+                    case V1Manifest v1Manifest:
+                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(v1Manifest.MediaType);
+                        break;
+                    case ManifestList manifestList:
+                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(manifestList.MediaType);
+                        break;
+                    case OCIManifest ociManifest:
+                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(ociManifest.MediaType);
+                        break;
+                    case OCIIndex ociIndex:
+                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(ociIndex.MediaType);
+                        break;
+                    default:
+                        throw new AcrErrorsException($"The requested mediaType could not be found in {payload}.");
+                }
             }
             // Set Credentials
             if (Client.Credentials != null)
