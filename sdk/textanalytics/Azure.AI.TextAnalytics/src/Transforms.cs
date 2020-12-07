@@ -42,7 +42,6 @@ namespace Azure.AI.TextAnalytics
                 errors.Add(ConvertToError(error));
             }
             return errors;
-
         }
 
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)

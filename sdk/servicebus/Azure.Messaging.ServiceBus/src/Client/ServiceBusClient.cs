@@ -21,7 +21,6 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
     {
-
         private readonly ServiceBusClientOptions _options;
 
         /// <summary>
@@ -38,7 +37,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed { get; private set; } = false;
+        public bool IsClosed { get; private set; }
 
         /// <summary>
         /// The transport type used for this <see cref="ServiceBusClient"/>.

@@ -139,7 +139,6 @@ namespace Azure.Storage
                 {
                     return 0;
                 }
-
             }
 
             if (_bufferPosition == 0 || _bufferPosition == _bufferLength || _bufferInvalidated)
@@ -250,6 +249,7 @@ namespace Azure.Storage
 
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             // Return the buffer to the pool if we're called from Dispose or a finalizer
             if (_buffer != null)
             {
@@ -346,7 +346,6 @@ namespace Azure.Storage
             long beginningOfBuffer = _position - _bufferPosition;
             if (newPosition < _position && newPosition > beginningOfBuffer)
             {
-
                 _bufferPosition = (int)(newPosition - beginningOfBuffer);
                 _position = newPosition;
                 return newPosition;

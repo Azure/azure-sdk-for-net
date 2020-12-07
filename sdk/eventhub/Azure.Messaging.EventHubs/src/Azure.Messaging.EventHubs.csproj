@@ -5,6 +5,10 @@
     <ApiCompatVersion>5.2.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>
+      <!-- TODO: Investigate and remove suppressions https://github.com/Azure/azure-sdk-for-net/issues/17153 -->
+      $(NoWarn);CA1816;CA2016
+    </NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

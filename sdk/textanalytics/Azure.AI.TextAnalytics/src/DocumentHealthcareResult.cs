@@ -67,7 +67,7 @@ namespace Azure.AI.TextAnalytics
         public TextDocumentStatistics? Statistics { get; }
 
         /// <summary> TextAnalyticsError. </summary>
-        public TextAnalyticsError TextAnalyticsError { get; } = new TextAnalyticsError();
+        public TextAnalyticsError TextAnalyticsError { get; }
 
         private static Regex _healthcareEntityRegex = new Regex(@"\#/results/documents\/(?<documentIndex>\d*)\/entities\/(?<entityIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
@@ -86,6 +86,5 @@ namespace Azure.AI.TextAnalytics
 
             throw new InvalidOperationException($"Failed to parse element reference: {reference}");
         }
-
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed = false;
+        private bool _closed;
 
         /// <summary>
         /// Indicates whether or not this receiver has been closed.
@@ -416,7 +416,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var i = 0;
                 foreach (ArraySegment<byte> deliveryTag in deliveryTags)
                 {
-
                     disposeMessageTasks[i++] = receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
                 }
 
@@ -649,7 +648,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 timeout);
         }
 
-        private Rejected GetRejectedOutcome(
+        private static Rejected GetRejectedOutcome(
             IDictionary<string, object> propertiesToModify,
             string deadLetterReason,
             string deadLetterErrorDescription)
@@ -826,7 +825,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             int messageCount = 1,
             CancellationToken cancellationToken = default)
         {
-
             long seqNumber = sequenceNumber ?? LastPeekedSequenceNumber + 1;
             IReadOnlyList<ServiceBusReceivedMessage> messages = null;
 
@@ -1257,7 +1255,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _receiveLink?.Dispose();
             _managementLink?.Dispose();
-
         }
 
         private void OnReceiverLinkClosed(object receiver, EventArgs e)

@@ -206,12 +206,14 @@ namespace Azure.Storage.Files.DataLake
             Uri fileSystemUri,
             string directoryPath,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             DataLakeClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics)
             : base(
                   fileSystemUri,
                   directoryPath,
                   pipeline,
+                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics)
         {
@@ -231,6 +233,7 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 $"{Path}/{fileName}",
                 Pipeline,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics);
 
@@ -247,6 +250,7 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 $"{Path}/{subdirectoryName}",
                 Pipeline,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics);
 
@@ -1212,7 +1216,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
 
         /// <summary>
@@ -1334,7 +1337,6 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
-
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -2374,7 +2376,7 @@ namespace Azure.Storage.Files.DataLake
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

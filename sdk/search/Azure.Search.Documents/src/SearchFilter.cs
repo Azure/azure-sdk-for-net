@@ -112,7 +112,7 @@ namespace Azure.Search.Documents
 
             // Optimistically allocate an extra 5% for escapes
             StringBuilder builder = new StringBuilder(2 + (int)(text.Length * 1.05));
-            builder.Append("'");
+            builder.Append('\'');
             foreach (char ch in text)
             {
                 builder.Append(ch);
@@ -121,7 +121,7 @@ namespace Azure.Search.Documents
                     builder.Append(ch);
                 }
             }
-            builder.Append("'");
+            builder.Append('\'');
             return builder.ToString();
         }
 

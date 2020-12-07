@@ -11,10 +11,8 @@ namespace Azure.Tables.Tests
 {
     public class TableServiceClientTests : ClientTestBase
     {
-
         public TableServiceClientTests(bool isAsync) : base(isAsync)
         {
-
         }
 
         /// <summary>

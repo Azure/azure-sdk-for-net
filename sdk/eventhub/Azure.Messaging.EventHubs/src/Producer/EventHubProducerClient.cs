@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private static readonly TimeSpan PartitionProducerLifespan = TimeSpan.FromMinutes(5);
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the producer is associated with.  This is likely
@@ -418,7 +418,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
         {
-
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             return await Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
@@ -465,7 +464,6 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (!partitionState.IsInitialized)
                 {
-
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                     await InitializePartitionStateAsync(partitionState, cancellationToken).ConfigureAwait(false);
                 }
@@ -1118,7 +1116,6 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             finally
             {
-
                 EventHubsEventSource.Log.IdempotentPublishComplete(EventHubName, options.PartitionId);
             }
         }
