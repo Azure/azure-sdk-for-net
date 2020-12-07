@@ -111,7 +111,11 @@ function Get-PkgProperties
             return $pkgProps
         }
     }
+<<<<<<< HEAD
     LogWarning "Failed to retrive Properties for $PackageName"
+=======
+    LogError "Failed to retrive Properties for $PackageName"
+>>>>>>> Update Package-Properties.ps1
     return $null
 }
 
