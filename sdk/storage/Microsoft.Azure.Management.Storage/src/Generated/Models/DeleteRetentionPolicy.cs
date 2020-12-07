@@ -69,16 +69,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Days != null)
+            if (Days > 365)
             {
-                if (Days > 365)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Days", 365);
-                }
-                if (Days < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Days", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Days", 365);
+            }
+            if (Days < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Days", 1);
             }
         }
     }
