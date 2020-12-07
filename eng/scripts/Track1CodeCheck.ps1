@@ -1,6 +1,6 @@
 ﻿$ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 1
-$exitCode=0
+$exitCode = 0
 
 [string[]] $errors = @()
 
@@ -41,44 +41,60 @@ function Get-ObjectMembers {
 }
 
 try {
-    # For pipeline
+    # Get RP Mapping
+    $RPMapping = @{ }
+    $readmePath = ''
+    git clone https://github.com/Azure/azure-rest-api-specs.git ../azure-rest-api-specs
+    $folderNames = Get-ChildItem ../azure-rest-api-specs/specification
+    $folderNames | ForEach-Object {
+        if (Test-Path "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md") {
+            $readmePath = "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md"
+        }
+        elseif (Test-Path "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.md") {
+            $readmePath = "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.md"
+        } 
+        $fileContent = Get-Content $readmePath
+        foreach ($item in $fileContent) {
+            if (($item -match '\$\(csharp-sdks-folder\)')) {
+                $item -match "\/([^/]+)\/"
+                $folderName = $matches[0].Substring(1, $matches[0].Length - 2)
+                if (($folderName -notmatch "\$") -and (!$RPMapping.ContainsKey($folderName))) {
+                    $RPMapping += @{ $folderName = "$($_.Name)" }
+                }
+            }
+        }
+    }
+
+    # Get Metadata file path
     $Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
     $changeList = $Response.Content | ConvertFrom-Json
-    $rpMapping = Get-Content "./eng/scripts/RPMapping.json" | ConvertFrom-Json
     $mataPath = @()
-    $folderName = @()
     $rpIndex = @()
-
+    $folderName = @()
     $changeList | ForEach-Object {
         $fileName = $_.filename
         if ($fileName -match 'eng/mgmt/mgmtmetadata') {
             $mataPath += $fileName
         }
     }
-
-    if ($mataPath.Length -eq 0) {
-        $changeList | ForEach-Object {
-            $fileName = $_.filename
-            if ($fileName -match 'sdk/') {
-                $name = $fileName.substring(4, (($fileName.indexof('/Microsoft') - 4)))
-                If ($folderName -notcontains $name) {
-                    $folderName += $name
-                }
+    $changeList | ForEach-Object {
+        $fileName = $_.filename
+        if ($fileName -match 'sdk/') {
+            $name = $fileName.substring(4, (($fileName.indexof('/Microsoft') - 4)))
+            If ($folderName -notcontains $name) {
+                $folderName += $name
             }
         }
-        foreach ($item in $folderName) {
-            $rpMapping | Get-ObjectMembers | ForEach-Object {
-                $value = $_.Value
-                if ($value.PSObject.Properties.Name -eq $item) {
-                    $rpName = $_.Key
-                    If ($rpIndex -notcontains $rpName) {
-                        $rpIndex += $rpName
-                    }
-                }   
-            }
+    }
+    foreach ($item in $folderName) {
+        $rpName = $RPMapping.Get_Item($item)
+        If ($rpIndex -notcontains $rpName) {
+            $rpIndex += $rpName
         }
-        $rpIndex | ForEach-Object {
-            $path = "eng/mgmt/mgmtmetadata/$_" + "_resource-manager.txt"
+    }
+    $rpIndex | ForEach-Object {
+        $path = "eng/mgmt/mgmtmetadata/$_" + "_resource-manager.txt"
+        if ($mataPath -notcontains $path) {
             $mataPath += $path
         }
     }
@@ -111,41 +127,43 @@ try {
 
         # prevent warning related to EOL differences which triggers an exception for some reason
         & git add -A
-        $diffResult=@()
+        $diffResult = @()
         $diffResult += git -c core.safecrlf=false diff HEAD --name-only --ignore-space-at-eol
-        if($diffResult.Length -gt 1){
+        if ($diffResult.Length -gt 1) {
             $exitCode ++
-        } elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')){
+        }
+        elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')) {
             $changeContent = @()
             $content = git -c core.safecrlf=false diff -U0 HEAD --ignore-space-at-eol $diffResult[0]
-            $content[4..($content.Length-1)] | ForEach-Object {
-                if($_.StartsWith('+') -or $_.StartsWith('-')){
+            $content[4..($content.Length - 1)] | ForEach-Object {
+                if ($_.StartsWith('+') -or $_.StartsWith('-')) {
                     $changeContent += $_
                 }
             }
-            if ($changeContent.Length -ne 11){
+            if ($changeContent.Length -ne 11) {
                 $exitCode ++
             }
 
-        # metaDataContent doesn't contains 'AutoRestCmdExecuted' part since it can't be verified
-        $metaDataContent = @('-      // BEGIN: Code Generation Metadata Section',
-        '-      public static readonly String AutoRestVersion = "v2";',
-        '-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";',
-        '-      public static readonly String GithubForkName = "Azure";',
-        '-      public static readonly String GithubBranchName = "master";',
-        '-      public static readonly String GithubCommidId = "{0}";'.Replace('{0}',$commit),
-        '-      public static readonly String CodeGenerationErrors = "";',
-        '-      public static readonly String GithubRepoName = "azure-rest-api-specs";',
-        '-      // END: Code Generation Metadata Section'
-        )
-        foreach ($metaString in $metaDataContent) {
-            if ($metaString -notin $changeContent) {
-                Write-Output "Diff in" $metaString
-                $exitCode ++
-                break
+            # metaDataContent doesn't contains 'AutoRestCmdExecuted' part since it can't be verified
+            $metaDataContent = @('-      // BEGIN: Code Generation Metadata Section',
+                '-      public static readonly String AutoRestVersion = "v2";',
+                '-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";',
+                '-      public static readonly String GithubForkName = "Azure";',
+                '-      public static readonly String GithubBranchName = "master";',
+                '-      public static readonly String GithubCommidId = "{0}";'.Replace('{0}', $commit),
+                '-      public static readonly String CodeGenerationErrors = "";',
+                '-      public static readonly String GithubRepoName = "azure-rest-api-specs";',
+                '-      // END: Code Generation Metadata Section'
+            )
+            foreach ($metaString in $metaDataContent) {
+                if ($metaString -notin $changeContent) {
+                    Write-Output "Diff in" $metaString
+                    $exitCode ++
+                    break
+                }
             }
         }
-        } elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -notmatch 'SdkInfo_')) {
+        elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -notmatch 'SdkInfo_')) {
             $exitCode ++
         }
 
