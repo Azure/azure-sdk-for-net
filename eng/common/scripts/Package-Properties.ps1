@@ -84,7 +84,7 @@ function Get-PkgProperties
     if (!(Test-Path $serviceDirectoryPath))
     {
         LogError "Service Directory $ServiceDirectory does not exist"
-        exit 1
+        return $null
     }
 
     $directoriesPresent = Get-ChildItem $serviceDirectoryPath -Directory
@@ -110,6 +110,7 @@ function Get-PkgProperties
         }
     }
     LogError "Failed to retrive Properties for $PackageName"
+    return $null
 }
 
 # Takes ServiceName and Repo Root Directory
@@ -156,8 +157,12 @@ function Operate-OnPackages ($activePkgList, $ServiceDirectory, [Array]$pkgProps
 {
     foreach ($pkg in $activePkgList)
     {
+        Log-Debug "Operating on $($pkg["name"])"
         $pkgProps = Get-PkgProperties -PackageName $pkg["name"] -ServiceDirectory $ServiceDirectory
-        $pkgPropsResult += $pkgProps
+        if ($null -ne  $pkgProps)
+        {
+            $pkgPropsResult += $pkgProps
+        }
     }
     return $pkgPropsResult
 }
@@ -165,8 +170,16 @@ function Operate-OnPackages ($activePkgList, $ServiceDirectory, [Array]$pkgProps
 function Get-PkgListFromYml ($ciYmlPath)
 {
     $ProgressPreference = "SilentlyContinue"
-    Register-PSRepository -Default -ErrorAction:SilentlyContinue
-    Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope CurrentUser
+    if ((Get-PSRepository | ?{$_.Name -eq "PSGallery"}).Count -eq 0)
+    {
+        Register-PSRepository -Default -ErrorAction:SilentlyContinue
+    }
+
+    if ((Get-Module -ListAvailable -Name powershell-yaml | ?{$_.Version -eq "0.4.2"}).Count -eq 0)
+    {
+        Install-Module -Name powershell-yaml -RequiredVersion 0.4.2 -Force -Scope CurrentUser
+    }
+
     $ciYmlContent = Get-Content $ciYmlPath -Raw
     $ciYmlObj = ConvertFrom-Yaml $ciYmlContent -Ordered
     if ($ciYmlObj.Contains("stages"))
