@@ -37,12 +37,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="input">The inputs for the Job.</param>
         /// <param name="outputs">The outputs for the Job.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="created">The UTC date and time when the customer has
         /// created the Job, in 'YYYY-MM-DDThh:mm:ssZ' format.</param>
         /// <param name="state">The current state of the job. Possible values

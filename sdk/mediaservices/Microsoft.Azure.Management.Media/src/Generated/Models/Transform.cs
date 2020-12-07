@@ -39,12 +39,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="outputs">An array of one or more TransformOutputs that
         /// the Transform should generate.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="created">The UTC date and time when the Transform was
         /// created, in 'YYYY-MM-DDThh:mm:ssZ' format.</param>
         /// <param name="description">An optional verbose description of the
