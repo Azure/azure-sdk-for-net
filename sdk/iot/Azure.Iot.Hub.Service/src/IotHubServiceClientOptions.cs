@@ -41,7 +41,6 @@ namespace Azure.Iot.Hub.Service
             Version = version;
         }
 
-
         internal string GetVersionString()
         {
             return Version switch

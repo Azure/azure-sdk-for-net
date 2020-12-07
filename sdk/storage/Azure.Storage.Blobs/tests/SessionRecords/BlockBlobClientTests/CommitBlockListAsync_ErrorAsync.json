@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "11352636-7794-28db-ab63-970ad8537fce",
         "x-ms-date": "Sat, 04 Apr 2020 01:43:33 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "11352636-7794-28db-ab63-970ad8537fce",
         "x-ms-request-id": "aa95867c-a01e-0030-6222-0af36f000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "285f7fb3-c600-3f5b-9938-7c6a07a4c63b",
         "x-ms-date": "Sat, 04 Apr 2020 01:43:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "\u003CBlockList\u003E\u003CLatest\u003EdGVzdC1ibG9jay03YzFhOWJmMi0yOWNkLTI0NGQtMzY2Zi02MmFjN2FkNjgyOTg=\u003C/Latest\u003E\u003C/BlockList\u003E",
       "StatusCode": 400,
@@ -63,7 +63,7 @@
         "x-ms-client-request-id": "285f7fb3-c600-3f5b-9938-7c6a07a4c63b",
         "x-ms-error-code": "InvalidBlockList",
         "x-ms-request-id": "aa958686-a01e-0030-6722-0af36f000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidBlockList\u003C/Code\u003E\u003CMessage\u003EThe specified block list is invalid.\n",
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "faf8ba28-5a76-b698-a9ff-254c2cccc536",
         "x-ms-date": "Sat, 04 Apr 2020 01:43:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,7 +97,7 @@
         ],
         "x-ms-client-request-id": "faf8ba28-5a76-b698-a9ff-254c2cccc536",
         "x-ms-request-id": "aa95869d-a01e-0030-7622-0af36f000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

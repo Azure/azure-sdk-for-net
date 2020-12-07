@@ -152,7 +152,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 return TimeSpan.FromMinutes(interval);
-
             }, LazyThreadSafetyMode.PublicationOnly);
         }
 

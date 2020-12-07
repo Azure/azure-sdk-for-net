@@ -71,7 +71,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expectedUri, requestUri);
         }
 
-
         public static object[] HeadersWithValuesAndType =>
             new object[]
             {
@@ -146,7 +145,6 @@ namespace Azure.Core.Tests
 
             CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
         }
-
 
         private static Request CreateRequest(HttpClientTransport transport, byte[] bytes = null)
         {

@@ -162,7 +162,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             {
                 currentBlobs = container.GetBlobsAsync(cancellationToken: cancellationToken);
 
-
                 List<BlobBaseClient> newBlobs = new List<BlobBaseClient>();
 
                 // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.

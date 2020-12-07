@@ -35,6 +35,19 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [Test]
+        public async Task ExtractKeyPhrasesWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            string document = singleEnglish;
+
+            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document);
+
+            Assert.AreEqual(2, keyPhrases.Count);
+            Assert.IsTrue(keyPhrases.Contains("cat"));
+            Assert.IsTrue(keyPhrases.Contains("veterinarian"));
+        }
+
+        [Test]
         public async Task ExtractKeyPhrasesTest()
         {
             TextAnalyticsClient client = GetClient();

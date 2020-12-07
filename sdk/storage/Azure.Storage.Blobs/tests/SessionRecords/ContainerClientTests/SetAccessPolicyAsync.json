@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "1287298e-2c2e-dfad-8b79-0d5330fb23aa",
         "x-ms-date": "Mon, 03 Aug 2020 17:53:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "1287298e-2c2e-dfad-8b79-0d5330fb23aa",
         "x-ms-request-id": "90336e4c-301e-00fb-1dbf-695a01000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-client-request-id": "98e38814-6d79-2f33-6aa7-f55292241132",
         "x-ms-date": "Mon, 03 Aug 2020 17:53:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Ebgrkouwmbwjmfniyiklc\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2020-08-03T16:53:45.3743810Z\u003C/Start\u003E\u003CExpiry\u003E2020-08-03T18:53:45.3743810Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
       "StatusCode": 200,
@@ -64,7 +64,7 @@
         ],
         "x-ms-client-request-id": "98e38814-6d79-2f33-6aa7-f55292241132",
         "x-ms-request-id": "90336e9e-301e-00fb-66bf-695a01000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -81,7 +81,7 @@
         "x-ms-client-request-id": "b9d4d0a4-0f19-2c4b-9e5e-43bae9d22a27",
         "x-ms-date": "Mon, 03 Aug 2020 17:53:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -103,7 +103,7 @@
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "90336ecf-301e-00fb-10bf-695a01000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -120,7 +120,7 @@
         "x-ms-client-request-id": "c2ad119b-5850-4219-12e3-88f26ec209ff",
         "x-ms-date": "Mon, 03 Aug 2020 17:53:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -137,7 +137,7 @@
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "c2ad119b-5850-4219-12e3-88f26ec209ff",
         "x-ms-request-id": "90336f04-301e-00fb-3dbf-695a01000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Ebgrkouwmbwjmfniyiklc\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2020-08-03T16:53:45.3743810Z\u003C/Start\u003E\u003CExpiry\u003E2020-08-03T18:53:45.3743810Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E"
     },
@@ -154,7 +154,7 @@
         "x-ms-client-request-id": "d81f30c3-6724-5cd7-1ed5-8813e5d2f449",
         "x-ms-date": "Mon, 03 Aug 2020 17:53:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -167,7 +167,7 @@
         ],
         "x-ms-client-request-id": "d81f30c3-6724-5cd7-1ed5-8813e5d2f449",
         "x-ms-request-id": "90336f2f-301e-00fb-62bf-695a01000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

@@ -188,6 +188,5 @@ namespace Azure.Security.KeyVault.Keys
             P521Value => new Oid(P521OidValue),
             _ => null,
         };
-
     }
 }
