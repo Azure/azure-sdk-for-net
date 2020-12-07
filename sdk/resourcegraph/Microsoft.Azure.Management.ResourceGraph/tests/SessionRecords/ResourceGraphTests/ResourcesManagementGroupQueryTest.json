@@ -4,7 +4,7 @@
       "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2020-04-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VHcmFwaC9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAyMC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"subscriptions\": [\r\n    \"00000000-0000-0000-0000-000000000000\"\r\n  ],\r\n  \"query\": \"project id, tags, properties | limit 2\"\r\n}",
+      "RequestBody": "{\"managementGroupId\": \"testManagementGroupId\",  \"query\": \"project id, tags, properties | limit 2\"}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "d2cbefd0-8265-4e02-bf5f-9229c30e0ca9"

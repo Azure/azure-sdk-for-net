@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
     /// Successfully executed facet containing additional statistics on the
     /// response of a query.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FacetResult")]
     public partial class FacetResult : Facet
     {
         /// <summary>

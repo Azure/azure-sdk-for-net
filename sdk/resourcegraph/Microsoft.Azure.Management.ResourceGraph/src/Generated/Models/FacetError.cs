@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
     /// <summary>
     /// A facet whose execution resulted in an error.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FacetError")]
     public partial class FacetError : Facet
     {
         /// <summary>

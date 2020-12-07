@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2019-04-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VHcmFwaC9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxOS0wNC0wMQ==",
+      "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VHcmFwaC9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAyMC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "{\"subscriptions\": [\"00000000-0000-0000-0000-000000000000\"], \"query\": \"project id, tags, properties | limit 2\", \"options\": {\"resultFormat\": \"objectArray\"}}",
       "RequestHeaders": {
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 31 Aug 2018 23:24:47 GMT"
+          "Fri, 31 Aug 2020 23:24:47 GMT"
         ],
         "Pragma": [
           "no-cache"

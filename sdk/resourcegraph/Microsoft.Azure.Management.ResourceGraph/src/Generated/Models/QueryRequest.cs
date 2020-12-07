@@ -32,15 +32,18 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// <summary>
         /// Initializes a new instance of the QueryRequest class.
         /// </summary>
+        /// <param name="query">The resources query.</param>
         /// <param name="subscriptions">Azure subscriptions against which to
         /// execute the query.</param>
-        /// <param name="query">The resources query.</param>
+        /// <param name="managementGroupId">The management group
+        /// identifier.</param>
         /// <param name="options">The query evaluation options</param>
         /// <param name="facets">An array of facet requests to be computed
         /// against the query result.</param>
-        public QueryRequest(IList<string> subscriptions, string query, QueryRequestOptions options = default(QueryRequestOptions), IList<FacetRequest> facets = default(IList<FacetRequest>))
+        public QueryRequest(string query, IList<string> subscriptions = default(IList<string>), string managementGroupId = default(string), QueryRequestOptions options = default(QueryRequestOptions), IList<FacetRequest> facets = default(IList<FacetRequest>))
         {
             Subscriptions = subscriptions;
+            ManagementGroupId = managementGroupId;
             Query = query;
             Options = options;
             Facets = facets;
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// </summary>
         [JsonProperty(PropertyName = "subscriptions")]
         public IList<string> Subscriptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the management group identifier.
+        /// </summary>
+        [JsonProperty(PropertyName = "managementGroupId")]
+        public string ManagementGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the resources query.
@@ -86,10 +95,6 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Subscriptions == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Subscriptions");
-            }
             if (Query == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Query");

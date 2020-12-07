@@ -291,5 +291,100 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 Assert.IsType<JObject>(array[0]["properties"]);
             }
         }
+
+        /// <summary>
+        /// Resources tenant level query test.
+        /// </summary>
+        [Fact]
+        public void ResourcesTenantLevelQueryTest()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var resourceGraphClient = GetResourceGraphClient(context);
+                var query = new QueryRequest
+                {
+                    Query = "project id, tags, properties | limit 2"
+                };
+
+                var queryResponse = resourceGraphClient.Resources(query);
+
+                // Top-level response fields
+                Assert.Equal(2, queryResponse.Count);
+                Assert.Equal(2, queryResponse.TotalRecords);
+                Assert.Null(queryResponse.SkipToken);
+                Assert.Equal(ResultTruncated.False, queryResponse.ResultTruncated);
+                Assert.NotNull(queryResponse.Data);
+                Assert.NotNull(queryResponse.Facets);
+                Assert.Empty(queryResponse.Facets);
+
+                var table = (queryResponse.Data as JObject).ToObject<Table>();
+
+                // Data columns
+                Assert.NotNull(table.Columns);
+                Assert.Equal(3, table.Columns.Count);
+                Assert.NotNull(table.Columns[0].Name);
+                Assert.NotNull(table.Columns[1].Name);
+                Assert.NotNull(table.Columns[2].Name);
+                Assert.Equal(ColumnDataType.String, table.Columns[0].Type);
+                Assert.Equal(ColumnDataType.Object, table.Columns[1].Type);
+                Assert.Equal(ColumnDataType.Object, table.Columns[2].Type);
+
+                // Data rows
+                Assert.NotNull(table.Rows);
+                Assert.Equal(2, table.Rows.Count);
+                Assert.Equal(3, table.Rows[0].Count);
+                Assert.IsType<string>(table.Rows[0][0]);
+                Assert.IsType<JObject>(table.Rows[0][1]);
+                Assert.IsType<JObject>(table.Rows[0][2]);
+            }
+        }
+
+        /// <summary>
+        /// Resources management group query test.
+        /// </summary>
+        [Fact]
+        public void ResourcesManagementGroupQueryTest()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var resourceGraphClient = GetResourceGraphClient(context);
+                var query = new QueryRequest
+                {
+                    ManagementGroupId = "testManagementGroupId",
+                    Query = "project id, tags, properties | limit 2"
+                };
+
+                var queryResponse = resourceGraphClient.Resources(query);
+
+                // Top-level response fields
+                Assert.Equal(2, queryResponse.Count);
+                Assert.Equal(2, queryResponse.TotalRecords);
+                Assert.Null(queryResponse.SkipToken);
+                Assert.Equal(ResultTruncated.False, queryResponse.ResultTruncated);
+                Assert.NotNull(queryResponse.Data);
+                Assert.NotNull(queryResponse.Facets);
+                Assert.Empty(queryResponse.Facets);
+
+                var table = (queryResponse.Data as JObject).ToObject<Table>();
+
+                // Data columns
+                Assert.NotNull(table.Columns);
+                Assert.Equal(3, table.Columns.Count);
+                Assert.NotNull(table.Columns[0].Name);
+                Assert.NotNull(table.Columns[1].Name);
+                Assert.NotNull(table.Columns[2].Name);
+                Assert.Equal(ColumnDataType.String, table.Columns[0].Type);
+                Assert.Equal(ColumnDataType.Object, table.Columns[1].Type);
+                Assert.Equal(ColumnDataType.Object, table.Columns[2].Type);
+
+                // Data rows
+                Assert.NotNull(table.Rows);
+                Assert.Equal(2, table.Rows.Count);
+                Assert.Equal(3, table.Rows[0].Count);
+                Assert.IsType<string>(table.Rows[0][0]);
+                Assert.IsType<JObject>(table.Rows[0][1]);
+                Assert.IsType<JObject>(table.Rows[0][2]);
+            }
+        }
     }
 }
