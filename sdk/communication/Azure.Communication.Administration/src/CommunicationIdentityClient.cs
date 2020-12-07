@@ -35,7 +35,7 @@ namespace Azure.Communication.Administration
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
-                options.BuildHttpPipline(connectionString),
+                options.BuildHttpPipeline(connectionString),
                 connectionString.GetRequired("endpoint"));
         }
 
