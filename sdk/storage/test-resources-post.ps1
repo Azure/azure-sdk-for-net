@@ -174,4 +174,5 @@ Write-Verbose "Setting AZ_STORAGE_CONFIG_PATH environment variable used by Stora
 Write-Host "##vso[task.setvariable variable=AZ_STORAGE_CONFIG_PATH]$TestConfigurationPath"
 
 # Wait until RBAC replicates. It has 5min SLA. https://github.com/Azure/azure-sdk-for-net/issues/17384 to find better solution.
+Write-Verbose "Sleeping for 90 seconds to let RBAC replicate"
 Start-Sleep -s 90
