@@ -23,7 +23,6 @@ namespace Azure.Security.Attestation
     /// </summary>
     public class AttestationClient
     {
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AttestationRestClient _restClient;
