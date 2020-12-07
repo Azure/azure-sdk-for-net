@@ -323,7 +323,6 @@ namespace Azure.Security.Attestation
             }
         }
 
-
         /// <summary>
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
@@ -446,6 +445,5 @@ namespace Azure.Security.Attestation
                 return _signers;
             }
         }
-
     }
 }

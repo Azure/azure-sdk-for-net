@@ -76,6 +76,5 @@ namespace Azure.Security.Attestation.Models
         /// </summary>
         [JsonPropertyName("crit")]
         public bool? Critical { get; set; }
-
     }
 }
