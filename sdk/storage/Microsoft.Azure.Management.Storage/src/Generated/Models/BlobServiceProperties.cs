@@ -59,11 +59,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// restore policy.</param>
         /// <param name="containerDeleteRetentionPolicy">The blob service
         /// properties for container soft delete.</param>
-        /// <param name="lastAccessTimeTrackingPolicy">The blob service
-        /// property to configure last access time based tracking
-        /// policy.</param>
         /// <param name="sku">Sku name and tier.</param>
-        public BlobServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), string defaultServiceVersion = default(string), DeleteRetentionPolicy deleteRetentionPolicy = default(DeleteRetentionPolicy), bool? isVersioningEnabled = default(bool?), bool? automaticSnapshotPolicyEnabled = default(bool?), ChangeFeed changeFeed = default(ChangeFeed), RestorePolicyProperties restorePolicy = default(RestorePolicyProperties), DeleteRetentionPolicy containerDeleteRetentionPolicy = default(DeleteRetentionPolicy), LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy = default(LastAccessTimeTrackingPolicy), Sku sku = default(Sku))
+        public BlobServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), string defaultServiceVersion = default(string), DeleteRetentionPolicy deleteRetentionPolicy = default(DeleteRetentionPolicy), bool? isVersioningEnabled = default(bool?), bool? automaticSnapshotPolicyEnabled = default(bool?), ChangeFeed changeFeed = default(ChangeFeed), RestorePolicyProperties restorePolicy = default(RestorePolicyProperties), DeleteRetentionPolicy containerDeleteRetentionPolicy = default(DeleteRetentionPolicy), Sku sku = default(Sku))
             : base(id, name, type)
         {
             Cors = cors;
@@ -74,7 +71,6 @@ namespace Microsoft.Azure.Management.Storage.Models
             ChangeFeed = changeFeed;
             RestorePolicy = restorePolicy;
             ContainerDeleteRetentionPolicy = containerDeleteRetentionPolicy;
-            LastAccessTimeTrackingPolicy = lastAccessTimeTrackingPolicy;
             Sku = sku;
             CustomInit();
         }
@@ -139,13 +135,6 @@ namespace Microsoft.Azure.Management.Storage.Models
         public DeleteRetentionPolicy ContainerDeleteRetentionPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets the blob service property to configure last access
-        /// time based tracking policy.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.lastAccessTimeTrackingPolicy")]
-        public LastAccessTimeTrackingPolicy LastAccessTimeTrackingPolicy { get; set; }
-
-        /// <summary>
         /// Gets sku name and tier.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
@@ -170,10 +159,6 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (ContainerDeleteRetentionPolicy != null)
             {
                 ContainerDeleteRetentionPolicy.Validate();
-            }
-            if (LastAccessTimeTrackingPolicy != null)
-            {
-                LastAccessTimeTrackingPolicy.Validate();
             }
             if (Sku != null)
             {
