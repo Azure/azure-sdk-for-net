@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Identity;
 using NUnit.Framework;
@@ -20,6 +19,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
                 #region Snippet:ServiceBusSendAndReceive
+                #region Snippet:ServiceBusSendSingleMessage
                 //@@ string connectionString = "<connection_string>";
                 //@@ string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
@@ -34,6 +34,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the message
                 await sender.SendMessageAsync(message);
 
+                #endregion
+                #region Snippet:ServiceBusReceiveSingleMessage
                 // create a receiver that we can use to receive the message
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -43,6 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // get the message body as a string
                 string body = receivedMessage.Body.ToString();
                 Console.WriteLine(body);
+                #endregion
                 #endregion
                 Assert.AreEqual("Hello world!", receivedMessage.Body.ToString());
             }
@@ -194,7 +197,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
-                    // get the message body as a string using an implicit cast
+                    // get the message body as a string
                     string body = receivedMessage.Body.ToString();
                 }
             }
@@ -214,7 +217,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
                 #region Snippet:ServiceBusSchedule
                 long seq = await sender.ScheduleMessageAsync(
