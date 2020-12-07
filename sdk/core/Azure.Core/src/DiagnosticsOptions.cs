@@ -110,13 +110,13 @@ namespace Azure.Core
 
         private static bool? EnvironmentVariableToBool(string? value)
         {
-            if (string.Equals("true", value, StringComparison.OrdinalIgnoreCase) ||
+            if (string.Equals(bool.TrueString, value, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals("1", value, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
 
-            if (string.Equals("false", value, StringComparison.OrdinalIgnoreCase) ||
+            if (string.Equals(bool.FalseString, value, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals("0", value, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
