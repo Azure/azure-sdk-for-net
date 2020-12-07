@@ -329,7 +329,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task ListCheckpointsLogsStartAndComplete()
         {
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
@@ -361,7 +362,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var expectedOffset = 13;
             var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
 
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
@@ -390,7 +392,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var expectedSequence = 133;
             var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequence, false);
 
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
@@ -417,7 +420,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var partitionId = "67";
 
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
@@ -449,8 +453,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public async Task ListCheckpointsPreferredNewCheckpointOverLegacy()
         {
             string partitionId = Guid.NewGuid().ToString();
-            var blobList = new List<BlobItem>{
-
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId}",
                                             false,
                                             BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag), contentLength: 0),
@@ -497,8 +501,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             string partitionId1 = Guid.NewGuid().ToString();
             string partitionId2 = Guid.NewGuid().ToString();
-            var blobList = new List<BlobItem>{
-
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId1}",
                                             false,
                                             BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag), contentLength: 0),
@@ -545,7 +549,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task ListCheckpointsUsesOffsetAsTheStartingPositionWhenPresentInLegacyCheckpoint()
         {
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
@@ -580,7 +585,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task ListCheckpointsUsesSequenceNumberAsTheStartingPositionWhenNoOffsetIsPresentInLegacyCheckpoint()
         {
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
@@ -614,7 +620,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task ListCheckpointsConsidersDataInvalidWithNoOffsetOrSequenceNumberLegacyCheckpoint()
         {
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
@@ -653,7 +660,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [TestCase("\0\0\0")]
         public async Task ListCheckpointsConsidersDataInvalidWithLegacyCheckpointBlobContainingInvalidJson(string json)
         {
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
@@ -707,7 +715,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var partitionId = Guid.NewGuid().ToString();
 
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
@@ -758,7 +767,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var blobInfo = BlobsModelFactory.BlobInfo(new ETag($@"""{MatchingEtag}"""), DateTime.UtcNow);
 
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/ownership/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
@@ -798,7 +808,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 PartitionId = PartitionId,
             };
 
-            var blobList = new List<BlobItem>{
+            var blobList = new List<BlobItem>
+            {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/ownership/{Guid.NewGuid().ToString()}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
