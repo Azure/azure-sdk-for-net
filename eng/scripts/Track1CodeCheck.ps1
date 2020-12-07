@@ -44,7 +44,7 @@ try {
     # Get RP Mapping
     $RPMapping = @{ }
     $readmePath = ''
-    git clone https://github.com/Azure/azure-rest-api-specs.git ../
+    git clone https://github.com/Azure/azure-rest-api-specs.git ../azure-rest-api-specs
     $folderNames = Get-ChildItem ../azure-rest-api-specs/specification
     $folderNames | ForEach-Object {
         if (Test-Path "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md") {
