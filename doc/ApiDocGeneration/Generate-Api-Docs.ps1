@@ -54,7 +54,7 @@ function UpdateDocIndexFiles([string]$docPath, [string] $mainJsPath) {
     $docfxContent = Get-Content -Path $docPath -Raw
     $docfxContent = $docfxContent -replace "`"_appTitle`": `"`"", "`"_appTitle`": `"Azure SDK for .NET`""
     $docfxContent = $docfxContent -replace "`"_appFooter`": `"`"", "`"_appFooter`": `"Azure SDK for .NET`""
-    Set-Content -Path $docPath -Value $docfxContent
+    Set-Content -Path $docPath -Value $docfxContent -NoNewline
     # Update main.js var lang
     $mainJsContent = Get-Content -Path $mainJsPath -Raw
     $mainJsContent = $mainJsContent -replace "var SELECTED_LANGUAGE = ''", "var SELECTED_LANGUAGE = 'dotnet'"

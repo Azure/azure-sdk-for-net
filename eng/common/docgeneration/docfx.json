@@ -61,8 +61,8 @@
     "cleanupCacheHistory": false,
     "disableGitFeatures": false,
     "globalMetadata": {
-      "_appTitle": "Azure SDK for .NET",
-      "_appFooter": "Azure SDK for .NET",
+      "_appTitle": "",
+      "_appFooter": "",
       "_enableSearch": false,
       "_enableNewTab": true,
       "_appFaviconPath": "https://c.s-microsoft.com/favicon.ico?v2",
@@ -70,12 +70,3 @@
     }    
   }
 }
-
-
-
-
-
-
-
-
-
