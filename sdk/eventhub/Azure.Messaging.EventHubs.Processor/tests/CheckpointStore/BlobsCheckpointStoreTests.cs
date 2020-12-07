@@ -476,7 +476,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                                             "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
                                                             "\"Epoch\":386," +
                                                             "\"Offset\":\"13\"," +
-                                                            "\"SequenceNumber\":960180}");
+                                                            "\"SequenceNumber\":960180" +
+                                                            "}");
             });
 
             var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
@@ -523,7 +524,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                                             "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
                                                             "\"Epoch\":386," +
                                                             "\"Offset\":\"13\"," +
-                                                            "\"SequenceNumber\":960180}");
+                                                            "\"SequenceNumber\":960180" +
+                                                            "}");
             });
 
             var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
@@ -559,7 +561,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                                             "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
                                                             "\"Epoch\":386," +
                                                             "\"Offset\":\"13\"," +
-                                                            "\"SequenceNumber\":960180}");
+                                                            "\"SequenceNumber\":960180" +
+                                                            "}");
             });
 
             var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
@@ -592,7 +595,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                                         "\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\"," +
                                                         "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
                                                         "\"Epoch\":386," +
-                                                        "\"SequenceNumber\":960180}");
+                                                        "\"SequenceNumber\":960180" +
+                                                        "}");
             });
 
             var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);

@@ -408,7 +408,6 @@ namespace Azure.Messaging.EventHubs.Processor
             List<EventProcessorCheckpoint> checkpoints = null;
             try
             {
-
                 checkpoints = await ApplyRetryPolicy(listCheckpointsAsync, cancellationToken).ConfigureAwait(false);
                 if (ReadLegacyCheckpoints)
                 {
