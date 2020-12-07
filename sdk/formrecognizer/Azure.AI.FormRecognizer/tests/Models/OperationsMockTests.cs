@@ -122,6 +122,26 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         }
 
         [Test]
+        public async Task RecognizeBusinessCardsOperationCreatesDiagnosticScopeOnUpdate()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateFormRecognizerClient(options);
+
+            var operation = new RecognizeBusinessCardsOperation("00000000-0000-0000-0000-000000000000", client);
+
+            await operation.UpdateStatusAsync();
+
+            testListener.AssertScope($"{nameof(RecognizeBusinessCardsOperation)}.{nameof(RecognizeBusinessCardsOperation.UpdateStatus)}");
+        }
+
+        [Test]
         public void RecognizeBusinessCardsOperationRequiredParameters()
         {
             FormRecognizerClient client = CreateFormRecognizerClient();
@@ -129,6 +149,26 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             Assert.Throws<ArgumentNullException>(() => new RecognizeBusinessCardsOperation(null, client));
             Assert.Throws<ArgumentException>(() => new RecognizeBusinessCardsOperation(string.Empty, client));
             Assert.Throws<ArgumentNullException>(() => new RecognizeBusinessCardsOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
+        }
+
+        [Test]
+        public async Task RecognizeInvoicesOperationCreatesDiagnosticScopeOnUpdate()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateFormRecognizerClient(options);
+
+            var operation = new RecognizeInvoicesOperation("00000000-0000-0000-0000-000000000000", client);
+
+            await operation.UpdateStatusAsync();
+
+            testListener.AssertScope($"{nameof(RecognizeInvoicesOperation)}.{nameof(RecognizeInvoicesOperation.UpdateStatus)}");
         }
 
         [Test]
@@ -207,6 +247,32 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new TrainingOperation(string.Empty, client);
             Assert.ThrowsAsync<FormatException>(async () => await operation.UpdateStatusAsync());
+        }
+
+        [Test]
+        public async Task CreateComposedModelOperationCreatesDiagnosticScopeOnUpdate()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""modelInfo"": {
+                        ""status"": ""creating"",
+                        ""modelId"": ""00000000-0000-0000-0000-000000000000""
+                    }
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateFormTrainingClient(options);
+
+            var operation = new CreateComposedModelOperation("00000000-0000-0000-0000-000000000000", client);
+
+            await operation.UpdateStatusAsync();
+
+            testListener.AssertScope($"{nameof(CreateCustomFormModelOperation)}.{nameof(CreateCustomFormModelOperation.UpdateStatus)}");
         }
 
         [Test]
