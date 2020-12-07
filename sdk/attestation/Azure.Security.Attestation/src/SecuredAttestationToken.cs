@@ -94,7 +94,6 @@ namespace Azure.Security.Attestation
             var serializationOptions = new JsonSerializerOptions
             {
                 IgnoreNullValues = true,
-
             };
             byte[] jwtHeader = JsonSerializer.SerializeToUtf8Bytes<JsonWebTokenHeader>(header, serializationOptions);
             string encodedHeader = Base64Url.Encode(jwtHeader);

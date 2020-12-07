@@ -12,13 +12,11 @@ namespace Azure.Security.Attestation.Models
     /// </summary>
     public partial class StoredAttestationPolicy
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StoredAttestationPolicy"/> class.
         /// </summary>
         public StoredAttestationPolicy() : base()
         {
-
         }
         /// <summary>
         /// Gets or sets the attestation policy stored in the MAA.

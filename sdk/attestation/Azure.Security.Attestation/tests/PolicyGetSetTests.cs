@@ -33,7 +33,6 @@ namespace Azure.Security.Attestation.Tests
             var policyRaw = Base64Url.Decode(result);
             var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
             Assert.IsTrue(policy.StartsWith("version"));
-
         }
 
         [RecordedTest]
@@ -47,7 +46,6 @@ namespace Azure.Security.Attestation.Tests
             var policyRaw = Base64Url.Decode(result);
             var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
             Assert.IsTrue(policy.StartsWith("version"));
-
         }
 
         [RecordedTest]
@@ -62,7 +60,6 @@ namespace Azure.Security.Attestation.Tests
             var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
 
             Assert.IsTrue(policy.StartsWith("version"));
-
         }
 
         public const string disallowDebugging = "version=1.0;" +
@@ -130,7 +127,6 @@ namespace Azure.Security.Attestation.Tests
 
                 var policyRaw = Base64Url.Decode(result);
                 originalPolicy = System.Text.Encoding.UTF8.GetString(policyRaw);
-
             }
 
             byte[] disallowDebuggingHash;
@@ -209,7 +205,6 @@ namespace Azure.Security.Attestation.Tests
 
                 var policyRaw = Base64Url.Decode(result);
                 originalPolicy = System.Text.Encoding.UTF8.GetString(policyRaw);
-
             }
 
             X509Certificate2 x509Certificate;
@@ -270,7 +265,6 @@ namespace Azure.Security.Attestation.Tests
                 // And when we're done, policy should be reset to the original value.
                 Assert.AreEqual(originalPolicy, policy);
             }
-
         }
 
         [RecordedTest]
@@ -399,7 +393,6 @@ namespace Azure.Security.Attestation.Tests
                     }
                 }
                 Assert.IsFalse(foundAddedCertificate);
-
             }
         }
 

@@ -140,7 +140,6 @@ namespace Azure.Security.Attestation.Tests.Samples
 
             var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
             var result = policyResult.Value.AttestationPolicy;
-
         }
 
         [RecordedTest]
@@ -173,7 +172,6 @@ namespace Azure.Security.Attestation.Tests.Samples
                 AttestationType.SgxEnclave,
                 new SecuredAttestationToken(policyTokenSigner));
             return;
-
         }
         private AttestationClient GetAttestationClient()
         {

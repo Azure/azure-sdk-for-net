@@ -390,7 +390,6 @@ namespace Azure.Security.Attestation
                     }
 
                     returnedCertificates.Add(new AttestationSigner(certificates.ToArray(), keyId));
-
                 }
 
                 return Task.FromResult(Response.FromValue((IReadOnlyList<AttestationSigner>)returnedCertificates, keys.GetRawResponse()));
@@ -414,7 +413,5 @@ namespace Azure.Security.Attestation
                 return _signers;
             }
         }
-
-
     }
 }
