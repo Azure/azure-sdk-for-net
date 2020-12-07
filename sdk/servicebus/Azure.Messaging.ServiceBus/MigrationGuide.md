@@ -112,9 +112,7 @@ await sender.SendMessageAsync(message);
 
 The feature to send a list of messages in a single call was implemented by batching all the messages into a single AMQP message and sending that to the service.
 
-While we continue to support this feature, it always had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.
-
-In the below code snippet, `inputMessageArray` is an array of messages which we will loop over to safely batch and then send.
+While we continue to support this feature, it had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 // add the messages that we plan to send to a local queue
@@ -201,7 +199,7 @@ Now in `Azure.Messaging.ServiceBus`, we introduce a dedicated class `ServiceBusP
 
 The concept of a receiver remains for users who need to have a more fine grained control over the receiving and settling messages. The difference is that this is now created from the top-level `ServiceBusClient` via the `CreateReceiver()` method that would take the queue or subscription you want to target. 
 
-Another notable difference from the previous library when it comes to receiving messages, is that the new library uses a separate type for received messages, `ServiceBusReceivedMessage`. This helps reduce the surface area of the sendable messages by excluding properties that are set by the service itself and cannot be set by a user. In order to construct a `ServiceBusReceivedMessage` for mocking purposes, use the `ServiceBusModelFactory.ServiceBusReceivedMessage` method. In general, output types that are meant to be constructed only by the library can be created for mocking using the `ServiceBusModelFactory` static class.
+Another notable difference from the previous library when it comes to receiving messages, is that the new library uses a separate type for received messages, `ServiceBusReceivedMessage`. This helps reduce the surface area of the sendable messages by excluding properties that are set by the service itself and cannot be set by a user when sending messages. In order to construct a `ServiceBusReceivedMessage` for mocking purposes, use the `ServiceBusModelFactory.ServiceBusReceivedMessage` method. In general, output types that are meant to be constructed only by the library can be created for mocking using the `ServiceBusModelFactory` static class.
 
 ```C#
 // create the ServiceBusClient
@@ -254,7 +252,7 @@ Now in `Azure.Messaging.ServiceBus`, we simplfify this by giving session variant
 The below code snippet shows you the session variation of the `ServiceBusProcessor`.
 
 ```C# Snippet:ServiceBusConfigureSessionProcessor
-// get the options to use for configuring the processor
+// create the options to use for configuring the processor
 var options = new ServiceBusSessionProcessorOptions
 {
     // By default after the message handler returns, the processor will complete the message
@@ -264,8 +262,9 @@ var options = new ServiceBusSessionProcessorOptions
     // I can also allow for processing multiple sessions
     MaxConcurrentSessions = 5,
 
-    // By default, there will be a single concurrent call per session. I can
-    // increase that here to enable parallel processing within each session.
+    // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
+    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
     MaxConcurrentCallsPerSession = 2,
 
     // Processing can be optionally limited to a subset of session Ids.
@@ -273,7 +272,41 @@ var options = new ServiceBusSessionProcessorOptions
 };
 
 // create a session processor that we can use to process the messages
-ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
+await using ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
+
+// configure the message and error handler to use
+processor.ProcessMessageAsync += MessageHandler;
+processor.ProcessErrorAsync += ErrorHandler;
+
+async Task MessageHandler(ProcessSessionMessageEventArgs args)
+{
+    var body = args.Message.Body.ToString();
+
+    // we can evaluate application logic and use that to determine how to settle the message.
+    await args.CompleteMessageAsync(args.Message);
+
+    // we can also set arbitrary session state using this receiver
+    // the state is specific to the session, and not any particular message
+    await args.SetSessionStateAsync(new BinaryData("some state"));
+}
+
+Task ErrorHandler(ProcessErrorEventArgs args)
+{
+    // the error source tells me at what point in the processing an error occurred
+    Console.WriteLine(args.ErrorSource);
+    // the fully qualified namespace is available
+    Console.WriteLine(args.FullyQualifiedNamespace);
+    // as well as the entity path
+    Console.WriteLine(args.EntityPath);
+    Console.WriteLine(args.Exception.ToString());
+    return Task.CompletedTask;
+}
+
+// start processing
+await processor.StartProcessingAsync();
+
+// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
+Console.ReadKey();
 ```
 
 The below code snippet shows you the session variation of the receiver. Please note that creating a session receiver is an async operation because the library will need to get a lock on the session by connecting to the service first.
@@ -298,11 +331,11 @@ Console.WriteLine(receivedMessage.SessionId);
 ```
 
 ## Known Gaps from Previous Library
-There are a few features that have yet to be implemented in `Azure.Messaging.ServiceBus`, but were present in the previous library. The plan is to add these features in upcoming releases (unless otherwise noted), but they will not be available at the time of GA:
-- **Cross entity transactions** - In the previous library, transactions could work across multiple entities by leveraging the [`viaEntityPath`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/Core/MessageSender.cs#L118) parameter of the `MessageSender` constructor. The service is planning to make future updates that would make it possible to do cross-entity transactions without specificing a "via" entity. The `viaEntityPath` parameter will still continue to work in the same way in the previous library, but will not be necessary in the new library. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/17355.
-- **Plugins** - In the previous library, users could [register plugins](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/QueueClient.cs#L527) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. This feature is not yet supported in the new library but will be added in an upcoming release. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/12943.
-- **AMQP Body Sections** - In the previous library, it was possible to read the message body even if it was not stored in the [AMQP data section](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data) by using the [`GetBody<T>`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/Extensions/MessageInterOpExtensions.cs#L76) extension method. In the new library, we currently do not expose a way to get the message body if it is not populated in the AMQP data section. We will add support for both setting and retrieving the message body in any of the AMQP body sections in an upcoming release. This includes the [data](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data), [sequence](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-amqp-sequence), [value](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-amqp-value) body sections. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/17356.
-- **Max receive wait time for Processor** - In the previous library, it was possible to configure the maximum amount of time each receive call would wait when receiving a message using the message pump (this is known as the Processor in the new library). This was not included in the GA release of the new library as we were not certain that this configuration option would be needed for users of the processor. Feedback for this feature request can be submitted and tracked via https://github.com/Azure/azure-sdk-for-net/issues/16773.
+There are a few features that are yet to be implemented in `Azure.Messaging.ServiceBus`, but were present in the previous library `Microsoft.Azure.ServiceBus`. The plan is to add these features in upcoming releases (unless otherwise noted), but they will not be available in the version 7.0.0:
+- **Cross entity transactions** - In the previous library, Microsoft.Azure.ServiceBus, transactions could work across multiple entities by leveraging the [`viaEntityPath`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/Core/MessageSender.cs#L118) parameter of the `MessageSender` constructor. The service is planning to make backward compatible updates that would make it possible to do cross-entity transactions without specificing a "via" entity. The new library plans to take advantage of this new feature and therefore, the cross entity transactions feature will be available in the upcoming release instead of the current version 7.0.0. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/17355.
+- **Plugins** - In the previous library, Microsoft.Azure.ServiceBus, users could [register plugins](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/QueueClient.cs#L527) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. This feature is not yet supported in the new library but will be added in an upcoming release. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/12943.
+- **AMQP Body Sections** - In the previous library, Microsoft.Azure.ServiceBus, it was possible to read the message body even if it was not stored in the [AMQP data section](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data) by using the [`GetBody<T>`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/Extensions/MessageInterOpExtensions.cs#L76) extension method. In the new library, we currently do not expose a way to get the message body if it is not populated in the AMQP data section. We will add support for both setting and retrieving the message body in any of the AMQP body sections in an upcoming release. This includes the [data](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data), [sequence](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-amqp-sequence), [value](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-amqp-value) body sections. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/17356.
+- **Max receive wait time for Processor** - In the previous library, Microsoft.Azure.ServiceBus, it was possible to configure the maximum amount of time each receive call would wait when receiving a message using the message pump (this is known as the Processor in the new library). This was not included in the GA release of the new library as we were not certain that this configuration option would be needed for users of the processor. Feedback for this feature request can be submitted and tracked via https://github.com/Azure/azure-sdk-for-net/issues/16773.
 
 ## Additional samples
 
