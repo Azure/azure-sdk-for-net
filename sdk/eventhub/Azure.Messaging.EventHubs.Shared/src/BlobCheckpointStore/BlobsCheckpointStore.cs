@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -341,14 +342,27 @@ namespace Azure.Messaging.EventHubs.Processor
                 return checkpoints;
             };
 
-            async Task<List<EventProcessorCheckpoint>> listLegacyCheckpointsAsync(CancellationToken listCheckpointsToken)
+            async Task<List<EventProcessorCheckpoint>> listLegacyCheckpointsAsync(List<EventProcessorCheckpoint> existingCheckpoints, CancellationToken listCheckpointsToken)
             {
                 var legacyPrefix = string.Format(CultureInfo.InvariantCulture, LegacyCheckpointPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
                 var checkpoints = new List<EventProcessorCheckpoint>();
 
                 await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(prefix: legacyPrefix, cancellationToken: listCheckpointsToken).ConfigureAwait(false))
                 {
+                    // Skip empty blobs
+                    if (blob.Properties.ContentLength == 0)
+                    {
+                        continue;
+                    }
+
                     var partitionId = blob.Name.Substring(legacyPrefix.Length);
+
+                    // Check whether there is already a checkpoint for this partition id
+                    if (existingCheckpoints.Any(existingCheckpoint => string.Equals(existingCheckpoint.PartitionId, partitionId, StringComparison.Ordinal)))
+                    {
+                        continue;
+                    }
+
                     var startingPosition = default(EventPosition?);
 
                     BlobBaseClient blobClient = ContainerClient.GetBlobClient(blob.Name);
@@ -356,7 +370,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     await blobClient.DownloadToAsync(memoryStream, listCheckpointsToken).ConfigureAwait(false);
 
                     TryReadLegacyCheckpoint(
-                        memoryStream.GetBuffer().AsSpan(0, (int) memoryStream.Length),
+                        memoryStream.GetBuffer().AsSpan(0, (int)memoryStream.Length),
                         out long? offset,
                         out long? sequenceNumber);
 
@@ -391,13 +405,14 @@ namespace Azure.Messaging.EventHubs.Processor
                 return checkpoints;
             };
 
-            IList<EventProcessorCheckpoint> checkpoints = Array.Empty<EventProcessorCheckpoint>();
+            List<EventProcessorCheckpoint> checkpoints = null;
             try
             {
+
                 checkpoints = await ApplyRetryPolicy(listCheckpointsAsync, cancellationToken).ConfigureAwait(false);
-                if (checkpoints.Count == 0 && ReadLegacyCheckpoints)
+                if (ReadLegacyCheckpoints)
                 {
-                    checkpoints = await ApplyRetryPolicy(listLegacyCheckpointsAsync, cancellationToken).ConfigureAwait(false);
+                    checkpoints.AddRange(await ApplyRetryPolicy(ct => listLegacyCheckpointsAsync(checkpoints, ct), cancellationToken).ConfigureAwait(false));
                 }
                 return checkpoints;
             }
@@ -413,7 +428,7 @@ namespace Azure.Messaging.EventHubs.Processor
             }
             finally
             {
-                ListCheckpointsComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, checkpoints.Count);
+                ListCheckpointsComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, checkpoints?.Count ?? 0);
             }
         }
 
@@ -566,8 +581,21 @@ namespace Azure.Messaging.EventHubs.Processor
 
         /// <summary>
         /// Attempts to read a legacy checkpoint JSON format and extract an offset and a sequence number
-        /// {"PartitionId":"0","Owner":"681d365b-de1b-4288-9733-76294e17daf0","Token":"2d0c4276-827d-4ca4-a345-729caeca3b82","Epoch":386,"Offset":"8591964920","SequenceNumber":960180}
         /// </summary>
+        /// <param name="data">The binary representation of the checkpoint JSON.</param>
+        /// <param name="offset">The parsed offset. null if not found.</param>
+        /// <param name="sequenceNumber">The parsed sequence number. null if not found.</param>
+        /// <remarks>
+        /// Sample checkpoint JSON:
+        /// {
+        ///     "PartitionId":"0",
+        ///     "Owner":"681d365b-de1b-4288-9733-76294e17daf0",
+        ///     "Token":"2d0c4276-827d-4ca4-a345-729caeca3b82",
+        ///     "Epoch":386,
+        ///     "Offset":"8591964920",
+        ///     "SequenceNumber":960180
+        /// }
+        /// </remarks>
         private static void TryReadLegacyCheckpoint(Span<byte> data, out long? offset, out long? sequenceNumber)
         {
             offset = null;
@@ -609,7 +637,7 @@ namespace Azure.Messaging.EventHubs.Processor
             }
             catch (JsonException)
             {
-                // ignore
+                // Ignore this because if the data is malformed, it will be treated as if the checkpoint didn't exist.
             }
         }
 
