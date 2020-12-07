@@ -44,14 +44,14 @@ try {
     # Get RP Mapping
     $RPMapping = @{ }
     $readmePath = ''
-    git clone https://github.com/Azure/azure-rest-api-specs.git
-    $folderNames = Get-ChildItem azure-rest-api-specs/specification
+    git clone https://github.com/Azure/azure-rest-api-specs.git ../
+    $folderNames = Get-ChildItem ../azure-rest-api-specs/specification
     $folderNames | ForEach-Object {
-        if (Test-Path "azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md") {
-            $readmePath = "azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md"
+        if (Test-Path "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md") {
+            $readmePath = "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md"
         }
-        elseif (Test-Path "azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.md") {
-            $readmePath = "azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.md"
+        elseif (Test-Path "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.md") {
+            $readmePath = "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.md"
         } 
         $fileContent = Get-Content $readmePath
         foreach ($item in $fileContent) {
