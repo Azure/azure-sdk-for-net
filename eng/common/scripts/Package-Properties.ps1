@@ -157,7 +157,7 @@ function Operate-OnPackages ($activePkgList, $ServiceDirectory, [Array]$pkgProps
 {
     foreach ($pkg in $activePkgList)
     {
-        Log-Debug "Operating on $($pkg["name"])"
+        LogDebug "Operating on $($pkg["name"])"
         $pkgProps = Get-PkgProperties -PackageName $pkg["name"] -ServiceDirectory $ServiceDirectory
         if ($null -ne  $pkgProps)
         {
