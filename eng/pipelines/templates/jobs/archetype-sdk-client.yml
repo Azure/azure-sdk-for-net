@@ -170,7 +170,6 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
-      - template: /eng/pipelines/templates/steps/select-feed.yml
       - task: UniversalPackages@0
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Get code coverage history
