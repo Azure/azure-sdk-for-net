@@ -88,9 +88,14 @@ try {
     }
     foreach ($item in $folderName) {
         $rpName = $RPMapping.Get_Item($item)
-        If ($rpIndex -notcontains $rpName) {
-            $rpIndex += $rpName
+        if ($rpName){
+            If ($rpIndex -notcontains $rpName) {
+                $rpIndex += $rpName
+            }
+        } else {
+            Write-Output "Can't get proper RP name with folder $item"
         }
+        
     }
     $rpIndex | ForEach-Object {
         $path = "eng/mgmt/mgmtmetadata/$_" + "_resource-manager.txt"

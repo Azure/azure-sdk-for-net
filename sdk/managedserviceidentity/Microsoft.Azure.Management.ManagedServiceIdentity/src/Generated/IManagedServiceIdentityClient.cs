@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    // Some Manual Change
 
     /// <summary>
     /// The Managed Service Identity Client.

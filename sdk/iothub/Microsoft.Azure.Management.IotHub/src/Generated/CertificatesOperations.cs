@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.IotHub
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    // Some Manual Change
 
     /// <summary>
     /// CertificatesOperations operations.

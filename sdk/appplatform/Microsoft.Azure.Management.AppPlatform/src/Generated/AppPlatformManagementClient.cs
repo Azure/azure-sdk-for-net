@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.AppPlatform
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    // Some Manual Change
 
     /// <summary>
     /// REST API for Azure Spring Cloud

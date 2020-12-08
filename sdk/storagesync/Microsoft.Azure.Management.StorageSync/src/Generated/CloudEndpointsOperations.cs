@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.StorageSync
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    // Some Manual Change
 
     /// <summary>
     /// CloudEndpointsOperations operations.

@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Scheduler
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    // Some Manual Change
 
     /// <summary>
     /// JobCollectionsOperations operations.

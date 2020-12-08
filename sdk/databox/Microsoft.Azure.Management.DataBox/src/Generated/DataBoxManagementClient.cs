@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataBox
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    // Some Manual Change
 
     public partial class DataBoxManagementClient : ServiceClient<DataBoxManagementClient>, IDataBoxManagementClient, IAzureClient
     {
