@@ -168,9 +168,10 @@ $content = Get-Content -Path $baseUrl -Raw
 $hrefRegex = "[""']\.\.\/([^""']*)[""']"
 $innerTocRegex = "[""']toc.html[^""']*[""']"
 $outerTocRegex = "[""']\.\.\/toc.html[^""']*[""']"
-$mutatedContent = $content -replace $hrefRegex, '"./$1"'
+# The order matters for the following mutations.
 $mutatedContent = $mutatedContent -replace $innerTocRegex, "`"./api/toc.html`""
 $mutatedContent = $mutatedContent -replace $outerTocRegex, './toc.html'
+$mutatedContent = $content -replace $hrefRegex, '"./$1"'
 Set-Content -Path $baseUrl -Value $mutatedContent -NoNewline
 
 Write-Verbose "Compress and copy HTML into the staging Area"
