@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> How frame data should be transmitted to the inferencing engine. </summary>
+    /// <summary> How frame data should be transmitted to the inference engine. </summary>
     public readonly partial struct MediaGraphGrpcExtensionDataTransferMode : IEquatable<MediaGraphGrpcExtensionDataTransferMode>
     {
         private readonly string _value;

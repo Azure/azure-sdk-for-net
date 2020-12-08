@@ -11,7 +11,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
     public partial class MediaGraphImageFormatRaw : MediaGraphImageFormat
     {
         /// <summary> Initializes a new instance of MediaGraphImageFormatRaw. </summary>
-        /// <param name="pixelFormat"> pixel format. </param>
+        /// <param name="pixelFormat"> The pixel format that will be used to encode images. </param>
         public MediaGraphImageFormatRaw(MediaGraphImageFormatRawPixelFormat pixelFormat)
         {
             PixelFormat = pixelFormat;
@@ -20,14 +20,14 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> Initializes a new instance of MediaGraphImageFormatRaw. </summary>
         /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="pixelFormat"> pixel format. </param>
+        /// <param name="pixelFormat"> The pixel format that will be used to encode images. </param>
         internal MediaGraphImageFormatRaw(string type, MediaGraphImageFormatRawPixelFormat pixelFormat) : base(type)
         {
             PixelFormat = pixelFormat;
             Type = type ?? "#Microsoft.Media.MediaGraphImageFormatRaw";
         }
 
-        /// <summary> pixel format. </summary>
+        /// <summary> The pixel format that will be used to encode images. </summary>
         public MediaGraphImageFormatRawPixelFormat PixelFormat { get; set; }
     }
 }

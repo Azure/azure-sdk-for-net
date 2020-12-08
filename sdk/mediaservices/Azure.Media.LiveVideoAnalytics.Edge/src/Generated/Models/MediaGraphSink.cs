@@ -15,7 +15,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
     public partial class MediaGraphSink
     {
         /// <summary> Initializes a new instance of MediaGraphSink. </summary>
-        /// <param name="name"> Name to be used for the media graph sink. </param>
+        /// <param name="name"> The name to be used for the media graph sink. </param>
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this sink node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
         public MediaGraphSink(string name, IEnumerable<MediaGraphNodeInput> inputs)
@@ -35,7 +35,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> Initializes a new instance of MediaGraphSink. </summary>
         /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> Name to be used for the media graph sink. </param>
+        /// <param name="name"> The name to be used for the media graph sink. </param>
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this sink node. </param>
         internal MediaGraphSink(string type, string name, IList<MediaGraphNodeInput> inputs)
         {
@@ -46,7 +46,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> The discriminator for derived types. </summary>
         internal string Type { get; set; }
-        /// <summary> Name to be used for the media graph sink. </summary>
+        /// <summary> The name to be used for the media graph sink. </summary>
         public string Name { get; set; }
         /// <summary> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this sink node. </summary>
         public IList<MediaGraphNodeInput> Inputs { get; }

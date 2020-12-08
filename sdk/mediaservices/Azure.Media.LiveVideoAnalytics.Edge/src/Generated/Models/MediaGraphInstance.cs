@@ -13,7 +13,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
     public partial class MediaGraphInstance
     {
         /// <summary> Initializes a new instance of MediaGraphInstance. </summary>
-        /// <param name="name"> name of the instance. </param>
+        /// <param name="name"> The identifier for the media graph instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MediaGraphInstance(string name)
         {
@@ -26,7 +26,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         }
 
         /// <summary> Initializes a new instance of MediaGraphInstance. </summary>
-        /// <param name="name"> name of the instance. </param>
+        /// <param name="name"> The identifier for the media graph instance. </param>
         /// <param name="systemData"> The system data for a resource. This is used by both topologies and instances. </param>
         /// <param name="properties"> Properties of a media graph instance. </param>
         internal MediaGraphInstance(string name, MediaGraphSystemData systemData, MediaGraphInstanceProperties properties)
@@ -36,7 +36,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             Properties = properties;
         }
 
-        /// <summary> name of the instance. </summary>
+        /// <summary> The identifier for the media graph instance. </summary>
         public string Name { get; set; }
         /// <summary> The system data for a resource. This is used by both topologies and instances. </summary>
         public MediaGraphSystemData SystemData { get; set; }

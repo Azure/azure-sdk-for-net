@@ -13,7 +13,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
     public partial class MediaGraphTopologySetRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of MediaGraphTopologySetRequest. </summary>
-        /// <param name="graph"> A description of a media graph topology. </param>
+        /// <param name="graph"> The definition of a media graph topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="graph"/> is null. </exception>
         public MediaGraphTopologySetRequest(MediaGraphTopology graph)
         {
@@ -29,14 +29,14 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <summary> Initializes a new instance of MediaGraphTopologySetRequest. </summary>
         /// <param name="methodName"> method name. </param>
         /// <param name="apiVersion"> api version. </param>
-        /// <param name="graph"> A description of a media graph topology. </param>
+        /// <param name="graph"> The definition of a media graph topology. </param>
         internal MediaGraphTopologySetRequest(string methodName, string apiVersion, MediaGraphTopology graph) : base(methodName, apiVersion)
         {
             Graph = graph;
             MethodName = methodName ?? "GraphTopologySet";
         }
 
-        /// <summary> A description of a media graph topology. </summary>
+        /// <summary> The definition of a media graph topology. </summary>
         public MediaGraphTopology Graph { get; set; }
     }
 }

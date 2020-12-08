@@ -23,11 +23,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         }
 
         /// <summary> Initializes a new instance of MediaGraphTopologyProperties. </summary>
-        /// <param name="description"> . </param>
-        /// <param name="parameters"> list of parameters. </param>
-        /// <param name="sources"> list of sources. </param>
-        /// <param name="processors"> list of processors. </param>
-        /// <param name="sinks"> list of sinks. </param>
+        /// <param name="description"> A description of a media graph topology. It is recommended to use this to describe the expected use of the topology. </param>
+        /// <param name="parameters"> The list of parameters defined in the topology. The value for these parameters are supplied by instances of this topology. </param>
+        /// <param name="sources"> The list of source nodes in this topology. </param>
+        /// <param name="processors"> The list of processor nodes in this topology. </param>
+        /// <param name="sinks"> The list of sink nodes in this topology. </param>
         internal MediaGraphTopologyProperties(string description, IList<MediaGraphParameterDeclaration> parameters, IList<MediaGraphSource> sources, IList<MediaGraphProcessor> processors, IList<MediaGraphSink> sinks)
         {
             Description = description;
@@ -37,15 +37,15 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             Sinks = sinks;
         }
 
-        /// <summary> description of graph topology. </summary>
+        /// <summary> A description of a media graph topology. It is recommended to use this to describe the expected use of the topology. </summary>
         public string Description { get; set; }
-        /// <summary> list of parameters. </summary>
+        /// <summary> The list of parameters defined in the topology. The value for these parameters are supplied by instances of this topology. </summary>
         public IList<MediaGraphParameterDeclaration> Parameters { get; }
-        /// <summary> list of sources. </summary>
+        /// <summary> The list of source nodes in this topology. </summary>
         public IList<MediaGraphSource> Sources { get; }
-        /// <summary> list of processors. </summary>
+        /// <summary> The list of processor nodes in this topology. </summary>
         public IList<MediaGraphProcessor> Processors { get; }
-        /// <summary> list of sinks. </summary>
+        /// <summary> The list of sink nodes in this topology. </summary>
         public IList<MediaGraphSink> Sinks { get; }
     }
 }

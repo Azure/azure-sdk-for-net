@@ -13,8 +13,8 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
     public partial class MediaGraphParameterDefinition
     {
         /// <summary> Initializes a new instance of MediaGraphParameterDefinition. </summary>
-        /// <param name="name"> Name of parameter as defined in the media graph topology. </param>
-        /// <param name="value"> Value of parameter. </param>
+        /// <param name="name"> The name of the parameter defined in the media graph topology. </param>
+        /// <param name="value"> The value to supply for the named parameter defined in the media graph topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public MediaGraphParameterDefinition(string name, string value)
         {
@@ -31,9 +31,9 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             Value = value;
         }
 
-        /// <summary> Name of parameter as defined in the media graph topology. </summary>
+        /// <summary> The name of the parameter defined in the media graph topology. </summary>
         public string Name { get; set; }
-        /// <summary> Value of parameter. </summary>
+        /// <summary> The value to supply for the named parameter defined in the media graph topology. </summary>
         public string Value { get; set; }
     }
 }

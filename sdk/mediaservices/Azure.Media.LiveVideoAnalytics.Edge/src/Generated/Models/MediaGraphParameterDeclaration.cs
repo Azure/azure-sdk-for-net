@@ -14,7 +14,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
     {
         /// <summary> Initializes a new instance of MediaGraphParameterDeclaration. </summary>
         /// <param name="name"> The name of the parameter. </param>
-        /// <param name="type"> type of the parameter. </param>
+        /// <param name="type"> The type of the parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MediaGraphParameterDeclaration(string name, MediaGraphParameterType type)
         {
@@ -29,7 +29,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> Initializes a new instance of MediaGraphParameterDeclaration. </summary>
         /// <param name="name"> The name of the parameter. </param>
-        /// <param name="type"> type of the parameter. </param>
+        /// <param name="type"> The type of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>
         /// <param name="default"> The default value for the parameter to be used if the media graph instance does not specify a value. </param>
         internal MediaGraphParameterDeclaration(string name, MediaGraphParameterType type, string description, string @default)
@@ -42,7 +42,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> The name of the parameter. </summary>
         public string Name { get; set; }
-        /// <summary> type of the parameter. </summary>
+        /// <summary> The type of the parameter. </summary>
         public MediaGraphParameterType Type { get; set; }
         /// <summary> Description of the parameter. </summary>
         public string Description { get; set; }

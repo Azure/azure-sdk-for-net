@@ -14,7 +14,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
     public partial class MediaGraphIoTHubMessageSink : MediaGraphSink
     {
         /// <summary> Initializes a new instance of MediaGraphIoTHubMessageSink. </summary>
-        /// <param name="name"> Name to be used for the media graph sink. </param>
+        /// <param name="name"> The name to be used for the media graph sink. </param>
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this sink node. </param>
         /// <param name="hubOutputName"> Name of the output path to which the media graph will publish message. These messages can then be delivered to desired destinations by declaring routes referencing the output path in the IoT Edge deployment manifest. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, or <paramref name="hubOutputName"/> is null. </exception>
@@ -39,7 +39,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> Initializes a new instance of MediaGraphIoTHubMessageSink. </summary>
         /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> Name to be used for the media graph sink. </param>
+        /// <param name="name"> The name to be used for the media graph sink. </param>
         /// <param name="inputs"> An array of the names of the other nodes in the media graph, the outputs of which are used as input for this sink node. </param>
         /// <param name="hubOutputName"> Name of the output path to which the media graph will publish message. These messages can then be delivered to desired destinations by declaring routes referencing the output path in the IoT Edge deployment manifest. </param>
         internal MediaGraphIoTHubMessageSink(string type, string name, IList<MediaGraphNodeInput> inputs, string hubOutputName) : base(type, name, inputs)

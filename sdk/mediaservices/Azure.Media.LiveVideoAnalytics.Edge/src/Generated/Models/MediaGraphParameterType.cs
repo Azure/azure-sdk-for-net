@@ -7,7 +7,7 @@
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> type of the parameter. </summary>
+    /// <summary> The type of the parameter. </summary>
     public enum MediaGraphParameterType
     {
         /// <summary> A string parameter value. </summary>

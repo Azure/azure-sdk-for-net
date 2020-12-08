@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> A description of a media graph topology. </summary>
+    /// <summary> The definition of a media graph topology. </summary>
     public partial class MediaGraphTopology
     {
         /// <summary> Initializes a new instance of MediaGraphTopology. </summary>
-        /// <param name="name"> name of the topology. </param>
+        /// <param name="name"> The identifier for the media graph topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MediaGraphTopology(string name)
         {
@@ -26,7 +26,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         }
 
         /// <summary> Initializes a new instance of MediaGraphTopology. </summary>
-        /// <param name="name"> name of the topology. </param>
+        /// <param name="name"> The identifier for the media graph topology. </param>
         /// <param name="systemData"> The system data for a resource. This is used by both topologies and instances. </param>
         /// <param name="properties"> A description of the properties of a media graph topology. </param>
         internal MediaGraphTopology(string name, MediaGraphSystemData systemData, MediaGraphTopologyProperties properties)
@@ -36,7 +36,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             Properties = properties;
         }
 
-        /// <summary> name of the topology. </summary>
+        /// <summary> The identifier for the media graph topology. </summary>
         public string Name { get; set; }
         /// <summary> The system data for a resource. This is used by both topologies and instances. </summary>
         public MediaGraphSystemData SystemData { get; set; }
