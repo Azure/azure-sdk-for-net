@@ -1,5 +1,8 @@
 # Release History
 
+## 12.6.0-beta.2 (Unreleased)
+
+
 ## 12.6.0-beta.1 (2020-12-07)
 - Added support for service version 2020-04-08.
 - Fixed bug where DataLakeServiceClient.GetFileSystemClient(), DataLakeFileSystemClient.GetFileClient(), DataLakeFileSystemClient.GetDirectoryClient(),
