@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Keys;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
@@ -48,13 +49,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(restoreOperation.HasValue, Is.True);
         }
 
-       // [RecordedTest]
-        public async Task BackupAndRestoreMultiPartFolderNAme()
+        [RecordedTest]
+        public async Task BackupAndRestoreMultiPartFolderName()
         {
             var source = new CancellationTokenSource(TimeSpan.FromMinutes(2));
 
             UriBuilder builder = new UriBuilder(TestEnvironment.StorageUri);
-            builder.Path = BlobContainerName;
+            builder.Path = BlobContainerNameMultiPart;
 
             // Start the backup.
             BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, "?" + SasToken, source.Token);

@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "traceparent": "00-8e275b49744af64bbba2c197ddb5449f-bfeb89af9d019b42-00",
+        "traceparent": "00-a6bdeca451874d4a8d285147285ad585-a0b8f5c9bec95141-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201207.1",
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201208.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "fd11268180250c0e84d8a04f84407099",
@@ -25,7 +25,7 @@
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-request-id": "93d123ba-38b5-11eb-8e5e-0242ac12000b",
+        "x-ms-request-id": "3308c314-39ad-11eb-9eda-0242ac12000b",
         "x-ms-server-latency": "0"
       },
       "ResponseBody": []
@@ -36,28 +36,28 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "117",
+        "Content-Length": "100",
         "Content-Type": "application/json",
-        "traceparent": "00-8e275b49744af64bbba2c197ddb5449f-bfeb89af9d019b42-00",
+        "traceparent": "00-a6bdeca451874d4a8d285147285ad585-a0b8f5c9bec95141-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201207.1",
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201208.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "fd11268180250c0e84d8a04f84407099",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "storageResourceUri": "https://chrisskeyvaultprim.blob.core.windows.net/backup/some/folder/name",
+        "storageResourceUri": "https://chrisskeyvaultprim.blob.core.windows.net/backup",
         "token": "Sanitized"
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "azure-asyncoperation": "https://chrisskeyvaulthsm.managedhsm.azure.net/backup/74987a6557b547eb886af8c5ffcd6239/pending",
+        "azure-asyncoperation": "https://chrisskeyvaulthsm.managedhsm.azure.net/backup/a11ecce95754487a9f9fed991e29d3ad/pending",
         "Cache-Control": "no-cache",
         "Content-Length": "216",
         "Content-Security-Policy": "default-src \u0027self\u0027",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Dec 2020 17:56:55 GMT",
+        "Date": "Tue, 08 Dec 2020 23:29:22 GMT",
         "Retry-After": "0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -65,8 +65,8 @@
         "X-Frame-Options": "SAMEORIGIN",
         "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "southcentralus",
-        "x-ms-request-id": "93ee9990-38b5-11eb-8e5e-0242ac12000b",
-        "x-ms-server-latency": "7128"
+        "x-ms-request-id": "33666d48-39ad-11eb-9eda-0242ac12000b",
+        "x-ms-server-latency": "1295"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -76,20 +76,20 @@
           "message": null,
           "innererror": null
         },
-        "startTime": 1607363813,
+        "startTime": 1607470162,
         "endTime": null,
-        "jobId": "74987a6557b547eb886af8c5ffcd6239",
+        "jobId": "a11ecce95754487a9f9fed991e29d3ad",
         "azureStorageBlobContainerUri": null
       }
     },
     {
-      "RequestUri": "https://chrisskeyvaulthsm.managedhsm.azure.net/backup/74987a6557b547eb886af8c5ffcd6239/pending?api-version=7.2-preview",
+      "RequestUri": "https://chrisskeyvaulthsm.managedhsm.azure.net/backup/a11ecce95754487a9f9fed991e29d3ad/pending?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201207.1",
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201208.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "ad008af4938bc164349ae946f7d616e8",
@@ -102,7 +102,7 @@
         "Content-Length": "216",
         "Content-Security-Policy": "default-src \u0027self\u0027",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Dec 2020 17:56:58 GMT",
+        "Date": "Tue, 08 Dec 2020 23:29:23 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
@@ -110,8 +110,8 @@
         "x-ms-build-version": "1.0.20201130-1-64549fd2-develop",
         "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "southcentralus",
-        "x-ms-request-id": "9832fe06-38b5-11eb-8e5e-0242ac12000b",
-        "x-ms-server-latency": "2946"
+        "x-ms-request-id": "3431e3ec-39ad-11eb-9eda-0242ac12000b",
+        "x-ms-server-latency": "951"
       },
       "ResponseBody": {
         "azureStorageBlobContainerUri": null,
@@ -121,20 +121,20 @@
           "innererror": null,
           "message": null
         },
-        "jobId": "74987a6557b547eb886af8c5ffcd6239",
-        "startTime": 1607363813,
+        "jobId": "a11ecce95754487a9f9fed991e29d3ad",
+        "startTime": 1607470162,
         "status": "InProgress",
         "statusDetails": null
       }
     },
     {
-      "RequestUri": "https://chrisskeyvaulthsm.managedhsm.azure.net/backup/74987a6557b547eb886af8c5ffcd6239/pending?api-version=7.2-preview",
+      "RequestUri": "https://chrisskeyvaulthsm.managedhsm.azure.net/backup/a11ecce95754487a9f9fed991e29d3ad/pending?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201207.1",
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201208.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "b6b2cab2cc9b8a60006c1c6f15bd5d68",
@@ -144,10 +144,10 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "289",
+        "Content-Length": "272",
         "Content-Security-Policy": "default-src \u0027self\u0027",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Dec 2020 17:57:09 GMT",
+        "Date": "Tue, 08 Dec 2020 23:29:34 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
@@ -155,15 +155,15 @@
         "x-ms-build-version": "1.0.20201130-1-64549fd2-develop",
         "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "southcentralus",
-        "x-ms-request-id": "9feff52c-38b5-11eb-8e5e-0242ac12000b",
-        "x-ms-server-latency": "1590"
+        "x-ms-request-id": "3abf9fb0-39ad-11eb-9eda-0242ac12000b",
+        "x-ms-server-latency": "937"
       },
       "ResponseBody": {
-        "azureStorageBlobContainerUri": "https://chrisskeyvaultprim.blob.core.windows.net/backup/some/folder/name/mhsm-chrisskeyvaulthsm-2020120717565518",
-        "endTime": 1607363825,
+        "azureStorageBlobContainerUri": "https://chrisskeyvaultprim.blob.core.windows.net/backup/mhsm-chrisskeyvaulthsm-2020120823292303",
+        "endTime": 1607470172,
         "error": null,
-        "jobId": "74987a6557b547eb886af8c5ffcd6239",
-        "startTime": 1607363813,
+        "jobId": "a11ecce95754487a9f9fed991e29d3ad",
+        "startTime": 1607470162,
         "status": "Succeeded",
         "statusDetails": null
       }
@@ -174,11 +174,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "200",
+        "Content-Length": "183",
         "Content-Type": "application/json",
-        "traceparent": "00-648c674e492773429fca814e5ba03bc7-c46859dd36823b4a-00",
+        "traceparent": "00-bd0586a7d07669458c61c239ceb1ce2c-bc2a31e9e60cf84e-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201207.1",
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201208.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "9f326f145686ed9fc14fc88a96c815ad",
@@ -189,16 +189,16 @@
           "storageResourceUri": "https://chrisskeyvaultprim.blob.core.windows.net/backup",
           "token": "Sanitized"
         },
-        "folderToRestore": "some/folder/name/mhsm-chrisskeyvaulthsm-2020120717565518"
+        "folderToRestore": "mhsm-chrisskeyvaulthsm-2020120823292303"
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "azure-asyncoperation": "https://chrisskeyvaulthsm.managedhsm.azure.net/restore/6577824f8f264463a30b820c1a405554/pending",
+        "azure-asyncoperation": "https://chrisskeyvaulthsm.managedhsm.azure.net/restore/38557a09961442efb7225d2f00dc2b38/pending",
         "Cache-Control": "no-cache",
         "Content-Length": "180",
         "Content-Security-Policy": "default-src \u0027self\u0027",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Dec 2020 17:57:12 GMT",
+        "Date": "Tue, 08 Dec 2020 23:29:38 GMT",
         "Retry-After": "0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -206,8 +206,8 @@
         "X-Frame-Options": "SAMEORIGIN",
         "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "southcentralus",
-        "x-ms-request-id": "a21b3cee-38b5-11eb-8e5e-0242ac12000b",
-        "x-ms-server-latency": "1237"
+        "x-ms-request-id": "3c87f7fc-39ad-11eb-9eda-0242ac12000b",
+        "x-ms-server-latency": "1170"
       },
       "ResponseBody": {
         "endTime": null,
@@ -216,20 +216,20 @@
           "innererror": null,
           "message": null
         },
-        "jobId": "6577824f8f264463a30b820c1a405554",
-        "startTime": 1607363833,
+        "jobId": "38557a09961442efb7225d2f00dc2b38",
+        "startTime": 1607470178,
         "status": "InProgress",
         "statusDetails": null
       }
     },
     {
-      "RequestUri": "https://chrisskeyvaulthsm.managedhsm.azure.net/restore/6577824f8f264463a30b820c1a405554/pending?api-version=7.2-preview",
+      "RequestUri": "https://chrisskeyvaulthsm.managedhsm.azure.net/restore/38557a09961442efb7225d2f00dc2b38/pending?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201207.1",
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201208.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "b99cb7c1ba8e27fd2975ad1f76f5ab77",
@@ -242,7 +242,7 @@
         "Content-Length": "180",
         "Content-Security-Policy": "default-src \u0027self\u0027",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Dec 2020 17:57:14 GMT",
+        "Date": "Tue, 08 Dec 2020 23:29:39 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
@@ -250,8 +250,8 @@
         "x-ms-build-version": "1.0.20201130-1-64549fd2-develop",
         "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "southcentralus",
-        "x-ms-request-id": "a2dd2bb0-38b5-11eb-8e5e-0242ac12000b",
-        "x-ms-server-latency": "1081"
+        "x-ms-request-id": "3d3fc4d6-39ad-11eb-9eda-0242ac12000b",
+        "x-ms-server-latency": "963"
       },
       "ResponseBody": {
         "endTime": null,
@@ -260,20 +260,20 @@
           "innererror": null,
           "message": null
         },
-        "jobId": "6577824f8f264463a30b820c1a405554",
-        "startTime": 1607363833,
+        "jobId": "38557a09961442efb7225d2f00dc2b38",
+        "startTime": 1607470178,
         "status": "InProgress",
         "statusDetails": null
       }
     },
     {
-      "RequestUri": "https://chrisskeyvaulthsm.managedhsm.azure.net/restore/6577824f8f264463a30b820c1a405554/pending?api-version=7.2-preview",
+      "RequestUri": "https://chrisskeyvaulthsm.managedhsm.azure.net/restore/38557a09961442efb7225d2f00dc2b38/pending?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201207.1",
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201208.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "8732803d77a35c622bc5f44c04d6f438",
@@ -283,54 +283,10 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "180",
-        "Content-Security-Policy": "default-src \u0027self\u0027",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Dec 2020 17:57:25 GMT",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-build-version": "1.0.20201130-1-64549fd2-develop",
-        "x-ms-keyvault-network-info": "addr=70.121.15.5",
-        "x-ms-keyvault-region": "southcentralus",
-        "x-ms-request-id": "a97c3704-38b5-11eb-8e5e-0242ac12000b",
-        "x-ms-server-latency": "1783"
-      },
-      "ResponseBody": {
-        "endTime": null,
-        "error": {
-          "code": null,
-          "innererror": null,
-          "message": null
-        },
-        "jobId": "6577824f8f264463a30b820c1a405554",
-        "startTime": 1607363833,
-        "status": "InProgress",
-        "statusDetails": null
-      }
-    },
-    {
-      "RequestUri": "https://chrisskeyvaulthsm.managedhsm.azure.net/restore/6577824f8f264463a30b820c1a405554/pending?api-version=7.2-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.0.0-alpha.20201207.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "5ead6e56a32159da710b7511a97f76cc",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
         "Content-Length": "143",
         "Content-Security-Policy": "default-src \u0027self\u0027",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Dec 2020 17:57:37 GMT",
+        "Date": "Tue, 08 Dec 2020 23:29:49 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
@@ -338,14 +294,14 @@
         "x-ms-build-version": "1.0.20201130-1-64549fd2-develop",
         "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "southcentralus",
-        "x-ms-request-id": "b08afe18-38b5-11eb-8e5e-0242ac12000b",
-        "x-ms-server-latency": "1399"
+        "x-ms-request-id": "43cf9092-39ad-11eb-9eda-0242ac12000b",
+        "x-ms-server-latency": "970"
       },
       "ResponseBody": {
-        "endTime": 1607363850,
+        "endTime": 1607470190,
         "error": null,
-        "jobId": "6577824f8f264463a30b820c1a405554",
-        "startTime": 1607363833,
+        "jobId": "38557a09961442efb7225d2f00dc2b38",
+        "startTime": 1607470178,
         "status": "Succeeded",
         "statusDetails": null
       }

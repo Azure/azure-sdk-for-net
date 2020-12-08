@@ -16,7 +16,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public KeyVaultBackupClient Client { get; private set; }
 
         internal string SasToken { get; private set; }
-        internal string BlobContainerName = "backup/some/folder/name";
+        internal string BlobContainerName = "backup";
+        internal string BlobContainerNameMultiPart = "backup/some/folder/name";
 
         public BackupRestoreTestBase(bool isAsync, RecordedTestMode? mode)
             : base(isAsync, mode)
