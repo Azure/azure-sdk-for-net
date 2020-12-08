@@ -487,7 +487,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                                             "}");
             });
 
-            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
             var checkpoints = await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
 
             Assert.That(checkpoints, Has.One.Items, "A single checkpoint should have been returned.");
@@ -535,7 +535,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                                             "}");
             });
 
-            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
             var checkpoints = (await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken())).ToArray();
 
             Assert.That(checkpoints, Has.Exactly(2).Items, "Two checkpoints should have been returned.");
@@ -573,7 +573,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                                             "}");
             });
 
-            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
             var checkpoints = await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
 
             Assert.That(checkpoints, Is.Not.Null, "A set of checkpoints should have been returned.");
@@ -608,7 +608,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                                         "}");
             });
 
-            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
             var checkpoints = await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
 
             Assert.That(checkpoints, Is.Not.Null, "A set of checkpoints should have been returned.");
@@ -642,7 +642,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             });
 
             var mockLogger = new Mock<BlobEventStoreEventSource>();
-            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
 
             target.Logger = mockLogger.Object;
 
@@ -679,7 +679,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             });
 
             var mockLogger = new Mock<BlobEventStoreEventSource>();
-            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), readLegacyCheckpoints: true);
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
 
             target.Logger = mockLogger.Object;
 
