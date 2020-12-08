@@ -111,7 +111,7 @@ jobs:
     variables:
       - template: ../variables/globals.yml
       - name: Coverage.PackageName
-        value: Coverage.${{ parameters.ServiceDirectory }}-$(Build.Repository.Name).$(Build.SourceBranchName)
+        value: Coverage.${{ parameters.ServiceDirectory }}.$[replace(variables['Build.Repository.Name'], 'Azure/', '')]
       - name: Coverage.HistoryDirectory
         value: $(Build.ArtifactStagingDirectory)\coverage_history
     strategy:
