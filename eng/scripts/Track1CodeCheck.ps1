@@ -187,18 +187,19 @@ try {
             Write-Warning $Error[0]
         }
     }
-    finally {
-        Write-Host ""
-        Write-Host "Summary:"
-        Write-Host ""
-        Write-Host "   $($errors.Length) error(s)"
-        Write-Host ""
+}
+finally {
+    Write-Host ""
+    Write-Host "Summary:"
+    Write-Host ""
+    Write-Host "   $($errors.Length) error(s)"
+    Write-Host ""
 
-        foreach ($err in $errors) {
-            Write-Host -f Red "error : $err"
-        }
-
-        if ($errors) {
-            exit 1
-        }
+    foreach ($err in $errors) {
+        Write-Host -f Red "error : $err"
     }
+
+    if ($errors) {
+        exit 1
+    }
+}
