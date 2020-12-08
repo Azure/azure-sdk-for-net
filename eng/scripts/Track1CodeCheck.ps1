@@ -184,7 +184,7 @@ try {
             }
         }
         catch {
-            Write-Warning $Error[0]
+            Write-Warning $Error[$Error.count - 1]
         }
     }
 }
