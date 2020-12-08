@@ -861,5 +861,38 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await Task.WhenAll(tasks);
             }
         }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanAcceptMultipleSessionsUsingSameOptionsTopic(bool acceptSpecificSession)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.TopicName);
+                var msgs = new List<ServiceBusMessage>();
+                for (int i = 0; i < 20; i++)
+                {
+                    msgs.Add(new ServiceBusMessage() { SessionId = i.ToString() });
+                }
+                await sender.SendMessagesAsync(msgs);
+
+                var options = new ServiceBusSessionReceiverOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete };
+                var tasks = new List<Task>();
+                for (int i = 0; i < 20; i++)
+                {
+                    if (acceptSpecificSession)
+                    {
+                        tasks.Add(client.AcceptSessionAsync(scope.TopicName, scope.SubscriptionNames.First(), i.ToString(), options));
+                    }
+                    else
+                    {
+                        tasks.Add(client.AcceptNextSessionAsync(scope.TopicName, scope.SubscriptionNames.First(), options));
+                    }
+                }
+                await Task.WhenAll(tasks);
+            }
+        }
     }
 }
