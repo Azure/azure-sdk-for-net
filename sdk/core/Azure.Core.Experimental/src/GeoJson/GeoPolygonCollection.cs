@@ -25,8 +25,8 @@ namespace Azure.Core.GeoJson
         /// </summary>
         /// <param name="polygons">The collection of inner geometries.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
-        public GeoPolygonCollection(IEnumerable<GeoPolygon> polygons, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
+        /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
+        public GeoPolygonCollection(IEnumerable<GeoPolygon> polygons, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
             Argument.AssertNotNull(polygons, nameof(polygons));
 
@@ -51,5 +51,13 @@ namespace Azure.Core.GeoJson
 
         /// <inheritdoc />
         public GeoPolygon this[int index] => Polygons[index];
+
+        /// <summary>
+        /// Returns a view over the coordinates array that forms this geometry.
+        /// </summary>
+        public GeoArray<GeoArray<GeoArray<GeoPosition>>> Coordinates => new GeoArray<GeoArray<GeoArray<GeoPosition>>>(this);
+
+        /// <inheritdoc />
+        public override GeoObjectType Type { get; } = GeoObjectType.MultiPolygon;
     }
 }

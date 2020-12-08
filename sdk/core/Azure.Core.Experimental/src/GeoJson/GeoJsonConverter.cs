@@ -71,7 +71,7 @@ namespace Azure.Core.GeoJson
                 case PointType:
                     return new GeoPoint(ReadCoordinate(coordinates), boundingBox, additionalProperties);
                 case LineStringType:
-                    return new GeoLine(ReadCoordinates(coordinates), boundingBox, additionalProperties);
+                    return new GeoLineString(ReadCoordinates(coordinates), boundingBox, additionalProperties);
                 case MultiPointType:
                     var points = new List<GeoPoint>();
                     foreach (GeoPosition coordinate in ReadCoordinates(coordinates))
@@ -82,32 +82,32 @@ namespace Azure.Core.GeoJson
                     return new GeoPointCollection(points, boundingBox, additionalProperties);
 
                 case PolygonType:
-                    var rings = new List<GeoLine>();
+                    var rings = new List<GeoLinearRing>();
                     foreach (JsonElement ringArray in coordinates.EnumerateArray())
                     {
-                        rings.Add(new GeoLine(ReadCoordinates(ringArray), null, GeoObject.DefaultProperties));
+                        rings.Add(new GeoLinearRing(ReadCoordinates(ringArray)));
                     }
 
                     return new GeoPolygon(rings, boundingBox, additionalProperties);
 
                 case MultiLineStringType:
-                    var lineStrings = new List<GeoLine>();
+                    var lineStrings = new List<GeoLineString>();
                     foreach (JsonElement ringArray in coordinates.EnumerateArray())
                     {
-                        lineStrings.Add(new GeoLine(ReadCoordinates(ringArray), null, GeoObject.DefaultProperties));
+                        lineStrings.Add(new GeoLineString(ReadCoordinates(ringArray), null, GeoObject.DefaultProperties));
                     }
 
-                    return new GeoLineCollection(lineStrings, boundingBox, additionalProperties);
+                    return new GeoLineStringCollection(lineStrings, boundingBox, additionalProperties);
 
                 case MultiPolygonType:
 
                     var polygons = new List<GeoPolygon>();
                     foreach (JsonElement polygon in coordinates.EnumerateArray())
                     {
-                        var polygonRings = new List<GeoLine>();
+                        var polygonRings = new List<GeoLinearRing>();
                         foreach (JsonElement ringArray in polygon.EnumerateArray())
                         {
-                            polygonRings.Add(new GeoLine(ReadCoordinates(ringArray), null, GeoObject.DefaultProperties));
+                            polygonRings.Add(new GeoLinearRing(ReadCoordinates(ringArray)));
                         }
 
                         polygons.Add(new GeoPolygon(polygonRings));
@@ -277,7 +277,7 @@ namespace Azure.Core.GeoJson
                 writer.WriteEndArray();
             }
 
-            void WritePositions(IEnumerable<GeoPosition> positions)
+            void WritePositions(GeoArray<GeoPosition> positions)
             {
                 writer.WriteStartArray();
                 foreach (var position in positions)
@@ -294,13 +294,13 @@ namespace Azure.Core.GeoJson
                 case GeoPoint point:
                     WriteType(PointType);
                     writer.WritePropertyName(CoordinatesProperty);
-                    WritePosition(point.Position);
+                    WritePosition(point.Coordinates);
                     break;
 
-                case GeoLine lineString:
+                case GeoLineString lineString:
                     WriteType(LineStringType);
                     writer.WritePropertyName(CoordinatesProperty);
-                    WritePositions(lineString.Positions);
+                    WritePositions(lineString.Coordinates);
                     break;
 
                 case GeoPolygon polygon:
@@ -309,7 +309,7 @@ namespace Azure.Core.GeoJson
                     writer.WriteStartArray();
                     foreach (var ring in polygon.Rings)
                     {
-                        WritePositions(ring.Positions);
+                        WritePositions(ring.Coordinates);
                     }
 
                     writer.WriteEndArray();
@@ -321,19 +321,19 @@ namespace Azure.Core.GeoJson
                     writer.WriteStartArray();
                     foreach (var point in multiPoint.Points)
                     {
-                        WritePosition(point.Position);
+                        WritePosition(point.Coordinates);
                     }
 
                     writer.WriteEndArray();
                     break;
 
-                case GeoLineCollection multiLineString:
+                case GeoLineStringCollection multiLineString:
                     WriteType(MultiLineStringType);
                     writer.WritePropertyName(CoordinatesProperty);
                     writer.WriteStartArray();
                     foreach (var lineString in multiLineString.Lines)
                     {
-                        WritePositions(lineString.Positions);
+                        WritePositions(lineString.Coordinates);
                     }
 
                     writer.WriteEndArray();
@@ -348,7 +348,7 @@ namespace Azure.Core.GeoJson
                         writer.WriteStartArray();
                         foreach (var polygonRing in polygon.Rings)
                         {
-                            WritePositions(polygonRing.Positions);
+                            WritePositions(polygonRing.Coordinates);
                         }
                         writer.WriteEndArray();
                     }
@@ -391,7 +391,7 @@ namespace Azure.Core.GeoJson
                 writer.WriteEndArray();
             }
 
-            foreach (var additionalProperty in value.AdditionalProperties)
+            foreach (var additionalProperty in value.CustomProperties)
             {
                 writer.WritePropertyName(additionalProperty.Key);
                 WriteAdditionalPropertyValue(writer, additionalProperty.Value);
