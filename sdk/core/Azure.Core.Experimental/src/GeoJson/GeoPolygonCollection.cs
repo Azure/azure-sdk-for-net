@@ -59,6 +59,5 @@ namespace Azure.Core.GeoJson
 
         /// <inheritdoc />
         public override GeoObjectType Type { get; } = GeoObjectType.MultiPolygon;
-
     }
 }
