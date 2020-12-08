@@ -322,7 +322,6 @@ namespace Azure.Storage
             public const string FileSystemName = "FileSystem";
 
             public const string DeletionId = "deletionid";
-
         }
 
         /// <summary>

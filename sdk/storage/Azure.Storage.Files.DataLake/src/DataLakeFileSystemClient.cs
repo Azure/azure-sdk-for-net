@@ -374,7 +374,7 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 directoryName,
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics);
             }
@@ -403,7 +403,7 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 fileName,
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics);
 
@@ -2569,7 +2569,6 @@ namespace Azure.Storage.Files.DataLake
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
-
 
         internal async Task<Response<DataLakePathClient>> RestorePathInternal(
             string deletedPath,

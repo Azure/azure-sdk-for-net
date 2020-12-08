@@ -31,7 +31,9 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be read only
         public IList<DataLakeCorsRule> Cors { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
 
         /// <summary>
         /// The default version to use for requests to the Data Lake service if an incoming request's version is not specified.

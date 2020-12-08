@@ -794,7 +794,7 @@ namespace Azure.Storage.Files.DataLake
             try
             {
                 scope.Start();
-                Response<Azure.Storage.Blobs.Models.BlobServiceProperties> response = _blobServiceClient.GetProperties();
+                Response<Azure.Storage.Blobs.Models.BlobServiceProperties> response = _blobServiceClient.GetProperties(cancellationToken);
                 return Response.FromValue(
                     response.Value.ToDataLakeServiceProperties(),
                     response.GetRawResponse());
@@ -838,7 +838,8 @@ namespace Azure.Storage.Files.DataLake
             try
             {
                 scope.Start();
-                Response<Azure.Storage.Blobs.Models.BlobServiceProperties> response = await _blobServiceClient.GetPropertiesAsync().ConfigureAwait(false);
+                Response<Azure.Storage.Blobs.Models.BlobServiceProperties> response
+                    = await _blobServiceClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(
                     response.Value.ToDataLakeServiceProperties(),
                     response.GetRawResponse());
