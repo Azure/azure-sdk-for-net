@@ -378,6 +378,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 plugins: Plugins,
                 options: options,
+                sessionId: default,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -411,6 +412,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 plugins: Plugins,
                 options: options,
+                sessionId: default,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -446,8 +448,8 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 plugins: Plugins,
                 options: options,
-                cancellationToken: cancellationToken,
-                sessionId: sessionId).ConfigureAwait(false);
+                sessionId: sessionId,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -484,8 +486,8 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 plugins: Plugins,
                 options: options,
-                cancellationToken: cancellationToken,
-                sessionId: sessionId).ConfigureAwait(false);
+                sessionId: sessionId,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

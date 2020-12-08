@@ -38,8 +38,8 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the receiver.</param>
+        /// <param name="sessionId">The Session Id to receive from or null to receive from the next available session.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <param name="sessionId">An optional Session Id to receive from</param>
         ///
         ///<returns>Returns a new instance of the <see cref="ServiceBusSessionReceiver"/> class.</returns>
         internal static async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
@@ -47,8 +47,8 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection connection,
             IList<ServiceBusPlugin> plugins,
             ServiceBusSessionReceiverOptions options,
-            CancellationToken cancellationToken,
-            string sessionId = default)
+            string sessionId,
+            CancellationToken cancellationToken)
         {
             var receiver = new ServiceBusSessionReceiver(
                 connection: connection,
