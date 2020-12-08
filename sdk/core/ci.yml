@@ -33,7 +33,8 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: core
-    ServiceToTest: '*'
+    # TODO: Uncomment before merging.
+    # ServiceToTest: '*'
     ArtifactName: packages
     Artifacts:
     - name: Azure.Core

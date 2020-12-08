@@ -110,10 +110,12 @@ jobs:
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     variables:
       - template: ../variables/globals.yml
-      - name: Coverage.PackageName
-        value: Coverage.${{ parameters.ServiceDirectory }}.${{ coalesce(variables['System.PullRequest.TargetBranch'], 'master') }}
+      - name: Coverage.FeedID
+        value: 590cfd2a-581c-4dcb-a12e-6568ce786175/d7e84250-6db5-46e1-89c9-b7b6f32fe560
       - name: Coverage.HistoryDirectory
         value: $(Build.ArtifactStagingDirectory)\coverage_history
+      - name: Coverage.PackageName
+        value: Coverage.${{ parameters.ServiceDirectory }}.${{ coalesce(variables['System.PullRequest.TargetBranch'], 'master') }}
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
@@ -177,7 +179,7 @@ jobs:
           command: download
           downloadDirectory: $(Coverage.HistoryDirectory)
           feedsToUse: internal
-          vstsFeed: $(DevOpsFeedID)
+          vstsFeed: $(Coverage.FeedID)
           vstsFeedPackage: $(Coverage.PackageName)
           vstsPackageVersion: '0.*'
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
@@ -196,7 +198,8 @@ jobs:
         inputs:
           codeCoverageTool: Cobertura
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
-      - ${{ if and(eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.SourceBranchName'], 'master')) }}:
+      # - ${{ if and(eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net'), eq(variables['Build.SourceBranchName'], 'master')) }}:
+      - ${{ if and(eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net')) }}:
         - task: UniversalPackages@0
           condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
           displayName: Publish code coverage history
@@ -204,7 +207,7 @@ jobs:
             command: publish
             publishDirectory: $(Coverage.HistoryDirectory)
             feedsToUsePublish: internal
-            vstsFeedPublish: $(DevOpsFeedID)
+            vstsFeedPublish: $(Coverage.FeedID)
             vstsFeedPackagePublish: $(Coverage.PackageName)
             versionOption: patch
             packagePublishDescription: Code coverage history for $(Coverage.PackageName) on branch $(Build.SourceBranchName)
