@@ -18,17 +18,894 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8492123b-d195-49cf-bb1b-3cbb60c04668",
-        "Content-Length": "1348805",
+        "apim-request-id": "5aca2899-add7-4bfe-afa0-871513e7bc22",
+        "Content-Length": "1367980",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Dec 2020 04:42:13 GMT",
+        "Date": "Tue, 08 Dec 2020 18:40:21 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "376",
-        "x-request-id": "8492123b-d195-49cf-bb1b-3cbb60c04668"
+        "x-envoy-upstream-service-time": "324",
+        "x-request-id": "5aca2899-add7-4bfe-afa0-871513e7bc22"
       },
       "ResponseBody": {
         "value": [
+          {
+            "feedbackId": "65c8108e-2390-451b-b7e0-916bbdeeff95",
+            "createdTime": "2020-12-08T18:40:20.665Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": null,
+            "endTime": null,
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "53720982-0da9-4a9c-af01-3e0093d51d6c",
+            "createdTime": "2020-12-08T18:40:19.985Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "7c5c34f4-5fda-4478-b3cb-1faa8a795eed",
+            "createdTime": "2020-12-08T18:40:19.388Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "anomalyValue": "AutoDetect"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "f74886c0-34f6-4d28-9d6d-9833a7d6dd64",
+            "createdTime": "2020-12-08T18:40:18.835Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "anomalyValue": "AutoDetect"
+            },
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "anomalyDetectionConfigurationSnapshot": {
+              "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+              "name": "Default",
+              "description": "",
+              "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+              "wholeMetricConfiguration": {
+                "smartDetectionCondition": {
+                  "sensitivity": 100.0,
+                  "anomalyDetectorDirection": "Both",
+                  "suppressCondition": {
+                    "minNumber": 1,
+                    "minRatio": 100.0
+                  }
+                }
+              },
+              "dimensionGroupOverrideConfigurations": [],
+              "seriesOverrideConfigurations": []
+            }
+          },
+          {
+            "feedbackId": "22676348-2fb6-4e75-93a4-b2aa4b4f001d",
+            "createdTime": "2020-12-08T18:40:18.219Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AutoDetect",
+              "periodValue": 10
+            }
+          },
+          {
+            "feedbackId": "f9e43d89-e98f-4be4-8949-88135f278536",
+            "createdTime": "2020-12-08T18:40:17.33Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "changePointValue": "AutoDetect"
+            }
+          },
+          {
+            "feedbackId": "bc4fa44b-f9dd-44c3-9d74-a1fd077645d6",
+            "createdTime": "2020-12-08T18:40:10.266Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": null,
+            "endTime": null,
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "77e4169d-d007-47ca-ad6c-05cfe3f5fcf2",
+            "createdTime": "2020-12-08T18:40:09.398Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "b43f237b-a5a8-484c-97c1-a34a8775f268",
+            "createdTime": "2020-12-08T18:40:08.839Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "anomalyValue": "AutoDetect"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "218d97b1-4d4c-4138-b060-5e3617255066",
+            "createdTime": "2020-12-08T18:40:08.145Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "anomalyValue": "AutoDetect"
+            },
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "anomalyDetectionConfigurationSnapshot": {
+              "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+              "name": "Default",
+              "description": "",
+              "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+              "wholeMetricConfiguration": {
+                "smartDetectionCondition": {
+                  "sensitivity": 100.0,
+                  "anomalyDetectorDirection": "Both",
+                  "suppressCondition": {
+                    "minNumber": 1,
+                    "minRatio": 100.0
+                  }
+                }
+              },
+              "dimensionGroupOverrideConfigurations": [],
+              "seriesOverrideConfigurations": []
+            }
+          },
+          {
+            "feedbackId": "cc19e4d9-9151-4c05-b7d7-e637718f2b90",
+            "createdTime": "2020-12-08T18:40:07.507Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AutoDetect",
+              "periodValue": 10
+            }
+          },
+          {
+            "feedbackId": "b34d9429-2e4f-4b73-88ca-7739f834089d",
+            "createdTime": "2020-12-08T18:39:56.209Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "changePointValue": "AutoDetect"
+            }
+          },
+          {
+            "feedbackId": "786489a1-3207-4bff-896e-0f600c11b80b",
+            "createdTime": "2020-12-08T09:20:18.198Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AssignValue",
+              "periodValue": 2
+            }
+          },
+          {
+            "feedbackId": "00c7d828-1075-4b8e-a2c5-37c5aa3dda53",
+            "createdTime": "2020-12-08T09:20:17.572Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "commentValue": "comment"
+            }
+          },
+          {
+            "feedbackId": "35e794f9-5388-4b23-b6f5-265ddc4c4fec",
+            "createdTime": "2020-12-08T09:20:17.035Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "changePointValue": "NotChangePoint"
+            }
+          },
+          {
+            "feedbackId": "dfc4f499-ae71-4e66-a536-60022c24284f",
+            "createdTime": "2020-12-08T09:20:16.478Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "anomalyValue": "NotAnomaly"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "380d6475-6f96-4bc0-8caf-a2376d8d9d25",
+            "createdTime": "2020-12-08T09:16:41.423Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AssignValue",
+              "periodValue": 2
+            }
+          },
+          {
+            "feedbackId": "7510a9e2-07f2-4398-b0fa-159ae5d76dec",
+            "createdTime": "2020-12-08T09:16:40.79Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "commentValue": "comment"
+            }
+          },
+          {
+            "feedbackId": "3ef5dd44-0baa-4db7-a337-00d1916c75b9",
+            "createdTime": "2020-12-08T09:16:40.089Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "changePointValue": "NotChangePoint"
+            }
+          },
+          {
+            "feedbackId": "24384629-8edf-401a-843d-b493fad71280",
+            "createdTime": "2020-12-08T09:16:39.305Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "anomalyValue": "NotAnomaly"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "5148db91-76ee-4804-9094-2b1bb12dd59a",
+            "createdTime": "2020-12-08T09:02:33.26Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AssignValue",
+              "periodValue": 2
+            }
+          },
+          {
+            "feedbackId": "bcf248d2-1631-45c8-b0b5-ff4303f72480",
+            "createdTime": "2020-12-08T09:02:32.656Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "commentValue": "comment"
+            }
+          },
+          {
+            "feedbackId": "f044141a-1896-4da6-a232-40a0076bee82",
+            "createdTime": "2020-12-08T09:02:32.163Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "changePointValue": "NotChangePoint"
+            }
+          },
+          {
+            "feedbackId": "fd6f9745-db9c-4e15-80ee-f078230fca67",
+            "createdTime": "2020-12-08T09:02:31.644Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "anomalyValue": "NotAnomaly"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "34f4047c-4eb9-451d-8de9-14e15224958c",
+            "createdTime": "2020-12-08T08:58:55.106Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AssignValue",
+              "periodValue": 2
+            }
+          },
+          {
+            "feedbackId": "4f811b9c-702e-47c5-815f-cd68bf36ab8f",
+            "createdTime": "2020-12-08T08:58:54.159Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "commentValue": "comment"
+            }
+          },
+          {
+            "feedbackId": "9b213d0a-923f-4c3e-908c-c62ba0c3191c",
+            "createdTime": "2020-12-08T08:58:53.375Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "changePointValue": "NotChangePoint"
+            }
+          },
+          {
+            "feedbackId": "fc59f06f-26a7-459b-8818-d0e05804d713",
+            "createdTime": "2020-12-08T08:58:52.273Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "anomalyValue": "NotAnomaly"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "deff4420-65cb-4c11-a4d6-ebc6c3d254c9",
+            "createdTime": "2020-12-08T08:50:12.658Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AssignValue",
+              "periodValue": 2
+            }
+          },
+          {
+            "feedbackId": "b2ad04bc-4762-4477-906f-0a81827fc74b",
+            "createdTime": "2020-12-08T08:50:12.076Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "commentValue": "comment"
+            }
+          },
+          {
+            "feedbackId": "09e11c69-3f77-4fe3-914b-cd6f1f24fa46",
+            "createdTime": "2020-12-08T08:50:11.531Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "changePointValue": "NotChangePoint"
+            }
+          },
+          {
+            "feedbackId": "64092a79-dabb-449b-89a1-5a350c65e4d5",
+            "createdTime": "2020-12-08T08:50:10.903Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "anomalyValue": "NotAnomaly"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "0c7a0c73-dd85-47a6-92bf-8e6ba38847ba",
+            "createdTime": "2020-12-08T08:39:54.701Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AssignValue",
+              "periodValue": 2
+            }
+          },
+          {
+            "feedbackId": "51043672-a34c-4a7f-bb56-79e7d7de2cd6",
+            "createdTime": "2020-12-08T08:39:53.643Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "commentValue": "comment"
+            }
+          },
+          {
+            "feedbackId": "da235ba5-ffbc-4abf-982b-e6c7c95018d1",
+            "createdTime": "2020-12-08T08:39:52.746Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "changePointValue": "NotChangePoint"
+            }
+          },
+          {
+            "feedbackId": "7aa4a300-2f8d-4bba-8815-86a083f53af9",
+            "createdTime": "2020-12-08T08:39:51.507Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "anomalyValue": "NotAnomaly"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "51658e08-72c4-4339-919f-f549d227b292",
+            "createdTime": "2020-12-08T08:36:06.416Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AssignValue",
+              "periodValue": 2
+            }
+          },
+          {
+            "feedbackId": "cf9b996f-5364-4046-9ed6-5f29cf8f9624",
+            "createdTime": "2020-12-08T08:36:05.796Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "commentValue": "comment"
+            }
+          },
+          {
+            "feedbackId": "2bd9790c-d245-444c-8f93-31d2c4bdf70e",
+            "createdTime": "2020-12-08T08:36:05.213Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "changePointValue": "NotChangePoint"
+            }
+          },
+          {
+            "feedbackId": "4b94c9bc-6dfa-4679-838e-9704def1702c",
+            "createdTime": "2020-12-08T08:36:04.543Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "anomalyValue": "NotAnomaly"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "1ad07296-1323-4578-a98c-5cde95897bf1",
+            "createdTime": "2020-12-08T08:24:23.78Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AssignValue",
+              "periodValue": 2
+            }
+          },
+          {
+            "feedbackId": "0bf8b0e5-1399-4e95-8943-2f1c752b8b95",
+            "createdTime": "2020-12-08T08:24:22.698Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "commentValue": "comment"
+            }
+          },
+          {
+            "feedbackId": "3c497ae6-d7a7-49f1-8ec1-7b66e84a22c7",
+            "createdTime": "2020-12-08T08:24:21.552Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "changePointValue": "NotChangePoint"
+            }
+          },
+          {
+            "feedbackId": "50f45714-7805-4631-9ff5-4da5baf9aa9f",
+            "createdTime": "2020-12-08T08:24:20.203Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "anomalyValue": "NotAnomaly"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "740a9f8d-0d6f-418d-8389-a2e10877b23c",
+            "createdTime": "2020-12-08T08:21:05.743Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AssignValue",
+              "periodValue": 2
+            }
+          },
+          {
+            "feedbackId": "c505d72d-4882-4f8a-aa7a-279c769e2787",
+            "createdTime": "2020-12-08T08:21:05.086Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "commentValue": "comment"
+            }
+          },
+          {
+            "feedbackId": "5d3d43fd-d5b7-4a41-985e-6d73bf1cb71a",
+            "createdTime": "2020-12-08T08:21:04.464Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "ChangePoint",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "changePointValue": "NotChangePoint"
+            }
+          },
+          {
+            "feedbackId": "414b0dbb-cfc0-40dc-bcb3-79c6269fd24c",
+            "createdTime": "2020-12-08T08:21:03.845Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Los Angeles"
+              }
+            },
+            "feedbackType": "Anomaly",
+            "startTime": "2020-08-05T00:00:00Z",
+            "endTime": "2020-10-21T00:00:00Z",
+            "value": {
+              "anomalyValue": "NotAnomaly"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
           {
             "feedbackId": "1cde363b-e396-4a7a-bc83-6c00b7852cc2",
             "createdTime": "2020-12-08T04:42:13.206Z",

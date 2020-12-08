@@ -280,7 +280,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
             Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
 
-            DateTimeOffset justNow = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromMinutes(5));
+            DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
             Assert.That(feedback.CreatedTime, Is.GreaterThan(justNow));
 
             Assert.That(feedback.DimensionFilter, Is.Not.Null);
