@@ -105,13 +105,13 @@ try {
         }
     }
 
-    $mataPath | ForEach-Object {
+    foreach ($item in $mataPath) {
         $metaData = ''
         try {
-            $metaData = Get-Content $mataPath
+            $metaData = Get-Content $item
         }
         catch {
-            Write-Warning "Cannot find path $mataPath"
+            Write-Warning "Cannot find path $item"
         }
 
         if ( $metaData -ne '') {
