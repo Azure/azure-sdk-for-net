@@ -12,13 +12,15 @@ jobs:
   - {{ each config in parameters.MatrixConfigs }}:
     - job: generate_matrix_${{ config.Name }}
       steps:
-      - pwsh: |
-          eng/scripts/matrix/Create-JobMatrix.ps1 `
-            -ConfigPath ${{ config.Path }} `
-            -Selection ${{ config.Selection }} `
-            -MatrixVariableName ${{ config.Name }}
-        name: generate_job_matrix_${{ config.Name }}
-        displayName: Generate Job Matrix
+      - task: PowerShell@2
+        inputs:
+          name: generate_job_matrix_${{ config.Name }}
+          displayName: Generate ${{ config.Name }} Job Matrix
+          script: |
+            eng/scripts/matrix/Create-JobMatrix.ps1 `
+              -ConfigPath ${{ config.Path }} `
+              -Selection ${{ config.Selection }} `
+              -MatrixVariableName ${{ config.Name }}
 
     - job:
       dependsOn: generate_matrix_${{ config.Name }}
