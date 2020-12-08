@@ -137,7 +137,6 @@ else {
     Write-Verbose "Package ReadMe was not found"
 }
 
-
 Write-Verbose "Make changes to docfx.json and main.js."
 UpdateDocIndexFiles -docPath "${DocCommonGenDir}/docfx.json" -mainJsPath "${DocCommonGenDir}\templates\matthews\styles\main.js"
 
@@ -146,6 +145,10 @@ Copy-Item "${YamlOutDir}/*"-Destination "${DocOutApiDir}" -Recurse -Force
 New-Item -Path "${DocOutDir}" -Name templates -ItemType directory
 Copy-Item "${DocCommonGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
 Copy-Item "${DocCommonGenDir}/docfx.json" -Destination "${DocOutDir}" -Force
+
+Write-Verbose "Create Toc for Site Navigation"
+New-Item "${DocOutDir}/toc.yml" -Force
+Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: api/`r`n  homepage: index.md"
 
 Write-Verbose "Build Doc Content"
 & "${DocFxTool}" build "${DocOutDir}/docfx.json"
@@ -163,9 +166,10 @@ Write-Verbose "Make changes on relative path on page index.html."
 $baseUrl = $destFolder + "index.html"
 $content = Get-Content -Path $baseUrl -Raw
 $hrefRegex = "[""']\.\.\/([^""']*)[""']"
-$tocRegex = "(./)?toc.html"
-$mutatedContent = $content -replace $hrefRegex, '"./$1"'
-$mutatedContent = $mutatedContent -replace $tocRegex, './api/toc.html'
+$tocRegex = "[""'](./)?toc.html[""']"
+# The order matters for the following mutations. If excutes the latter one, then we will see two same toc.html path.
+$mutatedContent = $content -replace $tocRegex , "`"./api/toc.html`""
+$mutatedContent = $mutatedContent -replace $hrefRegex, '"./$1"'
 Set-Content -Path $baseUrl -Value $mutatedContent -NoNewline
 
 Write-Verbose "Compress and copy HTML into the staging Area"
