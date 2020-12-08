@@ -167,8 +167,9 @@ $baseUrl = $destFolder + "index.html"
 $content = Get-Content -Path $baseUrl -Raw
 $hrefRegex = "[""']\.\.\/([^""']*)[""']"
 $tocRegex = "[""'](./)?toc.html[""']"
-$mutatedContent = $content -replace $hrefRegex, '"./$1"'
-$mutatedContent = $mutatedContent -replace $tocRegex , "`"./api/toc.html`""
+# The order matters for the following mutations. If excutes the latter one, then we will see two same toc.html path.
+$mutatedContent = $content -replace $tocRegex , "`"./api/toc.html`""
+$mutatedContent = $mutatedContent -replace $hrefRegex, '"./$1"'
 Set-Content -Path $baseUrl -Value $mutatedContent -NoNewline
 
 Write-Verbose "Compress and copy HTML into the staging Area"
