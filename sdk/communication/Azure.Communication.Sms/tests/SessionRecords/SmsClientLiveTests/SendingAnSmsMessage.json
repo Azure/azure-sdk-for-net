@@ -38,8 +38,8 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==;",
-    "FROM_PHONE_NUMBER": "\u002B18005551234",
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==;",
+    "AZURE_PHONE_NUMBER": "\u002B18005551234",
     "RandomSeed": "2069880153",
     "TO_PHONE_NUMBER": "\u002B18005555555"
   }

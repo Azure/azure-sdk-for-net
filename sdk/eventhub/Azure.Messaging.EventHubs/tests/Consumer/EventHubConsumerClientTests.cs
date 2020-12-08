@@ -979,7 +979,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 firstCompletionSource.TrySetResult(0);
-
             }, cancellation.Token);
 
             var secondSubscriberTask = Task.Run(async () =>
@@ -998,7 +997,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 secondCompletionSource.TrySetResult(0);
-
             }, cancellation.Token);
 
             await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
@@ -1089,7 +1087,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 firstCompletionSource.TrySetResult(0);
-
             }, cancellation.Token);
 
             var secondSubscriberTask = Task.Run(async () =>
@@ -1108,7 +1105,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 secondCompletionSource.TrySetResult(0);
-
             }, cancellation.Token);
 
             await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
@@ -1760,7 +1756,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 firstCompletionSource.TrySetResult(0);
-
             }, cancellation.Token);
 
             var secondSubscriberTask = Task.Run(async () =>
@@ -1784,7 +1779,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 secondCompletionSource.TrySetResult(0);
-
             }, cancellation.Token);
 
             await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);

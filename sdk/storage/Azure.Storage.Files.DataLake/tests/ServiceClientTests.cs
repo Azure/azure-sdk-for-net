@@ -474,25 +474,59 @@ namespace Azure.Storage.Files.DataLake.Tests
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (uriEndpoint, blobSecondaryEndpoint));
 
             // Act - DataLakeServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
-            DataLakeServiceClient serviceClient = new DataLakeServiceClient(
+            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(
                 uriEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(serviceClient.CanGenerateAccountSasUri);
 
             // Act - DataLakeServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            DataLakeServiceClient serviceClient2 = new DataLakeServiceClient(
+            DataLakeServiceClient serviceClient2 = InstrumentClient(new DataLakeServiceClient(
                 uriEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(serviceClient2.CanGenerateAccountSasUri);
 
             // Act - DataLakeServiceClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
-            DataLakeServiceClient serviceClient3 = new DataLakeServiceClient(
+            DataLakeServiceClient serviceClient3 = InstrumentClient(new DataLakeServiceClient(
                 uriEndpoint,
                 tokenCredentials,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(serviceClient3.CanGenerateAccountSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetFileSystemClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var uriEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (uriEndpoint, blobSecondaryEndpoint));
+
+            // Act - DataLakeServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
+            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(
+                uriEndpoint,
+                GetOptions()));
+            DataLakeFileSystemClient fileSystemClient = serviceClient.GetFileSystemClient(GetNewFileSystemName());
+            Assert.IsFalse(fileSystemClient.CanGenerateSasUri);
+
+            // Act - DataLakeServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            DataLakeServiceClient serviceClient2 = InstrumentClient(new DataLakeServiceClient(
+                uriEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            DataLakeFileSystemClient fileSystemClient2 = serviceClient2.GetFileSystemClient(GetNewFileSystemName());
+            Assert.IsTrue(fileSystemClient2.CanGenerateSasUri);
+
+            // Act - DataLakeServiceClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakeServiceClient serviceClient3 = InstrumentClient(new DataLakeServiceClient(
+                uriEndpoint,
+                tokenCredentials,
+                GetOptions()));
+            DataLakeFileSystemClient fileSystemClient3 = serviceClient3.GetFileSystemClient(GetNewFileSystemName());
+            Assert.IsFalse(fileSystemClient3.CanGenerateSasUri);
         }
 
         [Test]
@@ -507,9 +541,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             AccountSasPermissions permissions = AccountSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            DataLakeServiceClient serviceClient = new DataLakeServiceClient(
+            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(
                 blobEndpoint,
-                constants.Sas.SharedKeyCredential, GetOptions());
+                constants.Sas.SharedKeyCredential, GetOptions()));
 
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(
@@ -540,9 +574,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             AccountSasServices services = AccountSasServices.Blobs;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            DataLakeServiceClient serviceClient = new DataLakeServiceClient(
+            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(
                 blobEndpoint,
-                constants.Sas.SharedKeyCredential, GetOptions());
+                constants.Sas.SharedKeyCredential, GetOptions()));
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
             {
@@ -574,9 +608,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasServices services = AccountSasServices.Files; // Wrong Service
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            DataLakeServiceClient serviceClient = new DataLakeServiceClient(
+            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(
                 blobEndpoint,
-                constants.Sas.SharedKeyCredential, GetOptions());
+                constants.Sas.SharedKeyCredential, GetOptions()));
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
             {

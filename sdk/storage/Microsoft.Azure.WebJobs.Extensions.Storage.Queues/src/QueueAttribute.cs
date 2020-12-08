@@ -9,7 +9,6 @@ using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs
 {
-
 #pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
     /// Attribute used to bind a parameter to an Azure Queue.
@@ -21,6 +20,7 @@ namespace Microsoft.Azure.WebJobs
     /// <item><description><see cref="QueueMessage"/> (out parameter)</description></item>
     /// <item><description><see cref="string"/> (out parameter)</description></item>
     /// <item><description><see cref="T:byte[]"/> (out parameter)</description></item>
+    /// <item><description><see cref="BinaryData"/> (out parameter)</description></item>
     /// <item><description>A user-defined type (out parameter, serialized as JSON)</description></item>
     /// <item><description><see cref="ICollector{T}"/> of these types (to enqueue multiple messages via <see cref="ICollector{T}.Add"/></description></item>
     /// <item><description><see cref="IAsyncCollector{T}"/> of these types (to enqueue multiple messages via <see cref="IAsyncCollector{T}.AddAsync(T, System.Threading.CancellationToken)"/></description></item>

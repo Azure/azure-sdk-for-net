@@ -34,7 +34,6 @@ namespace Azure.Management.Dns.Tests
                 this.resourceGroup = Recording.GenerateAssetName("Default-Dns-Zones-");
                 await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
                 setupRun = true;
-
             }
             else if (setupRun)
             {
@@ -180,7 +179,6 @@ namespace Azure.Management.Dns.Tests
             var response = await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, response, "somegibberish", null));
             await ZonesOperations.StartDeleteAsync(resourceGroup, this.defaultZoneName);
-
         }
 
         [TestCase]

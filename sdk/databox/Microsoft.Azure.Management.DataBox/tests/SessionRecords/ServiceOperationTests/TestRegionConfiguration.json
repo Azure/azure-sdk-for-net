@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/regionConfiguration?api-version=2020-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3JlZ2lvbkNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAyMC0wNC0wMQ==",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/regionConfiguration?api-version=2020-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3JlZ2lvbkNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAyMC0xMS0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"transportAvailabilityRequest\": {\r\n    \"skuName\": \"DataBox\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "02bed6a4-deb4-443b-9d76-281b5d4e951d"
+          "bafa0c42-5837-4b0a-84a6-b3c29f4a5af4"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29130.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,32 +32,32 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "72c88e6d-be6d-4893-8dee-14133c847988"
-        ],
-        "x-ms-client-request-id": [
-          "02bed6a4-deb4-443b-9d76-281b5d4e951d"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "72c88e6d-be6d-4893-8dee-14133c847988"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20200831T045556Z:72c88e6d-be6d-4893-8dee-14133c847988"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "56b0c448-be68-4fd4-9e76-087a0db10deb"
+        ],
+        "x-ms-client-request-id": [
+          "bafa0c42-5837-4b0a-84a6-b3c29f4a5af4"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-correlation-request-id": [
+          "56b0c448-be68-4fd4-9e76-087a0db10deb"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20201110T132503Z:56b0c448-be68-4fd4-9e76-087a0db10deb"
+        ],
         "Date": [
-          "Mon, 31 Aug 2020 04:55:56 GMT"
+          "Tue, 10 Nov 2020 13:25:02 GMT"
         ],
         "Content-Length": [
           "217"

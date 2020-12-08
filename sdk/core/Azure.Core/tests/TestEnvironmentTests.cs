@@ -226,7 +226,6 @@ namespace Azure.Core.Tests
             public string CustomSecret => GetRecordedVariable("CustomSecret", option => option.IsSecret("Custom"));
             public string MissingOptionalSecret => GetRecordedOptionalVariable("MissingOptionalSecret", option => option.IsSecret("INVALID"));
             public string ConnectionStringWithSecret => GetRecordedVariable("ConnectionStringWithSecret", option => option.HasSecretConnectionStringParameter("key"));
-
         }
     }
 }

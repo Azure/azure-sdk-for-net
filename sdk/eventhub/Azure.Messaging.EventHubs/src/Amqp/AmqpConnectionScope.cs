@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private const string PartitionProducerPathSuffixMask = "{0}/Partitions/{1}";
 
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
-        private volatile bool _disposed = false;
+        private volatile bool _disposed;
 
         /// <summary>
         ///   The version of AMQP to use within the scope.
@@ -67,14 +67,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   than the expected expiration by this amount.
         /// </summary>
         ///
-        private static TimeSpan AuthorizationRefreshBuffer { get; } = TimeSpan.FromMinutes(5);
+        private static TimeSpan AuthorizationRefreshBuffer { get; } = TimeSpan.FromMinutes(10);
 
         /// <summary>
         ///   The minimum amount of time for authorization to be refreshed; any calculations that
         ///   call for refreshing more frequently will be substituted with this value.
         /// </summary>
         ///
-        private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(4);
+        private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(2);
 
         /// <summary>
         ///   The amount time to allow to refresh authorization of an AMQP link.

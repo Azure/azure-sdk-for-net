@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus
     internal class SessionReceiverManager : ReceiverManager
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
-        private int _threadCount = 0;
+        private int _threadCount;
         private readonly Func<ProcessSessionEventArgs, Task> _sessionInitHandler;
         private readonly Func<ProcessSessionEventArgs, Task> _sessionCloseHandler;
         private readonly Func<ProcessSessionMessageEventArgs, Task> _messageHandler;

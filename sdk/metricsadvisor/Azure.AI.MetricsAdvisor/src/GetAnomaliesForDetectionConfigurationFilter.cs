@@ -42,6 +42,7 @@ namespace Azure.AI.MetricsAdvisor
         /// be returned.
         /// </summary>
         /// <exception cref="ArgumentNullException">The value assigned to <see cref="SeriesGroupKeys"/> is null.</exception>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<DimensionKey> SeriesGroupKeys
         {
             get => _seriesGroupKeys;
@@ -51,6 +52,7 @@ namespace Azure.AI.MetricsAdvisor
                 _seriesGroupKeys = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// The minimum severity level an anomaly must have to be returned.

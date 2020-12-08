@@ -164,15 +164,20 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
         /// </summary>
-        private StorageSharedKeyCredential _storageSharedKeyCredential;
+        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
 
         /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -388,6 +393,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
         /// <param name="clientSideEncryption">Client-side encryption options.</param>
@@ -395,6 +403,7 @@ namespace Azure.Storage.Blobs.Specialized
         internal BlobBaseClient(
             Uri blobUri,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
@@ -402,7 +411,20 @@ namespace Azure.Storage.Blobs.Specialized
             string encryptionScope)
         {
             _uri = blobUri;
+            if (!string.IsNullOrEmpty(blobUri.Query))
+            {
+                UriQueryParamsCollection queryParamsCollection = new UriQueryParamsCollection(blobUri.Query);
+                if (queryParamsCollection.ContainsKey(Constants.SnapshotParameterName))
+                {
+                    _snapshot = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.SnapshotParameterName);
+                }
+                if (queryParamsCollection.ContainsKey(Constants.VersionIdParameterName))
+                {
+                    _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
+                }
+            }
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
@@ -448,6 +470,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -487,6 +510,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -1363,7 +1387,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var client = new BlobBaseClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
+            var client = new BlobBaseClient(Uri, Pipeline, SharedKeyCredential, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
 
             PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions);
 
@@ -2710,7 +2734,6 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (RequestFailedException storageRequestFailedException)
                 when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound
                     || storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
-
                 {
                     return Response.FromValue(false, default);
                 }
@@ -4243,7 +4266,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }
@@ -4275,6 +4298,7 @@ namespace Azure.Storage.Blobs.Specialized
                 _parentBlobContainerClient = new BlobContainerClient(
                     blobUriBuilder.ToUri(),
                     Pipeline,
+                    SharedKeyCredential,
                     Version,
                     ClientDiagnostics,
                     CustomerProvidedKey,
@@ -4319,14 +4343,7 @@ namespace Azure.Storage.Blobs.Specialized
         public static BlobBaseClient GetBlobBaseClient(
             this BlobContainerClient client,
             string blobName) =>
-            new BlobBaseClient(
-                client.Uri.AppendToPath(blobName),
-                client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey,
-                client.ClientSideEncryption,
-                client.EncryptionScope);
+            client.GetBlobBaseClientCore(blobName);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class, maintaining all the same
@@ -4336,13 +4353,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="clientSideEncryptionOptions">New encryption options. Setting this to <code>default</code> will clear client-side encryption.</param>
         /// <returns>New instance with provided options and same internals otherwise.</returns>
         public static BlobClient WithClientSideEncryptionOptions(this BlobClient client, ClientSideEncryptionOptions clientSideEncryptionOptions)
-            => new BlobClient(
-                client.Uri,
-                client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey,
-                clientSideEncryptionOptions,
-                client.EncryptionScope);
+            => client.WithClientSideEncryptionOptionsCore(clientSideEncryptionOptions);
     }
 }

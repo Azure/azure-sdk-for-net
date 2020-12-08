@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics
     /// Overall predicted sentiment and confidence scores for the document.
     /// It also includes per-sentence sentiment prediction.
     /// <para>For more information regarding text sentiment, see
-    /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.</para>
+    /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.</para>
     /// </summary>
     public class DocumentSentiment
     {

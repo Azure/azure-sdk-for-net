@@ -223,12 +223,14 @@ namespace Azure.Storage.Files.DataLake
             Uri fileSystemUri,
             string filePath,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             DataLakeClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics)
             : base(
                   fileSystemUri,
                   filePath,
                   pipeline,
+                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics)
         {
@@ -1201,7 +1203,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
 
         /// <summary>
@@ -1323,7 +1324,6 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
-
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -3546,7 +3546,6 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}");
                 try
                 {
-
                     PathExpiryOptions blobExpiryOptions;
                     string expiresOn = null;
 

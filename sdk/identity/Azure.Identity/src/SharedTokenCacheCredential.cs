@@ -25,19 +25,21 @@ namespace Azure.Identity
         internal const string MultipleMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified{0}{1} were found in the cache.";
 
         private static readonly ITokenCacheOptions s_DefaultCacheOptions = new SharedTokenCacheCredentialOptions();
-        private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
         private readonly string _username;
+        private readonly bool _skipTenantValidation;
         private readonly AuthenticationRecord _record;
         private readonly AsyncLockWithValue<IAccount> _accountAsyncLock;
+
+        internal MsalPublicClient Client { get; }
+
         /// <summary>
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
         /// </summary>
         public SharedTokenCacheCredential()
             : this(null, null, null, null, null)
         {
-
         }
 
         /// <summary>
@@ -71,11 +73,13 @@ namespace Azure.Identity
 
             _username = username;
 
+            _skipTenantValidation = (options as SharedTokenCacheCredentialOptions)?.EnableGuestTenantAuthentication ?? false;
+
             _record = (options as SharedTokenCacheCredentialOptions)?.AuthenticationRecord;
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client ?? new MsalPublicClient(_pipeline, tenantId, Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
+            Client = client ?? new MsalPublicClient(_pipeline, tenantId, (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
 
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
@@ -109,7 +113,7 @@ namespace Azure.Identity
             try
             {
                 IAccount account = await GetAccountAsync(async, cancellationToken).ConfigureAwait(false);
-                AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, account, async, cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, account, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException)
@@ -138,15 +142,15 @@ namespace Azure.Identity
                 return account;
             }
 
-            List<IAccount> accounts = await _client.GetAccountsAsync(async, cancellationToken).ConfigureAwait(false);
+            List<IAccount> accounts = await Client.GetAccountsAsync(async, cancellationToken).ConfigureAwait(false);
 
             // filter the accounts to those matching the specified user and tenant
             List<IAccount> filteredAccounts = accounts.Where(a =>
                 // if _username is specified it must match the account
-                (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
+                ((string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0))
                 &&
-                //if _tenantId is specified it must match the account
-                (string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                // if _skipTenantValidation is false and _tenantId is specified it must match the account
+                (_skipTenantValidation || (string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0))
             ).ToList();
 
             if (filteredAccounts.Count != 1)

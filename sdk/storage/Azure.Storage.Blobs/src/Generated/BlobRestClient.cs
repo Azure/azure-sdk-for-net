@@ -918,6 +918,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.AccountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
                         }
+                        if (response.Headers.TryGetValue("x-ms-is-hns-enabled", out _header))
+                        {
+                            _value.IsHierarchicalNamespaceEnabled = bool.Parse(_header);
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -4722,6 +4726,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobDeleteType">Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -4742,6 +4747,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string ifTags = default,
                 string requestId = default,
+                Azure.Storage.Blobs.Models.BlobDeleteType? blobDeleteType = default,
                 bool async = true,
                 string operationName = "BlobClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -4765,7 +4771,8 @@ namespace Azure.Storage.Blobs
                         ifMatch,
                         ifNoneMatch,
                         ifTags,
-                        requestId))
+                        requestId,
+                        blobDeleteType))
                     {
                         if (async)
                         {
@@ -4811,6 +4818,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobDeleteType">Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.</param>
             /// <returns>The Blob.DeleteAsync Message.</returns>
             internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4826,7 +4834,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string ifTags = default,
-                string requestId = default)
+                string requestId = default,
+                Azure.Storage.Blobs.Models.BlobDeleteType? blobDeleteType = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -4848,6 +4857,7 @@ namespace Azure.Storage.Blobs
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
                 if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (blobDeleteType != null) { _request.Uri.AppendQuery("deletetype", blobDeleteType.Value.ToString()); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
@@ -12981,6 +12991,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="sourceIfTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="sourceContentHash">Specify the md5 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="copySourceBlobProperties">Optional, default is true.  Indicates if properties from the source blob should be copied.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
@@ -13020,6 +13031,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? sourceIfNoneMatch = default,
                 string sourceIfTags = default,
                 string requestId = default,
+                byte[] sourceContentHash = default,
                 string blobTagsString = default,
                 bool? copySourceBlobProperties = default,
                 bool async = true,
@@ -13063,6 +13075,7 @@ namespace Azure.Storage.Blobs
                         sourceIfNoneMatch,
                         sourceIfTags,
                         requestId,
+                        sourceContentHash,
                         blobTagsString,
                         copySourceBlobProperties))
                     {
@@ -13127,6 +13140,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="sourceIfTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="sourceContentHash">Specify the md5 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="copySourceBlobProperties">Optional, default is true.  Indicates if properties from the source blob should be copied.</param>
             /// <returns>The BlockBlob.PutBlobFromUrlAsync Message.</returns>
@@ -13162,6 +13176,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? sourceIfNoneMatch = default,
                 string sourceIfTags = default,
                 string requestId = default,
+                byte[] sourceContentHash = default,
                 string blobTagsString = default,
                 bool? copySourceBlobProperties = default)
             {
@@ -13223,6 +13238,7 @@ namespace Azure.Storage.Blobs
                 if (sourceIfNoneMatch != null) { _request.Headers.SetValue("x-ms-source-if-none-match", sourceIfNoneMatch.Value.ToString()); }
                 if (sourceIfTags != null) { _request.Headers.SetValue("x-ms-source-if-tags", sourceIfTags); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash)); }
                 if (blobTagsString != null) { _request.Headers.SetValue("x-ms-tags", blobTagsString); }
                 if (copySourceBlobProperties != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
@@ -15619,6 +15635,11 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; internal set; }
 
         /// <summary>
+        /// Version 2019-07-07 and newer. Indicates if the account has a hierarchical namespace enabled.
+        /// </summary>
+        public bool IsHierarchicalNamespaceEnabled { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of AccountInfo instances.
         /// You can use BlobsModelFactory.AccountInfo instead.
         /// </summary>
@@ -15635,12 +15656,14 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static AccountInfo AccountInfo(
             Azure.Storage.Blobs.Models.SkuName skuName,
-            Azure.Storage.Blobs.Models.AccountKind accountKind)
+            Azure.Storage.Blobs.Models.AccountKind accountKind,
+            bool isHierarchicalNamespaceEnabled)
         {
             return new AccountInfo()
             {
                 SkuName = skuName,
                 AccountKind = accountKind,
+                IsHierarchicalNamespaceEnabled = isHierarchicalNamespaceEnabled,
             };
         }
     }
@@ -17455,6 +17478,22 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class BlobCorsRule
+
+#region enum BlobDeleteType
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.
+    /// </summary>
+    internal enum BlobDeleteType
+    {
+        /// <summary>
+        /// Permanent
+        /// </summary>
+        Permanent
+    }
+}
+#endregion enum BlobDeleteType
 
 #region enum strings BlobErrorCode
 namespace Azure.Storage.Blobs.Models
@@ -19560,7 +19599,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The set of CORS rules.
         /// </summary>
+        #pragma warning disable CA2227 // Collection properties should be readonly
         public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobCorsRule> Cors { get; set; }
+        #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions

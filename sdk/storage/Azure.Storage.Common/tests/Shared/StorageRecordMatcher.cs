@@ -156,7 +156,6 @@ namespace Azure.Storage.Test.Shared
                 // can't analyze them
                 default:
                     return false;
-
             }
         }
 
@@ -330,7 +329,6 @@ namespace Azure.Storage.Test.Shared
                     case JsonValueKind.Null:
                     default:
                         return null;
-
                 }
             }
         }

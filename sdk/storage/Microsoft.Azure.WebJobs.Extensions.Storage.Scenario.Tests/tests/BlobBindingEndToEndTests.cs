@@ -713,7 +713,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                     })
                     .Build();
 
-
                 JobHost = Host.GetJobHost();
 
                 BlobServiceClient = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
