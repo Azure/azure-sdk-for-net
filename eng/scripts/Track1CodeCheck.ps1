@@ -183,23 +183,22 @@ try {
                 LogError "Generated code is manually altered, you may need to re-run sdk\<RP Name>\generate.ps1"
             }
         }
+        catch {
+            Write-Warning $Error[0]
+        }
     }
-    catch {
-        Write-Warning $Error[0]
-    }
-}
-finally {
-    Write-Host ""
-    Write-Host "Summary:"
-    Write-Host ""
-    Write-Host "   $($errors.Length) error(s)"
-    Write-Host ""
+    finally {
+        Write-Host ""
+        Write-Host "Summary:"
+        Write-Host ""
+        Write-Host "   $($errors.Length) error(s)"
+        Write-Host ""
 
-    foreach ($err in $errors) {
-        Write-Host -f Red "error : $err"
-    }
+        foreach ($err in $errors) {
+            Write-Host -f Red "error : $err"
+        }
 
-    if ($errors) {
-        exit 1
+        if ($errors) {
+            exit 1
+        }
     }
-}
