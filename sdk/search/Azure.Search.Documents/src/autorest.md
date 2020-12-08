@@ -11,9 +11,10 @@ however merge two local swagger files together automagically.  At some point,
 we should merge the Service and Index swagger files together but for now we
 copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
+title: SearchServiceClient
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0bc7853cb4d824bb6c310344dcc1b5f77cbe6bdd/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchindex.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0bc7853cb4d824bb6c310344dcc1b5f77cbe6bdd/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchservice.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d61b283066c03650ad434e62c29f9e1c2633673a/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchindex.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d61b283066c03650ad434e62c29f9e1c2633673a/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchservice.json
 ```
 
 ## Release hacks
@@ -189,6 +190,53 @@ directive:
   where: $.definitions.IndexerExecutionResult
   transform: >
     $.properties.endTime["x-nullable"] = true;
+```
+
+#### Skills
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.EntityRecognitionSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.ImageAnalysisSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.KeyPhraseExtractionSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.OcrSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+    $.properties.detectOrientation["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.SentimentSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.SplitSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.TextTranslationSkill
+  transform: >
+    $.properties.defaultFromLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.WebApiSkill
+  transform: >
+    $.properties.httpHeaders["x-nullable"] = true;
+    $.properties.timeout["x-nullable"] = true;
 ```
 
 ## C# Customizations

@@ -95,7 +95,6 @@
 
         private static async Task AssertPoolWasCreatedWithApplicationReferences(BatchClient client, string poolId, string applicationId)
         {
-            CloudPool referenceToPool = null;
             try
             {
                 CloudPool pool = client.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily));
@@ -104,7 +103,7 @@
 
                 await pool.CommitAsync().ConfigureAwait(false);
 
-                referenceToPool = await client.PoolOperations.GetPoolAsync(poolId).ConfigureAwait(false);
+                CloudPool referenceToPool = await client.PoolOperations.GetPoolAsync(poolId).ConfigureAwait(false);
 
                 ApplicationPackageReference apr = referenceToPool.ApplicationPackageReferences.First();
 

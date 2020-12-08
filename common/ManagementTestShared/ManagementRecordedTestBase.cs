@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ResourcesManagementClient GetResourceManagementClient()
         {
-            var options = Recording.InstrumentClientOptions(new ResourcesManagementClientOptions());
+            var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
             CleanupPolicy = new ResourceGroupCleanupPolicy();
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 

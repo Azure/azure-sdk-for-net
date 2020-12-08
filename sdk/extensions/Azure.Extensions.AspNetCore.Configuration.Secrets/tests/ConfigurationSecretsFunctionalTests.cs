@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
@@ -10,17 +11,17 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 {
-    public class ConfigurationSecretsFunctionalTests
+    public class ConfigurationSecretsFunctionalTests: LiveTestBase<ConfigurationTestEnvironment>
     {
         [Test]
         [Category("Live")]
         public async Task SecretsAreLoadedFromKeyVault()
         {
             var credential = new ClientSecretCredential(
-                ConfigurationTestEnvironment.Instance.TenantId,
-                ConfigurationTestEnvironment.Instance.ClientId,
-                ConfigurationTestEnvironment.Instance.ClientSecret);
-            var vaultUri = new Uri(ConfigurationTestEnvironment.Instance.KeyVaultUrl);
+                TestEnvironment.TenantId,
+                TestEnvironment.ClientId,
+                TestEnvironment.ClientSecret);
+            var vaultUri = new Uri(TestEnvironment.KeyVaultUrl);
 
             var client = new SecretClient(vaultUri, credential);
             await client.SetSecretAsync("TestSecret1", "1");

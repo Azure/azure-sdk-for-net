@@ -2,7 +2,7 @@
 
 Azure Digital Twins is a developer platform for next-generation IoT solutions that lets you create, run, and manage digital representations of your business environment, securely and efficiently in the cloud. With Azure Digital Twins, creating live operational state representations is quick and cost-effective, and digital representations stay current with real-time data from IoT and other data sources. If you are new to Azure Digital Twins and would like to learn more about the platform, please make sure you check out the Azure Digital Twins [official documentation page](https://docs.microsoft.com/azure/digital-twins/overview). 
 
-For an introduction on how to program against the Azure Digital Twins service, visit the [coding tutorial page](https://docs.microsoft.com/en-us/azure/digital-twins/tutorial-code) for an easy step-by-step guide. Visit [this tutorial](https://docs.microsoft.com/azure/digital-twins/tutorial-command-line-app) to learn how to interact with an Azure Digital Twin instance using a command-line client application. Finally, for a quick guide on how to build an end-to-end Azure Digital Twins solution that is driven by live data from your environment, make sure you check out [this helpful guide](https://docs.microsoft.com/azure/digital-twins/tutorial-end-to-end).
+For an introduction on how to program against the Azure Digital Twins service, visit the [coding tutorial page](https://docs.microsoft.com/azure/digital-twins/tutorial-code) for an easy step-by-step guide. Visit [this tutorial](https://docs.microsoft.com/azure/digital-twins/tutorial-command-line-app) to learn how to interact with an Azure Digital Twin instance using a command-line client application. Finally, for a quick guide on how to build an end-to-end Azure Digital Twins solution that is driven by live data from your environment, make sure you check out [this helpful guide](https://docs.microsoft.com/azure/digital-twins/tutorial-end-to-end).
 
 The guides mentioned above can help you get started with key elements of Azure Digital Twins, such as creating Azure Digital Twins instances, models, twin graphs, etc. Use this samples guide below to familiarize yourself with the various APIs that help you program against Azure Digital Twins.
 
@@ -24,7 +24,7 @@ The samples project demonstrates the following:
 
 To create a new digital twins client, you need the endpoint to an Azure Digital Twin instance and credentials.
 In the sample below, you can set `AdtEndpoint`, `TenantId`, `ClientId`, and `ClientSecret` as command-line arguments.
-The client requires an instance of [TokenCredential](https://docs.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
+The client requires an instance of [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
 In this samples, we illustrate how to use one derived class: ClientSecretCredential.
 
 > Note: In order to access the data plane for the Digital Twins service, the entity must be given permissions.
@@ -62,11 +62,11 @@ Console.WriteLine($"Created models '{componentModelId}' and '{sampleModelId}'.")
 
 ### List models
 
-Using `GetModelsAsync`, all created models are returned as `AsyncPageable<ModelData>`.
+Using `GetModelsAsync`, all created models are returned as `AsyncPageable<DigitalTwinsModelData>`.
 
 ```C# Snippet:DigitalTwinsSampleGetModels
-AsyncPageable<ModelData> allModels = client.GetModelsAsync();
-await foreach (ModelData model in allModels)
+AsyncPageable<DigitalTwinsModelData> allModels = client.GetModelsAsync();
+await foreach (DigitalTwinsModelData model in allModels)
 {
     Console.WriteLine($"Retrieved model '{model.Id}', " +
         $"display name '{model.DisplayName["en"]}', " +
@@ -78,7 +78,7 @@ await foreach (ModelData model in allModels)
 Use `GetModelAsync` with model's unique identifier to get a specific model.
 
 ```C# Snippet:DigitalTwinsSampleGetModel
-Response<ModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
+Response<DigitalTwinsModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
 Console.WriteLine($"Retrieved model '{sampleModelResponse.Value.Id}'.");
 ```
 
@@ -222,7 +222,7 @@ Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" 
 
 ### Query digital twins
 
-Query the Azure Digital Twins instance for digital twins using the [Azure Digital Twins Query Store lanaguage](https://review.docs.microsoft.com/en-us/azure/digital-twins-v2/concepts-query-language?branch=pr-en-us-114648). Query calls support paging. Here's an example of how to query for digital twins and how to iterate over the results.
+Query the Azure Digital Twins instance for digital twins using the [Azure Digital Twins Query Store lanaguage](https://review.docs.microsoft.com/azure/digital-twins-v2/concepts-query-language?branch=pr-en-us-114648). Query calls support paging. Here's an example of how to query for digital twins and how to iterate over the results.
 
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging

@@ -65,6 +65,17 @@ namespace Azure.Messaging.EventHubs.Amqp
         private TransportProducerFeatures ActiveFeatures { get; }
 
         /// <summary>
+        ///   The set of options currently active for the partition associated with this producer.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   These options are managed by the producer and will be mutated as part of state
+        ///   updates.
+        /// </remarks>
+        ///
+        private PartitionPublishingOptions ActiveOptions { get; }
+
+        /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
@@ -138,8 +149,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                             TransportProducerFeatures requestedFeatures = TransportProducerFeatures.None,
                             PartitionPublishingOptions partitionOptions = null)
         {
-            partitionOptions ??= new PartitionPublishingOptions();
-
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
@@ -151,9 +160,10 @@ namespace Azure.Messaging.EventHubs.Amqp
             ConnectionScope = connectionScope;
             MessageConverter = messageConverter;
             ActiveFeatures = requestedFeatures;
+            ActiveOptions = partitionOptions?.Clone() ?? new PartitionPublishingOptions();
 
             SendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(
-                timeout => CreateLinkAndEnsureProducerStateAsync(partitionId, partitionOptions, timeout, CancellationToken.None),
+                timeout => CreateLinkAndEnsureProducerStateAsync(partitionId, ActiveOptions, timeout, CancellationToken.None),
                 link =>
                 {
                     link.Session?.SafeClose();
@@ -277,9 +287,9 @@ namespace Azure.Messaging.EventHubs.Amqp
             // default to the maximum size allowed by the link.
 
             options.MaximumSizeInBytes ??= MaximumMessageSize;
-
             Argument.AssertInRange(options.MaximumSizeInBytes.Value, EventHubProducerClient.MinimumBatchSizeLimit, MaximumMessageSize.Value, nameof(options.MaximumSizeInBytes));
-            return new AmqpEventBatch(MessageConverter, options);
+
+            return new AmqpEventBatch(MessageConverter, options, ActiveFeatures);
         }
 
         /// <summary>
@@ -537,7 +547,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             try
             {
-                link = await ConnectionScope.OpenProducerLinkAsync(partitionId, timeout, cancellationToken).ConfigureAwait(false);
+                link = await ConnectionScope.OpenProducerLinkAsync(partitionId, ActiveFeatures, partitionOptions, timeout, cancellationToken).ConfigureAwait(false);
 
                 if (!MaximumMessageSize.HasValue)
                 {
@@ -555,14 +565,16 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (InitializedPartitionProperties == null)
                 {
-                    if ((ActiveFeatures & TransportProducerFeatures.IdempotentPublishing) != 0)
-                    {
-                        throw new NotImplementedException(nameof(CreateLinkAndEnsureProducerStateAsync));
-                    }
-                    else
-                    {
-                        InitializedPartitionProperties = new PartitionPublishingProperties(false, null, null, null);
-                    }
+                    var producerGroup = link.ExtractSettingPropertyValueOrDefault(AmqpProperty.ProducerGroupId, default(long?));
+                    var ownerLevel = link.ExtractSettingPropertyValueOrDefault(AmqpProperty.ProducerOwnerLevel, default(short?));
+                    var sequence = link.ExtractSettingPropertyValueOrDefault(AmqpProperty.ProducerSequenceNumber, default(int?));
+
+                    // Once the properties are initialized, clear the starting sequence number to ensure that the current
+                    // sequence tracked by the service is used should the link need to be recreated; this avoids the need for
+                    // the transport producer to have awareness of the sequence numbers of events being sent.
+
+                    InitializedPartitionProperties = new PartitionPublishingProperties(false, producerGroup, ownerLevel, sequence);
+                    partitionOptions.StartingSequenceNumber = null;
                 }
 
             }

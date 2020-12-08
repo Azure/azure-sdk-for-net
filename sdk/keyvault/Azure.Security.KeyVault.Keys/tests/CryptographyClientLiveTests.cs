@@ -364,20 +364,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        private CryptographyClient GetCryptoClient(Uri keyId, bool forceRemote = false, TestRecording recording = null)
+        private CryptographyClient GetCryptoClient(Uri keyId, bool forceRemote = false)
         {
-            recording ??= Recording;
-
-            CryptographyClientOptions options = recording.InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
+            CryptographyClientOptions options = InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
             CryptographyClient client = new CryptographyClient(keyId, TestEnvironment.Credential, options, forceRemote);
             return InstrumentClient(client);
         }
 
-        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(KeyVaultKey key, TestRecording recording = null)
+        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(KeyVaultKey key)
         {
-            recording ??= Recording;
-
-            CryptographyClientOptions options = recording.InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
+            CryptographyClientOptions options = InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
             CryptographyClient client = new CryptographyClient(key, TestEnvironment.Credential, options);
             CryptographyClient clientProxy = InstrumentClient(client);
 

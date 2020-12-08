@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-preview.2</Version>
+    <Version>1.0.0-preview.3</Version>
     <PackageId>Azure.ResourceManager.Resources</PackageId>
     <Description>
       Azure management client SDK for Azure resource provider Microsoft.Resource.
@@ -8,6 +8,5 @@
     </Description>
     <PackageTags>azure;management;resource</PackageTags>
     <NoWarn>$(NoWarn);AZC0008;AZC0001</NoWarn>
-    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
   </PropertyGroup>
 </Project>

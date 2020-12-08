@@ -275,8 +275,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Re-enable when feature is re-enabled.")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ListContainersSegmentAsync_Deleted()
         {
             // Arrange
@@ -287,9 +286,7 @@ namespace Azure.Storage.Blobs.Test
             await containerClient.DeleteAsync();
 
             // Act
-            // Uncomment line, delete following line.
-            //IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
-            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync().ToListAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
             BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
 
             // Assert
@@ -644,8 +641,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Re-enable when API is enabled")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UndeleteBlobContainerAsync()
         {
             // Arrange
@@ -654,9 +650,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateAsync();
             await container.DeleteAsync();
-            // Uncomment this line, remove folling line.
-            //IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
-            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync().ToListAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
             BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
 
             // It takes some time for the Container to be deleted.
@@ -676,8 +670,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Re-enable when API is enabled")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UndeleteBlobContainerAsync_Error()
         {
             // Arrange

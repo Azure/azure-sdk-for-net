@@ -1,0 +1,68 @@
+{
+  "parameters": {
+    "api-version": "2020-10-31",
+    "id": "myNewTwinId",
+    "If-None-Match": "*",
+    "twin": {
+      "$metadata": {
+        "$model": "dtmi:com:example:interfaces:interfaceName;1"
+      },
+      "property1": 1,
+      "property2": {
+        "subProperty1": "some value",
+        "subProperty2": "some other value"
+      },
+      "component1": {
+        "$metadata": {},
+        "componentProperty": "some value"
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "$dtId": "myNewTwinId",
+        "$metadata": {
+          "$model": "dtmi:com:example:interfaces:interfaceName;1",
+          "property1": {
+            "desiredValue": 1,
+            "desiredVersion": 1,
+            "ackVersion": 1,
+            "ackCode": 200,
+            "ackDescription": "description",
+            "lastUpdateTime": "2020-05-23T21:44:02Z"
+          },
+          "property2": {
+            "desiredValue": {
+              "subProperty1": "some value",
+              "subProperty2": "some other value"
+            },
+            "desiredVersion": 1,
+            "ackVersion": 1,
+            "ackCode": 200,
+            "ackDescription": "description",
+            "lastUpdateTime": "2020-05-23T21:44:02Z"
+          }
+        },
+        "property1": 1,
+        "property2": {
+          "subProperty1": "some value",
+          "subProperty2": "some other value"
+        },
+        "component1": {
+          "$metadata": {
+            "componentProperty": {
+              "desiredValue": "some value",
+              "desiredVersion": 1,
+              "ackVersion": 1,
+              "ackCode": 200,
+              "ackDescription": "description",
+              "lastUpdateTime": "2020-05-23T21:44:02Z"
+            }
+          }
+        }
+      }
+    },
+    "202": {}
+  }
+}

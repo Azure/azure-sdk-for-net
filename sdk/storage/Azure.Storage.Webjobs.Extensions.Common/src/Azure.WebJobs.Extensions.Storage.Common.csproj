@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Version>5.0.0-beta.1</Version>
+    <Description>This extension adds bindings for Storage</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Shared\**\*.cs" />
+    <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
+    <Compile Include="Shared\Constants.cs" />
+    <Compile Include="Shared\RequestFailedExceptionExtensions.cs" />
+    <Compile Include="Shared\StorageQueueExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- TODO (kasobol-msft) change this to PackageReference when stable -->
+    <ProjectReference Include="..\..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj" />
+    <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
+  </ItemGroup>
+</Project>

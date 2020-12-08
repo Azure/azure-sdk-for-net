@@ -1,0 +1,262 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts?api-version=2020-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200922.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "810dd2be7029500cb3235e5ce45564d5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "2044",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts?api-version=2020-04-01",
+        "Content-Type": "application/json",
+        "Date": "Wed, 23 Sep 2020 03:09:05 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "73403f97-d684-4577-90b9-d2a3653bde5c",
+        "x-ms-gatewayversion": "version=2.11.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11291",
+        "x-ms-request-id": "73403f97-d684-4577-90b9-d2a3653bde5c",
+        "x-ms-routing-request-id": "WESTUS2:20200923T030906Z:73403f97-d684-4577-90b9-d2a3653bde5c"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": "db4937",
+            "location": "West US",
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "kind": "MongoDB",
+            "tags": {
+              "key3": "value3",
+              "key4": "value4"
+            },
+            "systemData": {
+              "createdAt": "2020-09-23T03:05:50.4402887Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "documentEndpoint": "https://db4937.documents.azure.com:443/",
+              "publicNetworkAccess": "Enabled",
+              "enableAutomaticFailover": true,
+              "enableMultipleWriteLocations": false,
+              "enablePartitionKeyMonitor": false,
+              "isVirtualNetworkFilterEnabled": false,
+              "virtualNetworkRules": [],
+              "EnabledApiTypes": "MongoDB",
+              "disableKeyBasedMetadataWriteAccess": true,
+              "enableFreeTier": false,
+              "enableAnalyticalStorage": false,
+              "instanceId": "6f75a867-bdfc-499f-8383-2506abe93098",
+              "createMode": "Default",
+              "databaseAccountOfferType": "Standard",
+              "consistencyPolicy": {
+                "defaultConsistencyLevel": "BoundedStaleness",
+                "maxIntervalInSeconds": 1000,
+                "maxStalenessPrefix": 300
+              },
+              "apiProperties": {
+                "serverVersion": "3.2"
+              },
+              "configurationOverrides": {
+                "EnableBsonSchema": "True"
+              },
+              "writeLocations": [
+                {
+                  "id": "db4937-westus",
+                  "locationName": "West US",
+                  "documentEndpoint": "https://db4937-westus.documents.azure.com:443/",
+                  "provisioningState": "Succeeded",
+                  "failoverPriority": 0,
+                  "isZoneRedundant": false
+                }
+              ],
+              "readLocations": [
+                {
+                  "id": "db4937-westus",
+                  "locationName": "West US",
+                  "documentEndpoint": "https://db4937-westus.documents.azure.com:443/",
+                  "provisioningState": "Succeeded",
+                  "failoverPriority": 0,
+                  "isZoneRedundant": false
+                }
+              ],
+              "locations": [
+                {
+                  "id": "db4937-westus",
+                  "locationName": "West US",
+                  "documentEndpoint": "https://db4937-westus.documents.azure.com:443/",
+                  "provisioningState": "Succeeded",
+                  "failoverPriority": 0,
+                  "isZoneRedundant": false
+                }
+              ],
+              "failoverPolicies": [
+                {
+                  "id": "db4937-westus",
+                  "locationName": "West US",
+                  "failoverPriority": 0
+                }
+              ],
+              "cors": [],
+              "capabilities": [],
+              "ipRules": [
+                {
+                  "ipAddressOrRange": "23.43.230.120"
+                }
+              ],
+              "backupPolicy": {
+                "type": "Periodic",
+                "periodicModeProperties": {
+                  "backupIntervalInMinutes": 240,
+                  "backupRetentionIntervalInHours": 8
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937?api-version=2020-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-27acd0defc73df4fbd31ad3afc75f4c0-c1a66c555d0c3048-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200922.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "7da1434898348de826430f85e4fecba3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "2032",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937?api-version=2020-04-01",
+        "Content-Type": "application/json",
+        "Date": "Wed, 23 Sep 2020 03:09:05 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3a062c53-035a-4802-8d0b-dc7bdd50323c",
+        "x-ms-gatewayversion": "version=2.11.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11290",
+        "x-ms-request-id": "3a062c53-035a-4802-8d0b-dc7bdd50323c",
+        "x-ms-routing-request-id": "WESTUS2:20200923T030906Z:3a062c53-035a-4802-8d0b-dc7bdd50323c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+        "name": "db4937",
+        "location": "West US",
+        "type": "Microsoft.DocumentDB/databaseAccounts",
+        "kind": "MongoDB",
+        "tags": {
+          "key3": "value3",
+          "key4": "value4"
+        },
+        "systemData": {
+          "createdAt": "2020-09-23T03:05:50.4402887Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "documentEndpoint": "https://db4937.documents.azure.com:443/",
+          "publicNetworkAccess": "Enabled",
+          "enableAutomaticFailover": true,
+          "enableMultipleWriteLocations": false,
+          "enablePartitionKeyMonitor": false,
+          "isVirtualNetworkFilterEnabled": false,
+          "virtualNetworkRules": [],
+          "EnabledApiTypes": "MongoDB",
+          "disableKeyBasedMetadataWriteAccess": true,
+          "enableFreeTier": false,
+          "enableAnalyticalStorage": false,
+          "instanceId": "6f75a867-bdfc-499f-8383-2506abe93098",
+          "createMode": "Default",
+          "databaseAccountOfferType": "Standard",
+          "consistencyPolicy": {
+            "defaultConsistencyLevel": "BoundedStaleness",
+            "maxIntervalInSeconds": 1000,
+            "maxStalenessPrefix": 300
+          },
+          "apiProperties": {
+            "serverVersion": "3.2"
+          },
+          "configurationOverrides": {
+            "EnableBsonSchema": "True"
+          },
+          "writeLocations": [
+            {
+              "id": "db4937-westus",
+              "locationName": "West US",
+              "documentEndpoint": "https://db4937-westus.documents.azure.com:443/",
+              "provisioningState": "Succeeded",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "readLocations": [
+            {
+              "id": "db4937-westus",
+              "locationName": "West US",
+              "documentEndpoint": "https://db4937-westus.documents.azure.com:443/",
+              "provisioningState": "Succeeded",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "locations": [
+            {
+              "id": "db4937-westus",
+              "locationName": "West US",
+              "documentEndpoint": "https://db4937-westus.documents.azure.com:443/",
+              "provisioningState": "Succeeded",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "failoverPolicies": [
+            {
+              "id": "db4937-westus",
+              "locationName": "West US",
+              "failoverPriority": 0
+            }
+          ],
+          "cors": [],
+          "capabilities": [],
+          "ipRules": [
+            {
+              "ipAddressOrRange": "23.43.230.120"
+            }
+          ],
+          "backupPolicy": {
+            "type": "Periodic",
+            "periodicModeProperties": {
+              "backupIntervalInMinutes": 240,
+              "backupRetentionIntervalInHours": 8
+            }
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1564785812"
+  }
+}

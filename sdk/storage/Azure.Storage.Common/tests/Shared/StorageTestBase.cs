@@ -102,6 +102,13 @@ namespace Azure.Storage.Test.Shared
                 () => TestConfigurations.DefaultTargetSoftDeleteTenant);
 
         /// <summary>
+        /// Gets the tenant to use for any tests premium files.
+        /// </summary>
+        public TenantConfiguration TestConfigPremiumFile => GetTestConfig(
+                "Storage_TestConfigPremiumFile",
+                () => TestConfigurations.DefaultPremiumFileTenant);
+
+        /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
         /// not get values from this directly; use GetTestConfig.
         /// </summary>

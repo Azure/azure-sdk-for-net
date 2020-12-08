@@ -1,0 +1,16 @@
+{
+  "parameters": {
+    "id": "dtmi:com:example:Sample;1",
+    "updateModel": [
+      {
+        "op": "replace",
+        "path": "/decommissioned",
+        "value": true
+      }
+    ],
+    "api-version": "2020-10-31"
+  },
+  "responses": {
+    "204": {}
+  }
+}

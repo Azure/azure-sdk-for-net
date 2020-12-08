@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class RecognizeReceiptsOperation : Operation<RecognizedFormCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceRestClient _serviceClient;
+        private readonly FormRecognizerRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -98,7 +98,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal RecognizeReceiptsOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
+        internal RecognizeReceiptsOperation(FormRecognizerRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -208,7 +208,7 @@ namespace Azure.AI.FormRecognizer.Models
             List<RecognizedForm> receipts = new List<RecognizedForm>();
             for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
             {
-                receipts.Add(new RecognizedForm(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults));
+                receipts.Add(new RecognizedForm(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults, default));
             }
             return new RecognizedFormCollection(receipts);
         }

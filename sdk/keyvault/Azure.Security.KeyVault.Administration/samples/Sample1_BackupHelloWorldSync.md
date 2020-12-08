@@ -18,7 +18,7 @@ KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new
 
 Using the `KeyVaultBackupClient`, you can back up your entire collection of keys. The backing store for full key backups is a blob storage container using Shared Access Signature authentication. 
 For more details on creating a SAS token using the `BlobServiceClient`, see the [Azure Storage Blobs client README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/README.md) and the [authentication samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/samples/Sample02_Auth.cs).
-Alternatively, it is possible to [generate a SAS token in Storage Explorer](https://docs.microsoft.com/en-us/azure/vs-azure-tools-storage-manage-with-storage-explorer?tabs=windows#generate-a-shared-access-signature-in-storage-explorer)
+Alternatively, it is possible to [generate a SAS token in Storage Explorer](https://docs.microsoft.com/azure/vs-azure-tools-storage-manage-with-storage-explorer?tabs=windows#generate-a-shared-access-signature-in-storage-explorer)
 
 To ensure you have some keys for backup, you may want to first create a key using the `KeyClient`.
 To create a new `KeyClient` to create a key, see the [Creating a KeyClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md#creating-a-keyclientkeyvault) and [Creating a key](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md#creating-a-key) samples.
@@ -50,7 +50,7 @@ Uri backupBlobUri = backupOperation.Value;
 
 Using the `KeyVaultBackupClient`, you can restore your entire collection of keys from backup. The data source for full key restore is a storage blob accessed using Shared Access Signature authentication. 
 For more details on creating a SAS token using the `BlobServiceClient`, see the [Azure Storage Blobs client README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/README.md) and the [authentication samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/samples/Sample02_Auth.cs).
-Alternatively, it is possible to [generate a SAS token in Storage Explorer](https://docs.microsoft.com/en-us/azure/vs-azure-tools-storage-manage-with-storage-explorer?tabs=windows#generate-a-shared-access-signature-in-storage-explorer)
+Alternatively, it is possible to [generate a SAS token in Storage Explorer](https://docs.microsoft.com/azure/vs-azure-tools-storage-manage-with-storage-explorer?tabs=windows#generate-a-shared-access-signature-in-storage-explorer)
 
 ```C# Snippet:HelloFullRestoreSync
 // Get the folder name from the backupBlobUri returned from a previous BackupOperation
@@ -70,4 +70,4 @@ Uri restoreResult = backupOperation.Value;
 ```
 
 <!-- LINKS -->
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md

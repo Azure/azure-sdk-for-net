@@ -19,7 +19,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         /// <param name="id"> Identifier of a page view instance. Used for correlation between page view and other telemetry items. </param>
         /// <param name="name"> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
-        public PageViewData(int version, string id, string name)
+        public PageViewData(int version, string id, string name) : base(version)
         {
             if (id == null)
             {
@@ -30,15 +30,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Version = version;
             Id = id;
             Name = name;
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Schema version. </summary>
-        public int Version { get; }
         /// <summary> Identifier of a page view instance. Used for correlation between page view and other telemetry items. </summary>
         public string Id { get; }
         /// <summary> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </summary>

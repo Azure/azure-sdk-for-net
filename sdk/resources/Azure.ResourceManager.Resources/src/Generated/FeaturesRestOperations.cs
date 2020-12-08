@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Features/features", false);
             uri.AppendQuery("api-version", "2015-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/features", false);
             uri.AppendQuery("api-version", "2015-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -184,6 +186,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(featureName, true);
             uri.AppendQuery("api-version", "2015-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -267,6 +270,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/register", false);
             uri.AppendQuery("api-version", "2015-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -350,6 +354,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/unregister", false);
             uri.AppendQuery("api-version", "2015-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -426,6 +431,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -492,6 +498,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 

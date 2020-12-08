@@ -41,10 +41,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _serviceVersion = serviceVersion;
         }
 
-        internal KeyClient GetClient(TestRecording recording = null)
+        internal KeyClient GetClient()
         {
-            recording = recording ?? Recording;
-
             // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
             // we need to delay creation of keys due to aggressive service limits on key creation:
             // https://docs.microsoft.com/azure/key-vault/key-vault-service-limits
@@ -54,7 +52,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 new KeyClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyClientOptions(_serviceVersion))),
+                    InstrumentClientOptions(new KeyClientOptions(_serviceVersion))),
                 interceptors);
         }
 

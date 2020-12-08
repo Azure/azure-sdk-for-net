@@ -1451,25 +1451,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.StagingSettings StagingSettings { get { throw null; } set { } }
         public object Translator { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CopyBehaviorType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CopyBehaviorType(string value) { throw null; }
-        public static Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType FlattenHierarchy { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType MergeFiles { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType PreserveHierarchy { get { throw null; } }
-        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType left, Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType right) { throw null; }
-        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType (string value) { throw null; }
-        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType left, Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class CopySink : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public CopySink() { }
@@ -3275,24 +3256,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.DatasetCompression Compression { get { throw null; } set { } }
         public object EncodingName { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.DatasetLocation Location { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JsonFormatFilePattern : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.JsonFormatFilePattern>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JsonFormatFilePattern(string value) { throw null; }
-        public static Azure.Analytics.Synapse.Artifacts.Models.JsonFormatFilePattern ArrayOfObjects { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.JsonFormatFilePattern SetOfObjects { get { throw null; } }
-        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.JsonFormatFilePattern other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.JsonFormatFilePattern left, Azure.Analytics.Synapse.Artifacts.Models.JsonFormatFilePattern right) { throw null; }
-        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.JsonFormatFilePattern (string value) { throw null; }
-        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.JsonFormatFilePattern left, Azure.Analytics.Synapse.Artifacts.Models.JsonFormatFilePattern right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class JsonSink : Azure.Analytics.Synapse.Artifacts.Models.CopySink
     {

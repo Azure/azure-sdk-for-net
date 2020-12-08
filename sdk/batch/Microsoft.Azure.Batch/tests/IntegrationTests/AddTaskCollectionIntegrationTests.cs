@@ -467,7 +467,7 @@
                             batchCli,
                             testName,
                             311,
-                            timeout: TimeSpan.FromSeconds(1),
+                            timeout: TimeSpan.FromSeconds(-1),
                             useJobOperations: useJobOperations).ConfigureAwait(false)).ConfigureAwait(false);
 
                     Assert.IsType<TimeoutException>(exception.InnerException);

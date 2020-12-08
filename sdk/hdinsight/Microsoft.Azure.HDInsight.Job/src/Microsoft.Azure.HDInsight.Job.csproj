@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Provides job operations for Microsoft Azure HDInsight.</Description>
     <AssemblyTitle>Microsoft Azure HDInsight Job Library</AssemblyTitle>
@@ -10,7 +10,7 @@ Support using Apache Spark REST API to submit remote jobs to an HDInsight Spark 
       ]]>
     </PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <Version>3.0.0-preview.2</Version>
+    <Version>3.0.0-preview.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

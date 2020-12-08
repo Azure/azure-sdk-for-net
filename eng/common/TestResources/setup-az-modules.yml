@@ -1,0 +1,36 @@
+# Cloud Configuration will be splat into parameters of `Add-AzEnvironment`. It
+# should be JSON in the form (not all fields are required):
+# {
+#   "Name": "<environment name>",
+#   "PublishSettingsFileUrl": "<publish settings file url>",
+#   "ServiceEndpoint": "<service endpoint>",
+#   "ManagementPortalUrl": "<management portal url>",
+#   "ActiveDirectoryEndpoint": "<active directory endpoint>",
+#   "ActiveDirectoryServiceEndpointResourceId": "<active directory service endpoint resource id>",
+#   "ResourceManagerEndpoint": "<resource manager endpoint>",
+#   "GalleryEndpoint": "<gallery endpoint>",
+#   "GraphEndpoint": "<graph endpoint>",
+#   "GraphAudience": "<graph audience>",
+#   "AzureKeyVaultDnsSuffix": "<key vault suffix>",
+#   "AzureKeyVaultServiceEndpointResourceId": "<key vault service endpoint resource id>"
+# }
+
+steps:
+  - bash: sudo chown -R runner ~/.Azure
+    displayName: (MacOS) Grant access to ~/.Azure
+    condition: contains(variables['OSVmImage'], 'mac')
+
+  # New-TestResources command requires Az module
+  - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
+    displayName: Install Azure PowerShell module
+
+  - task: Powershell@2
+    inputs:
+      displayName: Register Dogfood environment
+      targetType: inline
+      pwsh: true
+      script: |
+        $environmentSpec = @"
+          $(env-config-dogfood)
+        "@ | ConvertFrom-Json -AsHashtable;
+        Add-AzEnvironment @environmentSpec

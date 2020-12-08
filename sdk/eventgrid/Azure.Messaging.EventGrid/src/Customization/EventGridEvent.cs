@@ -117,7 +117,10 @@ namespace Azure.Messaging.EventGrid
                     egEventInternal.EventType,
                     egEventInternal.DataVersion,
                     egEventInternal.EventTime,
-                    egEventInternal.Id);
+                    egEventInternal.Id)
+                {
+                    Topic = egEventInternal.Topic
+                };
 
                 egEvents.Add(egEvent);
             }

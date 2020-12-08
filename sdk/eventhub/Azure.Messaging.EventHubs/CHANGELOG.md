@@ -1,6 +1,36 @@
-﻿# Release History
+# Release History
 
-## 5.3.0-beta.1 (Unreleased)
+## 5.3.0-beta.4 (Unreleased)
+
+## 5.3.0-beta.3 (2020-09-30)
+
+### Changes
+
+#### Key Bug Fixes
+
+- An issue with package publishing which blocked referencing and use has been fixed.
+
+## 5.3.0-beta.2 (2020-09-28)
+
+### Changes
+
+#### New Features
+
+- The `EventData` representation has been extended with the ability to treat the `Body` as `BinaryData`.  `BinaryData` supports a variety of data transformations and allows the ability to provide serialization logic when sending or receiving events.  Any type that derives from `ObjectSerializer`, such as `JsonObjectSerializer` can be used, with Schema Registry support available via the `SchemaRegistryAvroObjectSerializer`.
+
+- `EventData` has been integrated with the new Schema Registry service, via use of the `ObjectSerializer` with `BinaryData`.
+
+- When publishing events to Event Hubs, timeouts or other transient failures may introduce ambiguity into the understanding of whether a batch of events was received by the service.  To assist in this scenario, the option to publish events idempotently across all retries of a publish operation has been added to the `EventHubProducerClient`. 
+
+**Note:** The idempotent publishing feature is new to the Event Hubs service, and Azure Schema Registry is a new hosted schema repository service provided by Azure Event Hubs.  Both offerings may not yet be available in all regions or Azure clouds.
+
+## 5.3.0-beta.1 (2020-09-15)
+
+### Changes
+
+#### New Features
+
+- Introduction of an option for the various event consumers allowing the prefetch cache to be filled based on a size-based heuristic rather than a count of events.  This feature is considered a special case, helpful in scenarios where the size of events being read is not able to be known or predicted upfront and limiting resource use is valued over consistent and predictable performance.
 
 ## 5.2.0 (2020-09-08)
 
@@ -226,9 +256,9 @@ _(A community contribution, courtesy of [albertodenatale](https://github.com/alb
 
 - A large portion of the public API surface, including members and parameters, have had adjustments to their naming in order to improve discoverability, provide better context to developers, and better conform to the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-- The `EventProcessorClient` has been moved into its own [package](./../Azure.Messaging.EventHubs.Processor) and evolved into an opinionated implementation on top of Azure Storage Blobs.  This is intended to offer a more streamlined developer experience for the majority of scenarios and allow developers to more easily take advantage of the processor.
+- The `EventProcessorClient` has been moved into its own [package](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor) and evolved into an opinionated implementation on top of Azure Storage Blobs.  This is intended to offer a more streamlined developer experience for the majority of scenarios and allow developers to more easily take advantage of the processor.
 
-- A collection of internal supporting types were moved into a new [shared library](./../Azure.Messaging.EventHubs.Shared) to allow them to be shared as source between the Event Hubs client libraries.  The tests assoociated with these types were also moved to the shared library for locality with the source being tested.
+- A collection of internal supporting types were moved into a new [shared library](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Shared) to allow them to be shared as source between the Event Hubs client libraries.  The tests assoociated with these types were also moved to the shared library for locality with the source being tested.
 
 ## 5.0.0-preview.5 
 

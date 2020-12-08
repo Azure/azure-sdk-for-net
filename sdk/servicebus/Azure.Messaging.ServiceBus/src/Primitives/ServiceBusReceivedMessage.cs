@@ -198,16 +198,6 @@ namespace Azure.Messaging.ServiceBus
         public IReadOnlyDictionary<string, object> ApplicationProperties => new ReadOnlyDictionary<string, object>(AmqpMessage.ApplicationProperties);
 
         /// <summary>
-        /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
-        /// </summary>
-        internal const string DeadLetterReasonHeader = "DeadLetterReason";
-
-        /// <summary>
-        /// User property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
-        /// </summary>
-        internal const string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
-
-        /// <summary>
         /// Gets the lock token for the current message.
         /// </summary>
         /// <remarks>
@@ -396,7 +386,7 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (ApplicationProperties.TryGetValue(DeadLetterReasonHeader, out object reason))
+                if (ApplicationProperties.TryGetValue(AmqpMessageConstants.DeadLetterReasonHeader, out object reason))
                 {
                     return reason as string;
                 }
@@ -411,7 +401,7 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (ApplicationProperties.TryGetValue(DeadLetterErrorDescriptionHeader, out object description))
+                if (ApplicationProperties.TryGetValue(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, out object description))
                 {
                     return description as string;
                 }

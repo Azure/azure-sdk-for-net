@@ -231,7 +231,7 @@ namespace Azure
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         ///
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static async Task<BinaryData> FromObjectAsync<T>(
+        public static async ValueTask<BinaryData> FromObjectAsync<T>(
             T jsonSerializable,
             CancellationToken cancellationToken = default) =>
             await FromObjectInternalAsync<T>(jsonSerializable, s_jsonSerializer, true, cancellationToken).ConfigureAwait(false);
@@ -266,13 +266,13 @@ namespace Azure
         ///
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static async Task<BinaryData> FromObjectAsync<T>(
+        public static async ValueTask<BinaryData> FromObjectAsync<T>(
             T serializable,
             ObjectSerializer serializer,
             CancellationToken cancellationToken = default) =>
             await FromObjectInternalAsync<T>(serializable, serializer, true, cancellationToken).ConfigureAwait(false);
 
-        private static async Task<BinaryData> FromObjectInternalAsync<T>(
+        private static async ValueTask<BinaryData> FromObjectInternalAsync<T>(
             T data,
             ObjectSerializer serializer,
             bool async,

@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
+using Microsoft.Spatial;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -77,7 +78,7 @@ namespace Azure.Search.Documents.Tests
             options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1);
             options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 600);
             options.Transport = new HttpClientTransport(s_httpClient);
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         /// <summary>
@@ -161,11 +162,15 @@ namespace Azure.Search.Documents.Tests
                 }
             }
 #if EXPERIMENTAL_SPATIAL
-            else if (expected is PointGeometry ePt && actual is PointGeometry aPt)
+            else if (expected is GeoPoint ePt && actual is GeoPoint aPt)
             {
-                AssertEqual(ePt.Position, aPt.Position, path != null ? path + ".Position" : "Position");
+                AssertEqual(ePt.Position, aPt.Position, path != null ? $"{path}.{nameof(GeoPoint.Position)}" : nameof(GeoPoint.Position));
             }
 #endif
+            else if (expected is GeographyPoint eGpt && actual is GeographyPoint aGpt)
+            {
+                AssertEqual(eGpt, aGpt, path);
+            }
             else
             {
                 AssertEqual(expected, actual, path);

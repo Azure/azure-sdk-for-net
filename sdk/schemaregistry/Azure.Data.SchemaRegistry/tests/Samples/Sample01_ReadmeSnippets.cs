@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Data.SchemaRegistry.Tests.Samples
 {
+    [Ignore("Only verifying that the sample builds")]
     public class Sample01_ReadmeSnippets : SamplesBase<SchemaRegistryClientTestEnvironment>
     {
         [Ignore("Only verifying that the sample builds")]

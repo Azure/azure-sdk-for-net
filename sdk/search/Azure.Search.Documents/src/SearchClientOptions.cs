@@ -5,9 +5,7 @@ using System;
 using System.Diagnostics;
 using Azure.Core;
 using Azure.Core.Pipeline;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -54,7 +52,6 @@ namespace Azure.Search.Documents
         /// </summary>
         public ServiceVersion Version { get; }
 
-#if EXPERIMENTAL_SERIALIZER
         /// <summary>
         /// Gets or sets an <see cref="ObjectSerializer"/> that can be used to
         /// customize the serialization of strongly typed models.  The
@@ -62,7 +59,6 @@ namespace Azure.Search.Documents
         /// will be used if no value is provided.
         /// </summary>
         public ObjectSerializer Serializer { get; set; }
-#endif
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchClientOptions"/>

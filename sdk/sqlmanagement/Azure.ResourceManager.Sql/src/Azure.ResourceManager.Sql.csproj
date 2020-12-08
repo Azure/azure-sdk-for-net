@@ -4,7 +4,7 @@
     <PackageId>Azure.ResourceManager.Sql</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.Sql</Description>
     <PackageTags>azure;management;arm;resource manager;sql</PackageTags>
-    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
+    <TemporaryUsePreviousGeneratorVersion>false</TemporaryUsePreviousGeneratorVersion>
   </PropertyGroup>
 
   <PropertyGroup>

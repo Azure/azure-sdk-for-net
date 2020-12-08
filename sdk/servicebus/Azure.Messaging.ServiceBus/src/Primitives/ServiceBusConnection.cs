@@ -327,7 +327,7 @@ namespace Azure.Messaging.ServiceBus
 
             // A proxy is only valid when web sockets is used as the transport.
 
-            if ((!connectionOptions.TransportType.IsWebSocketTransport()) && (connectionOptions.Proxy != null))
+            if ((!connectionOptions.TransportType.IsWebSocketTransport()) && (connectionOptions.WebProxy != null))
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ProxyMustUseWebSockets), nameof(connectionOptions));
             }

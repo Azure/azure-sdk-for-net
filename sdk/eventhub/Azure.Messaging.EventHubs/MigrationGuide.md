@@ -1,4 +1,4 @@
-﻿# Guide for migrating to Azure.Messaging.EventHubs from Microsoft.Azure.EventHubs
+# Guide for migrating to Azure.Messaging.EventHubs from Microsoft.Azure.EventHubs
 
 This guide is intended to assist in the migration to version 5 of the Event Hubs client library from version 4.  It will focus on side-by-side comparisons for similar operations between the v5 packages, [`Azure.Messaging.EventHubs`](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) and [`Azure.Messaging.EventHubs.Processor`](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/)  and their v4 equivalents, [`Microsoft.Azure.EventHubs`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) and [`Microsoft.Azure.EventHubs.Processor`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/).
 
@@ -359,7 +359,7 @@ private async Task ProcessUntilCanceled(CancellationToken cancellationToken)
 
     async Task processEventHandler(ProcessEventArgs eventArgs)
     {
-        Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
+        Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.EventBody.ToBytes().ToArray()) }");
         return Task.CompletedTask;
     }
 
@@ -401,7 +401,7 @@ For v5, the `EventProcessorClient` will use a default starting position to read 
 
 Because the nature of legacy checkpoint data cannot be assumed due to custom storage provider support, the example uses a static set of checkpoint data for illustration.  The format of this sample data matches that used by the default Azure Storage checkpoint manager of the `EventProcessorHost` for the body of the Blob holding checkpoint data.  
 
-Reading Azure Storage data is not within the scope of this example, but details may be found in the Azure Storage documentation, see: [Quickstart: Azure Blob storage client library v12 for .NET](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).
+Reading Azure Storage data is not within the scope of this example, but details may be found in the Azure Storage documentation, see: [Quickstart: Azure Blob storage client library v12 for .NET](https://docs.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-dotnet).
 
 ```csharp
 public static async Task Main(string[] args)

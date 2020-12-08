@@ -17,9 +17,9 @@ namespace IntegrationTestCommon
     using Microsoft.Azure.Management.Batch.Models;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using System.Text;
-    using Microsoft.WindowsAzure.Storage.Blob;
     using BatchTestCommon;
     using Microsoft.Rest;
+    using Azure.Storage.Blobs.Specialized;
 
     public class IntegrationTestCommon
     {
@@ -163,8 +163,6 @@ namespace IntegrationTestCommon
 
         public static async Task UploadTestApplicationAsync(string storageUrl)
         {
-            CloudBlockBlob blob = new CloudBlockBlob(new Uri(storageUrl));
-
             const string dummyPackageContentFile = @"TestApplicationPackage.zip";
 
             using (MemoryStream fakeApplicationPackageZip = new MemoryStream())
@@ -181,7 +179,8 @@ namespace IntegrationTestCommon
 
                 fakeApplicationPackageZip.Seek(0, SeekOrigin.Begin);
 
-                await blob.UploadFromStreamAsync(fakeApplicationPackageZip).ConfigureAwait(false);
+                BlockBlobClient blobClient = new BlockBlobClient(new Uri(storageUrl));
+                await blobClient.UploadAsync(fakeApplicationPackageZip).ConfigureAwait(false);
             }
         }
 

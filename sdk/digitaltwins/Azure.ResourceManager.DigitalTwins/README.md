@@ -81,8 +81,8 @@ For more information see the Code of Conduct FAQ or contact opencode@microsoft.c
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
 [package]: https://www.nuget.org/packages/Azure.DigitalTwins.Core
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[token_credential]: https://docs.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet
-[digital_twins_documentation]: https://docs.microsoft.com/en-us/azure/digital-twins/
+[token_credential]: https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet
+[digital_twins_documentation]: https://docs.microsoft.com/azure/digital-twins/
 [adt_nuget]: https://www.nuget.org/packages/Azure.ResourceManager.DigitalTwins
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fdigitaltwins%2FAzure.ResourceManager.DigitalTwins%2FREADME.md)

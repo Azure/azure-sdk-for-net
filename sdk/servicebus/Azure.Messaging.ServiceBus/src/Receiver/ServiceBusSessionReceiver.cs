@@ -2,21 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Core;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Core.Pipeline;
+using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Plugins;
-using System.Collections.Generic;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     /// The <see cref="ServiceBusSessionReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
     ///  and settling messages from session-enabled Queues and Subscriptions. It is constructed by calling
-    ///  <see cref="ServiceBusClient.CreateSessionReceiverAsync(string, string, ServiceBusSessionReceiverOptions, CancellationToken)"/>.
+    ///  <see cref="ServiceBusClient.AcceptNextSessionAsync(string, string, ServiceBusSessionReceiverOptions, CancellationToken)"/>.
     /// </summary>
     public class ServiceBusSessionReceiver : ServiceBusReceiver
     {

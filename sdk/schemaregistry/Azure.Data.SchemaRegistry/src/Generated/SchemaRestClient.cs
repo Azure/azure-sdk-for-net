@@ -132,11 +132,9 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("X-Schema-Type", xSchemaType.ToString());
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "text/plain");
             request.Headers.Add("Accept", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(schemaContent);
-            request.Content = content;
+            request.Content = new StringRequestContent(schemaContent);
             return message;
         }
 
@@ -233,11 +231,9 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("X-Schema-Type", xSchemaType.ToString());
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "text/plain");
             request.Headers.Add("Accept", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(schemaContent);
-            request.Content = content;
+            request.Content = new StringRequestContent(schemaContent);
             return message;
         }
 

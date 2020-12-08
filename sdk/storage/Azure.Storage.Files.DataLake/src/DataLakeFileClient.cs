@@ -3468,7 +3468,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual Response<PathInfo> ScheduleDeletion(
+        public virtual Response<PathInfo> ScheduleDeletion(
             DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
             => ScheduleDeletionInternal(
@@ -3494,7 +3494,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
+        public virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
             DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
             => await ScheduleDeletionInternal(
@@ -4136,7 +4136,8 @@ namespace Azure.Storage.Files.DataLake
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: conditions,
-                    progressHandler: options?.ProgressHandler);
+                    progressHandler: options?.ProgressHandler,
+                    closeEvent: options?.Close);
             }
             catch (Exception ex)
             {
@@ -4196,7 +4197,7 @@ namespace Azure.Storage.Files.DataLake
                     // Flush data
                     return await client.FlushInternal(
                         position: newPosition,
-                        retainUncommittedData: args.RetainUncommittedData,
+                        retainUncommittedData: default,
                         close: args.Close,
                         args.HttpHeaders,
                         args.Conditions,
@@ -4223,7 +4224,7 @@ namespace Azure.Storage.Files.DataLake
 
                     return await client.FlushInternal(
                         offset + size,
-                        retainUncommittedData: args.RetainUncommittedData,
+                        retainUncommittedData: default,
                         close: args.Close,
                         httpHeaders: args.HttpHeaders,
                         conditions: args.Conditions,

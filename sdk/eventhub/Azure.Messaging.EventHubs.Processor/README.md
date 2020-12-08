@@ -10,7 +10,7 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 - Managing checkpoints and state for processing in a durable manner using Azure Storage blobs as the underlying data store.
 
-[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) | [API reference documentation](https://aka.ms/azsdk-dotnet-eventhubs-processor-docs) | [Product documentation](https://docs.microsoft.com/azure/event-hubs/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) | [API reference documentation](https://aka.ms/azsdk-dotnet-eventhubs-processor-docs) | [Product documentation](https://docs.microsoft.com/azure/event-hubs/)
 
 ## Getting started
 
@@ -209,27 +209,37 @@ When using Azure Active Directory with Azure Storage, your principal must be ass
 
 ## Troubleshooting
 
-### Event Processor client exceptions
+### Exception handling
+
+#### Event Processor client exceptions
 
 The Event Processor client makes every attempt to be resilient in the face of exceptions and will take the necessary actions to continue processing unless it is impossible to do so.  No action from developers is needed for this to take place; it is natively part of the processor's behavior.
 
 In order to allow developers the opportunity to inspect and react to exceptions that occur within the Event Processor client operations, they are surfaced via the `ProcessError` event.  The arguments for this event offer details about the exception and the context in which it was observed.  Developers may perform normal operations on the Event Processor client from within this event handler, such as stopping and/or restarting it in response to errors, but may not otherwise influence the processor's exception behavior.  
 
-For a basic example of implementing the error handler, please see the sample: [Manage the Event Processor when an error is encountered](./samples/Sample07_RestartProcessingOnError.cs).
+For a basic example of implementing the error handler, please see the sample: [Manage the Event Processor when an error is encountered](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample07_RestartProcessingOnError.cs).
 
-### Exceptions in event handlers
+#### Exceptions in event handlers
 
 Because the Event Processor client lacks the appropriate context to understand the severity of exceptions within the event handlers that developers provide, it cannot assume what actions would be a reasonable response to them.  As a result, developers are considered responsible for exceptions that occur within the event handlers they provide using `try/catch` blocks and other standard language constructs.  
 
 The Event Processor client will not attempt to detect exceptions in developer code nor surface them explicitly.  The resulting behavior will depend on the processor's hosting environment and the context in which the event handler was called.  Because this may vary between different scenarios, it is strongly recommended that developers code their event handlers defensively and account for potential exceptions.
 
-### Exception details
+#### Exception details
 
 For detailed information about exceptions that may occur, please refer to the Event Hubs client library [README]( https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/README.md#event-hubs-exception) and the service documentation for [Event Hubs messaging exceptions](https://docs.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions). 
 
+### Logging and diagnostics
+
+The Event Processor client library is fully instrumented for logging information at various levels of detail using the .NET `EventSource` to emit information.  Logging is performed for each operation and follows the pattern of marking the starting point of the operation, it's completion, and any exceptions encountered.  Additional information that may offer insight is also logged in the context of the associated operation.
+
+The Event Processor client logs are available to any `EventListener` by opting into the source named "Azure-Messaging-EventHubs-Processor-EventProcessorClient" or opting into all sources that have the trait "AzureEventSource".  To make capturing logs from the Azure client libraries easier, the `Azure.Core` library used by Event Hubs offers an `AzureEventSourceListener`.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging).
+
+The Event Processor library is also instrumented for distributed tracing using Application Insights or OpenTelemetry.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing).
+
 ## Next steps
 
-Beyond the scenarios discussed, the Azure Event Hubs Processor library offers support for additional scenarios to help take advantage of the full feature set of the `EventProcessorClient`.  In order to help explore some of these scenarios, the Event Hubs Processor client library offers a project of samples to serve as an illustration for common scenarios.  Please see the samples [README](./samples/README.md) for details.
+Beyond the scenarios discussed, the Azure Event Hubs Processor library offers support for additional scenarios to help take advantage of the full feature set of the `EventProcessorClient`.  In order to help explore some of these scenarios, the Event Hubs Processor client library offers a project of samples to serve as an illustration for common scenarios.  Please see the samples [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/README.md) for details.
 
 ## Contributing  
 
@@ -239,6 +249,6 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-Please see our [contributing guide](./../Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
+Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
   
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.Processor%2FREADME.png)

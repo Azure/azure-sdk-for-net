@@ -15,10 +15,10 @@ namespace Azure.Messaging.ServiceBus
         /// The queue or topic name to route the message through. This is useful when using transactions, in order
         /// to allow for completing a transaction involving multiple entities. For instance, if you want to
         /// settle a message on Entity A and send a message to Entity B as part of the same transaction,
-        /// you can use a <see cref="ServiceBusSender"/> for Entity B, with the <see cref="ViaQueueOrTopicName"/>
+        /// you can use a <see cref="ServiceBusSender"/> for Entity B, with the <see cref="TransactionQueueOrTopicName"/>
         /// property set to Entity A.
         /// </summary>
-        public string ViaQueueOrTopicName { get; set; }
+        public string TransactionQueueOrTopicName { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusSenderOptions Clone() =>
             new ServiceBusSenderOptions
             {
-                ViaQueueOrTopicName = ViaQueueOrTopicName
+                TransactionQueueOrTopicName = TransactionQueueOrTopicName
             };
     }
 }

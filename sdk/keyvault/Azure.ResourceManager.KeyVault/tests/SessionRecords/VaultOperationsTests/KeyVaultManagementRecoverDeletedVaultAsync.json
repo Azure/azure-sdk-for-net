@@ -4,6 +4,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.KeyVault?api-version=2017-05-10",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-be180135105b564bb8e03f0ace6bc64f-aa6548db3d4bcf4e-00",
         "User-Agent": [
@@ -540,6 +541,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/sdktestrg3744?api-version=2017-05-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "31",
         "Content-Type": "application/json",
@@ -586,6 +588,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/sdktestrg3744/providers/Microsoft.KeyVault/vaults/sdktestvault9731?api-version=2019-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "660",
         "Content-Type": "application/json",
@@ -1754,6 +1757,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/sdktestrg3744/providers/Microsoft.KeyVault/vaults/sdktestvault9731?api-version=2019-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-d7e6314cbaa3c94a8c2c52dddd5606b5-165648d831d23746-00",
         "User-Agent": [
@@ -1790,6 +1794,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/sdktestrg3744/providers/Microsoft.KeyVault/vaults/sdktestvault9731?api-version=2019-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "660",
         "Content-Type": "application/json",
@@ -1934,6 +1939,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/sdktestrg3744/providers/Microsoft.KeyVault/vaults/sdktestvault9731?api-version=2019-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-36d256e2b2c0b34db2c877a2c809352b-5b4e30e03f053844-00",
         "User-Agent": [
@@ -2059,6 +2065,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/sdktestrg3744/providers/Microsoft.KeyVault/vaults/sdktestvault9731?api-version=2019-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "626",
         "Content-Type": "application/json",
@@ -2195,6 +2202,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/sdktestrg3744/providers/Microsoft.KeyVault/vaults/sdktestvault9731?api-version=2019-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-def6869b4b320c478730c87c8291d2c5-11195bad0887b044-00",
         "User-Agent": [

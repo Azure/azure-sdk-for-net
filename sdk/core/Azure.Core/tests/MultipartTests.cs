@@ -22,52 +22,6 @@ namespace Azure.Core.Tests
         private const string Body = "{}";
 
         // Note that CRLF (\r\n) is required. You can't use multi-line C# strings here because the line breaks on Linux are just LF.
-        private const string TablesOdataBatchResponse =
-"--batchresponse_6040fee7-a2b8-4e78-a674-02086369606a\r\n" +
-"Content-Type: multipart/mixed; boundary=changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92\r\n" +
-"\r\n" +
-"--changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92\r\n" +
-"Content-Type: application/http\r\n" +
-"Content-Transfer-Encoding: binary\r\n" +
-"\r\n" +
-"HTTP/1.1 201 Created\r\n" +
-"DataServiceVersion: 3.0;\r\n" +
-"Content-Type: application/json;odata=fullmetadata;streaming=true;charset=utf-8\r\n" +
-"X-Content-Type-Options: nosniff\r\n" +
-"Cache-Control: no-cache\r\n" +
-"Location: https://mytable.table.core.windows.net/tablename(PartitionKey='somPartition',RowKey='01')\r\n" +
-"ETag: W/\"datetime'2020-08-14T22%3A58%3A57.8328323Z'\"\r\n" +
-"\r\n" +
-"{}\r\n" +
-"--changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92\r\n" +
-"Content-Type: application/http\r\n" +
-"Content-Transfer-Encoding: binary\r\n" +
-"\r\n" +
-"HTTP/1.1 201 Created\r\n" +
-"DataServiceVersion: 3.0;\r\n" +
-"Content-Type: application/json;odata=fullmetadata;streaming=true;charset=utf-8\r\n" +
-"X-Content-Type-Options: nosniff\r\n" +
-"Cache-Control: no-cache\r\n" +
-"Location: https://mytable.table.core.windows.net/tablename(PartitionKey='somPartition',RowKey='02')\r\n" +
-"ETag: W/\"datetime'2020-08-14T22%3A58%3A57.8328323Z'\"\r\n" +
-"\r\n" +
-"{}\r\n" +
-"--changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92\r\n" +
-"Content-Type: application/http\r\n" +
-"Content-Transfer-Encoding: binary\r\n" +
-"\r\n" +
-"HTTP/1.1 201 Created\r\n" +
-"DataServiceVersion: 3.0;\r\n" +
-"Content-Type: application/json;odata=fullmetadata;streaming=true;charset=utf-8\r\n" +
-"X-Content-Type-Options: nosniff\r\n" +
-"Cache-Control: no-cache\r\n" +
-"Location: https://mytable.table.core.windows.net/tablename(PartitionKey='somPartition',RowKey='03')\r\n" +
-"ETag: W/\"datetime'2020-08-14T22%3A58%3A57.8328323Z'\"\r\n" +
-"\r\n" +
-"{}\r\n" +
-"--changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92--\r\n" +
-"--batchresponse_6040fee7-a2b8-4e78-a674-02086369606a--\r\n" +
-"";
 
         private const string BlobBatchResponse =
 "--batchresponse_6040fee7-a2b8-4e78-a674-02086369606a \r\n" +
@@ -104,21 +58,63 @@ namespace Azure.Core.Tests
 "--batchresponse_6040fee7-a2b8-4e78-a674-02086369606a-- \r\n" +
 "0";
 
+        private const string TablesOdataBatchResponse =
+"--batchresponse_6040fee7-a2b8-4e78-a674-02086369606a\r\n" +
+"Content-Type: multipart/mixed; boundary=changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92\r\n" +
+"\r\n" +
+"--changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92\r\n" +
+"Content-Type: application/http\r\n" +
+"Content-Transfer-Encoding: binary\r\n" +
+"\r\n" +
+"HTTP/1.1 204 No Content\r\n" +
+"DataServiceVersion: 3.0;\r\n" +
+"Content-Type: application/json;odata=fullmetadata;streaming=true;charset=utf-8\r\n" +
+"X-Content-Type-Options: nosniff\r\n" +
+"Cache-Control: no-cache\r\n" +
+"Location: https://mytable.table.core.windows.net/tablename(PartitionKey='somPartition',RowKey='01')\r\n" +
+"ETag: W/\"datetime'2020-08-14T22%3A58%3A57.8328323Z'\"\r\n" +
+"\r\n" +
+"\r\n" +
+"--changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92--\r\n" +
+"--batchresponse_6040fee7-a2b8-4e78-a674-02086369606a--\r\n" +
+"";
+        private const string CosmosTableBatchOdataResponse =
+"--batchresponse_6040fee7-a2b8-4e78-a674-02086369606a\n" +
+"Content-Type: multipart/mixed; boundary=changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92\r\n" +
+"\r\n" +
+"--changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92\n" +
+"Content-Type: application/http\n" +
+"Content-Transfer-Encoding: binary\r\n" +
+"\r\n" +
+"HTTP/1.1 204 No Content\r\n" +
+"ETag: W/\"datetime'2020-09-23T00%3A57%3A45.1446280Z'\"\r\n" +
+"Preference-Applied: return-no-content\r\n" +
+"Location: https://chrissprim.table.cosmos.azure.com/testtableo6uc2ude(PartitionKey='somPartition',RowKey='01')\r\n" +
+"Content-Type: application/json;odata=fullmetadata;streaming=true;charset=utf-8\r\n" +
+"Content-ID: 1\r\n" +
+"\r\n" +
+"\r\n" +
+"--changesetresponse_e52cbca8-7e7f-4d91-a719-f99c69686a92--\n" +
+"--batchresponse_6040fee7-a2b8-4e78-a674-02086369606a--\n" +
+"";
+
 
         [Test]
-        public async Task ParseBatchChangesetResponse()
+        [TestCase(TablesOdataBatchResponse)]
+        [TestCase(CosmosTableBatchOdataResponse)]
+        public async Task ParseBatchChangesetResponse(string batchResponse)
         {
-            var stream = MakeStream(TablesOdataBatchResponse);
-            var responses = await Multipart.ParseAsync(stream, ContentType, true, default);
+            var stream = MakeStream(batchResponse);
+            var responses = await Multipart.ParseAsync(stream, ContentType, false, true, default);
 
             Assert.That(responses, Is.Not.Null);
-            Assert.That(responses.Length, Is.EqualTo(3));
-            Assert.That(responses.All(r => r.Status == (int)HttpStatusCode.Created));
+            Assert.That(responses.Length, Is.EqualTo(1));
+            Assert.That(responses.All(r => r.Status == (int)HttpStatusCode.NoContent));
 
             foreach (var response in responses)
             {
-                Assert.That(response.TryGetHeader("DataServiceVersion", out var version));
-                Assert.That(version, Is.EqualTo("3.0;"));
+                Assert.That(response.TryGetHeader("Location", out var location));
+                Assert.That(location.Contains("RowKey='01'"));
 
                 Assert.That(response.TryGetHeader("Content-Type", out var contentType));
                 Assert.That(contentType, Is.EqualTo("application/json;odata=fullmetadata;streaming=true;charset=utf-8"));
@@ -127,8 +123,7 @@ namespace Azure.Core.Tests
                 await response.ContentStream.ReadAsync(bytes, 0, bytes.Length);
                 var content = GetString(bytes, bytes.Length);
 
-                Assert.That(content, Is.EqualTo(Body));
-
+                Assert.That(content, Is.EqualTo(string.Empty));
             }
         }
 
@@ -136,13 +131,13 @@ namespace Azure.Core.Tests
         public async Task ParseBatchResponse()
         {
             var stream = MakeStream(BlobBatchResponse);
-            var responses = await Multipart.ParseAsync(stream, ContentType, true, default);
+            var responses = await Multipart.ParseAsync(stream, ContentType, true, true, default);
 
             Assert.That(responses, Is.Not.Null);
             Assert.That(responses.Length, Is.EqualTo(3));
 
             var response = responses[0];
-            Assert.That(response.Status, Is.EqualTo( (int)HttpStatusCode.Accepted));
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             Assert.That(response.TryGetHeader("x-ms-version", out var version));
             Assert.That(version, Is.EqualTo("2018-11-09"));
             Assert.That(response.TryGetHeader("x-ms-request-id", out _));

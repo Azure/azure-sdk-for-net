@@ -207,7 +207,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
         public virtual ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
         {
-            ValidateSendViaEntityName(queueOrTopicName, options?.ViaQueueOrTopicName);
+            ValidateSendViaEntityName(queueOrTopicName, options?.TransactionQueueOrTopicName);
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
@@ -328,13 +328,12 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
-        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
-        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If there are no available messages in the queue,
+        /// this will throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// </remarks>
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
-        public virtual async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
+        public virtual async Task<ServiceBusSessionReceiver> AcceptNextSessionAsync(
             string queueName,
             ServiceBusSessionReceiverOptions options = default,
             CancellationToken cancellationToken = default)
@@ -361,19 +360,92 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
-        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
-        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If there are no available messages in the queue,
+        /// this will throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// </remarks>
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
-        public virtual async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
+        public virtual async Task<ServiceBusSessionReceiver> AcceptNextSessionAsync(
             string topicName,
             string subscriptionName,
             ServiceBusSessionReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
             ValidateEntityName(topicName);
+
+            return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
+                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
+                connection: Connection,
+                plugins: Plugins,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
+        /// and settling messages from a specific session-enabled queue. It uses <see cref="ReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
+        /// </summary>
+        ///
+        /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="sessionId">Gets or sets a session ID to scope the <see cref="ServiceBusSessionReceiver"/> to.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionReceiver"/>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
+        /// sessionId parameter is null, and there are no available messages in the queue, this will
+        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// </remarks>
+        ///
+        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
+        public virtual async Task<ServiceBusSessionReceiver> AcceptSessionAsync(
+            string queueName,
+            string sessionId,
+            ServiceBusSessionReceiverOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateEntityName(queueName);
+            options ??= new ServiceBusSessionReceiverOptions();
+            options.SessionId = sessionId;
+
+            return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
+                entityPath: queueName,
+                connection: Connection,
+                plugins: Plugins,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
+        /// and settling messages from a specific session-enabled subscription. It uses <see cref="ReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
+        /// </summary>
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="subscriptionName">The session-enabled subscription to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="sessionId">Gets or sets a session ID to scope the <see cref="ServiceBusSessionReceiver"/> to.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionReceiver"/>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
+        /// sessionId parameter is null, and there are no available messages in the queue, this will
+        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// </remarks>
+        ///
+        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
+        public virtual async Task<ServiceBusSessionReceiver> AcceptSessionAsync(
+            string topicName,
+            string subscriptionName,
+            string sessionId,
+            ServiceBusSessionReceiverOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateEntityName(topicName);
+            options ??= new ServiceBusSessionReceiverOptions();
+            options.SessionId = sessionId;
 
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),

@@ -1799,24 +1799,6 @@ namespace Azure.Management.Compute.Models
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Management.Compute.Models.AvailabilitySet> Value { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AvailabilitySetSkuTypes : System.IEquatable<Azure.Management.Compute.Models.AvailabilitySetSkuTypes>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AvailabilitySetSkuTypes(string value) { throw null; }
-        public static Azure.Management.Compute.Models.AvailabilitySetSkuTypes Aligned { get { throw null; } }
-        public static Azure.Management.Compute.Models.AvailabilitySetSkuTypes Classic { get { throw null; } }
-        public bool Equals(Azure.Management.Compute.Models.AvailabilitySetSkuTypes other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Management.Compute.Models.AvailabilitySetSkuTypes left, Azure.Management.Compute.Models.AvailabilitySetSkuTypes right) { throw null; }
-        public static implicit operator Azure.Management.Compute.Models.AvailabilitySetSkuTypes (string value) { throw null; }
-        public static bool operator !=(Azure.Management.Compute.Models.AvailabilitySetSkuTypes left, Azure.Management.Compute.Models.AvailabilitySetSkuTypes right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class AvailabilitySetUpdate : Azure.Management.Compute.Models.UpdateResource
     {
         public AvailabilitySetUpdate() { }

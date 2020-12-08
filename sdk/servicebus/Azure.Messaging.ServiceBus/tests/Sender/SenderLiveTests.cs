@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var options = new ServiceBusClientOptions
                 {
                     TransportType = ServiceBusTransportType.AmqpWebSockets,
-                    Proxy = WebRequest.DefaultWebProxy,
+                    WebProxy = WebRequest.DefaultWebProxy,
                     RetryOptions = new ServiceBusRetryOptions()
                     {
                         Mode = ServiceBusRetryMode.Exponential
@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var options = new ServiceBusClientOptions
                 {
                     TransportType = ServiceBusTransportType.AmqpWebSockets,
-                    Proxy = WebRequest.DefaultWebProxy,
+                    WebProxy = WebRequest.DefaultWebProxy,
                     RetryOptions = new ServiceBusRetryOptions()
                     {
                         Mode = ServiceBusRetryMode.Exponential

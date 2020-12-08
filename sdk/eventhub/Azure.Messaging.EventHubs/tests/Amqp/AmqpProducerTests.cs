@@ -12,6 +12,7 @@ using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
+using Microsoft.Identity.Client;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -125,13 +126,53 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.Object.ReadInitializationPublishingPropertiesAsync(default);
 
+            Func<PartitionPublishingOptions, PartitionPublishingOptions, bool> areOptionsEqual = (first, second) =>
+                first.ProducerGroupId == second.ProducerGroupId
+                && first.OwnerLevel == second.OwnerLevel
+                && first.StartingSequenceNumber == second.StartingSequenceNumber;
+
             producer
                 .Protected()
                 .Verify<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.Is<PartitionPublishingOptions>(options => object.ReferenceEquals(options, expectedOptions)),
+                    ItExpr.Is<PartitionPublishingOptions>(options => areOptionsEqual(options, expectedOptions)),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateLinkAndEnsureProducerStateAsyncClearsTheStartingSequenceNumberAfterInitialization()
+        {
+            var expectedOptions = new PartitionPublishingOptions { ProducerGroupId = 1, OwnerLevel = 4, StartingSequenceNumber = 88 };
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+            var mockConnectionScope = new Mock<AmqpConnectionScope>();
+
+            var producer = new Mock<AmqpProducer>("aHub", null, mockConnectionScope.Object, new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.IdempotentPublishing, expectedOptions)
+            {
+                CallBase = true
+            };
+
+            mockConnectionScope
+                .Setup(scope => scope.OpenProducerLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<TransportProducerFeatures>(),
+                    It.Is<PartitionPublishingOptions>(options => options.StartingSequenceNumber == expectedOptions.StartingSequenceNumber),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+               .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings { MaxMessageSize = 512 })))
+               .Verifiable();
+
+            Assert.That(GetPartitionPublishingOptions(producer.Object).StartingSequenceNumber, Is.EqualTo(expectedOptions.StartingSequenceNumber), "The initial options should have the sequence number set.");
+
+            await producer.Object.ReadInitializationPublishingPropertiesAsync(default);
+            Assert.That(GetPartitionPublishingOptions(producer.Object).StartingSequenceNumber, Is.Null, "After initializing state, the active options should not have a sequence number.");
+
+            mockConnectionScope.VerifyAll();
         }
 
         /// <summary>
@@ -1689,6 +1730,20 @@ namespace Azure.Messaging.EventHubs.Tests
                 typeof(AmqpEventBatch)
                     .GetProperty("Options", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(batch);
+
+        /// <summary>
+        ///   Gets the active set of publishing options for a partition by accessing its private field.
+        /// </summary>
+        ///
+        /// <param name="target">The producer to retrieve the options from.</param>
+        ///
+        /// <returns>The partition publishing options.</returns>
+        ///
+        private static PartitionPublishingOptions GetPartitionPublishingOptions(AmqpProducer target) =>
+            (PartitionPublishingOptions)
+                typeof(AmqpProducer)
+                    .GetProperty("ActiveOptions", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(target);
 
         /// <summary>
         ///   Sets the maximum message size for the given producer, using its

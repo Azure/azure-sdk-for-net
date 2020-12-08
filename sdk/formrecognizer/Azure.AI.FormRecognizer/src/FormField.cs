@@ -116,6 +116,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         private static Regex _wordRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)/words/(?<wordIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
         private static Regex _lineRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+        private static Regex _selectionMarkRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/selectionMarks/(?<selectionMarkIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
         private static FormElement ResolveTextReference(IReadOnlyList<ReadResult> readResults, string reference)
         {
@@ -145,6 +146,16 @@ namespace Azure.AI.FormRecognizer.Models
                 int lineIndex = int.Parse(lineMatch.Groups["lineIndex"].Value, CultureInfo.InvariantCulture);
 
                 return new FormLine(readResults[pageIndex].Lines[lineIndex], pageIndex + 1);
+            }
+
+            // Selection Mark Reference
+            var selectionMarkMatch = _selectionMarkRegex.Match(reference);
+            if (selectionMarkMatch.Success && selectionMarkMatch.Groups.Count == 3)
+            {
+                int pageIndex = int.Parse(selectionMarkMatch.Groups["pageIndex"].Value, CultureInfo.InvariantCulture);
+                int selectionMark = int.Parse(selectionMarkMatch.Groups["selectionMarkIndex"].Value, CultureInfo.InvariantCulture);
+
+                return new FormSelectionMark(readResults[pageIndex].SelectionMarks[selectionMark], pageIndex + 1);
             }
 
             throw new InvalidOperationException($"Failed to parse element reference: {reference}");

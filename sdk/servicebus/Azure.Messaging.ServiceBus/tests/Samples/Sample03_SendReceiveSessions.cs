@@ -4,7 +4,6 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -38,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // create a session receiver that we can use to receive the message. Since we don't specify a
                 // particular session, we will get the next available session from the service.
-                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+                ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(queueName);
 
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -89,12 +88,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 #region Snippet:ServiceBusReceiveFromSpecificSession
                 // create a receiver specifying a particular session
-                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
+                ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(
                     queueName,
-                    new ServiceBusSessionReceiverOptions
-                    {
-                        SessionId = "Session2"
-                    });
+                    "Session2");
 
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();

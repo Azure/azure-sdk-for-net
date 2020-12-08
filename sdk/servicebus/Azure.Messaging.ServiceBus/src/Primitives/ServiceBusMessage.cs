@@ -63,6 +63,14 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
             AmqpMessage = new AmqpAnnotatedMessage(receivedMessage.AmqpMessage);
+            AmqpMessage.Header.DeliveryCount = null;
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.LockedUntilName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.SequenceNumberName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.DeadLetterSourceName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.EnqueueSequenceNumberName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.EnqueuedTimeUtcName);
+            ApplicationProperties.Remove(AmqpMessageConstants.DeadLetterReasonHeader);
+            ApplicationProperties.Remove(AmqpMessageConstants.DeadLetterErrorDescriptionHeader);
         }
 
         /// <summary>
@@ -138,7 +146,7 @@ namespace Azure.Messaging.ServiceBus
         ///    messages are kept together and in order as they are transferred.
         ///    See <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</see>.
         /// </remarks>
-        public string ViaPartitionKey
+        public string TransactionPartitionKey
         {
             get
             {

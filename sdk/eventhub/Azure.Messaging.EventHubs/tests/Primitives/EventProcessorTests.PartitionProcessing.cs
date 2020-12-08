@@ -382,7 +382,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partition = new EventProcessorPartition { PartitionId = "99" };
             var position = EventPosition.FromOffset(12);
-            var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, PrefetchCount = 37, LoadBalancingUpdateInterval = TimeSpan.FromMinutes(1) };
+            var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, PrefetchCount = 37, PrefetchSizeInBytes = 44, LoadBalancingUpdateInterval = TimeSpan.FromMinutes(1) };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = new Mock<EventHubConnection>();
             var mockConsumer = new Mock<SettableTransportConsumer>();
@@ -402,7 +402,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.CompletedTask);
 
             mockConnection
-                .Setup(connection => connection.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<uint?>()))
+                .Setup(connection => connection.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<uint?>(), It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
@@ -418,7 +418,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     options.TrackLastEnqueuedEventProperties,
                     0,
-                    (uint?)options.PrefetchCount),
+                    (uint?)options.PrefetchCount,
+                    options.PrefetchSizeInBytes),
                 Times.Once);
 
             cancellationSource.Cancel();

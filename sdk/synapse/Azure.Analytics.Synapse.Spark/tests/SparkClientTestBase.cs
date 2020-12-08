@@ -50,24 +50,22 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
         }
 
-        internal SparkBatchClient CreateSparkBatchClient(TestRecording recording = null)
+        internal SparkBatchClient CreateSparkBatchClient()
         {
-            recording ??= Recording;
             return InstrumentClient(new SparkBatchClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.SparkPoolName,
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new SparkClientOptions())));
+                InstrumentClientOptions(new SparkClientOptions())));
         }
 
-        internal SparkSessionClient CreateSparkSessionClient(TestRecording recording = null)
+        internal SparkSessionClient CreateSparkSessionClient()
         {
-            recording ??= Recording;
             return InstrumentClient(new SparkSessionClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.SparkPoolName,
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new SparkClientOptions())));
+                InstrumentClientOptions(new SparkClientOptions())));
         }
 
         internal void ValidateSparkBatchJob(SparkBatchJob expectedSparkJob, SparkBatchJob actualSparkJob)

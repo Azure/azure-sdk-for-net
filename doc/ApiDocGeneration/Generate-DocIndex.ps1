@@ -16,7 +16,8 @@ $ServiceMapping = @{
     "batch"="Batch"; "batchai"="Batch AI";
     "billing"="Billing"; "blueprint"="Blueprint";
     "botservice"="Bot Service"; "cdn"="CDN";
-    "cognitiveservices"="Cognitive Services"; "compute"="Compute";
+    "cognitiveservices"="Cognitive Services"; "compute"="Compute"; 
+    "communication" = "Communication"; "cosmosdb" = "Cosmos";
     "consumption"="Consumption"; "containerinstance"="Container Instance";
     "containerregistry"="Container Registry"; "containerservice"="Container Service";
     "core"="Core"; "cost-management"="Cost Management";
@@ -26,24 +27,26 @@ $ServiceMapping = @{
     "datalake-store"="Data Lake Store"; "datamigration"="Data Migration";
     "datashare"="Data Share"; "deploymentmanager"="Deployment Manager";
     "deviceprovisioningservices"="Device Provisioning Services"; "devspaces"="Dev Spaces";
-    "Dev Test Labs"=""; "dns"="DNS";
+    "devtestlabs" = "Dev Test Labs"; "dns"="DNS"; "digitaltwins" = "Digital Twins";
     "edgegateway"="Edge Gateway";
-    "eventgrid"="Event Grid"; "eventhub"="Event Hub";
+    "eventgrid"="Event Grid"; "eventhub"="Event Hub"; "extensions" = "Extensions"
     "frontdoor"="Front Door"; "graphrbac"="Active Directory";
+    "formrecognizer" = "Form Recognizer";
     "guestconfiguration"="Guest Configuration"; "hdinsight"="HDInsight";
     "healthcareapis"="Healthcare APIs"; "hybridcompute"="Hybrid Cloud";
     "hybriddatamanager"="Hybrid Datamanager"; "identity"="Identity";
-    "insights"="Insights"; "iotcentral"="IoT Central";
-    "iothub"="IoT"; "keyvault"="Keyvault";
+    "insights"="Insights"; "iot" = "IoT"; "iotcentral"="IoT Central";
+    "iothub"="IoTHub"; "keyvault"="Keyvault";
     "kusto"="Kusto"; "labservices"="LabServices";
     "locationbasedservices"="Location Based Services"; "logic"="Logic Apps";
     "machinelearning"="Machine Learning"; "machinelearningcompute"="Machine Learning Compute";
-    "maintenance"="Maintenance"; "managednetwork"="Managed Network";
+    "marketplace" = "Marketplace"; "maintenance"="Maintenance"; "managednetwork"="Managed Network";
     "managedserviceidentity"="Managed Service Identity"; "managedservices"="Managed Services";
     "managementgroups"="Management Groups"; "managementpartner"="Management Partner";
     "maps"="Maps"; "marketplaceordering"="Market Place Ordering";
     "mediaservices"="Media Services";
     "mixedreality"="Mixed Reality"; "monitor"="Monitor";
+    "mysql" = "MySql";
     "netapp"="NetApp"; "network"="Network";
     "notificationhubs"="Notification Hubs"; "operationalinsights"="Operational Insights";
     "peering"="Peering"; "policyinsights"="Policy Insights";
@@ -52,15 +55,20 @@ $ServiceMapping = @{
     "recoveryservices-backup"="Recovery Services Backup"; "recoveryservices-siterecovery"="Recovery Services Site Recovery";
     "redis"="Redis"; "relay"="Relay";
     "reservations"="Reservations"; "resourcegraph"="Resource Graph";
+    "resourcemover" = "Resource Mover";
     "resources"="Resources"; "scheduler"="Scheduler";
     "search"="Search"; "securitycenter"="Security Center";
     "servermanagement"="Server Management"; "servicebus"="Service Bus";
     "servicefabric"="Service Fabric"; "signalr"="signalR";
+    "schemaregistry" = "Schema Registry"
     "sqlmanagement"="SQL Management"; "sqlvirtualmachine"="SQL Virtual Machine";
+    "synapse" = "Synapse";
     "storage"="Storage"; "storagecache"="Storage Cache";
     "storagesync"="Storage Sync"; "storsimple"="Stor Simple";
     "storsimple8000series"="Stor Simple 8000 series"; "streamanalytics"="Stream Analytics";
-    "subscription"="Subscription"; "textanalytics"="Text Analytics";
+    "subscription"="Subscription"; 
+    "tables" = "Tables"
+    "textanalytics"="Text Analytics";
     "trafficmanager"="Traffic Manager"; "websites"="Websites";
 }
 
@@ -77,7 +85,7 @@ Copy-Item "${DocGenDir}/templates/*" -Destination "${DocOutDir}/templates" -Forc
 Copy-Item "${DocGenDir}/docfx.json" -Destination "${DocOutDir}/" -Force
 
 Write-Verbose "Creating Index using service directory and package names from repo..."
-$ServiceList = Get-ChildItem "$($RepoRoot)/sdk" -Directory -Exclude eng, mgmtcommon, template | Sort-Object
+$ServiceList = Get-ChildItem "$($RepoRoot)/sdk" -Directory -Exclude eng, mgmtcommon, testcommon, template | Sort-Object
 $YmlPath = "${DocOutDir}/api"
 New-Item -Path $YmlPath -Name "toc.yml" -Force
 

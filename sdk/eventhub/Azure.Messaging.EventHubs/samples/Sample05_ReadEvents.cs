@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 await foreach (PartitionEvent partitionEvent in consumerClient.ReadEventsAsync(cancellationSource.Token))
                 {
-                    Console.WriteLine($"Event Read: { Encoding.UTF8.GetString(partitionEvent.Data.Body.ToArray()) }");
+                    Console.WriteLine($"Event Read: { Encoding.UTF8.GetString(partitionEvent.Data.EventBody.ToBytes().ToArray()) }");
                     eventsRead++;
 
                     if (eventsRead >= maximumEvents)

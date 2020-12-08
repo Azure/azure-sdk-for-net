@@ -1,29 +1,28 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using BatchTestCommon;
+using Microsoft.Azure.Batch;
+using Microsoft.Azure.Batch.Common;
+using Microsoft.Azure.Batch.Integration.Tests.Infrastructure;
+using BatchClientIntegrationTests.Fixtures;
+using BatchClientIntegrationTests.IntegrationTestUtilities;
+using Microsoft.Azure.Batch.Protocol.BatchRequests;
+using Microsoft.Rest.Azure;
+using Xunit;
+using Xunit.Abstractions;
+using Protocol = Microsoft.Azure.Batch.Protocol;
+using Azure.Storage.Blobs;
+using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
+using Azure.Storage.Blobs.Models;
+
 namespace BatchClientIntegrationTests
 {
-    using Microsoft.Azure.Batch.Integration.Tests.Extensions;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using BatchTestCommon;
-    using Fixtures;
-    using Microsoft.Azure.Batch;
-    using Microsoft.Azure.Batch.Common;
-    using Microsoft.Azure.Batch.Integration.Tests.Infrastructure;
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Auth;
-    using Microsoft.WindowsAzure.Storage.Blob;
-    using IntegrationTestUtilities;
-    using Microsoft.Azure.Batch.Protocol.BatchRequests;
-    using Microsoft.Rest.Azure;
-    using Xunit;
-    using Xunit.Abstractions;
-    using Protocol = Microsoft.Azure.Batch.Protocol;
-
     /// <summary>
     /// Tests focused primarily on the <see cref="ComputeNode"/>.
     /// </summary>
@@ -791,45 +790,35 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task ComputeNodeUploadLogs()
         {
-            Action test = async () =>
+            Func<Task> test = async () =>
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
                 {
-                    var node = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).First();
+
+                    const string containerName = "computenodelogscontainer";
 
                     // Generate a storage container URL
                     StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
-                    CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(
-                        new StorageCredentials(storageAccount.StorageAccount, storageAccount.StorageAccountKey),
-                        blobEndpoint: storageAccount.BlobUri,
-                        queueEndpoint: null,
-                        tableEndpoint: null,
-                        fileEndpoint: null);
-                    CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
-                    const string containerName = "computenodelogscontainer";
-                    var container = blobClient.GetContainerReference(containerName);
+                    BlobServiceClient blobClient = BlobUtilities.GetBlobServiceClient(storageAccount);
+                    BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, blobClient, storageAccount);
 
                     try
                     {
-                        await container.CreateIfNotExistsAsync();
-                        var blobs = await BlobStorageExtensions.ListBlobs(container);
+                        containerClient.CreateIfNotExists();
+                        string sasUri = BlobUtilities.GetWriteableSasUri(containerClient, storageAccount);
+
+                        var blobs = containerClient.GetAllBlobs();
 
                         // Ensure that there are no items in the container to begin with
                         Assert.Empty(blobs);
 
-                        var sas = container.GetSharedAccessSignature(new SharedAccessBlobPolicy()
-                        {
-                            Permissions = SharedAccessBlobPermissions.Write,
-                            SharedAccessExpiryTime = DateTime.UtcNow.AddDays(1)
-                        });
-                        var fullSas = container.Uri + sas;
-
                         var startTime = DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(5));
 
+                        var node = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).First();
                         var result = batchCli.PoolOperations.UploadComputeNodeBatchServiceLogs(
                             this.poolFixture.PoolId,
                             node.Id,
-                            fullSas,
+                            sasUri,
                             startTime);
 
                         Assert.NotEqual(0, result.NumberOfFilesUploaded);
@@ -839,7 +828,7 @@ namespace BatchClientIntegrationTests
                         DateTime timeoutAt = DateTime.UtcNow.AddMinutes(2);
                         while (DateTime.UtcNow < timeoutAt)
                         {
-                            blobs = await BlobStorageExtensions.ListBlobs(container);
+                            blobs = containerClient.GetAllBlobs();
                             if (blobs.Any())
                             {
                                 break;
@@ -850,12 +839,12 @@ namespace BatchClientIntegrationTests
                     }
                     finally
                     {
-                        await container.DeleteIfExistsAsync();
+                        await containerClient.DeleteIfExistsAsync();
                     }
                 }
             };
 
-            SynchronizationContextHelper.RunTest(test, TestTimeout);
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
         [Fact]

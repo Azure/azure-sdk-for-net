@@ -2,6 +2,10 @@
 
 ## 1.0.0-preview.4 (Unreleased)
 
+### Breaking changes
+
+-Renamed model type "ModelData" to "DigitalTwinsModelData"
+-Renamed model type "RequestOptions" to "DigitalTwinsRequestOptions"
 
 ## 1.0.0-preview.3 (2020-07-13)
 

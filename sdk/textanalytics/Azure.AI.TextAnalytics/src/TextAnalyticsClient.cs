@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics
     public partial class TextAnalyticsClient
     {
         private readonly Uri _baseUri;
-        private readonly ServiceRestClient _serviceRestClient;
+        private readonly TextAnalyticsRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
@@ -72,7 +72,7 @@ namespace Azure.AI.TextAnalytics
             _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, DefaultCognitiveScope));
-            _serviceRestClient = new ServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.AI.TextAnalytics
             _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
-            _serviceRestClient = new ServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         #region Detect Language

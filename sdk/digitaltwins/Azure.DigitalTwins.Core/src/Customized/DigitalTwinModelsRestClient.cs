@@ -16,7 +16,7 @@ namespace Azure.DigitalTwins.Core
     {
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        public async Task<Response<IReadOnlyList<ModelData>>> AddAsync(IEnumerable<string> models = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(IEnumerable<string> models = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.Add");
             scope.Start();
@@ -29,12 +29,12 @@ namespace Azure.DigitalTwins.Core
                     case 200:
                     case 201:
                         {
-                            IReadOnlyList<ModelData> value = default;
+                            IReadOnlyList<DigitalTwinsModelData> value = default;
                             using JsonDocument document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            List<ModelData> array = new List<ModelData>(document.RootElement.GetArrayLength());
+                            List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>(document.RootElement.GetArrayLength());
                             foreach (JsonElement item in document.RootElement.EnumerateArray())
                             {
-                                array.Add(ModelData.DeserializeModelData(item));
+                                array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
                             }
                             value = array;
                             return Response.FromValue(value, message.Response);
@@ -52,7 +52,7 @@ namespace Azure.DigitalTwins.Core
 
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal Response<IReadOnlyList<ModelData>> Add(IEnumerable<string> models = null, CancellationToken cancellationToken = default)
+        internal Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<string> models = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.Add");
             scope.Start();
@@ -65,12 +65,12 @@ namespace Azure.DigitalTwins.Core
                     case 200:
                     case 201:
                         {
-                            IReadOnlyList<ModelData> value = default;
+                            IReadOnlyList<DigitalTwinsModelData> value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            List<ModelData> array = new List<ModelData>(document.RootElement.GetArrayLength());
+                            List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>(document.RootElement.GetArrayLength());
                             foreach (JsonElement item in document.RootElement.EnumerateArray())
                             {
-                                array.Add(ModelData.DeserializeModelData(item));
+                                array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
                             }
                             value = array;
                             return Response.FromValue(value, message.Response);
@@ -208,7 +208,7 @@ namespace Azure.DigitalTwins.Core
         // Original return type is Task<Response<IReadOnlyList<ModelData>>>. Changing to object to allow returning null.
         private object AddAsync(IEnumerable<object> models = null, CancellationToken cancellationToken = default) => null;
 
-        private Response<IReadOnlyList<ModelData>> Add(IEnumerable<object> models = null, CancellationToken cancellationToken = default) => null;
+        private Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<object> models = null, CancellationToken cancellationToken = default) => null;
 
         // Original return type is ValueTask<Response>. Changing to object to allow returing null.
         private object UpdateAsync(string id, IEnumerable<object> updateModel, CancellationToken cancellationToken = default) => null;

@@ -137,7 +137,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_powershell]: https://docs.microsoft.com/powershell/azure/
 [create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
 [quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md
-[schema_registry_client]: ../Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
+[schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
 [schema_properties]: src/SchemaProperties.cs
 [azure_identity]: https://www.nuget.org/packages/Azure.Identity
@@ -146,8 +146,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
 [object_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/Serialization/ObjectSerializer.cs
-[schema_registry_avro_serializer]: src/SchemaRegistryAvroObjectSerializer.cs
-[employee]: tests\Models\Employee.cs
+[schema_registry_avro_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/src/SchemaRegistryAvroObjectSerializer.cs
+[employee]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/tests/Models/Employee.cs
 [avro_csharp_documentation]: https://avro.apache.org/docs/current/api/csharp/html/index.html
 [apache_avro_library]: https://www.nuget.org/packages/Apache.Avro/
 [generic_record]: https://avro.apache.org/docs/current/api/csharp/html/classAvro_1_1Generic_1_1GenericRecord.html

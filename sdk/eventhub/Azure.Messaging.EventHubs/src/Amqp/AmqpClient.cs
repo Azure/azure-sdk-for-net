@@ -424,6 +424,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
@@ -433,7 +434,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                          EventHubsRetryPolicy retryPolicy,
                                                          bool trackLastEnqueuedEventProperties,
                                                          long? ownerLevel,
-                                                         uint? prefetchCount)
+                                                         uint? prefetchCount,
+                                                         long? prefetchSizeInBytes)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
 
@@ -446,6 +448,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 trackLastEnqueuedEventProperties,
                 ownerLevel,
                 prefetchCount,
+                prefetchSizeInBytes,
                 ConnectionScope,
                 MessageConverter,
                 retryPolicy

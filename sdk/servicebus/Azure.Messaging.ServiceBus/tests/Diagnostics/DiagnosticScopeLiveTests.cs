@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 ServiceBusReceiver receiver = null;
                 if (useSessions)
                 {
-                    receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                    receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 else
                 {

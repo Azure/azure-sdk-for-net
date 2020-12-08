@@ -39,24 +39,20 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         internal KeyVaultAccessControlClient GetClient(TestRecording recording = null)
         {
-            recording ??= Recording;
-
             return InstrumentClient
                 (new KeyVaultAccessControlClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyVaultAccessControlClientOptions())));
+                    InstrumentClientOptions(new KeyVaultAccessControlClientOptions())));
         }
 
         internal KeyClient GetKeyClient(TestRecording recording = null)
         {
-            recording ??= Recording;
-
             return InstrumentClient
                 (new KeyClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyClientOptions())));
+                    InstrumentClientOptions(new KeyClientOptions())));
         }
 
         [SetUp]

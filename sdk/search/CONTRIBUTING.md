@@ -16,7 +16,7 @@ and share a number of core features such as HTTP retries, logging, transport
 protocols, authentication protocols, etc., so that once you learn how to use
 these features in one client library, you will know how to use them in other
 client libraries.  You can learn about these shared features in the
-[Azure.Core README](../core/Azure.Core/README.md).
+[Azure.Core README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md).
 
 ## Code Generation
 Please do not edit any of the code in the `/Generated` folders directly.  If

@@ -28,6 +28,7 @@ RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUriAs
 foreach (RecognizedForm form in forms)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
+    Console.WriteLine($"Form was analyzed with model with ID: {form.ModelId}");
     foreach (FormField field in form.Fields.Values)
     {
         Console.WriteLine($"Field '{field.Name}: ");

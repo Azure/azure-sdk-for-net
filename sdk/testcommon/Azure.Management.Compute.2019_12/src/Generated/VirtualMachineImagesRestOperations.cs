@@ -65,6 +65,7 @@ namespace Azure.Management.Compute
             uri.AppendPath(version, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -194,6 +195,7 @@ namespace Azure.Management.Compute
             }
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -313,6 +315,7 @@ namespace Azure.Management.Compute
             uri.AppendPath("/artifacttypes/vmimage/offers", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -404,6 +407,7 @@ namespace Azure.Management.Compute
             uri.AppendPath("/publishers", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -489,6 +493,7 @@ namespace Azure.Management.Compute
             uri.AppendPath("/skus", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

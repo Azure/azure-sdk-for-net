@@ -43,12 +43,12 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateModelsAsync(modelsList).ConfigureAwait(false);
 
                 // GET one created model
-                Response<ModelData> buildingModel = await client.GetModelAsync(buildingModelId).ConfigureAwait(false);
+                Response<DigitalTwinsModelData> buildingModel = await client.GetModelAsync(buildingModelId).ConfigureAwait(false);
                 Console.WriteLine($"Got {buildingModelId} as {buildingModel.Value.Model}");
 
                 // LIST all models
-                AsyncPageable<ModelData> models = client.GetModelsAsync();
-                await foreach (ModelData model in models)
+                AsyncPageable<DigitalTwinsModelData> models = client.GetModelsAsync();
+                await foreach (DigitalTwinsModelData model in models)
                 {
                     Console.WriteLine($"{model.Id}");
                 }
@@ -94,7 +94,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             // act
             // should not throw on deserialization
-            Response<ModelData> wardModel = await client.GetModelAsync(wardModelId).ConfigureAwait(false);
+            Response<DigitalTwinsModelData> wardModel = await client.GetModelAsync(wardModelId).ConfigureAwait(false);
 
             // assert
 
@@ -109,7 +109,7 @@ namespace Azure.DigitalTwins.Core.Tests
             DigitalTwinsClient client = GetClient();
 
             // act
-            Func<Task> act = async () => await client.GetModelAsync("urn:doesnotexist:fakemodel:1000").ConfigureAwait(false);
+            Func<Task> act = async () => await client.GetModelAsync("dtmi:doesnotexist:fakemodel;1000").ConfigureAwait(false);
 
             // assert
             act.Should().Throw<RequestFailedException>()

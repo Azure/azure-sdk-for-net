@@ -51,14 +51,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted
-        /// after the flush operation. The default is false. Data at offsets less than the specified position are written to the
-        /// file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future
-        /// flush operation.
-        /// </summary>
-        public bool? RetainUncommittedData { get; set; }
-
-        /// <summary>
         /// Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled,
         /// a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the
         /// difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter

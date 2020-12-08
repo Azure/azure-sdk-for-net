@@ -9,10 +9,8 @@
 		<![CDATA[
 			Documentation can be found at https://go.microsoft.com/fwlink/p/?linkid=862452.
 			
-			Support for new App Services managed identity API
-			Key vault client updates
-			Enabling CRL checks
-			Bug fixes
+			Support for managed identies on Service Fabric
+			Improvements and bug fixes for token providers
 		]]>
 		</PackageReleaseNotes>
     </PropertyGroup>

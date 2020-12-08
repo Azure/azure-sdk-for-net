@@ -91,6 +91,7 @@ function Get-ReleaseDay($baseDate)
 
 $ErrorPreference = 'Stop'
 $repoRoot = Resolve-Path "$PSScriptRoot/../..";
+$commonParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
 
 if (!(Get-Command az)) {
   throw 'You must have the Azure CLI installed: https://aka.ms/azure-cli'
@@ -119,67 +120,6 @@ catch
     $existing = @()
 }
 
-$libraryType = "Preview";
-$latestVersion = $null;
-foreach ($existingVersion in $existing.versions)
-{
-    $parsedVersion = [AzureEngSemanticVersion]::new($existingVersion)
-    if (!$parsedVersion.IsPrerelease)
-    {
-        $libraryType = "GA"
-    }
-
-    $latestVersion = $existingVersion;
-}
-
-$currentProjectVersion = ([xml](Get-Content "$packageDirectory/src/*.csproj")).Project.PropertyGroup.Version
-
-if ($latestVersion)
-{
-    Write-Host
-    Write-Host "Latest released version $latestVersion, library type $libraryType" -ForegroundColor Green
-}
-else
-{
-    Write-Host
-    Write-Host "No released version, library type $libraryType" -ForegroundColor Green
-}
-
-$newVersion = Read-Host -Prompt "Input the new version or press Enter to use use current project version '$currentProjectVersion'"
-
-if (!$newVersion)
-{
-    $newVersion = $currentProjectVersion;
-}
-
-if ($latestVersion)
-{
-    $releaseType = "None";
-    $parsedNewVersion = [AzureEngSemanticVersion]::new($newVersion)
-    if ($parsedNewVersion.Major -ne $parsedVersion.Major)
-    {
-        $releaseType = "Major"
-    }
-    elseif ($parsedNewVersion.Minor -ne $parsedVersion.Minor)
-    {
-        $releaseType = "Minor"
-    }
-    elseif ($parsedNewVersion.Patch -ne $parsedVersion.Patch)
-    {
-        $releaseType = "Bugfix"
-    }
-    elseif ($parsedNewVersion.IsPrerelease)
-    {
-        $releaseType = "Bugfix"
-    }
-}
-else
-{
-    $releaseType = "Major";
-}
-
-Write-Host
-Write-Host "Detected released type $releaseType" -ForegroundColor Green
 
 if (!$ReleaseDate)
 {
@@ -214,12 +154,96 @@ $month = $ParsedReleaseDate.ToString("MMMM")
 Write-Host
 Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
 
-Write-Host
-Write-Host "Updating versions" -ForegroundColor Green
+$libraryType = "Beta";
+$latestVersion = $null;
+foreach ($existingVersion in $existing.versions)
+{
+    $parsedVersion = [AzureEngSemanticVersion]::new($existingVersion)
+    if (!$parsedVersion.IsPrerelease)
+    {
+        $libraryType = "GA"
+    }
 
-& "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion -ReleaseDate $releaseDateString
+    $latestVersion = $existingVersion;
+}
 
-$commonParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
+$currentProjectVersion = ([xml](Get-Content "$packageDirectory/src/*.csproj")).Project.PropertyGroup.Version
+
+if ($latestVersion)
+{
+    Write-Host
+    Write-Host "Latest released version $latestVersion, library type $libraryType" -ForegroundColor Green
+}
+else
+{
+    Write-Host
+    Write-Host "No released version, library type $libraryType" -ForegroundColor Green
+}
+
+$newVersion = Read-Host -Prompt "Input the new version, NA if you are not releasing, or press Enter to use use current project version '$currentProjectVersion'"
+$releasing = $true
+
+if (!$newVersion)
+{
+    $newVersion = $currentProjectVersion;
+}
+
+if ($newVersion -eq "NA")
+{
+    $releasing = $false
+}
+
+if ($releasing)
+{
+    if ($latestVersion)
+    {
+        $releaseType = "None";
+        $parsedNewVersion = [AzureEngSemanticVersion]::new($newVersion)
+        if ($parsedNewVersion.Major -ne $parsedVersion.Major)
+        {
+            $releaseType = "Major"
+        }
+        elseif ($parsedNewVersion.Minor -ne $parsedVersion.Minor)
+        {
+            $releaseType = "Minor"
+        }
+        elseif ($parsedNewVersion.Patch -ne $parsedVersion.Patch)
+        {
+            $releaseType = "Bugfix"
+        }
+        elseif ($parsedNewVersion.IsPrerelease)
+        {
+            $releaseType = "Bugfix"
+        }
+    }
+    else
+    {
+        $releaseType = "Major";
+    }
+
+    Write-Host
+    Write-Host "Detected released type $releaseType" -ForegroundColor Green
+
+    Write-Host
+    Write-Host "Updating versions" -ForegroundColor Green
+
+    & "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion -ReleaseDate $releaseDateString
+
+    $fields = @{
+        "Permalink usetag"="https://github.com/Azure/azure-sdk-for-net/sdk/$serviceDirectory/$package/README.md"
+        "Package Registry Permalink"="https://nuget.org/packages/$package/$newVersion"
+        "Library Type"=$libraryType
+        "Release Type"=$releaseType
+        "Version Number"=$newVersion
+        "Planned Release Date"=$releaseDateString
+    }
+    $state = "Active"
+}
+else
+{
+    $fields = @{}
+    $state = "Not In Release"
+}
 
 $workItems = az boards query @commonParameter --project Release --wiql "SELECT [ID], [State], [Iteration Path], [Title] FROM WorkItems WHERE [State] <> 'Closed' AND [Iteration Path] under 'Release\2020\$month' AND [Title] contains '.NET'" | ConvertFrom-Json;
 
@@ -244,26 +268,9 @@ if (!$issueId)
     $issueId = $mostProbable.fields."System.ID"
 }
 
-$changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation "$packageDirectory/CHANGELOG.md" -VersionString $newVersion
-
-$githubAnchor = $changeLogEntry.ReleaseTitle.Replace("## ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace(" ", "-")
-
-$notes = "> dotnet add package $package --version $newVersion`n`n";
-$notes += "### $package [Changelog](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)`n"
-$changeLogEntry.ReleaseContent | %{ $notes += "$_`n" }
-
-$fields = @{
-    "Permalink usetag"="https://github.com/Azure/azure-sdk-for-net/sdk/$serviceDirectory/$package/README.md"
-    "Package Registry Permalink"="https://nuget.org/packages/$package/$newVersion"
-    "Library Type"=$libraryType
-    "Release Type"=$releaseType
-    "Version Number"=$newVersion
-    "Planned Release Date"=$releaseDateString
-    "Notes"=[System.Net.WebUtility]::HtmlEncode($notes).Replace("`n", "<br>")
-}
-
 Write-Host
 Write-Host "Going to set the following fields:" -ForegroundColor Green
+Write-Host "    State = $state"
 
 foreach ($field in $fields.Keys)
 {
@@ -274,13 +281,9 @@ $decision = $Host.UI.PromptForChoice("Updating work item https://dev.azure.com/a
 
 if ($decision -eq 0)
 {
-    az boards work-item update @commonParameter --id $issueId --state Active > $null
+    az boards work-item update @commonParameter --id $issueId --state $state > $null
     foreach ($field in $fields.Keys)
     {
         az boards work-item update @commonParameter --id $issueId -f "$field=$($fields[$field])" > $null
     }
 }
-
-Write-Host
-Write-Host "Snippet for the centralized CHANGELOG:" -ForegroundColor Green
-Write-Host $notes

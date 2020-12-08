@@ -67,6 +67,16 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("queryType");
                 writer.WriteStringValue(QueryType.Value.ToSerialString());
             }
+            if (Optional.IsDefined(ScoringStatistics))
+            {
+                writer.WritePropertyName("scoringStatistics");
+                writer.WriteStringValue(ScoringStatistics.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId");
+                writer.WriteStringValue(SessionId);
+            }
             if (Optional.IsCollectionDefined(ScoringParameters))
             {
                 writer.WritePropertyName("scoringParameters");
@@ -126,6 +136,8 @@ namespace Azure.Search.Documents
             Optional<double> minimumCoverage = default;
             Optional<string> orderby = default;
             Optional<SearchQueryType> queryType = default;
+            Optional<ScoringStatistics> scoringStatistics = default;
+            Optional<string> sessionId = default;
             Optional<IList<string>> scoringParameters = default;
             Optional<string> scoringProfile = default;
             Optional<string> search = default;
@@ -186,6 +198,16 @@ namespace Azure.Search.Documents
                     queryType = property.Value.GetString().ToSearchQueryType();
                     continue;
                 }
+                if (property.NameEquals("scoringStatistics"))
+                {
+                    scoringStatistics = property.Value.GetString().ToScoringStatistics();
+                    continue;
+                }
+                if (property.NameEquals("sessionId"))
+                {
+                    sessionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("scoringParameters"))
                 {
                     List<string> array = new List<string>();
@@ -232,7 +254,7 @@ namespace Azure.Search.Documents
                     continue;
                 }
             }
-            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToList(scoringParameters), scoringProfile.Value, search.Value, searchFields.Value, Optional.ToNullable(searchMode), select.Value, Optional.ToNullable(skip), Optional.ToNullable(top));
+            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, search.Value, searchFields.Value, Optional.ToNullable(searchMode), select.Value, Optional.ToNullable(skip), Optional.ToNullable(top));
         }
     }
 }

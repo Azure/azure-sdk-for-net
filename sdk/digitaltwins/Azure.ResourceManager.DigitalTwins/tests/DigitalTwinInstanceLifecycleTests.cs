@@ -5,6 +5,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Management.Resources.Models;
 using Azure.ResourceManager.DigitalTwins.Models;
 using FluentAssertions;
 using NUnit.Framework;
@@ -18,21 +19,37 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
         {
         }
 
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                Initialize();
+            }
+        }
+
+        [TearDown]
+        public async Task CleanupResourceGroup()
+        {
+            await CleanupResourceGroupsAsync();
+        }
+
         [Test]
         public async Task DigitalTwinInstance_Lifecycle()
         {
-            InitClient();
-
             string dtInstanceName;
             Response<CheckNameResult> checkNameResponse = null;
             const int maxTryCount = 5;
             int tryCount = 0;
 
+            // Create Resource Group
+            string resourceGroupName = Recording.GenerateAssetName("DtSDKRG");
+            await ResourceManagementClient.ResourceGroups.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup("eastus2"));
+
             // Ensure the random instance Id generated does not already exist.
             do
             {
-                dtInstanceName = $"DtInstanceLifecycle-{GetRandom()}";
-
+                dtInstanceName = Recording.GenerateAssetName("DtInstanceLifecycle");
                 if (tryCount++ > maxTryCount)
                 {
                     // If for some reason this unique check keeps failing, proceed with the last unique
@@ -42,7 +59,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
 
                 try
                 {
-                    checkNameResponse = await Client.DigitalTwins
+                    checkNameResponse = await DigitalTwinsManagementClient.DigitalTwins
                         .CheckNameAvailabilityAsync(
                             TestEnvironment.Location,
                             dtInstanceName)
@@ -66,9 +83,9 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
             try
             {
                 // Test create
-                DigitalTwinsCreateOrUpdateOperation createResponse = await Client.DigitalTwins
+                DigitalTwinsCreateOrUpdateOperation createResponse = await DigitalTwinsManagementClient.DigitalTwins
                     .StartCreateOrUpdateAsync(
-                        TestEnvironment.ResourceGroup,
+                        resourceGroupName,
                         dtInstanceName,
                         new DigitalTwinsDescription(TestEnvironment.Location))
                     .ConfigureAwait(false);
@@ -97,9 +114,9 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                 createdDtInstance.LastUpdatedTime.Should().NotBeNull();
 
                 // Test get
-                Response<DigitalTwinsDescription> getResponse = await Client.DigitalTwins
+                Response<DigitalTwinsDescription> getResponse = await DigitalTwinsManagementClient.DigitalTwins
                     .GetAsync(
-                        TestEnvironment.ResourceGroup,
+                        resourceGroupName,
                         dtInstanceName)
                     .ConfigureAwait(false);
 
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                 getResponse.Value.LastUpdatedTime.Should().NotBeNull();
 
                 // Test list
-                AsyncPageable<DigitalTwinsDescription> listResponse = Client.DigitalTwins.ListAsync();
+                AsyncPageable<DigitalTwinsDescription> listResponse = DigitalTwinsManagementClient.DigitalTwins.ListAsync();
 
                 // Validate list
                 DigitalTwinsDescription foundInstance = null;
@@ -140,9 +157,9 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                 if (createdSuccessfully)
                 {
                     // Test delete
-                    DigitalTwinsDeleteOperation deleteResponse = await Client.DigitalTwins
+                    DigitalTwinsDeleteOperation deleteResponse = await DigitalTwinsManagementClient.DigitalTwins
                         .StartDeleteAsync(
-                            TestEnvironment.ResourceGroup,
+                            resourceGroupName,
                             dtInstanceName)
                         .ConfigureAwait(false);
 

@@ -4,13 +4,8 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Dns.Tests;
-using System.Collections.Generic;
-using System;
-using Azure.Core;
-using Azure.ResourceManager.TestFramework;
 
 namespace Azure.Management.Dns.Tests
 {
@@ -38,6 +33,7 @@ namespace Azure.Management.Dns.Tests
                 InitializeClients();
                 this.resourceGroup = Recording.GenerateAssetName("Default-Dns-Zones-");
                 await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
+                setupRun = true;
 
             }
             else if (setupRun)
@@ -68,8 +64,8 @@ namespace Azure.Management.Dns.Tests
             aZone.Tags.Add("key2", "val2");
             response = await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
             Assert.IsTrue(Helper.AreEqual(response, aZone, ignoreEtag: true));
-            var delResponse = await ZonesOperations.StartDeleteAsync(resourceGroup, this.defaultZoneName);
-            Assert.IsNotNull(delResponse);
+            var delResponse = await this.WaitForCompletionAsync(await ZonesOperations.StartDeleteAsync(resourceGroup, this.defaultZoneName));
+            Assert.AreEqual(delResponse.Value.Status, 200);
         }
 
         [TestCase]
@@ -130,15 +126,15 @@ namespace Azure.Management.Dns.Tests
             }
             Assert.IsTrue(zoneOneFound && zoneTwoFound);
             await ResourceGroupsOperations.StartDeleteAsync(this.resourceGroup + "-Two");
-            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameOne);
+            await this.WaitForCompletionAsync(await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameOne));
         }
 
         [TestCase]
         public async Task DnsListZonesWithTopParameter()
         {
-            string zoneNameOne = "dns.zoneonename.io";
-            string zoneNameTwo = "dns.zonetwoname.io";
-            string zoneNameThree = "dns.zonethreename.io";
+            string zoneNameOne = "dns.zoneonenametop.io";
+            string zoneNameTwo = "dns.zonetwonametop.io";
+            string zoneNameThree = "dns.zonethreenametop.io";
             var aZone = new Zone("Global");
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameOne, aZone);
             aZone = new Zone("Global");
@@ -156,7 +152,7 @@ namespace Azure.Management.Dns.Tests
             response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 10);
             it = response.AsPages().GetAsyncEnumerator();
             await it.MoveNextAsync();
-            Assert.AreEqual(it.Current.Values.Count, 3);
+            Assert.IsTrue(it.Current.Values.Count >= 3);
 
             await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameOne);
             await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameTwo);

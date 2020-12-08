@@ -64,10 +64,12 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="CloudJob"/> representing a new job that has not been submitted to the Batch service.</returns>
         public CloudJob CreateJob()
         {
-            CloudJob unboundJob = new CloudJob(this.ParentBatchClient, this.CustomBehaviors);
-
-            //TODO: Do we want to do this...?
-            unboundJob.Id = Guid.NewGuid().ToString(); // we lose the ability to construct an unbound job with zero changes (ie not marked dirty)
+            string id = Guid.NewGuid().ToString();
+            CloudJob unboundJob = new CloudJob(ParentBatchClient, CustomBehaviors)
+            {
+                //TODO: Do we want to do this...?
+                Id = id // we lose the ability to construct an unbound job with zero changes (ie not marked dirty)
+            };
 
             return unboundJob;
         }
@@ -80,7 +82,7 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="CloudJob"/> representing a new job that has not been submitted to the Batch service.</returns>
         public CloudJob CreateJob(string jobId, PoolInformation poolInformation)
         {
-            CloudJob unboundJob = new CloudJob(this.ParentBatchClient, this.CustomBehaviors)
+            CloudJob unboundJob = new CloudJob(ParentBatchClient, CustomBehaviors)
                                   {
                                       Id = jobId,
                                       PoolInformation = poolInformation
@@ -124,9 +126,9 @@ namespace Microsoft.Azure.Batch
             return enumerable;
         }
 
-        internal async System.Threading.Tasks.Task<CloudJob> GetJobAsyncImpl(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        internal async Task<CloudJob> GetJobAsyncImpl(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>> asyncTask = this.ParentBatchClient.ProtocolLayer.GetJob(jobId, bhMgr, cancellationToken);
+            Task<AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>> asyncTask = this.ParentBatchClient.ProtocolLayer.GetJob(jobId, bhMgr, cancellationToken);
 
             AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders> response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
@@ -148,16 +150,16 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="CloudJob"/> containing information about the specified Azure Batch job.</returns>
         /// <remarks>The get job operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task<CloudJob> GetJobAsync(
+        public async Task<CloudJob> GetJobAsync(
             string jobId, 
             DetailLevel detailLevel = null, 
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
 
-            System.Threading.Tasks.Task<CloudJob> asyncTask = GetJobAsyncImpl(jobId, bhMgr, cancellationToken);
+            Task<CloudJob> asyncTask = GetJobAsyncImpl(jobId, bhMgr, cancellationToken);
 
             CloudJob openedJob = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
@@ -180,14 +182,14 @@ namespace Microsoft.Azure.Batch
             return newJob;
         }
 
-        internal async Task<TaskCounts> GetJobTaskCountsAsyncImpl(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        internal async Task<TaskCountsResult> GetJobTaskCountsAsyncImpl(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            AzureOperationResponse<Models.TaskCounts, Models.JobGetTaskCountsHeaders> response = await this.ParentBatchClient.ProtocolLayer.GetJobTaskCounts(
+            AzureOperationResponse<Models.TaskCountsResult, Models.JobGetTaskCountsHeaders> response = await this.ParentBatchClient.ProtocolLayer.GetJobTaskCounts(
                 jobId,
                 bhMgr,
                 cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
-            Models.TaskCounts protoTaskCounts = response.Body;
-            TaskCounts result = new TaskCounts(protoTaskCounts);
+            Models.TaskCountsResult protoTaskCounts = response.Body;
+            TaskCountsResult result = new TaskCountsResult(protoTaskCounts);
 
             return result;
         }
@@ -200,14 +202,14 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <remarks>The get job task counts operation runs asynchronously.</remarks>
         /// <returns>A <see cref="TaskCounts"/> object containing the task counts for the job.</returns>
-        public async Task<TaskCounts> GetJobTaskCountsAsync(
+        public async Task<TaskCountsResult> GetJobTaskCountsAsync(
             string jobId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel: null);
-            TaskCounts counts = await GetJobTaskCountsAsyncImpl(jobId, bhMgr, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+            TaskCountsResult counts = await GetJobTaskCountsAsyncImpl(jobId, bhMgr, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 
             return counts;
         }
@@ -219,9 +221,9 @@ namespace Microsoft.Azure.Batch
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>A <see cref="TaskCounts"/> object containing the task counts for the job.</returns>
         /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetJobTaskCountsAsync"/>.</remarks>
-        public TaskCounts GetJobTaskCounts(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        public TaskCountsResult GetJobTaskCounts(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            TaskCounts result = GetJobTaskCountsAsync(jobId, additionalBehaviors).WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            TaskCountsResult result = GetJobTaskCountsAsync(jobId, additionalBehaviors).WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
             return result;
         }
 
@@ -231,9 +233,9 @@ namespace Microsoft.Azure.Batch
         /// <param name="jobId">The id of the job.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>The enable operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task EnableJobAsync(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task EnableJobAsync(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default)
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
@@ -262,13 +264,13 @@ namespace Microsoft.Azure.Batch
         /// <param name="disableJobOption">Specifies what to do with active tasks associated with the job.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>The disable operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task DisableJobAsync(
+        public async Task DisableJobAsync(
             string jobId, 
             Common.DisableJobOption disableJobOption, 
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
@@ -298,16 +300,16 @@ namespace Microsoft.Azure.Batch
         /// <param name="terminateReason">The text you want to appear as the job's <see cref="JobExecutionInformation.TerminateReason"/>.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
         /// <remarks>The terminate operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task TerminateJobAsync(
+        public async Task TerminateJobAsync(
             string jobId, 
             string terminateReason = null, 
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             Task asyncTask = this.ParentBatchClient.ProtocolLayer.TerminateJob(jobId, terminateReason, bhMgr, cancellationToken);
 
@@ -333,13 +335,13 @@ namespace Microsoft.Azure.Batch
         /// <param name="jobId">The id of the job.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The delete operation requests that the job be deleted.  The request puts the job in the <see cref="Common.JobState.Deleting"/> state.
         /// The Batch service will stop any running tasks and perform the actual job deletion without any further client action.</para>
         /// <para>The delete operation runs asynchronously.</para>
         /// </remarks>
-        public async System.Threading.Tasks.Task DeleteJobAsync(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DeleteJobAsync(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default)
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
@@ -406,7 +408,7 @@ namespace Microsoft.Azure.Batch
             return enumerable;
         }
 
-        internal async System.Threading.Tasks.Task<CloudTask> GetTaskAsyncImpl(
+        internal async Task<CloudTask> GetTaskAsyncImpl(
                                                                     string jobId,
                                                                     string taskId, 
                                                                     BehaviorManager bhMgr,
@@ -440,17 +442,17 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="CloudTask"/> containing information about the specified Azure Batch task.</returns>
         /// <remarks>The get task operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task<CloudTask> GetTaskAsync(
+        public Task<CloudTask> GetTaskAsync(
             string jobId,
             string taskId, 
             DetailLevel detailLevel = null, 
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
 
-            System.Threading.Tasks.Task<CloudTask> asyncTask = GetTaskAsyncImpl(jobId, taskId, bhMgr, cancellationToken);
+            Task<CloudTask> asyncTask = GetTaskAsyncImpl(jobId, taskId, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -496,7 +498,7 @@ namespace Microsoft.Azure.Batch
             return enumerable;
         }
 
-        internal async System.Threading.Tasks.Task AddTaskAsyncImpl(
+        internal async Task AddTaskAsyncImpl(
             string jobId,
             CloudTask taskToAdd, 
             BehaviorManager bhMgr,
@@ -518,7 +520,7 @@ namespace Microsoft.Azure.Batch
             }
 
             // start file staging
-            System.Threading.Tasks.Task stagingTask = implTask.StageFilesAsync(allFileStagingArtifacts);
+            Task stagingTask = implTask.StageFilesAsync(allFileStagingArtifacts);
 
             // wait for the files to be staged
             await stagingTask.ConfigureAwait(continueOnCapturedContext: false);
@@ -528,7 +530,7 @@ namespace Microsoft.Azure.Batch
             implTask.Freeze(); //Mark the underlying task readonly
 
             // start the AddTask request
-            System.Threading.Tasks.Task asyncTask = this.ParentBatchClient.ProtocolLayer.AddTask(jobId, protoTask, bhMgr, cancellationToken);
+            Task asyncTask = this.ParentBatchClient.ProtocolLayer.AddTask(jobId, protoTask, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -543,7 +545,7 @@ namespace Microsoft.Azure.Batch
         /// For more information see <see cref="IFileStagingArtifact"/>.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>Each call to this method incurs a request to the Batch service. Therefore, using this method to add
         /// multiple tasks is less efficient than using a bulk add method, and can incur HTTP connection restrictions.
@@ -552,17 +554,17 @@ namespace Microsoft.Azure.Batch
         /// or use the multiple-task overload of AddTaskAsync.</para>
         /// <para>The add task operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task AddTaskAsync(
+        public Task AddTaskAsync(
             string jobId,
             CloudTask taskToAdd, 
             ConcurrentDictionary<Type, IFileStagingArtifact> allFileStagingArtifacts = null, 
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
             
-            System.Threading.Tasks.Task asyncTask = AddTaskAsyncImpl(jobId, taskToAdd, bhMgr, cancellationToken, allFileStagingArtifacts);
+            Task asyncTask = AddTaskAsyncImpl(jobId, taskToAdd, bhMgr, cancellationToken, allFileStagingArtifacts);
 
             return asyncTask;
         }
@@ -672,18 +674,18 @@ namespace Microsoft.Azure.Batch
         /// <param name="taskId">The id of the task.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>The terminate operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task TerminateTaskAsync(
+        public Task TerminateTaskAsync(
             string jobId,
             string taskId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = this.ParentBatchClient.ProtocolLayer.TerminateTask(jobId, taskId, bhMgr, cancellationToken);
+            Task asyncTask = this.ParentBatchClient.ProtocolLayer.TerminateTask(jobId, taskId, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -694,7 +696,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="jobId">The id of the job containing the task.</param>
         /// <param name="taskId">The id of the task.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>This is a blocking operation.  For a non-blocking equivalent, see <see cref="TerminateTaskAsync"/>.</remarks>
         public void TerminateTask(
             string jobId,
@@ -713,18 +715,18 @@ namespace Microsoft.Azure.Batch
         /// <param name="taskId">The id of the task.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>The delete operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task DeleteTaskAsync(
+        public Task DeleteTaskAsync(
             string jobId,
             string taskId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = this.ParentBatchClient.ProtocolLayer.DeleteTask(jobId, taskId, bhMgr, cancellationToken);
+            Task asyncTask = this.ParentBatchClient.ProtocolLayer.DeleteTask(jobId, taskId, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -742,7 +744,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = DeleteTaskAsync(jobId, taskId, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -752,7 +754,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="taskId">The id of the task.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>
         /// Reactivation makes a task eligible to be retried again up to its maximum retry count.
@@ -765,16 +767,16 @@ namespace Microsoft.Azure.Batch
         /// The reactivate operation runs asynchronously.
         /// </para>
         /// </remarks>
-        public System.Threading.Tasks.Task ReactivateTaskAsync(
+        public Task ReactivateTaskAsync(
             string jobId,
             string taskId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = this.ParentBatchClient.ProtocolLayer.ReactivateTask(jobId, taskId, bhMgr, cancellationToken);
+            Task asyncTask = this.ParentBatchClient.ProtocolLayer.ReactivateTask(jobId, taskId, bhMgr, cancellationToken);
             
             return asyncTask;
         }
@@ -806,7 +808,7 @@ namespace Microsoft.Azure.Batch
             asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
         }
 
-        internal async System.Threading.Tasks.Task<NodeFile> GetNodeFileAsyncImpl(
+        internal async Task<NodeFile> GetNodeFileAsyncImpl(
             string jobId,
             string taskId,
             string filePath,
@@ -838,17 +840,17 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="NodeFile"/> representing the specified file.</returns>
         /// <remarks>The get file operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task<NodeFile> GetNodeFileAsync(
+        public Task<NodeFile> GetNodeFileAsync(
             string jobId,
             string taskId,
             string filePath,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsyncImpl(jobId, taskId, filePath, bhMgr, cancellationToken);
+            Task<NodeFile> asyncTask = this.GetNodeFileAsyncImpl(jobId, taskId, filePath, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -910,10 +912,10 @@ namespace Microsoft.Azure.Batch
             Stream stream,
             GetFileRequestByteRange byteRange = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
             return this.CopyNodeFileContentToStreamAsyncImpl(jobId, taskId, filePath, stream, byteRange, bhMgr, cancellationToken);
         }
 
@@ -975,7 +977,7 @@ namespace Microsoft.Azure.Batch
             Encoding encoding = null,
             GetFileRequestByteRange byteRange = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
@@ -1017,18 +1019,18 @@ namespace Microsoft.Azure.Batch
         /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>The delete operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task DeleteNodeFileAsync(
+        public async Task DeleteNodeFileAsync(
             string jobId,
             string taskId,
             string filePath,
             bool? recursive = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             var asyncTask = this.ParentBatchClient.ProtocolLayer.DeleteNodeFileByTask(
                 jobId,
@@ -1053,7 +1055,7 @@ namespace Microsoft.Azure.Batch
         /// then the directory must be empty or deletion will fail.
         /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>This is a blocking operation.  For a non-blocking equivalent, see <see cref="DeleteNodeFileAsync"/>.</remarks>
         public void DeleteNodeFile(
             string jobId,
@@ -1101,7 +1103,7 @@ namespace Microsoft.Azure.Batch
         /// Unlike single-task adds, you cannot use this parameter to customize the file staging process.
         /// For more information about the format of each entry, see <see cref="IFileStagingArtifact"/>.</param>
         /// <param name="timeout">The amount of time after which the operation times out.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The add task operation runs asynchronously.</para>
         /// <para>This method is not atomic; that is, it is possible for the method to start adding tasks and
@@ -1118,7 +1120,7 @@ namespace Microsoft.Azure.Batch
         /// or <paramref name="additionalBehaviors"/> collections.</para>
         /// </remarks>
         /// <exception cref="ParallelOperationsException">Thrown if one or more requests to the Batch service fail.</exception>
-        public async System.Threading.Tasks.Task AddTaskAsync(
+        public async Task AddTaskAsync(
             string jobId,
             IEnumerable<CloudTask> tasksToAdd,
             BatchClientParallelOptions parallelOptions = null,
@@ -1199,14 +1201,14 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>The aggregated job statistics.</returns>
         /// <remarks>The get statistics operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task<JobStatistics> GetAllLifetimeStatisticsAsync(
+        public async Task<JobStatistics> GetAllLifetimeStatisticsAsync(
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> asyncTask = 
+            Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> asyncTask = 
                 this.ParentBatchClient.ProtocolLayer.GetAllJobLifetimeStats(
                     bhMgr,
                     cancellationToken);

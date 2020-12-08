@@ -34,7 +34,8 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
           Directory: ""
-
+          CheckLinkGuidance: $true
+          
       - pwsh: |
           mkdir "$(System.ArtifactsDirectory)/BuildArtifacts"
           ls "$(PIPELINE.WORKSPACE)/net-core/packages"

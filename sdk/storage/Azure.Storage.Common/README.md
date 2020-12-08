@@ -1,6 +1,6 @@
 # Azure Storage Common client library for .NET
 
-> Server Version: 2019-07-07 and 2019-02-02
+> Server Version: 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
 
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage
@@ -86,17 +86,17 @@ additional questions or comments.
 [storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-[auth_credentials]: src/StorageSharedKeyCredential.cs
+[auth_credentials]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/src/StorageSharedKeyCredential.cs
 [blobs_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#Examples
 [files_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.Shares/README.md#Examples
 [queues_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/README.md#Examples
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
-[samples]: samples/
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/samples/
 [blobs_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#next-steps
 [files_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.Shares/README.md#next-steps
 [queues_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/README.md#next-steps
-[storage_contrib]: ../CONTRIBUTING.md
+[storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

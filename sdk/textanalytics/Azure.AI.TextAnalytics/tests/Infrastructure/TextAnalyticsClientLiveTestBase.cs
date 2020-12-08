@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 new TextAnalyticsClient(
                     new Uri(TestEnvironment.Endpoint),
                     credential,
-                    Recording.InstrumentClientOptions(options))
+                    InstrumentClientOptions(options))
             );
         }
     }

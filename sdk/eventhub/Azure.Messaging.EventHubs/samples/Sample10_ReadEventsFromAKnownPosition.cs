@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // The body of our event was an encoded string; we'll recover the
                     // message by reversing the encoding process.
 
-                    string message = Encoding.UTF8.GetString(eventData.Body.ToArray());
+                    string message = Encoding.UTF8.GetString(eventData.EventBody.ToBytes().ToArray());
                     Console.WriteLine($"\tEvent Message: \"{ message }\"");
                 }
 
@@ -198,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // The body of our event was an encoded string; we'll recover the
                     // message by reversing the encoding process.
 
-                    string message = Encoding.UTF8.GetString(eventData.Body.ToArray());
+                    string message = Encoding.UTF8.GetString(eventData.EventBody.ToBytes().ToArray());
                     Console.WriteLine($"\tEvent Message: \"{ message }\"");
                 }
             }

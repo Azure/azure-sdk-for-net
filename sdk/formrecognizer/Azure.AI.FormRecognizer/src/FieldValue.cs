@@ -102,6 +102,17 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        internal FieldValue(FormSelectionMarkState value)
+            : this()
+        {
+            ValueType = FieldValueType.SelectionMark;
+            ValueSelectionMark = value;
+        }
+
+        /// <summary>
         /// The data type of the field value.
         /// </summary>
         public FieldValueType ValueType { get; }
@@ -149,6 +160,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// used for mocking.
         /// </summary>
         private IReadOnlyDictionary<string, FormField> ValueDictionary { get; }
+
+        /// <summary>
+        /// The <see cref="FieldValueSelectionMark"/> value of this instance. Values are usually extracted from
+        /// <see cref="_fieldValue"/>, so this property is exclusively used for mocking.
+        /// </summary>
+        private FormSelectionMarkState ValueSelectionMark { get; }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="string"/>.
@@ -348,6 +365,31 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return fieldDictionary;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as a <see cref="FormSelectionMarkState"/>.
+        /// </summary>
+        /// <returns>The value of the field converted to <see cref="FormSelectionMarkState"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.SelectionMark"/>.</exception>
+        public FormSelectionMarkState AsFormSelectionMarkState()
+        {
+            if (ValueType != FieldValueType.SelectionMark)
+            {
+                throw new InvalidOperationException($"Cannot get field as SelectionMark.  Field value's type is {ValueType}.");
+            }
+
+            if (_fieldValue == null)
+            {
+                return ValueSelectionMark;
+            }
+
+            if (!_fieldValue.ValueSelectionMark.HasValue)
+            {
+                throw new InvalidOperationException($"Field value is null.");
+            }
+
+            return _fieldValue.ValueSelectionMark.Value;
         }
     }
 }

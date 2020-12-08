@@ -59,7 +59,7 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinsSampleGetModel
 
-                Response<ModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
+                Response<DigitalTwinsModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
                 Console.WriteLine($"Retrieved model '{sampleModelResponse.Value.Id}'.");
 
                 #endregion Snippet:DigitalTwinsSampleGetModel

@@ -257,30 +257,31 @@ if ($Language -eq "javascript")
 
 if ($Language -eq "dotnet")
 {
-    $PublishedPkgs = Get-ChildItem "$($DocLocation)/packages" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
-    $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.StartsWith("Docs.")}
+    $PublishedPkgs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+    $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith("docs.zip")}
 
-    foreach ($Item in $PublishedDocs) {
-        $PkgName = $Item.Name.Remove(0, 5)
-        $PkgFullName = $PublishedPkgs | Where-Object -FilterScript {$_.Name -match "$($PkgName).\d"}
-
-        if (($PkgFullName | Measure-Object).count -eq 1)
-        {
-            $DocVersion = $PkgFullName[0].BaseName.Remove(0, $PkgName.Length + 1)
-
-            Write-Host "Start Upload for $($PkgName)/$($DocVersion)"
-            Write-Host "DocDir $($Item)"
-            Write-Host "PkgName $($PkgName)"
-            Write-Host "DocVersion $($DocVersion)"
-            $releaseTag = RetrieveReleaseTag "Nuget" $PublicArtifactLocation 
-            Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion -ReleaseTag $releaseTag
-        }
-        else
-        {
-            Write-Host "Package with the same name Exists. Upload Skipped"
-            continue
-        }
+    if (($PublishedPkgs.Count -gt 1) -or ($PublishedDoc.Count -gt 1))
+    {
+        Write-Host "$($DocLocation) should contain only one (1) published package and docs"
+        Write-Host "No of Packages $($PublishedPkgs.Count)"
+        Write-Host "No of Docs $($PublishedDoc.Count)"
+        exit 1
     }
+
+    $DocsStagingDir = "$WorkingDirectory/docstaging"
+    $TempDir = "$WorkingDirectory/temp"
+
+    New-Item -ItemType directory -Path $DocsStagingDir
+    New-Item -ItemType directory -Path $TempDir
+
+    Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath $DocsStagingDir
+    $pkgProperties = ParseNugetPackage -pkg $PublishedPkgs[0].FullName -workingDirectory $TempDir
+
+    Write-Host "Start Upload for $($pkgProperties.ReleaseTag)"
+    Write-Host "DocDir $($DocsStagingDir)"
+    Write-Host "PkgName $($pkgProperties.PackageId)"
+    Write-Host "DocVersion $($pkgProperties.PackageVersion)"
+    Upload-Blobs -DocDir "$($DocsStagingDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.ReleaseTag
 }
 
 if ($Language -eq "python")

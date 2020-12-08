@@ -69,7 +69,7 @@ namespace Microsoft.Rest.Serialization
                 // Skipping properties with JsonIgnore attribute, non-readable, and 
                 // ShouldSerialize returning false when set
                 if (!property.Ignored && property.Readable &&
-                    (property.ShouldSerialize == null || property.ShouldSerialize(memberValue)))
+                    (property.ShouldSerialize == null || property.ShouldSerialize(value)))
                 {
                     string propertyName = property.PropertyName;
                     if (property.PropertyName.StartsWith("properties.", StringComparison.OrdinalIgnoreCase))

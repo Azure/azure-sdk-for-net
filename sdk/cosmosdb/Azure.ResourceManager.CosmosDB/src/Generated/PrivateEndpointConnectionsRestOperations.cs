@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/privateEndpointConnections", false);
             uri.AppendQuery("api-version", "2019-08-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -143,6 +144,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(privateEndpointConnectionName, true);
             uri.AppendQuery("api-version", "2019-08-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -238,6 +240,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2019-08-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -337,6 +340,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(privateEndpointConnectionName, true);
             uri.AppendQuery("api-version", "2019-08-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -38,6 +38,11 @@ namespace Azure.Storage.Files.Shares.Models
         public IEnumerable<HttpRange> Ranges { get; internal set; }
 
         /// <summary>
+        /// Clear ranges for the file.
+        /// </summary>
+        public IEnumerable<HttpRange> ClearRanges { get; internal set; }
+
+        /// <summary>
         /// Creates a new PageRangesInfo instance
         /// </summary>
         internal ShareFileRangeInfo(ShareFileRangeInfoInternal rangesInfoInternal)
@@ -45,12 +50,20 @@ namespace Azure.Storage.Files.Shares.Models
             _shareFileRangeInfoInternal = rangesInfoInternal;
 
             // convert from internal Range type to HttpRange
-            var ranges = new List<HttpRange>();
-            foreach (Range range in rangesInfoInternal.Ranges)
+            List<HttpRange> ranges = new List<HttpRange>();
+            foreach (FileRange range in rangesInfoInternal.Body.Ranges)
             {
                 ranges.Add(new HttpRange(range.Start, range.End - range.Start + 1));
             }
             Ranges = ranges;
+
+            List<HttpRange> clearRanges = new List<HttpRange>();
+            foreach (ClearRange clearRange in rangesInfoInternal.Body.ClearRanges)
+            {
+                clearRanges.Add(new HttpRange(clearRange.Start, clearRange.End - clearRange.Start + 1));
+            }
+
+            ClearRanges = clearRanges;
         }
     }
 

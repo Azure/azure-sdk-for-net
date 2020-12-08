@@ -16,7 +16,7 @@ namespace PostgreSQL.Tests.ScenarioTests
         protected static string ServerName;
         protected static string DmsProjectName;
         protected static string DmsTaskName;
-
+        
         public CRUDPostgreSQLTestsBase()
         {
             ResourceGroupName = "pgsdkrg";

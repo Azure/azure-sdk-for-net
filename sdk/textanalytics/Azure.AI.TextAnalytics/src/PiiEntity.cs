@@ -20,7 +20,6 @@ namespace Azure.AI.TextAnalytics
             SubCategory = entity.Subcategory;
             ConfidenceScore = entity.ConfidenceScore;
             Offset = entity.Offset;
-            Length = entity.Length;
         }
 
         /// <summary>
@@ -55,10 +54,5 @@ namespace Azure.AI.TextAnalytics
         /// Gets the starting position (in UTF-16 code units) for the matching text in the input document.
         /// </summary>
         public int Offset { get; }
-
-        /// <summary>
-        /// Gets the length (in UTF-16 code units) of the matching text in the input document.
-        /// </summary>
-        public int Length { get; }
     }
 }

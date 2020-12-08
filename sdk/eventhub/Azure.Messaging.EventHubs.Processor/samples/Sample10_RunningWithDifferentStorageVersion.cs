@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 if (eventArgs.HasEvent)
                 {
                     ++eventsProcessed;
-                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
+                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.EventBody.ToBytes().ToArray()) }");
                 }
 
                 return Task.CompletedTask;

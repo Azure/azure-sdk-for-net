@@ -19,6 +19,7 @@ namespace Microsoft.Extensions.Azure
         private readonly IOptionsMonitor<TOptions> _monitor;
 
         private readonly EventSourceLogForwarder _logForwarder;
+        private readonly AzureComponentFactory _componentFactory;
         private FallbackAzureClientFactory<TClient> _fallbackFactory;
 
         public AzureClientFactory(
@@ -27,7 +28,8 @@ namespace Microsoft.Extensions.Azure
             IOptionsMonitor<AzureClientCredentialOptions<TClient>> clientsOptions,
             IEnumerable<ClientRegistration<TClient>> clientRegistrations,
             IOptionsMonitor<TOptions> monitor,
-            EventSourceLogForwarder logForwarder)
+            EventSourceLogForwarder logForwarder,
+            AzureComponentFactory componentFactory)
         {
             _clientRegistrations = new Dictionary<string, ClientRegistration<TClient>>();
             foreach (var registration in clientRegistrations)
@@ -40,6 +42,7 @@ namespace Microsoft.Extensions.Azure
             _clientsOptions = clientsOptions;
             _monitor = monitor;
             _logForwarder = logForwarder;
+            _componentFactory = componentFactory;
         }
 
         public TClient CreateClient(string name)
@@ -48,8 +51,11 @@ namespace Microsoft.Extensions.Azure
 
             if (!_clientRegistrations.TryGetValue(name, out ClientRegistration<TClient> registration))
             {
-                _fallbackFactory ??= new FallbackAzureClientFactory<TClient>(_globalOptions, _serviceProvider, _logForwarder);
-
+                _fallbackFactory ??= new FallbackAzureClientFactory<TClient>(
+                    _globalOptions,
+                    _serviceProvider,
+                    _componentFactory,
+                    _logForwarder);
                 return _fallbackFactory.CreateClient(name);
             }
 

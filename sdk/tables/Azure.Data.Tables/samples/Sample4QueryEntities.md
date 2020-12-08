@@ -43,7 +43,7 @@ Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 ### LINQ expression
 Here is a query returning a collection of the strongly-typed `OfficeSupplyEntity` objects that cost at least $6.00.
 
-To define the strongly-typed class, refer to the sample on [creating classes](Sample2CreateDeleteEntities.md).
+To define the strongly-typed class, refer to the sample on [creating classes](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample2CreateDeleteEntities.md).
 
 ```C# Snippet:TablesSample4QueryEntitiesExpression
 // Use the <see cref="TableClient"> to query the table using a filter expression.

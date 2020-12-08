@@ -1,0 +1,129 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/anomalies/dimension/query?$top=1",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "92",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200929.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "5c19c1471853a02eb7196be3f6807c16",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "startTime": "2015-09-29T23:42:42Z",
+        "endTime": "2020-09-29T23:42:42Z",
+        "dimensionName": "city"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "548ccd6f-87ab-4a62-83fe-dcd3eaee085b",
+        "Content-Length": "242",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 29 Sep 2020 23:42:42 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "198",
+        "X-Request-ID": "548ccd6f-87ab-4a62-83fe-dcd3eaee085b"
+      },
+      "ResponseBody": {
+        "value": [
+          "Karachi"
+        ],
+        "@nextLink": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/anomalies/dimension/query?$top=1\u0026$skip=1"
+      }
+    },
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/anomalies/dimension/query?$top=1\u0026$skip=1",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "92",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200929.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "9a6dda04e2ecdf7e40b11ebd6a92df5d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "startTime": "2015-09-29T23:42:42Z",
+        "endTime": "2020-09-29T23:42:42Z",
+        "dimensionName": "city"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7323bf48-00c6-444d-b662-6f4243ec0075",
+        "Content-Length": "240",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 29 Sep 2020 23:42:42 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "177",
+        "X-Request-ID": "7323bf48-00c6-444d-b662-6f4243ec0075"
+      },
+      "ResponseBody": {
+        "value": [
+          "Delhi"
+        ],
+        "@nextLink": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/anomalies/dimension/query?$top=1\u0026$skip=2"
+      }
+    },
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/anomalies/dimension/query?$top=1\u0026$skip=2",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "92",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200929.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "472416586329aa21a3b5b75c55cf9a00",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "startTime": "2015-09-29T23:42:42Z",
+        "endTime": "2020-09-29T23:42:42Z",
+        "dimensionName": "city"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6bd451fa-4ce2-4c84-9d98-d7777d89c15f",
+        "Content-Length": "242",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 29 Sep 2020 23:42:43 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "195",
+        "X-Request-ID": "6bd451fa-4ce2-4c84-9d98-d7777d89c15f"
+      },
+      "ResponseBody": {
+        "value": [
+          "__SUM__"
+        ],
+        "@nextLink": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/anomalies/dimension/query?$top=1\u0026$skip=3"
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2020-09-29T18:42:42.9919862-05:00",
+    "METRICSADVISOR_ACCOUNT_NAME": "anuchan-cg-metric-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "245988263"
+  }
+}
