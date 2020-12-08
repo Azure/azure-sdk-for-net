@@ -78,7 +78,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(definition, Is.Not.Null);
                 Assert.That(definition.MetricId, Is.EqualTo(MetricId));
 
-                ValidateDimensionKey(definition.SeriesKey);
+                ValidateSeriesKey(definition.SeriesKey);
 
                 if (populateOptionalMembers)
                 {
@@ -138,10 +138,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 returnedKeys.Add(seriesData.Definition.SeriesKey);
             }
 
-            IEnumerable<List<KeyValuePair<string, string>>> expectedKvps = seriesKeys.Select(key => key.AsDictionary().ToList());
-            IEnumerable<List<KeyValuePair<string, string>>> returnedKvps = returnedKeys.Select(key => key.AsDictionary().ToList());
-
-            Assert.That(returnedKvps, Is.EquivalentTo(expectedKvps));
+            Assert.That(seriesKeys, Is.EquivalentTo(returnedKeys));
         }
 
         [Test]

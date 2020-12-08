@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
                 Assert.That(anomaly.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateDimensionKey(anomaly.SeriesKey);
+                ValidateSeriesKey(anomaly.SeriesKey);
 
                 if (populateOptionalMembers)
                 {
@@ -114,7 +114,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateDimensionKey(incident.DimensionKey);
+                ValidateSeriesKey(incident.DimensionKey);
 
                 if (populateOptionalMembers)
                 {
@@ -329,7 +329,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(path, Is.Not.Null.And.Not.Empty);
             }
 
-            ValidateDimensionKey(rootCause.DimensionKey);
+            ValidateSeriesKey(rootCause.DimensionKey);
         }
     }
 }
