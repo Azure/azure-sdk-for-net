@@ -1102,7 +1102,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }
                 else
                 {
-                    Task.WaitAll(stopPartitionProcessingTasks);
+                    Task.WaitAll(stopPartitionProcessingTasks, CancellationToken.None);
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                     LoadBalancer.RelinquishOwnershipAsync(CancellationToken.None).GetAwaiter().GetResult();
@@ -1515,7 +1515,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         private Task InvokeOnProcessingErrorAsync(Exception exception,
                                                   TPartition partition,
                                                   string operationDescription,
-                                                  CancellationToken cancellationToken) => Task.Run(() => OnProcessingErrorAsync(exception, partition, operationDescription, cancellationToken));
+                                                  CancellationToken cancellationToken) => Task.Run(() => OnProcessingErrorAsync(exception, partition, operationDescription, cancellationToken), CancellationToken.None);
 
         /// <summary>
         ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.

@@ -580,28 +580,31 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        /// Attempts to read a legacy checkpoint JSON format and extract an offset and a sequence number
+        ///   Attempts to read a legacy checkpoint JSON format and extract an offset and a sequence number
         /// </summary>
+        ///
         /// <param name="data">The binary representation of the checkpoint JSON.</param>
         /// <param name="offset">The parsed offset. null if not found.</param>
         /// <param name="sequenceNumber">The parsed sequence number. null if not found.</param>
+        ///
         /// <remarks>
-        /// Sample checkpoint JSON:
-        /// {
-        ///     "PartitionId":"0",
-        ///     "Owner":"681d365b-de1b-4288-9733-76294e17daf0",
-        ///     "Token":"2d0c4276-827d-4ca4-a345-729caeca3b82",
-        ///     "Epoch":386,
-        ///     "Offset":"8591964920",
-        ///     "SequenceNumber":960180
-        /// }
-        /// </remarks>
+        ///   Sample checkpoint JSON:
+        ///   {
+        ///       "PartitionId":"0",
+        ///       "Owner":"681d365b-de1b-4288-9733-76294e17daf0",
+        ///       "Token":"2d0c4276-827d-4ca4-a345-729caeca3b82",
+        ///       "Epoch":386,
+        ///       "Offset":"8591964920",
+        ///       "SequenceNumber":960180
+        ///   }
+        /// /// </remarks>
         private static void TryReadLegacyCheckpoint(Span<byte> data, out long? offset, out long? sequenceNumber)
         {
             offset = null;
             sequenceNumber = null;
 
             var jsonReader = new Utf8JsonReader(data);
+
             try
             {
                 if (!jsonReader.Read() || jsonReader.TokenType != JsonTokenType.StartObject) return;
