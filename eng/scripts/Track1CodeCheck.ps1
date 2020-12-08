@@ -106,8 +106,15 @@ try {
     }
 
     $mataPath | ForEach-Object {
+        $metaData = ''
         try {
             $metaData = Get-Content $mataPath
+        }
+        catch {
+            Write-Warning "Cannot find path $mataPath"
+        }
+
+        if ( $metaData -ne '') {
             $commit = ''
             $readme = ''
             [string]$path = Get-Location
@@ -122,16 +129,16 @@ try {
             }
             $readme = $readme -replace "blob/[\S]*/specification", "blob/$commit/specification"
             $path = ($path -replace "\\", "/") + "/sdk"
-
+    
             Invoke-Block {
                 & npm install -g autorest
             }
-
+    
             Write-Output "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90"
             Invoke-Block {
                 & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90 
             }
-
+    
             # prevent warning related to EOL differences which triggers an exception for some reason
             & git add -A
             $diffResult = @()
@@ -150,7 +157,7 @@ try {
                 if ($changeContent.Length -ne 11) {
                     $exitCode ++
                 }
-
+    
                 # metaDataContent doesn't contains 'AutoRestCmdExecuted' part since it can't be verified
                 $metaDataContent = @('-      // BEGIN: Code Generation Metadata Section',
                     '-      public static readonly String AutoRestVersion = "v2";',
@@ -173,7 +180,7 @@ try {
             elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -notmatch 'SdkInfo_')) {
                 $exitCode ++
             }
-
+    
             if ($exitCode -ne 0) {
                 & git -c core.safecrlf=false diff HEAD --ignore-space-at-eol
                 Write-Output "Git Diff file is:" 
@@ -183,9 +190,7 @@ try {
                 LogError "Generated code is manually altered, you may need to re-run sdk\<RP Name>\generate.ps1"
             }
         }
-        catch {
-            Write-Warning $Error[$Error.count - 1]
-        }
+        
     }
 }
 finally {
