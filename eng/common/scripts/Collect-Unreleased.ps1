@@ -1,16 +1,14 @@
 [CmdletBinding()]
 param()
 
-$repoRoot = Resolve-Path "$PSScriptRoot/../..";
-. ${repoRoot}\eng\common\scripts\SemVer.ps1
-. ${repoRoot}\eng\common\scripts\ChangeLog-Operations.ps1
+. (Join-Path $PSScriptRoot common.ps1)
 
+$allPackageProps = Get-AllPkgProperties
 
-Get-ChildItem "$repoRoot/sdk" -Filter CHANGELOG.md -Recurse | Sort-Object -Property Name | % {
-    
-    $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $_ 
-    $package = $_.Directory.Name
-    $serviceDirectory = $_.Directory.Parent.Name
+foreach ($packageProp in $allPackageProps) {
+    $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $packageProp.ChangeLogPath
+    $package = $packageProp.Name
+    $serviceDirectory = $packageProp.ServiceDirectory
 
     foreach ($changeLogEntry in $changeLogEntries.Values)
     {

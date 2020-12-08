@@ -31,7 +31,16 @@ foreach ($packageProp in $allPackageProps) {
         $textInfo = (Get-Culture).TextInfo
         $highlightTitle = $textInfo.ToTitleCase($package.Replace("-", " ").Replace("@azure/",""))
 
-        $InstallNotes += GetPackageInstallNotes -Package $package -Version $version
+        if (Test-Path "Function:GetPackageInstallNotes")
+        {
+            $InstallNotes += GetPackageInstallNotes -Package $package -Version $version
+        }
+        else
+        {
+            LogError "The function 'GetPackageInstallNotes' was not found."
+            return $null
+        }
+
         $ReleaseNotes += "### $highlightTitle $version [Changelog](https://github.com/Azure/azure-sdk-for-$LanguageShort/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)`n"
         $changeLogEntry.ReleaseContent | %{ 
 
