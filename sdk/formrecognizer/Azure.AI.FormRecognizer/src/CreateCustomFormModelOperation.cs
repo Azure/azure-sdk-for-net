@@ -123,9 +123,6 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="client">The client used to check for completion.</param>
         public CreateCustomFormModelOperation(string operationId, FormTrainingClient client)
         {
-            // We can't check if `operationId` is empty because it will create a breaking change for
-            // released version 3.0.0 of the SDK which throws a FormatException.
-            Argument.AssertNotNull(operationId, nameof(operationId));
             Argument.AssertNotNull(client, nameof(client));
 
             Id = operationId;

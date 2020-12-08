@@ -82,11 +82,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         {
             FormRecognizerClient client = CreateFormRecognizerClient();
 
-            Assert.Throws<ArgumentNullException>(() => new RecognizeContentOperation(null, client));
             Assert.Throws<ArgumentNullException>(() => new RecognizeContentOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
-
-            var operation = new RecognizeContentOperation(string.Empty, client);
-            Assert.ThrowsAsync<FormatException>(async () => await operation.UpdateStatusAsync());
         }
 
         [Test]
@@ -114,11 +110,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         {
             FormRecognizerClient client = CreateFormRecognizerClient();
 
-            Assert.Throws<ArgumentNullException>(() => new RecognizeReceiptsOperation(null, client));
             Assert.Throws<ArgumentNullException>(() => new RecognizeReceiptsOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
-
-            var operation = new RecognizeReceiptsOperation(string.Empty, client);
-            Assert.ThrowsAsync<FormatException>(async () => await operation.UpdateStatusAsync());
         }
 
         [Test]
@@ -242,11 +234,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         {
             FormTrainingClient client = CreateFormTrainingClient();
 
-            Assert.Throws<ArgumentNullException>(() => new TrainingOperation(null, client));
             Assert.Throws<ArgumentNullException>(() => new TrainingOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
-
-            var operation = new TrainingOperation(string.Empty, client);
-            Assert.ThrowsAsync<FormatException>(async () => await operation.UpdateStatusAsync());
         }
 
         [Test]
@@ -280,11 +268,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         {
             FormTrainingClient client = CreateFormTrainingClient();
 
-            Assert.Throws<ArgumentNullException>(() => new CreateComposedModelOperation(null, client));
             Assert.Throws<ArgumentNullException>(() => new CreateComposedModelOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
-
-            var operation = new CreateComposedModelOperation(string.Empty, client);
-            Assert.ThrowsAsync<FormatException>(async () => await operation.UpdateStatusAsync());
         }
 
         [Test]
@@ -316,7 +300,6 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             Assert.Throws<ArgumentNullException>(() => new CopyModelOperation(null, targetId, client));
             Assert.Throws<ArgumentException>(() => new CopyModelOperation(string.Empty, targetId, client));
-            Assert.Throws<ArgumentNullException>(() => new CopyModelOperation(operationId, null, client));
             Assert.Throws<ArgumentNullException>(() => new CopyModelOperation(operationId, targetId, null));
         }
     }
