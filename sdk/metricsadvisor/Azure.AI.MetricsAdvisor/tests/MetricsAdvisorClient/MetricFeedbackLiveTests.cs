@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
@@ -26,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         private DateTimeOffset FeedbackSamplingEndTimeReal => DateTimeOffset.Parse("2020-12-31T00:00:00Z");
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task AddAndGetAnomalyFeedback(bool populateOptionalMembers)
@@ -75,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AddAndGetChangePointFeedback()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
@@ -104,7 +105,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(changePointFeedback.ChangePointValue, Is.EqualTo(ChangePointValue.AutoDetect));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task AddAndGetCommentFeedback(bool populateOptionalMembers)
@@ -153,7 +154,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AddAndGetPeriodFeedback()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
@@ -184,7 +185,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(periodFeedback.PeriodValue, Is.EqualTo(periodValue));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task GetAllFeedback(bool populateOptionalMembers)
