@@ -29,7 +29,16 @@ namespace Azure.Communication.Administration
                   options ?? new CommunicationIdentityClientOptions(),
                   ConnectionString.Parse(AssertNotNull(connectionString, nameof(connectionString))))
         { }
-
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityClient"/>.</summary>
+        /// <param name="tokenCredential"></param>
+        /// <param name="endpoint"></param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CommunicationIdentityClient(TokenCredential tokenCredential, string endpoint, CommunicationIdentityClientOptions? options = default)
+            : this(
+                options ?? new CommunicationIdentityClientOptions(),
+                AssertNotNull(tokenCredential, nameof(tokenCredential)),
+                endpoint)
+        { }
         private CommunicationIdentityClient(CommunicationIdentityClientOptions options, ConnectionString connectionString)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -39,8 +48,17 @@ namespace Azure.Communication.Administration
                 connectionString.GetRequired("endpoint"));
         }
 
+        private CommunicationIdentityClient(CommunicationIdentityClientOptions options, TokenCredential tokenCredential, string endpoint)
+        {
+            _clientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new CommunicationIdentityRestClient(
+                _clientDiagnostics,
+                options.BuildHttpPipeline(tokenCredential),
+                endpoint);
+        }
+
         /// <summary>Initializes a new instance of <see cref="CommunicationIdentityClient"/> for mocking.</summary>
-        protected CommunicationIdentityClient()
+        protected CommunicationIdentityClient(CommunicationIdentityClientOptions communicationIdentityClientOptions)
         {
             _clientDiagnostics = null!;
             RestClient = null!;
