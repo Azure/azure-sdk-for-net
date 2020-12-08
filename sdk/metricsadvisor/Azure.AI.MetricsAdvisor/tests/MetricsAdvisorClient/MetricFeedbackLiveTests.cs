@@ -16,16 +16,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
         }
 
-        // The sampling time range for feedback differs from other tests so it doesn't interfere in anomaly
-        // detection and other tests' results.
+        private DateTimeOffset CreatedFeedbackStartTime => DateTimeOffset.Parse("2020-09-26T00:00:00Z");
 
-        private DateTimeOffset FeedbackSamplingStartTime => FeedbackSamplingEndTime.Subtract(TimeSpan.FromDays(3));
+        private DateTimeOffset CreatedFeedbackEndTime => DateTimeOffset.Parse("2020-09-29T00:00:00Z");
 
-        private DateTimeOffset FeedbackSamplingEndTime => SamplingStartTime.Subtract(TimeSpan.FromDays(2));
+        private DateTimeOffset FeedbackSamplingStartTime => DateTimeOffset.Parse("2020-12-01T00:00:00Z");
 
-        private DateTimeOffset FeedbackSamplingStartTimeReal => DateTimeOffset.Parse("2020-12-01T00:00:00Z");
-
-        private DateTimeOffset FeedbackSamplingEndTimeReal => DateTimeOffset.Parse("2020-12-31T00:00:00Z");
+        private DateTimeOffset FeedbackSamplingEndTime => DateTimeOffset.Parse("2020-12-31T00:00:00Z");
 
         [RecordedTest]
         [TestCase(true)]
@@ -40,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var filter = new FeedbackDimensionFilter(dimensionKey);
 
-            var feedbackToAdd = new MetricAnomalyFeedback(MetricId, filter, FeedbackSamplingStartTime, FeedbackSamplingEndTime, AnomalyValue.AutoDetect);
+            var feedbackToAdd = new MetricAnomalyFeedback(MetricId, filter, CreatedFeedbackStartTime, CreatedFeedbackEndTime, AnomalyValue.AutoDetect);
 
             if (populateOptionalMembers)
             {
@@ -61,8 +58,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(anomalyFeedback, Is.Not.Null);
             Assert.That(anomalyFeedback.AnomalyValue, Is.EqualTo(AnomalyValue.AutoDetect));
-            Assert.That(anomalyFeedback.StartTime, Is.EqualTo(FeedbackSamplingStartTime));
-            Assert.That(anomalyFeedback.EndTime, Is.EqualTo(FeedbackSamplingEndTime));
+            Assert.That(anomalyFeedback.StartTime, Is.EqualTo(CreatedFeedbackStartTime));
+            Assert.That(anomalyFeedback.EndTime, Is.EqualTo(CreatedFeedbackEndTime));
 
             if (populateOptionalMembers)
             {
@@ -87,7 +84,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var filter = new FeedbackDimensionFilter(dimensionKey);
 
-            var feedbackToAdd = new MetricChangePointFeedback(MetricId, filter, FeedbackSamplingStartTime, FeedbackSamplingEndTime, ChangePointValue.AutoDetect);
+            var feedbackToAdd = new MetricChangePointFeedback(MetricId, filter, CreatedFeedbackStartTime, CreatedFeedbackEndTime, ChangePointValue.AutoDetect);
 
             string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
 
@@ -123,8 +120,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             if (populateOptionalMembers)
             {
-                feedbackToAdd.StartTime = FeedbackSamplingStartTime;
-                feedbackToAdd.EndTime = FeedbackSamplingEndTime;
+                feedbackToAdd.StartTime = CreatedFeedbackStartTime;
+                feedbackToAdd.EndTime = CreatedFeedbackEndTime;
             }
 
             string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
@@ -144,8 +141,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             if (populateOptionalMembers)
             {
-                Assert.That(commentFeedback.StartTime, Is.EqualTo(FeedbackSamplingStartTime));
-                Assert.That(commentFeedback.EndTime, Is.EqualTo(FeedbackSamplingEndTime));
+                Assert.That(commentFeedback.StartTime, Is.EqualTo(CreatedFeedbackStartTime));
+                Assert.That(commentFeedback.EndTime, Is.EqualTo(CreatedFeedbackEndTime));
             }
             else
             {
@@ -197,8 +194,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             if (populateOptionalMembers)
             {
                 options.TimeMode = FeedbackQueryTimeMode.FeedbackCreatedTime;
-                options.StartTime = FeedbackSamplingStartTimeReal;
-                options.EndTime = FeedbackSamplingEndTimeReal;
+                options.StartTime = FeedbackSamplingStartTime;
+                options.EndTime = FeedbackSamplingEndTime;
                 options.FeedbackType = FeedbackType.Comment;
 
                 options.Filter.AddDimensionColumn("city", "Delhi");
@@ -221,8 +218,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (populateOptionalMembers)
                 {
-                    Assert.That(feedback.CreatedTime, Is.GreaterThanOrEqualTo(FeedbackSamplingStartTimeReal));
-                    Assert.That(feedback.CreatedTime, Is.LessThanOrEqualTo(FeedbackSamplingEndTimeReal));
+                    Assert.That(feedback.CreatedTime, Is.GreaterThanOrEqualTo(FeedbackSamplingStartTime));
+                    Assert.That(feedback.CreatedTime, Is.LessThanOrEqualTo(FeedbackSamplingEndTime));
                     Assert.That(feedback.Type, Is.EqualTo(FeedbackType.Comment));
 
                     Dictionary<string, string> dimensionColumns = feedback.DimensionFilter.DimensionFilter.AsDictionary();
