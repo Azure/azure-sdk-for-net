@@ -111,7 +111,7 @@ jobs:
     variables:
       - template: ../variables/globals.yml
       - name: Coverage.PackageName
-        value: Coverage.${{ parameters.ServiceDirectory }}.$[replace(variables['Build.Repository.Name'], 'Azure/', '')]
+        value: Coverage.${{ parameters.ServiceDirectory }}.${{ coalesce(variables['System.PullRequest.TargetBranch'], 'master') }}
       - name: Coverage.HistoryDirectory
         value: $(Build.ArtifactStagingDirectory)\coverage_history
     strategy:
@@ -196,7 +196,7 @@ jobs:
         inputs:
           codeCoverageTool: Cobertura
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
-      - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+      - ${{ if and(eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.SourceBranchName'], 'master')) }}:
         - task: UniversalPackages@0
           condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
           displayName: Publish code coverage history
