@@ -82,5 +82,55 @@ namespace Azure.Core.GeoJson
         {
             return HashCodeBuilder.Combine(West, South, East, North, MinAltitude, MaxAltitude);
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="index"></param>
+        public double this[int index]
+        {
+            get
+            {
+                if (MinAltitude is double minAltitude &&
+                    MaxAltitude is double maxAltitude)
+                {
+                    return index switch
+                    {
+                        0 => West,
+                        1 => South,
+                        2 => minAltitude,
+                        3 => East,
+                        4 => North,
+                        5 => maxAltitude,
+#pragma warning disable CA1065 // don't throw in a property
+                        _ => throw new IndexOutOfRangeException()
+#pragma warning restore CA1065
+                    };
+                }
+
+                return index switch
+                {
+                    0 => West,
+                    1 => South,
+                    2 => East,
+                    3 => North,
+#pragma warning disable CA1065 // don't throw in a property
+                    _ => throw new IndexOutOfRangeException()
+#pragma warning restore CA1065
+                };
+            }
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            if (MinAltitude is double minAltitude &&
+                MaxAltitude is double maxAltitude)
+            {
+                return $"[{West}, {South}, {minAltitude}, {East}, {North}, {maxAltitude}]";
+            }
+
+            return $"[{West}, {South}, {East}, {North}]";
+        }
     }
 }

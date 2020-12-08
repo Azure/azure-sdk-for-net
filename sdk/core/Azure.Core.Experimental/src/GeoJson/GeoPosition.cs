@@ -94,5 +94,30 @@ namespace Azure.Core.GeoJson
 
             return $"[{Longitude:G17}, {Latitude:G17}, {Altitude.Value:G17}]";
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="index"></param>
+        public double this[int index]
+        {
+            get
+            {
+                return index switch
+                {
+                    0 => Longitude,
+                    1 => Latitude,
+                    2 when Altitude != null => Altitude.Value,
+#pragma warning disable CA1065 // We want to have a behavior similar to an array
+                    _ => throw new IndexOutOfRangeException()
+#pragma warning restore
+                };
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public int Count => Altitude == null ? 2 : 3;
     }
 }
