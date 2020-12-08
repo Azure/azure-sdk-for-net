@@ -165,7 +165,6 @@ function UpdateDocIndexFiles {
     Param (
         [Parameter(Mandatory=$false)] [String]$appTitleLang = $Language,
         [Parameter(Mandatory=$false)] [String]$lang = $Language,
-        [Parameter(Mandatory=$false)] [String]$indexhtmlloc = "index.html",
         [Parameter(Mandatory=$false)] [String]$packageRegex = "`"`"",
         [Parameter(Mandatory=$false)] [String]$regexReplacement = ""
     )
@@ -177,8 +176,6 @@ function UpdateDocIndexFiles {
     # Update main.js var lang
     $mainJsContent = Get-Content -Path $MainJsPath -Raw
     $mainJsContent = $mainJsContent -replace "var SELECTED_LANGUAGE = ''", "var SELECTED_LANGUAGE = '$lang'"
-    # Update main.js var index html
-    $mainJsContent = $mainJsContent -replace "var INDEX_HTML = ''", "var INDEX_HTML = '$indexhtmlloc'"
     # Update main.js package regex and replacement
     $mainJsContent = $mainJsContent -replace "var PACKAGE_REGEX = ''", "var PACKAGE_REGEX = $packageRegex"
     $mainJsContent = $mainJsContent -replace "var PACKAGE_REPLACEMENT = ''", "var PACKAGE_REPLACEMENT = `"$regexReplacement`""
