@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.DataShare.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// A Synchronization Setting data transfer object.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("SynchronizationSetting")]
     public partial class SynchronizationSetting : ProxyDto
     {
         /// <summary>
