@@ -28,6 +28,18 @@ namespace Azure.Communication.Sms
                   options ?? new SmsClientOptions(),
                   ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))))
         { }
+        /// <summary> Initializes a new instance of <see cref="SmsClient"/>.</summary>
+        /// <param name="tokenCredential"></param>
+        /// <param name="endpoint"></param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+
+        public SmsClient(TokenCredential tokenCredential, string endpoint, SmsClientOptions? options = default)
+            : this(
+                options ?? new SmsClientOptions(),
+                tokenCredential,
+                endpoint
+            )
+        { }
 
         /// <summary>Initializes a new instance of <see cref="SmsClient"/> for mocking.</summary>
         protected SmsClient()
@@ -40,6 +52,16 @@ namespace Azure.Communication.Sms
         {
             RestClient = new SmsRestClient(clientDiagnostics, pipeline, endpointUrl, apiVersion);
             _clientDiagnostics = clientDiagnostics;
+        }
+
+        private SmsClient(SmsClientOptions options, TokenCredential tokenCredential, string endpoint)
+        {
+            _clientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new SmsRestClient(
+                _clientDiagnostics,
+                options.BuildHttpPipeline(tokenCredential),
+                endpoint,
+                "2020-07-20-preview1");
         }
 
         private SmsClient(SmsClientOptions options, ConnectionString connectionString)

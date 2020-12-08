@@ -30,8 +30,8 @@ namespace Azure.Communication.Administration
                   ConnectionString.Parse(AssertNotNull(connectionString, nameof(connectionString))))
         { }
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityClient"/>.</summary>
-        /// <param name="tokenCredential"></param>
-        /// <param name="endpoint"></param>
+        /// <param name="tokenCredential">Token acquired from the Azure Communication Services to be used by service calls</param>
+        /// <param name="endpoint">Endpoint to hit on the server</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(TokenCredential tokenCredential, string endpoint, CommunicationIdentityClientOptions? options = default)
             : this(
@@ -58,7 +58,7 @@ namespace Azure.Communication.Administration
         }
 
         /// <summary>Initializes a new instance of <see cref="CommunicationIdentityClient"/> for mocking.</summary>
-        protected CommunicationIdentityClient(CommunicationIdentityClientOptions communicationIdentityClientOptions)
+        protected CommunicationIdentityClient()
         {
             _clientDiagnostics = null!;
             RestClient = null!;
