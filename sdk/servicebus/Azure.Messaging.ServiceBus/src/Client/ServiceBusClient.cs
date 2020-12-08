@@ -440,14 +440,14 @@ namespace Azure.Messaging.ServiceBus
         {
             ValidateEntityName(queueName);
             options ??= new ServiceBusSessionReceiverOptions();
-            options.SessionId = sessionId;
 
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
                 connection: Connection,
                 plugins: Plugins,
                 options: options,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+                cancellationToken: cancellationToken,
+                sessionId: sessionId).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -478,14 +478,14 @@ namespace Azure.Messaging.ServiceBus
         {
             ValidateEntityName(topicName);
             options ??= new ServiceBusSessionReceiverOptions();
-            options.SessionId = sessionId;
 
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 plugins: Plugins,
                 options: options,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+                cancellationToken: cancellationToken,
+                sessionId: sessionId).ConfigureAwait(false);
         }
 
         /// <summary>
