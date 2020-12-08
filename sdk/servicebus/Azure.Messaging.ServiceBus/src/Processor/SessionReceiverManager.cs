@@ -155,6 +155,7 @@ namespace Azure.Messaging.ServiceBus
                     connection: _connection,
                     plugins: _plugins,
                     options: _sessionReceiverOptions,
+                    sessionId: _sessionId,
                     cancellationToken: processorCancellationToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
