@@ -3970,31 +3970,31 @@ namespace Azure.Storage.Files.Shares.Tests
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - ShareDirectoryClient(string connectionString, string blobContainerName, string blobName)
-            ShareFileClient directory = new ShareFileClient(
+            ShareFileClient directory = InstrumentClient(new ShareFileClient(
                 connectionString,
                 GetNewShareName(),
-                GetNewDirectoryName());
+                GetNewDirectoryName()));
             Assert.IsTrue(directory.CanGenerateSasUri);
 
             // Act - ShareFileClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
-            ShareFileClient directory2 = new ShareFileClient(
+            ShareFileClient directory2 = InstrumentClient(new ShareFileClient(
                 connectionString,
                 GetNewShareName(),
                 GetNewDirectoryName(),
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(directory2.CanGenerateSasUri);
 
             // Act - ShareFileClient(Uri blobContainerUri, BlobClientOptions options = default)
-            ShareFileClient directory3 = new ShareFileClient(
+            ShareFileClient directory3 = InstrumentClient(new ShareFileClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(directory3.CanGenerateSasUri);
 
             // Act - ShareFileClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            ShareFileClient directory4 = new ShareFileClient(
+            ShareFileClient directory4 = InstrumentClient(new ShareFileClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(directory4.CanGenerateSasUri);
         }
 
@@ -4011,11 +4011,11 @@ namespace Azure.Storage.Files.Shares.Tests
             string connectionString = storageConnectionString.ToString(true);
             string shareName = GetNewShareName();
             string fileName = GetNewFileName();
-            ShareFileClient fileClient = new ShareFileClient(
+            ShareFileClient fileClient = InstrumentClient(new ShareFileClient(
                 connectionString,
                 shareName,
                 fileName,
-                GetOptions());
+                GetOptions()));
 
             // Act
             Uri sasUri = fileClient.GenerateSasUri(permissions, expiresOn);
@@ -4049,11 +4049,11 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             string fileName = GetNewFileName();
 
-            ShareFileClient directoryClient = new ShareFileClient(
+            ShareFileClient directoryClient = InstrumentClient(new ShareFileClient(
                 connectionString,
                 shareName,
                 fileName,
-                GetOptions());
+                GetOptions()));
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
             {
@@ -4090,10 +4090,10 @@ namespace Azure.Storage.Files.Shares.Tests
             UriBuilder uriBuilder = new UriBuilder(blobEndpoint);
             string fileName = GetNewFileName();
             uriBuilder.Path += constants.Sas.Account + "/" + GetNewShareName() + "/" + fileName;
-            ShareFileClient fileClient = new ShareFileClient(
+            ShareFileClient fileClient = InstrumentClient(new ShareFileClient(
                 uriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.All, Recording.UtcNow.AddHours(+1))
             {
@@ -4123,10 +4123,10 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
             blobUriBuilder.Path += constants.Sas.Account + "/" + shareName + "/" + GetNewFileName();
-            ShareFileClient containerClient = new ShareFileClient(
+            ShareFileClient containerClient = InstrumentClient(new ShareFileClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.All, Recording.UtcNow.AddHours(+1))
             {

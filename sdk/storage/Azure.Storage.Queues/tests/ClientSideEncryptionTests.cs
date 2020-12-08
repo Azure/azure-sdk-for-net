@@ -779,9 +779,9 @@ namespace Azure.Storage.Queues.Test
             };
 
             // Create blob
-            QueueClient queue = new QueueClient(
+            QueueClient queue = InstrumentClient(new QueueClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(queue.CanGenerateSasUri);
 
             // Act
