@@ -25,7 +25,7 @@ namespace Azure.Core.GeoJson
         /// </summary>
         /// <param name="geometries">The collection of inner geometries.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="customProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         public GeoCollection(IEnumerable<GeoObject> geometries, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
             Argument.AssertNotNull(geometries, nameof(geometries));

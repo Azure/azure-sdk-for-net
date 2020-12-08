@@ -12,6 +12,6 @@ namespace Azure.Core.GeoJson
         MultiPolygon,
         LineString,
         MultiLineString,
-        GeometryCollection
+        GeometryCollection,
     }
 }

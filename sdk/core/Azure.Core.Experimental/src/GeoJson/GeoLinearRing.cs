@@ -29,7 +29,7 @@ namespace Azure.Core.GeoJson
 
             if (Coordinates[0] != Coordinates[Coordinates.Count - 1])
             {
-                throw new ArgumentException("The first and last coordinate of the linear ring is required to be equal");
+                throw new ArgumentException("The first and last coordinate of the linear ring are required to be equal");
             }
         }
 

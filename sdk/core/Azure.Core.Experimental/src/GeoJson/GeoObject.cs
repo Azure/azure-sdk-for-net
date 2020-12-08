@@ -21,7 +21,7 @@ namespace Azure.Core.GeoJson
         /// Initializes a new instance of <see cref="GeoObject"/>.
         /// </summary>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="customProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         internal GeoObject(GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties)
         {
             Argument.AssertNotNull(customProperties, nameof(customProperties));

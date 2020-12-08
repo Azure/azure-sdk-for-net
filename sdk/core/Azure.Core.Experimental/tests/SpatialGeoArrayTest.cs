@@ -139,7 +139,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, polygon.Coordinates[0][3][0]);
             Assert.AreEqual(2, polygon.Coordinates[0][3][1]);
 
-
             Assert.AreEqual(5, polygon.Coordinates[1][0][0]);
             Assert.AreEqual(6, polygon.Coordinates[1][0][1]);
 
@@ -152,7 +151,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(5, polygon.Coordinates[1][3][0]);
             Assert.AreEqual(6, polygon.Coordinates[1][3][1]);
         }
-
 
         [Test]
         public void PolygonCollectionCoordinatesWork()
@@ -207,7 +205,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, polygonCollection.Coordinates[0][0][3][0]);
             Assert.AreEqual(2, polygonCollection.Coordinates[0][0][3][1]);
 
-
             Assert.AreEqual(5, polygonCollection.Coordinates[0][1][0][0]);
             Assert.AreEqual(6, polygonCollection.Coordinates[0][1][0][1]);
 
@@ -220,7 +217,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(5, polygonCollection.Coordinates[0][1][3][0]);
             Assert.AreEqual(6, polygonCollection.Coordinates[0][1][3][1]);
 
-
             Assert.AreEqual(9, polygonCollection.Coordinates[1][0][0][0]);
             Assert.AreEqual(10, polygonCollection.Coordinates[1][0][0][1]);
 
@@ -232,7 +228,6 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(9, polygonCollection.Coordinates[1][0][3][0]);
             Assert.AreEqual(10, polygonCollection.Coordinates[1][0][3][1]);
-
 
             Assert.AreEqual(13, polygonCollection.Coordinates[1][1][0][0]);
             Assert.AreEqual(14, polygonCollection.Coordinates[1][1][0][1]);

@@ -24,7 +24,7 @@ namespace Azure.Core.GeoJson
         /// </summary>
         /// <param name="coordinates">The collection of <see cref="GeoPosition"/> that make up the line.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="customProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         public GeoLineString(IEnumerable<GeoPosition> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
             Coordinates = new GeoArray<GeoPosition>(coordinates.ToArray());;

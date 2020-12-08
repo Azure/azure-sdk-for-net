@@ -26,7 +26,7 @@ namespace Azure.Core.GeoJson
         /// </summary>
         /// <param name="points">The collection of inner points.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="customProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         public GeoPointCollection(IEnumerable<GeoPoint> points, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
             Argument.AssertNotNull(points, nameof(points));
