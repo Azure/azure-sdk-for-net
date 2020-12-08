@@ -148,7 +148,7 @@ Copy-Item "${DocCommonGenDir}/docfx.json" -Destination "${DocOutDir}" -Force
 
 Write-Verbose "Create Toc for Site Navigation"
 New-Item "${DocOutDir}/toc.yml" -Force
-Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: api/`r`n  homepage: api/index.md"
+Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: api/`r`n  homepage: index.md"
 
 Write-Verbose "Build Doc Content"
 & "${DocFxTool}" build "${DocOutDir}/docfx.json"
@@ -166,12 +166,9 @@ Write-Verbose "Make changes on relative path on page index.html."
 $baseUrl = $destFolder + "index.html"
 $content = Get-Content -Path $baseUrl -Raw
 $hrefRegex = "[""']\.\.\/([^""']*)[""']"
-$innerTocRegex = "[""']toc.html[^""']*[""']"
-$outerTocRegex = "[""']\.\.\/toc.html[^""']*[""']"
-# The order matters for the following mutations.
-$mutatedContent = $mutatedContent -replace $innerTocRegex, "`"./api/toc.html`""
-$mutatedContent = $mutatedContent -replace $outerTocRegex, './toc.html'
+$tocRegex = "[""'](./)?toc.html[""']"
 $mutatedContent = $content -replace $hrefRegex, '"./$1"'
+$mutatedContent = $mutatedContent -replace $tocRegex , "`"./api/toc.html`""
 Set-Content -Path $baseUrl -Value $mutatedContent -NoNewline
 
 Write-Verbose "Compress and copy HTML into the staging Area"
