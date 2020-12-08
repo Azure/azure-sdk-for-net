@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Indicates whether to read legacy checkpoints when no current version checkpoints are available.
         /// </summary>
         ///
-        private bool ReadLegacyCheckpoints { get; }
+        private bool InitializeWithLegacyCheckpoints { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BlobsCheckpointStore" /> class.
@@ -83,18 +83,18 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="blobContainerClient">The client used to interact with the Azure Blob Storage service.</param>
         /// <param name="retryPolicy">The retry policy to use as the basis for interacting with the Storage Blobs service.</param>
-        /// <param name="readLegacyCheckpoints">Indicates whether to read legacy checkpoint when no current version checkpoint is available for a partition.</param>
+        /// <param name="initializeWithLegacyCheckpoints">Indicates whether to read legacy checkpoint when no current version checkpoint is available for a partition.</param>
         ///
         public BlobsCheckpointStore(BlobContainerClient blobContainerClient,
                                     EventHubsRetryPolicy retryPolicy,
-                                    bool readLegacyCheckpoints = false)
+                                    bool initializeWithLegacyCheckpoints = false)
         {
             Argument.AssertNotNull(blobContainerClient, nameof(blobContainerClient));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             ContainerClient = blobContainerClient;
             RetryPolicy = retryPolicy;
-            ReadLegacyCheckpoints = readLegacyCheckpoints;
+            InitializeWithLegacyCheckpoints = initializeWithLegacyCheckpoints;
             BlobsCheckpointStoreCreated(nameof(BlobsCheckpointStore), blobContainerClient.AccountName, blobContainerClient.Name);
         }
 
@@ -410,7 +410,7 @@ namespace Azure.Messaging.EventHubs.Processor
             try
             {
                 checkpoints = await ApplyRetryPolicy(listCheckpointsAsync, cancellationToken).ConfigureAwait(false);
-                if (ReadLegacyCheckpoints)
+                if (InitializeWithLegacyCheckpoints)
                 {
                     checkpoints.AddRange(await ApplyRetryPolicy(ct => listLegacyCheckpointsAsync(checkpoints, ct), cancellationToken).ConfigureAwait(false));
                 }
