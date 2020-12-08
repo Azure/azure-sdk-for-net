@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 var plugin = new SendReceivePlugin();
                 var options = new ServiceBusClientOptions();
                 options.AddPlugin(plugin);
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
                 var sender = client.CreateSender(scope.TopicName);
 
                 await sender.SendMessageAsync(GetMessage("sessionId"));
@@ -163,7 +163,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 var plugin = new SendReceivePlugin();
                 var options = new ServiceBusClientOptions();
                 options.AddPlugin(plugin);
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage());
                 Assert.True(plugin.WasCalled);
@@ -193,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 var plugin = new SendReceivePlugin();
                 var options = new ServiceBusClientOptions();
                 options.AddPlugin(plugin);
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
                 var sender = client.CreateSender(scope.QueueName);
 
                 await sender.SendMessageAsync(GetMessage("sessionId"));
@@ -228,7 +228,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 var sender = client.CreateSender(scope.QueueName);
                 Assert.That(
-                    async() => await sender.SendMessageAsync(new ServiceBusMessage()),
+                    async () => await sender.SendMessageAsync(new ServiceBusMessage()),
                     Throws.InstanceOf<NotImplementedException>());
 
                 options = new ServiceBusClientOptions();

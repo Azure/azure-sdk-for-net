@@ -922,15 +922,17 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///
         /// <param name="identifier">The name of the Entity that the link is associated with.</param>
         /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
+        /// <param name="expiration"></param>
         ///
-        [Event(AmqpLinkRefreshCompleteEvent, Level = EventLevel.Informational, Message = "Completed refresh of AMQP link authorization for Identifier: {0} (Service Endpoint: '{1}').")]
+        [Event(AmqpLinkRefreshCompleteEvent, Level = EventLevel.Informational, Message = "Completed refresh of AMQP link authorization for Identifier: {0} (Service Endpoint: '{1}'), Expiration: {2}.")]
         public virtual void AmqpLinkAuthorizationRefreshComplete(
             string identifier,
-            string endpoint)
+            string endpoint,
+            string expiration)
         {
             if (IsEnabled())
             {
-                WriteEvent(AmqpLinkRefreshCompleteEvent, identifier ?? string.Empty, endpoint ?? string.Empty);
+                WriteEvent(AmqpLinkRefreshCompleteEvent, identifier ?? string.Empty, endpoint ?? string.Empty, expiration);
             }
         }
 
@@ -1065,6 +1067,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(CreateManagementLinkExceptionEvent, identifier, exception);
+            }
+        }
+
+        [Event(150, Level = EventLevel.Informational, Message = "CbsAuthorization for: {0}. Expiry: {1}")]
+        internal void CbsAuthorization(string endpoint, string expiry)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(150, endpoint, expiry);
             }
         }
 

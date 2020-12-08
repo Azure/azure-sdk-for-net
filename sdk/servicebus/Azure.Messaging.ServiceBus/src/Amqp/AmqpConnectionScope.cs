@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Runtime.ExceptionServices;
+using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -668,6 +669,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 var authClaims = new[] { ServiceBusClaim.Send };
 
+                //DateTime authExpirationUtc = DateTime.Now.Subtract(TimeSpan.FromMinutes(60));
                 DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
                     connection,
                     TokenProvider,
@@ -842,6 +844,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan refreshTimeout,
             Func<Timer> refreshTimerFactory)
         {
+            DateTime authExpirationUtc = default;
             return async _ =>
             {
                 ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshStart(entityPath, endpoint.AbsoluteUri);
@@ -854,7 +857,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         return;
                     }
 
-                    DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
+                    authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
                         connection,
                         tokenProvider,
                         endpoint,
@@ -890,7 +893,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
                 finally
                 {
-                    ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshComplete(entityPath, endpoint.AbsoluteUri);
+                    ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshComplete(entityPath, endpoint.AbsoluteUri, authExpirationUtc.ToString(CultureInfo.InvariantCulture));
                 }
             };
         }
@@ -967,6 +970,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     cbsTokenExpiresAtUtc = expiresAt;
                 }
             }
+            ServiceBusEventSource.Log.CbsAuthorization(endpoint.ToString(), cbsTokenExpiresAtUtc.ToString(CultureInfo.InvariantCulture));
             return cbsTokenExpiresAtUtc;
         }
 
