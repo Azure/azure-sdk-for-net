@@ -21,7 +21,6 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
     {
-
         private readonly ServiceBusClientOptions _options;
 
         /// <summary>

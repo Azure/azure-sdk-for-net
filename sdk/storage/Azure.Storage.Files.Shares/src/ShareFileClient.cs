@@ -144,10 +144,15 @@ namespace Azure.Storage.Files.Shares
         internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         //const string fileType = "file";
 
@@ -358,7 +363,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareFileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new ShareUriBuilder(Uri) { Snapshot = shareSnapshot };
-            return new ShareFileClient(builder.ToUri(), Pipeline, _storageSharedKeyCredential, Version, ClientDiagnostics);
+            return new ShareFileClient(builder.ToUri(), Pipeline, SharedKeyCredential, Version, ClientDiagnostics);
         }
 
         /// <summary>
@@ -3183,7 +3188,6 @@ namespace Azure.Storage.Files.Shares
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="ClearRangeAsync"/>
         /// operation clears the <paramref name="range"/> of a file.
@@ -3768,8 +3772,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .ConfigureAwait(false);
 
-
-
         /// <summary>
         /// The <see cref="UploadRangeFromUriAsync(Uri, HttpRange, HttpRange, CancellationToken)"/>
         /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
@@ -4189,7 +4191,6 @@ namespace Azure.Storage.Files.Shares
                         async,
                         cancellationToken)
                         .ConfigureAwait(false);
-
                 }
             }
             finally
@@ -4933,7 +4934,6 @@ namespace Azure.Storage.Files.Shares
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
                 handlesFailed += response.Value.NumberOfHandlesFailedToClose;
-
             } while (!string.IsNullOrEmpty(marker));
 
             return new CloseHandlesResult()
@@ -5293,7 +5293,7 @@ namespace Azure.Storage.Files.Shares
             }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

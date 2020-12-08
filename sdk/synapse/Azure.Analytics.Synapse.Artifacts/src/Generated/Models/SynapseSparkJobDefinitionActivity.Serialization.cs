@@ -16,6 +16,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(LinkedServiceName))
+            {
+                writer.WritePropertyName("linkedServiceName");
+                writer.WriteObjectValue(LinkedServiceName);
+            }
+            if (Optional.IsDefined(Policy))
+            {
+                writer.WritePropertyName("policy");
+                writer.WriteObjectValue(Policy);
+            }
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
@@ -60,6 +70,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SynapseSparkJobDefinitionActivity DeserializeSynapseSparkJobDefinitionActivity(JsonElement element)
         {
+            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
@@ -70,6 +82,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("linkedServiceName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("policy"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -135,7 +167,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, sparkJob);
+            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, sparkJob);
         }
     }
 }

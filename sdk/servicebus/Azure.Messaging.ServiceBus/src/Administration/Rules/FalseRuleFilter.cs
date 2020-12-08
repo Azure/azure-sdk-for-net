@@ -46,7 +46,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return other is FalseRuleFilter;
         }
 
-        /// <inheritdoc/>
+        /// <summary>Compares two <see cref="FalseRuleFilter"/> values for equality.</summary>
         public static bool operator ==(FalseRuleFilter left, FalseRuleFilter right)
         {
             if (ReferenceEquals(left, right))
@@ -62,7 +62,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <inheritdoc/>
+        /// <summary>Compares two <see cref="FalseRuleFilter"/> values for inequality.</summary>
         public static bool operator !=(FalseRuleFilter left, FalseRuleFilter right)
         {
             return !(left == right);

@@ -152,7 +152,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     Scheme = clientOptions.TransportType.GetUriScheme(),
                     Host = host
-
                 }.Uri;
 
                 EventHubName = eventHubName;

@@ -90,7 +90,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "HDInsightSpark": return HDInsightSparkActivity.DeserializeHDInsightSparkActivity(element);
                     case "HDInsightStreaming": return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element);
                     case "Lookup": return LookupActivity.DeserializeLookupActivity(element);
+                    case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element);
                     case "SqlServerStoredProcedure": return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element);
+                    case "SynapseNotebook": return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element);
                     case "WebActivity": return WebActivity.DeserializeWebActivity(element);
                 }
             }

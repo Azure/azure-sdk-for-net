@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201123.2" />
+    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201203.2" />
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
     <PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
@@ -28,7 +28,7 @@
     <PackageReference Update="Azure.Storage.Common" Version="12.1.1" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.0.1" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.1.1" />
-    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.0.0" />
+    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.5.0" />
     <PackageReference Update="Azure.Storage.Blobs.ChangeFeed" Version="12.0.0-preview.1" />
     <PackageReference Update="BenchmarkDotNet" Version="0.11.5" />
     <PackageReference Update="Castle.Core" Version="4.4.0" />

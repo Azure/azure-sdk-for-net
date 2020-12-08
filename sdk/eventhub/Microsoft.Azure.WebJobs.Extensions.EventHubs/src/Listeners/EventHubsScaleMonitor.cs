@@ -147,7 +147,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             };
         }
 
-
         // Get the number of unprocessed events by deriving the delta between the server side info and the partition lease info,
         private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobsCheckpointStore.BlobStorageCheckpoint partitionLeaseInfo)
         {

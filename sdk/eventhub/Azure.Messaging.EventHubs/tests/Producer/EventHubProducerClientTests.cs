@@ -479,7 +479,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 "Partition state should not have been initialized twice.");
         }
 
-
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
@@ -716,7 +715,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SendIdempotentRequiresThePartition()
         {
-
             var events = EventGenerator.CreateEvents(5);
             var transportProducer = new ObservableTransportProducerMock();
             var connection = new MockConnection(() => transportProducer);
@@ -2596,7 +2594,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public Func<string, TransportProducerFeatures, PartitionPublishingOptions, EventHubsRetryPolicy, TransportProducer> TransportProducerFactory =
                 (partition, features, options, retry) => Mock.Of<TransportProducer>();
-
 
             public MockConnection(string namespaceName = "fakeNamespace",
                                   string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net").Object)

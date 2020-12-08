@@ -80,6 +80,5 @@ namespace Azure.Identity
 
             return null;
         }
-
     }
 }

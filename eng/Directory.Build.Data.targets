@@ -232,5 +232,8 @@
      <Message Text="Ran ApiCompat against %(ResolvedMatchingContract.Identity) using assemblies from $(IntermediateOutputPath)" Importance="High" />
   </Target>
 
+  <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+  </Target>
+
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
 </Project>

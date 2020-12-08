@@ -76,7 +76,8 @@ namespace Azure.Storage.Test.Shared
                     Mode = RetryMode.Exponential,
                     MaxRetries = Storage.Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60),
+                    NetworkTimeout = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 100 : 400),
                 },
                 Transport = GetTransport()
             };
@@ -274,7 +275,6 @@ namespace Azure.Storage.Test.Shared
             PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
-
             containerName ??= GetNewContainerName();
             service ??= GetServiceClient_SharedKey();
 
@@ -287,7 +287,6 @@ namespace Azure.Storage.Test.Shared
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
-
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(

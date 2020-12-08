@@ -386,7 +386,6 @@ namespace Azure.Data.Tables
         /// <returns>The StorageCredentials object specified in the settings.</returns>
         private static object GetCredentials(ConnectionString settings)
         {
-
             settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName);
             settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey);
             settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out var sharedAccessSignature);
@@ -471,7 +470,6 @@ namespace Azure.Data.Tables
             return ConstructUris(scheme, accountName, TableConstants.ConnectionStrings.DefaultTableHostnamePrefix, endpointSuffix, sasToken);
         }
 
-
         /// <summary>
         /// Gets the default table endpoint using the specified settings.
         /// </summary>
@@ -482,6 +480,5 @@ namespace Azure.Data.Tables
                 settings.GetRequired(TableConstants.ConnectionStrings.AccountNameSetting),
                 settings.GetNonRequired(TableConstants.ConnectionStrings.EndpointSuffixSetting),
                 settings.GetNonRequired(TableConstants.ConnectionStrings.SharedAccessSignatureSetting));
-
     }
 }

@@ -83,7 +83,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 shardCursor)
                 .ConfigureAwait(false);
 
-
             ShardCursor cursor = shard.GetCursor();
 
             // Assert
@@ -504,7 +503,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             for (int i = 0; i < chunkCount; i++)
             {
-
                 chunks[$"chunk{2 + i}"].SetupSequence(r => r.Next(
                     It.IsAny<bool>(),
                     default))
