@@ -110,6 +110,10 @@ jobs:
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     variables:
       - template: ../variables/globals.yml
+      - name: Coverage.PackageName
+        value: Coverage.${{ parameters.ServiceDirectory }}-$(Build.Repository.Name).$(Build.SourceBranchName)
+      - name: Coverage.HistoryDirectory
+        value: $(Build.ArtifactStagingDirectory)\coverage_history
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
@@ -164,12 +168,25 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+      - template: /eng/pipelines/templates/steps/select-feed.yml
+      - task: UniversalPackages@0
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Get code coverage history
+        continueOnError: true
+        inputs:
+          command: download
+          downloadDirectory: $(Coverage.HistoryDirectory)
+          feedsToUse: internal
+          vstsFeed: $DevOpsFeedID
+          vstsFeedPackage: $(Coverage.PackageName)
+          vstsPackageVersion: '0.*'
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports
         inputs:
           reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
           targetdir: $(Build.ArtifactStagingDirectory)\coverage
+          historydir: $(Coverage.HistoryDirectory)
           reporttypes: Cobertura
           filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
           verbosity: Verbose
@@ -179,3 +196,16 @@ jobs:
         inputs:
           codeCoverageTool: Cobertura
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
+      - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        - task: UniversalPackages@0
+          condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+          displayName: Publish code coverage history
+          inputs:
+            command: publish
+            publishDirectory: $(Coverage.HistoryDirectory)
+            feedsToUsePublish: internal
+            vstsFeedPublish: $DevOpsFeedID
+            vstsFeedPackagePublish: $(Coverage.PackageName)
+            versionOption: patch
+            packagePublishDescription: Code coverage history for $(Coverage.PackageName) on branch $(Build.SourceBranchName)
+            verbosity: information
