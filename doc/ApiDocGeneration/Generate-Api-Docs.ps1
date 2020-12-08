@@ -74,7 +74,6 @@ $YamlOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-yaml-output"
 $DocOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/docfx-output/docfx_project"
 $DocOutApiDir = "${DocOutDir}/api"
 $DocOutHtmlDir = "${DocOutDir}/_site"
-echo "##vso[task.setvariable variable=DocHtmlDir]$DocOutHtmlDir"
 $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
 $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
 $DocCommonGenDir = "${RepoRoot}/eng/common/docgeneration"
@@ -153,3 +152,21 @@ Write-Verbose "Build Doc Content"
 
 Write-Verbose "Copy over site Logo"
 Copy-Item "${DocCommonGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
+
+# Copy everything inside of /api out.
+Write-Verbose "Copy index.html and toc.yml out."
+$destFolder = "${DocOutHtmlDir}/"
+Copy-Item -Path "${DocOutHtmlDir}/api/index.html" -Destination $destFolder -Confirm:$false -Force
+
+# Change the relative path inside index.html.
+Write-Verbose "Make changes on relative path on page index.html."
+$baseUrl = $destFolder + "index.html"
+$content = Get-Content -Path $baseUrl -Raw
+$hrefRegex = "[""']\.\.\/([^""']*)[""']"
+$tocRegex = "(./)?toc.html"
+$mutatedContent = $content -replace $hrefRegex, '"./$1"'
+$mutatedContent = $mutatedContent -replace $tocRegex, './api/toc.html'
+Set-Content -Path $baseUrl -Value $mutatedContent -NoNewline
+
+Write-Verbose "Compress and copy HTML into the staging Area"
+Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest  
