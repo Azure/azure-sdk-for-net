@@ -60,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                     {
                         Page<BlobItem>.FromValues(new[]
                         {
-                            BlobsModelFactory.BlobItem("testnamespace/testeventhubname/testconsumergroup/checkpoint/0", false, BlobsModelFactory.BlobItemProperties(false), metadata: new Dictionary<string, string>())
+                            BlobsModelFactory.BlobItem("testnamespace/testeventhubname/testconsumergroup/checkpoint/0", false, BlobsModelFactory.BlobItemProperties(false, contentLength: 0), metadata: new Dictionary<string, string>())
                         }, null, Mock.Of<Response>())
                     }));
 
