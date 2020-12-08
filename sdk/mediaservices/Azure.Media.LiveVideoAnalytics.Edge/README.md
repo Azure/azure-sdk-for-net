@@ -21,10 +21,11 @@ Install the Live Video Analytics client library for .NET with pip:
 
 * C# is required to use this package.
 * You need an active [Azure subscription][azure_sub], and a [IoT device connection string][iot_device_connection_string] to use this package.
+* You will need to use the version of the SDK that corresponds to the version of the LVA Edge module you are using.
 
-| SDK  | LVA Edge Module  |
-|---|---|
-| 1.0.0b1  | 2.0.0  |
+    | SDK  | LVA Edge Module  |
+    |---|---|
+    | 1.0.0b1  | 2.0  |
 
 ### Creating a graph topology and making requests
 Please visit the [Examples](#examples) for starter code

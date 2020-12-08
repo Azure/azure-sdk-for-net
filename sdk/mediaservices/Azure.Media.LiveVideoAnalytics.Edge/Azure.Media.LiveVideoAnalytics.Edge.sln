@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Media.LiveVideoAnalytics.Edge.Tests", "tests\Azure.Media.LiveVideoAnalytics.Edge.Tests.csproj", "{33D63B09-7C80-439B-8A8D-BC345110C908}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Media.LiveVideoAnalytics.Edge.Samples", "samples\Azure.Media.LiveVideoAnalytics.Edge.Samples.csproj", "{FE985514-0F2A-44AA-844A-F360A4475F21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{33D63B09-7C80-439B-8A8D-BC345110C908}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D63B09-7C80-439B-8A8D-BC345110C908}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D63B09-7C80-439B-8A8D-BC345110C908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE985514-0F2A-44AA-844A-F360A4475F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE985514-0F2A-44AA-844A-F360A4475F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE985514-0F2A-44AA-844A-F360A4475F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE985514-0F2A-44AA-844A-F360A4475F21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

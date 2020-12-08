@@ -1,14 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Media.LiveVideoAnalytics.Edge.Models;
 using Microsoft.Azure.Devices;
 using NUnit.Framework;
-using System.Text.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.IO;
@@ -21,8 +19,8 @@ namespace Azure.Media.LiveVideoAnalytics.Tests.Samples
     public class LiveVideoAnalyticsSample
     {
         private ServiceClient _serviceClient;
-        private String _deviceId = "enter-your-device-id";
-        private String _moduleId = "enter-your-moudle-id";
+        private String _deviceId = "enter-your-device-name";
+        private String _moduleId = "enter-your-module-name";
 
         public LiveVideoAnalyticsSample()
         {
@@ -56,7 +54,7 @@ namespace Azure.Media.LiveVideoAnalytics.Tests.Samples
                 var activateGraphResponse = await InvokeDirectMethodHelper(new MediaGraphInstanceActivateRequest(graphInstance.Name));
 
                 //get instance
-                var getGraphInstanceResponse = await InvokeDirectMethodHelper(new MediaGraphInstanceGetRequest(graphTopology.Name));
+                var getGraphInstanceResponse = await InvokeDirectMethodHelper(new MediaGraphInstanceGetRequest(graphInstance.Name));
                 var getGraphInstaceResult = MediaGraphInstance.Deserialize(getGraphInstanceResponse.GetPayloadAsJson());
 
                 //get deactive graph
