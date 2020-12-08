@@ -177,7 +177,7 @@ jobs:
           command: download
           downloadDirectory: $(Coverage.HistoryDirectory)
           feedsToUse: internal
-          vstsFeed: $DevOpsFeedID
+          vstsFeed: $(DevOpsFeedID)
           vstsFeedPackage: $(Coverage.PackageName)
           vstsPackageVersion: '0.*'
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
@@ -204,7 +204,7 @@ jobs:
             command: publish
             publishDirectory: $(Coverage.HistoryDirectory)
             feedsToUsePublish: internal
-            vstsFeedPublish: $DevOpsFeedID
+            vstsFeedPublish: $(DevOpsFeedID)
             vstsFeedPackagePublish: $(Coverage.PackageName)
             versionOption: patch
             packagePublishDescription: Code coverage history for $(Coverage.PackageName) on branch $(Build.SourceBranchName)
