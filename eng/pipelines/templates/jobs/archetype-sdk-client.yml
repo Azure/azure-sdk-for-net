@@ -149,7 +149,6 @@ jobs:
       vmImage: "$(OSVmImage)"
       name: "$(Pool)"
     steps:
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
