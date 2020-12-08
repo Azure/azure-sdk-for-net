@@ -16,7 +16,7 @@ namespace Azure.Communication.Pipeline
 
         public static HttpPipeline BuildHttpPipeline(this ClientOptions options, TokenCredential tokenCredential)
         {
-            var authPolicy = new BearerTokenAuthenticationPolicy(tokenCredential, "https://communication.azure.com//.default");
+            var authPolicy = new BearerTokenAuthenticationPolicy(tokenCredential, "");
             return HttpPipelineBuilder.Build(options, authPolicy);
         }
     }
