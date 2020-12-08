@@ -123,6 +123,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="client">The client used to check for completion.</param>
         public CreateCustomFormModelOperation(string operationId, FormTrainingClient client)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             Id = operationId;
             _diagnostics = client.Diagnostics;
             _serviceClient = client.ServiceClient;

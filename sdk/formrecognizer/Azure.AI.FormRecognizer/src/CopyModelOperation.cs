@@ -86,6 +86,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="client">The client used to check for completion.</param>
         public CopyModelOperation(string operationId, string targetModelId, FormTrainingClient client)
         {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
+
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
             _targetModelId = targetModelId;
