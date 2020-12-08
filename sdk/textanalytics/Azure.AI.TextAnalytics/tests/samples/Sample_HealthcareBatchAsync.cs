@@ -63,7 +63,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 foreach (HealthcareEntity entity in result.Entities)
                 {
                     Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+                    Console.WriteLine($"    Category: {entity.Category}");
                     Console.WriteLine($"    Offset: {entity.Offset}");
                     Console.WriteLine($"    Length: {entity.Length}");
                     Console.WriteLine($"    IsNegated: {entity.IsNegated}");
