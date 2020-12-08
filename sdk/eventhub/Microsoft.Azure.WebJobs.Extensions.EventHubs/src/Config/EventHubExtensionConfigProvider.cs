@@ -78,10 +78,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             context.AddBindingRule<EventHubAttribute>()
                 .BindToInput(attribute => _clientFactory.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection));
 
-            ExceptionHandler = (e =>
+            ExceptionHandler = e =>
             {
                 LogExceptionReceivedEvent(e, _loggerFactory);
-            });
+            };
         }
 
         internal static void LogExceptionReceivedEvent(ExceptionReceivedEventArgs e, ILoggerFactory loggerFactory)

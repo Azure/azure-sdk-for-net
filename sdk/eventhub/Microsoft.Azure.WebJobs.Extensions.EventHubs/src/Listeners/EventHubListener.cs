@@ -133,9 +133,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages)
             {
+                var events = messages.ToArray();
+
                 var triggerInput = new EventHubTriggerInput
                 {
-                    Events = messages.ToArray(),
+                    Events = events,
                     PartitionContext = context
                 };
 
@@ -191,9 +193,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 // so that is the responsibility of the user's function currently. E.g.
                 // the function should have try/catch handling around all event processing
                 // code, and capture/log/persist failed events, since they won't be retried.
-                if (messages.Any())
+                if (events.Any())
                 {
-                    await CheckpointAsync(messages.Last(), context).ConfigureAwait(false);
+                    await CheckpointAsync(events.Last(), context).ConfigureAwait(false);
                 }
             }
 

@@ -41,6 +41,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 
         public AzuriteFixture()
         {
+            for (int i = 0; i < 150; i++)
+            {
             // This is to force newer protocol on machines with older .NET Framework. Otherwise tests don't connect to Azurite with unsigned cert.
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
@@ -127,6 +129,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             }
             account.BlobsPort = blobsPort;
             account.QueuesPort = queuesPort;
+            process.Kill();
+            }
         }
 
         private int ParseAzuritePort(string outputLine)
