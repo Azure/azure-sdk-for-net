@@ -3,7 +3,7 @@ steps:
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Create-APIReview.ps1
       arguments: >
-        -ArtifactPath $(Pipeline.Workspace)
+        -ArtifactPath $(Build.ArtifactStagingDirectory)/packages
         -APIViewUri "https://apiviewstaging.azurewebsites.net/AutoReview/UploadAutoReview"
         -APIKey $(azuresdk-apiview-apikey)
         -APILabel $(Build.SourceVersion)
