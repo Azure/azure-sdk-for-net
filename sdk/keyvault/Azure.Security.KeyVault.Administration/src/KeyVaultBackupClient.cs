@@ -143,9 +143,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-                string[] uriSegments = folderUri.Segments;
-                string folderName = uriSegments[uriSegments.Length - 1];
-                string containerUriString = folderUri.AbsoluteUri.Substring(0, folderUri.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase));
+                ParseFolderName(folderUri, out string containerUriString, out string folderName);
 
                 var response = await _restClient.FullRestoreOperationAsync(
                     VaultUri.AbsoluteUri,
@@ -184,9 +182,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-                string[] uriSegments = folderUri.Segments;
-                string folderName = uriSegments[uriSegments.Length - 1];
-                string containerUriString = folderUri.AbsoluteUri.Substring(0, folderUri.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase));
+                ParseFolderName(folderUri, out string containerUriString, out string folderName);
 
                 var response = _restClient.FullRestoreOperation(
                     VaultUri.AbsoluteUri,
@@ -377,6 +373,15 @@ namespace Azure.Security.KeyVault.Administration
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        internal static void ParseFolderName(Uri folderUri, out string containerUriString, out string folderName)
+        {
+            int indexOfContainerBoundary = folderUri.AbsoluteUri.IndexOf('/', folderUri.Scheme.Length + 4);
+            indexOfContainerBoundary = folderUri.AbsoluteUri.IndexOf('/', indexOfContainerBoundary + 1) + 1;
+
+            containerUriString = folderUri.AbsoluteUri.Substring(0, indexOfContainerBoundary - 1);
+            folderName = folderUri.AbsoluteUri.Substring(indexOfContainerBoundary, folderUri.AbsoluteUri.Length - indexOfContainerBoundary);
         }
     }
 }
