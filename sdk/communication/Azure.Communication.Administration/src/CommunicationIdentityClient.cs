@@ -33,7 +33,7 @@ namespace Azure.Communication.Administration
         /// <param name="tokenCredential">Token acquired from the Azure Communication Services to be used by service calls</param>
         /// <param name="endpoint">Endpoint to hit on the server</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CommunicationIdentityClient(TokenCredential tokenCredential, string endpoint, CommunicationIdentityClientOptions? options = default)
+        public CommunicationIdentityClient(Uri endpoint, TokenCredential tokenCredential, CommunicationIdentityClientOptions? options = default)
             : this(
                 options ?? new CommunicationIdentityClientOptions(),
                 AssertNotNull(tokenCredential, nameof(tokenCredential)),
@@ -48,13 +48,13 @@ namespace Azure.Communication.Administration
                 connectionString.GetRequired("endpoint"));
         }
 
-        private CommunicationIdentityClient(CommunicationIdentityClientOptions options, TokenCredential tokenCredential, string endpoint)
+        private CommunicationIdentityClient(CommunicationIdentityClientOptions options, TokenCredential tokenCredential, Uri endpoint)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
                 options.BuildHttpPipeline(tokenCredential),
-                endpoint);
+                endpoint.AbsoluteUri);
         }
 
         /// <summary>Initializes a new instance of <see cref="CommunicationIdentityClient"/> for mocking.</summary>

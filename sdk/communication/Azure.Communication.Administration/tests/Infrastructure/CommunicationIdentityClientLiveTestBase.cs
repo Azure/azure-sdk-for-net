@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 
@@ -22,11 +23,11 @@ namespace Azure.Communication.Administration.Tests
                     TestEnvironment.ConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions())));
 
-        protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClientWithToken(MockCredential token, string endpoint)
+        protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClientWithToken(MockCredential token, Uri endpoint)
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    token,
                     endpoint,
+                    token,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions())));
     }
 }

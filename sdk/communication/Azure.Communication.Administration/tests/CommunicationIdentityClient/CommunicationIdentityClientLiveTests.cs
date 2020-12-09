@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
@@ -55,7 +56,7 @@ namespace Azure.Communication.Administration.Tests
         public async Task GeneratesIdentityUsingTokenCredentialWithScopes(params string[] scopes)
         {
             var tokenCredential = new MockCredential();
-            var endpoint = "mockendpoint";
+            var endpoint = new Uri("https://localHostTest");
             CommunicationIdentityClient client = CreateInstrumentedCommunicationIdentityClientWithToken(tokenCredential, endpoint);
             Response<CommunicationUser> userResponse = await client.CreateUserAsync();
             Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
