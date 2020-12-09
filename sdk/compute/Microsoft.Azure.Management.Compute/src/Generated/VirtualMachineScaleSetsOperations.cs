@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the VM scale set.
         /// </param>
         /// <param name='forceDeletion'>
-        /// Optional parameter to force delete a VM scale set.
+        /// Optional parameter to force delete a VM scale set. (Feature in Preview)
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -362,6 +362,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='forceDeletion'>
         /// Optional parameter to force delete virtual machines from the VM scale set.
+        /// (Feature in Preview)
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -2415,7 +2416,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the VM scale set.
         /// </param>
         /// <param name='forceDeletion'>
-        /// Optional parameter to force delete a VM scale set.
+        /// Optional parameter to force delete a VM scale set. (Feature in Preview)
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2793,6 +2794,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='forceDeletion'>
         /// Optional parameter to force delete virtual machines from the VM scale set.
+        /// (Feature in Preview)
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

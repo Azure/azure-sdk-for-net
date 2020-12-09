@@ -52,12 +52,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// excluding critical and security.</param>
         /// <param name="startDateTime">The UTC timestamp when the operation
         /// began.</param>
-        /// <param name="patches">The list of patches that have been detected
-        /// as available for installation.</param>
+        /// <param name="availablePatches">The list of patches that have been
+        /// detected as available for installation.</param>
         /// <param name="error">The errors that were encountered during
         /// execution of the operation. The details array contains the list of
         /// them.</param>
-        public VirtualMachineAssessPatchesResult(string status = default(string), string assessmentActivityId = default(string), bool? rebootPending = default(bool?), int? criticalAndSecurityPatchCount = default(int?), int? otherPatchCount = default(int?), System.DateTime? startDateTime = default(System.DateTime?), IList<VirtualMachineSoftwarePatchProperties> patches = default(IList<VirtualMachineSoftwarePatchProperties>), ApiError error = default(ApiError))
+        public VirtualMachineAssessPatchesResult(string status = default(string), string assessmentActivityId = default(string), bool? rebootPending = default(bool?), int? criticalAndSecurityPatchCount = default(int?), int? otherPatchCount = default(int?), System.DateTime? startDateTime = default(System.DateTime?), IList<VirtualMachineSoftwarePatchProperties> availablePatches = default(IList<VirtualMachineSoftwarePatchProperties>), ApiError error = default(ApiError))
         {
             Status = status;
             AssessmentActivityId = assessmentActivityId;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             CriticalAndSecurityPatchCount = criticalAndSecurityPatchCount;
             OtherPatchCount = otherPatchCount;
             StartDateTime = startDateTime;
-            Patches = patches;
+            AvailablePatches = availablePatches;
             Error = error;
             CustomInit();
         }
@@ -124,8 +124,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the list of patches that have been detected as available for
         /// installation.
         /// </summary>
-        [JsonProperty(PropertyName = "patches")]
-        public IList<VirtualMachineSoftwarePatchProperties> Patches { get; private set; }
+        [JsonProperty(PropertyName = "availablePatches")]
+        public IList<VirtualMachineSoftwarePatchProperties> AvailablePatches { get; private set; }
 
         /// <summary>
         /// Gets the errors that were encountered during execution of the

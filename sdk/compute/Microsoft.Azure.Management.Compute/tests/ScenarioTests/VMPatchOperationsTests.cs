@@ -4,6 +4,7 @@
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Rest;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;
@@ -123,6 +124,44 @@ namespace Compute.Tests
                 Assert.NotNull(installPatchesResult.Patches[0].InstallationState);
                 // Add this check once windows solution for error objects content is fixed.
                 //Assert.NotNull(installPatchesResult.Error);
+
+                // When installPatchInput is not provided. 
+                // ToDo: Move this to a seperate function once the ARM issue for test session record is fixed
+                Assert.Throws<ValidationException>(() => m_CrpClient.VirtualMachines.InstallPatches(RgName, VmName, null));
+
+                // MaximumDuration not provided.
+                // ToDo: Move this to a seperate function once the ARM issue for test session record is fixed
+                VirtualMachineInstallPatchesParameters installPatchesInput_WithoutMaxDuration = new VirtualMachineInstallPatchesParameters
+                {
+                    RebootSetting = "IfRequired",
+                    WindowsParameters = new WindowsParameters
+                    {
+                        ClassificationsToInclude = new List<string>
+                        {
+                            "Critical",
+                            "Security"
+                        },
+                        MaxPatchPublishDate = DateTime.UtcNow
+                    }
+                };
+                Assert.Throws<ValidationException>(() => m_CrpClient.VirtualMachines.InstallPatches(RgName, VmName, installPatchesInput_WithoutMaxDuration));
+
+                // RebootSetting not provided.
+                // ToDo: Move this to a seperate function once the ARM issue for test session record is fixed
+                VirtualMachineInstallPatchesParameters installPatchesInput_WithoutRebootSetting = new VirtualMachineInstallPatchesParameters
+                {
+                    MaximumDuration = "PT4H",
+                    WindowsParameters = new WindowsParameters
+                    {
+                        ClassificationsToInclude = new List<string>
+                        {
+                            "Critical",
+                            "Security"
+                        },
+                        MaxPatchPublishDate = DateTime.UtcNow
+                    }
+                };
+                Assert.Throws<ValidationException>(() => m_CrpClient.VirtualMachines.InstallPatches(RgName, VmName, installPatchesInput_WithoutRebootSetting));
             }
         }
 
@@ -175,6 +214,44 @@ namespace Compute.Tests
                 Assert.NotNull(installPatchesResult.Patches[0].Classifications);
                 Assert.NotNull(installPatchesResult.Patches[0].InstallationState);
                 Assert.NotNull(installPatchesResult.Error);
+
+                // When installPatchInput is not provided. 
+                // ToDo: Move this to a seperate function once the ARM issue for test session record is fixed
+                Assert.Throws<ValidationException>(() => m_CrpClient.VirtualMachines.InstallPatches(RgName, VmName, null));
+
+                // MaximumDuration not provided.
+                // ToDo: Move this to a seperate function once the ARM issue for test session record is fixed
+                VirtualMachineInstallPatchesParameters installPatchesInput_WithoutMaxDuration = new VirtualMachineInstallPatchesParameters
+                {
+                    RebootSetting = "IfRequired",
+                    LinuxParameters = new LinuxParameters
+                    {
+                        ClassificationsToInclude = new List<string>
+                        {
+                            "Critical",
+                            "Security"
+                        },
+                        MaintenanceRunId = DateTime.UtcNow.ToString(),
+                    }
+                };
+                Assert.Throws<ValidationException>(() => m_CrpClient.VirtualMachines.InstallPatches(RgName, VmName, installPatchesInput_WithoutMaxDuration));
+
+                // RebootSetting not provided.
+                // ToDo: Move this to a seperate function once the ARM issue for test session record is fixed
+                VirtualMachineInstallPatchesParameters installPatchesInput_WithoutRebootSetting = new VirtualMachineInstallPatchesParameters
+                {
+                    MaximumDuration = "PT4H",
+                    LinuxParameters = new LinuxParameters
+                    {
+                        ClassificationsToInclude = new List<string>
+                        {
+                            "Critical",
+                            "Security"
+                        },
+                        MaintenanceRunId = DateTime.UtcNow.ToString(),
+                    }
+                };
+                Assert.Throws<ValidationException>(() => m_CrpClient.VirtualMachines.InstallPatches(RgName, VmName, installPatchesInput_WithoutRebootSetting));
             }
         }
     }

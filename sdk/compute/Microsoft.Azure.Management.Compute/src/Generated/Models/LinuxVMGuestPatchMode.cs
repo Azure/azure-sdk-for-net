@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for PatchAssessmentState.
+    /// Defines values for LinuxVMGuestPatchMode.
     /// </summary>
-    public static class PatchAssessmentState
+    public static class LinuxVMGuestPatchMode
     {
-        public const string Unknown = "Unknown";
-        public const string Available = "Available";
+        public const string ImageDefault = "ImageDefault";
+        public const string AutomaticByPlatform = "AutomaticByPlatform";
     }
 }

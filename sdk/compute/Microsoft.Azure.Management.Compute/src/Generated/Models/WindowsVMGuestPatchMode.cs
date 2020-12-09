@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for PatchAssessmentState.
+    /// Defines values for WindowsVMGuestPatchMode.
     /// </summary>
-    public static class PatchAssessmentState
+    public static class WindowsVMGuestPatchMode
     {
-        public const string Unknown = "Unknown";
-        public const string Available = "Available";
+        public const string Manual = "Manual";
+        public const string AutomaticByOS = "AutomaticByOS";
+        public const string AutomaticByPlatform = "AutomaticByPlatform";
     }
 }
