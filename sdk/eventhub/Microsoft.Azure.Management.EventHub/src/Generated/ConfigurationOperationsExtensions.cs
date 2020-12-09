@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.EventHub
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -35,12 +37,13 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='clusterName'>
             /// The name of the Event Hubs Cluster.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters for creating an Event Hubs Cluster resource.
+            /// <param name='settings'>
+            /// All possible Cluster settings - a collection of key/value paired settings
+            /// which apply to quotas and configurations imposed on the cluster.
             /// </param>
-            public static ClusterQuotaConfigurationProperties Patch(this IConfigurationOperations operations, string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters)
+            public static ClusterQuotaConfigurationProperties Patch(this IConfigurationOperations operations, string resourceGroupName, string clusterName, IDictionary<string, string> settings = default(IDictionary<string, string>))
             {
-                return operations.PatchAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+                return operations.PatchAsync(resourceGroupName, clusterName, settings).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -57,15 +60,16 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='clusterName'>
             /// The name of the Event Hubs Cluster.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters for creating an Event Hubs Cluster resource.
+            /// <param name='settings'>
+            /// All possible Cluster settings - a collection of key/value paired settings
+            /// which apply to quotas and configurations imposed on the cluster.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ClusterQuotaConfigurationProperties> PatchAsync(this IConfigurationOperations operations, string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ClusterQuotaConfigurationProperties> PatchAsync(this IConfigurationOperations operations, string resourceGroupName, string clusterName, IDictionary<string, string> settings = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, clusterName, settings, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
