@@ -47,7 +47,8 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// True.</param>
         /// <param name="isValidated">Whether this channel is validated for the
         /// bot</param>
-        public SlackChannelProperties(string clientId, string clientSecret, string verificationToken, bool isEnabled, string landingPageUrl = default(string), string redirectAction = default(string), string lastSubmissionId = default(string), bool? registerBeforeOAuthFlow = default(bool?), bool? isValidated = default(bool?))
+        /// <param name="signingSecret">The Slack signing secret.</param>
+        public SlackChannelProperties(string clientId, string clientSecret, string verificationToken, bool isEnabled, string landingPageUrl = default(string), string redirectAction = default(string), string lastSubmissionId = default(string), bool? registerBeforeOAuthFlow = default(bool?), bool? isValidated = default(bool?), string signingSecret = default(string))
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -57,6 +58,7 @@ namespace Microsoft.Azure.Management.BotService.Models
             LastSubmissionId = lastSubmissionId;
             RegisterBeforeOAuthFlow = registerBeforeOAuthFlow;
             IsValidated = isValidated;
+            SigningSecret = signingSecret;
             IsEnabled = isEnabled;
             CustomInit();
         }
@@ -116,6 +118,12 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// </summary>
         [JsonProperty(PropertyName = "isValidated")]
         public bool? IsValidated { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Slack signing secret.
+        /// </summary>
+        [JsonProperty(PropertyName = "signingSecret")]
+        public string SigningSecret { get; set; }
 
         /// <summary>
         /// Gets or sets whether this channel is enabled for the bot
