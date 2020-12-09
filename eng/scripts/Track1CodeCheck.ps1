@@ -27,6 +27,19 @@ function Invoke-Block([scriptblock]$cmd) {
     }
 }
 
+function Find-Mapping([string]$path) {
+    $fileContent = Get-Content $path
+    $name = ''
+    foreach ($item in $fileContent) {
+        if (($item -match '\$\(csharp-sdks-folder\)')) {
+            $matchResult = $item -match "\/([^/]+)\/"
+            $name = $matches[0].Substring(1, $matches[0].Length - 2)
+            break
+        }
+    }
+    return $name
+}
+
 # helper to turn PSCustomObject into a list of key/value pairs
 function Get-ObjectMembers {
     [CmdletBinding()]
@@ -44,24 +57,22 @@ try {
     # Get RP Mapping
     $RPMapping = @{ }
     $readmePath = ''
+    $folderName = ''
     git clone https://github.com/Azure/azure-rest-api-specs.git ../azure-rest-api-specs
     $folderNames = Get-ChildItem ../azure-rest-api-specs/specification
     $folderNames | ForEach-Object {
-        if (Test-Path "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md") {
-            $readmePath = "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md"
+        $readmePath = "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md"
+        if (Test-Path $readmePath) {
+            $folderName = Find-Mapping $readmePath
         }
-        elseif (Test-Path "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.md") {
+        if (($folderName -eq '') -or ($folderName -match "\$")) {
             $readmePath = "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.md"
-        } 
-        $fileContent = Get-Content $readmePath
-        foreach ($item in $fileContent) {
-            if (($item -match '\$\(csharp-sdks-folder\)')) {
-                $item -match "\/([^/]+)\/"
-                $folderName = $matches[0].Substring(1, $matches[0].Length - 2)
-                if (($folderName -notmatch "\$") -and (!$RPMapping.ContainsKey($folderName))) {
-                    $RPMapping += @{ $folderName = "$($_.Name)" }
-                }
+            if (Test-Path $readmePath) {
+                $folderName = Find-Mapping $readmePath
             }
+        }
+        if (($folderName -notmatch "\$") -and (!$RPMapping.ContainsKey($folderName)) -and ($folderName -ne '')) {
+            $RPMapping += @{ $folderName = "$($_.Name)" }
         }
     }
 
@@ -124,7 +135,7 @@ try {
             $metaDataContent = Get-Content $metaData
         }
         catch {
-            LogError "Cannot find path $metaData"
+            LogError "Can't find path $metaData"
         }
 
         if ( $metaDataContent -ne '') {
