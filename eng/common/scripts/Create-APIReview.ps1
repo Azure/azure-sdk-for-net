@@ -54,7 +54,7 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel){
 }
 
 
-. "${PSScriptRoot}\..\common\scripts\common.ps1"
+. (Join-Path $PSScriptRoot common.ps1)
 $packages = Find-Artifacts-For-Apireview($ArtifactPath, $PackageName)
 $responses = @{}
 if ($packages){
@@ -63,6 +63,9 @@ if ($packages){
         Write-Host $packages[$pkg.Key]
         $responses[$pkg.Key] = Submit-APIReview -packagename $pkg.Key -filePath $packages[$pkg.Key] -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel
     }
+}
+else{
+    Write-Host "No package is found in artifact path to submit review request"
 }
 
 $FoundFailure = $False

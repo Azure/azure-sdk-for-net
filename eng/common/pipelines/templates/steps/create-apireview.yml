@@ -1,0 +1,20 @@
+steps:
+  - task: DownloadPipelineArtifact@2
+    displayName: Download Packages
+    inputs:
+      artifact: 'packages'
+      path: $(Pipeline.Workspace)/apireviewstaging
+
+  - task: Powershell@2
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Create-APIReview.ps1
+      arguments: >
+        -ArtifactPath $(Pipeline.Workspace)/apireviewstaging
+        -APIViewUri "https://apiviewstaging.azurewebsites.net/AutoReview/UploadAutoReview"
+        -APIKey $(azuresdk-apiview-apikey)
+        -APILabel $(Build.SourceVersion)
+      pwsh: true
+      workingDirectory: $(Pipeline.Workspace)
+    displayName: Create API Review ${{ parameters.PackageName }}
+    condition: and(succeededOrFailed(), ne(variables['Skip.CreateApiReview'], 'true') , ne(variables['Build.Reason'],'PullRequest'))
+    continueOnError: true
