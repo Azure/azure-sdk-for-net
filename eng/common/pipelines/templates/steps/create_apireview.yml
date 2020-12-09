@@ -19,4 +19,5 @@ steps:
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Create API Review ${{ parameters.PackageName }}
+    condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
     continueOnError: true

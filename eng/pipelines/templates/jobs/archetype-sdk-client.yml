@@ -108,7 +108,6 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
 
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
 
   - job: "Test"
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
