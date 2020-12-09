@@ -198,7 +198,14 @@ jobs:
           codeCoverageTool: Cobertura
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
       # - ${{ if and(eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net'), eq(variables['Build.SourceBranchName'], 'master')) }}:
-      - ${{ if and(eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net')) }}:
+      - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        - pwsh: |
+            echo "${env:BRN}"
+            echo "${env:SBN}"
+          displayName: TEST
+          env:
+            BRN: ${{ variables['Build.Repository.Name'] }}
+            SBN: ${{ variables['Build.SourceBranchName'] }}
         - task: UniversalPackages@0
           condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
           displayName: Publish code coverage history
