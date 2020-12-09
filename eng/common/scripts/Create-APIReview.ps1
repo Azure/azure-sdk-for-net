@@ -54,7 +54,7 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel){
 }
 
 
-. ".\common.ps1"
+. (Join-Path $PSScriptRoot common.ps1)
 $packages = Find-Artifacts-For-Apireview($ArtifactPath, $PackageName)
 $responses = @{}
 if ($packages){
