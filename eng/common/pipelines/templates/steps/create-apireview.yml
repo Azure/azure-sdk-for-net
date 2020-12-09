@@ -1,5 +1,6 @@
 steps:
   - task: DownloadPipelineArtifact@2
+    displayName: Download Packages
     inputs:
       artifact: 'packages'
       path: $(Pipeline.Workspace)/apireviewstaging
