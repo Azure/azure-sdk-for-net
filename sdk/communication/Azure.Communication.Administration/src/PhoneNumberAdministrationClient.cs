@@ -29,15 +29,6 @@ namespace Azure.Communication.Administration
         { }
 
         /// <summary>
-        /// Initializes a phone number administration client with an Token credential
-        /// </summary>
-        /// <param name="tokenCredential"></param>
-        /// <param name="endpoint"></param>
-        public PhoneNumberAdministrationClient(TokenCredential tokenCredential, string endpoint)
-            : this(new PhoneNumberAdministrationClientOptions(), tokenCredential, endpoint)
-        { }
-
-        /// <summary>
         /// Initializes a phone number administration client with an Azure resource connection string and client options.
         /// </summary>
         public PhoneNumberAdministrationClient(string connectionString, PhoneNumberAdministrationClientOptions? options = default)
@@ -45,22 +36,11 @@ namespace Azure.Communication.Administration
                   options ?? new PhoneNumberAdministrationClientOptions(),
                   ConnectionString.Parse(connectionString))
         { }
-        /// <summary>
-        /// Initializes a phone number administration client with an Token credential
-        /// </summary>
-        /// <param name="tokenCredential"></param>
-        /// <param name="endpoint"></param>
-        /// <param name="options"></param>
-        public PhoneNumberAdministrationClient(TokenCredential tokenCredential, string endpoint, PhoneNumberAdministrationClientOptions? options = default)
-            : this(options ?? new PhoneNumberAdministrationClientOptions(), tokenCredential, endpoint)
-        { }
+
         internal PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
             : this(new ClientDiagnostics(options), options.BuildHttpPipeline(connectionString), connectionString.GetRequired("endpoint"))
         { }
 
-        internal PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, TokenCredential tokenCredential, string endpoint)
-            : this(new ClientDiagnostics(options), options.BuildHttpPipeline(tokenCredential), endpoint)
-        { }
         internal PhoneNumberAdministrationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
         {
             RestClient = new PhoneNumberAdministrationRestClient(clientDiagnostics, pipeline, endpointUrl);
