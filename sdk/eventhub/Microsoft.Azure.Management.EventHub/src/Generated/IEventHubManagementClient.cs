@@ -40,6 +40,11 @@ namespace Microsoft.Azure.Management.EventHub
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// Client API Version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// Subscription credentials that uniquely identify a Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every
         /// service call.
@@ -74,6 +79,16 @@ namespace Microsoft.Azure.Management.EventHub
         /// Gets the INamespacesOperations.
         /// </summary>
         INamespacesOperations Namespaces { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
         /// Gets the IConfigurationOperations.
