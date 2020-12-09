@@ -47,7 +47,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public long TransferMessageCount { get; internal set; }
 
         /// <summary>
-        /// The number of messages transfer-messages which are dead-lettered into transfer-dead-letter sub-queue.
+        /// The number of messages transfer-messages which are dead-lettered into transfer-dead-letter subqueue.
         /// </summary>
         public long TransferDeadLetterMessageCount { get; internal set; }
 

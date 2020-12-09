@@ -63,6 +63,7 @@ stages:
                           pwsh: true
                           workingDirectory: $(Build.SourcesDirectory)
                           filePath: eng/scripts/SetTestPipelineVersion.ps1
+                          arguments: '-BuildID $(Build.BuildId)'
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}
@@ -138,7 +139,7 @@ stages:
               dependsOn: PublishPackage
 
               variables:
-                CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest'}]}"
+                CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview','content_folder':'api/overview/azure/preview'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest','content_folder':'api/overview/azure/latest'}]}"
 
               pool:
                 vmImage: windows-2019
@@ -219,6 +220,7 @@ stages:
                           PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
                           CommitMsg: "Increment package version after release of ${{ artifact.name }}"
                           PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
+                          PRLabels: "auto-merge"
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
   - stage: Integration

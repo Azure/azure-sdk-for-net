@@ -25,9 +25,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of BigDataPoolResourceInfo. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The state of the Big Data pool. </param>
@@ -35,6 +35,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="creationDate"> The time when the Big Data pool was created. </param>
         /// <param name="autoPause"> Auto-pausing properties. </param>
         /// <param name="isComputeIsolationEnabled"> Whether compute isolation is required or not. </param>
+        /// <param name="haveLibraryRequirementsChanged"> Whether library requirements changed. </param>
+        /// <param name="sessionLevelPackagesEnabled"> Whether session level packages enabled. </param>
         /// <param name="sparkEventsFolder"> The Spark events folder. </param>
         /// <param name="nodeCount"> The number of nodes in the Big Data pool. </param>
         /// <param name="libraryRequirements"> Library version requirements. </param>
@@ -43,13 +45,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="defaultSparkLogFolder"> The default folder where Spark logs will be written. </param>
         /// <param name="nodeSize"> The level of compute power that each node in the Big Data pool has. </param>
         /// <param name="nodeSizeFamily"> The kind of nodes that the Big Data pool provides. </param>
-        internal BigDataPoolResourceInfo(string id, string name, string type, IDictionary<string, string> tags, string location, string provisioningState, AutoScaleProperties autoScale, DateTimeOffset? creationDate, AutoPauseProperties autoPause, bool? isComputeIsolationEnabled, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, LibraryRequirements sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily) : base(id, name, type, tags, location)
+        internal BigDataPoolResourceInfo(string id, string name, string type, IDictionary<string, string> tags, string location, string provisioningState, AutoScaleProperties autoScale, DateTimeOffset? creationDate, AutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? haveLibraryRequirementsChanged, bool? sessionLevelPackagesEnabled, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, LibraryRequirements sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily) : base(id, name, type, tags, location)
         {
             ProvisioningState = provisioningState;
             AutoScale = autoScale;
             CreationDate = creationDate;
             AutoPause = autoPause;
             IsComputeIsolationEnabled = isComputeIsolationEnabled;
+            HaveLibraryRequirementsChanged = haveLibraryRequirementsChanged;
+            SessionLevelPackagesEnabled = sessionLevelPackagesEnabled;
             SparkEventsFolder = sparkEventsFolder;
             NodeCount = nodeCount;
             LibraryRequirements = libraryRequirements;
@@ -70,6 +74,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public AutoPauseProperties AutoPause { get; set; }
         /// <summary> Whether compute isolation is required or not. </summary>
         public bool? IsComputeIsolationEnabled { get; set; }
+        /// <summary> Whether library requirements changed. </summary>
+        public bool? HaveLibraryRequirementsChanged { get; set; }
+        /// <summary> Whether session level packages enabled. </summary>
+        public bool? SessionLevelPackagesEnabled { get; set; }
         /// <summary> The Spark events folder. </summary>
         public string SparkEventsFolder { get; set; }
         /// <summary> The number of nodes in the Big Data pool. </summary>

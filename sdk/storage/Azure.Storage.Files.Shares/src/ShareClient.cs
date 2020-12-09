@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.Shares
@@ -100,6 +101,22 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClient"/>
@@ -160,6 +177,7 @@ namespace Azure.Storage.Files.Shares
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
         }
 
         /// <summary>
@@ -176,7 +194,7 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </param>
         public ShareClient(Uri shareUri, ShareClientOptions options = default)
-            : this(shareUri, (HttpPipelinePolicy)null, options)
+            : this(shareUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -197,7 +215,7 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </param>
         public ShareClient(Uri shareUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
-            : this(shareUri, credential.AsPolicy(), options)
+            : this(shareUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -217,13 +235,21 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal ShareClient(Uri shareUri, HttpPipelinePolicy authentication, ShareClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal ShareClient(
+            Uri shareUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             options ??= new ShareClientOptions();
             _uri = shareUri;
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
         }
 
         /// <summary>
@@ -237,6 +263,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -244,10 +273,16 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal ShareClient(Uri shareUri, HttpPipeline pipeline, ShareClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        internal ShareClient(
+            Uri shareUri,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            ShareClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
         {
             _uri = shareUri;
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
         }
@@ -274,7 +309,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new ShareUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareClient(p.ToUri(), Pipeline, Version, ClientDiagnostics);
+            return new ShareClient(p.ToUri(), Pipeline, SharedKeyCredential, Version, ClientDiagnostics);
         }
 
         /// <summary>
@@ -294,10 +329,10 @@ namespace Azure.Storage.Files.Shares
             return new ShareDirectoryClient(
                 shareUriBuilder.ToUri(),
                 Pipeline,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics);
         }
-
 
         /// <summary>
         /// Create a <see cref="ShareDirectoryClient"/> object for the root of the
@@ -353,6 +388,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.Protocols,
+                options?.RootSquash,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -388,6 +425,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.Protocols,
+                options?.RootSquash,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -428,6 +467,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                rootSquash: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -468,6 +509,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                rootSquash: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -489,6 +532,12 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="accessTier">
         /// Optional.  Specifies the access tier of the share.
+        /// </param>
+        /// <param name="enabledProtocols">
+        /// The protocols to enable on the share.
+        /// </param>
+        /// <param name="rootSquash">
+        /// Squash root to set on the share.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -512,6 +561,8 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             int? quotaInGB,
             ShareAccessTier? accessTier,
+            ShareProtocols? enabledProtocols,
+            ShareRootSquash? rootSquash,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -533,6 +584,8 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         quotaInGB: quotaInGB,
                         accessTier: accessTier,
+                        enabledProtocols: enabledProtocols.ToShareEnableProtocolsString(),
+                        rootSquash: rootSquash,
                         async: async,
                         operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
@@ -583,6 +636,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.Protocols,
+                options?.RootSquash,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -617,6 +672,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.Protocols,
+                options?.RootSquash,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -656,6 +713,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                squashRoot: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -694,6 +753,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                squashRoot: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -715,6 +776,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="accessTier">
         /// Optional.  Specifies the access tier of the share.
         /// </param>
+        /// <param name="enabledProtocols">
+        /// The protocols to enable on the share.
+        /// </param>
+        /// <param name="squashRoot">
+        /// Squash root to set on the share.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -734,6 +801,8 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             int? quotaInGB,
             ShareAccessTier? accessTier,
+            ShareProtocols? enabledProtocols,
+            ShareRootSquash? squashRoot,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -751,6 +820,8 @@ namespace Azure.Storage.Files.Shares
                         metadata,
                         quotaInGB,
                         accessTier,
+                        enabledProtocols,
+                        squashRoot,
                         async,
                         cancellationToken,
                         $"{nameof(ShareClient)}.{nameof(CreateIfNotExists)}")
@@ -852,7 +923,7 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    Response<ShareProperties> response = await FileRestClient.Share.GetPropertiesAsync(
+                    Response<SharePropertiesInternal> response = await FileRestClient.Share.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -1612,7 +1683,7 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.Share.GetPropertiesAsync(
+                    Response<SharePropertiesInternal> response = await FileRestClient.Share.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -1622,6 +1693,10 @@ namespace Azure.Storage.Files.Shares
                         operationName: $"{nameof(ShareClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        response.Value.ToShareProperties(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1665,6 +1740,7 @@ namespace Azure.Storage.Files.Shares
             SetPropertiesInternal(
                 quotaInGB: options?.QuotaInGB,
                 accessTier: options?.AccessTier,
+                rootSquash: options?.RootSquash,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: false,
@@ -1699,6 +1775,7 @@ namespace Azure.Storage.Files.Shares
             await SetPropertiesInternal(
                 quotaInGB: options?.QuotaInGB,
                 accessTier: options?.AccessTier,
+                rootSquash: options?.RootSquash,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: true,
@@ -1718,6 +1795,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="accessTier">
         /// Access tier to set on the share.
+        /// </param>
+        /// <param name="rootSquash">
+        /// The root squash to set for the share.  Only valid for NFS shares.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -1744,6 +1824,7 @@ namespace Azure.Storage.Files.Shares
         internal virtual async Task<Response<ShareInfo>> SetPropertiesInternal(
             int? quotaInGB,
             ShareAccessTier? accessTier,
+            ShareRootSquash? rootSquash,
             ShareFileRequestConditions conditions,
             string operationName,
             bool async,
@@ -1765,6 +1846,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         quotaInGB: quotaInGB,
                         accessTier: accessTier,
+                        rootSquash: rootSquash,
                         leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: operationName,
@@ -1820,6 +1902,7 @@ namespace Azure.Storage.Files.Shares
             SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -1861,6 +1944,7 @@ namespace Azure.Storage.Files.Shares
             await SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -1900,6 +1984,7 @@ namespace Azure.Storage.Files.Shares
             SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -1938,6 +2023,7 @@ namespace Azure.Storage.Files.Shares
             await SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -2949,7 +3035,7 @@ namespace Azure.Storage.Files.Shares
                     writer.WriteEndObject();
                     if (async)
                     {
-                        await writer.FlushAsync().ConfigureAwait(false);
+                        await writer.FlushAsync(cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
@@ -3147,5 +3233,84 @@ namespace Azure.Storage.Files.Shares
                 operationName: $"{nameof(ShareClient)}.{nameof(DeleteDirectory)}")
                 .ConfigureAwait(false);
         #endregion DeleteDirectory
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateSasUri(ShareSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Share Service
+        /// Shared Access Signature (SAS) Uri based on the
+        /// Client properties and parameters passed.
+        /// The SAS is signed by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="ShareSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn) =>
+            GenerateSasUri(new ShareSasBuilder(permissions, expiresOn) { ShareName = Name });
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a Blob Container Service Shared Access Signature (SAS) Uri
+        /// based on the Client properties and builder passed.
+        /// The SAS is signed by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(ShareSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.ShareName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.ShareName),
+                    nameof(ShareSasBuilder),
+                    nameof(Name));
+            }
+            if (!string.IsNullOrEmpty(builder.FilePath))
+            {
+                throw Errors.SasBuilderEmptyParam(
+                    nameof(builder),
+                    nameof(builder.FilePath),
+                    nameof(Constants.File.Share.Name));
+            }
+            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
+            {
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
     }
 }

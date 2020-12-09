@@ -3,7 +3,8 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,14 +12,18 @@ namespace Azure.Identity.Tests
 {
     internal sealed class TestProcess : IProcess
     {
+        private static readonly Lazy<Func<string, DataReceivedEventArgs>> s_createDataReceivedEventArgs = new Lazy<Func<string, DataReceivedEventArgs>>(() =>
+        {
+            ConstructorInfo constructor = typeof(DataReceivedEventArgs).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)[0];
+            ParameterExpression dataParameter = Expression.Parameter(typeof(string), "data");
+            NewExpression callConstructor = Expression.New(constructor, dataParameter);
+            return Expression.Lambda<Func<string, DataReceivedEventArgs>>(callConstructor, dataParameter).Compile();
+        });
+
         private bool _hasStarted;
         private bool _hasExited;
         private int _exitCode;
         private CancellationTokenSource _cts;
-        private StreamReader _outputStreamReader;
-        private StreamReader _errorStreamReader;
-        private StreamWriter _outputStreamWriter;
-        private StreamWriter _errorStreamWriter;
         private ProcessStartInfo _startInfo;
 
         public ProcessStartInfo StartInfo
@@ -27,17 +32,14 @@ namespace Azure.Identity.Tests
             set => _startInfo = value;
         }
 
+        public bool FailedToStart { get; set; }
         public string Output { get; set; }
         public string Error { get; set; }
         public int? CodeOnExit { get; set; }
         public int Timeout { get; set; }
         public Exception ExceptionOnProcessKill { get; set; }
 
-        public void Dispose()
-        {
-            _outputStreamReader?.Dispose();
-            _errorStreamReader?.Dispose();
-        }
+        public void Dispose() { }
 
         public bool HasExited
         {
@@ -65,19 +67,20 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public StreamReader StandardOutput => _outputStreamReader;
-        public StreamReader StandardError => _errorStreamReader;
-
         public event EventHandler Exited;
         public event EventHandler Started;
+        public event DataReceivedEventHandler OutputDataReceived;
+        public event DataReceivedEventHandler ErrorDataReceived;
 
-        public void Start()
+        public bool Start()
         {
+            if (FailedToStart)
+            {
+                return false;
+            }
+
             _hasStarted = true;
             Started?.Invoke(this, EventArgs.Empty);
-
-            Create(out _outputStreamReader, out _outputStreamWriter);
-            Create(out _errorStreamReader, out _errorStreamWriter);
 
             if (Timeout > 0)
             {
@@ -88,6 +91,8 @@ namespace Azure.Identity.Tests
             {
                 Task.Run(FinishProcessRun);
             }
+
+            return true;
         }
 
         private void FinishProcessRun(Task delayTask)
@@ -100,31 +105,29 @@ namespace Azure.Identity.Tests
 
         private void FinishProcessRun()
         {
-            WriteToStream(Output, _outputStreamWriter);
-            WriteToStream(Error, _errorStreamWriter);
+            Notify(Output, OutputDataReceived);
+            Notify(Error, ErrorDataReceived);
 
             _hasExited = true;
             _exitCode = CodeOnExit ?? (Error != default ? 1 : 0);
             Exited?.Invoke(this, EventArgs.Empty);
         }
 
-        private static void Create(out StreamReader reader, out StreamWriter writer)
+        private void Notify(string data, DataReceivedEventHandler handler)
         {
-            var stream = new MemoryStream();
-            reader = new StreamReader(stream);
-            writer = new StreamWriter(stream);
-        }
-
-        private static void WriteToStream(string str, StreamWriter writer)
-        {
-            if (str == default)
+            if (handler == default)
             {
                 return;
             }
 
-            writer.Write(str);
-            writer.Flush();
-            writer.BaseStream.Seek(0, SeekOrigin.Begin);
+            Task.Run(() =>
+            {
+                if (data != default)
+                {
+                    handler(this, CreateDataReceivedEventArgs(data));
+                }
+                handler(this, CreateDataReceivedEventArgs(null));
+            });
         }
 
         public void Kill()
@@ -137,5 +140,10 @@ namespace Azure.Identity.Tests
                 throw ExceptionOnProcessKill;
             }
         }
+
+        public void BeginOutputReadLine() {}
+        public void BeginErrorReadLine() {}
+
+        private static DataReceivedEventArgs CreateDataReceivedEventArgs(string data) => s_createDataReceivedEventArgs.Value(data);
     }
 }

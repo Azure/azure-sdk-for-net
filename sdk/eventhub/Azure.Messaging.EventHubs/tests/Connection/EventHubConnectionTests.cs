@@ -228,9 +228,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCaseSource(nameof(ConstructorSharedKeyCredentialInvalidCases))]
         public void ConstructorValidatesExpandedArgumentsForSharedKeyCredential(string fullyQualifiedNamespace,
                                                                                 string eventHubName,
-                                                                                EventHubsSharedAccessKeyCredential credential)
+                                                                                object credential)
         {
-            Assert.That(() => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubConnection(fullyQualifiedNamespace, eventHubName, (EventHubsSharedAccessKeyCredential)credential), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -788,10 +788,10 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            public ReadableOptionsMock(string fullyQualifiedNamespace,
-                                       string eventHubName,
-                                       EventHubsSharedAccessKeyCredential credential,
-                                       EventHubConnectionOptions clientOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, clientOptions)
+            internal ReadableOptionsMock(string fullyQualifiedNamespace,
+                                         string eventHubName,
+                                         EventHubsSharedAccessKeyCredential credential,
+                                         EventHubConnectionOptions clientOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, clientOptions)
             {
             }
 
@@ -823,10 +823,10 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            public ObservableOperationsMock(string fullyQualifiedNamespace,
-                                            string eventHubName,
-                                            EventHubsSharedAccessKeyCredential credential,
-                                            EventHubConnectionOptions clientOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, clientOptions)
+            internal ObservableOperationsMock(string fullyQualifiedNamespace,
+                                              string eventHubName,
+                                              EventHubsSharedAccessKeyCredential credential,
+                                              EventHubConnectionOptions clientOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, clientOptions)
             {
             }
 
@@ -852,7 +852,6 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 TransportClient = transportClient;
                 SetTransportClient(transportClient);
-
             }
 
             public InjectableTransportClientMock(TransportClient transportClient,
@@ -888,7 +887,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 typeof(EventHubConnection)
                     .GetProperty("InnerClient", BindingFlags.Instance | BindingFlags.NonPublic)
                     .SetValue(this, transportClient);
-
         }
 
         /// <summary>

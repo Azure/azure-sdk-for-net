@@ -3,10 +3,10 @@
 
 using Azure.Core;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
-    /// <inheritdoc/>>
+    /// <inheritdoc/>
     [CodeGenModel("RoleAssignmentProperties")]
-    public partial class KeyVaultRoleAssignmentProperties
+    internal partial class KeyVaultRoleAssignmentProperties
     { }
 }

@@ -8,18 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
 
-namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 {
     public class BlobBindingEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
     {
@@ -217,6 +218,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task BindToIEnumerableICloudBlob()
         {
             await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("IEnumerableICloudBlobBinding"));
+
+            Assert.AreEqual(6, _numBlobsRead);
+        }
+
+        [Test]
+        public async Task BindToIEnumerableBlobClient()
+        {
+            await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("IEnumerableBlobClientBinding"));
 
             Assert.AreEqual(6, _numBlobsRead);
         }
@@ -515,6 +524,22 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [NoAutomaticTrigger]
+        public static async Task IEnumerableBlobClientBinding(
+            [Blob(ContainerName)] IEnumerable<BlobClient> blobs)
+        {
+            foreach (var blob in blobs)
+            {
+                Stream stream = await blob.OpenReadAsync();
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string content = reader.ReadToEnd();
+                    Assert.AreEqual(TestData, content);
+                }
+            }
+            _numBlobsRead = blobs.Count();
+        }
+
+        [NoAutomaticTrigger]
         public static void StringBinding_Block(
             [Blob(ContainerName + "/blob1")] string blob)
         {
@@ -687,7 +712,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         services.AddSingleton<INameResolver>(nameResolver);
                     })
                     .Build();
-
 
                 JobHost = Host.GetJobHost();
 

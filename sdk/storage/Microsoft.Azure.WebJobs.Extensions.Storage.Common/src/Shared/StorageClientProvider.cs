@@ -5,10 +5,10 @@ using System;
 using System.Net.Http;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
                 throw new InvalidOperationException($"Connection should have an 'endpoint' property or be a string representing a connection string.");
             }
 
-            var credential = _componentFactory.CreateCredential(connectionSection);
+            var credential = _componentFactory.CreateTokenCredential(connectionSection);
             var endpointUri = new Uri(endpoint);
             return CreateClientFromTokenCredential(endpointUri, credential, CreateClientOptions(connectionSection));
         }
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             return clientOptions;
         }
 
-        private HttpPipelineTransport CreateTransportForDynamicSku()
+        private static HttpPipelineTransport CreateTransportForDynamicSku()
         {
             return new HttpClientTransport(new HttpClient(new HttpClientHandler()
             {

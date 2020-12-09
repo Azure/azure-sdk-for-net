@@ -10,13 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 {
     public class BlobTriggerEndToEndTests : LiveTestBase<WebJobsTestEnvironment>, IDisposable
     {
@@ -247,7 +248,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 await host.StopAsync();
 
-
                 // Can't restart
                 Assert.Throws<InvalidOperationException>(() => host.Start());
             }
@@ -283,7 +283,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 .UploadTextAsync("10");
 
             var prog = new BlobGetsProcessedOnlyOnce_SingleHost_Program();
-
 
             string hostId = Guid.NewGuid().ToString("N");
             var host1 = NewBuilder(prog, builder=>builder.UseHostId(hostId))

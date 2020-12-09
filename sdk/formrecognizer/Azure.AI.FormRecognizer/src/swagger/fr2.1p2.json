@@ -1,0 +1,2175 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.1-preview.2",
+    "title": "Form Recognizer Client",
+    "description": "Extracts information from forms and images into structured data."
+  },
+  "securityDefinitions": {
+    "apim_key": {
+      "type": "apiKey",
+      "name": "Ocp-Apim-Subscription-Key",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apim_key": []
+    }
+  ],
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{endpoint}/formrecognizer/v2.1-preview.2",
+    "useSchemePrefix": false,
+    "parameters": [
+      {
+        "$ref": "#/parameters/Endpoint"
+      }
+    ]
+  },
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/custom/models": {
+      "post": {
+        "summary": "Train Custom Model",
+        "description": "Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if '{Mounts:Input}' configuration setting value is '/input' then a valid source path would be '/input/contosodataset'. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - 'application/pdf', 'image/jpeg', 'image/png', 'image/tiff'. Other type of content is ignored.",
+        "operationId": "TrainCustomModelAsync",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "trainRequest",
+            "in": "body",
+            "description": "Training request parameters.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TrainRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Request is queued successfully.",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "Location and ID of the model being trained. The status of model training is specified in the status property at the model location."
+              }
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Train custom model": {
+            "$ref": "./examples/TrainBatch.json"
+          },
+          "Train custom model with subfolder filter options": {
+            "$ref": "./examples/TrainBatchWithSubFolders.json"
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/custom/models/{modelId}": {
+      "get": {
+        "summary": "Get Custom Model",
+        "description": "Get detailed information about a custom model.",
+        "operationId": "GetCustomModel",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "includeKeys",
+            "in": "query",
+            "description": "Include list of extracted keys in model information.",
+            "required": false,
+            "default": false,
+            "type": "boolean",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Model"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get custom model": {
+            "$ref": "./examples/GetModel.json"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Custom Model",
+        "description": "Mark model for deletion. Model artifacts will be permanently removed within a predetermined period.",
+        "operationId": "DeleteCustomModel",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully marked model for deletion. Model artifacts will be removed within a predefined time period."
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Delete custom model": {
+            "$ref": "./examples/DeleteModel.json"
+          }
+        }
+      }
+    },
+    "/custom/models/{modelId}/analyze": {
+      "post": {
+        "summary": "Analyze Form",
+        "description": "Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - 'application/pdf', 'image/jpeg', 'image/png' or 'image/tiff'. Alternatively, use 'application/json' type to specify the location (Uri or local path) of the document to be analyzed.",
+        "operationId": "AnalyzeWithCustomModel",
+        "consumes": [
+          "application/pdf",
+          "application/json",
+          "image/jpeg",
+          "image/png",
+          "image/tiff"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "includeTextDetails",
+            "in": "query",
+            "description": "Include text lines and element references in the result.",
+            "required": false,
+            "default": false,
+            "type": "boolean",
+            "x-nullable": false
+          },
+          {
+            "$ref": "#/parameters/FileStream"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request is queued successfully.",
+            "headers": {
+              "Operation-Location": {
+                "type": "string",
+                "description": "URL containing the resultId used to track the progress and obtain the result of the analyze operation."
+              }
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Analyze form with custom model": {
+            "$ref": "./examples/AnalyzeBatch.json"
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/custom/models/{modelId}/analyzeResults/{resultId}": {
+      "get": {
+        "summary": "Get Analyze Form Result",
+        "description": "Obtain current status and the result of the analyze form operation.",
+        "operationId": "GetAnalyzeFormResult",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "resultId",
+            "in": "path",
+            "description": "Analyze operation result identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AnalyzeOperationResult"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get analyze form result": {
+            "$ref": "./examples/AnalyzeOperationResult.json"
+          }
+        }
+      }
+    },
+    "/custom/models/{modelId}/copy": {
+      "post": {
+        "summary": "Copy Custom Model",
+        "description": "Copy custom model stored in this resource (the source) to user specified target Form Recognizer resource.",
+        "operationId": "CopyCustomModel",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "copyRequest",
+            "in": "body",
+            "description": "Copy request parameters.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CopyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Copy request is queued successfully.",
+            "headers": {
+              "Operation-Location": {
+                "type": "string",
+                "description": "URL containing the resultId used to track the progress and obtain the result of the copy operation."
+              }
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Copy custom model": {
+            "$ref": "./examples/CopyModel.json"
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/custom/models/{modelId}/copyResults/{resultId}": {
+      "get": {
+        "summary": "Get Custom Model Copy Result",
+        "description": "Obtain current status and the result of a custom model copy operation.",
+        "operationId": "GetCustomModelCopyResult",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "resultId",
+            "in": "path",
+            "description": "Copy operation result identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CopyOperationResult"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get copy custom model result": {
+            "$ref": "./examples/CopyOperationResult.json"
+          },
+          "Get copy custom model result with failures": {
+            "$ref": "./examples/CopyOperationResultWithErrors.json"
+          }
+        }
+      }
+    },
+    "/custom/models/copyAuthorization": {
+      "post": {
+        "summary": "Generate Copy Authorization",
+        "description": "Generate authorization to copy a model into the target Form Recognizer resource.",
+        "operationId": "GenerateModelCopyAuthorization",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Copy request is authorized successfully.",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "Location and ID of the model being copied. The status of model copy is specified in the status property at the model location."
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/CopyAuthorizationResult"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Copy custom model": {
+            "$ref": "./examples/CopyModelAuthorization.json"
+          }
+        }
+      }
+    },
+    "/custom/models/compose": {
+      "post": {
+        "tags": [
+          "Form"
+        ],
+        "summary": "Compose trained with labels models into one composed model.",
+        "description": "Compose request would include list of models ids.\r\nIt would validate what all models either trained with labels model or composed model.\r\nIt would validate limit of models put together.",
+        "operationId": "ComposeCustomModelsAsync",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "composeRequest",
+            "in": "body",
+            "description": "Compose models",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ComposeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Request is queued successfully.",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "Location and ID of the composed model. The status of composed model is specified in the status property at the model location."
+              }
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Compose custom models": {
+            "$ref": "./examples/ComposeModels.json"
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/prebuilt/businessCard/analyze": {
+      "post": {
+        "summary": "Analyze Business Card",
+        "description": "Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - 'application/pdf', 'image/jpeg', 'image/png' or 'image/tiff'. Alternatively, use 'application/json' type to specify the location (Uri) of the document to be analyzed.",
+        "operationId": "AnalyzeBusinessCardAsync",
+        "consumes": [
+          "application/pdf",
+          "application/json",
+          "image/jpeg",
+          "image/png",
+          "image/tiff",
+          "image/bmp"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "includeTextDetails",
+            "in": "query",
+            "description": "Include text lines and element references in the result.",
+            "required": false,
+            "default": false,
+            "type": "boolean",
+            "x-nullable": false
+          },
+          {
+            "$ref": "#/parameters/Locale"
+          },
+          {
+            "$ref": "#/parameters/FileStream"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request is queued successfully.",
+            "headers": {
+              "Operation-Location": {
+                "type": "string",
+                "description": "URL containing the resultId used to track the progress and obtain the result of the analyze operation."
+              }
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Analyze Business Card": {
+            "$ref": "./examples/BusinessCardBatch.json"
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/prebuilt/businessCard/analyzeResults/{resultId}": {
+      "get": {
+        "summary": "Get Analyze Business Card Result",
+        "description": "Track the progress and obtain the result of the analyze business card operation.",
+        "operationId": "GetAnalyzeBusinessCardResult",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "resultId",
+            "in": "path",
+            "description": "Analyze operation result identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AnalyzeOperationResult"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get analyze business card result": {
+            "$ref": "./examples/BusinessCardBatchResult.json"
+          }
+        }
+      }
+    },
+    "/prebuilt/invoice/analyze": {
+      "post": {
+        "summary": "Analyze Invoice Document",
+        "description": "Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - 'application/pdf', 'image/jpeg', 'image/png' or 'image/tiff'. Alternatively, use 'application/json' type to specify the location (Uri) of the document to be analyzed.",
+        "operationId": "AnalyzeInvoiceAsync",
+        "consumes": [
+          "application/pdf",
+          "application/json",
+          "image/jpeg",
+          "image/png",
+          "image/tiff",
+          "image/bmp"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "includeTextDetails",
+            "in": "query",
+            "description": "Include text lines and element references in the result.",
+            "required": false,
+            "default": false,
+            "type": "boolean",
+            "x-nullable": false
+          },
+          {
+            "$ref": "#/parameters/Locale"
+          },
+          {
+            "$ref": "#/parameters/FileStream"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request is queued successfully.",
+            "headers": {
+              "Operation-Location": {
+                "type": "string",
+                "description": "URL containing the resultId used to track the progress and obtain the result of the analyze operation."
+              }
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Analyze receipt": {
+            "$ref": "./examples/InvoiceBatch.json"
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/prebuilt/invoice/analyzeResults/{resultId}": {
+      "get": {
+        "summary": "Get Analyze Invoice Result",
+        "description": "Track the progress and obtain the result of the analyze invoice operation.",
+        "operationId": "GetAnalyzeInvoiceResult",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "resultId",
+            "in": "path",
+            "description": "Analyze operation result identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AnalyzeOperationResult"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get analyze receipt result": {
+            "$ref": "./examples/InvoiceBatchResult.json"
+          }
+        }
+      }
+    },
+    "/prebuilt/receipt/analyze": {
+      "post": {
+        "summary": "Analyze Receipt",
+        "description": "Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - 'application/pdf', 'image/jpeg', 'image/png' or 'image/tiff'. Alternatively, use 'application/json' type to specify the location (Uri) of the document to be analyzed.",
+        "operationId": "AnalyzeReceiptAsync",
+        "consumes": [
+          "application/pdf",
+          "application/json",
+          "image/jpeg",
+          "image/png",
+          "image/tiff",
+          "image/bmp"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "includeTextDetails",
+            "in": "query",
+            "description": "Include text lines and element references in the result.",
+            "required": false,
+            "default": false,
+            "type": "boolean",
+            "x-nullable": false
+          },
+          {
+            "$ref": "#/parameters/Locale"
+          },
+          {
+            "$ref": "#/parameters/FileStream"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request is queued successfully.",
+            "headers": {
+              "Operation-Location": {
+                "type": "string",
+                "description": "URL containing the resultId used to track the progress and obtain the result of the analyze operation."
+              }
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Analyze receipt": {
+            "$ref": "./examples/ReceiptsBatch.json"
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/prebuilt/receipt/analyzeResults/{resultId}": {
+      "get": {
+        "summary": "Get Analyze Receipt Result",
+        "description": "Track the progress and obtain the result of the analyze receipt operation.",
+        "operationId": "GetAnalyzeReceiptResult",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "resultId",
+            "in": "path",
+            "description": "Analyze operation result identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AnalyzeOperationResult"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get analyze receipt result": {
+            "$ref": "./examples/ReceiptsBatchResult.json"
+          }
+        }
+      }
+    },
+    "/layout/analyze": {
+      "post": {
+        "summary": "Analyze Layout",
+        "description": "Extract text and layout information from a given document. The input document must be of one of the supported content types - 'application/pdf', 'image/jpeg', 'image/png', 'image/tiff' or 'image/bmp'. Alternatively, use 'application/json' type to specify the location (Uri or local path) of the document to be analyzed.",
+        "operationId": "AnalyzeLayoutAsync",
+        "consumes": [
+          "application/pdf",
+          "application/json",
+          "image/jpeg",
+          "image/png",
+          "image/tiff",
+          "image/bmp"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/Language"
+          },
+          {
+            "$ref": "#/parameters/FileStream"
+          },
+          {
+            "$ref": "#/parameters/Pages"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request is queued successfully.",
+            "headers": {
+              "Operation-Location": {
+                "type": "string",
+                "description": "URL containing the resultId used to track the progress and obtain the result of the analyze operation."
+              }
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Analyze layout": {
+            "$ref": "./examples/LayoutBatch.json"
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/layout/analyzeResults/{resultId}": {
+      "get": {
+        "summary": "Get Analyze Layout Result",
+        "description": "Track the progress and obtain the result of the analyze layout operation",
+        "operationId": "GetAnalyzeLayoutResult",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "resultId",
+            "in": "path",
+            "description": "Analyze operation result identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AnalyzeOperationResult"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get analyze layout result": {
+            "$ref": "./examples/LayoutBatchResult.json"
+          }
+        }
+      }
+    }
+  },
+  "x-ms-paths": {
+    "/custom/models?op=full": {
+      "get": {
+        "summary": "List Custom Models",
+        "description": "Get information about all custom models",
+        "operationId": "ListCustomModels",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "op",
+            "in": "query",
+            "description": "Specify whether to return summary or full list of models.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "full"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Models"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink",
+          "itemName": "modelList"
+        },
+        "x-ms-examples": {
+          "List custom models": {
+            "$ref": "./examples/GetModels.json"
+          }
+        }
+      }
+    },
+    "/custom/models?op=summary": {
+      "get": {
+        "summary": "Get Custom Models",
+        "description": "Get information about all custom models",
+        "operationId": "GetCustomModels",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "op",
+            "in": "query",
+            "description": "Specify whether to return summary or full list of models.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "summary"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Models"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get models summary": {
+            "$ref": "./examples/GetModelsSummary.json"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "OperationStatus": {
+      "type": "string",
+      "description": "Status of the queued operation.",
+      "enum": [
+        "notStarted",
+        "running",
+        "succeeded",
+        "failed"
+      ],
+      "x-ms-enum": {
+        "name": "OperationStatus",
+        "modelAsString": false
+      },
+      "x-nullable": false
+    },
+    "CopyAuthorizationResult": {
+      "description": "Request parameter that contains authorization claims for copy operation.",
+      "required": [
+        "modelId",
+        "accessToken",
+        "expirationDateTimeTicks"
+      ],
+      "type": "object",
+      "properties": {
+        "modelId": {
+          "description": "Model identifier.",
+          "type": "string"
+        },
+        "accessToken": {
+          "description": "Token claim used to authorize the request.",
+          "type": "string"
+        },
+        "expirationDateTimeTicks": {
+          "description": "The time when the access token expires. The date is represented as the number of seconds from 1970-01-01T0:0:0Z UTC until the expiration time.",
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "CopyRequest": {
+      "description": "Request parameter to copy an existing custom model from the source resource to a target resource referenced by the resource ID.",
+      "required": [
+        "targetResourceId",
+        "targetResourceRegion",
+        "copyAuthorization"
+      ],
+      "type": "object",
+      "properties": {
+        "targetResourceId": {
+          "description": "Azure Resource Id of the target Form Recognizer resource where the model is copied to.",
+          "maxLength": 1024,
+          "type": "string",
+          "pattern": "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.CognitiveServices/accounts/[^/]*$",
+          "x-ms-azure-resource": true
+        },
+        "targetResourceRegion": {
+          "description": "Location of the target Azure resource. A valid Azure region name supported by Cognitive Services.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+$",
+          "minLength": 1,
+          "maxLength": 24
+        },
+        "copyAuthorization": {
+          "description": "Entity that encodes claims to authorize the copy request.",
+          "$ref": "#/definitions/CopyAuthorizationResult"
+        }
+      }
+    },
+    "CopyOperationResult": {
+      "description": "Status and result of the queued copy operation.",
+      "type": "object",
+      "required": [
+        "status",
+        "createdDateTime",
+        "lastUpdatedDateTime"
+      ],
+      "properties": {
+        "status": {
+          "description": "Operation status.",
+          "$ref": "#/definitions/OperationStatus"
+        },
+        "createdDateTime": {
+          "format": "date-time",
+          "description": "Date and time (UTC) when the copy operation was submitted.",
+          "type": "string",
+          "x-nullable": false
+        },
+        "lastUpdatedDateTime": {
+          "format": "date-time",
+          "description": "Date and time (UTC) when the status was last updated.",
+          "type": "string",
+          "x-nullable": false
+        },
+        "copyResult": {
+          "description": "Results of the copy operation.",
+          "$ref": "#/definitions/CopyResult"
+        }
+      }
+    },
+    "CopyResult": {
+      "description": "Custom model copy result.",
+      "type": "object",
+      "required": [
+        "modelId"
+      ],
+      "properties": {
+        "modelId": {
+          "description": "Identifier of the target model.",
+          "type": "string",
+          "format": "uuid"
+        },
+        "errors": {
+          "description": "Errors returned during the copy operation.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorInformation"
+          }
+        }
+      }
+    },
+    "AnalyzeOperationResult": {
+      "description": "Status and result of the queued analyze operation.",
+      "type": "object",
+      "required": [
+        "status",
+        "createdDateTime",
+        "lastUpdatedDateTime"
+      ],
+      "properties": {
+        "status": {
+          "description": "Operation status.",
+          "$ref": "#/definitions/OperationStatus"
+        },
+        "createdDateTime": {
+          "format": "date-time",
+          "description": "Date and time (UTC) when the analyze operation was submitted.",
+          "type": "string",
+          "x-nullable": false
+        },
+        "lastUpdatedDateTime": {
+          "format": "date-time",
+          "description": "Date and time (UTC) when the status was last updated.",
+          "type": "string",
+          "x-nullable": false
+        },
+        "analyzeResult": {
+          "description": "Results of the analyze operation.",
+          "$ref": "#/definitions/AnalyzeResult"
+        }
+      }
+    },
+    "ModelName": {
+      "description": "Optional user defined model name (max length: 1024).",
+      "type": "string",
+      "x-nullable": false
+    },
+    "TrainRequest": {
+      "description": "Request parameter to train a new custom model.",
+      "required": [
+        "source"
+      ],
+      "type": "object",
+      "properties": {
+        "source": {
+          "description": "Source path containing the training documents.",
+          "maxLength": 2048,
+          "minLength": 0,
+          "type": "string"
+        },
+        "sourceFilter": {
+          "$ref": "#/definitions/TrainSourceFilter",
+          "description": "Filter to apply to the documents in the source path for training."
+        },
+        "useLabelFile": {
+          "description": "Use label file for training a model.",
+          "type": "boolean",
+          "default": false
+        },
+        "modelName": {
+          "$ref": "#/definitions/ModelName"
+        }
+      }
+    },
+    "TrainSourceFilter": {
+      "description": "Filter to apply to the documents in the source path for training.",
+      "type": "object",
+      "properties": {
+        "prefix": {
+          "description": "A case-sensitive prefix string to filter documents in the source path for training. For example, when using a Azure storage blob Uri, use the prefix to restrict sub folders for training.",
+          "maxLength": 1024,
+          "minLength": 0,
+          "type": "string"
+        },
+        "includeSubFolders": {
+          "description": "A flag to indicate if sub folders within the set of prefix folders will also need to be included when searching for content to be preprocessed.",
+          "type": "boolean",
+          "default": false,
+          "x-nullable": false
+        }
+      }
+    },
+    "TrainResult": {
+      "description": "Custom model training result.",
+      "type": "object",
+      "required": [
+        "trainingDocuments"
+      ],
+      "properties": {
+        "trainingDocuments": {
+          "description": "List of the documents used to train the model and any errors reported in each document.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TrainingDocumentInfo"
+          }
+        },
+        "fields": {
+          "description": "List of fields used to train the model and the train operation error reported by each.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FormFieldsReport"
+          }
+        },
+        "averageModelAccuracy": {
+          "description": "Average accuracy.",
+          "type": "number",
+          "x-nullable": false
+        },
+        "modelId": {
+          "description": "Model identifier.",
+          "type": "string",
+          "format": "uuid",
+          "x-nullable": false
+        },
+        "errors": {
+          "description": "Errors returned during the training operation.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorInformation"
+          }
+        }
+      }
+    },
+    "SourcePath": {
+      "description": "Uri or local path to source data.",
+      "type": "object",
+      "properties": {
+        "source": {
+          "description": "File source path.",
+          "maxLength": 2048,
+          "minLength": 0,
+          "type": "string"
+        }
+      }
+    },
+    "Attributes": {
+      "description": "Optional model attributes.",
+      "type": "object",
+      "properties": {
+        "isComposed": {
+          "description": "Is this model composed? (default: false).",
+          "type": "boolean",
+          "default": false,
+          "x-nullable": false
+        }
+      }
+    },
+    "ModelInfo": {
+      "description": "Basic custom model information.",
+      "type": "object",
+      "required": [
+        "modelId",
+        "status",
+        "createdDateTime",
+        "lastUpdatedDateTime"
+      ],
+      "properties": {
+        "modelId": {
+          "description": "Model identifier.",
+          "type": "string",
+          "format": "uuid",
+          "x-nullable": false
+        },
+        "status": {
+          "description": "Status of the model.",
+          "enum": [
+            "creating",
+            "ready",
+            "invalid"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "ModelStatus",
+            "modelAsString": false
+          },
+          "x-nullable": false
+        },
+        "createdDateTime": {
+          "format": "date-time",
+          "description": "Date and time (UTC) when the model was created.",
+          "type": "string",
+          "x-nullable": false
+        },
+        "lastUpdatedDateTime": {
+          "format": "date-time",
+          "description": "Date and time (UTC) when the status was last updated.",
+          "type": "string",
+          "x-nullable": false
+        },
+        "modelName": {
+          "$ref": "#/definitions/ModelName"
+        },
+        "attributes": {
+          "$ref": "#/definitions/Attributes"
+        }
+      }
+    },
+    "Models": {
+      "description": "Response to the list custom models operation.",
+      "type": "object",
+      "properties": {
+        "summary": {
+          "description": "Summary of all trained custom models.",
+          "type": "object",
+          "required": [
+            "count",
+            "limit",
+            "lastUpdatedDateTime"
+          ],
+          "properties": {
+            "count": {
+              "description": "Current count of trained custom models.",
+              "type": "integer",
+              "x-nullable": false
+            },
+            "limit": {
+              "description": "Max number of models that can be trained for this account.",
+              "type": "integer",
+              "x-nullable": false
+            },
+            "lastUpdatedDateTime": {
+              "format": "date-time",
+              "description": "Date and time (UTC) when the summary was last updated.",
+              "type": "string",
+              "x-nullable": false
+            }
+          }
+        },
+        "modelList": {
+          "description": "Collection of trained custom models.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ModelInfo"
+          }
+        },
+        "nextLink": {
+          "description": "Link to the next page of custom models.",
+          "type": "string"
+        }
+      }
+    },
+    "Model": {
+      "description": "Response to the get custom model operation.",
+      "type": "object",
+      "required": [
+        "modelInfo"
+      ],
+      "properties": {
+        "modelInfo": {
+          "$ref": "#/definitions/ModelInfo"
+        },
+        "keys": {
+          "$ref": "#/definitions/KeysResult"
+        },
+        "trainResult": {
+          "description": "Training result for custom model.",
+          "$ref": "#/definitions/TrainResult"
+        },
+        "composedTrainResults": {
+          "type": "array",
+          "description": "Training result for composed model.",
+          "items": {
+            "$ref": "#/definitions/TrainResult"
+          }
+        }
+      }
+    },
+    "KeysResult": {
+      "description": "Keys extracted by the custom model.",
+      "type": "object",
+      "required": [
+        "clusters"
+      ],
+      "properties": {
+        "clusters": {
+          "description": "Object mapping clusterIds to a list of keys.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "TrainingDocumentInfo": {
+      "description": "Report for a custom model training document.",
+      "type": "object",
+      "required": [
+        "documentName",
+        "pages",
+        "errors",
+        "status"
+      ],
+      "properties": {
+        "documentName": {
+          "description": "Training document name.",
+          "type": "string"
+        },
+        "pages": {
+          "format": "int32",
+          "description": "Total number of pages trained.",
+          "type": "integer",
+          "x-nullable": false
+        },
+        "errors": {
+          "description": "List of errors.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorInformation"
+          }
+        },
+        "status": {
+          "description": "Status of the training operation.",
+          "enum": [
+            "succeeded",
+            "partiallySucceeded",
+            "failed"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "TrainStatus",
+            "modelAsString": false
+          },
+          "x-nullable": false
+        }
+      }
+    },
+    "FormFieldsReport": {
+      "description": "Report for a custom model training field.",
+      "type": "object",
+      "required": [
+        "fieldName",
+        "accuracy"
+      ],
+      "properties": {
+        "fieldName": {
+          "description": "Training field name.",
+          "type": "string"
+        },
+        "accuracy": {
+          "description": "Estimated extraction accuracy for this field.",
+          "type": "number",
+          "x-nullable": false
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/ErrorInformation"
+        }
+      }
+    },
+    "ErrorInformation": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "ComposeRequest": {
+      "description": "Request contract for compose operation.",
+      "required": [
+        "modelIds"
+      ],
+      "type": "object",
+      "properties": {
+        "modelIds": {
+          "description": "List of model ids to compose.",
+          "uniqueItems": false,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "modelName": {
+          "$ref": "#/definitions/ModelName"
+        }
+      }
+    },
+    "AnalyzeResult": {
+      "description": "Analyze operation result.",
+      "type": "object",
+      "required": [
+        "version",
+        "readResults"
+      ],
+      "properties": {
+        "version": {
+          "description": "Version of schema used for this result.",
+          "type": "string"
+        },
+        "readResults": {
+          "description": "Text extracted from the input.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReadResult"
+          }
+        },
+        "pageResults": {
+          "description": "Page-level information extracted from the input.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PageResult"
+          }
+        },
+        "documentResults": {
+          "description": "Document-level information extracted from the input.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DocumentResult"
+          }
+        },
+        "errors": {
+          "description": "List of errors reported during the analyze operation.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorInformation"
+          }
+        }
+      }
+    },
+    "ReadResult": {
+      "description": "Text extracted from a page in the input document.",
+      "type": "object",
+      "required": [
+        "page",
+        "angle",
+        "width",
+        "height",
+        "unit"
+      ],
+      "properties": {
+        "page": {
+          "description": "The 1-based page number in the input document.",
+          "type": "integer",
+          "minimum": 1,
+          "x-nullable": false
+        },
+        "angle": {
+          "description": "The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].",
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "exclusiveMinimum": true,
+          "x-nullable": false
+        },
+        "width": {
+          "description": "The width of the image/PDF in pixels/inches, respectively.",
+          "type": "number",
+          "minimum": 0,
+          "x-nullable": false
+        },
+        "height": {
+          "description": "The height of the image/PDF in pixels/inches, respectively.",
+          "type": "number",
+          "minimum": 0,
+          "x-nullable": false
+        },
+        "unit": {
+          "description": "The unit used by the width, height and boundingBox properties. For images, the unit is \"pixel\". For PDF, the unit is \"inch\".",
+          "type": "string",
+          "enum": [
+            "pixel",
+            "inch"
+          ],
+          "x-ms-enum": {
+            "name": "LengthUnit",
+            "modelAsString": false
+          },
+          "x-nullable": false
+        },
+        "language": {
+          "description": "The detected language on the page overall.",
+          "$ref": "#/definitions/Language"
+        },
+        "lines": {
+          "description": "When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TextLine"
+          }
+        },
+        "selectionMarks": {
+          "description": "List of selection marks extracted from the page.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SelectionMark"
+          }
+        }
+      }
+    },
+    "Language": {
+      "description": "Language code",
+      "type": "string",
+      "enum": [
+        "en",
+        "es",
+        "de",
+        "fr",
+        "it",
+        "nl",
+        "pt",
+        "zh-Hans"
+      ],
+      "x-ms-enum": {
+        "name": "Language",
+        "modelAsString": true
+      },
+      "x-nullable": false
+    },
+    "TextLine": {
+      "description": "An object representing an extracted text line.",
+      "type": "object",
+      "required": [
+        "text",
+        "boundingBox",
+        "words"
+      ],
+      "properties": {
+        "text": {
+          "description": "The text content of the line.",
+          "type": "string"
+        },
+        "boundingBox": {
+          "description": "Bounding box of an extracted line.",
+          "$ref": "#/definitions/BoundingBox"
+        },
+        "language": {
+          "description": "The detected language of this line, if different from the overall page language.",
+          "$ref": "#/definitions/Language"
+        },
+        "words": {
+          "description": "List of words in the text line.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TextWord"
+          }
+        },
+        "appearance": {
+          "description": "Text appearance properties.",
+          "$ref": "#/definitions/Appearance"
+        }
+      }
+    },
+    "TextWord": {
+      "description": "An object representing a word.",
+      "type": "object",
+      "required": [
+        "boundingBox",
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "description": "The text content of the word.",
+          "type": "string"
+        },
+        "boundingBox": {
+          "description": "Bounding box of an extracted word.",
+          "$ref": "#/definitions/BoundingBox"
+        },
+        "confidence": {
+          "description": "Confidence value.",
+          "$ref": "#/definitions/Confidence"
+        }
+      }
+    },
+    "BoundingBox": {
+      "description": "Quadrangle bounding box, with coordinates specified relative to the top-left of the original image. The eight numbers represent the four points, clockwise from the top-left corner relative to the text orientation. For image, the (x, y) coordinates are measured in pixels. For PDF, the (x, y) coordinates are measured in inches.",
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "number",
+        "x-nullable": false
+      }
+    },
+    "PageResult": {
+      "description": "Extracted information from a single page.",
+      "type": "object",
+      "required": [
+        "page"
+      ],
+      "properties": {
+        "page": {
+          "description": "Page number.",
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1,
+          "x-nullable": false
+        },
+        "clusterId": {
+          "description": "Cluster identifier.",
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0,
+          "x-nullable": false
+        },
+        "keyValuePairs": {
+          "description": "List of key-value pairs extracted from the page.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValuePair"
+          }
+        },
+        "tables": {
+          "description": "List of data tables extracted from the page.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DataTable"
+          }
+        }
+      }
+    },
+    "KeyValuePair": {
+      "description": "Information about the extracted key-value pair.",
+      "type": "object",
+      "required": [
+        "key",
+        "value",
+        "confidence"
+      ],
+      "properties": {
+        "label": {
+          "description": "A user defined label for the key/value pair entry.",
+          "type": "string"
+        },
+        "key": {
+          "description": "Information about the extracted key in a key-value pair.",
+          "$ref": "#/definitions/KeyValueElement"
+        },
+        "value": {
+          "description": "Information about the extracted value in a key-value pair.",
+          "$ref": "#/definitions/KeyValueElement"
+        },
+        "confidence": {
+          "description": "Confidence value.",
+          "$ref": "#/definitions/Confidence"
+        }
+      }
+    },
+    "KeyValueElement": {
+      "description": "Information about the extracted key or value in a key-value pair.",
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/KeyValueType"
+        },
+        "text": {
+          "description": "The text content of the key or value.",
+          "type": "string"
+        },
+        "boundingBox": {
+          "description": "Bounding box of the key or value.",
+          "$ref": "#/definitions/BoundingBox"
+        },
+        "elements": {
+          "description": "When includeTextDetails is set to true, a list of references to the text elements constituting this key or value.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ElementReference"
+          }
+        }
+      }
+    },
+    "KeyValueType": {
+      "type": "string",
+      "description": "Semantic data type of the key value element.",
+      "enum": [
+        "string",
+        "selectionMark"
+      ],
+      "x-ms-enum": {
+        "name": "KeyValueType",
+        "modelAsString": true
+      },
+      "x-nullable": false
+    },
+    "ElementReference": {
+      "description": "Reference to a line, word or selection mark.",
+      "type": "string"
+    },
+    "SelectionMark": {
+      "description": "Information about the extracted selection mark.",
+      "type": "object",
+      "required": [
+        "boundingBox",
+        "confidence",
+        "state"
+      ],
+      "properties": {
+        "boundingBox": {
+          "description": "Bounding box of the selection mark.",
+          "$ref": "#/definitions/BoundingBox"
+        },
+        "confidence": {
+          "description": "Confidence value.",
+          "$ref": "#/definitions/Confidence"
+        },
+        "state": {
+          "description": "State of the selection mark.",
+          "type": "string",
+          "enum": [
+            "selected",
+            "unselected"
+          ]
+        }
+      }
+    },
+    "DataTable": {
+      "description": "Information about the extracted table contained in a page.",
+      "type": "object",
+      "required": [
+        "rows",
+        "columns",
+        "cells",
+        "boundingBox"
+      ],
+      "properties": {
+        "rows": {
+          "description": "Number of rows.",
+          "type": "integer",
+          "minimum": 1,
+          "x-nullable": false
+        },
+        "columns": {
+          "description": "Number of columns.",
+          "type": "integer",
+          "minimum": 1,
+          "x-nullable": false
+        },
+        "cells": {
+          "description": "List of cells contained in the table.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DataTableCell"
+          }
+        },
+        "boundingBox": {
+          "description": "Bounding box of the table.",
+          "$ref": "#/definitions/BoundingBox"
+        }
+      }
+    },
+    "DataTableCell": {
+      "description": "Information about the extracted cell in a table.",
+      "type": "object",
+      "required": [
+        "rowIndex",
+        "columnIndex",
+        "text",
+        "boundingBox",
+        "confidence"
+      ],
+      "properties": {
+        "rowIndex": {
+          "description": "Row index of the cell.",
+          "type": "integer",
+          "minimum": 0,
+          "x-nullable": false
+        },
+        "columnIndex": {
+          "description": "Column index of the cell.",
+          "type": "integer",
+          "minimum": 0,
+          "x-nullable": false
+        },
+        "rowSpan": {
+          "description": "Number of rows spanned by this cell.",
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "x-nullable": false
+        },
+        "columnSpan": {
+          "description": "Number of columns spanned by this cell.",
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "x-nullable": false
+        },
+        "text": {
+          "description": "Text content of the cell.",
+          "type": "string"
+        },
+        "boundingBox": {
+          "description": "Bounding box of the cell.",
+          "$ref": "#/definitions/BoundingBox"
+        },
+        "confidence": {
+          "description": "Confidence value.",
+          "$ref": "#/definitions/Confidence"
+        },
+        "elements": {
+          "description": "When includeTextDetails is set to true, a list of references to the text elements constituting this table cell.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ElementReference"
+          }
+        },
+        "isHeader": {
+          "description": "Is the current cell a header cell?",
+          "type": "boolean",
+          "default": false,
+          "x-nullable": false
+        },
+        "isFooter": {
+          "description": "Is the current cell a footer cell?",
+          "type": "boolean",
+          "default": false,
+          "x-nullable": false
+        }
+      }
+    },
+    "DocumentResult": {
+      "description": "A set of extracted fields corresponding to the input document.",
+      "type": "object",
+      "required": [
+        "docType",
+        "pageRange",
+        "fields"
+      ],
+      "properties": {
+        "docType": {
+          "description": "Document type.",
+          "type": "string"
+        },
+        "modelId": {
+          "description": "Model identifier.",
+          "type": "string",
+          "format": "uuid",
+          "x-nullable": false
+        },
+        "pageRange": {
+          "description": "First and last page number where the document is found.",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "x-nullable": false
+          }
+        },
+        "docTypeConfidence": {
+          "description": "Predicted document type confidence.",
+          "$ref": "#/definitions/Confidence"
+        },
+        "fields": {
+          "description": "Dictionary of named field values.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/FieldValue"
+          }
+        }
+      }
+    },
+    "FieldValue": {
+      "description": "Recognized field value.",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "Type of field value.",
+          "$ref": "#/definitions/FieldValueType"
+        },
+        "valueString": {
+          "description": "String value.",
+          "type": "string"
+        },
+        "valueDate": {
+          "description": "Date value.",
+          "format": "date",
+          "type": "string",
+          "x-nullable": false
+        },
+        "valueTime": {
+          "description": "Time value.",
+          "format": "time",
+          "type": "string",
+          "x-nullable": false
+        },
+        "valuePhoneNumber": {
+          "description": "Phone number value.",
+          "type": "string"
+        },
+        "valueNumber": {
+          "description": "Floating point value.",
+          "type": "number",
+          "x-nullable": false
+        },
+        "valueInteger": {
+          "description": "Integer value.",
+          "type": "integer",
+          "x-nullable": false
+        },
+        "valueArray": {
+          "description": "Array of field values.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FieldValue"
+          }
+        },
+        "valueObject": {
+          "description": "Dictionary of named field values.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/FieldValue"
+          }
+        },
+        "valueSelectionMark": {
+          "description": "Selection mark value.",
+          "type": "string",
+          "enum": [
+            "selected",
+            "unselected"
+          ],
+          "x-nullable": false
+        },
+        "text": {
+          "description": "Text content of the extracted field.",
+          "type": "string"
+        },
+        "boundingBox": {
+          "description": "Bounding box of the field value, if appropriate.",
+          "$ref": "#/definitions/BoundingBox"
+        },
+        "confidence": {
+          "description": "Confidence score.",
+          "$ref": "#/definitions/Confidence"
+        },
+        "elements": {
+          "description": "When includeTextDetails is set to true, a list of references to the text elements constituting this field.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ElementReference"
+          }
+        },
+        "page": {
+          "description": "The 1-based page number in the input document.",
+          "type": "integer",
+          "minimum": 1,
+          "x-nullable": false
+        }
+      }
+    },
+    "FieldValueType": {
+      "type": "string",
+      "description": "Semantic data type of the field value.",
+      "enum": [
+        "string",
+        "date",
+        "time",
+        "phoneNumber",
+        "number",
+        "integer",
+        "array",
+        "object",
+        "selectionMark"
+      ],
+      "x-ms-enum": {
+        "name": "FieldValueType",
+        "modelAsString": false
+      },
+      "x-nullable": false
+    },
+    "Confidence": {
+      "description": "Confidence value.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "x-nullable": false
+    },
+    "Appearance": {
+      "description": "An object representing the appearance of the text line.",
+      "type": "object",
+      "required": [
+        "style"
+      ],
+      "properties": {
+        "style": {
+          "description": "An object representing the style of the text line.",
+          "type": "object",
+          "$ref": "#/definitions/Style"
+        }
+      }
+    },
+    "Style": {
+      "description": "An object representing the style of the text line.",
+      "type": "object",
+      "required": [
+        "name",
+        "confidence"
+      ],
+      "properties": {
+        "name": {
+          "description": "The text line style name, including handwriting and other.",
+          "type": "string",
+          "x-ms-enum": {
+            "name": "TextStyle",
+            "modelAsString": true
+          },
+          "enum": [
+            "other",
+            "handwriting"
+          ]
+        },
+        "confidence": {
+          "description": "The confidence of text line style.",
+          "type": "number",
+          "format": "float"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "Endpoint": {
+      "name": "endpoint",
+      "description": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com).",
+      "x-ms-parameter-location": "client",
+      "required": true,
+      "type": "string",
+      "in": "path",
+      "x-ms-skip-url-encoding": true
+    },
+    "FileStream": {
+      "name": "fileStream",
+      "description": ".json, .pdf, .jpg, .png or .tiff type file stream.",
+      "x-ms-parameter-location": "method",
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/SourcePath"
+      }
+    },
+    "Pages": {
+      "name": "Pages",
+      "in": "query",
+      "description": "Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space.",
+      "required": false,
+      "x-ms-parameter-location": "method",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "(^[0-9]+-[0-9]+$)|(^[0-9]+$)"
+      }
+    },
+    "Locale": {
+      "name": "locale",
+      "in": "query",
+      "description": "Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default).",
+      "required": false,
+      "x-ms-parameter-location": "method",
+      "type": "string",
+      "enum": [
+        "en-AU",
+        "en-CA",
+        "en-GB",
+        "en-IN",
+        "en-US"
+      ],
+      "x-ms-enum": {
+        "name": "Locale",
+        "modelAsString": true
+      }
+    },
+    "Language": {
+      "name": "language",
+      "in": "query",
+      "description": "The BCP-47 language code of the text in the document. Currently, only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt'), simplified Chinese ('zh-Hans') and Spanish ('es') are supported (print – nine languages and handwritten – English only). Layout supports auto language identification and multi language documents, so only provide a language code if you would like to force the documented to be processed as that specific language.",
+      "required": false,
+      "x-ms-parameter-location": "method",
+      "type": "string",
+      "enum": [
+        "en",
+        "es",
+        "de",
+        "fr",
+        "it",
+        "nl",
+        "pt",
+        "zh-Hans"
+      ],
+      "x-ms-enum": {
+        "name": "Language",
+        "modelAsString": true
+      }
+    }
+  }
+}

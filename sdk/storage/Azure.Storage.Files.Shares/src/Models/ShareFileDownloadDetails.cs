@@ -105,7 +105,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public bool IsServerEncrypted => _flattened.IsServerEncrypted;
 
-
         /// <summary>
         /// When a file is leased, specifies whether the lease is of infinite or fixed duration.
         /// </summary>

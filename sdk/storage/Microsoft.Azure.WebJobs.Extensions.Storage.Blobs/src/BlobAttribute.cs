@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs
 {
-
 #pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
     /// Attribute used to bind a parameter to an Azure Blob. The attribute supports binding
@@ -40,6 +41,7 @@ namespace Microsoft.Azure.WebJobs
     /// The parameter type can be CloudBlobContainer, CloudBlobDirectory or <see cref="IEnumerable{T}"/>
     /// of one of the following element types:
     /// <list type = "bullet" >
+    /// <item><description><see cref="BlobClient"/></description></item>
     /// <item><description><see cref="BlobBaseClient"/></description></item>
     /// <item><description><see cref="AppendBlobClient"/></description></item>
     /// <item><description><see cref="BlockBlobClient"/></description></item>

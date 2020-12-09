@@ -19,7 +19,6 @@ namespace Azure.Core.Tests
         [Test]
         public void CreatesActivityWithNameAndTags()
         {
-
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 
@@ -53,7 +52,6 @@ namespace Azure.Core.Tests
         [Test]
         public void ResourceNameIsOptional()
         {
-
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", null, true);
 

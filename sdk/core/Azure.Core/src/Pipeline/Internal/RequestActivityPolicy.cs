@@ -118,17 +118,14 @@ namespace Azure.Core.Pipeline
 
             if (currentActivity != null)
             {
+                var currentActivityId = currentActivity.Id ?? string.Empty;
+
                 if (currentActivity.IsW3CFormat())
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
-                        if (currentActivity.Id != null)
-                        {
-                            message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
-                        }
-
-                        string? traceStateString = currentActivity.GetTraceState();
-                        if (traceStateString != null)
+                        message.Request.Headers.Add(TraceParentHeaderName, currentActivityId);
+                        if (currentActivity.TryGetTraceState(out string? traceStateString) && traceStateString != null)
                         {
                             message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
                         }
@@ -138,10 +135,7 @@ namespace Azure.Core.Pipeline
                 {
                     if (!message.Request.Headers.Contains(RequestIdHeaderName))
                     {
-                        if (currentActivity.Id != null)
-                        {
-                            message.Request.Headers.Add(RequestIdHeaderName, currentActivity.Id);
-                        }
+                        message.Request.Headers.Add(RequestIdHeaderName, currentActivityId);
                     }
                 }
             }

@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.Azure.WebJobs.Host.Protocols;
-using Newtonsoft.Json.Linq;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     /// <summary>
     /// Tracks causality via JSON formatted queue message content.
@@ -21,9 +23,16 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
     /// Id is not filled out until after the message is queued,
     /// but then there's a race between updating the aux storage and another function picking up the message.
     /// </remarks>
-    internal static class QueueCausalityManager
+    internal class QueueCausalityManager
     {
         private const string ParentGuidFieldName = "$AzureWebJobsParentId";
+
+        private readonly ILogger<QueueCausalityManager> _logger;
+
+        public QueueCausalityManager(ILoggerFactory loggerFactory)
+        {
+            _logger = loggerFactory.CreateLogger<QueueCausalityManager>();
+        }
 
         public static void SetOwner(Guid functionOwner, JObject token)
         {
@@ -39,9 +48,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         }
 
         [DebuggerNonUserCode]
-        public static Guid? GetOwner(QueueMessage msg)
+        public Guid? GetOwner(QueueMessage msg)
         {
-            string text = msg.MessageText;
+            string text = msg.TryGetAsString(_logger);
 
             if (text == null)
             {

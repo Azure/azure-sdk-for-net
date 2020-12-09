@@ -12,10 +12,9 @@ namespace Azure.Core.Amqp.Tests
     public class AmqpAnnotatedMessageTests
     {
         [Test]
-        public void CopyConstructorCopies()
+        public void CanCreateAnnotatedMessage()
         {
-            var message = new AmqpAnnotatedMessage(
-                new BinaryData[] { BinaryData.FromString("some data") });
+            var message = new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { Encoding.UTF8.GetBytes("some data") }));
             message.ApplicationProperties.Add("applicationKey", "applicationValue");
             message.DeliveryAnnotations.Add("deliveryKey", "deliveryValue");
             message.MessageAnnotations.Add("messageKey", "messageValue");
@@ -25,52 +24,46 @@ namespace Azure.Core.Amqp.Tests
             message.Header.FirstAcquirer = true;
             message.Header.Priority = 1;
             message.Header.TimeToLive = TimeSpan.FromSeconds(60);
-            message.Properties.AbsoluteExpiryTime = DateTimeOffset.Now.AddDays(1);
+            DateTimeOffset time = DateTimeOffset.Now.AddDays(1);
+            message.Properties.AbsoluteExpiryTime = time;
             message.Properties.ContentEncoding = "compress";
             message.Properties.ContentType = "application/json";
-            message.Properties.CorrelationId = "correlationId";
-            message.Properties.CreationTime = DateTimeOffset.Now;
+            message.Properties.CorrelationId = new AmqpMessageId("correlationId");
+            message.Properties.CreationTime = time;
             message.Properties.GroupId = "groupId";
             message.Properties.GroupSequence = 5;
-            message.Properties.MessageId = "messageId";
-            message.Properties.ReplyTo = "replyTo";
+            message.Properties.MessageId = new AmqpMessageId("messageId");
+            message.Properties.ReplyTo = new AmqpAddress("replyTo");
             message.Properties.ReplyToGroupId = "replyToGroupId";
             message.Properties.Subject = "subject";
-            message.Properties.To = "to";
-            message.Properties.UserId = BinaryData.FromString("userId");
-            var copy = new AmqpAnnotatedMessage(message);
-            Assert.AreEqual(((AmqpDataMessageBody)message.Body).Data.ToArray(), ((AmqpDataMessageBody)copy.Body).Data.ToArray());
-            Assert.AreEqual(message.ApplicationProperties["applicationKey"], copy.ApplicationProperties["applicationKey"]);
-            Assert.AreEqual(message.DeliveryAnnotations["deliveryKey"], copy.DeliveryAnnotations["deliveryKey"]);
-            Assert.AreEqual(message.MessageAnnotations["messageKey"], copy.MessageAnnotations["messageKey"]);
-            Assert.AreEqual(message.Footer["footerKey"], copy.Footer["footerKey"]);
-            Assert.AreEqual(message.Header.DeliveryCount, copy.Header.DeliveryCount);
-            Assert.AreEqual(message.Header.Durable, copy.Header.Durable);
-            Assert.AreEqual(message.Header.FirstAcquirer, copy.Header.FirstAcquirer);
-            Assert.AreEqual(message.Header.Priority, copy.Header.Priority);
-            Assert.AreEqual(message.Header.TimeToLive, copy.Header.TimeToLive);
-            Assert.AreEqual(message.Properties.AbsoluteExpiryTime, copy.Properties.AbsoluteExpiryTime);
-            Assert.AreEqual(message.Properties.ContentEncoding, copy.Properties.ContentEncoding);
-            Assert.AreEqual(message.Properties.ContentType, copy.Properties.ContentType);
-            Assert.AreEqual(message.Properties.CorrelationId, copy.Properties.CorrelationId);
-            Assert.AreEqual(message.Properties.AbsoluteExpiryTime, copy.Properties.AbsoluteExpiryTime);
-            Assert.AreEqual(message.Properties.CreationTime, copy.Properties.CreationTime);
-            Assert.AreEqual(message.Properties.GroupId, copy.Properties.GroupId);
-            Assert.AreEqual(message.Properties.GroupSequence, copy.Properties.GroupSequence);
-            Assert.AreEqual(message.Properties.MessageId, copy.Properties.MessageId);
-            Assert.AreEqual(message.Properties.ReplyTo, copy.Properties.ReplyTo);
-            Assert.AreEqual(message.Properties.ReplyToGroupId, copy.Properties.ReplyToGroupId);
-            Assert.AreEqual(message.Properties.Subject, copy.Properties.Subject);
-            Assert.AreEqual(message.Properties.To, copy.Properties.To);
-            Assert.AreEqual(message.Properties.UserId, copy.Properties.UserId);
-        }
+            message.Properties.To = new AmqpAddress("to");
+            message.Properties.UserId = Encoding.UTF8.GetBytes("userId");
 
-        [Test]
-        public void CopyConstructorThrowsIfNull()
-        {
-            Assert.That(
-                () => new AmqpAnnotatedMessage(messageToCopy: null),
-                Throws.InstanceOf<ArgumentNullException>());
+            Assert.AreEqual(AmqpMessageBodyType.Data, message.Body.BodyType);
+            Assert.IsTrue(message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> body));
+            Assert.AreEqual("some data", Encoding.UTF8.GetString(body.First().ToArray()));
+            Assert.AreEqual("applicationValue", message.ApplicationProperties["applicationKey"]);
+            Assert.AreEqual("deliveryValue", message.DeliveryAnnotations["deliveryKey"]);
+            Assert.AreEqual("messageValue", message.MessageAnnotations["messageKey"]);
+            Assert.AreEqual("footerValue", message.Footer["footerKey"]);
+            Assert.AreEqual(1, message.Header.DeliveryCount);
+            Assert.IsTrue(message.Header.Durable);
+            Assert.IsTrue(message.Header.FirstAcquirer);
+            Assert.AreEqual(1, message.Header.Priority);
+            Assert.AreEqual(TimeSpan.FromSeconds(60), message.Header.TimeToLive);
+            Assert.AreEqual(time, message.Properties.AbsoluteExpiryTime);
+            Assert.AreEqual("compress", message.Properties.ContentEncoding);
+            Assert.AreEqual("application/json", message.Properties.ContentType);
+            Assert.AreEqual("correlationId", message.Properties.CorrelationId.ToString());
+            Assert.AreEqual(time, message.Properties.CreationTime);
+            Assert.AreEqual("groupId", message.Properties.GroupId);
+            Assert.AreEqual(5, message.Properties.GroupSequence);
+            Assert.AreEqual("messageId", message.Properties.MessageId.ToString());
+            Assert.AreEqual("replyTo", message.Properties.ReplyTo.ToString());
+            Assert.AreEqual("replyToGroupId", message.Properties.ReplyToGroupId);
+            Assert.AreEqual("subject", message.Properties.Subject);
+            Assert.AreEqual("to", message.Properties.To.ToString());
+            Assert.AreEqual("userId", Encoding.UTF8.GetString(message.Properties.UserId.Value.ToArray()));
         }
     }
 }

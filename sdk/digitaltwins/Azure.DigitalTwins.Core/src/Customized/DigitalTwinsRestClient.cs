@@ -587,7 +587,8 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<RelationshipCollection<T>>> ListRelationshipsAsync<T>(string id,
+        internal async Task<Response<RelationshipCollection<T>>> ListRelationshipsAsync<T>(
+            string id,
             string relationshipName = null,
             GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null,
             ObjectSerializer objectSerializer = null,
@@ -618,7 +619,8 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<RelationshipCollection<T>>> ListRelationshipsNextPageAsync<T>(string nextLink,
+        internal async Task<Response<RelationshipCollection<T>>> ListRelationshipsNextPageAsync<T>(
+            string nextLink,
             string id,
             string relationshipName = null,
             GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null,
@@ -655,7 +657,8 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<RelationshipCollection<T>> ListRelationships<T>(string id,
+        internal Response<RelationshipCollection<T>> ListRelationships<T>(
+            string id,
             string relationshipName = null,
             GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null,
             ObjectSerializer objectSerializer = null,
@@ -686,7 +689,8 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<RelationshipCollection<T>> ListRelationshipsNextPage<T>(string nextLink,
+        internal Response<RelationshipCollection<T>> ListRelationshipsNextPage<T>(
+            string nextLink,
             string id,
             string relationshipName = null,
             GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null,
@@ -941,7 +945,7 @@ namespace Azure.DigitalTwins.Core
         // As such, these methods are declared here and made private, while the public method is declared above, too.
         // These methods should never be called.
 
-#pragma warning disable CA1801, IDE0051, IDE0060 // Remove unused parameter
+#pragma warning disable CA1801, IDE0051, IDE0060, CA1822 // Remove unused parameter
 
         // Original return type is Task<Response<object>>. Changing to object to allow returning null.
         private object AddAsync(string id, object twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default) => null;

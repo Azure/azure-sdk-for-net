@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Azure.WebJobs.Host.Bindings.Path;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal class ParameterizedBlobPathSource : IBlobPathSource
     {
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
             BindingTemplateSource template)
         {
             Debug.Assert(template != null, "template must not be null");
-            Debug.Assert(template.ParameterNames.Count() > 0, "template must contain one or more parameters");
+            Debug.Assert(template.ParameterNames.Any(), "template must contain one or more parameters");
 
             _containerNamePattern = containerNamePattern;
             _blobNamePattern = blobNamePattern;

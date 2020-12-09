@@ -254,7 +254,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [source_root]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/src
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples
 [reference_docs]: https://azure.github.io/azure-sdk-for-net/appconfiguration.html
-[azconfig_rest]: https://github.com/Azure/AppConfiguration#rest-api-reference
+[azconfig_rest]: https://docs.microsoft.com/azure/azure-app-configuration/rest-api
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [configuration_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/src/ConfigurationClient.cs

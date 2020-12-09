@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         private readonly KeyClientOptions.ServiceVersion _serviceVersion;
         public CryptographyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             _serviceVersion = serviceVersion;
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
@@ -29,8 +29,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // is always made.  This allows tests to be replayed independently and in any order
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Client = GetClient();
-
                 ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
             }
         }

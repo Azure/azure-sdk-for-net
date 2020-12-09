@@ -1,10 +1,11 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: search
     TimeoutInMinutes: 120
     MaxParallel: 2
+    UnsupportedClouds: Canary
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live

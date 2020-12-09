@@ -21,6 +21,7 @@ namespace Azure.Data.Tables
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
         private readonly string _version;
         internal readonly bool _isPremiumEndpoint;
+        private readonly QueryOptions _defaultQueryOptions = new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified <see cref="Uri" /> containing a shared access signature (SAS)
@@ -123,8 +124,8 @@ namespace Azure.Data.Tables
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
 
             options ??= new TableClientOptions();
-            var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
-            var secondaryEndpoint = connString.TableStorageUri.PrimaryUri?.ToString() ?? endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
+            var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
+            var secondaryEndpoint = connString.TableStorageUri.SecondaryUri?.AbsoluteUri;
 
             TableSharedKeyPipelinePolicy policy = connString.Credentials switch
             {
@@ -133,11 +134,11 @@ namespace Azure.Data.Tables
             };
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
 
-            _diagnostics = new ClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
-            _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString);
-            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint);
             _version = options.VersionString;
+            _diagnostics = new ClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
+            _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
             _isPremiumEndpoint = IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
         }
 
@@ -146,15 +147,15 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new TableClientOptions();
-            var endpointString = endpoint.ToString();
-            var secondaryEndpoint = endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
+            var endpointString = endpoint.AbsoluteUri;
+            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
 
-            _diagnostics = new ClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
-            _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString);
-            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint);
             _version = options.VersionString;
+            _diagnostics = new ClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
+            _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
             _isPremiumEndpoint = IsPremiumEndpoint(endpoint);
         }
 
@@ -221,21 +222,24 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return PageableHelpers.CreateAsyncEnumerable(async _ =>
-            {
-                var response = await _tableOperations.QueryAsync(
-                    null,
-                    new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
-                    cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            }, async (nextLink, _) =>
-            {
-                var response = await _tableOperations.QueryAsync(
-                       nextTableName: nextLink,
-                       new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
-                       cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            });
+                return PageableHelpers.CreateAsyncEnumerable(
+                    async pageSizeHint =>
+                    {
+                        var response = await _tableOperations.QueryAsync(
+                            null,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                            cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    },
+                    async (nextLink, pageSizeHint) =>
+                    {
+                        var response = await _tableOperations.QueryAsync(
+                            nextTableName: nextLink,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                            cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    },
+                    maxPerPage);
             }
             catch (Exception ex)
             {
@@ -256,42 +260,44 @@ namespace Azure.Data.Tables
         /// <returns>An <see cref="Pageable{T}"/> containing a collection of <see cref="TableItem"/>.</returns>
         public virtual Pageable<TableItem> GetTables(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-
-            return PageableHelpers.CreateEnumerable(_ =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-                scope.Start();
-                try
+            return PageableHelpers.CreateEnumerable(
+                pageSizeHint =>
                 {
-                    var response = _tableOperations.Query(
-                            null,
-                            new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    scope.Start();
+                    try
+                    {
+                        var response = _tableOperations.Query(
+                                null,
+                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                                cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                (nextLink, pageSizeHint) =>
+                {
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    scope.Start();
+                    try
+                    {
+                        var response = _tableOperations.Query(
+                            nextTableName: nextLink,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                             cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }, (nextLink, _) =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-                scope.Start();
-                try
-                {
-                    var response = _tableOperations.Query(
-                        nextTableName: nextLink,
-                        new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
-                        cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                maxPerPage);
         }
 
         /// <summary>
@@ -307,7 +313,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -330,7 +336,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -353,7 +359,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -380,7 +386,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)

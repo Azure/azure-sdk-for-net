@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 #pragma warning disable CA1822 // Mark members as static
         protected void SetBody(ServiceBusReceivedMessage message, BinaryData body)
         {
-            message.AmqpMessage.Body = new AmqpDataMessageBody(new BinaryData[] { body });
+            message.AmqpMessage.Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body });
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetCorrelationId(ServiceBusReceivedMessage message, string correlationId)
         {
-            message.AmqpMessage.Properties.CorrelationId = correlationId;
+            message.AmqpMessage.Properties.CorrelationId = new AmqpMessageId(correlationId);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetMessageId(ServiceBusReceivedMessage message, string messageId)
         {
-            message.AmqpMessage.Properties.MessageId = messageId;
+            message.AmqpMessage.Properties.MessageId = new AmqpMessageId(messageId);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetReplyTo(ServiceBusReceivedMessage message, string replyTo)
         {
-            message.AmqpMessage.Properties.ReplyTo = replyTo;
+            message.AmqpMessage.Properties.ReplyTo = new AmqpAddress(replyTo);
         }
 
         /// <summary>
@@ -171,11 +171,11 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="to">The to value to set on the message.</param>
         protected void SetTo(ServiceBusReceivedMessage message, string to)
         {
-            message.AmqpMessage.Properties.To = to;
+            message.AmqpMessage.Properties.To = new AmqpAddress(to);
         }
 
         /// <summary>
-        /// Sets the <see cref="ServiceBusReceivedMessage.ViaPartitionKey"/>.
+        /// Sets the <see cref="ServiceBusReceivedMessage.TransactionPartitionKey"/>.
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="viaPartitionKey">The via partition key to set on the message.</param>
