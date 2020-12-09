@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
@@ -16,7 +17,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
         }
 
-        [Test]
+        /// <param name="populateOptionalMembers">
+        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
+        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
+        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
+        /// </param>
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task GetDimensionValues(bool populateOptionalMembers)
@@ -53,7 +59,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(valueCount, Is.GreaterThan(0));
         }
 
-        [Test]
+        /// <param name="populateOptionalMembers">
+        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
+        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
+        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
+        /// </param>
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task GetMetricSeriesDefinitions(bool populateOptionalMembers)
@@ -100,7 +111,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(definitionCount, Is.GreaterThan(0));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetMetricSeriesData()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
@@ -141,7 +152,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(seriesKeys, Is.EquivalentTo(returnedKeys));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetMetricEnrichmentStatuses()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();

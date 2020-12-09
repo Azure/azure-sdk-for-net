@@ -20,10 +20,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         private DateTimeOffset CreatedFeedbackEndTime => DateTimeOffset.Parse("2020-09-29T00:00:00Z");
 
-        private DateTimeOffset FeedbackSamplingStartTime => DateTimeOffset.Parse("2020-12-01T00:00:00Z");
-
-        private DateTimeOffset FeedbackSamplingEndTime => DateTimeOffset.Parse("2020-12-31T00:00:00Z");
-
+        /// <param name="populateOptionalMembers">
+        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
+        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
+        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
+        /// </param>
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
@@ -104,6 +105,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(changePointFeedback.EndTime, Is.EqualTo(CreatedFeedbackEndTime));
         }
 
+        /// <param name="populateOptionalMembers">
+        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
+        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
+        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
+        /// </param>
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
@@ -184,6 +190,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(periodFeedback.PeriodValue, Is.EqualTo(periodValue));
         }
 
+        /// <param name="populateOptionalMembers">
+        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
+        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
+        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
+        /// </param>
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
@@ -191,13 +202,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
+            // The sampling time range was chosen in a way to make sure there'll be feedback returned by the
+            // service call. Changing these values can make this test fail.
+
+            DateTimeOffset feedbackSamplingStartTime = DateTimeOffset.Parse("2020-12-01T00:00:00Z");
+            DateTimeOffset feedbackSamplingEndTime = DateTimeOffset.Parse("2020-12-31T00:00:00Z");
+
             var options = new GetAllFeedbackOptions();
 
             if (populateOptionalMembers)
             {
                 options.TimeMode = FeedbackQueryTimeMode.FeedbackCreatedTime;
-                options.StartTime = FeedbackSamplingStartTime;
-                options.EndTime = FeedbackSamplingEndTime;
+                options.StartTime = feedbackSamplingStartTime;
+                options.EndTime = feedbackSamplingEndTime;
                 options.FeedbackType = FeedbackType.Comment;
 
                 options.Filter.AddDimensionColumn("city", "Delhi");
@@ -220,8 +237,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (populateOptionalMembers)
                 {
-                    Assert.That(feedback.CreatedTime, Is.GreaterThanOrEqualTo(FeedbackSamplingStartTime));
-                    Assert.That(feedback.CreatedTime, Is.LessThanOrEqualTo(FeedbackSamplingEndTime));
+                    Assert.That(feedback.CreatedTime, Is.GreaterThanOrEqualTo(feedbackSamplingStartTime));
+                    Assert.That(feedback.CreatedTime, Is.LessThanOrEqualTo(feedbackSamplingEndTime));
                     Assert.That(feedback.Type, Is.EqualTo(FeedbackType.Comment));
 
                     Dictionary<string, string> dimensionColumns = feedback.DimensionFilter.DimensionFilter.AsDictionary();
