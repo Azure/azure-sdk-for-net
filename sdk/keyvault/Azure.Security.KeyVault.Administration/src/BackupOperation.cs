@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// The number of seconds recommended by the service to delay before checking on completion status.
         /// </summary>
-        private readonly int? _retryAfterSeconds;
+        internal int? _retryAfterSeconds;
         private readonly KeyVaultBackupClient _client;
         private Response _response;
         private FullBackupDetailsInternal _value;
