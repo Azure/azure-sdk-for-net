@@ -24,13 +24,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// or not</param>
         /// <param name="transforms">List of transforms</param>
         public CookiesMatchConditionParameters(string selector = null, string operatorProperty = null, IList<string> matchValues = null, bool? negateCondition = null, IList<string> transforms = null)
-        {
-            Selector = selector;
-            OperatorProperty = operatorProperty;
-            NegateCondition = negateCondition;
-            MatchValues = matchValues;
-            Transforms = transforms;
-            CustomInit();
-        }
+            : this(operatorProperty, selector, negateCondition, matchValues, transforms) { }
     }
 }

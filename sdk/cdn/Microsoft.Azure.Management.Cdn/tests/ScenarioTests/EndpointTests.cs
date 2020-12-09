@@ -101,7 +101,7 @@ namespace Cdn.Tests.ScenarioTests
                     IsHttpAllowed = true,
                     IsHttpsAllowed = true,
                     IsCompressionEnabled = true,
-                    OriginHostHeader = "www.bing.com",
+                    OriginHostHeader = "www.azurecdntest.com",
                     OriginPath = "/photos",
                     QueryStringCachingBehavior = QueryStringCachingBehavior.BypassCaching,
                     ContentTypesToCompress = new List<string> { "text/html", "application/octet-stream" },
@@ -143,7 +143,16 @@ namespace Cdn.Tests.ScenarioTests
                                             OperatorProperty = "Equal",
                                             MatchValues = new List <string> {"abc"}
                                         }
-                                    }
+                                    },
+                                    new DeliveryRuleCookiesCondition(
+                                        new CookiesMatchConditionParameters(
+                                            "ExampleCookie",
+                                            "Contains",
+                                            new List<string> { "search-value" },
+                                            true,
+                                            new List<string> { "Lowercase" }
+                                       )
+                                    )
                                 }
                             }
                         }
@@ -152,6 +161,17 @@ namespace Cdn.Tests.ScenarioTests
 
                 endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
                 Assert.NotNull(endpoint);
+                Assert.Equal(1, endpoint.DeliveryPolicy.Rules.Count);
+                Assert.Equal(2, endpoint.DeliveryPolicy.Rules[0].Conditions.Count);
+                var cookiesCondition = endpoint.DeliveryPolicy.Rules[0].Conditions[1] as DeliveryRuleCookiesCondition;
+                var cookiesParams = cookiesCondition.Parameters;
+                Assert.Equal("ExampleCookie", cookiesParams.Selector);
+                Assert.Equal("Contains", cookiesParams.OperatorProperty);
+                Assert.Equal(1, cookiesParams.MatchValues.Count);
+                Assert.Contains("search-value", cookiesParams.MatchValues);
+                Assert.True(cookiesParams.NegateCondition);
+                Assert.Equal(1, cookiesParams.Transforms.Count);
+                Assert.Contains("Lowercase", cookiesParams.Transforms);
 
                 // Create a cdn endpoint with DSA should succeed
                 endpointName = TestUtilities.GenerateName("endpoint");
@@ -318,7 +338,7 @@ namespace Cdn.Tests.ScenarioTests
                     IsHttpAllowed = true,
                     IsHttpsAllowed = true,
                     IsCompressionEnabled = true,
-                    OriginHostHeader = "www.bing.com",
+                    OriginHostHeader = "www.azurecdntest.com",
                     OriginPath = "/photos",
                     QueryStringCachingBehavior = QueryStringCachingBehavior.BypassCaching,
                     ContentTypesToCompress = new List<string> { "text/html", "application/octet-stream" },
@@ -337,7 +357,7 @@ namespace Cdn.Tests.ScenarioTests
                     IsHttpAllowed = false,
                     IsHttpsAllowed = false,
                     IsCompressionEnabled = true,
-                    OriginHostHeader = "www.bing.com",
+                    OriginHostHeader = "www.azurecdntest.com",
                     OriginPath = "/photos",
                     QueryStringCachingBehavior = QueryStringCachingBehavior.BypassCaching,
                     ContentTypesToCompress = new List<string> { "text/html", "application/octet-stream" },
@@ -407,7 +427,7 @@ namespace Cdn.Tests.ScenarioTests
                 {
                     IsHttpAllowed = false,
                     OriginPath = "\\&123invalid_path/.",
-                    OriginHostHeader = "www.bing.com"
+                    OriginHostHeader = "www.azurecdntest.com"
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
@@ -419,7 +439,7 @@ namespace Cdn.Tests.ScenarioTests
                 {
                     IsHttpAllowed = false,
                     OriginPath = "/path/valid",
-                    OriginHostHeader = "www.bing.com",
+                    OriginHostHeader = "www.azurecdntest.com",
                     IsCompressionEnabled = true,
                     QueryStringCachingBehavior = QueryStringCachingBehavior.IgnoreQueryString
                 };
@@ -433,7 +453,7 @@ namespace Cdn.Tests.ScenarioTests
                 {
                     IsHttpAllowed = false,
                     OriginPath = "/path/valid",
-                    OriginHostHeader = "www.bing.com",
+                    OriginHostHeader = "www.azurecdntest.com",
                     IsCompressionEnabled = true,
                     QueryStringCachingBehavior = QueryStringCachingBehavior.IgnoreQueryString,
                     GeoFilters = new List<GeoFilter>
@@ -521,7 +541,7 @@ namespace Cdn.Tests.ScenarioTests
                 {
                     IsHttpAllowed = false,
                     OriginPath = "/path/valid",
-                    OriginHostHeader = "www.bing.com",
+                    OriginHostHeader = "www.azurecdntest.com",
                     IsCompressionEnabled = true,
                     ContentTypesToCompress = new List<string> { "text/html", "application/octet-stream" },
                     QueryStringCachingBehavior = QueryStringCachingBehavior.IgnoreQueryString,
@@ -569,7 +589,7 @@ namespace Cdn.Tests.ScenarioTests
                 endpointUpdateParameters = new EndpointUpdateParameters
                 {
                     IsHttpAllowed = false,
-                    OriginHostHeader = "www.bing.com"
+                    OriginHostHeader = "www.azurecdntest.com"
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
@@ -908,7 +928,7 @@ namespace Cdn.Tests.ScenarioTests
                     IsHttpAllowed = true,
                     IsHttpsAllowed = true,
                     IsCompressionEnabled = true,
-                    OriginHostHeader = "www.bing.com",
+                    OriginHostHeader = "www.azurecdntest.com",
                     OriginPath = "/photos",
                     QueryStringCachingBehavior = QueryStringCachingBehavior.IgnoreQueryString,
                     ContentTypesToCompress = new List<string> { "text/html", "text/css" },
