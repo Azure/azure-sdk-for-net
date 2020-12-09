@@ -80,7 +80,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly.Status, Is.Not.EqualTo(default(AnomalyStatus)));
                 Assert.That(anomaly.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateDimensionKey(anomaly.SeriesKey);
+                ValidateSeriesKey(anomaly.SeriesKey);
 
                 if (++anomalyCount >= MaximumSamplesCount)
                 {
@@ -111,7 +111,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 // Service bug: https://github.com/Azure/azure-sdk-for-net/issues/16581
                 //Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateDimensionKey(incident.DimensionKey);
+                ValidateSeriesKey(incident.DimensionKey);
 
                 if (++incidentCount >= MaximumSamplesCount)
                 {

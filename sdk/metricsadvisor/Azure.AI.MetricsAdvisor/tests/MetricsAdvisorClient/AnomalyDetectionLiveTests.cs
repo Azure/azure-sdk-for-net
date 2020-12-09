@@ -17,6 +17,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
         }
 
+        /// <param name="populateOptionalMembers">
+        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
+        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
+        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
+        /// </param>
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
@@ -55,7 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
                 Assert.That(anomaly.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateDimensionKey(anomaly.SeriesKey);
+                ValidateSeriesKey(anomaly.SeriesKey);
 
                 if (populateOptionalMembers)
                 {
@@ -78,6 +83,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(anomalyCount, Is.GreaterThan(0));
         }
 
+        /// <param name="populateOptionalMembers">
+        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
+        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
+        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
+        /// </param>
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
@@ -114,7 +124,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateDimensionKey(incident.DimensionKey);
+                ValidateSeriesKey(incident.DimensionKey);
 
                 if (populateOptionalMembers)
                 {
@@ -233,6 +243,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(rootCauseCount, Is.GreaterThan(0));
         }
 
+        /// <param name="populateOptionalMembers">
+        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
+        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
+        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
+        /// </param>
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
@@ -265,6 +280,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(valueCount, Is.GreaterThan(0));
         }
 
+        /// <param name="populateOptionalMembers">
+        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
+        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
+        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
+        /// </param>
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
@@ -329,7 +349,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(path, Is.Not.Null.And.Not.Empty);
             }
 
-            ValidateDimensionKey(rootCause.DimensionKey);
+            ValidateSeriesKey(rootCause.DimensionKey);
         }
     }
 }
