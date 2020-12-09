@@ -21,9 +21,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// Name of the blob container that the EventHostProcessor instances uses to coordinate load balancing listening on an event hub.
         /// Each event hub gets its own blob prefix within the container.
         /// </summary>
-        public string LeaseContainerName { get; set; } = "azure-webjobs-eventhub";
-
-        private int _batchCheckpointFrequency = 1;
+        public const string LeaseContainerName = "azure-webjobs-eventhub";
 
         public EventHubOptions()
         {
@@ -31,11 +29,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             InvokeProcessorAfterReceiveTimeout = false;
             EventProcessorOptions = new EventProcessorOptions()
             {
+                TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(1),
                 PrefetchCount = 300,
                 DefaultStartingPosition = EventPosition.Earliest,
             };
         }
+
+        public EventProcessorOptions EventProcessorOptions { get; }
+
+        private int _batchCheckpointFrequency = 1;
 
         /// <summary>
         /// Gets or sets the number of batches to process before creating an EventHub cursor checkpoint. Default 1.
@@ -67,15 +70,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             {
                 if (value < 1)
                 {
-                    throw new ArgumentException("Batch checkpoint frequency must be larger than 0.");
+                    throw new ArgumentException("Batch size must be larger than 0.");
                 }
                 _maxBatchSize = value;
             }
         }
 
+        /// <summary>
+        /// Returns whether the function would be triggered when a receive timeout occurs.
+        /// </summary>
         public bool InvokeProcessorAfterReceiveTimeout { get; set; }
 
-        public EventProcessorOptions EventProcessorOptions { get; }
+        /// <summary>
+        /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.
+        /// </summary>
+        internal string CheckpointContainer { get; set; } = LeaseContainerName;
 
         internal Action<ExceptionReceivedEventArgs> ExceptionHandler { get; set; }
 
@@ -260,7 +269,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 {
                     { nameof(EventProcessorOptions.TrackLastEnqueuedEventProperties), EventProcessorOptions.TrackLastEnqueuedEventProperties },
                     { nameof(EventProcessorOptions.PrefetchCount), EventProcessorOptions.PrefetchCount },
-                    { nameof(EventProcessorOptions.MaximumWaitTime), EventProcessorOptions.MaximumWaitTime }
+                    { nameof(EventProcessorOptions.MaximumWaitTime), EventProcessorOptions.MaximumWaitTime },
+                    { nameof(EventProcessorOptions.PartitionOwnershipExpirationInterval), EventProcessorOptions.PartitionOwnershipExpirationInterval },
+                    { nameof(EventProcessorOptions.LoadBalancingUpdateInterval), EventProcessorOptions.LoadBalancingUpdateInterval },
                 };
             }
 
