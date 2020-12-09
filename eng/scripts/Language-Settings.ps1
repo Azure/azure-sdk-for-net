@@ -186,7 +186,7 @@ function Find-Artifacts-For-Apireview($artifactDir, $pkgName = $null){
   }
 
   # Find all nupkg files in given artifact directory and skip any symbol files
-  $files = Get-ChildItem -Path $artifactDir -Recurse -Include $filter |  Where-Object {$_.Name -NotMatch "symbols" -and $_.Name.StartsWith("Azure") -and !$_.Name.StartsWith("Azure.ResourceManager")} |  Select-Object Name, FullName
+  $files = Get-ChildItem -Path $artifactDir -Recurse -Include $filter |  Where-Object {$_.Name -NotMatch "symbols" -and $_.Name -NotMatch "Azure.ResourceManager"} |  Select-Object Name, FullName
   write-host $files
   if($files){
     foreach($f in $files){
