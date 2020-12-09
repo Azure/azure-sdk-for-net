@@ -66,7 +66,8 @@ try {
     }
 
     # Get Metadata file path
-    $Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
+    $Response = Invoke-WebRequest -URI https://api.github.com/repos/Azure/azure-sdk-for-net/pulls/17062/files
+    # $Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
     $changeList = $Response.Content | ConvertFrom-Json
     $mataPath = @()
     $rpIndex = @()
@@ -94,7 +95,7 @@ try {
             }
         }
         else {
-            Write-Output "Can't get proper RP name with folder $item"
+            LogError "Can't get proper RP name with folder $item"
         } 
     }
     $rpIndex | ForEach-Object {
@@ -110,20 +111,20 @@ try {
     }
 
     # Invoke AutoRest
-    foreach ($path in $mataPath) {
-        $metaData = ''
+    foreach ($metaData in $mataPath) {
+        $metaDataContent = ''
         try {
-            $metaData = Get-Content $path
+            $metaDataContent = Get-Content $metaData
         }
         catch {
-            Write-Warning "Cannot find path $path"
+            LogError "Cannot find path $metaData"
         }
 
-        if ( $metaData -ne '') {
+        if ( $metaDataContent -ne '') {
             $commit = ''
             $readme = ''
             [string]$path = Get-Location
-            $metaData | ForEach-Object {
+            $metaDataContent | ForEach-Object {
                 if ($_ -match 'Commit') {
                     $commit = $_.substring($_.length - 40, 40)
                 }
@@ -134,10 +135,15 @@ try {
             }
             $readme = $readme -replace "blob/[\S]*/specification", "blob/$commit/specification"
             $path = ($path -replace "\\", "/") + "/sdk"
-    
-            Write-Output "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90"
-            Invoke-Block {
-                & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90 
+
+            if ($readme -eq '') {
+                LogError "MetaData $metaData content not correct"
+            }
+            else {
+                Write-Output "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90"
+                Invoke-Block {
+                    & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90 
+                }
             }
         }
     }
