@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -13,6 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
         }
 
+        private string FakeGuid => "00000000-0000-0000-0000-000000000000";
+
         [Test]
         public void AddFeedbackValidatesArguments()
         {
@@ -21,6 +26,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(() => client.AddFeedbackAsync(null), Throws.InstanceOf<ArgumentNullException>());
 
             Assert.That(() => client.AddFeedback(null), Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void AddFeedbackRespectsTheCancellationToken()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            var filter = new FeedbackDimensionFilter(new DimensionKey());
+            var feedback = new MetricCommentFeedback(FakeGuid, filter, "comment");
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(() => client.AddFeedbackAsync(feedback, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => client.AddFeedback(feedback, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]
@@ -36,6 +56,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        public void GetFeedbackRespectsTheCancellationToken()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(() => client.GetFeedbackAsync(FakeGuid, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => client.GetFeedback(FakeGuid, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+        }
+
+        [Test]
         public void GetAllFeedbackValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
@@ -45,6 +77,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetAllFeedback(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAllFeedback(""), Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void GetAllFeedbackRespectsTheCancellationToken()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            IAsyncEnumerator<MetricFeedback> asyncEnumerator = client.GetAllFeedbackAsync(FakeGuid, cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
+            Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
+
+            IEnumerator<MetricFeedback> enumerator = client.GetAllFeedback(FakeGuid, cancellationToken: cancellationSource.Token).GetEnumerator();
+            Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 
         private MetricsAdvisorClient GetMetricsAdvisorClient()

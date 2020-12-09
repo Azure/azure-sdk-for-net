@@ -100,6 +100,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(changePointFeedback, Is.Not.Null);
             Assert.That(changePointFeedback.ChangePointValue, Is.EqualTo(ChangePointValue.AutoDetect));
+            Assert.That(changePointFeedback.StartTime, Is.EqualTo(CreatedFeedbackStartTime));
+            Assert.That(changePointFeedback.EndTime, Is.EqualTo(CreatedFeedbackEndTime));
         }
 
         [RecordedTest]
