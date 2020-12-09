@@ -37,7 +37,7 @@ namespace Azure.Communication.Administration
             : this(
                 options ?? new CommunicationIdentityClientOptions(),
                 AssertNotNull(tokenCredential, nameof(tokenCredential)),
-                endpoint)
+                AssertNotNull(endpoint, nameof(endpoint)))
         { }
         private CommunicationIdentityClient(CommunicationIdentityClientOptions options, ConnectionString connectionString)
         {
