@@ -106,6 +106,10 @@ jobs:
         inputs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+
+      - template: /eng/common/pipelines/templates/steps/create-apireview.yml
+        condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))
+
   - job: "Test"
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     variables:

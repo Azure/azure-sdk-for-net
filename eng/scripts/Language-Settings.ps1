@@ -174,3 +174,25 @@ function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$
 
   Set-Content -Path $csvLoc -Value $allCSVRows
 }
+
+
+# function is used to auto generate API View
+function Find-Artifacts-For-Apireview($artifactDir, $pkgName = $null){
+  $packages = @{}
+  $filter = "*.nupkg"
+
+  if ($pkgName -ne $null){
+    $filter = $pkgName + $filter
+  }
+
+  # Find all nupkg files in given artifact directory and skip any symbol files
+  $files = Get-ChildItem -Path $artifactDir -Recurse -Include $filter |  Where-Object {$_.Name -NotMatch "symbols" -and !$_.Name.StartsWith("Azure.ResourceManager")} |  Select-Object Name, FullName
+  write-host $files
+  if($files){
+    foreach($f in $files){
+      $packages[$f.Name] = $f.FullName
+    }
+  }
+
+  return $packages
+}
