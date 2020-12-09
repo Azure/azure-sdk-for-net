@@ -95,8 +95,7 @@ try {
         }
         else {
             Write-Output "Can't get proper RP name with folder $item"
-        }
-        
+        } 
     }
     $rpIndex | ForEach-Object {
         $path = "eng/mgmt/mgmtmetadata/$_" + "_resource-manager.txt"
@@ -105,6 +104,12 @@ try {
         }
     }
 
+    # Install AutoRest    
+    Invoke-Block {
+        & npm install -g autorest
+    }
+
+    # Invoke AutoRest
     foreach ($path in $mataPath) {
         $metaData = ''
         try {
@@ -130,67 +135,62 @@ try {
             $readme = $readme -replace "blob/[\S]*/specification", "blob/$commit/specification"
             $path = ($path -replace "\\", "/") + "/sdk"
     
-            Invoke-Block {
-                & npm install -g autorest
-            }
-    
             Write-Output "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90"
             Invoke-Block {
                 & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90 
             }
+        }
+    }
     
-            # prevent warning related to EOL differences which triggers an exception for some reason
-            & git add -A
-            $diffResult = @()
-            $diffResult += git -c core.safecrlf=false diff HEAD --name-only --ignore-space-at-eol
-            if ($diffResult.Length -gt 1) {
+    # prevent warning related to EOL differences which triggers an exception for some reason
+    & git add -A
+    $diffResult = @()
+    $diffResult += git -c core.safecrlf=false diff HEAD --name-only --ignore-space-at-eol
+
+    foreach ($item in $diffResult) {
+        if ($item -notmatch 'SdkInfo_') {
+            $exitCode ++
+        }
+        else {
+            $changeContent = @()
+            $content = git -c core.safecrlf=false diff -U0 HEAD --ignore-space-at-eol $diffResult[0]
+            $content[4..($content.Length - 1)] | ForEach-Object {
+                if ($_.StartsWith('+') -or $_.StartsWith('-')) {
+                    $changeContent += $_
+                }
+            }
+            if ($changeContent.Length -ne 11) {
                 $exitCode ++
             }
-            elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -match 'SdkInfo_')) {
-                $changeContent = @()
-                $content = git -c core.safecrlf=false diff -U0 HEAD --ignore-space-at-eol $diffResult[0]
-                $content[4..($content.Length - 1)] | ForEach-Object {
-                    if ($_.StartsWith('+') -or $_.StartsWith('-')) {
-                        $changeContent += $_
-                    }
-                }
-                if ($changeContent.Length -ne 11) {
+    
+            # metaDataContent doesn't contains 'AutoRestCmdExecuted' part since it can't be verified
+            $metaDataContent = @('-      // BEGIN: Code Generation Metadata Section',
+                '-      public static readonly String AutoRestVersion = "v2";',
+                '-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";',
+                '-      public static readonly String GithubForkName = "Azure";',
+                '-      public static readonly String GithubBranchName = "master";',
+                '-      public static readonly String GithubCommidId = "{0}";'.Replace('{0}', $commit),
+                '-      public static readonly String CodeGenerationErrors = "";',
+                '-      public static readonly String GithubRepoName = "azure-rest-api-specs";',
+                '-      // END: Code Generation Metadata Section'
+            )
+            foreach ($metaString in $metaDataContent) {
+                if ($metaString -notin $changeContent) {
+                    Write-Output "Diff in" $metaString
                     $exitCode ++
+                    break
                 }
-    
-                # metaDataContent doesn't contains 'AutoRestCmdExecuted' part since it can't be verified
-                $metaDataContent = @('-      // BEGIN: Code Generation Metadata Section',
-                    '-      public static readonly String AutoRestVersion = "v2";',
-                    '-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";',
-                    '-      public static readonly String GithubForkName = "Azure";',
-                    '-      public static readonly String GithubBranchName = "master";',
-                    '-      public static readonly String GithubCommidId = "{0}";'.Replace('{0}', $commit),
-                    '-      public static readonly String CodeGenerationErrors = "";',
-                    '-      public static readonly String GithubRepoName = "azure-rest-api-specs";',
-                    '-      // END: Code Generation Metadata Section'
-                )
-                foreach ($metaString in $metaDataContent) {
-                    if ($metaString -notin $changeContent) {
-                        Write-Output "Diff in" $metaString
-                        $exitCode ++
-                        break
-                    }
-                }
-            }
-            elseif (($diffResult.Length -eq 1) -And ($diffResult[0] -notmatch 'SdkInfo_')) {
-                $exitCode ++
-            }
-    
-            if ($exitCode -ne 0) {
-                & git -c core.safecrlf=false diff HEAD --ignore-space-at-eol
-                Write-Output "Git Diff file is:" 
-                $diffResult | ForEach-Object {
-                    Write-Output $_
-                }
-                LogError "Generated code is manually altered, you may need to re-run sdk\<RP Name>\generate.ps1"
             }
         }
-        
+    }
+    
+    if ($exitCode -ne 0) {
+        & git -c core.safecrlf=false diff HEAD --ignore-space-at-eol
+        Write-Output "Git Diff file is:" 
+        $diffResult | ForEach-Object {
+            Write-Output $_
+        }
+        LogError "Generated code is manually altered, you may need to re-run sdk\<RP Name>\generate.ps1"
     }
 }
 finally {
