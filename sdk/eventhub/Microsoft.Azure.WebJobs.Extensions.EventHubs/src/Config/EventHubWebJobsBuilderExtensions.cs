@@ -45,6 +45,14 @@ namespace Microsoft.Extensions.Hosting
                         "EventProcessorOptions:InvokeProcessorAfterReceiveTimeout",
                         options.InvokeProcessorAfterReceiveTimeout);
 
+                    options.EventProcessorOptions.TrackLastEnqueuedEventProperties = section.GetValue(
+                        "EventProcessorOptions:EnableReceiverRuntimeMetric",
+                        options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
+
+                    options.MaxBatchSize = section.GetValue(
+                        "EventProcessorOptions:MaxBatchSize",
+                        options.MaxBatchSize);
+
                     var receiveTimeout = section.GetValue<TimeSpan?>(
                         "EventProcessorOptions:ReceiveTimeout",
                         null);

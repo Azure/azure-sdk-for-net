@@ -29,6 +29,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             InvokeProcessorAfterReceiveTimeout = false;
             EventProcessorOptions = new EventProcessorOptions()
             {
+                TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(1),
                 PrefetchCount = 300,
                 DefaultStartingPosition = EventPosition.Earliest,
