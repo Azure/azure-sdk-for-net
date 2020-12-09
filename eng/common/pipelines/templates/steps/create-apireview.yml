@@ -1,9 +1,14 @@
 steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifact: 'packages'
+      path: $(Pipeline.Workspace)/apireviewstaging
+
   - task: Powershell@2
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Create-APIReview.ps1
       arguments: >
-        -ArtifactPath $(Build.ArtifactStagingDirectory)/packages
+        -ArtifactPath $(Pipeline.Workspace)/apireviewstaging
         -APIViewUri "https://apiviewstaging.azurewebsites.net/AutoReview/UploadAutoReview"
         -APIKey $(azuresdk-apiview-apikey)
         -APILabel $(Build.SourceVersion)
