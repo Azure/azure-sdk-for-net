@@ -20,14 +20,33 @@ namespace Azure.Core.Pipeline
         private readonly DiagnosticActivity? _oldStyleActivity;
 
         private readonly DiagnosticListener _source;
-        private readonly ActivitySourceAdapter? _activityAdapter;
+        private readonly ActivitySourceAdapter? _activitySourceAdapter;
 
-        internal DiagnosticScope(string ns, string name, DiagnosticListener source)
+        internal DiagnosticScope(string ns, string name, DiagnosticListener source, ActivityKind kind)
         {
-            _activityAdapter = null;
+            _activitySourceAdapter = null;
             _source = source;
             _oldStyleActivity = _source.IsEnabled(name) ? new DiagnosticActivity(name) : null;
             _oldStyleActivity?.SetW3CFormat();
+
+            switch (kind)
+            {
+                case ActivityKind.Internal:
+                    _oldStyleActivity?.AddTag("kind", "internal");
+                    break;
+                case ActivityKind.Server:
+                    _oldStyleActivity?.AddTag("kind", "server");
+                    break;
+                case ActivityKind.Client:
+                    _oldStyleActivity?.AddTag("kind", "client");
+                    break;
+                case ActivityKind.Producer:
+                    _oldStyleActivity?.AddTag("kind", "producer");
+                    break;
+                case ActivityKind.Consumer:
+                    _oldStyleActivity?.AddTag("kind", "consumer");
+                    break;
+            }
 
             if (!ActivityExtensions.SupportsActivitySource())
             {
@@ -43,19 +62,19 @@ namespace Azure.Core.Pipeline
             string clientName = ns + "." + name.Substring(0, indexOfDot);
             string methodName = name.Substring(indexOfDot + 1);
 
-            var currentSource = ActivitySources.GetOrAdd(clientName, n => ActivityExtensions.CreateActivitySource(n));
+            var currentSource = ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
             if (currentSource != null)
             {
-                _activityAdapter = new ActivitySourceAdapter(currentSource, methodName);
+                _activitySourceAdapter = new ActivitySourceAdapter(currentSource, methodName, kind);
             }
         }
 
-        public bool IsEnabled => _oldStyleActivity != null || _activityAdapter?.HasListeners() == true;
+        public bool IsEnabled => _oldStyleActivity != null || _activitySourceAdapter?.HasListeners() == true;
 
         public void AddAttribute(string name, string value)
         {
             _oldStyleActivity?.AddTag(name, value);
-            _activityAdapter?.AddTag(name, value);
+            _activitySourceAdapter?.AddTag(name, value);
         }
 
         public void AddAttribute<T>(string name, T value)
@@ -65,12 +84,12 @@ namespace Azure.Core.Pipeline
                 AddAttribute(name, value.ToString() ?? string.Empty);
             }
 
-            _activityAdapter?.AddTag(name, value);
+            _activitySourceAdapter?.AddTag(name, value);
         }
 
         public void AddAttribute<T>(string name, T value, Func<T, string> format)
         {
-            if (_oldStyleActivity != null || _activityAdapter != null)
+            if (_oldStyleActivity != null || _activitySourceAdapter != null)
             {
                 var formattedValue = format(value);
                 AddAttribute(name, formattedValue);
@@ -96,7 +115,7 @@ namespace Azure.Core.Pipeline
                 _oldStyleActivity.AddLink(linkedActivity);
             }
 
-            _activityAdapter?.AddLink(id, attributes);
+            _activitySourceAdapter?.AddLink(id, attributes);
         }
 
         public void Start()
@@ -106,13 +125,13 @@ namespace Azure.Core.Pipeline
                 _source.StartActivity(_oldStyleActivity, _oldStyleActivity);
             }
 
-            _activityAdapter?.Start();
+            _activitySourceAdapter?.Start();
         }
 
         public void SetStartTime(DateTime dateTime)
         {
             _oldStyleActivity?.SetStartTime(dateTime);
-            _activityAdapter?.SetStartTime(dateTime);
+            _activitySourceAdapter?.SetStartTime(dateTime);
         }
 
         public void Dispose()
@@ -122,7 +141,7 @@ namespace Azure.Core.Pipeline
                 _source.StopActivity(_oldStyleActivity, null);
             }
 
-            _activityAdapter?.Dispose();
+            _activitySourceAdapter?.Dispose();
         }
 
         public void Failed(Exception e)
@@ -132,7 +151,39 @@ namespace Azure.Core.Pipeline
                 _source?.Write(_oldStyleActivity.OperationName + ".Exception", e);
             }
 
-            _activityAdapter?.MarkFailed(e);
+            _activitySourceAdapter?.MarkFailed(e);
+        }
+
+        /// <summary>
+        /// Kind describes the relationship between the Activity, its parents, and its children in a Trace.
+        /// </summary>
+        public enum ActivityKind
+        {
+            /// <summary>
+            /// Default value.
+            /// Indicates that the Activity represents an internal operation within an application, as opposed to an operations with remote parents or children.
+            /// </summary>
+            Internal = 0,
+
+            /// <summary>
+            /// Server activity represents request incoming from external component.
+            /// </summary>
+            Server = 1,
+
+            /// <summary>
+            /// Client activity represents outgoing request to the external component.
+            /// </summary>
+            Client = 2,
+
+            /// <summary>
+            /// Producer activity represents output provided to external components.
+            /// </summary>
+            Producer = 3,
+
+            /// <summary>
+            /// Consumer activity represents output received from an external component.
+            /// </summary>
+            Consumer = 4,
         }
 
         private class DiagnosticActivity : Activity
@@ -158,15 +209,17 @@ namespace Azure.Core.Pipeline
         {
             private readonly object _activitySource;
             private readonly string _activityName;
+            private readonly ActivityKind _kind;
             private Activity? _currentActivity;
             private ICollection<KeyValuePair<string,object>>? _tagCollection;
             private DateTimeOffset _startTime;
             private IList? _linkCollection;
 
-            public ActivitySourceAdapter(object activitySource, string activityName)
+            public ActivitySourceAdapter(object activitySource, string activityName, ActivityKind kind)
             {
                 _activitySource = activitySource;
                 _activityName = activityName;
+                _kind = kind;
             }
 
             public void AddTag<T>(string name, T value)
@@ -212,7 +265,7 @@ namespace Azure.Core.Pipeline
                 _currentActivity = ActivityExtensions.ActivitySourceStartActivity(
                     _activitySource,
                     _activityName,
-                    ActivityExtensions.ActivityKindInternal,
+                    (int)_kind,
                     startTime: _startTime,
                     tags: _tagCollection,
                     links: _linkCollection);
@@ -240,6 +293,7 @@ namespace Azure.Core.Pipeline
             }
         }
     }
+
     /// <summary>
     /// WORKAROUND. Some runtime environments like Azure.Functions downgrade System.Diagnostic.DiagnosticSource package version causing method not found exceptions in customer apps
     /// This type is a temporary workaround to avoid the issue.
@@ -262,7 +316,6 @@ namespace Azure.Core.Pipeline
         private static Func<ICollection<KeyValuePair<string,object>>?>? s_createTagsCollectionMethod;
 
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
-        public const int ActivityKindInternal = 0;
 
         public static void SetW3CFormat(this Activity activity)
         {
@@ -342,7 +395,7 @@ namespace Azure.Core.Pipeline
 
                 if (method == null)
                 {
-                    s_activityAddTagMethod = (a, n, v) => { };
+                    s_activityAddTagMethod = (_, _, _) => { };
                 }
                 else
                 {
@@ -399,7 +452,7 @@ namespace Azure.Core.Pipeline
                     ctor == null ||
                     s_activityTagsCollectionType == null)
                 {
-                    s_createActivityLinkMethod = (id, tags) => null;
+                    s_createActivityLinkMethod = (_, _) => null;
                 }
                 else
                 {
@@ -470,7 +523,7 @@ namespace Azure.Core.Pipeline
                     s_activityKindType == null
                     )
                 {
-                    s_activitySourceStartActivityMethod = (activitySource, activityName, kind, startTime, tags, links) => null;
+                    s_activitySourceStartActivityMethod = (_, _, _, _, _, _) => null;
                 }
                 else
                 {
