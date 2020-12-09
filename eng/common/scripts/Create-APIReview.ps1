@@ -64,6 +64,9 @@ if ($packages){
         $responses[$pkg.Key] = Submit-APIReview -packagename $pkg.Key -filePath $packages[$pkg.Key] -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel
     }
 }
+else{
+    Write-Host "No package is found in artifact path to submit review request"
+}
 
 $FoundFailure = $False
 foreach($res in $responses.GetEnumerator()){
