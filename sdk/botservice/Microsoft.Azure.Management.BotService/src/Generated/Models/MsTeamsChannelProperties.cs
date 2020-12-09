@@ -31,23 +31,14 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// </summary>
         /// <param name="isEnabled">Whether this channel is enabled for the
         /// bot</param>
-        /// <param name="enableMessaging">Enable messaging for Microsoft Teams
-        /// channel</param>
-        /// <param name="enableMediaCards">Enable media cards for Microsoft
-        /// Teams channel</param>
-        /// <param name="enableVideo">Enable video for Microsoft Teams
-        /// channel</param>
         /// <param name="enableCalling">Enable calling for Microsoft Teams
         /// channel</param>
-        /// <param name="callMode">Enable messaging for Microsoft Teams
-        /// channel</param>
-        public MsTeamsChannelProperties(bool isEnabled, bool? enableMessaging = default(bool?), bool? enableMediaCards = default(bool?), bool? enableVideo = default(bool?), bool? enableCalling = default(bool?), string callMode = default(string))
+        /// <param name="callingWebHook">Webhook for Microsoft Teams channel
+        /// calls</param>
+        public MsTeamsChannelProperties(bool isEnabled, bool? enableCalling = default(bool?), string callingWebHook = default(string))
         {
-            EnableMessaging = enableMessaging;
-            EnableMediaCards = enableMediaCards;
-            EnableVideo = enableVideo;
             EnableCalling = enableCalling;
-            CallMode = callMode;
+            CallingWebHook = callingWebHook;
             IsEnabled = isEnabled;
             CustomInit();
         }
@@ -58,34 +49,16 @@ namespace Microsoft.Azure.Management.BotService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets enable messaging for Microsoft Teams channel
-        /// </summary>
-        [JsonProperty(PropertyName = "enableMessaging")]
-        public bool? EnableMessaging { get; set; }
-
-        /// <summary>
-        /// Gets or sets enable media cards for Microsoft Teams channel
-        /// </summary>
-        [JsonProperty(PropertyName = "enableMediaCards")]
-        public bool? EnableMediaCards { get; set; }
-
-        /// <summary>
-        /// Gets or sets enable video for Microsoft Teams channel
-        /// </summary>
-        [JsonProperty(PropertyName = "enableVideo")]
-        public bool? EnableVideo { get; set; }
-
-        /// <summary>
         /// Gets or sets enable calling for Microsoft Teams channel
         /// </summary>
         [JsonProperty(PropertyName = "enableCalling")]
         public bool? EnableCalling { get; set; }
 
         /// <summary>
-        /// Gets or sets enable messaging for Microsoft Teams channel
+        /// Gets or sets webhook for Microsoft Teams channel calls
         /// </summary>
-        [JsonProperty(PropertyName = "callMode")]
-        public string CallMode { get; set; }
+        [JsonProperty(PropertyName = "callingWebHook")]
+        public string CallingWebHook { get; set; }
 
         /// <summary>
         /// Gets or sets whether this channel is enabled for the bot
