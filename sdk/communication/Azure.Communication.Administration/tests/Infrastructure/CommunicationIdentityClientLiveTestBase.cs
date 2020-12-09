@@ -21,5 +21,12 @@ namespace Azure.Communication.Administration.Tests
                 new CommunicationIdentityClient(
                     TestEnvironment.ConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+
+        protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClientWithToken(MockCredential token, string endpoint)
+            => InstrumentClient(
+                new CommunicationIdentityClient(
+                    token,
+                    endpoint,
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
     }
 }
