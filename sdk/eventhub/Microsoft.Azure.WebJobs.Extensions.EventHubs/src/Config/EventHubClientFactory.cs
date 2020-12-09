@@ -150,7 +150,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
 
             // Fall back to default if not explicitly registered
-            return new BlobContainerClient(storageConnectionString ?? _configuration.GetWebJobsConnectionString(ConnectionStringNames.Storage), _options.LeaseContainerName);
+            return new BlobContainerClient(storageConnectionString ?? _configuration.GetWebJobsConnectionString(ConnectionStringNames.Storage), _options.CheckpointContainer);
         }
 
         internal static string NormalizeConnectionString(string originalConnectionString, string eventHubName)
