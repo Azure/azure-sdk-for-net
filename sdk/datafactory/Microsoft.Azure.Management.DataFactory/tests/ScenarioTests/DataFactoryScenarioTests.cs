@@ -42,7 +42,7 @@ namespace DataFactory.Tests.ScenarioTests
             AzureOperationResponse<Factory> createResponse = await client.Factories.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, dataFactoryName, expectedFactory);
             ValidateFactory(createResponse.Body, dataFactoryName);
             Assert.Equal(createResponse.Body.PublicNetworkAccess, expectedFactory.PublicNetworkAccess);
-            Assert.Equal(createResponse.Body.Encryption.VaultBaseUrl, expectedFactory.Encryption.VaultBaseUrl);
+            Assert.Equal(createResponse.Body?.Encryption?.VaultBaseUrl, expectedFactory?.Encryption?.VaultBaseUrl);
             Assert.Equal(HttpStatusCode.OK, createResponse.Response.StatusCode);
 
             AzureOperationResponse<Factory> getResponse = await client.Factories.GetWithHttpMessagesAsync(resourceGroupName, dataFactoryName);
