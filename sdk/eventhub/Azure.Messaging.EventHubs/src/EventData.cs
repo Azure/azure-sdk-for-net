@@ -381,7 +381,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
-        /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
+        /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         protected EventData(BinaryData eventBody,
                             IDictionary<string, object> properties = null,
@@ -403,7 +403,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
-        /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
+        /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected EventData(ReadOnlyMemory<byte> eventBody,
