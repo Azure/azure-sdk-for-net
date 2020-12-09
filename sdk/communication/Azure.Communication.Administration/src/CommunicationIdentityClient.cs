@@ -35,9 +35,9 @@ namespace Azure.Communication.Administration
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(Uri endpoint, TokenCredential tokenCredential, CommunicationIdentityClientOptions? options = default)
             : this(
+                AssertNotNull(endpoint, nameof(endpoint)),
                 options ?? new CommunicationIdentityClientOptions(),
-                AssertNotNull(tokenCredential, nameof(tokenCredential)),
-                AssertNotNull(endpoint, nameof(endpoint)))
+                AssertNotNull(tokenCredential, nameof(tokenCredential)))
         { }
         private CommunicationIdentityClient(CommunicationIdentityClientOptions options, ConnectionString connectionString)
         {
@@ -48,7 +48,7 @@ namespace Azure.Communication.Administration
                 connectionString.GetRequired("endpoint"));
         }
 
-        private CommunicationIdentityClient(CommunicationIdentityClientOptions options, TokenCredential tokenCredential, Uri endpoint)
+        private CommunicationIdentityClient(Uri endpoint, CommunicationIdentityClientOptions options, TokenCredential tokenCredential)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new CommunicationIdentityRestClient(
