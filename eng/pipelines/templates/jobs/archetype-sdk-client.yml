@@ -3,7 +3,8 @@ jobs:
     variables:
       - template: ../variables/globals.yml
     pool:
-      vmImage: windows-2019
+      name: azsdk-pool-mms2019-ds2v2-general # Comment this line back-out to switch to public pools.
+      # vmImage: windows-2019 # Comment this line back-in to switch to public pools.
     steps:
       - ${{if eq(parameters.TestPipeline, 'true')}}:
         - task: PowerShell@2
@@ -114,33 +115,40 @@ jobs:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
         Linux:
+          Pool: # Intentionally blank.
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
-          OSVmImage: "windows-2019"
+          Pool: azsdk-pool-mms2019-ds2v2-general # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: netcoreapp2.1
           CollectCoverage: true
         Windows_NetCoreApp_ProjectReferences:
-          OSVmImage: "windows-2019"
+          Pool: azsdk-pool-mms2019-ds2v2-general # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: netcoreapp2.1
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
-          OSVmImage: "windows-2019"
+          Pool: azsdk-pool-mms2019-ds2v2-general # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net461
         Windows_NetFramework_ProjectReferences:
-          OSVmImage: "windows-2019"
+          Pool: azsdk-pool-mms2019-ds2v2-general # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net461
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         MacOs:
+          Pool: # Intentionally blank.
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
         Windows_Net50:
-          OSVmImage: "windows-2019"
+          Pool: azsdk-pool-mms2019-ds2v2-general # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net5.0
     pool:
       vmImage: "$(OSVmImage)"
+      name: "$(Pool)"
     steps:
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
