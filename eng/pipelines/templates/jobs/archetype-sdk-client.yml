@@ -108,7 +108,7 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
 
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
-        condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))
+        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
 
   - job: "Test"
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
