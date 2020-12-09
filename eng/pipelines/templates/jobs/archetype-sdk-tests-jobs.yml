@@ -56,7 +56,8 @@ jobs:
 
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
-    pool: $(Pool)
+    pool:
+      name: $(Pool)
       vmImage: $(OSVmImage)
 
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
