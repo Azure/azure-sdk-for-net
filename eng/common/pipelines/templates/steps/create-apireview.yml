@@ -3,16 +3,13 @@ parameters:
   type: string
   default: ''
 
-variables:
-  apiviewuri : "https://apiviewstaging.azurewebsites.net/AutoReview/UploadAutoReview"
-
 steps:
   - task: Powershell@2
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Create-APIReview.ps1
       arguments: >
         -ArtifactPath $(Pipeline.Workspace)
-        -APIViewUri $(apiviewuri)
+        -APIViewUri "https://apiviewstaging.azurewebsites.net/AutoReview/UploadAutoReview"
         -APIKey $(azuresdk-apiview-apikey)
         -APILabel $(Build.SourceVersion)
         -PackageName ${{ parameters.PackageName }}
