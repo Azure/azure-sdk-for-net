@@ -1,8 +1,3 @@
-parameters:
-- name: PackageName
-  type: string
-  default: ''
-
 steps:
   - task: Powershell@2
     inputs:
@@ -12,7 +7,6 @@ steps:
         -APIViewUri "https://apiviewstaging.azurewebsites.net/AutoReview/UploadAutoReview"
         -APIKey $(azuresdk-apiview-apikey)
         -APILabel $(Build.SourceVersion)
-        -PackageName ${{ parameters.PackageName }}
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Create API Review ${{ parameters.PackageName }}
