@@ -361,26 +361,31 @@ namespace Microsoft.Azure.ContainerRegistry
             {              
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(payload, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-
+                string mediaType = string.Empty;               
                 switch (payload)
                 {
                     case V2Manifest v2Manifest:
-                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(v2Manifest.MediaType);
+                         mediaType = v2Manifest.MediaType;
+                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(mediaType);
                         break;
                     case V1Manifest v1Manifest:
-                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(v1Manifest.MediaType);
+                        mediaType = v1Manifest.MediaType;
+                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(mediaType);
                         break;
                     case ManifestList manifestList:
-                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(manifestList.MediaType);
+                        mediaType = manifestList.MediaType;
+                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(mediaType);
                         break;
                     case OCIManifest ociManifest:
-                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(ociManifest.MediaType);
+                        mediaType = ociManifest.MediaType;
+                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(mediaType);
                         break;
                     case OCIIndex ociIndex:
-                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(ociIndex.MediaType);
+                        mediaType = ociIndex.MediaType;
+                        _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(mediaType);
                         break;
                     default:
-                        throw new AcrErrorsException($"The requested mediaType could not be found in {payload}.");
+                        throw new AcrErrorsException($"The manifest type is unknown: {payload}.");
                 }
             }
             // Set Credentials

@@ -78,7 +78,7 @@ namespace ContainerRegistry.Tests
         private static readonly V1Manifest ExpectedV1ManifestProd = new V1Manifest()
         {
             SchemaVersion = 1,
-            MediaType=ACRTestUtil.MediatypeV1Manifest,
+            MediaType = ACRTestUtil.MediatypeV1Manifest,
             Architecture = "amd64",
             Name = ACRTestUtil.TestRepository,
             Tag = "latest",
@@ -192,7 +192,7 @@ namespace ContainerRegistry.Tests
 
         private static readonly OCIManifest ExpectedOCIManifestProd = new OCIManifest()
         {
-            MediaType=ACRTestUtil.MediatypeOCIManifest,
+            MediaType = ACRTestUtil.MediatypeOCIManifest,
             Config = new Descriptor
             {
                 MediaType = "application/vnd.oci.image.config.v1+json",
@@ -556,8 +556,7 @@ namespace ContainerRegistry.Tests
         private void VerifyManifest(Manifest baseManifest, Manifest actualManifest)
         {
             Assert.Equal(baseManifest.GetType(), actualManifest.GetType());
-            Assert.Equal(baseManifest.SchemaVersion, actualManifest.SchemaVersion);
-            
+            Assert.Equal(baseManifest.SchemaVersion, actualManifest.SchemaVersion);           
             if (baseManifest.GetType() == typeof(V2Manifest))
             {
                 var baseManifestV2 = (V2Manifest)baseManifest;
