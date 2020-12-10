@@ -386,6 +386,10 @@
         "AZURE_STORAGE_FILE_SYSTEM_NAME": {
             "type": "string",
             "value": "[variables('uniqueDataLakeStorageFilesystemName')]"
+        },
+        "AZURE_SYNAPSE_PRINCIPAL_ID": {
+            "type": "string",
+            "value": "[parameters('testApplicationOid')]"
         }
     }
 }
