@@ -89,10 +89,16 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
   }
 }
 
+# Return list of nupkg artifacts
+function Get-dotnet-Package-Artifacts ($Location)
+{
+  return Get-ChildItem "$($Location)" -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+}
+
 # Stage and Upload Docs to blob Storage
 function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 {
-  $PublishedPkgs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+  $PublishedPkgs = Get-dotnet-Package-Artifacts $DocLocation
   $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith("docs.zip")}
 
   if (($PublishedPkgs.Count -gt 1) -or ($PublishedDoc.Count -gt 1))
@@ -177,20 +183,14 @@ function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$
 
 
 # function is used to auto generate API View
-function Find-Artifacts-For-Apireview($artifactDir, $pkgName = $null){
+function Find-dotnet-Artifacts-For-Apireview($artifactDir, $pkgName)
+{
   $packages = @{}
-  $filter = "*.nupkg"
 
-  if ($pkgName -ne $null){
-    $filter = $pkgName + $filter
-  }
-
-  # Find all nupkg files in given artifact directory and skip any symbol files
-  $files = Get-ChildItem -Path $artifactDir -Recurse -Include $filter |  Where-Object {$_.Name -NotMatch "symbols" -and $_.Name -NotMatch "Azure.ResourceManager"} |  Select-Object Name, FullName
-  if($files){
-    foreach($f in $files){
+  # Find all nupkg files in given artifact directory
+  $files = Get-dotnet-Package-Artifacts $artifactDir
+  foreach($f in $files.Where({ $_.Name.StartsWith($pkgName) })) {
       $packages[$f.Name] = $f.FullName
-    }
   }
 
   return $packages

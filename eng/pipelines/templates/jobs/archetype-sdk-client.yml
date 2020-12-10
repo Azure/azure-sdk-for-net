@@ -58,7 +58,9 @@ jobs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
       
-      - template: /eng/common/pipelines/templates/steps/create-apireview.yml
+      - template: /eng/pipelines/templates/steps/create-apireview.yml
+        parameters:
+          Artifacts: ${{parameters.Artifacts}}
 
   - job: "Analyze"
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
