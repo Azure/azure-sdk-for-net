@@ -16,14 +16,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task AnalyzeOperationAsync_ManualPolling()
+        public async Task AnalyzeOperationAsync_AutomaticPolling()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:AnalyzeOperationBatchAsyncManualPolling
+            #region Snippet:AnalyzeOperationBatchAsyncAutomaticPolling
             string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
                                 and we adore the spot! They provide marvelous food and they have a great menu. The
                                 chief cook happens to be the owner (I think his name is John Doe) and he is super 
@@ -53,16 +53,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             TimeSpan pollingInterval = new TimeSpan(1000);
 
-            while (true)
-            {
-                await operation.UpdateStatusAsync();
-                if (operation.HasCompleted)
-                {
-                    break;
-                }
-
-                await Task.Delay(pollingInterval).ConfigureAwait(false);
-            }
+            await operation.WaitForCompletionAsync(pollingInterval);
 
             AnalyzeOperationResult resultCollection = operation.Value;
 

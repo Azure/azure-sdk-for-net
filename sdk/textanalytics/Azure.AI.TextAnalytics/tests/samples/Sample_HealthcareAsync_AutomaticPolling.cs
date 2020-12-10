@@ -15,14 +15,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task HealthcareAsync_ManualPolling()
+        public async Task HealthcareAsync_AutomaticPolling()
         {
 			string endpoint = TestEnvironment.Endpoint;
 			string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:RecognizeHealthcareEntitiesAsyncManualPolling
+            #region Snippet:RecognizeHealthcareEntitiesAsyncAutomaticPolling
             string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                                 HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -37,16 +37,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             TimeSpan pollingInterval = new TimeSpan(1000);
 
-            while (true)
-            {
-                await healthOperation.UpdateStatusAsync();
-                if (healthOperation.HasCompleted)
-                {
-                    break;
-                }
-
-                await Task.Delay(pollingInterval).ConfigureAwait(false);
-            }
+            await healthOperation.WaitForCompletionAsync(pollingInterval);
 
             RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
 
