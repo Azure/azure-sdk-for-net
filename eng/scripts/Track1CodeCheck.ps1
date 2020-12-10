@@ -34,7 +34,9 @@ function Find-Mapping([string]$path) {
         if (($item -match '\$\(csharp-sdks-folder\)')) {
             $matchResult = $item -match "\/([^/]+)\/"
             $name = $matches[0].Substring(1, $matches[0].Length - 2)
-            break
+            if (($folderName -ne '') -and ($folderName -notmatch "\$")) {
+                break
+            }
         }
     }
     return $name
@@ -55,12 +57,12 @@ function Get-ObjectMembers {
 
 try {
     # Get RP Mapping
-    $RPMapping = @{ }
+    $RPMapping = [ordered]@{ }
     $readmePath = ''
-    $folderName = ''
     git clone https://github.com/Azure/azure-rest-api-specs.git ../azure-rest-api-specs
     $folderNames = Get-ChildItem ../azure-rest-api-specs/specification
     $folderNames | ForEach-Object {
+        $folderName = ''
         $readmePath = "../azure-rest-api-specs/specification/$($_.Name)/resource-manager/readme.csharp.md"
         if (Test-Path $readmePath) {
             $folderName = Find-Mapping $readmePath
@@ -71,7 +73,7 @@ try {
                 $folderName = Find-Mapping $readmePath
             }
         }
-        if (($folderName -notmatch "\$") -and (!$RPMapping.ContainsKey($folderName)) -and ($folderName -ne '')) {
+        if (($folderName -notmatch "\$") -and (!$RPMapping.Contains($folderName)) -and ($folderName -ne '')) {
             $RPMapping += @{ $folderName = "$($_.Name)" }
         }
     }
