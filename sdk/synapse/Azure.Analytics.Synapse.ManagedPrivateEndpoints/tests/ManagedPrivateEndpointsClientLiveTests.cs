@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
         {
         }
 
-        [Test]
+        //[Test] - https://github.com/Azure/azure-sdk-for-net/issues/17455
         public async Task TestManagedPrivateEndpoints()
         {
             // Create a managed private endpoint

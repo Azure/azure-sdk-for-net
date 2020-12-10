@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Tests.Monitoring
         {
         }
 
-        [Test]
+        //[Test] - https://github.com/Azure/azure-sdk-for-net/issues/17455
         public async Task TestListSparkApplications()
         {
             SparkJobListViewResponse sparkJobList = await MonitoringClient.GetSparkJobListAsync();
