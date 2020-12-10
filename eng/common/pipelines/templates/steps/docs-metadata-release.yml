@@ -22,6 +22,15 @@ parameters:
 
 steps:
 - pwsh: |
+    if ($IsWindows) {
+      REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem /f /v LongPathsEnabled /t REG_DWORD /d 1
+    }
+    else {
+      Write-Host "Not on windows, skipping registry modification."
+    }
+  displayName: Enable Long Paths
+  
+- pwsh: |
     git clone https://github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
 
     try {
