@@ -13,7 +13,6 @@ namespace Azure.Security.Attestation.Models
     [JsonConverter(typeof(AttestationResultConverter))]
     public partial class AttestationResult
     {
-
         internal AttestationResult()
         {
         }

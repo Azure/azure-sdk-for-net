@@ -13,5 +13,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFr
         public string Message;
         public Dictionary<string, string> CustomProperties;
         public SeverityLevel SeverityLevel;
+        public string SpanId;
+        public string TraceId;
     }
 }

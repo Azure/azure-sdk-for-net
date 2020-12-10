@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -77,7 +76,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         {
             var message = "Hello World!";
 
+            var activity = new Activity("test activity").Start();
             var telemetryItem = this.RunLoggerTest(x => x.Log(logLevel: logLevel, message: message));
+            activity.Stop();
 
             VerifyTelemetryItem.VerifyEvent(
                 telemetryItem: telemetryItem,
@@ -85,24 +86,26 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
                 {
                     Message = message,
                     SeverityLevel = expectedSeverityLevel,
+                    SpanId = activity.SpanId.ToHexString(),
+                    TraceId = activity.TraceId.ToHexString(),
                 });
         }
 
         private TelemetryItem RunActivityTest(Action<ActivitySource> testScenario)
         {
             // SETUP
-            var ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
+            var ActivitySourceName = $"{nameof(TelemetryItemTests)}.{nameof(RunActivityTest)}";
             using var activitySource = new ActivitySource(ActivitySourceName);
 
-            var transmitter = new MockTransmitter();
+            var mockTransmitter = new MockTransmitter();
             var processor = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
                 options: new AzureMonitorExporterOptions
                 {
                     ConnectionString = EmptyConnectionString,
                 },
-                transmitter: transmitter));
+                transmitter: mockTransmitter));
 
-            Sdk.CreateTracerProviderBuilder()
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
                 .AddSource(ActivitySourceName)
                 .AddProcessor(processor)
@@ -113,43 +116,109 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 
             // CLEANUP
             processor.ForceFlush();
-            //Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
 
-            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
-            return transmitter.TelemetryItems.Single();
+            Assert.True(mockTransmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            return mockTransmitter.TelemetryItems.Single();
         }
 
         private TelemetryItem RunLoggerTest(Action<ILogger<TelemetryItemTests>> testScenario)
         {
             // SETUP
-            var transmitter = new MockTransmitter();
+            var mockTransmitter = new MockTransmitter();
             var processor = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(
                 options: new AzureMonitorExporterOptions
                 {
                     ConnectionString = EmptyConnectionString,
                 },
-                transmitter: transmitter));
+                transmitter: mockTransmitter));
 
             var serviceCollection = new ServiceCollection().AddLogging(builder =>
             {
                 builder.SetMinimumLevel(LogLevel.Trace)
                     .AddOpenTelemetry(options => options
-                    .AddProcessor(processor));
+                        .AddProcessor(processor));
             });
 
-            // ACT
             using var serviceProvider = serviceCollection.BuildServiceProvider();
             var logger = serviceProvider.GetRequiredService<ILogger<TelemetryItemTests>>();
+
+            // ACT
             testScenario(logger);
 
             // CLEANUP
             processor.ForceFlush();
-            //Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
 
-            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
-            return transmitter.TelemetryItems.Single();
+            Assert.True(mockTransmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            return mockTransmitter.TelemetryItems.Single();
         }
 
-        // TODO: INCLUDE ADDITIONAL TESTS VALIDATING ILOGGER + ACTIVITY
+        /// <summary>
+        /// This test is to verify that the correlation Ids from Activity are set on Log Telemetry.
+        /// This test will generate two telemetry items and their Ids are expected to match.
+        /// This test does not inspect any other fields.
+        /// </summary>
+        [Fact]
+        public void VerifyLoggerWithActivity()
+        {
+            // SETUP
+            var ActivitySourceName = $"{nameof(TelemetryItemTests)}.{nameof(VerifyLoggerWithActivity)}";
+            using var activitySource = new ActivitySource(ActivitySourceName);
+
+            var mockTransmitter = new MockTransmitter();
+
+            var azureMonitorExporterOptions = new AzureMonitorExporterOptions
+            {
+                ConnectionString = EmptyConnectionString,
+            };
+
+            var processor1 = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
+                options: azureMonitorExporterOptions,
+                transmitter: mockTransmitter));
+
+            var processor2 = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(
+                options: azureMonitorExporterOptions,
+                transmitter: mockTransmitter));
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .AddSource(ActivitySourceName)
+                .AddProcessor(processor1)
+                .Build();
+
+            var serviceCollection = new ServiceCollection().AddLogging(builder =>
+            {
+                builder.SetMinimumLevel(LogLevel.Trace)
+                    .AddOpenTelemetry(options => options
+                        .AddProcessor(processor2));
+            });
+
+            using var serviceProvider = serviceCollection.BuildServiceProvider();
+            var logger = serviceProvider.GetRequiredService<ILogger<TelemetryItemTests>>();
+
+            // ACT
+            using (var activity = activitySource.StartActivity(name: "test activity", kind: ActivityKind.Server))
+            {
+                activity.SetTag("message", "hello activity!");
+
+                logger.LogWarning("hello ilogger");
+            }
+
+            // CLEANUP
+            processor1.ForceFlush();
+            processor2.ForceFlush();
+
+            // VERIFY
+            Assert.True(mockTransmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            Assert.Equal(2, mockTransmitter.TelemetryItems.Count);
+
+            var logTelemetry = mockTransmitter.TelemetryItems.Single(x => x.Name == "Message");
+            var activityTelemetry = mockTransmitter.TelemetryItems.Single(x => x.Name == "Request");
+
+            var activityId = ((RequestData)activityTelemetry.Data.BaseData).Id;
+            var operationId = activityTelemetry.Tags["ai.operation.id"];
+
+            Assert.Equal(activityId, logTelemetry.Tags["ai.operation.parentId"]);
+            Assert.Equal(operationId, logTelemetry.Tags["ai.operation.id"]);
+        }
     }
 }

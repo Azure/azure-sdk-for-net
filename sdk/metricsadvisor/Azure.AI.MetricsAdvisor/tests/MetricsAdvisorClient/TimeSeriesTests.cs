@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -14,6 +15,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public TimeSeriesTests(bool isAsync) : base(isAsync)
         {
         }
+
+        private string FakeGuid => "00000000-0000-0000-0000-000000000000";
 
         [Test]
         public void GetDimensionValuesValidatesArguments()
@@ -32,6 +35,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        public void GetDimensionValuesRespectsTheCancellationToken()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            IAsyncEnumerator<string> asyncEnumerator = client.GetDimensionValuesAsync(FakeGuid, "dimensionName", cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
+            Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
+
+            IEnumerator<string> enumerator = client.GetDimensionValues(FakeGuid, "dimensionName", cancellationToken: cancellationSource.Token).GetEnumerator();
+            Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
+        }
+
+        [Test]
         public void GetMetricSeriesDefinitionsValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
@@ -45,6 +63,23 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(() => client.GetMetricSeriesDefinitions(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetMetricSeriesDefinitions("", options), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.GetMetricSeriesDefinitions("metricId", null), Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void GetMetricSeriesDefinitionsRespectsTheCancellationToken()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            var options = new GetMetricSeriesDefinitionsOptions(default);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            IAsyncEnumerator<MetricSeriesDefinition> asyncEnumerator = client.GetMetricSeriesDefinitionsAsync(FakeGuid, options, cancellationSource.Token).GetAsyncEnumerator();
+            Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
+
+            IEnumerator<MetricSeriesDefinition> enumerator = client.GetMetricSeriesDefinitions(FakeGuid, options, cancellationSource.Token).GetEnumerator();
+            Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]
@@ -65,6 +100,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        public void GetMetricSeriesDataRespectsTheCancellationToken()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            var seriesToFilter = new List<DimensionKey>();
+            var options = new GetMetricSeriesDataOptions(seriesToFilter, default, default);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            IAsyncEnumerator<MetricSeriesData> asyncEnumerator = client.GetMetricSeriesDataAsync(FakeGuid, options, cancellationSource.Token).GetAsyncEnumerator();
+            Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
+
+            IEnumerator<MetricSeriesData> enumerator = client.GetMetricSeriesData(FakeGuid, options, cancellationSource.Token).GetEnumerator();
+            Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
+        }
+
+        [Test]
         public void GetMetricEnrichmentStatusesValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
@@ -78,6 +131,23 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(() => client.GetMetricEnrichmentStatuses(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetMetricEnrichmentStatuses("", options), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.GetMetricEnrichmentStatuses("metricId", null), Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void GetMetricEnrichmentStatusesRespectsTheCancellationToken()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            var options = new GetMetricEnrichmentStatusesOptions(default, default);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            IAsyncEnumerator<EnrichmentStatus> asyncEnumerator = client.GetMetricEnrichmentStatusesAsync(FakeGuid, options, cancellationSource.Token).GetAsyncEnumerator();
+            Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
+
+            IEnumerator<EnrichmentStatus> enumerator = client.GetMetricEnrichmentStatuses(FakeGuid, options, cancellationSource.Token).GetEnumerator();
+            Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 
         private MetricsAdvisorClient GetMetricsAdvisorClient()

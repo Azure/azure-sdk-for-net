@@ -1,5 +1,8 @@
 # Release History
 
+## 12.5.0-beta.2 (Unreleased)
+
+
 ## 12.5.0-beta.1 (2020-12-07)
 - Added support for service version 2020-04-08.
 - This release contains bug fixes to improve quality.
