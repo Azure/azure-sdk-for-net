@@ -1,23 +1,17 @@
 parameters:
+  ArtifactPath: $(Build.ArtifactStagingDirectory)/packages
   Artifacts: []
 
 steps:
-  - task: DownloadPipelineArtifact@2
-    displayName: Download Packages
-    inputs:
-      artifact: 'packages'
-      path: $(Pipeline.Workspace)/apireviewstaging
-
   - ${{ each artifact in parameters.Artifacts }}:
     - task: Powershell@2
       inputs:
         filePath: $(Build.SourcesDirectory)/eng/scripts/Create-APIReview.ps1
         arguments: >
-          -ArtifactPath $(Pipeline.Workspace)/apireviewstaging
+          -ArtifactPath ${{parameters.ArtifactPath}}/${{artifact.name}}
           -APIViewUri $(azuresdk-apiview-uri)
           -APIKey $(azuresdk-apiview-apikey)
           -APILabel $(Build.SourceVersion)
-          -PackageName '${{artifact.name}}'
         pwsh: true
         workingDirectory: $(Pipeline.Workspace)
       displayName: Create API Review ${{ artifact.name}}
