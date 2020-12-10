@@ -57,21 +57,21 @@ parameters:
       OSVmImage: "ubuntu-18.04"
       TestTargetFramework: netcoreapp2.1
     Windows_NetCore:
-      Pool: azsdk-pool-mms2019-ds2v2-general
+      Pool: azsdk-canadacentral-winmms2019
       OSVmImage:
       TestTargetFramework: netcoreapp2.1
       SupportsRecording: true
     Windows_NetCore_ProjectRefAzureClients:
-      Pool: azsdk-pool-mms2019-ds2v2-general
+      Pool: azsdk-canadacentral-winmms2019
       OSVmImage:
       TestTargetFramework: netcoreapp2.1
       AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
     Windows_NetFramework:
-      Pool: azsdk-pool-mms2019-ds2v2-general
+      Pool: azsdk-canadacentral-winmms2019
       OSVmImage:
       TestTargetFramework: net461
     Windows_NetFramework_ProjectRefAzureClients:
-      Pool: azsdk-pool-mms2019-ds2v2-general
+      Pool: azsdk-canadacentral-winmms2019
       OSVmImage:
       TestTargetFramework: net461
       AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
