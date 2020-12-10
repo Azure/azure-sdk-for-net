@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "e30e73ea-8f9f-e130-19e3-15aa63dbe3b4",
         "x-ms-date": "Tue, 13 Oct 2020 15:22:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "e30e73ea-8f9f-e130-19e3-15aa63dbe3b4",
         "x-ms-request-id": "ec5ac042-701a-0097-7b74-a18ccf000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-lease-duration": "-1",
         "x-ms-proposed-lease-id": "a0893eb9-0c8b-e3b7-17bc-68f58c04525a",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "44df0b05-4a46-dd28-bb2a-cce2273a5415",
         "x-ms-lease-id": "a0893eb9-0c8b-e3b7-17bc-68f58c04525a",
         "x-ms-request-id": "ec5ac048-701a-0097-7e74-a18ccf000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -82,7 +82,7 @@
         "x-ms-date": "Tue, 13 Oct 2020 15:22:55 GMT",
         "x-ms-lease-id": "a0893eb9-0c8b-e3b7-17bc-68f58c04525a",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -97,7 +97,7 @@
         "Vary": "Origin",
         "x-ms-client-request-id": "80f08717-0e25-1114-bd23-7217ce76c8bc",
         "x-ms-request-id": "ec5ac04a-701a-0097-8074-a18ccf000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CShareStats\u003E\u003CShareUsageBytes\u003E0\u003C/ShareUsageBytes\u003E\u003C/ShareStats\u003E"
     },
@@ -116,7 +116,7 @@
         "x-ms-delete-snapshots": "include",
         "x-ms-lease-id": "a0893eb9-0c8b-e3b7-17bc-68f58c04525a",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -129,7 +129,7 @@
         ],
         "x-ms-client-request-id": "9fcb66ef-d34a-82ef-a63d-bfb7425a4f6f",
         "x-ms-request-id": "ec5ac04c-701a-0097-0274-a18ccf000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

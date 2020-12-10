@@ -107,7 +107,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [Test]
         public void GetBindingData_MultipleDispatch_ReturnsExpectedValue()
         {
-
             var events = new EventData[3]
             {
                 GetSystemProperties(Encoding.UTF8.GetBytes("Event 1"), $"pk0"),
@@ -215,10 +214,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var eventProcessorOptions = options.EventProcessorOptions;
             Assert.AreEqual(200, eventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
-            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/16636
-            // Assert.AreEqual(100, eventProcessorOptions.MaxBatchSize);
-            // Assert.AreEqual(31, options.PartitionManagerOptions.LeaseDuration.TotalSeconds);
-            // Assert.AreEqual(21, options.PartitionManagerOptions.RenewInterval.TotalSeconds);
+            Assert.AreEqual(100, options.MaxBatchSize);
+            Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
+            Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
         }
 
         internal static EventProcessorHostPartition GetPartitionContext(string partitionId = "0", string eventHubPath = "path",

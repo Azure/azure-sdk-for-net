@@ -12,6 +12,5 @@ namespace Azure.Identity
         /// Specifies the <see cref="TokenCache"/> to be used by the credential.
         /// </summary>
         public TokenCache TokenCache { get; set; }
-
     }
 }

@@ -233,7 +233,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-
         public class EventHubTestSingleDispatchJobs
         {
             public static void SendEvent_TestHub(string input, [EventHub(TestHubName)] out EventData evt)
@@ -429,7 +428,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     // Speedup shutdown
                     services.Configure<EventHubOptions>(options =>
                     {
-                        options.LeaseContainerName = _storageScope.ContainerName;
+                        options.CheckpointContainer = _storageScope.ContainerName;
                         options.EventProcessorOptions.MaximumWaitTime = TimeSpan.FromSeconds(5);
                     });
                 })

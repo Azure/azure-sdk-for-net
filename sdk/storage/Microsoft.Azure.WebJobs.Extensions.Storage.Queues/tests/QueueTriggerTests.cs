@@ -152,8 +152,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(expectedContent, result);
         }
 
-
-
         [Test]
         public async Task QueueTrigger_IfBoundToBinaryData_Binds()
         {

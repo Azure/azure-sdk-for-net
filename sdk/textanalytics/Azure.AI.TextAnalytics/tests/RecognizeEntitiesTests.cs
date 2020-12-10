@@ -35,6 +35,24 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [Test]
+        public async Task RecognizeEntitiesWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            string document = singleEnglish;
+
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
+
+            Assert.AreEqual(3, entities.Count);
+
+            var entitiesList = new List<string> { "Bill Gates", "Microsoft", "Paul Allen" };
+            foreach (CategorizedEntity entity in entities)
+            {
+                Assert.IsTrue(entitiesList.Contains(entity.Text));
+                Assert.IsNotNull(entity.ConfidenceScore);
+            }
+        }
+
+        [Test]
         public async Task RecognizeEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();

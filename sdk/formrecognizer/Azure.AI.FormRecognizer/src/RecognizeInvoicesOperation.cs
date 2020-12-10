@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -79,13 +78,15 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeInvoicesOperation"/> class.
+        /// Initializes a new instance of the <see cref="RecognizeInvoicesOperation"/> class which
+        /// tracks the status of a long-running operation for recognizing values from invoices.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         public RecognizeInvoicesOperation(string operationId, FormRecognizerClient client)
         {
-            // TODO: Add argument validation here.
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
 
             Id = operationId;
             _serviceClient = client.ServiceClient;

@@ -177,7 +177,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -470,7 +470,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -510,7 +510,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -2734,7 +2734,6 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (RequestFailedException storageRequestFailedException)
                 when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound
                     || storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
-
                 {
                     return Response.FromValue(false, default);
                 }
@@ -3992,6 +3991,7 @@ namespace Azure.Storage.Blobs.Specialized
                         resourceUri: Uri,
                         version: Version.ToVersionString(),
                         ifTags: conditions?.TagConditions,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(GetTags)}",
                         cancellationToken: cancellationToken)
@@ -4155,6 +4155,7 @@ namespace Azure.Storage.Blobs.Specialized
                         version: Version.ToVersionString(),
                         tags: tags.ToBlobTags(),
                         ifTags: conditions?.TagConditions,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(SetTags)}",
                         cancellationToken: cancellationToken)
@@ -4265,7 +4266,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }
@@ -4297,7 +4298,7 @@ namespace Azure.Storage.Blobs.Specialized
                 _parentBlobContainerClient = new BlobContainerClient(
                     blobUriBuilder.ToUri(),
                     Pipeline,
-                    _storageSharedKeyCredential,
+                    SharedKeyCredential,
                     Version,
                     ClientDiagnostics,
                     CustomerProvidedKey,
