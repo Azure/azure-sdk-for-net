@@ -1,0 +1,45 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-40168346-ea4d-7fb0-8b12-6bc9a46d0789?restype=container\u0026comp=list\u0026prefix=test-blob-d5d9460b-f385-338d-2b6a-73c185343d39\u0026include=snapshots",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.8.0-alpha.20201210.1",
+          "(.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "2d46a6fa-7bd7-53f8-f5e3-14e277effa56",
+        "x-ms-date": "Thu, 10 Dec 2020 20:57:57 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-04-08"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-client-request-id,Server,x-ms-version,x-ms-error-code,Content-Length,Date,Transfer-Encoding",
+        "Content-Length": "225",
+        "Content-Type": "application/xml",
+        "Date": "Thu, 10 Dec 2020 20:57:56 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "2d46a6fa-7bd7-53f8-f5e3-14e277effa56",
+        "x-ms-error-code": "ContainerNotFound",
+        "x-ms-request-id": "d0a4fc47-b01e-001e-2237-cf361a000000",
+        "x-ms-version": "2020-04-08"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",
+        "RequestId:d0a4fc47-b01e-001e-2237-cf361a000000\n",
+        "Time:2020-12-10T20:57:57.8818392Z\u003C/Message\u003E\u003C/Error\u003E"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "545227575",
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+  }
+}

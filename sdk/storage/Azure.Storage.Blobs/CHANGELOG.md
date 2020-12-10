@@ -2,6 +2,7 @@
 
 ## 12.8.0-beta.2 (Unreleased)
 - Fixed bug where the Stream returned by BlobBaseClient.OpenRead() would return a different Length after calls to Seek().
+- Added BlobBaseClient.GetBlobVersions() and .GetBlobSnapshots().
 
 ## 12.8.0-beta.1 (2020-12-07)
 - Added support for service version 2020-04-08.

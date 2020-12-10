@@ -164,6 +164,16 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
+        /// The parent container.
+        /// </summary>
+        private readonly BlobContainerClient _containerClient;
+
+        /// <summary>
+        /// The parent container.
+        /// </summary>
+        internal virtual BlobContainerClient ContainerClient => _containerClient;
+
+        /// <summary>
         /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
         /// </summary>
         private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
@@ -240,13 +250,13 @@ namespace Azure.Storage.Blobs.Specialized
         {
             options ??= new BlobClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder =
+            BlobUriBuilder blobUriBuilder =
                 new BlobUriBuilder(conn.BlobEndpoint)
                 {
                     BlobContainerName = blobContainerName,
                     BlobName = blobName
                 };
-            _uri = builder.ToUri();
+            _uri = blobUriBuilder.ToUri();
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -254,6 +264,18 @@ namespace Azure.Storage.Blobs.Specialized
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+
+            blobUriBuilder.BlobName = null;
+            _containerClient = new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                _pipeline,
+                _storageSharedKeyCredential,
+                _version,
+                _clientDiagnostics,
+                _customerProvidedKey,
+                _clientSideEncryption,
+                _encryptionScope);
+
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -373,6 +395,22 @@ namespace Azure.Storage.Blobs.Specialized
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             _storageSharedKeyCredential = storageSharedKeyCredential;
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobUri)
+            {
+                BlobName = null
+            };
+
+            _containerClient = new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                _pipeline,
+                _storageSharedKeyCredential,
+                _version,
+                _clientDiagnostics,
+                _customerProvidedKey,
+                _clientSideEncryption,
+                _encryptionScope);
+
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -430,6 +468,21 @@ namespace Azure.Storage.Blobs.Specialized
             _customerProvidedKey = customerProvidedKey;
             _clientSideEncryption = clientSideEncryption?.Clone();
             _encryptionScope = encryptionScope;
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobUri)
+            {
+                BlobName = null
+            };
+            _containerClient = new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                _pipeline,
+                _storageSharedKeyCredential,
+                _version,
+                _clientDiagnostics,
+                _customerProvidedKey,
+                _clientSideEncryption,
+                _encryptionScope);
+
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -4308,6 +4361,98 @@ namespace Azure.Storage.Blobs.Specialized
 
             return _parentBlobContainerClient;
         }
+        #endregion
+
+        #region GetVersions
+        /// <summary>
+        /// Gets the Blob Versions associated with the Blob.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{T}"/> of <see cref="BlobItem"/>
+        /// describing the versions assocaited with the blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<BlobItem> GetBlobVersions(CancellationToken cancellationToken = default)
+            => ContainerClient.GetBlobs(
+                states: BlobStates.Version,
+                prefix: Name,
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// Gets the Blob Versions associated with the Blob.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{T}"/> of <see cref="BlobItem"/>
+        /// describing the versions assocaited with the blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<BlobItem> GetBlobVersionsAsync(CancellationToken cancellationToken = default)
+            => ContainerClient.GetBlobsAsync(
+                states: BlobStates.Version,
+                prefix: Name,
+                cancellationToken: cancellationToken);
+        #endregion
+
+        #region GetSnapshots
+        /// <summary>
+        /// Gets the Blob Snaphots associated with the Blob.
+        /// Note that the current version of the Blob will be returned
+        /// in addition to the blob's snapshots.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{T}"/> of <see cref="BlobItem"/>
+        /// describing the snapshots assocaited with the blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<BlobItem> GetBlobSnapshots(CancellationToken cancellationToken = default)
+            => ContainerClient.GetBlobs(
+                states: BlobStates.Snapshots,
+                prefix: Name,
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// Gets the Blob Snapshots associated with the Blob.
+        /// Note that the current version of the Blob will be returned
+        /// in addition to the blob's snapshots.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{T}"/> of <see cref="BlobItem"/>
+        /// describing the snapshots assocaited with the blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<BlobItem> GetBlobSnapshotsAsync(CancellationToken cancellationToken = default)
+            => ContainerClient.GetBlobsAsync(
+                states: BlobStates.Snapshots,
+                prefix: Name,
+                cancellationToken: cancellationToken);
         #endregion
     }
 

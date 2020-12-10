@@ -6403,6 +6403,76 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreSame(blobContainerClientMock.Object, blobContainerClient);
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetBlobVersions()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+
+            // Act
+            IList<BlobItem> blobs = await blob.GetBlobVersionsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+            Assert.IsNull(blobs[0].IsLatestVersion);
+            Assert.AreEqual(createResponse.Value.VersionId, blobs[0].VersionId);
+            Assert.IsTrue(blobs[1].IsLatestVersion);
+            Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetBlobVersions_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetBlobVersionsAsync().ToListAsync(),
+                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task GetBlobSnapshots()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateIfNotExistsAsync();
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+
+            // Act
+            IList<BlobItem> blobs = await blob.GetBlobSnapshotsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+            Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Snapshot);
+        }
+
+        [Test]
+        public async Task GetBlobSnapshots_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetBlobSnapshotsAsync().ToListAsync(),
+                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
+        }
+
         public IEnumerable<AccessConditionParameters> AccessConditions_Data
             => new[]
             {
