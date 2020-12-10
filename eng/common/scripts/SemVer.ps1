@@ -94,9 +94,7 @@ class AzureEngSemanticVersion {
         $this.HasBuildNumber = $false
       } else {
         $this.BuildNumberSeparator = $matches["buildnumsep"]
-        if ($matches.ContainsKey("buildnumber")) {
-          $this.BuildNumber = [int]$matches["buildnumber"]
-        }
+        $this.BuildNumber = [int]$matches["buildnumber"]
         $this.HasBuildNumber = $true
       }
     }
@@ -166,7 +164,7 @@ class AzureEngSemanticVersion {
   [void] SetupPythonConventions() 
   {
     # Python uses no separators and "b" for beta so this sets up the the object to work with those conventions
-    $this.PrereleaseLabelSeparator = $this.PrereleaseNumberSeparator = ""
+    $this.PrereleaseLabelSeparator = $this.PrereleaseNumberSeparator = $this.BuildNumberSeparator = ""
     $this.DefaultPrereleaseLabel = "b"
     $this.DefaultAlphaReleaseLabel = "a"
   }
@@ -201,8 +199,11 @@ class AzureEngSemanticVersion {
       "2.0.0-alpha.20200920.1",
       "2.0.0-beta.2", 
       "1.0.10", 
+      "2.0.0-alpha.20201221.1",
+      "2.0.0-alpha.20201221.01",
       "2.0.0-alpha.20201221.5",
       "2.0.0-alpha.20201221.2",
+      "2.0.0-alpha.20201221.10",
       "2.0.0-beta.1", 
       "2.0.0-beta.10", 
       "1.0.0", 
@@ -214,8 +215,11 @@ class AzureEngSemanticVersion {
       "2.0.0-beta.10",
       "2.0.0-beta.2",
       "2.0.0-beta.1",
+      "2.0.0-alpha.20201221.10",
       "2.0.0-alpha.20201221.5",
       "2.0.0-alpha.20201221.2",
+      "2.0.0-alpha.20201221.1",
+      "2.0.0-alpha.20201221.1",
       "2.0.0-alpha.20200920.1",
       "2.0.0-alpha.20200920",
       "1.0.10",
