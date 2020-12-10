@@ -5,12 +5,10 @@
     <LangVersion>latest</LangVersion>
     <StartupObject>SmokeTest.Program</StartupObject>
   </PropertyGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" Version="1.4.0-dev.*" />
     <PackageReference Include="Azure.Identity" Version="1.2.0-dev.*" />
@@ -18,11 +16,10 @@
     <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.1.0-dev.*" />
     <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.1.0-dev.*" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.5.0-dev.*" />
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.3" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.8" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.20.1" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.10.0" />
   </ItemGroup>
-
   <!-- Sample: IoT Hub Connection String Translation -->
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\..\samples\iothub-connect-to-eventhubs\**\*.cs" Link="Samples\IoTHubConnection\SharedSource\%(Filename)%(Extension)" />
