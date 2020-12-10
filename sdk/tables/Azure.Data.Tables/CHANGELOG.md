@@ -1,9 +1,10 @@
 # Release History
 
-## 3.0.0-beta.4 (Unreleased)
+## 3.0.0-beta.4 (2020-12-10)
 
 ### Fixed
 
+- Fixed an issue with custom entity model serialization of the ETag property
 - Properly create secondary endpoint Uri for Azurite endpoints
 
 ## 3.0.0-beta.3 (2020-11-12)
