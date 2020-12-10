@@ -222,7 +222,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, keyPhrasesInDocument.Statistics.TransactionCount);
                 }
 
-                ValidateInDocumenResult(keyPhrasesInDocument.KeyPhrases);
+                ValidateInDocumenResult(keyPhrasesInDocument.KeyPhrases, minKeyPhrasesCount);
             }
         }
     }
