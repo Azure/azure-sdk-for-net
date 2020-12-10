@@ -28,7 +28,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         internal static MediaGraphInstanceDeleteRequest DeserializeMediaGraphInstanceDeleteRequest(JsonElement element)
         {
             string name = default;
-            Optional<string> methodName = default;
+            string methodName = default;
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphInstanceDeleteRequest(methodName.Value, apiVersion.Value, name);
+            return new MediaGraphInstanceDeleteRequest(methodName, apiVersion.Value, name);
         }
     }
 }

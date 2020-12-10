@@ -19,7 +19,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// GetPayloadAsJSON function.
         /// </summary>
         /// <returns></returns>
-        public virtual string GetPayloadAsJSON()
+        public virtual string GetPayloadAsJson()
         {
             return SerializeItemRequestInternal(this);
         }

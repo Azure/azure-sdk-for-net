@@ -25,7 +25,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         internal static MediaGraphTopologyListRequest DeserializeMediaGraphTopologyListRequest(JsonElement element)
         {
-            Optional<string> methodName = default;
+            string methodName = default;
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -40,7 +40,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphTopologyListRequest(methodName.Value, apiVersion.Value);
+            return new MediaGraphTopologyListRequest(methodName, apiVersion.Value);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             string name = default;
             Optional<MediaGraphSystemData> systemData = default;
             Optional<MediaGraphInstanceProperties> properties = default;
-            Optional<string> methodName = default;
+            string methodName = default;
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphInstanceSetRequestBody(methodName.Value, apiVersion.Value, name, systemData.Value, properties.Value);
+            return new MediaGraphInstanceSetRequestBody(methodName, apiVersion.Value, name, systemData.Value, properties.Value);
         }
     }
 }

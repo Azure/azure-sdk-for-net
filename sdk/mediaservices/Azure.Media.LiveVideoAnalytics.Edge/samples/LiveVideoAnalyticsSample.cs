@@ -19,12 +19,12 @@ namespace Azure.Media.LiveVideoAnalytics.Tests.Samples
     public class LiveVideoAnalyticsSample
     {
         private ServiceClient _serviceClient;
-        private String _deviceId = "enter-your-device-name";
-        private String _moduleId = "enter-your-module-name";
+        private String _deviceId = "deviceid";
+        private String _moduleId = "modulename";
 
         public LiveVideoAnalyticsSample()
         {
-            var connectionString = "enter-your-connection-string";
+            var connectionString = "connection-string";
             this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
         }
         [Test]
@@ -72,7 +72,7 @@ namespace Azure.Media.LiveVideoAnalytics.Tests.Samples
         private async Task<CloudToDeviceMethodResult> InvokeDirectMethodHelper(MethodRequest bc)
         {
             var directMethod = new CloudToDeviceMethod(bc.MethodName);
-            directMethod.SetPayloadJson(bc.GetPayloadAsJSON());
+            directMethod.SetPayloadJson(bc.GetPayloadAsJson());
 
             return await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
         }

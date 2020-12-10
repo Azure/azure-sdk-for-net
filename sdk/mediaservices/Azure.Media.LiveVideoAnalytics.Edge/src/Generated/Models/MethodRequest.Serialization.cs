@@ -44,7 +44,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     case "MediaGraphInstanceSetRequestBody": return MediaGraphInstanceSetRequestBody.DeserializeMediaGraphInstanceSetRequestBody(element);
                 }
             }
-            Optional<string> methodName = default;
+            string methodName = default;
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,7 +59,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MethodRequest(methodName.Value, apiVersion.Value);
+            return new MethodRequest(methodName, apiVersion.Value);
         }
     }
 }

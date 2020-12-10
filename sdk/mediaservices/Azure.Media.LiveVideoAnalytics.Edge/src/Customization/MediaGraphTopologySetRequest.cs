@@ -13,12 +13,12 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         ///  Serialize .
         /// </summary>
         /// <returns></returns>
-        public override string GetPayloadAsJSON()
+        public override string GetPayloadAsJson()
         {
             GraphBody = new MediaGraphTopologySetRequestBody(Graph.Name);
             GraphBody.SystemData = Graph.SystemData;
             GraphBody.Properties = Graph.Properties;
-            return GraphBody.GetPayloadAsJSON();
+            return GraphBody.GetPayloadAsJson();
         }
     }
 }

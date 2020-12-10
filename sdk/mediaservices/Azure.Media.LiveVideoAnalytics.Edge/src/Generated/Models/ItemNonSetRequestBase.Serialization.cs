@@ -40,7 +40,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
             }
             string name = default;
-            Optional<string> methodName = default;
+            string methodName = default;
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new ItemNonSetRequestBase(methodName.Value, apiVersion.Value, name);
+            return new ItemNonSetRequestBase(methodName, apiVersion.Value, name);
         }
     }
 }

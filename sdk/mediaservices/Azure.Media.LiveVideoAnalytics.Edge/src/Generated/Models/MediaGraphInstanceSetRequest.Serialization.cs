@@ -28,7 +28,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         internal static MediaGraphInstanceSetRequest DeserializeMediaGraphInstanceSetRequest(JsonElement element)
         {
             MediaGraphInstance instance = default;
-            Optional<string> methodName = default;
+            string methodName = default;
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphInstanceSetRequest(methodName.Value, apiVersion.Value, instance);
+            return new MediaGraphInstanceSetRequest(methodName, apiVersion.Value, instance);
         }
     }
 }
