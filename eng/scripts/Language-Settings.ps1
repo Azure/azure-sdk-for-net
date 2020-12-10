@@ -92,7 +92,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 # Return list of nupkg artifacts
 function Get-dotnet-Package-Artifacts ($Location)
 {
-  return Get-ChildItem "$($Location)" -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+  return Get-ChildItem "${Location}" -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
 }
 
 # Stage and Upload Docs to blob Storage
