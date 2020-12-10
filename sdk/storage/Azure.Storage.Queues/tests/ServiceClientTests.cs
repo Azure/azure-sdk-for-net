@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
+    [NonParallelizable]
     public class ServiceClientTests : QueueTestBase
     {
         public ServiceClientTests(bool async)
