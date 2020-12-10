@@ -2,17 +2,20 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Core.TestFramework
 {
+    /// <summary>
+    /// Attribute on test assemblies, classes, or methods that defines parallelization behavior when tests are run in <see cref="RecordedTestMode.Live"/> mode.
+    /// In other modes it will enforce no parallelization.
+    /// </summary>
     public class LiveParallelizableAttribute : ParallelizableAttribute
     {
-        public LiveParallelizableAttribute(ParallelScope scope) : base(GetParallelScope(scope))
+        public LiveParallelizableAttribute(ParallelScope scope) : base(ApplyModeToParallelScope(scope))
         {
         }
 
-        private static ParallelScope GetParallelScope(ParallelScope scope)
+        private static ParallelScope ApplyModeToParallelScope(ParallelScope scope)
         {
             RecordedTestMode mode = RecordedTestUtilities.GetModeFromEnvironment();
             return mode == RecordedTestMode.Live ? scope : ParallelScope.None;
