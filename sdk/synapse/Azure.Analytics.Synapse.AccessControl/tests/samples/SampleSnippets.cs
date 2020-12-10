@@ -46,7 +46,6 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #region Snippet:DeleteRoleAssignment
             client.DeleteRoleAssignmentById(roleAssignment.Id);
             #endregion
-
         }
     }
 }

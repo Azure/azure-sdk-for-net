@@ -22,7 +22,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:CreateLinkedService
-            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = client.StartCreateOrUpdateLinkedService("MyLinkedService", new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
+            LinkedServiceResource serviceResource = new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/"));
+            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = client.StartCreateOrUpdateLinkedService("MyLinkedService", serviceResource);
             operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
 

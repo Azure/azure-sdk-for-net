@@ -11,7 +11,8 @@ namespace Azure.Analytics.Synapse.Monitoring.Samples
 {
     public partial class Snippets : SampleFixture
     {
-        //[Test] - https://github.com/Azure/azure-sdk-for-net/issues/17455
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         public void MonitoringSample()
         {
             #region Snippet:CreateMonitoringClient

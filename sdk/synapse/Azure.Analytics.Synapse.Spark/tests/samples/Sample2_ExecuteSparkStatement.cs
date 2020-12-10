@@ -15,7 +15,8 @@ namespace Azure.Analytics.Synapse.Samples
     /// </summary>
     public partial class ExecuteSparkStatement
     {
-        //[Test] - https://github.com/Azure/azure-sdk-for-net/issues/17455
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         public void ExecuteSparkStatementSync()
         {
             // Environment variable with the Synapse workspace endpoint.
