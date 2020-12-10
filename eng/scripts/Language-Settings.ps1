@@ -5,7 +5,6 @@ $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
-$PACKAGE_INSTALL_NOTES_REGEX = "^\$>\sdotnet\sadd\spackage\s(?<PackageName>.*)\s--version\s(?<Version>.*)"
 
 function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
 {
@@ -225,7 +224,9 @@ function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseD
   & "$EngDir/scripts/Update-PkgVersion.ps1" -ServiceDirectory $ServiceDirectory -PackageName $PackageName `
   -NewVersionString $Version -ReleaseDate $ReleaseDate
 }
-function GetExistingPackageVersions ($PackageName, $GroupId=$null) {
+
+function GetExistingPackageVersions ($PackageName, $GroupId=$null)
+{
   try {
     $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
     return $existingVersion.versions
@@ -234,16 +235,4 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null) {
     LogError "Failed to retrieve package versions. `n$_"
     return $null
   }
-}
-
-function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate, $BuildType=$null, $GroupId=$null) {
-  if($null -eq $ReleaseDate)
-  {
-    $ReleaseDate = Get-Date -Format "yyy-MM-dd"
-  }
-  & "$EngDir/scripts/Update-PkgVersion.ps1" -ServiceDirectory $ServiceDirectory -PackageName $PackageName `
-  -NewVersionString $Version -ReleaseDate $ReleaseDate
-}
-function GetPackageInstallNotes ($PackageName, $Version) {
-  return "$> dotnet add package $PackageName --version $Version`n";
 }
