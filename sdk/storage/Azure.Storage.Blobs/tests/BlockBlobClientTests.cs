@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.Test
             ex => ex.Status == 500 && ex.ErrorCode == BlobErrorCode.CannotVerifyCopySource.ToString();
 
         public BlockBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -3126,7 +3126,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Take out lease on destination blob
             string leaseId = Recording.Random.NewGuid().ToString();
-            TimeSpan duration = TimeSpan.FromSeconds(15);
+            TimeSpan duration = TimeSpan.FromSeconds(60);
             await InstrumentClient(destBlob.GetBlobLeaseClient(leaseId)).AcquireAsync(duration);
 
             // Upload data to source blob
