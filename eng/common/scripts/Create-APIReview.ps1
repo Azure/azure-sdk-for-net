@@ -53,10 +53,9 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
 
 . (Join-Path $PSScriptRoot common.ps1)
 $packages = @{}
-
 if (Test-Path "Function:Find-Artifacts-For-Apireview")
 {
-    $packages = Find-Artifacts-For-Apireview($ArtifactPath, $PackageName)
+    $packages = Find-Artifacts-For-Apireview $ArtifactPath $PackageName
 }
 else
 {

@@ -16,5 +16,5 @@ steps:
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Create API Review ${{ parameters.PackageName }}
-    condition: and(succeededOrFailed(), ne(variables['Skip.CreateApiReview'], 'true') , ne(variables['Build.Reason'],'PullRequest'))
+    condition: and(succeededOrFailed(), ne(variables['Skip.CreateApiReview'], 'true') , ne(variables['Build.Reason'],'PullRequest'), eq(variables['System.TeamProject'], 'internal'))
     continueOnError: true
