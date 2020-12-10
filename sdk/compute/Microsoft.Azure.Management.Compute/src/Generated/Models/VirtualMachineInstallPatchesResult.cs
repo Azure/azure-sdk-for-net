@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// operation that produced this result. It is used to correlate across
         /// CRP and extension logs.</param>
         /// <param name="rebootStatus">The reboot state of the VM following
-        /// completion of the operation. Possible values include: 'NotNeeded',
-        /// 'Required', 'Started', 'Failed', 'Completed'</param>
+        /// completion of the operation. Possible values include: 'Unknown',
+        /// 'NotNeeded', 'Required', 'Started', 'Failed', 'Completed'</param>
         /// <param name="maintenanceWindowExceeded">Whether the operation ran
         /// out of time before it completed all its intended actions.</param>
         /// <param name="excludedPatchCount">The number of patches that were
@@ -108,8 +108,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets the reboot state of the VM following completion of the
-        /// operation. Possible values include: 'NotNeeded', 'Required',
-        /// 'Started', 'Failed', 'Completed'
+        /// operation. Possible values include: 'Unknown', 'NotNeeded',
+        /// 'Required', 'Started', 'Failed', 'Completed'
         /// </summary>
         [JsonProperty(PropertyName = "rebootStatus")]
         public string RebootStatus { get; private set; }

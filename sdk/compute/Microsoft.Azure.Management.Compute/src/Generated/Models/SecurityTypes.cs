@@ -21,8 +21,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum SecurityTypes
     {
-        [EnumMember(Value = "SecureBoot")]
-        SecureBoot
+        [EnumMember(Value = "TrustedLaunch")]
+        TrustedLaunch
     }
     internal static class SecurityTypesEnumExtension
     {
@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         {
             switch( value )
             {
-                case SecurityTypes.SecureBoot:
-                    return "SecureBoot";
+                case SecurityTypes.TrustedLaunch:
+                    return "TrustedLaunch";
             }
             return null;
         }
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         {
             switch( value )
             {
-                case "SecureBoot":
-                    return SecurityTypes.SecureBoot;
+                case "TrustedLaunch":
+                    return SecurityTypes.TrustedLaunch;
             }
             return null;
         }

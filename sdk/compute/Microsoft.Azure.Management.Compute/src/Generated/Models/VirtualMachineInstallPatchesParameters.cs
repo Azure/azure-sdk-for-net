@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// duration string such as PT4H (4 hours)</param>
         /// <param name="rebootSetting">Defines when it is acceptable to reboot
         /// a VM during a software update operation. Possible values include:
-        /// 'Unknown', 'IfRequired', 'Never', 'Always'</param>
+        /// 'IfRequired', 'Never', 'Always'</param>
         /// <param name="windowsParameters">Input for InstallPatches on a
         /// Windows VM, as directly received by the API</param>
         /// <param name="linuxParameters">Input for InstallPatches on a Linux
@@ -66,8 +66,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets defines when it is acceptable to reboot a VM during a
-        /// software update operation. Possible values include: 'Unknown',
-        /// 'IfRequired', 'Never', 'Always'
+        /// software update operation. Possible values include: 'IfRequired',
+        /// 'Never', 'Always'
         /// </summary>
         [JsonProperty(PropertyName = "rebootSetting")]
         public string RebootSetting { get; set; }
