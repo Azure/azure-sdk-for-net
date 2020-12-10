@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Security.Models
     public static class EventSource
     {
         public const string Assessments = "Assessments";
+        public const string SubAssessments = "SubAssessments";
         public const string Alerts = "Alerts";
     }
 }

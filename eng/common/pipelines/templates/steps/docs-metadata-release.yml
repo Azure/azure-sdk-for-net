@@ -18,6 +18,7 @@ parameters:
   GHReviewersVariable: '' 
   GHTeamReviewersVariable: '' # externally set, as eng-common does not have the identity-resolver. Run as pre-step
   OnboardingBranch: ''
+  CloseAfterOpenForTesting: false
 
 steps:
 - pwsh: |
@@ -47,7 +48,7 @@ steps:
       -WorkDirectory "${{ parameters.WorkingDirectory }}"
       -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
       -Language "${{parameters.Language}}"
-      -DocRepoContentLocation ${{ parameters.DocRepoDestinationPath }}
+      -Configs "${{ parameters.CIConfigs }}"
     pwsh: true
   env:
     GH_TOKEN: $(azuresdk-github-pat)
@@ -64,7 +65,7 @@ steps:
       -RepoId ${{ parameters.RepoId }}
       -Repository ${{ parameters.PackageRepository }}
       -ReleaseSHA ${{ parameters.ReleaseSha }}
-      -CIRepository "${{ parameters.WorkingDirectory }}/repo"
+      -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
       -Configs "${{ parameters.CIConfigs }}"
     pwsh: true
   env:
@@ -83,6 +84,7 @@ steps:
     GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
     GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
     PRLabels: ${{ parameters.PRLabels }}
+    CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
@@ -105,7 +107,7 @@ steps:
         -RepoId ${{ parameters.RepoId }}
         -Repository ${{ parameters.PackageRepository }}
         -ReleaseSHA ${{ parameters.ReleaseSha }}
-        -CIRepository "${{ parameters.WorkingDirectory }}/repo"
+        -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
         -Configs "${{ parameters.CIConfigs }}"
       pwsh: true
     env:
@@ -122,4 +124,5 @@ steps:
       WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
       GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
+      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }}
+      CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}

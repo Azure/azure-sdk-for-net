@@ -76,31 +76,61 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("negationOperation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     negationOperation = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("dimensionAnomalyScope"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dimensionAnomalyScope = DimensionKey.DeserializeDimensionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("topNAnomalyScope"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     topNAnomalyScope = TopNGroupScope.DeserializeTopNGroupScope(property.Value);
                     continue;
                 }
                 if (property.NameEquals("severityFilter"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     severityFilter = SeverityCondition.DeserializeSeverityCondition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snoozeFilter"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     snoozeFilter = MetricAnomalyAlertSnoozeCondition.DeserializeMetricAnomalyAlertSnoozeCondition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueFilter"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     valueFilter = MetricBoundaryCondition.DeserializeMetricBoundaryCondition(property.Value);
                     continue;
                 }

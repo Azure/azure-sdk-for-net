@@ -62,11 +62,21 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("windowSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     windowSize = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("timeAggregation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timeAggregation = property.Value.GetString().ToTimeAggregationOperator();
                     continue;
                 }
@@ -77,6 +87,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("dataSource"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
                     continue;
                 }

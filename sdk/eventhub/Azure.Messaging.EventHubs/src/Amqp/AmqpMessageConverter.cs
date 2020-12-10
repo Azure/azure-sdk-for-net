@@ -304,7 +304,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static AmqpMessage BuildAmqpMessageFromEvent(EventData source,
                                                              string partitionKey)
         {
-            var body = new ArraySegment<byte>((source.Body.IsEmpty) ? Array.Empty<byte>() : source.Body.ToArray());
+            var bodyBytes = source.EventBody.ToMemory();
+            var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
             var message = AmqpMessage.Create(new Data { Value = body });
 
             if (source.Properties?.Count > 0)

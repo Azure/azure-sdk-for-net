@@ -723,13 +723,6 @@ namespace Microsoft.Azure.Management.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (name != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9]{3,24}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9]{3,24}$");
-                }
-            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
@@ -954,13 +947,6 @@ namespace Microsoft.Azure.Management.KeyVault
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (name != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9]{3,24}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9]{3,24}$");
-                }
             }
             if (parameters == null)
             {

@@ -484,7 +484,6 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 Enumerable.Range(0, 10).Select(b => CreateSecret("Secret" + (a * 10 + b), (a * 10 + b).ToString())).ToArray()
             ).ToArray();
 
-
             SetPages(client,
                 async (string id) =>
                 {

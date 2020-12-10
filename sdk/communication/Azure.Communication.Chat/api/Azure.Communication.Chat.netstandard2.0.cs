@@ -10,7 +10,7 @@ namespace Azure.Communication.Chat
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteChatThreadAsync(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Chat.ChatThread> GetChatThread(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Chat.ChatThread>> GetChatThreadAsync(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Communication.Chat.ChatThreadClient GetChatThreadClient(string threadId, Azure.Communication.Chat.ChatClientOptions? options = null) { throw null; }
+        public virtual Azure.Communication.Chat.ChatThreadClient GetChatThreadClient(string threadId) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.Chat.ChatThreadInfo> GetChatThreadsInfo(System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.Chat.ChatThreadInfo> GetChatThreadsInfoAsync(System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -119,5 +119,15 @@ namespace Azure.Communication.Chat
     {
         internal SendChatMessageResult() { }
         public string Id { get { throw null; } }
+    }
+}
+namespace Azure.Communication.Chat.Models
+{
+    public static partial class ChatModelFactory
+    {
+        public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, string type, Azure.Communication.Chat.ChatMessagePriority? priority, string version, string content, string senderDisplayName, System.DateTimeOffset? createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn) { throw null; }
+        public static Azure.Communication.Chat.ChatThreadInfo ChatThreadInfo(string id, string topic, bool? isDeleted, System.DateTimeOffset? lastMessageReceivedOn) { throw null; }
+        public static Azure.Communication.Chat.ReadReceipt ReadReceipt(string senderId, string chatMessageId, System.DateTimeOffset? readOn) { throw null; }
+        public static Azure.Communication.Chat.SendChatMessageResult SendChatMessageResult(string id) { throw null; }
     }
 }

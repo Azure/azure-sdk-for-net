@@ -92,6 +92,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("ignoreDataBefore"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ignoreDataBefore = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -122,6 +127,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("dimensions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MetricDimension> array = new List<MetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

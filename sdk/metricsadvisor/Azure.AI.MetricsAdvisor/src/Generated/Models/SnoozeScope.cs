@@ -24,11 +24,6 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string MetricValue = "Metric";
         private const string SeriesValue = "Series";
-
-        /// <summary> Metric. </summary>
-        public static SnoozeScope Metric { get; } = new SnoozeScope(MetricValue);
-        /// <summary> Series. </summary>
-        public static SnoozeScope Series { get; } = new SnoozeScope(SeriesValue);
         /// <summary> Determines if two <see cref="SnoozeScope"/> values are the same. </summary>
         public static bool operator ==(SnoozeScope left, SnoozeScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SnoozeScope"/> values are not the same. </summary>

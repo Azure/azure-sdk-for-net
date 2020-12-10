@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("ipAddresses"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -57,6 +62,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("fqdns"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

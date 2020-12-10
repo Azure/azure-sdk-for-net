@@ -2,99 +2,91 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A Data feed source.
+    /// Ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public abstract class DataFeedSource
     {
-        internal DataFeedDetail DataFeedDetail { get; set; }
+        internal DataFeedSourceType Type { get; }
 
         internal object Parameter { get; set; }
 
-        private DataFeedSourceType DataFeedSourceType { get; }
-
         internal DataFeedSource(DataFeedSourceType dataFeedSourceType)
         {
-            DataFeedSourceType = dataFeedSourceType;
+            Type = dataFeedSourceType;
         }
 
-        internal DataFeedSource(DataFeedDetail detail)
-        {
-            Argument.AssertNotNull(detail, nameof(detail));
-
-            DataFeedSourceType = detail.DataSourceType;
-            DataFeedDetail = detail;
-        }
-
-        /// <summary> Initializes a new instance of a data source specific DataFeedDetail. </summary>
-        /// <param name="dataFeedName"> data feed name. </param>
-        /// <param name="dataFeedGranularity"></param>
-        /// <param name="dataFeedSchema"></param>
-        /// <param name="dataFeedIngestionSettings"></param>
-        /// <param name="dataFeedOptions"></param>
-        internal void SetDetail(string dataFeedName, DataFeedGranularity dataFeedGranularity, DataFeedSchema dataFeedSchema, DataFeedIngestionSettings dataFeedIngestionSettings, DataFeedOptions dataFeedOptions)
-        {
-            dataFeedIngestionSettings.IngestionStartTime = ClientCommon.NormalizeDateTimeOffset(dataFeedIngestionSettings.IngestionStartTime);
-
-            DataFeedDetail = Parameter switch
+        internal static DataFeedSource GetDataFeedSource(DataFeedDetail dataFeedDetail) =>
+            dataFeedDetail switch
             {
-                AzureApplicationInsightsParameter p => new AzureApplicationInsightsDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                AzureBlobParameter p => new AzureBlobDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                AzureCosmosDBParameter p => new AzureCosmosDBDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                AzureDataLakeStorageGen2Parameter p => new AzureDataLakeStorageGen2DataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                AzureTableParameter p => new AzureTableDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                ElasticsearchParameter p => new ElasticsearchDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                HttpRequestParameter p => new HttpRequestDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                InfluxDBParameter p => new InfluxDBDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                SqlSourceParameter p when DataFeedSourceType == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                SqlSourceParameter p when DataFeedSourceType == DataFeedSourceType.MySql => new MySqlDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                SqlSourceParameter p when DataFeedSourceType == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                SqlSourceParameter p when DataFeedSourceType == DataFeedSourceType.SqlServer => new SQLServerDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
-                MongoDBParameter p => new MongoDBDataFeed(dataFeedName, dataFeedGranularity.GranularityType, dataFeedSchema.MetricColumns, dataFeedIngestionSettings.IngestionStartTime, p),
+                AzureApplicationInsightsDataFeed d => new AzureApplicationInsightsDataFeedSource(d.DataSourceParameter),
+                AzureBlobDataFeed d => new AzureBlobDataFeedSource(d.DataSourceParameter),
+                AzureCosmosDBDataFeed d => new AzureCosmosDbDataFeedSource(d.DataSourceParameter),
+                AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageGen2DataFeedSource(d.DataSourceParameter),
+                AzureTableDataFeed d => new AzureTableDataFeedSource(d.DataSourceParameter),
+                ElasticsearchDataFeed d => new ElasticsearchDataFeedSource(d.DataSourceParameter),
+                HttpRequestDataFeed d => new HttpRequestDataFeedSource(d.DataSourceParameter),
+                InfluxDBDataFeed d => new InfluxDbDataFeedSource(d.DataSourceParameter),
+                AzureDataExplorerDataFeed d => new AzureDataExplorerDataFeedSource(d.DataSourceParameter),
+                MySqlDataFeed d => new MySqlDataFeedSource(d.DataSourceParameter),
+                PostgreSqlDataFeed d => new PostgreSqlDataFeedSource(d.DataSourceParameter),
+                SQLServerDataFeed d => new SqlServerDataFeedSource(d.DataSourceParameter),
+                MongoDBDataFeed d => new MongoDbDataFeedSource(d.DataSourceParameter),
                 _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
             };
 
-            DataFeedDetail.GranularityAmount = dataFeedGranularity.CustomGranularityValue;
-            foreach (var column in dataFeedSchema.DimensionColumns)
+        /// <summary>
+        /// Initializes a new instance of a data source specific DataFeedDetail.
+        /// </summary>
+        internal DataFeedDetail InstantiateDataFeedDetail(string name, DataFeedGranularityType granularityType, IList<DataFeedMetric> metricColumns, DateTimeOffset ingestionStartTime)
+        {
+            ingestionStartTime = ClientCommon.NormalizeDateTimeOffset(ingestionStartTime);
+
+            return Parameter switch
             {
-                DataFeedDetail.Dimension.Add(column);
-            }
-            DataFeedDetail.TimestampColumn = dataFeedSchema.TimestampColumn;
-            DataFeedDetail.MaxConcurrency = dataFeedIngestionSettings.DataSourceRequestConcurrency;
-            DataFeedDetail.MinRetryIntervalInSeconds = (long?)dataFeedIngestionSettings.IngestionRetryDelay?.TotalSeconds;
-            DataFeedDetail.StartOffsetInSeconds = (long?)dataFeedIngestionSettings.IngestionStartOffset?.TotalSeconds;
-            DataFeedDetail.StopRetryAfterInSeconds = (long?)dataFeedIngestionSettings.StopRetryAfter?.TotalSeconds;
-            if (dataFeedOptions != null)
+                AzureApplicationInsightsParameter p => new AzureApplicationInsightsDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                AzureBlobParameter p => new AzureBlobDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                AzureCosmosDBParameter p => new AzureCosmosDBDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                AzureDataLakeStorageGen2Parameter p => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                AzureTableParameter p => new AzureTableDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                ElasticsearchParameter p => new ElasticsearchDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                HttpRequestParameter p => new HttpRequestDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                InfluxDBParameter p => new InfluxDBDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                SqlSourceParameter p when Type == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                SqlSourceParameter p when Type == DataFeedSourceType.MySql => new MySqlDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                SqlSourceParameter p when Type == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                SqlSourceParameter p when Type == DataFeedSourceType.SqlServer => new SQLServerDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                MongoDBParameter p => new MongoDBDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
+            };
+        }
+
+        /// <summary>
+        /// Initializes a new instance of a data source specific DataFeedDetailPatch.
+        /// </summary>
+        internal DataFeedDetailPatch InstantiateDataFeedDetailPatch()
+        {
+            return Parameter switch
             {
-                foreach (var admin in dataFeedOptions.Administrators)
-                {
-                    DataFeedDetail.Admins.Add(admin);
-                }
-                foreach (var viewer in dataFeedOptions.Viewers)
-                {
-                    DataFeedDetail.Viewers.Add(viewer);
-                }
-                DataFeedDetail.DataFeedDescription = dataFeedOptions.FeedDescription;
-                DataFeedDetail.ViewMode = dataFeedOptions.AccessMode;
-                if (dataFeedOptions.RollupSettings != null)
-                {
-                    foreach (var columnName in dataFeedOptions.RollupSettings.AutoRollupGroupByColumnNames)
-                    {
-                        DataFeedDetail.RollUpColumns.Add(columnName);
-                    }
-                    DataFeedDetail.RollUpMethod = dataFeedOptions.RollupSettings.RollupMethod;
-                    DataFeedDetail.NeedRollup = dataFeedOptions.RollupSettings.RollupType;
-                }
-                if (dataFeedOptions.MissingDataPointFillSettings != null)
-                {
-                    DataFeedDetail.FillMissingPointType = dataFeedOptions.MissingDataPointFillSettings.FillType;
-                    DataFeedDetail.FillMissingPointValue = dataFeedOptions.MissingDataPointFillSettings.CustomFillValue;
-                }
-            }
+                AzureApplicationInsightsParameter p => new AzureApplicationInsightsDataFeedPatch() { DataSourceParameter = p },
+                AzureBlobParameter p => new AzureBlobDataFeedPatch() { DataSourceParameter = p },
+                AzureCosmosDBParameter p => new AzureCosmosDBDataFeedPatch() { DataSourceParameter = p },
+                AzureDataLakeStorageGen2Parameter p => new AzureDataLakeStorageGen2DataFeedPatch() { DataSourceParameter = p },
+                AzureTableParameter p => new AzureTableDataFeedPatch() { DataSourceParameter = p },
+                ElasticsearchParameter p => new ElasticsearchDataFeedPatch() { DataSourceParameter = p },
+                HttpRequestParameter p => new HttpRequestDataFeedPatch() { DataSourceParameter = p },
+                InfluxDBParameter p => new InfluxDBDataFeedPatch() { DataSourceParameter = p },
+                SqlSourceParameter p when Type == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeedPatch() { DataSourceParameter = p },
+                SqlSourceParameter p when Type == DataFeedSourceType.MySql => new MySqlDataFeedPatch() { DataSourceParameter = p },
+                SqlSourceParameter p when Type == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeedPatch() { DataSourceParameter = p },
+                SqlSourceParameter p when Type == DataFeedSourceType.SqlServer => new SQLServerDataFeedPatch() { DataSourceParameter = p },
+                MongoDBParameter p => new MongoDBDataFeedPatch() { DataSourceParameter = p },
+                _ => throw new InvalidOperationException("Invalid DataFeedDetailPatch type")
+            };
         }
     }
 }

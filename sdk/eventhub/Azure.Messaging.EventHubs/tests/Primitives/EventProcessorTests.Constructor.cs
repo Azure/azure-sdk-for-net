@@ -35,7 +35,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             yield return new object[] { new MinimalProcessorMock(99, "consumerGroup", connectionString), "connection string with default options" };
             yield return new object[] { new MinimalProcessorMock(99, "consumerGroup", connectionStringNoHub, "hub", default), "connection string with default options" };
-            yield return new object[] { new MinimalProcessorMock(99, "consumerGroup", "namespace", "hub", credential, default(EventProcessorOptions)), "namespace with explicit null options" };
+            yield return new object[] { new MinimalProcessorMock(99, "consumerGroup", "namespace", "hub", credential, default(EventProcessorOptions)), "token credential with explicit null options" };
+            yield return new object[] { new MinimalProcessorMock(99, "consumerGroup", "namespace", "hub", new EventHubsSharedAccessKeyCredential("key", "value"), default(EventProcessorOptions)), "shared key credential with explicit null options" };
         }
 
         /// <summary>
@@ -51,7 +52,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheEventBatchMaximumCount(int constructorArgument)
         {
             Assert.That(() => new MinimalProcessorMock(constructorArgument, "dummyGroup", "dummyConnection", new EventProcessorOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the maximum batch size.");
-            Assert.That(() => new MinimalProcessorMock(constructorArgument, "dummyGroup", "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the maximum batch size.");
+            Assert.That(() => new MinimalProcessorMock(constructorArgument, "dummyGroup", "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorOptions()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate the maximum batch size.");
+            Assert.That(() => new MinimalProcessorMock(constructorArgument, "dummyGroup", "dummyNamespace", "dummyEventHub", new EventHubsSharedAccessKeyCredential("key", "value"), new EventProcessorOptions()), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate the maximum batch size.");
         }
 
         /// <summary>
@@ -65,7 +67,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheConsumerGroup(string constructorArgument)
         {
             Assert.That(() => new MinimalProcessorMock(1, constructorArgument, "dummyConnection", new EventProcessorOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the consumer group.");
-            Assert.That(() => new MinimalProcessorMock(1, constructorArgument, "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the consumer group.");
+            Assert.That(() => new MinimalProcessorMock(1, constructorArgument, "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorOptions()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate the consumer group.");
+            Assert.That(() => new MinimalProcessorMock(1, constructorArgument, "dummyNamespace", "dummyEventHub", new EventHubsSharedAccessKeyCredential("key", "value"), new EventProcessorOptions()), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate the consumer group.");
         }
 
         /// <summary>
@@ -138,7 +141,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("sb://namespace.place.com")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
-            Assert.That(() => new MinimalProcessorMock(1, EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new MinimalProcessorMock(1, EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate.");
+            Assert.That(() => new MinimalProcessorMock(1, EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", new EventHubsSharedAccessKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate.");
         }
 
         /// <summary>
@@ -151,7 +155,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHub(string constructorArgument)
         {
-            Assert.That(() => new MinimalProcessorMock(100, EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new MinimalProcessorMock(100, EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate.");
+            Assert.That(() => new MinimalProcessorMock(100, EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, new EventHubsSharedAccessKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate.");
         }
 
         /// <summary>
@@ -162,7 +167,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheCredential()
         {
-            Assert.That(() => new MinimalProcessorMock(5, EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException);
+            Assert.That(() => new MinimalProcessorMock(5, EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException, "The token credential constructor should validate.");
+            Assert.That(() => new MinimalProcessorMock(5, EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(EventHubsSharedAccessKeyCredential)), Throws.ArgumentNullException, "The shared key credential constructor should validate.");
         }
 
         /// <summary>
@@ -216,7 +222,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void NamespaceConstructorClonesTheConnectionOptions()
+        public void TokenCredentialConstructorClonesTheConnectionOptions()
         {
             var expectedTransportType = EventHubsTransportType.AmqpWebSockets;
             var otherTransportType = EventHubsTransportType.AmqpTcp;
@@ -227,6 +233,35 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var eventProcessor = new MinimalProcessorMock(11, "consumerGroup", "namespace", "hub", Mock.Of<TokenCredential>(), options);
+
+            // Simply retrieving the options from an inner connection won't be enough to prove the processor clones
+            // its connection options because the cloning step also happens in the EventHubConnection constructor.
+            // For this reason, we will change the transport type and verify that it won't affect the returned
+            // connection options.
+
+            options.ConnectionOptions.TransportType = otherTransportType;
+
+            var connectionOptions = GetConnectionOptions(eventProcessor);
+            Assert.That(connectionOptions.TransportType, Is.EqualTo(expectedTransportType), $"The connection options should have been cloned.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}" />
+        ///   constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorClonesTheConnectionOptions()
+        {
+            var expectedTransportType = EventHubsTransportType.AmqpWebSockets;
+            var otherTransportType = EventHubsTransportType.AmqpTcp;
+
+            var options = new EventProcessorOptions
+            {
+                ConnectionOptions = new EventHubConnectionOptions { TransportType = expectedTransportType }
+            };
+
+            var eventProcessor = new MinimalProcessorMock(11, "consumerGroup", "namespace", "hub", new EventHubsSharedAccessKeyCredential("key", "value"), options);
 
             // Simply retrieving the options from an inner connection won't be enough to prove the processor clones
             // its connection options because the cloning step also happens in the EventHubConnection constructor.
@@ -264,7 +299,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void NamespaceConstructorSetsTheIdentifier()
+        public void TokenCredentialConstructorSetsTheIdentifier()
         {
             var options = new EventProcessorOptions
             {
@@ -272,6 +307,25 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var eventProcessor = new MinimalProcessorMock(65, "consumerGroup", "namespace", "hub", Mock.Of<TokenCredential>(), options);
+
+            Assert.That(eventProcessor.Identifier, Is.Not.Null);
+            Assert.That(eventProcessor.Identifier, Is.EqualTo(options.Identifier));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}" />
+        ///   constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorSetsTheIdentifier()
+        {
+            var options = new EventProcessorOptions
+            {
+                Identifier = Guid.NewGuid().ToString()
+            };
+
+            var eventProcessor = new MinimalProcessorMock(65, "consumerGroup", "namespace", "hub", new EventHubsSharedAccessKeyCredential("key", "value"), options);
 
             Assert.That(eventProcessor.Identifier, Is.Not.Null);
             Assert.That(eventProcessor.Identifier, Is.EqualTo(options.Identifier));
@@ -306,7 +360,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        public void NamespaceConstructorCreatesTheIdentifierWhenNotSpecified(string identifier)
+        public void TokenCredentialConstructorCreatesTheIdentifierWhenNotSpecified(string identifier)
         {
             var options = new EventProcessorOptions
             {
@@ -314,6 +368,27 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var eventProcessor = new MinimalProcessorMock(665, "consumerGroup", "namespace", "hub", Mock.Of<TokenCredential>(), options);
+
+            Assert.That(eventProcessor.Identifier, Is.Not.Null);
+            Assert.That(eventProcessor.Identifier, Is.Not.Empty);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}" />
+        ///   constructor.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void SharedKeyCredentialConstructorCreatesTheIdentifierWhenNotSpecified(string identifier)
+        {
+            var options = new EventProcessorOptions
+            {
+                Identifier = identifier
+            };
+
+            var eventProcessor = new MinimalProcessorMock(665, "consumerGroup", "namespace", "hub", new EventHubsSharedAccessKeyCredential("key", "value"), options);
 
             Assert.That(eventProcessor.Identifier, Is.Not.Null);
             Assert.That(eventProcessor.Identifier, Is.Not.Empty);

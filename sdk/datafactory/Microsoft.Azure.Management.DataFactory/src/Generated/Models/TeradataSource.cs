@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// with resultType string).</param>
         /// <param name="partitionOption">The partition mechanism that will be
         /// used for teradata read in parallel. Possible values include:
-        /// 'None', 'Hash', 'DynamicRange'</param>
+        /// "None", "Hash", "DynamicRange".</param>
         /// <param name="partitionSettings">The settings that will be leveraged
         /// for teradata source partitioning.</param>
-        public TeradataSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), string partitionOption = default(string), TeradataPartitionSettings partitionSettings = default(TeradataPartitionSettings))
+        public TeradataSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), object partitionOption = default(object), TeradataPartitionSettings partitionSettings = default(TeradataPartitionSettings))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
         {
             Query = query;
@@ -77,11 +77,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the partition mechanism that will be used for teradata
-        /// read in parallel. Possible values include: 'None', 'Hash',
-        /// 'DynamicRange'
+        /// read in parallel. Possible values include: "None", "Hash",
+        /// "DynamicRange".
         /// </summary>
         [JsonProperty(PropertyName = "partitionOption")]
-        public string PartitionOption { get; set; }
+        public object PartitionOption { get; set; }
 
         /// <summary>
         /// Gets or sets the settings that will be leveraged for teradata

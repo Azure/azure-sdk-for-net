@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Communication.Tests
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Communication.Tests
             return InstrumentClient(new CommunicationManagementClient(
                 TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new CommunicationManagementClientOptions())));
+                InstrumentClientOptions(new CommunicationManagementClientOptions())));
         }
     }
 }

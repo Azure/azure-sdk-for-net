@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using System;
@@ -16,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         private readonly KeyClientOptions.ServiceVersion _serviceVersion;
         public CryptographyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             _serviceVersion = serviceVersion;
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
@@ -30,14 +29,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // is always made.  This allows tests to be replayed independently and in any order
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Client = GetClient();
-
                 ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
             }
         }
 
+        // TODO: Record tests on Managed HSM for other EncryptionAlgorithm values.
         [Test]
-        public async Task EncryptDecryptRoundTrip([EnumValues]EncryptionAlgorithm algorithm)
+        public async Task EncryptDecryptRoundTrip([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep), nameof(EncryptionAlgorithm.RsaOaep256))]EncryptionAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -364,20 +362,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        private CryptographyClient GetCryptoClient(Uri keyId, bool forceRemote = false, TestRecording recording = null)
+        private CryptographyClient GetCryptoClient(Uri keyId, bool forceRemote = false)
         {
-            recording ??= Recording;
-
-            CryptographyClientOptions options = recording.InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
+            CryptographyClientOptions options = InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
             CryptographyClient client = new CryptographyClient(keyId, TestEnvironment.Credential, options, forceRemote);
             return InstrumentClient(client);
         }
 
-        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(KeyVaultKey key, TestRecording recording = null)
+        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(KeyVaultKey key)
         {
-            recording ??= Recording;
-
-            CryptographyClientOptions options = recording.InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
+            CryptographyClientOptions options = InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
             CryptographyClient client = new CryptographyClient(key, TestEnvironment.Credential, options);
             CryptographyClient clientProxy = InstrumentClient(client);
 

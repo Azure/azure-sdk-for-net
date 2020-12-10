@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.Tests
         protected FormRecognizerClient CreateFormRecognizerClient(bool useTokenCredential = false, string apiKey = default, bool skipInstrumenting = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
+            var options = InstrumentClientOptions(new FormRecognizerClientOptions());
             FormRecognizerClient client;
 
             if (useTokenCredential)
@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.Tests
         protected FormTrainingClient CreateFormTrainingClient(bool useTokenCredential = false, string apiKey = default, bool skipInstrumenting = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
+            var options = InstrumentClientOptions(new FormRecognizerClientOptions());
             FormTrainingClient client;
 
             if (useTokenCredential)
@@ -78,14 +78,30 @@ namespace Azure.AI.FormRecognizer.Tests
         /// the model ID can be obtained. Upon disposal, the model will be deleted.
         /// </summary>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
-        /// <param name="useMultipageFiles">Whether or not to use multipage files for training.</param>
+        /// <param name="containerType">Type of container to use to execute training.</param>
+        /// <param name="modelName">Optional model name.</param>
         /// <returns>A <see cref="DisposableTrainedModel"/> instance from which the trained model ID can be obtained.</returns>
-        protected async Task<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useTrainingLabels, bool useMultipageFiles = false)
+        protected async Task<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useTrainingLabels, ContainerType containerType = default, string modelName = default)
         {
             var trainingClient = CreateFormTrainingClient();
-            var trainingFilesUri = new Uri(useMultipageFiles ? TestEnvironment.MultipageBlobContainerSasUrl : TestEnvironment.BlobContainerSasUrl);
 
-            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval);
+            string trainingFiles = containerType switch
+            {
+                ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
+                ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
+                ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
+                _ => TestEnvironment.BlobContainerSasUrl,
+            };
+            var trainingFilesUri = new Uri(trainingFiles);
+
+            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval, modelName);
+        }
+
+        protected enum ContainerType
+        {
+            Singleforms,
+            MultipageFiles,
+            SelectionMarks
         }
     }
 }

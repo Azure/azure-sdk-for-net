@@ -29,27 +29,25 @@
             const bool usesTaskDependencies = true;
             // Bound
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
-                    baseRequest =>
-                    {
-                        var request = (Protocol.BatchRequest<Models.JobGetOptions, AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>>)baseRequest;
-                                                request.ServiceRequestFunc = (token) =>
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
+                baseRequest =>
+                {
+                    var request = (Protocol.BatchRequest<Models.JobGetOptions, AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>>)baseRequest;
+                    request.ServiceRequestFunc = (token) =>
+{
+                        var response = new AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>
                         {
-                            var response = new AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>
-                            {
-                                Body = new Protocol.Models.CloudJob { UsesTaskDependencies = usesTaskDependencies }
-                            };
-
-                            return Task.FromResult(response);
+                            Body = new Protocol.Models.CloudJob { UsesTaskDependencies = usesTaskDependencies }
                         };
-                    });
 
-                var cloudJob = client.JobOperations.GetJob(jobId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
-                Assert.Equal(usesTaskDependencies, cloudJob.UsesTaskDependencies);
-                Assert.Throws<InvalidOperationException>(() => cloudJob.UsesTaskDependencies = false);
-            }
+                        return Task.FromResult(response);
+                    };
+                });
+
+            var cloudJob = client.JobOperations.GetJob(jobId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+            Assert.Equal(usesTaskDependencies, cloudJob.UsesTaskDependencies);
+            Assert.Throws<InvalidOperationException>(() => cloudJob.UsesTaskDependencies = false);
         }
 
         [Fact]
@@ -59,28 +57,26 @@
             const string jobId = "id-123";
             const bool usesTaskDependencies = true;
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
-                    baseRequest =>
-                        {
-                            var request = (Protocol.BatchRequest<Models.JobScheduleGetOptions, AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>>)baseRequest;
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
+                baseRequest =>
+                    {
+                        var request = (Protocol.BatchRequest<Models.JobScheduleGetOptions, AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>>)baseRequest;
 
-                            request.ServiceRequestFunc = token =>
+                        request.ServiceRequestFunc = token =>
+                            {
+                                var response = new AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>
                                 {
-                                    var response = new AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>
-                                    {
-                                        Body = new Protocol.Models.CloudJobSchedule(jobId, schedule: new Protocol.Models.Schedule(), jobSpecification: new Protocol.Models.JobSpecification(){ UsesTaskDependencies = true })
-                                    };
-
-                                    return Task.FromResult(response);
+                                    Body = new Protocol.Models.CloudJobSchedule(jobId, schedule: new Protocol.Models.Schedule(), jobSpecification: new Protocol.Models.JobSpecification() { UsesTaskDependencies = true })
                                 };
-                        });
 
-                Microsoft.Azure.Batch.CloudJobSchedule unboundCloudJob = client.JobScheduleOperations.GetJobSchedule(jobId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+                                return Task.FromResult(response);
+                            };
+                    });
 
-                Assert.Equal(usesTaskDependencies, unboundCloudJob.JobSpecification.UsesTaskDependencies);
-            }
+            Microsoft.Azure.Batch.CloudJobSchedule unboundCloudJob = client.JobScheduleOperations.GetJobSchedule(jobId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+
+            Assert.Equal(usesTaskDependencies, unboundCloudJob.JobSpecification.UsesTaskDependencies);
         }
 
         [Fact]
@@ -90,29 +86,27 @@
             const bool usesTaskDependencies = true;
 
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
-                    baseRequest =>
-                        {
-                            var request = (Protocol.BatchRequests.JobScheduleAddBatchRequest)baseRequest;
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
+                baseRequest =>
+                    {
+                        var request = (Protocol.BatchRequests.JobScheduleAddBatchRequest)baseRequest;
 
-                            request.ServiceRequestFunc = token =>
-                                {
-                                    var response = new AzureOperationHeaderResponse<Models.JobScheduleAddHeaders> { Response = new HttpResponseMessage(HttpStatusCode.Created) };
+                        request.ServiceRequestFunc = token =>
+                            {
+                                var response = new AzureOperationHeaderResponse<Models.JobScheduleAddHeaders> { Response = new HttpResponseMessage(HttpStatusCode.Created) };
 
-                                    return Task.FromResult(response);
-                                };
-                        });
+                                return Task.FromResult(response);
+                            };
+                    });
 
-                Microsoft.Azure.Batch.CloudJobSchedule cloudJobSchedule = client.JobScheduleOperations.CreateJobSchedule();
-                Microsoft.Azure.Batch.JobSpecification jobSpec = new Microsoft.Azure.Batch.JobSpecification(poolInformation: null) { UsesTaskDependencies = usesTaskDependencies };
-                cloudJobSchedule.JobSpecification = jobSpec;
-                cloudJobSchedule.Commit(new List<BatchClientBehavior> { interceptor });
+            Microsoft.Azure.Batch.CloudJobSchedule cloudJobSchedule = client.JobScheduleOperations.CreateJobSchedule();
+            Microsoft.Azure.Batch.JobSpecification jobSpec = new Microsoft.Azure.Batch.JobSpecification(poolInformation: null) { UsesTaskDependencies = usesTaskDependencies };
+            cloudJobSchedule.JobSpecification = jobSpec;
+            cloudJobSchedule.Commit(new List<BatchClientBehavior> { interceptor });
 
-                // writing isn't allowed for a CloudJobSchedule.JobSpecification.UsesTaskDependencies that is in an invalid state. 
-                Assert.Throws<InvalidOperationException>(() => cloudJobSchedule.JobSpecification.UsesTaskDependencies = false);
-            }
+            // writing isn't allowed for a CloudJobSchedule.JobSpecification.UsesTaskDependencies that is in an invalid state. 
+            Assert.Throws<InvalidOperationException>(() => cloudJobSchedule.JobSpecification.UsesTaskDependencies = false);
         }
 
         [Fact]
@@ -121,38 +115,36 @@
         {
             const string jobId = "id-123";
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                var returnFakeJob = ClientUnitTestCommon.SimulateServiceResponse<Models.JobGetOptions, AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>>(_ =>
-                    new AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>
-                    {
-                        Body = new Protocol.Models.CloudJob { Id = jobId, UsesTaskDependencies = true }
-                    });
-
-                var verifyTaskDependencies = ClientUnitTestCommon.SimulateServiceResponse<Models.TaskAddParameter, Models.TaskAddOptions, AzureOperationHeaderResponse<Models.TaskAddHeaders>>((parameters, options) =>
-                    {
-                        Assert.Equal((Int32.Parse(parameters.Id) - 10).ToString(), parameters.DependsOn.TaskIds.Single());
-                        Assert.Equal(5, parameters.DependsOn.TaskIdRanges.Single().Start);
-                        Assert.Equal(15, parameters.DependsOn.TaskIdRanges.Single().End);
-
-                        return new AzureOperationHeaderResponse<Models.TaskAddHeaders>()
-                        {
-                            Response = new HttpResponseMessage(HttpStatusCode.Accepted)
-                        };
-                    });
-
-
-                var job = client.JobOperations.GetJob(jobId, additionalBehaviors: returnFakeJob);
-
-                for (int j = 0; j < 5; j++)
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            var returnFakeJob = ClientUnitTestCommon.SimulateServiceResponse<Models.JobGetOptions, AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>>(_ =>
+                new AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>
                 {
-                    var taskWithDependencies = new Microsoft.Azure.Batch.CloudTask((10 + j).ToString(), "cmd /c hostname")
-                    {
-                        DependsOn = new Microsoft.Azure.Batch.TaskDependencies(new[] { j.ToString() }, new[] { new Microsoft.Azure.Batch.TaskIdRange(5, 15) }),
-                    };
+                    Body = new Protocol.Models.CloudJob { Id = jobId, UsesTaskDependencies = true }
+                });
 
-                    job.AddTask(taskWithDependencies, additionalBehaviors: verifyTaskDependencies);  // assertions happen in the callback
-                }
+            var verifyTaskDependencies = ClientUnitTestCommon.SimulateServiceResponse<Models.TaskAddParameter, Models.TaskAddOptions, AzureOperationHeaderResponse<Models.TaskAddHeaders>>((parameters, options) =>
+                {
+                    Assert.Equal((Int32.Parse(parameters.Id) - 10).ToString(), parameters.DependsOn.TaskIds.Single());
+                    Assert.Equal(5, parameters.DependsOn.TaskIdRanges.Single().Start);
+                    Assert.Equal(15, parameters.DependsOn.TaskIdRanges.Single().End);
+
+                    return new AzureOperationHeaderResponse<Models.TaskAddHeaders>()
+                    {
+                        Response = new HttpResponseMessage(HttpStatusCode.Accepted)
+                    };
+                });
+
+
+            var job = client.JobOperations.GetJob(jobId, additionalBehaviors: returnFakeJob);
+
+            for (int j = 0; j < 5; j++)
+            {
+                var taskWithDependencies = new Microsoft.Azure.Batch.CloudTask((10 + j).ToString(), "cmd /c hostname")
+                {
+                    DependsOn = new Microsoft.Azure.Batch.TaskDependencies(new[] { j.ToString() }, new[] { new Microsoft.Azure.Batch.TaskIdRange(5, 15) }),
+                };
+
+                job.AddTask(taskWithDependencies, additionalBehaviors: verifyTaskDependencies);  // assertions happen in the callback
             }
         }
 
@@ -160,13 +152,12 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void WhenATaskIsRetrievedFromTheService_ItsDependenciesAreSurfacedCorrectly()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                var returnFakeTasks = ClientUnitTestCommon.SimulateServiceResponse<Models.TaskListOptions, AzureOperationResponse<IPage<Models.CloudTask>, Models.TaskListHeaders>>(_ =>
-                    new AzureOperationResponse<IPage<Models.CloudTask>, Models.TaskListHeaders>
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            var returnFakeTasks = ClientUnitTestCommon.SimulateServiceResponse<Models.TaskListOptions, AzureOperationResponse<IPage<Models.CloudTask>, Models.TaskListHeaders>>(_ =>
+                new AzureOperationResponse<IPage<Models.CloudTask>, Models.TaskListHeaders>
+                {
+                    Body = new FakePage<Models.CloudTask>(new[]
                     {
-                        Body = new FakePage<Models.CloudTask>(new []
-                        {
                             new Protocol.Models.CloudTask
                             {
                                 DependsOn = new Protocol.Models.TaskDependencies
@@ -177,45 +168,42 @@
                                 Id = "5",
                                 State = Models.TaskState.Active,
                             }
-                        })
-                    });
+                    })
+                });
 
-                var tasks = client.JobOperations.ListTasks("job", additionalBehaviors: returnFakeTasks).ToList();
+            var tasks = client.JobOperations.ListTasks("job", additionalBehaviors: returnFakeTasks).ToList();
 
-                var taskDependencies = tasks.First().DependsOn;
+            var taskDependencies = tasks.First().DependsOn;
 
-                Assert.Equal("5", taskDependencies.TaskIds.Single());
-                Assert.Equal(5, taskDependencies.TaskIdRanges.Single().Start);
-                Assert.Equal(15, taskDependencies.TaskIdRanges.Single().End);
-            }
+            Assert.Equal("5", taskDependencies.TaskIds.Single());
+            Assert.Equal(5, taskDependencies.TaskIdRanges.Single().Start);
+            Assert.Equal(15, taskDependencies.TaskIdRanges.Single().End);
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void CannotModifyDependenciesOfABoundTask()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                var returnFakeTasks = ClientUnitTestCommon.SimulateServiceResponse<Models.TaskGetOptions, AzureOperationResponse<Models.CloudTask, Models.TaskGetHeaders>>(_ =>
-                    new AzureOperationResponse<Models.CloudTask, Models.TaskGetHeaders>
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            var returnFakeTasks = ClientUnitTestCommon.SimulateServiceResponse<Models.TaskGetOptions, AzureOperationResponse<Models.CloudTask, Models.TaskGetHeaders>>(_ =>
+                new AzureOperationResponse<Models.CloudTask, Models.TaskGetHeaders>
+                {
+                    Body = new Protocol.Models.CloudTask
                     {
-                        Body = new Protocol.Models.CloudTask
+                        DependsOn = new Protocol.Models.TaskDependencies
                         {
-                            DependsOn = new Protocol.Models.TaskDependencies
-                            {
-                                TaskIdRanges = new[] { new Protocol.Models.TaskIdRange(5, 15) },
-                                TaskIds = new List<string> { "5" }
-                            },
-                            Id = "5",
-                            State = Models.TaskState.Active,
-                        }
-                    });
+                            TaskIdRanges = new[] { new Protocol.Models.TaskIdRange(5, 15) },
+                            TaskIds = new List<string> { "5" }
+                        },
+                        Id = "5",
+                        State = Models.TaskState.Active,
+                    }
+                });
 
-                var task = client.JobOperations.GetTask("job", "5", additionalBehaviors: returnFakeTasks);
+            var task = client.JobOperations.GetTask("job", "5", additionalBehaviors: returnFakeTasks);
 
-                var newDependencies = Microsoft.Azure.Batch.TaskDependencies.OnId("hello");
-                Assert.Throws<InvalidOperationException>(() => task.DependsOn = newDependencies);
-            }
+            var newDependencies = Microsoft.Azure.Batch.TaskDependencies.OnId("hello");
+            Assert.Throws<InvalidOperationException>(() => task.DependsOn = newDependencies);
         }
 
         [Fact]

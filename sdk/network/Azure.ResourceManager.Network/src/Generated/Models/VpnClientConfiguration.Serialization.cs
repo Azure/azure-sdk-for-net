@@ -116,11 +116,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("vpnClientAddressPool"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vpnClientRootCertificates"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VpnClientRootCertificate> array = new List<VpnClientRootCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -131,6 +141,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("vpnClientRevokedCertificates"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VpnClientRevokedCertificate> array = new List<VpnClientRevokedCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -141,6 +156,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("vpnClientProtocols"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VpnClientProtocol> array = new List<VpnClientProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -151,6 +171,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("vpnClientIpsecPolicies"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<IpsecPolicy> array = new List<IpsecPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -171,6 +196,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("radiusServers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<RadiusServer> array = new List<RadiusServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -100,15 +100,30 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("state"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             state = property0.Value.GetString().ToSecurityAlertPolicyState();
                             continue;
                         }
                         if (property0.NameEquals("disabledAlerts"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -119,6 +134,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("emailAddresses"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -129,6 +149,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("emailAccountAdmins"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             emailAccountAdmins = property0.Value.GetBoolean();
                             continue;
                         }
@@ -144,11 +169,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("retentionDays"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             retentionDays = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("creationTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }

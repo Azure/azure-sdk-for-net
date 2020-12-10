@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "cd553d31-440b-e980-40c5-f745b6240688",
         "x-ms-date": "Mon, 03 Aug 2020 17:53:47 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Eaeohmvvsnvvvmlklvuac\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2020-08-03T16:53:47.8077704Z\u003C/Start\u003E\u003CExpiry\u003E2020-08-03T18:53:47.8077704Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
       "StatusCode": 404,
@@ -30,7 +30,7 @@
         "x-ms-client-request-id": "cd553d31-440b-e980-40c5-f745b6240688",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "081835f0-d01e-00fa-41bf-695bfc000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",

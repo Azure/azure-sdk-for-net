@@ -52,7 +52,6 @@ namespace Azure.Identity
         {
         }
 
-
         internal EnvironmentCredential(CredentialPipeline pipeline)
         {
             _pipeline = pipeline;
@@ -79,7 +78,6 @@ namespace Azure.Identity
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, null, _pipeline, null);
                 }
             }
-
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)
@@ -91,7 +89,7 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
-        /// This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
@@ -107,7 +105,7 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
-        /// This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specifeid, the default <see cref="AccessToken"/>

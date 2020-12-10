@@ -4,12 +4,11 @@
 using System.Threading.Tasks;
 using System;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Dns.Tests
 {
-
     [RunFrequency(RunTestFrequency.Manually)]
     public abstract class DnsManagementClientBase : ManagementRecordedTestBase<DnsManagementTestEnvironment>
     {
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.Dns.Tests
         public ZonesOperations ZonesOperations { get; set; }
         protected DnsManagementClientBase(bool isAsync) : base(isAsync)
         {
-
         }
         protected void InitializeClients()
         {
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.Dns.Tests
         internal DnsManagementClient GetDnsManagementClient()
         {
             return CreateClient<DnsManagementClient>(this.SubscriptionId,
-                TestEnvironment.Credential, Recording.InstrumentClientOptions(new DnsManagementClientOptions()));
+                TestEnvironment.Credential, InstrumentClientOptions(new DnsManagementClientOptions()));
         }
     }
 }

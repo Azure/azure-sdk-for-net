@@ -180,9 +180,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='targetExportPlatforms'>
             /// List of platforms the trained model is intending exporting to.
             /// </param>
-            public static Project CreateProject(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>))
+            /// <param name='options'>
+            /// Additional project creation options.
+            /// </param>
+            public static Project CreateProject(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), CreateProjectOptions options = default(CreateProjectOptions))
             {
-                return operations.CreateProjectAsync(name, description, domainId, classificationType, targetExportPlatforms).GetAwaiter().GetResult();
+                return operations.CreateProjectAsync(name, description, domainId, classificationType, targetExportPlatforms, options).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -207,12 +210,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='targetExportPlatforms'>
             /// List of platforms the trained model is intending exporting to.
             /// </param>
+            /// <param name='options'>
+            /// Additional project creation options.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Project> CreateProjectAsync(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Project> CreateProjectAsync(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), CreateProjectOptions options = default(CreateProjectOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, classificationType, targetExportPlatforms, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, classificationType, targetExportPlatforms, options, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -240,12 +246,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='targetExportPlatforms'>
             /// List of platforms the trained model is intending exporting to.
             /// </param>
+            /// <param name='options'>
+            /// Additional project creation options.
+            /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<Project> CreateProjectWithHttpMessages(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<Project> CreateProjectWithHttpMessages(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), CreateProjectOptions options = default(CreateProjectOptions), Dictionary<string, List<string>> customHeaders = null)
             {
-                return operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, classificationType, targetExportPlatforms, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                return operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, classificationType, targetExportPlatforms, options, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1245,9 +1254,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The list of image ids to update. Limited to 64.
             /// </param>
             /// <param name='metadata'>
-            /// The metadata to be updated to the specified images. Limited to 50 key-value
-            /// pairs per image. The length of key is limited to 256. The length of value
-            /// is limited to 512.
+            /// The metadata to be updated to the specified images. Limited to 10 key-value
+            /// pairs per image. The length of key is limited to 128. The length of value
+            /// is limited to 256.
             /// </param>
             public static ImageMetadataUpdateSummary UpdateImageMetadata(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds, IDictionary<string, string> metadata)
             {
@@ -1271,9 +1280,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The list of image ids to update. Limited to 64.
             /// </param>
             /// <param name='metadata'>
-            /// The metadata to be updated to the specified images. Limited to 50 key-value
-            /// pairs per image. The length of key is limited to 256. The length of value
-            /// is limited to 512.
+            /// The metadata to be updated to the specified images. Limited to 10 key-value
+            /// pairs per image. The length of key is limited to 128. The length of value
+            /// is limited to 256.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1303,9 +1312,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The list of image ids to update. Limited to 64.
             /// </param>
             /// <param name='metadata'>
-            /// The metadata to be updated to the specified images. Limited to 50 key-value
-            /// pairs per image. The length of key is limited to 256. The length of value
-            /// is limited to 512.
+            /// The metadata to be updated to the specified images. Limited to 10 key-value
+            /// pairs per image. The length of key is limited to 128. The length of value
+            /// is limited to 256.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
@@ -2631,7 +2640,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// </param>
             /// <param name='platform'>
             /// The target platform. Possible values include: 'CoreML', 'TensorFlow',
-            /// 'DockerFile', 'ONNX', 'VAIDK'
+            /// 'DockerFile', 'ONNX', 'VAIDK', 'OpenVino'
             /// </param>
             /// <param name='flavor'>
             /// The flavor of the target platform. Possible values include: 'Linux',
@@ -2656,7 +2665,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// </param>
             /// <param name='platform'>
             /// The target platform. Possible values include: 'CoreML', 'TensorFlow',
-            /// 'DockerFile', 'ONNX', 'VAIDK'
+            /// 'DockerFile', 'ONNX', 'VAIDK', 'OpenVino'
             /// </param>
             /// <param name='flavor'>
             /// The flavor of the target platform. Possible values include: 'Linux',
@@ -2687,7 +2696,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// </param>
             /// <param name='platform'>
             /// The target platform. Possible values include: 'CoreML', 'TensorFlow',
-            /// 'DockerFile', 'ONNX', 'VAIDK'
+            /// 'DockerFile', 'ONNX', 'VAIDK', 'OpenVino'
             /// </param>
             /// <param name='flavor'>
             /// The flavor of the target platform. Possible values include: 'Linux',

@@ -25,13 +25,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string NoRollupValue = "NoRollup";
         private const string NeedRollupValue = "NeedRollup";
         private const string AlreadyRollupValue = "AlreadyRollup";
-
-        /// <summary> NoRollup. </summary>
-        public static DataFeedRollupType NoRollup { get; } = new DataFeedRollupType(NoRollupValue);
-        /// <summary> NeedRollup. </summary>
-        public static DataFeedRollupType NeedRollup { get; } = new DataFeedRollupType(NeedRollupValue);
-        /// <summary> AlreadyRollup. </summary>
-        public static DataFeedRollupType AlreadyRollup { get; } = new DataFeedRollupType(AlreadyRollupValue);
         /// <summary> Determines if two <see cref="DataFeedRollupType"/> values are the same. </summary>
         public static bool operator ==(DataFeedRollupType left, DataFeedRollupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedRollupType"/> values are not the same. </summary>

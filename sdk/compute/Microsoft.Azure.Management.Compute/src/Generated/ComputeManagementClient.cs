@@ -172,6 +172,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMRunCommandsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetVMRunCommandsOperations VirtualMachineScaleSetVMRunCommands { get; private set; }
+
+        /// <summary>
         /// Gets the IResourceSkusOperations.
         /// </summary>
         public virtual IResourceSkusOperations ResourceSkus { get; private set; }
@@ -487,6 +492,7 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
+            VirtualMachineScaleSetVMRunCommands = new VirtualMachineScaleSetVMRunCommandsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);
             Disks = new DisksOperations(this);
             Snapshots = new SnapshotsOperations(this);

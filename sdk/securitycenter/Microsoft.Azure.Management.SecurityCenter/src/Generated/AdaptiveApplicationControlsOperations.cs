@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Security
         public SecurityCenterClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a list of application control VM/server groups for the subscription.
+        /// Gets a list of application control machine groups for the subscription.
         /// </summary>
         /// <param name='includePathRecommendations'>
         /// Include the policy rules
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AppWhitelistingGroups>> ListWithHttpMessagesAsync(bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AdaptiveApplicationControlGroups>> ListWithHttpMessagesAsync(bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AppWhitelistingGroups>();
+            var _result = new AzureOperationResponse<AdaptiveApplicationControlGroups>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppWhitelistingGroups>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AdaptiveApplicationControlGroups>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management.Security
         /// Gets an application control VM/server group.
         /// </summary>
         /// <param name='groupName'>
-        /// Name of an application control VM/server group
+        /// Name of an application control machine group
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AppWhitelistingGroup>> GetWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> GetWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -414,7 +414,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AppWhitelistingGroup>();
+            var _result = new AzureOperationResponse<AdaptiveApplicationControlGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -427,7 +427,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppWhitelistingGroup>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AdaptiveApplicationControlGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -447,10 +447,10 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Update an application control VM/server group
+        /// Update an application control machine group
         /// </summary>
         /// <param name='groupName'>
-        /// Name of an application control VM/server group
+        /// Name of an application control machine group
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AppWhitelistingGroup>> PutWithHttpMessagesAsync(string groupName, AppWhitelistingGroup body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> PutWithHttpMessagesAsync(string groupName, AdaptiveApplicationControlGroup body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -624,7 +624,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AppWhitelistingGroup>();
+            var _result = new AzureOperationResponse<AdaptiveApplicationControlGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -637,7 +637,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppWhitelistingGroup>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AdaptiveApplicationControlGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -657,10 +657,10 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Delete an application control VM/server group
+        /// Delete an application control machine group
         /// </summary>
         /// <param name='groupName'>
-        /// Name of an application control VM/server group
+        /// Name of an application control machine group
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("protocol"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     protocol = new EffectiveSecurityRuleProtocol(property.Value.GetString());
                     continue;
                 }
@@ -54,6 +59,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("sourcePortRanges"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -64,6 +74,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("destinationPortRanges"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -84,6 +99,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("sourceAddressPrefixes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -94,6 +114,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("destinationAddressPrefixes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -104,6 +129,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("expandedSourceAddressPrefix"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -114,6 +144,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("expandedDestinationAddressPrefix"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -124,16 +159,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("access"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     access = new SecurityRuleAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("priority"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     priority = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("direction"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     direction = new SecurityRuleDirection(property.Value.GetString());
                     continue;
                 }

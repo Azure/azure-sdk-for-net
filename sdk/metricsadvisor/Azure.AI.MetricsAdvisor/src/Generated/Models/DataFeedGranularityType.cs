@@ -27,26 +27,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string WeeklyValue = "Weekly";
         private const string DailyValue = "Daily";
         private const string HourlyValue = "Hourly";
-        private const string MinutelyValue = "Minutely";
-        private const string SecondlyValue = "Secondly";
+        private const string PerMinuteValue = "Minutely";
+        private const string PerSecondValue = "Secondly";
         private const string CustomValue = "Custom";
-
-        /// <summary> Yearly. </summary>
-        public static DataFeedGranularityType Yearly { get; } = new DataFeedGranularityType(YearlyValue);
-        /// <summary> Monthly. </summary>
-        public static DataFeedGranularityType Monthly { get; } = new DataFeedGranularityType(MonthlyValue);
-        /// <summary> Weekly. </summary>
-        public static DataFeedGranularityType Weekly { get; } = new DataFeedGranularityType(WeeklyValue);
-        /// <summary> Daily. </summary>
-        public static DataFeedGranularityType Daily { get; } = new DataFeedGranularityType(DailyValue);
-        /// <summary> Hourly. </summary>
-        public static DataFeedGranularityType Hourly { get; } = new DataFeedGranularityType(HourlyValue);
-        /// <summary> Minutely. </summary>
-        public static DataFeedGranularityType Minutely { get; } = new DataFeedGranularityType(MinutelyValue);
-        /// <summary> Secondly. </summary>
-        public static DataFeedGranularityType Secondly { get; } = new DataFeedGranularityType(SecondlyValue);
-        /// <summary> Custom. </summary>
-        public static DataFeedGranularityType Custom { get; } = new DataFeedGranularityType(CustomValue);
         /// <summary> Determines if two <see cref="DataFeedGranularityType"/> values are the same. </summary>
         public static bool operator ==(DataFeedGranularityType left, DataFeedGranularityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedGranularityType"/> values are not the same. </summary>

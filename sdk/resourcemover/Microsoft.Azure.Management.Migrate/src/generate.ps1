@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "regionmove/resource-manager" -AutoRestVersion "V2"
+Start-AutoRestCodeGeneration -ResourceProvider "resourcemover/resource-manager" -AutoRestVersion "V2"

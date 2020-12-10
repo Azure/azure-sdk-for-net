@@ -8,13 +8,11 @@ using Azure.Core;
 
 namespace Azure.Identity
 {
-
     /// <summary>
     /// An exception indicating a <see cref="TokenCredential"/> did not attempt to authenticate and retrieve <see cref="AccessToken"/>, as its prerequisite information or state was not available.
     /// </summary>
     public class CredentialUnavailableException : AuthenticationFailedException
     {
-
         /// <summary>
         /// Creates a new <see cref="CredentialUnavailableException"/> with the specified message.
         /// </summary>

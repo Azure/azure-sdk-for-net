@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -17,20 +18,19 @@ namespace Azure.Data.SchemaRegistry.Tests
 
         private SchemaRegistryClient CreateClient() =>
             InstrumentClient(new SchemaRegistryClient(
-                TestEnvironment.SchemaRegistryUri,
+                TestEnvironment.SchemaRegistryEndpoint,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
+                InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
 
         private const string SchemaContent = "{\"type\" : \"record\",\"namespace\" : \"TestSchema\",\"name\" : \"Employee\",\"fields\" : [{ \"name\" : \"Name\" , \"type\" : \"string\" },{ \"name\" : \"Age\", \"type\" : \"int\" }]}";
 
         [Test]
-        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanRegisterSchema()
         {
             var client = CreateClient();
             var schemaName = "test1";
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
             var schemaType = SerializationType.Avro;
 
             var schemaProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, SchemaContent);
@@ -41,12 +41,11 @@ namespace Azure.Data.SchemaRegistry.Tests
         }
 
         [Test]
-        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanGetSchemaId()
         {
             var client = CreateClient();
             var schemaName = "test1";
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
             var schemaType = SerializationType.Avro;
 
             await client.RegisterSchemaAsync(groupName, schemaName, schemaType, SchemaContent);
@@ -58,12 +57,11 @@ namespace Azure.Data.SchemaRegistry.Tests
         }
 
         [Test]
-        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanGetSchema()
         {
             var client = CreateClient();
             var schemaName = "test1";
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
             var schemaType = SerializationType.Avro;
 
             var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, SchemaContent);
@@ -74,7 +72,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.IsNotNull(schemaProperties.Value);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
-            Assert.AreEqual(SchemaContent, schemaProperties.Value.Content);
+            Assert.AreEqual(Regex.Replace(SchemaContent, @"\s+", string.Empty), schemaProperties.Value.Content);
         }
     }
 }

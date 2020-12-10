@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("identity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);
                     continue;
                 }
@@ -101,6 +106,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -126,6 +136,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("administratorLogin"))
@@ -155,6 +170,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ServerPrivateEndpointConnection> array = new List<ServerPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -170,6 +190,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             publicNetworkAccess = new ServerPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }

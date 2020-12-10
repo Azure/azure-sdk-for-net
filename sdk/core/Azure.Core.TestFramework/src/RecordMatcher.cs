@@ -83,7 +83,7 @@ namespace Azure.Core.TestFramework
                 var recordRequestUri = entry.RequestUri;
                 if (entry.IsTrack1Recording)
                 {
-                    //there's no domain name for request uri in track 1 record, so add it from reqeust uri
+                    //there's no domain name for request uri in track 1 record, so add it from request uri
                     int len = 8; //length of "https://"
                     int domainEndingIndex = uri.IndexOf('/', len);
                     if (domainEndingIndex > 0)

@@ -10,21 +10,5 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The TopNGroupScope. </summary>
     public partial class TopNGroupScope
     {
-        /// <summary> Initializes a new instance of TopNGroupScope. </summary>
-        /// <param name="top"> top N, value range : [1, +∞). </param>
-        /// <param name="period"> point count used to look back, value range : [1, +∞). </param>
-        /// <param name="minimumTopCount">
-        /// min count should be in top N, value range : [1, +∞)
-        /// 
-        /// 
-        /// 
-        /// should be less than or equal to period.
-        /// </param>
-        public TopNGroupScope(int top, int period, int minimumTopCount)
-        {
-            Top = top;
-            Period = period;
-            MinimumTopCount = minimumTopCount;
-        }
     }
 }

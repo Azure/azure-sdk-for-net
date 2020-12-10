@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("available"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     available = property.Value.GetBoolean();
                     continue;
                 }
