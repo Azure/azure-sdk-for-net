@@ -13,50 +13,28 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 {
     public partial class Snippets : SampleFixture
     {
-#pragma warning disable IDE1006 // Naming Styles
-        private AccessControlClient client;
-#pragma warning restore IDE1006 // Naming Styles
-
-        [OneTimeSetUp]
-        public void CreateClient()
+        [Test]
+        public void RoleAssignmentSample()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
-
             #region Snippet:CreateAccessControlClient
-            // Create a new access control client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+            // Replace the string below with your actual workspace url.
+            string workspaceUrl = "<my-workspace-url>";
+            /*@@*/workspaceUrl = TestEnvironment.WorkspaceUrl;
             AccessControlClient client = new AccessControlClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
             #endregion
 
-            this.client = client;
-        }
-
-        [Test]
-        public void CreateRoleAssignment()
-        {
             string principalId = TestEnvironment.PrincipalId;
             string sqlAdminRoleId = client.GetRoleDefinitions().AsEnumerable().Single(role => role.Name == "Sql Admin").Id;
 
             #region Snippet:CreateRoleAssignment
             RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
-            RoleAssignmentDetails roleAssignment = client.CreateRoleAssignment(options);
+            string assignmentId = client.CreateRoleAssignment(options).Value.Id;
             #endregion
-        }
-
-        [Test]
-        public void RetrieveRoleAssignment()
-        {
-            string principalId = TestEnvironment.PrincipalId;
 
             #region Snippet:RetrieveRoleAssignment
-            RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(principalId);
+            RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(assignmentId);
             #endregion
-        }
 
-        [Test]
-        public void ListRoleAssignments()
-        {
             #region Snippet:ListRoleAssignments
             IReadOnlyList<RoleAssignmentDetails> roleAssignments = client.GetRoleAssignments().Value;
             foreach (RoleAssignmentDetails assignment in roleAssignments)
@@ -64,17 +42,11 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
                 Console.WriteLine(assignment.Id);
             }
             #endregion
-        }
-
-        [Test]
-        public void DeleteRoleAssignment()
-        {
-            string principalId = TestEnvironment.PrincipalId;
-            RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(principalId);
 
             #region Snippet:DeleteRoleAssignment
             client.DeleteRoleAssignmentById(roleAssignment.Id);
             #endregion
+
         }
     }
 }

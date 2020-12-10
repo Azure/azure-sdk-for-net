@@ -11,57 +11,35 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class LinkedServiceSnippets : SampleFixture
     {
-        private LinkedServiceClient LinkedServiceClient;
-
-        [OneTimeSetUp]
-        public void CreateClient()
+        [Test]
+        public void LinkedServiceSample()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
-
             #region Snippet:CreateLinkedServiceClient
-            // Create a new LinkedService client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+            // Replace the string below with your actual workspace url.
+            string workspaceUrl = "<my-workspace-url>";
+            /*@@*/workspaceUrl = TestEnvironment.WorkspaceUrl;
             LinkedServiceClient client = new LinkedServiceClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
             #endregion
 
-            this.LinkedServiceClient = client;
-        }
-
-        [Test]
-        public void CreateLinkedService()
-        {
             #region Snippet:CreateLinkedService
-            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = LinkedServiceClient.StartCreateOrUpdateLinkedService("MyLinkedService", new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
-            LinkedServiceResource linkedService = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = client.StartCreateOrUpdateLinkedService("MyLinkedService", new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
+            operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
-        }
 
-        [Test]
-        public void RetrieveLinkedService()
-        {
             #region Snippet:RetrieveLinkedService
-            LinkedServiceResource linkedService = LinkedServiceClient.GetLinkedService("MyLinkedService");
+            LinkedServiceResource linkedService = client.GetLinkedService("MyLinkedService");
             #endregion
-        }
 
-        [Test]
-        public void ListLinkedServices()
-        {
             #region Snippet:ListLinkedServices
-            Pageable<LinkedServiceResource> linkedServices = LinkedServiceClient.GetLinkedServicesByWorkspace();
-            foreach (LinkedServiceResource linkedService in linkedServices)
+            Pageable<LinkedServiceResource> linkedServices = client.GetLinkedServicesByWorkspace();
+            foreach (LinkedServiceResource service in linkedServices)
             {
-                System.Console.WriteLine(linkedService.Name);
+                System.Console.WriteLine(service.Name);
             }
             #endregion
-        }
 
-        [Test]
-        public void DeleteLinkedService()
-        {
             #region Snippet:DeleteLinkedService
-            LinkedServiceClient.StartDeleteLinkedService("MyLinkedService");
+            client.StartDeleteLinkedService("MyLinkedService");
             #endregion
         }
     }

@@ -11,57 +11,35 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class DataFlowSnippets : SampleFixture
     {
-        private DataFlowClient DataFlowClient;
-
-        [OneTimeSetUp]
-        public void CreateClient()
+        [Test]
+        public void DataFlowSample()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
-
             #region Snippet:CreateDataFlowClient
-            // Create a new DataFlow client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+            // Replace the string below with your actual workspace url.
+            string workspaceUrl = "<my-workspace-url>";
+            /*@@*/workspaceUrl = TestEnvironment.WorkspaceUrl;
             DataFlowClient client = new DataFlowClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
             #endregion
 
-            this.DataFlowClient = client;
-        }
-
-        [Test]
-        public void CreateDataFlow()
-        {
             #region Snippet:CreateDataFlow
-            DataFlowCreateOrUpdateDataFlowOperation operation = DataFlowClient.StartCreateOrUpdateDataFlow("MyDataFlow", new DataFlowResource(new DataFlow()));
-            DataFlowResource dataFlow = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            DataFlowCreateOrUpdateDataFlowOperation operation = client.StartCreateOrUpdateDataFlow("MyDataFlow", new DataFlowResource(new DataFlow()));
+            operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
-        }
 
-        [Test]
-        public void RetrieveDataFlow()
-        {
             #region Snippet:RetrieveDataFlow
-            DataFlowResource dataFlow = DataFlowClient.GetDataFlow("MyDataFlow");
+            DataFlowResource dataFlow = client.GetDataFlow("MyDataFlow");
             #endregion
-        }
 
-        [Test]
-        public void ListDataFlows()
-        {
             #region Snippet:ListDataFlows
-            Pageable<DataFlowResource> dataFlows = DataFlowClient.GetDataFlowsByWorkspace();
-            foreach (DataFlowResource dataFlow in dataFlows)
+            Pageable<DataFlowResource> dataFlows = client.GetDataFlowsByWorkspace();
+            foreach (DataFlowResource flow in dataFlows)
             {
-                System.Console.WriteLine(dataFlow.Name);
+                System.Console.WriteLine(flow.Name);
             }
             #endregion
-        }
 
-        [Test]
-        public void DeleteDataFlow()
-        {
             #region Snippet:DeleteDataFlow
-            DataFlowClient.StartDeleteDataFlow("MyDataFlow");
+            client.StartDeleteDataFlow("MyDataFlow");
             #endregion
         }
     }

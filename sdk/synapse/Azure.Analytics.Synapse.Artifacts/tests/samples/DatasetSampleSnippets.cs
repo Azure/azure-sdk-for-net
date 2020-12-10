@@ -11,57 +11,35 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class DatasetSnippets : SampleFixture
     {
-        private DatasetClient DatasetClient;
-
-        [OneTimeSetUp]
-        public void CreateClient()
+        [Test]
+        public void DatasetSample()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
-
             #region Snippet:CreateDatasetClient
-            // Create a new Dataset client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+            // Replace the string below with your actual workspace url.
+            string workspaceUrl = "<my-workspace-url>";
+            /*@@*/workspaceUrl = TestEnvironment.WorkspaceUrl;
             DatasetClient client = new DatasetClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
             #endregion
 
-            this.DatasetClient = client;
-        }
-
-        [Test]
-        public void CreateDataset()
-        {
             #region Snippet:CreateDataset
-            DatasetCreateOrUpdateDatasetOperation operation = DatasetClient.StartCreateOrUpdateDataset("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
-            DatasetResource dataset = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            DatasetCreateOrUpdateDatasetOperation operation = client.StartCreateOrUpdateDataset("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
+            operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
-        }
 
-        [Test]
-        public void RetrieveDataset()
-        {
             #region Snippet:RetrieveDataset
-            DatasetResource dataset = DatasetClient.GetDataset("MyDataset");
+            DatasetResource dataset = client.GetDataset("MyDataset");
             #endregion
-        }
 
-        [Test]
-        public void ListDatasets()
-        {
             #region Snippet:ListDatasets
-            Pageable<DatasetResource> datasets = DatasetClient.GetDatasetsByWorkspace();
-            foreach (DatasetResource dataset in datasets)
+            Pageable<DatasetResource> datasets = client.GetDatasetsByWorkspace();
+            foreach (DatasetResource set in datasets)
             {
-                System.Console.WriteLine(dataset.Name);
+                System.Console.WriteLine(set.Name);
             }
             #endregion
-        }
 
-        [Test]
-        public void DeleteDataset()
-        {
             #region Snippet:DeleteDataset
-            DatasetClient.StartDeleteDataset("MyDataset");
+            client.StartDeleteDataset("MyDataset");
             #endregion
         }
     }

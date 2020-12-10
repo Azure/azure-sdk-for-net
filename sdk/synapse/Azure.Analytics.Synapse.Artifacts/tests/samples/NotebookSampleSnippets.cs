@@ -12,28 +12,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class NotebookSnippets : SampleFixture
     {
-        private NotebookClient notebookClient;
-
-        [OneTimeSetUp]
-        public void CreateClient()
+        [Test]
+        public void NotebookSample()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
-
             #region Snippet:CreateNotebookClient
-            // Create a new notebook client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+            // Replace the string below with your actual workspace url.
+            string workspaceUrl = "<my-workspace-url>";
+            /*@@*/workspaceUrl = TestEnvironment.WorkspaceUrl;
             NotebookClient client = new NotebookClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
             #endregion
 
-            this.notebookClient = client;
-        }
-
-        [Test]
-        public void CreateNotebook()
-        {
             #region Snippet:CreateNotebook
-            Notebook notebook = new Notebook(
+            Notebook newNotebook = new Notebook(
                 new NotebookMetadata
                 {
                     LanguageInfo = new NotebookLanguageInfo(name: "Python")
@@ -43,36 +33,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
                 new List<NotebookCell>()
             );
             string notebookName = "MyNotebook";
-            NotebookCreateOrUpdateNotebookOperation operation = notebookClient.StartCreateOrUpdateNotebook(notebookName, new NotebookResource(notebookName, notebook));
+            NotebookCreateOrUpdateNotebookOperation operation = client.StartCreateOrUpdateNotebook(notebookName, new NotebookResource(notebookName, newNotebook));
             NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
-        }
 
-        [Test]
-        public void RetrieveNotebook()
-        {
             #region Snippet:RetrieveNotebook
-            NotebookResource notebook = notebookClient.GetNotebook("MyNotebook");
+            NotebookResource notebook = client.GetNotebook("MyNotebook");
             #endregion
-        }
 
-        [Test]
-        public void ListNotebooks()
-        {
             #region Snippet:ListNotebooks
-            Pageable<NotebookResource> notebooks = notebookClient.GetNotebooksByWorkspace();
-            foreach (NotebookResource notebook in notebooks)
+            Pageable<NotebookResource> notebooks = client.GetNotebooksByWorkspace();
+            foreach (NotebookResource book in notebooks)
             {
-                System.Console.WriteLine(notebook.Name);
+                System.Console.WriteLine(book.Name);
             }
             #endregion
-        }
 
-        [Test]
-        public void DeleteNotebook()
-        {
             #region Snippet:DeleteNotebook
-            notebookClient.StartDeleteNotebook("MyNotebook");
+            client.StartDeleteNotebook("MyNotebook");
             #endregion
         }
     }
