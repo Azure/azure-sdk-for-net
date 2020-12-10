@@ -47,6 +47,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("outputSelectors"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MediaGraphOutputSelector> array = new List<MediaGraphOutputSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

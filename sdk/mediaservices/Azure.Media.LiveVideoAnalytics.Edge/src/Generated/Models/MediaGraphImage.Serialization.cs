@@ -36,11 +36,21 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             {
                 if (property.NameEquals("scale"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     scale = MediaGraphImageScale.DeserializeMediaGraphImageScale(property.Value);
                     continue;
                 }
                 if (property.NameEquals("format"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     format = MediaGraphImageFormat.DeserializeMediaGraphImageFormat(property.Value);
                     continue;
                 }

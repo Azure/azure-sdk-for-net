@@ -64,6 +64,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MediaGraphParameterDefinition> array = new List<MediaGraphParameterDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -74,6 +79,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("state"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     state = property.Value.GetString().ToMediaGraphInstanceState();
                     continue;
                 }

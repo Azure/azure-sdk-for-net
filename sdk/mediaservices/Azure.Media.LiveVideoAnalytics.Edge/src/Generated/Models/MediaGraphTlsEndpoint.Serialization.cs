@@ -48,11 +48,21 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             {
                 if (property.NameEquals("trustedCertificates"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     trustedCertificates = MediaGraphCertificateSource.DeserializeMediaGraphCertificateSource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationOptions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     validationOptions = MediaGraphTlsValidationOptions.DeserializeMediaGraphTlsValidationOptions(property.Value);
                     continue;
                 }
@@ -63,6 +73,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("credentials"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     credentials = MediaGraphCredentials.DeserializeMediaGraphCredentials(property.Value);
                     continue;
                 }

@@ -70,6 +70,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("samplingOptions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     samplingOptions = MediaGraphSamplingOptions.DeserializeMediaGraphSamplingOptions(property.Value);
                     continue;
                 }

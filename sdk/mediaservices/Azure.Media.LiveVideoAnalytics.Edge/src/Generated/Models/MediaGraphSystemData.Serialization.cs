@@ -37,11 +37,21 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             {
                 if (property.NameEquals("createdAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastModifiedAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastModifiedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

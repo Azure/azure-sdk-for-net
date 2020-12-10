@@ -57,11 +57,21 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             {
                 if (property.NameEquals("sensitivity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sensitivity = new MediaGraphMotionDetectionSensitivity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("outputMotionRegion"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     outputMotionRegion = property.Value.GetBoolean();
                     continue;
                 }

@@ -39,6 +39,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             {
                 if (property.NameEquals("transport"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     transport = new MediaGraphRtspTransport(property.Value.GetString());
                     continue;
                 }

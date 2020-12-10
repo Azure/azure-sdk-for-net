@@ -47,6 +47,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property0.NameEquals("operator"))
                 {
+                    if (property0.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property0.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     @operator = property0.Value.GetString().ToMediaGraphOutputSelectorOperator();
                     continue;
                 }

@@ -49,6 +49,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("credentials"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     credentials = MediaGraphCredentials.DeserializeMediaGraphCredentials(property.Value);
                     continue;
                 }

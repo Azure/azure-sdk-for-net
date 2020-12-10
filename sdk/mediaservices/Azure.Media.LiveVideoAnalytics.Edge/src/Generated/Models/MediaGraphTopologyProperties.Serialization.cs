@@ -80,6 +80,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MediaGraphParameterDeclaration> array = new List<MediaGraphParameterDeclaration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -90,6 +95,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("sources"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MediaGraphSource> array = new List<MediaGraphSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -100,6 +110,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("processors"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MediaGraphProcessor> array = new List<MediaGraphProcessor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -110,6 +125,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 }
                 if (property.NameEquals("sinks"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MediaGraphSink> array = new List<MediaGraphSink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
