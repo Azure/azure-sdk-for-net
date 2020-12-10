@@ -143,7 +143,8 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
   Upload-Blobs -DocDir "$($DocsStagingDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.ReleaseTag
 }
 
-function Get-dotnet-GithubIoDocIndex() {
+function Get-dotnet-GithubIoDocIndex()
+{
   # Update the main.js and docfx.json language content
   UpdateDocIndexFiles -appTitleLang ".NET"
   # Fetch out all package metadata from csv file.
@@ -158,7 +159,8 @@ function Get-dotnet-GithubIoDocIndex() {
 
 # details on CSV schema can be found here
 # https://review.docs.microsoft.com/en-us/help/onboard/admin/reference/dotnet/documenting-nuget?branch=master#set-up-the-ci-job
-function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$null){
+function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$null)
+{
   $csvLoc = (Join-Path -Path $ciRepo -ChildPath $locationInDocRepo)
   
   if (-not (Test-Path $csvLoc)) {
@@ -213,7 +215,8 @@ function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName = "")
   return $packages
 }
 
-function GetExistingPackageVersions ($PackageName, $GroupId=$null) {
+function GetExistingPackageVersions ($PackageName, $GroupId=$null)
+{
   try {
     $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
     return $existingVersion.versions
@@ -224,14 +227,17 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null) {
   }
 }
 
-function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate, $BuildType=$null, $GroupId=$null) {
+function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate, $BuildType=$null, $GroupId=$null)
+{
   if($null -eq $ReleaseDate)
   {
-    $ReleaseDate = Get-Date -Format "yyy-MM-dd"
+    $ReleaseDate = Get-Date -Format "yyyy-MM-dd"
   }
   & "$EngDir/scripts/Update-PkgVersion.ps1" -ServiceDirectory $ServiceDirectory -PackageName $PackageName `
   -NewVersionString $Version -ReleaseDate $ReleaseDate
 }
-function GetPackageInstallNotes ($PackageName, $Version) {
+
+function GetPackageInstallNote ($PackageName, $Version, $GroupId=$null)
+{
   return "$> dotnet add package $PackageName --version $Version`n";
 }
