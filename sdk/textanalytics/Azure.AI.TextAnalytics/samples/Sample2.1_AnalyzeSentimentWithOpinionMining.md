@@ -25,7 +25,7 @@ To get a deeper analysis into which are the aspects that people considered good 
 string reviewA = @"The food and service were unacceptable, but the concierge were nice.
                  After talking to them about the quality of the food and the process
                  to get room service they refunded the money we spent at the restaurant
-                 and gave us a voucher for near by restaurants.";
+                 and gave us a voucher for nearby restaurants.";
 
 string reviewB = @"The rooms were beautiful. The AC was good and quiet, which was key for
                 us as outside it was 100F and our baby was getting uncomfortable because of the heat.

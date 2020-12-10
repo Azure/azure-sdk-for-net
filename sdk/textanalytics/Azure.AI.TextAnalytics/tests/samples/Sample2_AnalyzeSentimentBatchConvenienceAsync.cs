@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string documentA = @"The food and service were unacceptable, but the concierge were nice.
                                 After talking to them about the quality of the food and the process
                                 to get room service they refunded the money we spent at the restaurant and
-                                gave us a voucher for near by restaurants.";
+                                gave us a voucher for nearby restaurants.";
 
             string documentB = @"Nice rooms! I had a great unobstructed view of the Microsoft campus but bathrooms
                                 were old and the toilet was dirty when we arrived. It was close to bus stops and
