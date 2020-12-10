@@ -1,26 +1,22 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.Extensibility.Implementation;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Logging;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -30,51 +26,27 @@ using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
     /// <summary>
+    /// This test effectively validates that logic from
     /// https://github.com/microsoft/ApplicationInsights-dotnet/blob/004dbd78cecd9a380688288d8a89e152e2e819c6/WEB/Src/DependencyCollector/DependencyCollector/Implementation/AzureSdk/AzureSdkDiagnosticsEventHandler.cs
+    /// and
     /// https://github.com/Azure/azure-webjobs-sdk/blob/f0c9d0998ced69c8baf02fedb4e7f9184e0e05c9/src/Microsoft.Azure.WebJobs.Logging.ApplicationInsights/ApplicationInsightsLogger.cs
+    /// work correctly together in addition to DiagnosticScope logic inside Azure.Messaging.EventHubs
     /// </summary>
-    public class EventHubApplicationInsightsTests : IDisposable
+    [NonParallelizable]
+    [LiveOnly]
+    public class EventHubApplicationInsightsTests : WebJobsEventHubTestBase
     {
-        private const string TestHubName = "%webjobstesthub%";
-        private const int Timeout = 30000;
         private static EventWaitHandle _eventWait;
-        private readonly TestTelemetryChannel _channel = new TestTelemetryChannel();
-        private static string _testPrefix;
+        private TestTelemetryChannel _channel;
 
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _eventHubScope;
-
-        /// <summary>The active Blob storage resource scope for the test fixture.</summary>
-        private StorageScope _storageScope;
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
         [SetUp]
-        public async Task FixtureSetUp()
+        public void SetUp()
         {
             _eventWait = new ManualResetEvent(initialState: false);
-            _eventHubScope = await EventHubScope.CreateAsync(2);
-            _storageScope = await StorageScope.CreateAsync();
-            _eventWait = new ManualResetEvent(initialState: false);
-            _testPrefix = Guid.NewGuid().ToString();
-        }
+            _channel = new TestTelemetryChannel();
 
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [TearDown]
-        public async Task FixtureTearDown()
-        {
-            await Task.WhenAll
-            (
-                _eventHubScope.DisposeAsync().AsTask(),
-                _storageScope.DisposeAsync().AsTask()
-            );
+            EventHubTestMultipleDispatchJobs.LinksCount.Clear();
+            EventHubTestMultipleDispatchJobs.MessagesCount = 0;
         }
 
         private readonly JsonSerializerSettings jsonSettingThrowOnError = new JsonSerializerSettings
@@ -88,13 +60,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_SingleDispatch()
         {
-            using (var host = BuildHost<EventHubTestSingleDispatchJobs>())
+            var (jobHost, host) = BuildHost<EventHubTestSingleDispatchJobs>();
+            using (host)
             {
-                await host.StartAsync();
-
-                var method = typeof(EventHubTestSingleDispatchJobs).GetMethod("SendEvent_TestHub", BindingFlags.Static | BindingFlags.Public);
-                await host.GetJobHost().CallAsync(method, new { input = _testPrefix });
-
+                await jobHost.CallAsync(nameof(EventHubTestSingleDispatchJobs.SendEvent_TestHub), new { input = _testId });
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
             }
@@ -106,17 +75,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var messageDependencies = dependencies.Where(d => d.Name == "EventHubs.Message").ToList();
             var sendDependency = dependencies.Single(d => d.Name == "EventHubProducerClient.Send");
 
-            var sendRequest = requests.Single(r => r.Context.Operation.Name == "SendEvent_TestHub");
+            var sendRequest = requests.Single(r => r.Context.Operation.Name == nameof(EventHubTestSingleDispatchJobs.SendEvent_TestHub));
             var sendRequestOperationId = sendRequest.Context.Operation.Id;
 
-            var processRequest = requests.Single(r => r.Context.Operation.Name == "ProcessSingleEvent");
+            var processRequest = requests.Single(r => r.Context.Operation.Name == nameof(EventHubTestSingleDispatchJobs.ProcessSingleEvent));
 
             ValidateEventHubDependency(
                 sendDependency,
                 EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
                 _eventHubScope.EventHubName,
                 "EventHubProducerClient.Send",
-                "SendEvent_TestHub",
+                nameof(EventHubTestSingleDispatchJobs.SendEvent_TestHub),
                 sendRequestOperationId,
                 sendRequest.Id,
                 LogCategories.Bindings);
@@ -126,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 true,
                 EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
                 _eventHubScope.EventHubName,
-                "ProcessSingleEvent",
+                nameof(EventHubTestSingleDispatchJobs.ProcessSingleEvent),
                 null,
                 null);
 
@@ -148,12 +117,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_MultipleDispatch_BatchSend()
         {
-            using (var host = BuildHost<EventHubTestMultipleDispatchJobs>())
+            var (jobHost, host) = BuildHost<EventHubTestMultipleDispatchJobs>();
+            using (host)
             {
-                await host.StartAsync();
-
-                var method = typeof(EventHubTestMultipleDispatchJobs).GetMethod("SendEvents_TestHub", BindingFlags.Static | BindingFlags.Public);
-                await host.GetJobHost().CallAsync(method, new { input = _testPrefix });
+                await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchJobs.SendEvents_TestHub), new { input = _testId });
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
@@ -168,7 +135,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.AreEqual(5, messageDependencies.Count);
 
-            var manualCallRequest = requests.Single(r => r.Context.Operation.Name == "SendEvents_TestHub");
+            var manualCallRequest = requests.Single(r => r.Context.Operation.Name == nameof(EventHubTestMultipleDispatchJobs.SendEvents_TestHub));
             var manualOperationId = manualCallRequest.Context.Operation.Id;
 
             ValidateEventHubDependency(
@@ -176,12 +143,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
                 _eventHubScope.EventHubName,
                 "EventHubProducerClient.Send",
-                "SendEvents_TestHub",
+                nameof(EventHubTestMultipleDispatchJobs.SendEvents_TestHub),
                 manualOperationId,
                 manualCallRequest.Id,
                 LogCategories.Bindings);
 
-            var ehTriggerRequests = requests.Where(r => r.Context.Operation.Name == "ProcessMultipleEvents").ToList();
+            var ehTriggerRequests = requests.Where(r => r.Context.Operation.Name == nameof(EventHubTestMultipleDispatchJobs.ProcessMultipleEvents)).ToList();
             List<TestLink> allLinks = new List<TestLink>();
 
             // EventHub can batch events in a different ways
@@ -192,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     true,
                     EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
                     _eventHubScope.EventHubName,
-                    "ProcessMultipleEvents",
+                    nameof(EventHubTestMultipleDispatchJobs.ProcessMultipleEvents),
                     null,
                     null);
 
@@ -218,7 +185,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task EventHub_MultipleDispatch_IndependentMessages()
         {
             // send individual messages via EventHub client, process batch by host
-            var ehClient = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await using var ehClient = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
 
             var messages = new EventData[5];
             var expectedLinks = new TestLink[messages.Length];
@@ -233,7 +200,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     id = spanId
                 };
 
-                messages[i] = new EventData(Encoding.UTF8.GetBytes(_testPrefix + i))
+                messages[i] = new EventData(Encoding.UTF8.GetBytes(_testId + i))
                 {
                     Properties = {["Diagnostic-Id"] = $"00-{operationId}-{spanId}-01"}
                 };
@@ -241,16 +208,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             await ehClient.SendAsync(messages);
 
-            using (var host = BuildHost<EventHubTestMultipleDispatchJobs>())
+            var (jobHost, host) = BuildHost<EventHubTestMultipleDispatchJobs>();
+            using (host)
             {
-                await host.StartAsync();
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
             }
 
             List<RequestTelemetry> requests = _channel.Telemetries.OfType<RequestTelemetry>().ToList();
 
-            var ehTriggerRequests = requests.Where(r => r.Context.Operation.Name == "ProcessMultipleEvents");
+            var ehTriggerRequests = requests.Where(r => r.Context.Operation.Name == nameof(EventHubTestMultipleDispatchJobs.ProcessMultipleEvents));
 
             List<TestLink> actualLinks = new List<TestLink>();
             foreach (var ehTriggerRequest in ehTriggerRequests)
@@ -260,7 +227,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     true,
                     EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
                     _eventHubScope.EventHubName,
-                    "ProcessMultipleEvents",
+                    nameof(EventHubTestMultipleDispatchJobs.ProcessMultipleEvents),
                     null,
                     null);
 
@@ -370,7 +337,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName)] string evt)
             {
-                if (evt.StartsWith(_testPrefix))
+                if (evt.StartsWith(_testId))
                 {
                     _eventWait.Set();
                 }
@@ -380,13 +347,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class EventHubTestMultipleDispatchJobs
         {
             public static List<int> LinksCount = new List<int>();
-            public const int EventCount = 5;
-            private static readonly object lck = new object();
-            private static int messagesCount = 0;
+            public static int MessagesCount = 0;
+
+            private const int EventCount = 5;
+            private static readonly object MessageLock = new object();
             public static void SendEvents_TestHub(string input, [EventHub(TestHubName)] out EventData[] events)
             {
                 LinksCount.Clear();
-                messagesCount = 0;
+                MessagesCount = 0;
                 events = new EventData[EventCount];
                 for (int i = 0; i < EventCount; i++)
                 {
@@ -397,18 +365,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMultipleEvents([EventHubTrigger(TestHubName)] string[] events)
             {
-                var eventsFromCurrentTest = events.Where(e => e.StartsWith(_testPrefix)).ToArray();
+                var eventsFromCurrentTest = events.Where(e => e.StartsWith(_testId)).ToArray();
                 Activity.Current.AddTag("receivedMessages", eventsFromCurrentTest.Length.ToString());
-                lock (lck)
+                lock (MessageLock)
                 {
-                    messagesCount += eventsFromCurrentTest.Length;
+                    MessagesCount += eventsFromCurrentTest.Length;
 
                     if (eventsFromCurrentTest.Length > 0)
                     {
                         LinksCount.Add(eventsFromCurrentTest.Length);
                     }
 
-                    if (messagesCount >= EventCount)
+                    if (MessagesCount >= EventCount)
                     {
                         _eventWait.Set();
                     }
@@ -416,49 +384,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        private IHost BuildHost<T>()
+        private (JobHost, IHost) BuildHost<T>()
         {
-            var eventHubName = _eventHubScope.EventHubName;
+            var (jobHost, host) = base.BuildHost<T>(builder =>
+            {
+                builder.ConfigureLogging(b => b.AddApplicationInsightsWebJobs(o => o.InstrumentationKey = "mock ikey"));
+                ConfigureTestEventHub(builder);
+            }, h => h.Services.GetService<TelemetryConfiguration>().TelemetryChannel = _channel);
 
-            IHost host = new HostBuilder()
-                .ConfigureAppConfiguration(builder =>
-                {
-                    builder.AddInMemoryCollection(new Dictionary<string, string>()
-                    {
-                        {"webjobstesthub", eventHubName},
-                        {"AzureWebJobsStorage", StorageTestEnvironment.Instance.StorageConnectionString}
-                    });
-                })
-                .ConfigureDefaultTestHost<T>(b =>
-                {
-                    b.AddEventHubs(options =>
-                    {
-                        options.CheckpointContainer = _storageScope.ContainerName;
-                        // Speedup shutdown
-                        options.EventProcessorOptions.MaximumWaitTime = TimeSpan.FromSeconds(5);
-                        options.AddSender(eventHubName, EventHubsTestEnvironment.Instance.EventHubsConnectionString);
-                        options.AddReceiver(eventHubName, EventHubsTestEnvironment.Instance.EventHubsConnectionString);
-                    });
-                })
-                .ConfigureLogging(b =>
-                {
-                    b.SetMinimumLevel(LogLevel.Information);
-                    b.AddApplicationInsightsWebJobs(o => o.InstrumentationKey = "mock ikey");
-                })
-                .Build();
-
-            TelemetryConfiguration telemetryConfiguration = host.Services.GetService<TelemetryConfiguration>();
-            telemetryConfiguration.TelemetryChannel = _channel;
-
-            return host;
+            return (jobHost, host);
         }
 
-        public void Dispose()
-        {
-            _channel?.Dispose();
-        }
-
-        public class TestTelemetryChannel : ITelemetryChannel, ITelemetryModule
+        private class TestTelemetryChannel : ITelemetryChannel, ITelemetryModule
         {
             public ConcurrentBag<ITelemetry> Telemetries = new ConcurrentBag<ITelemetry>();
 
