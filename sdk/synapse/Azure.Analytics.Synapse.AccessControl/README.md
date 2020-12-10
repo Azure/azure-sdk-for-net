@@ -81,7 +81,7 @@ AccessControlClient client = new AccessControlClient(endpoint: new Uri(workspace
 
 ```C# Snippet:CreateRoleAssignment
 RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
-client.CreateRoleAssignment(options);
+string assignmentId = client.CreateRoleAssignment(options).Value.Id;
 ```
 
 ### Retrieve a role assignment
@@ -89,7 +89,7 @@ client.CreateRoleAssignment(options);
 `GetRoleAssignmentById` retrieves a role assignment by the given principal ID.
 
 ```C# Snippet:RetrieveRoleAssignment
-RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(principalId);
+RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(assignmentId);
 ```
 
 ### List role assignments
