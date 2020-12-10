@@ -51,7 +51,7 @@ namespace Compute.Tests
                         m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_NrpClient = ComputeManagementTestUtilities.GetNetworkManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
+                        
                         m_subId = m_CrpClient.SubscriptionId;
                         if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
                         {
@@ -234,7 +234,8 @@ namespace Compute.Tests
             bool? encryptionAtHostEnabled = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            string extendedLocation = null)
         {
             try
             {
@@ -304,6 +305,12 @@ namespace Compute.Tests
                     }
                     inputVM.HardwareProfile.VmSize = vmSize;
                     inputVM.Zones = zones;
+                }
+
+                if (extendedLocation != null)
+                {
+                    inputVM.AvailabilitySet = null;
+                    inputVM.ExtendedLocation = new ExtendedLocation(extendedLocation);
                 }
 
                 if (vmCustomizer != null)
