@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Media.LiveVideoAnalytics.Edge.Models;
+using Azure.Media.Analytics.Edge.Models;
 using Microsoft.Azure.Devices;
 using NUnit.Framework;
 using System.Text.Json;
