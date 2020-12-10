@@ -112,44 +112,50 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         [Test]
         public async Task PluginsCanAlterSessionMessage()
         {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(
-                enablePartitioning: false,
-                enableSession: true))
+            for (int i = 0; i < 10; i++)
             {
-                var plugin = new SendReceivePlugin();
-                var options = new ServiceBusClientOptions();
-                options.AddPlugin(plugin);
-                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
-                var sender = client.CreateSender(scope.QueueName);
+                await using (var scope = await ServiceBusScope.CreateWithQueue(
+                    enablePartitioning: false,
+                    enableSession: true))
+                {
+                    var plugin = new SendReceivePlugin();
+                    var options = new ServiceBusClientOptions();
+                    options.AddPlugin(plugin);
+                    var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
+                    var sender = client.CreateSender(scope.QueueName);
 
-                await sender.SendMessageAsync(GetMessage("sessionId"));
-                Assert.True(plugin.WasCalled);
-                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
-                var receivedMessage = await receiver.ReceiveMessageAsync();
+                    await sender.SendMessageAsync(GetMessage("sessionId"));
+                    Assert.True(plugin.WasCalled);
+                    var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+                    var receivedMessage = await receiver.ReceiveMessageAsync();
 
-                Assert.AreEqual("received", receivedMessage.Body.ToString());
+                    Assert.AreEqual("received", receivedMessage.Body.ToString());
+                }
             }
         }
 
         [Test]
         public async Task PluginsCanAlterTopicSessionMessage()
         {
-            await using (var scope = await ServiceBusScope.CreateWithTopic(
-                enablePartitioning: false,
-                enableSession: true))
+            for (int i = 0; i < 10; i++)
             {
-                var plugin = new SendReceivePlugin();
-                var options = new ServiceBusClientOptions();
-                options.AddPlugin(plugin);
-                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
-                var sender = client.CreateSender(scope.TopicName);
+                await using (var scope = await ServiceBusScope.CreateWithTopic(
+                    enablePartitioning: false,
+                    enableSession: true))
+                {
+                    var plugin = new SendReceivePlugin();
+                    var options = new ServiceBusClientOptions();
+                    options.AddPlugin(plugin);
+                    var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
+                    var sender = client.CreateSender(scope.TopicName);
 
-                await sender.SendMessageAsync(GetMessage("sessionId"));
-                Assert.True(plugin.WasCalled);
-                var receiver = await client.AcceptNextSessionAsync(scope.TopicName, scope.SubscriptionNames.First());
-                var receivedMessage = await receiver.ReceiveMessageAsync();
+                    await sender.SendMessageAsync(GetMessage("sessionId"));
+                    Assert.True(plugin.WasCalled);
+                    var receiver = await client.AcceptNextSessionAsync(scope.TopicName, scope.SubscriptionNames.First());
+                    var receivedMessage = await receiver.ReceiveMessageAsync();
 
-                Assert.AreEqual("received", receivedMessage.Body.ToString());
+                    Assert.AreEqual("received", receivedMessage.Body.ToString());
+                }
             }
         }
 
