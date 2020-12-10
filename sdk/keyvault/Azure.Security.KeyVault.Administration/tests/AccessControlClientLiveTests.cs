@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             Assert.That(result.Id, Is.Not.Null);
             Assert.That(result.Name, Is.Not.Null);
-            Assert.That(result.RoleAssignmentType, Is.Not.Null);
+            Assert.That(result.Type, Is.Not.Null);
             Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(definitionToAssign.Id));
         }
@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             Assert.That(result.Id, Is.EqualTo(assignment.Id));
             Assert.That(result.Name, Is.EqualTo(assignment.Name));
-            Assert.That(result.RoleAssignmentType, Is.EqualTo(assignment.RoleAssignmentType));
+            Assert.That(result.Type, Is.EqualTo(assignment.Type));
             Assert.That(result.Properties.PrincipalId, Is.EqualTo(assignment.Properties.PrincipalId));
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(assignment.Properties.RoleDefinitionId));
             Assert.That(result.Properties.Scope, Is.EqualTo(assignment.Properties.Scope));
@@ -81,7 +81,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             Assert.That(result.Id, Is.EqualTo(assignment.Id));
             Assert.That(result.Name, Is.EqualTo(assignment.Name));
-            Assert.That(result.RoleAssignmentType, Is.EqualTo(assignment.RoleAssignmentType));
+            Assert.That(result.Type, Is.EqualTo(assignment.Type));
             Assert.That(result.Properties.PrincipalId, Is.EqualTo(assignment.Properties.PrincipalId));
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(assignment.Properties.RoleDefinitionId));
             Assert.That(result.Properties.Scope, Is.EqualTo(assignment.Properties.Scope));
