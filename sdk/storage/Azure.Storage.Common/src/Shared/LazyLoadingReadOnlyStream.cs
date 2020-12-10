@@ -381,7 +381,7 @@ namespace Azure.Storage
                     }
                     else
                     {
-                        return _length += offset;
+                        return _length + offset;
                     }
                 default:
                     throw new ArgumentException($"Unknown ${nameof(SeekOrigin)} value");
