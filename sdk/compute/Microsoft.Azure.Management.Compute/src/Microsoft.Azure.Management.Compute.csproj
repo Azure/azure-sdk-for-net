@@ -22,6 +22,7 @@
         5. Remove EncryptionAtRestWithPlatformKey in diskEncryptionSetType
         6. Remove maximum for PlatformFaultDomainCount of DedicatedHostGroup
         7. New API: RunCommand resource for VM and VMSS instance
+        8. Update the description for DedicatedHostGroup.supportAutomaticPlacement to mention that the property defaults to true.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
