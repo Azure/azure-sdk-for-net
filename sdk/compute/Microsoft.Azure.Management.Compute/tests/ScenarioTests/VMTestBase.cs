@@ -10,9 +10,11 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -248,25 +250,62 @@ namespace Compute.Tests
                         Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                     });
 
-                PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
+                string nicId = null;
+                if (extendedLocation == null)
+                {
+                    PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
 
-                // Do not add Dns server for managed disks, as they cannot resolve managed disk url ( https://md-xyz ) without
-                // explicitly setting up the rules for resolution. The VMs upon booting would need to contact the
-                // DNS server to access the VMStatus agent blob. Without proper Dns resolution, The VMs cannot access the
-                // VMStatus agent blob and there by fail to boot.
-                bool addDnsServer = !hasManagedDisks;
-                Subnet subnetResponse = CreateVNET(rgName, addDnsServer);
+                    // Do not add Dns server for managed disks, as they cannot resolve managed disk url ( https://md-xyz ) without
+                    // explicitly setting up the rules for resolution. The VMs upon booting would need to contact the
+                    // DNS server to access the VMStatus agent blob. Without proper Dns resolution, The VMs cannot access the
+                    // VMStatus agent blob and there by fail to boot.
+                    bool addDnsServer = !hasManagedDisks;
+                    Subnet subnetResponse = CreateVNET(rgName, addDnsServer);
 
-                NetworkInterface nicResponse = CreateNIC(
-                    rgName,
-                    subnetResponse,
-                    getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
+                    NetworkInterface nicResponse = CreateNIC(
+                        rgName,
+                        subnetResponse,
+                        getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
+                    nicId = nicResponse.Id;
+                }
+                else
+                {
+                    JObject deploymentParams = new JObject
+                    {
+                        { "extendedLocation", new JObject
+                            {
+                                { "value", extendedLocation }
+                            }
+                        }
+                    };
+
+                    Deployment deployment = new Deployment
+                    {
+                        Properties = new DeploymentProperties()
+                        {
+                            Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "VM_EdgeZone_Template.json"))),
+                            Parameters = deploymentParams,
+                            Mode = DeploymentMode.Incremental
+                        }
+                    };
+                    string deploymentName = ComputeManagementTestUtilities.GenerateName("deployment");
+                    DeploymentExtended deploymentCreateResult = m_ResourcesClient.Deployments.CreateOrUpdate(rgName, deploymentName, deployment);
+
+                    Assert.Equal("Succeeded", deploymentCreateResult.Properties.ProvisioningState);
+                    Assert.NotNull(deploymentCreateResult.Id);
+                    Assert.Equal(deploymentName, deploymentCreateResult.Name);
+
+                    JObject deploymentOutputs = (JObject)deploymentCreateResult.Properties.Outputs;
+                    nicId = deploymentOutputs.GetValue("nicId")?.Value<string>("value");
+
+                    Assert.NotNull(nicId);
+                }
 
                 string ppgId = ((ppgName != null) ? CreateProximityPlacementGroup(rgName, ppgName): null);
 
                 string asetId = CreateAvailabilitySet(rgName, asName, hasManagedDisks, ppgId: ppgId);
 
-                inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType,
+                inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicId, hasManagedDisks, vmSize, osDiskStorageAccountType,
                     dataDiskStorageAccountType, writeAcceleratorEnabled, diskEncryptionSetId);
 
                 if (hasDiffDisks)
@@ -352,7 +391,7 @@ namespace Compute.Tests
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
                 ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled,
                     hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId, encryptionAtHostEnabled: encryptionAtHostEnabled,
-                    expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
+                    expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId, extendedLocation: extendedLocation);
 
                 return getResponse;
             }
@@ -988,7 +1027,7 @@ namespace Compute.Tests
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
             bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null,
-            bool? encryptionAtHostEnabled = null, string expectedDedicatedHostGroupReferenceId = null)
+            bool? encryptionAtHostEnabled = null, string expectedDedicatedHostGroupReferenceId = null, string extendedLocation = null)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -1192,6 +1231,16 @@ namespace Compute.Tests
             else
             {
                 Assert.Null(vmOut.HostGroup);
+            }
+
+            if (extendedLocation != null)
+            {
+                Assert.NotNull(vmOut.ExtendedLocation);
+                Assert.Equal(extendedLocation, vmOut.ExtendedLocation.Name, StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                Assert.Null(vmOut.ExtendedLocation);
             }
         }
 

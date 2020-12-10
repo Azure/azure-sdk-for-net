@@ -251,10 +251,11 @@ namespace Compute.Tests
                     Publisher = "MicrosoftWindowsServer",
                     Offer = "WindowsServer",
                     Sku = "2016-Datacenter",
-                    Version = "latest"
+                    Version = "14393.4048.2011170655"
                 };
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_ExtendedLocationScenario", hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3,
-                    osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, extendedLocation: "MicrosoftRRDCLab1", imageReference: imageReference);
+                    osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, dataDiskStorageAccountType: StorageAccountTypes.PremiumLRS, extendedLocation: "MicrosoftRRDCLab1", 
+                    imageReference: imageReference, validateListAvailableSize: false);
             }
             finally
             {
@@ -339,7 +340,7 @@ namespace Compute.Tests
                     var listResponse = m_CrpClient.VirtualMachines.List(rgName);
                     ValidateVM(inputVM, listResponse.FirstOrDefault(x => x.Name == inputVM.Name),
                         expectedVMReferenceId, hasManagedDisks, hasUserDefinedAS, writeAcceleratorEnabled, hasDiffDisks, expectedPpgReferenceId: expectedPpgReferenceId,
-                        encryptionAtHostEnabled: encryptionAtHostEnabled, expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
+                        encryptionAtHostEnabled: encryptionAtHostEnabled, expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId, extendedLocation: extendedLocation);
 
                     if (validateListAvailableSize)
                     {
