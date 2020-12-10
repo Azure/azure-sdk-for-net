@@ -61,6 +61,9 @@ namespace Azure.Communication.Administration.Tests
         [Test]
         public async Task GetAllReservations()
         {
+            if (!IncludePhoneNumberLiveTests)
+                Assert.Ignore("Include phone number live tests flag is off.");
+
             // Arrange
             var client = CreateClient();
 
