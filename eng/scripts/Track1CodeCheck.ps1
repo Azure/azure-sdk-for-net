@@ -34,7 +34,7 @@ function Find-Mapping([string]$path) {
         if (($item -match '\$\(csharp-sdks-folder\)')) {
             $matchResult = $item -match "\/([^/]+)\/"
             $name = $matches[0].Substring(1, $matches[0].Length - 2)
-            if (($folderName -ne '') -and ($folderName -notmatch "\$")) {
+            if (($name -ne '') -and ($name -notmatch "\$")) {
                 break
             }
         }
