@@ -61,7 +61,7 @@ The Azure.Analytics.Synapse.Artifacts package supports synchronous and asynchron
 `CreateOrUpdateNotebook` creates a notebook.
 
 ```C# Snippet:CreateNotebook
-Notebook newNotebook = new Notebook(
+Notebook notebookToCreate = new Notebook(
     new NotebookMetadata
     {
         LanguageInfo = new NotebookLanguageInfo(name: "Python")
