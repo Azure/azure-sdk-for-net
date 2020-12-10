@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for InGuestPatchMode.
+    /// Defines values for LinuxVMGuestPatchMode.
     /// </summary>
-    public static class InGuestPatchMode
+    public static class LinuxVMGuestPatchMode
     {
-        public const string Manual = "Manual";
-        public const string AutomaticByOS = "AutomaticByOS";
+        public const string ImageDefault = "ImageDefault";
         public const string AutomaticByPlatform = "AutomaticByPlatform";
     }
 }

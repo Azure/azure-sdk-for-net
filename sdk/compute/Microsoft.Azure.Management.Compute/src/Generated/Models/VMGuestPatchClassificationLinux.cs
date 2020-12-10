@@ -12,14 +12,13 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for PatchOperationStatus.
+    /// Defines values for VMGuestPatchClassificationLinux.
     /// </summary>
-    public static class PatchOperationStatus
+    public static class VMGuestPatchClassificationLinux
     {
         public const string Unknown = "Unknown";
-        public const string InProgress = "InProgress";
-        public const string Failed = "Failed";
-        public const string Succeeded = "Succeeded";
-        public const string CompletedWithWarnings = "CompletedWithWarnings";
+        public const string Critical = "Critical";
+        public const string Security = "Security";
+        public const string Other = "Other";
     }
 }

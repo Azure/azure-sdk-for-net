@@ -12,14 +12,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for PatchOperationStatus.
+    /// Defines values for DiskDetachOptionTypes.
     /// </summary>
-    public static class PatchOperationStatus
+    public static class DiskDetachOptionTypes
     {
-        public const string Unknown = "Unknown";
-        public const string InProgress = "InProgress";
-        public const string Failed = "Failed";
-        public const string Succeeded = "Succeeded";
-        public const string CompletedWithWarnings = "CompletedWithWarnings";
+        public const string ForceDetach = "ForceDetach";
     }
 }
