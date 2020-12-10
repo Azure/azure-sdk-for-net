@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Administration
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentPropertiesWithScope Properties { get { throw null; } }
-        public string RoleAssignmentType { get { throw null; } }
+        public string Type { get { throw null; } }
     }
     public partial class KeyVaultRoleAssignmentPropertiesWithScope
     {
