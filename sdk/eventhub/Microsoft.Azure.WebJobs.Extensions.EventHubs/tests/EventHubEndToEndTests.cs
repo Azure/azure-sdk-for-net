@@ -425,10 +425,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 })
                 .ConfigureServices(services =>
                 {
-                    // Speedup shutdown
                     services.Configure<EventHubOptions>(options =>
                     {
                         options.CheckpointContainer = _storageScope.ContainerName;
+                        // Speedup shutdown
                         options.EventProcessorOptions.MaximumWaitTime = TimeSpan.FromSeconds(5);
                     });
                 })
