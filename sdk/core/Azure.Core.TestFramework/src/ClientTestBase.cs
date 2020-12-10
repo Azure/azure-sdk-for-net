@@ -19,6 +19,7 @@ namespace Azure.Core.TestFramework
         private static readonly IInterceptor s_useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
         private static Dictionary<Type, Exception> s_clientValidation = new Dictionary<Type, Exception>();
+        private readonly IInterceptor diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
 
         public bool IsAsync { get; }
 
@@ -86,8 +87,7 @@ namespace Azure.Core.TestFramework
 
             if (TestDiagnostics)
             {
-                // DiagnosticScopeValidatingInterceptor isn't thread-safe.
-                interceptors.Add(new DiagnosticScopeValidatingInterceptor());
+                interceptors.Add(diagnosticScopeValidatingInterceptor);
             }
 
             // Ignore the async method interceptor entirely if we're running a
