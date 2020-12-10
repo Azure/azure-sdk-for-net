@@ -66,8 +66,6 @@ jobs:
     steps:
       - ${{ parameters.PreSteps }}
 
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
