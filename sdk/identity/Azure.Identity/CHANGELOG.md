@@ -1,6 +1,8 @@
 # Release History
 ## 1.4.0-beta.2 (Unreleased)
 
+### Fixes and improvements
+- Fixed issue in `HttpExtensions` causing the omission of content headers on requests ([#17448](https://github.com/Azure/azure-sdk-for-net/issues/17448))
 
 ## 1.4.0-beta.1 (2020-10-15)
 
