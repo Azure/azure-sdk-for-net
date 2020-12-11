@@ -16,10 +16,10 @@ namespace Azure.Analytics.Synapse.Monitoring.Samples
         public void MonitoringSample()
         {
             #region Snippet:CreateMonitoringClient
-            // Replace the string below with your actual workspace url.
-            string workspaceUrl = "<my-workspace-url>";
-            /*@@*/workspaceUrl = TestEnvironment.WorkspaceUrl;
-            MonitoringClient client = new MonitoringClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            // Replace the string below with your actual endpoint url.
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
+            MonitoringClient client = new MonitoringClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:GetSparkJobList

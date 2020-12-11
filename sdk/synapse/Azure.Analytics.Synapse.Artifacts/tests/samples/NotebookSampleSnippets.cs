@@ -17,10 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public async Task NotebookSample()
         {
             #region Snippet:CreateNotebookClient
-            // Replace the string below with your actual workspace url.
-            string workspaceUrl = "<my-workspace-url>";
-            /*@@*/workspaceUrl = TestEnvironment.WorkspaceUrl;
-            NotebookClient client = new NotebookClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            // Replace the string below with your actual endpoint url.
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
+            NotebookClient client = new NotebookClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateNotebook

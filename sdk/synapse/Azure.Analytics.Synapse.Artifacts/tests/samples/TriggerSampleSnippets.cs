@@ -16,10 +16,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public async Task TriggerSample()
         {
             #region Snippet:CreateTriggerClient
-            // Replace the string below with your actual workspace url.
-            string workspaceUrl = "<my-workspace-url>";
-            /*@@*/workspaceUrl = TestEnvironment.WorkspaceUrl;
-            TriggerClient client = new TriggerClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            // Replace the string below with your actual endpoint url.
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
+            TriggerClient client = new TriggerClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateTrigger

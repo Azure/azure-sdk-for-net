@@ -17,11 +17,11 @@ namespace Azure.Analytics.Synapse.Spark.Samples
         public void SparkSample()
         {
             #region Snippet:CreateBatchClient
-            // Replace the string below with your actual workspace url.
-            string workspaceUrl = "<my-workspace-url>";
-            /*@@*/workspaceUrl = TestEnvironment.WorkspaceUrl;
+            // Replace the string below with your actual endpoint url.
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
             string sparkPoolName = TestEnvironment.SparkPoolName;
-            SparkBatchClient client = new SparkBatchClient(endpoint: new Uri(workspaceUrl), sparkPoolName: sparkPoolName, credential: new DefaultAzureCredential());
+            SparkBatchClient client = new SparkBatchClient(endpoint: new Uri(endpoint), sparkPoolName: sparkPoolName, credential: new DefaultAzureCredential());
             #endregion
 
             // Environment variable with the storage account associated with the Synapse workspace endpoint.

@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Samples
         public void ExecuteSparkStatementSync()
         {
             // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
+            string endpoint = TestEnvironment.WorkspaceUrl;
 
             // Environment variable with the Synapse Spark pool name.
             string sparkPoolName = TestEnvironment.SparkPoolName;
 
-            SparkSessionClient client = new SparkSessionClient(new Uri(workspaceUrl), sparkPoolName, new DefaultAzureCredential());
+            SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
 
             SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewGuid()}")
             {

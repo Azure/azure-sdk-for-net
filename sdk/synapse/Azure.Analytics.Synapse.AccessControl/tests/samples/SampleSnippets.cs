@@ -17,10 +17,10 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         public void RoleAssignmentSample()
         {
             #region Snippet:CreateAccessControlClient
-            // Replace the string below with your actual workspace url.
-            string workspaceUrl = "<my-workspace-url>";
-            /*@@*/workspaceUrl = TestEnvironment.WorkspaceUrl;
-            AccessControlClient client = new AccessControlClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            // Replace the string below with your actual endpoint url.
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
+            AccessControlClient client = new AccessControlClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             string principalId = TestEnvironment.PrincipalId;
