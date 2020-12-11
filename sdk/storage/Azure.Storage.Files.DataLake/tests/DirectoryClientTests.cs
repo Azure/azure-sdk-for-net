@@ -1122,6 +1122,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17465")]
         public async Task SetAccessControlRecursiveAsync_InBatches_StopAndResume()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1399,6 +1400,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17465")]
         public async Task SetAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -2093,6 +2095,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17465")]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
@@ -2506,6 +2509,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17465")]
         public async Task RemoveAccessControlRecursiveAsync_InBatches_StopAndResume()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();

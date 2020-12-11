@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.6.0-beta.2 (Unreleased)
-
+- Fixed bug where the Stream returned by ShareFileClient.OpenRead() would return a different Length after calls to Seek().
 
 ## 12.6.0-beta.1 (2020-12-07)
 - Added support for service version 2020-04-08.
