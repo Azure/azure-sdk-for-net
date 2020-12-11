@@ -3126,7 +3126,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Take out lease on destination blob
             string leaseId = Recording.Random.NewGuid().ToString();
-            TimeSpan duration = TimeSpan.FromSeconds(15);
+            TimeSpan duration = TimeSpan.FromSeconds(60);
             await InstrumentClient(destBlob.GetBlobLeaseClient(leaseId)).AcquireAsync(duration);
 
             // Upload data to source blob
