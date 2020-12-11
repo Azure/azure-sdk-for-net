@@ -14,10 +14,6 @@ namespace Azure.Security.Attestation.Tests
 {
     public class AttestationClientTestEnvironment : TestEnvironment
     {
-        public AttestationClientTestEnvironment() : base("attestation")
-        {
-        }
-
         public string IsolatedAttestationUrl => GetRecordedVariable("ISOLATED_ATTESTATION_URL");
         public string AadAttestationUrl => GetRecordedVariable("AAD_ATTESTATION_URL");
 
