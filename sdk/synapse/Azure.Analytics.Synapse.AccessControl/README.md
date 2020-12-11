@@ -86,7 +86,7 @@ string assignmentId = client.CreateRoleAssignment(options).Value.Id;
 
 ### Retrieve a role assignment
 
-`GetRoleAssignmentById` retrieves a role assignment by the given principal ID.
+`GetRoleAssignmentById` retrieves a role assignment by the given assignment ID.
 
 ```C# Snippet:RetrieveRoleAssignment
 RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(assignmentId);

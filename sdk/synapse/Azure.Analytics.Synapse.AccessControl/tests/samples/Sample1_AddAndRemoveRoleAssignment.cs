@@ -25,11 +25,13 @@ namespace Azure.Analytics.Synapse.Samples
 
             AccessControlClient client = new AccessControlClient(new Uri(endpoint), new DefaultAzureCredential());
 
-            SynapseRole role = client.GetRoleDefinitions().Single(role => role.Name == "Workspace Admin");
+            Pageable<SynapseRole> roles = client.GetRoleDefinitions();
+            SynapseRole role = roles.Single(role => role.Name == "Workspace Admin");
 
             string principalId = Guid.NewGuid().ToString();
             RoleAssignmentOptions request = new RoleAssignmentOptions(roleId:role.Id, principalId:principalId);
-            RoleAssignmentDetails roleAssignmentAdded = client.CreateRoleAssignment(request);
+            Response<RoleAssignmentDetails> response = client.CreateRoleAssignment(request);
+            RoleAssignmentDetails roleAssignmentAdded = response.Value;
 
             RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(roleAssignmentAdded.Id);
             Debug.WriteLine($"Role {roleAssignment.RoleId} is assigned to {roleAssignment.PrincipalId}. Role assignment id: {roleAssignment.Id}");
