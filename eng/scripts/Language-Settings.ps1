@@ -96,13 +96,13 @@ function Get-dotnet-Package-Artifacts ($Location)
   if (!$pkgs)
   {
     Write-Host "$($Location) does not have any package"
-    exit(1)
+    return $null
   }
   elseif ($pkgs.Count -ne 1)
   {
     Write-Host "$($Location) should contain only one (1) published package"
     Write-Host "No of Packages $($pkgs.Count)"
-    exit(1)
+    return $null
   }
   return $pkgs[0]
 }
@@ -111,6 +111,12 @@ function Get-dotnet-Package-Artifacts ($Location)
 function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 {
   $PublishedPkg = Get-dotnet-Package-Artifacts $DocLocation
+  if (!$PublishedPkg)
+  {
+    Write-Host "Package is not available in artifact path $($DocLocation)"
+    exit 1
+  }
+
   $PublishedDocs = Get-ChildItem "${DocLocation}" | Where-Object -FilterScript {$_.Name.EndsWith("docs.zip")}
 
   if ($PublishedDoc.Count -gt 1)
@@ -198,6 +204,11 @@ function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName = "")
 {
   # Find all nupkg files in given artifact directory
   $pkg = Get-dotnet-Package-Artifacts $artifactDir
+  if (!$pkg)
+  {
+    Write-Host "Package is not available in artifact path $($artifactDir)"
+    return $null
+  }
   $packages = @{ $pkg.Name = $pkg.FullName }
   return $packages
 }

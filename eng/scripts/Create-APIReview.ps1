@@ -76,6 +76,7 @@ if ($packages)
 else
 {
     Write-Host "No package is found in artifact path to submit review request"
+    exit(1)
 }
 
 $FoundFailure = $False
