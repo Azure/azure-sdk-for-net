@@ -1,30 +1,58 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourcegroups/TestVaultGetBackupSecurityPinRg?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlZ3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourcegroups/TestVaultGetBackupSecurityPinRg?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTNkMmQzNDEtNGRkYi00YzVkLTkxMjEtNjliN2U3MTk0ODVlL3Jlc291cmNlZ3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"southeastasia\"\r\n}",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3dba7c0b-aca9-4ac2-9a2f-d960bffcf7f3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
           "35"
-        ],
-        "x-ms-client-request-id": [
-          "7d7aabd6-fa1c-40e1-8a91-ad20127467ff"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/TestVaultGetBackupSecurityPinRg\",\r\n  \"name\": \"TestVaultGetBackupSecurityPinRg\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "17b5d5fc-2210-4f56-8588-b6cb558b7949"
+        ],
+        "x-ms-correlation-request-id": [
+          "17b5d5fc-2210-4f56-8588-b6cb558b7949"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135100Z:17b5d5fc-2210-4f56-8588-b6cb558b7949"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:51:00 GMT"
+        ],
         "Content-Length": [
           "222"
         ],
@@ -33,291 +61,282 @@
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:03:54 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-request-id": [
-          "8b84b0c3-bb30-4d6a-8c4d-41d65a52d9f9"
-        ],
-        "x-ms-correlation-request-id": [
-          "8b84b0c3-bb30-4d6a-8c4d-41d65a52d9f9"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T060355Z:8b84b0c3-bb30-4d6a-8c4d-41d65a52d9f9"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/TestVaultGetBackupSecurityPinRg\",\r\n  \"name\": \"TestVaultGetBackupSecurityPinRg\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTNkMmQzNDEtNGRkYi00YzVkLTkxMjEtNjliN2U3MTk0ODVlL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"location\": \"southeastasia\"\r\n}",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9de2cb16-8d70-47d0-ab5b-b1252a997d12"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
           "98"
-        ],
-        "x-ms-client-request-id": [
-          "26a48b6e-7f8d-4136-889d-f8a1ff0e1e35"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"southeastasia\",\r\n  \"name\": \"TestVaultGetBackupSecurityPin\",\r\n  \"etag\": \"W/\\\"datetime'2017-10-29T06%3A03%3A59.1704907Z'\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "505a79df-3c43-49b1-9cdb-9c978a1dae6b"
+        ],
+        "x-ms-client-request-id": [
+          "9de2cb16-8d70-47d0-ab5b-b1252a997d12"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "208"
+        ],
+        "x-ms-correlation-request-id": [
+          "505a79df-3c43-49b1-9cdb-9c978a1dae6b"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135101Z:505a79df-3c43-49b1-9cdb-9c978a1dae6b"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:51:01 GMT"
+        ],
         "Content-Length": [
-          "421"
+          "505"
         ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:03:59 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "x-ms-request-id": [
-          "8c6a09b1-a620-4600-8a43-c2e035a00e10"
-        ],
-        "x-ms-client-request-id": [
-          "26a48b6e-7f8d-4136-889d-f8a1ff0e1e35"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "8c6a09b1-a620-4600-8a43-c2e035a00e10"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T060359Z:8c6a09b1-a620-4600-8a43-c2e035a00e10"
         ]
       },
+      "ResponseBody": "{\r\n  \"location\": \"southeastasia\",\r\n  \"name\": \"TestVaultGetBackupSecurityPin\",\r\n  \"etag\": \"W/\\\"datetime'2020-12-08T13%3A51%3A01.3925549Z'\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"privateEndpointStateForBackup\": \"None\",\r\n    \"privateEndpointStateForSiteRecovery\": \"None\"\r\n  },\r\n  \"id\": \"/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin/backupSecurityPIN?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbi9iYWNrdXBTZWN1cml0eVBJTj9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestUri": "/Subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin/backupSecurityPIN?api-version=2020-10-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTNkMmQzNDEtNGRkYi00YzVkLTkxMjEtNjliN2U3MTk0ODVlL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbi9iYWNrdXBTZWN1cml0eVBJTj9hcGktdmVyc2lvbj0yMDIwLTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dbc23daa-61de-48db-85d4-9437ec890c99"
+          "e53a90a9-de8f-49c3-963d-d524968d8b3c"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/4.1.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"token\": \"438927\",\r\n  \"expiryTimeInUtcTicks\": 636448541396019165,\r\n  \"securityPIN\": \"438927\"\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:04:00 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
+        "X-Content-Type-Options": [
+          "nosniff"
         ],
         "x-ms-request-id": [
-          "559f5478-6025-4195-92b2-8c6b998406d7"
+          "e3459fd5-86e3-4c49-b1e2-ef6f01dfc9a1"
         ],
         "x-ms-client-request-id": [
-          "dbc23daa-61de-48db-85d4-9437ec890c99",
-          "dbc23daa-61de-48db-85d4-9437ec890c99"
+          "e53a90a9-de8f-49c3-963d-d524968d8b3c",
+          "e53a90a9-de8f-49c3-963d-d524968d8b3c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
         ],
         "X-Powered-By": [
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "559f5478-6025-4195-92b2-8c6b998406d7"
+          "e3459fd5-86e3-4c49-b1e2-ef6f01dfc9a1"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T060400Z:559f5478-6025-4195-92b2-8c6b998406d7"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cz9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "3c17bf2b-dfbd-4f50-b57b-7f9dd0542e44"
+          "SOUTHINDIA:20201208T135102Z:e3459fd5-86e3-4c49-b1e2-ef6f01dfc9a1"
         ],
-        "accept-language": [
-          "en-US"
+        "Date": [
+          "Tue, 08 Dec 2020 13:51:02 GMT"
         ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"southeastasia\",\r\n      \"name\": \"TestVaultGetBackupSecurityPin\",\r\n      \"etag\": \"W/\\\"datetime'2017-10-29T06%3A03%3A59.1704907Z'\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
+        "Content-Length": [
+          "83"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"token\": \"998212\",\r\n  \"expiryTimeInUtcTicks\": 637430325626714017,\r\n  \"securityPIN\": \"998212\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTNkMmQzNDEtNGRkYi00YzVkLTkxMjEtNjliN2U3MTk0ODVlL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cz9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "065944c6-1270-4df4-b4ed-1e9d36833393"
         ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:04:00 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
+        "X-Content-Type-Options": [
+          "nosniff"
         ],
         "x-ms-request-id": [
-          "55c372e0-7ee7-4207-b11b-e825ee2bb482"
+          "7dca0848-b50d-40f6-bb22-fc79976df1ec"
         ],
         "x-ms-client-request-id": [
-          "3c17bf2b-dfbd-4f50-b57b-7f9dd0542e44"
+          "065944c6-1270-4df4-b4ed-1e9d36833393"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14843"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "55c372e0-7ee7-4207-b11b-e825ee2bb482"
+          "7dca0848-b50d-40f6-bb22-fc79976df1ec"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T060400Z:55c372e0-7ee7-4207-b11b-e825ee2bb482"
+          "SOUTHINDIA:20201208T135102Z:7dca0848-b50d-40f6-bb22-fc79976df1ec"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:51:02 GMT"
+        ],
+        "Content-Length": [
+          "517"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"southeastasia\",\r\n      \"name\": \"TestVaultGetBackupSecurityPin\",\r\n      \"etag\": \"W/\\\"datetime'2020-12-08T13%3A51%3A01.3925549Z'\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"privateEndpointStateForBackup\": \"None\",\r\n        \"privateEndpointStateForSiteRecovery\": \"None\"\r\n      },\r\n      \"id\": \"/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTNkMmQzNDEtNGRkYi00YzVkLTkxMjEtNjliN2U3MTk0ODVlL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "533a9267-7e83-4a8c-a632-06a378ad6003"
+          "42df6aae-c91f-41a8-8948-f031f064856b"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:04:02 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "x-ms-request-id": [
-          "ccbadcf7-38b7-4093-9a37-619cc888d080"
+          "88e1346c-4080-4951-8b66-577d9c246cda"
         ],
         "x-ms-client-request-id": [
-          "533a9267-7e83-4a8c-a632-06a378ad6003"
+          "42df6aae-c91f-41a8-8948-f031f064856b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "8"
         ],
         "x-ms-correlation-request-id": [
-          "ccbadcf7-38b7-4093-9a37-619cc888d080"
+          "88e1346c-4080-4951-8b66-577d9c246cda"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T060403Z:ccbadcf7-38b7-4093-9a37-619cc888d080"
+          "SOUTHINDIA:20201208T135104Z:88e1346c-4080-4951-8b66-577d9c246cda"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:51:03 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "e7a191f5-713c-4bdb-b5e4-cf3dd90230ef"
+    "SubscriptionId": "e3d2d341-4ddb-4c5d-9121-69b7e719485e"
   }
 }

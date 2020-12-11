@@ -158,60 +158,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
 
             /// <summary>
-            /// Gets the operation status for a private endpoint connection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='vaultName'>
-            /// The name of the recovery services vault.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group where the recovery services vault is
-            /// present.
-            /// </param>
-            /// <param name='privateEndpointConnectionName'>
-            /// The name of the private endpoint connection.
-            /// </param>
-            /// <param name='operationId'>
-            /// Operation id
-            /// </param>
-            public static OperationStatus GetOperationStatus1(this IRecoveryServicesBackupClient operations, string vaultName, string resourceGroupName, string privateEndpointConnectionName, string operationId)
-            {
-                return operations.GetOperationStatus1Async(vaultName, resourceGroupName, privateEndpointConnectionName, operationId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the operation status for a private endpoint connection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='vaultName'>
-            /// The name of the recovery services vault.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group where the recovery services vault is
-            /// present.
-            /// </param>
-            /// <param name='privateEndpointConnectionName'>
-            /// The name of the private endpoint connection.
-            /// </param>
-            /// <param name='operationId'>
-            /// Operation id
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<OperationStatus> GetOperationStatus1Async(this IRecoveryServicesBackupClient operations, string vaultName, string resourceGroupName, string privateEndpointConnectionName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationStatus1WithHttpMessagesAsync(vaultName, resourceGroupName, privateEndpointConnectionName, operationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Prepares source vault for Data Move operation
             /// </summary>
             /// <param name='operations'>
