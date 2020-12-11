@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Samples
         public void AddAndRemoveRoleAssignmentSync()
         {
             // Environment variable with the Synapse workspace endpoint.
-            string endpoint = TestEnvironment.WorkspaceUrl;
+            string endpoint = TestEnvironment.EndpointUrl;
 
             AccessControlClient client = new AccessControlClient(new Uri(endpoint), new DefaultAzureCredential());
 

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #region Snippet:CreateAccessControlClient
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
             AccessControlClient client = new AccessControlClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 

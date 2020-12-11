@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Samples
             #region Snippet:CreateMonitoringClient
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
             MonitoringClient client = new MonitoringClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 

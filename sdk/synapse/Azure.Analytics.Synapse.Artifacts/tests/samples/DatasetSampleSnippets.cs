@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #region Snippet:CreateDatasetClient
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
             DatasetClient client = new DatasetClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 

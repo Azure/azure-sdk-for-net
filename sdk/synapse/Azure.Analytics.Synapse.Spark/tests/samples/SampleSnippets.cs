@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
             #region Snippet:CreateBatchClient
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
             string sparkPoolName = TestEnvironment.SparkPoolName;
             SparkBatchClient client = new SparkBatchClient(endpoint: new Uri(endpoint), sparkPoolName: sparkPoolName, credential: new DefaultAzureCredential());
             #endregion

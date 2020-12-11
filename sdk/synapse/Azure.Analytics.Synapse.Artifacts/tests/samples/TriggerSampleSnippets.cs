@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #region Snippet:CreateTriggerClient
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
             TriggerClient client = new TriggerClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 

@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Samples
         public void ExecuteSparkStatementSync()
         {
             // Environment variable with the Synapse workspace endpoint.
-            string endpoint = TestEnvironment.WorkspaceUrl;
+            string endpoint = TestEnvironment.EndpointUrl;
 
             // Environment variable with the Synapse Spark pool name.
             string sparkPoolName = TestEnvironment.SparkPoolName;

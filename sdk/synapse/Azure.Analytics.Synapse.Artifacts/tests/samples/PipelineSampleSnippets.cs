@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #region Snippet:CreatePipelineClient
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.WorkspaceUrl;
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
             PipelineClient client = new PipelineClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
