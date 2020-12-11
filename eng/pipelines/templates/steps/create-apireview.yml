@@ -1,5 +1,5 @@
 parameters:
-  ArtifactPath: $(Build.ArtifactStagingDirectory)/packages
+  ArtifactPath: $(Build.ArtifactStagingDirectory)
   Artifacts: []
 
 steps:
