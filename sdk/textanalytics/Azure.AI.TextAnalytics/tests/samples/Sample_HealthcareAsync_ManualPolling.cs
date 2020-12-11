@@ -17,8 +17,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task HealthcareAsync_ManualPolling()
         {
-			string endpoint = TestEnvironment.Endpoint;
-			string apiKey = TestEnvironment.ApiKey;
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     break;
                 }
 
-                await Task.Delay(pollingInterval).ConfigureAwait(false);
+                await Task.Delay(pollingInterval);
             }
 
             RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;

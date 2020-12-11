@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     break;
                 }
 
-                await Task.Delay(pollingInterval).ConfigureAwait(false);
+                await Task.Delay(pollingInterval);
             }
 
             AnalyzeOperationResult resultCollection = operation.Value;

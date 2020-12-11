@@ -13,41 +13,39 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 ## Polling using `WaitForCompletionAsync()`
 
-To run analyze operation in multiple documents, call `StartAnalyzeOperationBatchAsync` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeOperation` which polls for the results from the API.
-
 In the below snippet the polling is happening by default when we call `WaitForCompletionAsync()` method.
 
 ```C#
-    string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-                        and we adore the spot! They provide marvelous food and they have a great menu. The
-                        chief cook happens to be the owner (I think his name is John Doe) and he is super 
-                        nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-                        the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-                        clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-                        call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-                        I have is the food didn't come fast enough. Overall I highly recommend it!";
+		string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
+				and we adore the spot! They provide marvelous food and they have a great menu. The
+				chief cook happens to be the owner (I think his name is John Doe) and he is super 
+				nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
+				the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
+				clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
+				call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
+				I have is the food didn't come fast enough. Overall I highly recommend it!";
 
-    var batchDocuments = new List<string> { document };
+		var batchDocuments = new List<string> { document };
 
-    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-    {
-        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-        EntitiesTaskParameters = new EntitiesTaskParameters(),
-        PiiTaskParameters = new PiiTaskParameters(),
-        DisplayName = "AnalyzeOperationSample"
-    };
+		AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+		{
+				KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+				EntitiesTaskParameters = new EntitiesTaskParameters(),
+				PiiTaskParameters = new PiiTaskParameters(),
+				DisplayName = "AnalyzeOperationSample"
+		};
 
-    AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
+		AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
 
-    await operation.WaitForCompletionAsync();
+		await operation.WaitForCompletionAsync();
 
-    AnalyzeOperationResult resultCollection = operation.Value;
+		AnalyzeOperationResult resultCollection = operation.Value;
 
-    RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
+		RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
 
-    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+		ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
-    RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
+		RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
 ```
 
 By default the polling happens every 1 second when there is no `pollingInterval` sent.
@@ -55,87 +53,90 @@ By default the polling happens every 1 second when there is no `pollingInterval`
 
 ## Polling using `WaitForCompletionAsync(TimeSpan pollingInterval)`
 
+For a custom `pollingInterval`, we will call `WaitForCompletionAsync()` method with `TimeSpan` object as an argument.
+
 ```C#
-    string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-                        and we adore the spot! They provide marvelous food and they have a great menu. The
-                        chief cook happens to be the owner (I think his name is John Doe) and he is super 
-                        nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-                        the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-                        clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-                        call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-                        I have is the food didn't come fast enough. Overall I highly recommend it!";
+		string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
+				and we adore the spot! They provide marvelous food and they have a great menu. The
+				chief cook happens to be the owner (I think his name is John Doe) and he is super 
+				nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
+				the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
+				clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
+				call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
+				I have is the food didn't come fast enough. Overall I highly recommend it!";
 
-    var batchDocuments = new List<string> { document };
+		var batchDocuments = new List<string> { document };
 
-    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-    {
-        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-        EntitiesTaskParameters = new EntitiesTaskParameters(),
-        PiiTaskParameters = new PiiTaskParameters(),
-        DisplayName = "AnalyzeOperationSample"
-    };
+		AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+		{
+				KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+				EntitiesTaskParameters = new EntitiesTaskParameters(),
+				PiiTaskParameters = new PiiTaskParameters(),
+				DisplayName = "AnalyzeOperationSample"
+		};
 
-    AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
+		AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
 
 		TimeSpan pollingInterval = new TimeSpan(1000);
 
 		await operation.WaitForCompletionAsync(pollingInterval);
 
-    AnalyzeOperationResult resultCollection = operation.Value;
+		AnalyzeOperationResult resultCollection = operation.Value;
 
-    RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
+		RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
 
-    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+		ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
-    RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
+		RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
 ```
 
 ## Polling using `UpdateStatusAsync()`
 
-This method is for users who want to have intermittent code paths during the polling process.
+This method is for users who want to have intermittent code paths during the polling process. 
 
 ```C#
-    string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-                        and we adore the spot! They provide marvelous food and they have a great menu. The
-                        chief cook happens to be the owner (I think his name is John Doe) and he is super 
-                        nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-                        the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-                        clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-                        call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-                        I have is the food didn't come fast enough. Overall I highly recommend it!";
+		string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
+				and we adore the spot! They provide marvelous food and they have a great menu. The
+				chief cook happens to be the owner (I think his name is John Doe) and he is super 
+				nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
+				the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
+				clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
+				call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
+				I have is the food didn't come fast enough. Overall I highly recommend it!";
 
-    var batchDocuments = new List<string> { document };
+		var batchDocuments = new List<string> { document };
 
-    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-    {
-        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-        EntitiesTaskParameters = new EntitiesTaskParameters(),
-        PiiTaskParameters = new PiiTaskParameters(),
-        DisplayName = "AnalyzeOperationSample"
-    };
+		AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+		{
+				KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+				EntitiesTaskParameters = new EntitiesTaskParameters(),
+				PiiTaskParameters = new PiiTaskParameters(),
+				DisplayName = "AnalyzeOperationSample"
+		};
 
-    AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
+		AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
 
 		TimeSpan pollingInterval = new TimeSpan(1000);
 
 		while (true)
 		{
-				await healthOperation.UpdateStatusAsync();
-				if (healthOperation.HasCompleted)
-				{
-						break;
-				}
+			await healthOperation.UpdateStatusAsync();
+			if (healthOperation.HasCompleted)
+			{
+				// TIP - Add logging, max wait time, or any other intermittent code path. 
+				break;
+			}
 
-				await Task.Delay(pollingInterval).ConfigureAwait(false);
+			await Task.Delay(pollingInterval);
 		}
 
-    AnalyzeOperationResult resultCollection = operation.Value;
+		AnalyzeOperationResult resultCollection = operation.Value;
 
-    RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
+		RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
 
-    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+		ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
-    RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
+		RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
 ```
 
 To see the full example source files, see:
