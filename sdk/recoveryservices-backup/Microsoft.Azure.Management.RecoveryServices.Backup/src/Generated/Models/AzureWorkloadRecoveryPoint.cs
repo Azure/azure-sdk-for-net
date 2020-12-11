@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recoveryPointTimeInUTC">UTC time at which recovery
         /// point was created</param>
         /// <param name="type">Type of restore point. Possible values include:
-        /// 'Invalid', 'Full', 'Log', 'Differential'</param>
+        /// 'Invalid', 'Full', 'Log', 'Differential', 'Incremental'</param>
         public AzureWorkloadRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string))
         {
             RecoveryPointTimeInUTC = recoveryPointTimeInUTC;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets type of restore point. Possible values include: 'Invalid',
-        /// 'Full', 'Log', 'Differential'
+        /// 'Full', 'Log', 'Differential', 'Incremental'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
