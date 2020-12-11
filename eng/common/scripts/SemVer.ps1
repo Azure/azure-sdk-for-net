@@ -127,8 +127,10 @@ class AzureEngSemanticVersion {
     if ($this.IsPrerelease)
     {
       $versionString += $this.PrereleaseLabelSeparator + $this.PrereleaseLabel + `
-                        $this.PrereleaseNumberSeparator + $this.PrereleaseNumber + `
-                        $this.BuildNumberSeparator + $this.BuildNumber
+                        $this.PrereleaseNumberSeparator + $this.PrereleaseNumber
+      if ($this.BuildNumber) {
+          $versionString += $this.BuildNumberSeparator + $this.BuildNumber
+      }
     }
     return $versionString;
   }
@@ -164,6 +166,7 @@ class AzureEngSemanticVersion {
     # Use the default common conventions
     $this.PrereleaseLabelSeparator = "-"
     $this.PrereleaseNumberSeparator = "."
+    $this.BuildNumberSeparator = "."
     $this.DefaultPrereleaseLabel = "beta"
     $this.DefaultAlphaReleaseLabel = "alpha"
   }
