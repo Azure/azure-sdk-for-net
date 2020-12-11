@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Samples
             SynapseRole role = roles.Single(role => role.Name == "Workspace Admin");
 
             string principalId = Guid.NewGuid().ToString();
-            RoleAssignmentOptions request = new RoleAssignmentOptions(roleId:role.Id, principalId:principalId);
+            RoleAssignmentOptions request = new RoleAssignmentOptions(role.Id, principalId);
             Response<RoleAssignmentDetails> response = client.CreateRoleAssignment(request);
             RoleAssignmentDetails roleAssignmentAdded = response.Value;
 
