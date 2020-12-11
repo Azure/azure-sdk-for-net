@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Communication.Pipeline;
+using Azure.Core;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Administration.Tests
@@ -23,10 +24,10 @@ namespace Azure.Communication.Administration.Tests
                     TestEnvironment.ConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions())));
 
-        protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClientWithToken(MockCredential token, Uri endpoint)
+        protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClientWithToken(TokenCredential token)
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    endpoint,
+                    new Uri(TestEnvironment.EndpointString),
                     token,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions())));
     }

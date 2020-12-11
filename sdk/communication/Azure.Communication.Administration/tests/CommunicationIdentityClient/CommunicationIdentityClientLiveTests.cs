@@ -6,7 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
 using Azure.Communication.Identity;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.Administration.Tests
@@ -52,12 +54,20 @@ namespace Azure.Communication.Administration.Tests
         }
 
         [Test]
-        [TestCase("chat", TestName = "IdentityWithTokenWithSingleScope")]
+        [TestCase("chat", TestName = "IdentityClientFromTokenWithSingleScope")]
+        [TestCase("chat", "pstn", TestName = "IdentityClientFromTokenWithMultipleScope")]
         public async Task GeneratesIdentityUsingTokenCredentialWithScopes(params string[] scopes)
         {
-            var tokenCredential = new MockCredential();
-            var endpoint = new Uri("https://localHostTest");
-            CommunicationIdentityClient client = CreateInstrumentedCommunicationIdentityClientWithToken(tokenCredential, endpoint);
+            TokenCredential tokenCredential;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                tokenCredential = new MockCredential();
+            }
+            else
+            {
+                tokenCredential = new DefaultAzureCredential();
+            }
+            CommunicationIdentityClient client = CreateInstrumentedCommunicationIdentityClientWithToken(tokenCredential);
             Response<CommunicationUser> userResponse = await client.CreateUserAsync();
             Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
 
