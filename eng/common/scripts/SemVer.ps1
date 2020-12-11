@@ -21,15 +21,14 @@ class AzureEngSemanticVersion {
   [string] $PrereleaseLabel
   [string] $PrereleaseNumberSeparator
   [string] $BuildNumberSeparator
-  [int] $BuildNumber
+  # BuildNumber is string to preserve zero-padding where applicable
+  [string] $BuildNumber
   [int] $PrereleaseNumber
   [bool] $IsPrerelease
-  [bool] $HasBuildNumber
   [string] $RawVersion
   [bool] $IsSemVerFormat
   [string] $DefaultPrereleaseLabel
   [string] $DefaultAlphaReleaseLabel
-  [string] $SortingDummyValue = 9999999
 
   # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
   # Validation: https://regex101.com/r/vkijKf/426
@@ -79,7 +78,7 @@ class AzureEngSemanticVersion {
       {
         # artifically provide these values for non-prereleases to enable easy sorting of them later than prereleases.
         $this.PrereleaseLabel = "zzz"
-        $this.PrereleaseNumber = $this.SortingDummyValue
+        $this.PrereleaseNumber = 99999999
         $this.IsPrerelease = $false
       }
       else
@@ -89,13 +88,9 @@ class AzureEngSemanticVersion {
         $this.PrereleaseNumber = [int]$matches["prenumber"]
         $this.PrereleaseNumberSeparator = $matches["prenumsep"]
         $this.IsPrerelease = $true
-      }
-      if ($null -eq $matches["buildnumber"]) {
-        $this.HasBuildNumber = $false
-      } else {
+
         $this.BuildNumberSeparator = $matches["buildnumsep"]
-        $this.BuildNumber = [int]$matches["buildnumber"]
-        $this.HasBuildNumber = $true
+        $this.BuildNumber = $matches["buildnumber"]
       }
     }
     else
@@ -131,14 +126,9 @@ class AzureEngSemanticVersion {
 
     if ($this.IsPrerelease)
     {
-      $versionString += $this.PrereleaseLabelSeparator + $this.PrereleaseLabel + $this.PrereleaseNumberSeparator + $this.PrereleaseNumber
-      if ($this.HasBuildNumber) {
-        if ([AzureEngSemanticVersion]::ParseLanguage -eq "python") {
-          $versionString += $this.BuildNumberSeparator + ("{0:d3}" -f $this.BuildNumber)
-        } else {
-          $versionString += $this.BuildNumberSeparator + $this.BuildNumber
-        }
-      }
+      $versionString += $this.PrereleaseLabelSeparator + $this.PrereleaseLabel + `
+                        $this.PrereleaseNumberSeparator + $this.PrereleaseNumber + `
+                        $this.BuildNumberSeparator + $this.BuildNumber
     }
     return $versionString;
   }
@@ -154,7 +144,7 @@ class AzureEngSemanticVersion {
     }
     else
     {
-      if ($this.HasBuildNumber) {
+      if ($this.BuildNumber) {
         throw "Cannot increment releases tagged with azure pipelines build numbers"
       }
       $this.PrereleaseNumber++
@@ -187,7 +177,10 @@ class AzureEngSemanticVersion {
 
   static [AzureEngSemanticVersion[]] SortVersions([AzureEngSemanticVersion[]] $versions)
   {
-    return ($versions | Sort-Object -Property Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber, BuildNumber -Descending)
+    return ($versions | `
+            Sort-Object -Descending -Property `
+              Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber, `
+              @{ Expression = { [int]$_.BuildNumber }; Descending = $true })
   }
 
   static [void] QuickTests()
@@ -199,8 +192,8 @@ class AzureEngSemanticVersion {
       "2.0.0-alpha.20200920.1",
       "2.0.0-beta.2", 
       "1.0.10", 
+      "2.0.0-alpha.20201221.03",
       "2.0.0-alpha.20201221.1",
-      "2.0.0-alpha.20201221.01",
       "2.0.0-alpha.20201221.5",
       "2.0.0-alpha.20201221.2",
       "2.0.0-alpha.20201221.10",
@@ -217,8 +210,8 @@ class AzureEngSemanticVersion {
       "2.0.0-beta.1",
       "2.0.0-alpha.20201221.10",
       "2.0.0-alpha.20201221.5",
+      "2.0.0-alpha.20201221.03",
       "2.0.0-alpha.20201221.2",
-      "2.0.0-alpha.20201221.1",
       "2.0.0-alpha.20201221.1",
       "2.0.0-alpha.20200920.1",
       "2.0.0-alpha.20200920",
@@ -264,15 +257,17 @@ class AzureEngSemanticVersion {
     # Note: For python we lump build number into prerelease number, since it simplifies the code and regex, and is behaviorally the same
     if ($pythonAlphaVer.Major -ne 1 -or $pythonAlphaVer.Minor -ne 2 -or $pythonAlphaVer.Patch -ne 3 `
         -or $pythonAlphaVer.PrereleaseLabel -ne "a" -or $pythonAlphaVer.PrereleaseNumber -ne 20200828 `
-        -or $pythonAlphaVer.BuildNumber -ne 9) {
+        -or $pythonAlphaVer.BuildNumber -ne "009") {
       Write-Host "Error: Didn't correctly parse python alpha version string $pythonAlphaVerString"
     }
     if ($pythonAlphaVerString -ne $pythonAlphaVer.ToString()) {
       Write-Host "Error: python alpha string did not correctly round trip with ToString. Expected: $($pythonAlphaVerString), Actual: $($pythonAlphaVer)"
     }
 
-    $versions = @("1.0.1", "2.0.0", "2.0.0a20201208001", "2.0.0a20201208002", "2.0.0b2", "1.0.10", "2.0.0b1", "2.0.0b10", "1.0.0", "1.0.0b2", "1.0.2")
-    $expectedSort = @("2.0.0", "2.0.0b10", "2.0.0b2", "2.0.0b1", "2.0.0a20201208002", "2.0.0a20201208001", "1.0.10", "1.0.2", "1.0.1", "1.0.0", "1.0.0b2")
+    $versions = @("1.0.1", "2.0.0", "2.0.0a20201208001", "2.0.0a20201105020", "2.0.0a20201208012", `
+                  "2.0.0b2", "1.0.10", "2.0.0b1", "2.0.0b10", "1.0.0", "1.0.0b2", "1.0.2")
+    $expectedSort = @("2.0.0", "2.0.0b10", "2.0.0b2", "2.0.0b1", "2.0.0a20201208012", "2.0.0a20201208001", `
+                      "2.0.0a20201105020", "1.0.10", "1.0.2", "1.0.1", "1.0.0", "1.0.0b2")
     $sort = [AzureEngSemanticVersion]::SortVersionStrings($versions)
     for ($i = 0; $i -lt $expectedSort.Count; $i++)
     {
