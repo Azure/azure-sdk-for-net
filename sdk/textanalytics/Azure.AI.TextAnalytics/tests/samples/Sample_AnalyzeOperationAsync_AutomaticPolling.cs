@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task AnalyzeOperationAsync_AutomaticPolling()
+        public async Task AnalyzeOperationAsync_AutomaticPollingWithSetInterval()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
