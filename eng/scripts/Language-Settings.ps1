@@ -93,19 +93,19 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 function Get-dotnet-Package-Artifacts ($Location)
 {
   $pkgs = Get-ChildItem "${Location}" -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
-  if ($pkgs.Count -gt 1)
+  if ($pkgs -and $pkgs.Count -ne 1)
   {
     Write-Host "$($Location) should contain only one (1) published package"
     Write-Host "No of Packages $($pkgs.Count)"
     exit(1)
   }
-  return $pkgs
+  return $pkgs[0]
 }
 
 # Stage and Upload Docs to blob Storage
 function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 {
-  $PublishedPkgs = Get-dotnet-Package-Artifacts "${DocLocation}"
+  $PublishedPkg = Get-dotnet-Package-Artifacts $DocLocation
   $PublishedDocs = Get-ChildItem "${DocLocation}" | Where-Object -FilterScript {$_.Name.EndsWith("docs.zip")}
 
   if ($PublishedDoc.Count -gt 1)
@@ -122,7 +122,7 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
   New-Item -ItemType directory -Path $TempDir
 
   Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath $DocsStagingDir
-  $pkgProperties = Get-dotnet-PackageInfoFromPackageFile -pkg $PublishedPkgs[0].FullName -workingDirectory $TempDir
+  $pkgProperties = Get-dotnet-PackageInfoFromPackageFile -pkg $PublishedPkg.FullName -workingDirectory $TempDir
 
   Write-Host "Start Upload for $($pkgProperties.ReleaseTag)"
   Write-Host "DocDir $($DocsStagingDir)"
@@ -189,15 +189,10 @@ function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$
 
 
 # function is used to auto generate API View
-function Find-dotnet-Artifacts-For-Apireview($artifactDir)
+function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName = "")
 {
-  $packages = @{}
-
   # Find all nupkg files in given artifact directory
-  $files = Get-dotnet-Package-Artifacts $artifactDir
-  foreach($f in $files) {
-      $packages[$f.Name] = $f.FullName
-  }
-
+  $pkg = Get-dotnet-Package-Artifacts $artifactDir
+  $packages = @{ $pkg.Name = $pkg.FullName }
   return $packages
 }
