@@ -70,9 +70,9 @@ The Azure.Analytics.Synapse.AccessControl package supports synchronous and async
 `CreateAccessControlClient` creates a role assignment.
 
 ```C# Snippet:CreateAccessControlClient
-// Replace the string below with your actual workspace url.
-string workspaceUrl = "<my-workspace-url>";
-AccessControlClient client = new AccessControlClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+// Replace the string below with your actual endpoint url.
+string endpoint = "<my-endpoint-url>";
+AccessControlClient client = new AccessControlClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
 
 ### Create a role assignment
@@ -81,7 +81,7 @@ AccessControlClient client = new AccessControlClient(endpoint: new Uri(workspace
 
 ```C# Snippet:CreateRoleAssignment
 RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
-string assignmentId = client.CreateRoleAssignment(options).Value.Id;
+RoleAssignmentDetails createdRoleAssignment = client.CreateRoleAssignment(options);
 ```
 
 ### Retrieve a role assignment
@@ -89,7 +89,7 @@ string assignmentId = client.CreateRoleAssignment(options).Value.Id;
 `GetRoleAssignmentById` retrieves a role assignment by the given assignment ID.
 
 ```C# Snippet:RetrieveRoleAssignment
-RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(assignmentId);
+RoleAssignmentDetails retrievedRoleAssignment = client.GetRoleAssignmentById(createdRoleAssignment.Id);
 ```
 
 ### List role assignments
@@ -97,9 +97,9 @@ RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(assignmentId
 
 ```C# Snippet:ListRoleAssignments
 IReadOnlyList<RoleAssignmentDetails> roleAssignments = client.GetRoleAssignments().Value;
-foreach (RoleAssignmentDetails assignment in roleAssignments)
+foreach (RoleAssignmentDetails roleAssignment in roleAssignments)
 {
-    Console.WriteLine(assignment.Id);
+    Console.WriteLine(roleAssignment.Id);
 }
 ```
 
@@ -108,7 +108,7 @@ foreach (RoleAssignmentDetails assignment in roleAssignments)
 `DeleteRoleAssignmentById` deletes a role assignment by the given principal ID.
 
 ```C# Snippet:DeleteRoleAssignment
-client.DeleteRoleAssignmentById(roleAssignment.Id);
+client.DeleteRoleAssignmentById(retrievedRoleAssignment.Id);
 ```
 
 ## To build

@@ -72,7 +72,7 @@ Notebook newNotebook = new Notebook(
 );
 string notebookName = "MyNotebook";
 NotebookCreateOrUpdateNotebookOperation operation = client.StartCreateOrUpdateNotebook(notebookName, new NotebookResource(notebookName, newNotebook));
-NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+Response<NotebookResource> createdNotebook = await operation.WaitForCompletionAsync();
 ```
 
 ### Retrieve a notebook
@@ -80,7 +80,7 @@ NotebookResource notebookResource = operation.WaitForCompletionAsync().Configure
 `GetNoteBook` retrieves a notebook.
 
 ```C# Snippet:RetrieveNotebook
-NotebookResource notebook = client.GetNotebook("MyNotebook");
+NotebookResource retrievedNotebook = client.GetNotebook("MyNotebook");
 ```
 
 ### List notebooks
@@ -88,9 +88,9 @@ NotebookResource notebook = client.GetNotebook("MyNotebook");
 
 ```C# Snippet:ListNotebooks
 Pageable<NotebookResource> notebooks = client.GetNotebooksByWorkspace();
-foreach (NotebookResource book in notebooks)
+foreach (NotebookResource notebook in notebooks)
 {
-    System.Console.WriteLine(book.Name);
+    System.Console.WriteLine(notebook.Name);
 }
 ```
 

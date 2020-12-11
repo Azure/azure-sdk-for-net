@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
+    <ProjectReference Include="..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\Azure.Analytics.Synapse.Spark\src\Azure.Analytics.Synapse.Spark.csproj" />
+    <ProjectReference Include="..\Azure.Analytics.Synapse.ManagedPrivateEndpoints\src\Azure.Analytics.Synapse.ManagedPrivateEndpoints.csproj" />
+    <ProjectReference Include="..\Azure.Analytics.Synapse.Artifacts\src\Azure.Analytics.Synapse.Artifacts.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>
