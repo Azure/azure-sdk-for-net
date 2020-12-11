@@ -19,6 +19,7 @@ foreach ($packageProp in $allPackageProps) {
     $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $packageProp.ChangeLogPath
     $package = $packageProp.Name
     $serviceDirectory = $packageProp.ServiceDirectory
+    $groupId = $packageProp.Group
 
     foreach ($changeLogEntry in $changeLogEntries.Values) {
         if ($changeLogEntry.ReleaseStatus -notmatch $date)
@@ -28,20 +29,24 @@ foreach ($packageProp in $allPackageProps) {
 
         $version = $changeLogEntry.ReleaseVersion
         $githubAnchor = $changeLogEntry.ReleaseTitle.Replace("## ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace(" ", "-")
-        $textInfo = (Get-Culture).TextInfo
-        $highlightTitle = $textInfo.ToTitleCase($package.Replace("-", " ").Replace("@azure/",""))
 
-        if (Test-Path "Function:GetPackageInstallNotes")
+        if (Test-Path "Function:GetPackageInstallNote")
         {
-            $InstallNotes += GetPackageInstallNotes -Package $package -Version $version
+            $InstallNotes += GetPackageInstallNote -Package $package -Version $version -GroupId $groupId
         }
         else
         {
-            LogError "The function 'GetPackageInstallNotes' was not found."
+            LogError "The function 'GetPackageInstallNote' was not found."
             return $null
         }
 
-        $ReleaseNotes += "### $highlightTitle $version [Changelog](https://github.com/Azure/azure-sdk-for-$LanguageShort/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)`n"
+        $highlightsTitle = "$package $version"
+        if (-not ([string]::IsNullOrEmpty($groupId))
+        {
+            $highlightsTitle = "$groupId $highlightsTitle"
+        }
+
+        $ReleaseNotes += "### $groupId $package $version [Changelog](https://github.com/Azure/azure-sdk-for-$LanguageShort/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)`n"
         $changeLogEntry.ReleaseContent | %{ 
 
             $ReleaseNotes += $_.Replace("###", "####")
