@@ -1400,6 +1400,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17465")]
         public async Task SetAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
         {
             string fileSystemName = GetNewFileSystemName();
