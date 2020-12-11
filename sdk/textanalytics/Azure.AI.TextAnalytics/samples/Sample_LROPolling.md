@@ -1,5 +1,5 @@
-# Polling the Long Running Operations
-This sample demonstrates how to use polling for the Long Running Operations using the Text Analytics client.
+# Polling Long Running Operations
+This sample demonstrates the different ways to consume or poll the status of a Text Analytics client Long Running Operation.  It uses the (Analyze Operation)[https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics#run-analyze-operation-asynchronously] as an example
 
 ## Creating a `TextAnalyticsClient`
 
