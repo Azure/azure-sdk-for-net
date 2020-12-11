@@ -16,19 +16,29 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            #region Snippet:TextAnalyticsSample2CreateClient
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            #endregion
 
             #region Snippet:AnalyzeSentiment
-            string document = "That was the best day of my life!";
+            string document = @"I had the best day of my life. I decided to go sky-diving and it
+                                made me appreciate my whole life so much more.
+                                I developed a deep-connection with my instructor as well, and I
+                                feel as if I've made a life-long friend in her.";
 
-            DocumentSentiment docSentiment = client.AnalyzeSentiment(document);
+            try
+            {
+                Response<DocumentSentiment> response = client.AnalyzeSentiment(document);
+                DocumentSentiment docSentiment = response.Value;
 
-            Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
-            Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");
-            Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
-            Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
+                Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
+                Console.WriteLine($"  Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");
+                Console.WriteLine($"  Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
+                Console.WriteLine($"  Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
+            }
             #endregion
         }
     }
