@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
@@ -12,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
     public partial class DataFlowSnippets : SampleFixture
     {
         [Test]
-        public void DataFlowSample()
+        public async Task DataFlowSample()
         {
             #region Snippet:CreateDataFlowClient
             // Replace the string below with your actual workspace url.
@@ -23,18 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:CreateDataFlow
             DataFlowCreateOrUpdateDataFlowOperation operation = client.StartCreateOrUpdateDataFlow("MyDataFlow", new DataFlowResource(new DataFlow()));
-            operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Response<DataFlowResource> createdDataflow = await operation.WaitForCompletionAsync();
             #endregion
 
             #region Snippet:RetrieveDataFlow
-            DataFlowResource dataFlow = client.GetDataFlow("MyDataFlow");
+            DataFlowResource retrievedDataflow = client.GetDataFlow("MyDataFlow");
             #endregion
 
             #region Snippet:ListDataFlows
             Pageable<DataFlowResource> dataFlows = client.GetDataFlowsByWorkspace();
-            foreach (DataFlowResource flow in dataFlows)
+            foreach (DataFlowResource dataflow in dataFlows)
             {
-                System.Console.WriteLine(flow.Name);
+                System.Console.WriteLine(dataflow.Name);
             }
             #endregion
 

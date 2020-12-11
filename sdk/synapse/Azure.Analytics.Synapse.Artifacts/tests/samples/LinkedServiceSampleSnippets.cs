@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
@@ -12,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
     public partial class LinkedServiceSnippets : SampleFixture
     {
         [Test]
-        public void LinkedServiceSample()
+        public async Task LinkedServiceSample()
         {
             #region Snippet:CreateLinkedServiceClient
             // Replace the string below with your actual workspace url.
@@ -24,18 +25,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #region Snippet:CreateLinkedService
             LinkedServiceResource serviceResource = new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/"));
             LinkedServiceCreateOrUpdateLinkedServiceOperation operation = client.StartCreateOrUpdateLinkedService("MyLinkedService", serviceResource);
-            operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Response<LinkedServiceResource> createdService = await operation.WaitForCompletionAsync();
             #endregion
 
             #region Snippet:RetrieveLinkedService
-            LinkedServiceResource linkedService = client.GetLinkedService("MyLinkedService");
+            LinkedServiceResource retrievedService = client.GetLinkedService("MyLinkedService");
             #endregion
 
             #region Snippet:ListLinkedServices
             Pageable<LinkedServiceResource> linkedServices = client.GetLinkedServicesByWorkspace();
-            foreach (LinkedServiceResource service in linkedServices)
+            foreach (LinkedServiceResource linkedService in linkedServices)
             {
-                System.Console.WriteLine(service.Name);
+                System.Console.WriteLine(linkedService.Name);
             }
             #endregion
 

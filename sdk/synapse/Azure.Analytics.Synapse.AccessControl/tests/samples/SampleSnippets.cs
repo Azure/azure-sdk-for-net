@@ -28,23 +28,23 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 
             #region Snippet:CreateRoleAssignment
             RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
-            string assignmentId = client.CreateRoleAssignment(options).Value.Id;
+            RoleAssignmentDetails createdRoleAssignment = client.CreateRoleAssignment(options);
             #endregion
 
             #region Snippet:RetrieveRoleAssignment
-            RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(assignmentId);
+            RoleAssignmentDetails retrievedRoleAssignment = client.GetRoleAssignmentById(createdRoleAssignment.Id);
             #endregion
 
             #region Snippet:ListRoleAssignments
             IReadOnlyList<RoleAssignmentDetails> roleAssignments = client.GetRoleAssignments().Value;
-            foreach (RoleAssignmentDetails assignment in roleAssignments)
+            foreach (RoleAssignmentDetails roleAssignment in roleAssignments)
             {
-                Console.WriteLine(assignment.Id);
+                Console.WriteLine(roleAssignment.Id);
             }
             #endregion
 
             #region Snippet:DeleteRoleAssignment
-            client.DeleteRoleAssignmentById(roleAssignment.Id);
+            client.DeleteRoleAssignmentById(retrievedRoleAssignment.Id);
             #endregion
         }
     }

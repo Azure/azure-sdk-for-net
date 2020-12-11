@@ -2,17 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
-using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class TriggerSnippets : SampleFixture
     {
         [Test]
-        public void TriggerSample()
+        public async Task TriggerSample()
         {
             #region Snippet:CreateTriggerClient
             // Replace the string below with your actual workspace url.
@@ -24,18 +25,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #region Snippet:CreateTrigger
             TriggerResource triggerResource = new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence()));
             TriggerCreateOrUpdateTriggerOperation operation = client.StartCreateOrUpdateTrigger("MyTrigger", triggerResource);
-            operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Response<TriggerResource> createdTrigger = await operation.WaitForCompletionAsync();
             #endregion
 
             #region Snippet:RetrieveTrigger
-            TriggerResource trigger = client.GetTrigger("MyTrigger");
+            TriggerResource retrievedTrigger = client.GetTrigger("MyTrigger");
             #endregion
 
             #region Snippet:ListTriggers
             Pageable<TriggerResource> triggers = client.GetTriggersByWorkspace();
-            foreach (TriggerResource trig in triggers)
+            foreach (TriggerResource trigger in triggers)
             {
-                System.Console.WriteLine(trig.Name);
+                System.Console.WriteLine(trigger.Name);
             }
             #endregion
 

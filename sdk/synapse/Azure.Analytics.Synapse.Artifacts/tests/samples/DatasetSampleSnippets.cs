@@ -2,17 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
-using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class DatasetSnippets : SampleFixture
     {
         [Test]
-        public void DatasetSample()
+        public async Task DatasetSample()
         {
             #region Snippet:CreateDatasetClient
             // Replace the string below with your actual workspace url.
@@ -23,18 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:CreateDataset
             DatasetCreateOrUpdateDatasetOperation operation = client.StartCreateOrUpdateDataset("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
-            operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Response<DatasetResource> createdDataset = await operation.WaitForCompletionAsync();
             #endregion
 
             #region Snippet:RetrieveDataset
-            DatasetResource dataset = client.GetDataset("MyDataset");
+            DatasetResource retrievedDataset = client.GetDataset("MyDataset");
             #endregion
 
             #region Snippet:ListDatasets
             Pageable<DatasetResource> datasets = client.GetDatasetsByWorkspace();
-            foreach (DatasetResource set in datasets)
+            foreach (DatasetResource dataset in datasets)
             {
-                System.Console.WriteLine(set.Name);
+                System.Console.WriteLine(dataset.Name);
             }
             #endregion
 

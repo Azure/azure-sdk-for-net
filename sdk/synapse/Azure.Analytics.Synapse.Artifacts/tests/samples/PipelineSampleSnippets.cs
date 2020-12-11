@@ -2,17 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
-using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class PipelineSnippets : SampleFixture
     {
         [Test]
-        public void PipelineSample()
+        public async Task PipelineSample()
         {
             #region Snippet:CreatePipelineClient
             // Replace the string below with your actual workspace url.
@@ -23,16 +24,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:CreatePipeline
             PipelineCreateOrUpdatePipelineOperation operation = client.StartCreateOrUpdatePipeline("MyPipeline", new PipelineResource());
-            operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Response<PipelineResource> createdPipeline = await operation.WaitForCompletionAsync();
             #endregion
 
             #region Snippet:RetrievePipeline
-            PipelineResource pipeline = client.GetPipeline("MyPipeline");
+            PipelineResource retrievedPipeline = client.GetPipeline("MyPipeline");
             #endregion
 
             #region Snippet:ListPipelines
             Pageable<PipelineResource> pipelines = client.GetPipelinesByWorkspace();
-            foreach (PipelineResource pipe in pipelines)
+            foreach (PipelineResource pipeline in pipelines)
             {
                 System.Console.WriteLine(pipeline.Name);
             }

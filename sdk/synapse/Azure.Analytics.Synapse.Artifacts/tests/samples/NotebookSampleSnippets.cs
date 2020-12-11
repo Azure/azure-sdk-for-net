@@ -2,18 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
-using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class NotebookSnippets : SampleFixture
     {
         [Test]
-        public void NotebookSample()
+        public async Task NotebookSample()
         {
             #region Snippet:CreateNotebookClient
             // Replace the string below with your actual workspace url.
@@ -34,18 +35,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             );
             string notebookName = "MyNotebook";
             NotebookCreateOrUpdateNotebookOperation operation = client.StartCreateOrUpdateNotebook(notebookName, new NotebookResource(notebookName, newNotebook));
-            NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Response<NotebookResource> createdNotebook = await operation.WaitForCompletionAsync();
             #endregion
 
             #region Snippet:RetrieveNotebook
-            NotebookResource notebook = client.GetNotebook("MyNotebook");
+            NotebookResource retrievedNotebook = client.GetNotebook("MyNotebook");
             #endregion
 
             #region Snippet:ListNotebooks
             Pageable<NotebookResource> notebooks = client.GetNotebooksByWorkspace();
-            foreach (NotebookResource book in notebooks)
+            foreach (NotebookResource notebook in notebooks)
             {
-                System.Console.WriteLine(book.Name);
+                System.Console.WriteLine(notebook.Name);
             }
             #endregion
 
