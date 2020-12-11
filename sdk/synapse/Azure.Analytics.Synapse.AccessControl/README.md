@@ -80,7 +80,10 @@ AccessControlClient client = new AccessControlClient(endpoint: new Uri(endpoint)
 `CreateRoleAssignment` creates a role assignment.
 
 ```C# Snippet:CreateRoleAssignment
-RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
+Pageable<SynapseRole> roles = client.GetRoleDefinitions();
+SynapseRole sqlAdminRole = roles.Single(role => role.Name == "Sql Admin");
+
+RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRole.Id, principalId);
 RoleAssignmentDetails createdRoleAssignment = client.CreateRoleAssignment(options);
 ```
 
