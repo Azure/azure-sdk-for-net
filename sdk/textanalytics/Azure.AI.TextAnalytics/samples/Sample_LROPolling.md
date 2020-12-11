@@ -1,4 +1,4 @@
-# Polling the Long Running Operations
+# Polling Long Running Operations
 This sample demonstrates how to use polling for the Long Running Operations using the Text Analytics client.
 
 ## Creating a `TextAnalyticsClient`
