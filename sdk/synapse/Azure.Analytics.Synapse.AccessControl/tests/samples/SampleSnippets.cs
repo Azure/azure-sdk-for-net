@@ -24,10 +24,12 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #endregion
 
             string principalId = TestEnvironment.PrincipalId;
-            string sqlAdminRoleId = client.GetRoleDefinitions().AsEnumerable().Single(role => role.Name == "Sql Admin").Id;
 
             #region Snippet:CreateRoleAssignment
-            RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
+            Pageable<SynapseRole> roles = client.GetRoleDefinitions();
+            SynapseRole sqlAdminRole = roles.Single(role => role.Name == "Sql Admin");
+
+            RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRole.Id, principalId);
             RoleAssignmentDetails createdRoleAssignment = client.CreateRoleAssignment(options);
             #endregion
 
