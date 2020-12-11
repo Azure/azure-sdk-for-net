@@ -59,7 +59,27 @@ namespace Compute.Tests
             }
         }
 
-        private void CreateImageTestHelper(string originalTestLocation, string diskEncryptionSetId)
+        [Fact]
+        [Trait("Name", "TestCreateImage_with_ExtendedLocation")]
+        public void TestCreateImage_with_ExtendedLocation()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                    EnsureClientsInitialized(context);
+                    CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null, extendedLocation: "MicrosoftRRDCLab1");
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        private void CreateImageTestHelper(string originalTestLocation, string diskEncryptionSetId, string extendedLocation = null)
         {
             VirtualMachine inputVM = null;
 
@@ -159,6 +179,11 @@ namespace Compute.Tests
                     HyperVGeneration = HyperVGeneration.V1
                 };
 
+                if (extendedLocation != null)
+                {
+                    imageInput.ExtendedLocation = new ExtendedLocation(extendedLocation);
+                }
+
                 var image = m_CrpClient.Images.CreateOrUpdate(rgName, imageName, imageInput);
                 var getImage = m_CrpClient.Images.Get(rgName, imageName);
 
@@ -242,6 +267,12 @@ namespace Compute.Tests
                     Assert.NotNull(dataDiskOut.BlobUri);
                     Assert.NotNull(dataDiskOut.DiskSizeGB);
                 }
+            }
+
+            if (imageIn.ExtendedLocation != null)
+            {
+                Assert.NotNull(imageOut.ExtendedLocation);
+                Assert.Equal(imageIn.ExtendedLocation.Name, imageOut.ExtendedLocation.Name, StringComparer.OrdinalIgnoreCase);
             }
 
             Assert.Equal(imageIn.StorageProfile.ZoneResilient, imageOut.StorageProfile.ZoneResilient);

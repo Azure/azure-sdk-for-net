@@ -31,7 +31,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Update="ScenarioTests\VM_EdgeZone_Template.json">
+    <None Update="ScenarioTests\EdgeZone_Template.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

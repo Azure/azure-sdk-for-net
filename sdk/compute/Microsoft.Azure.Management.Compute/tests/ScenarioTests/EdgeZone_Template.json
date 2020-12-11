@@ -134,8 +134,12 @@
   ],
   "outputs": {
     "nicId": {
-        "type": "string",
-        "value": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+    },
+    "subnetId": {
+      "type": "string",
+      "value": "[variables('subnetRef')]"
     }
   }
 }

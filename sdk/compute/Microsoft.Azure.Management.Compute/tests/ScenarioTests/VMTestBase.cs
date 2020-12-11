@@ -283,7 +283,7 @@ namespace Compute.Tests
                     {
                         Properties = new DeploymentProperties()
                         {
-                            Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "VM_EdgeZone_Template.json"))),
+                            Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "EdgeZone_Template.json"))),
                             Parameters = deploymentParams,
                             Mode = DeploymentMode.Incremental
                         }

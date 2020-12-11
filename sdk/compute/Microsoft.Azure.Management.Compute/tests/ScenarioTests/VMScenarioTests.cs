@@ -254,8 +254,8 @@ namespace Compute.Tests
                     Version = "14393.4048.2011170655"
                 };
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_ExtendedLocationScenario", hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3,
-                    osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, dataDiskStorageAccountType: StorageAccountTypes.PremiumLRS, extendedLocation: "MicrosoftRRDCLab1", 
-                    imageReference: imageReference, validateListAvailableSize: false);
+                    osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, dataDiskStorageAccountType: StorageAccountTypes.PremiumLRS, 
+                    imageReference: imageReference, validateListAvailableSize: false, extendedLocation: "MicrosoftRRDCLab1");
             }
             finally
             {
