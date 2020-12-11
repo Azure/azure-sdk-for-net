@@ -105,9 +105,9 @@ class AzureEngSemanticVersion {
   [bool] HasValidPrereleaseLabel()
   {
     if ($this.IsPrerelease -eq $true) {
-      if ($this.PrereleaseLabel -ne $this.DefaultPrereleaseLabel -or $this.PrereleaseLabel -ne $this.DefaultAlphaReleaseLabel) {
+      if ($this.PrereleaseLabel -ne $this.DefaultPrereleaseLabel -and $this.PrereleaseLabel -ne $this.DefaultAlphaReleaseLabel) {
         Write-Host "Unexpected pre-release identifier '$($this.PrereleaseLabel)', "`
-                   "should be '$($this.DefaultPrereleaseLabel) or $($this.DefaultAlphaReleaseLabel)'"
+                   "should be '$($this.DefaultPrereleaseLabel)' or '$($this.DefaultAlphaReleaseLabel)'"
         return $false;
       }
       if ($this.PrereleaseNumber -lt 1)
