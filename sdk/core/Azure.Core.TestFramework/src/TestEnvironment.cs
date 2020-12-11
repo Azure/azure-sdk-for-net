@@ -38,7 +38,7 @@ namespace Azure.Core.TestFramework
                 throw new InvalidOperationException("Unexpected error, repository root not found");
             }
 
-            var testProject = GetType().Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "SourcePath").Value;
+            var testProject = GetSourcePath(GetType().Assembly);
             var sdkDirectory = Path.GetFullPath(Path.Combine(RepositoryRoot, "sdk"));
             var serviceName = Path.GetFullPath(testProject)
                 .Substring(sdkDirectory.Length)
@@ -303,6 +303,18 @@ namespace Azure.Core.TestFramework
             }
 
             return _recording.GetVariable(name, null);
+        }
+
+        internal static string GetSourcePath(Assembly assembly)
+        {
+            if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+
+            var testProject = assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "SourcePath").Value;
+            if (string.IsNullOrEmpty(testProject))
+            {
+                throw new InvalidOperationException($"Unable to determine the test directory for {assembly}");
+            }
+            return testProject;
         }
     }
 }
