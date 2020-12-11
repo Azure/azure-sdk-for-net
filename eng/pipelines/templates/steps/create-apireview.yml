@@ -11,7 +11,7 @@ steps:
           -ArtifactPath ${{parameters.ArtifactPath}}/${{artifact.name}}
           -APIViewUri $(azuresdk-apiview-uri)
           -APIKey $(azuresdk-apiview-apikey)
-          -APILabel $(Build.SourceVersion)
+          -APILabel "Auto Review - $(Build.SourceVersion)"
         pwsh: true
         workingDirectory: $(Pipeline.Workspace)
       displayName: Create API Review ${{ artifact.name}}

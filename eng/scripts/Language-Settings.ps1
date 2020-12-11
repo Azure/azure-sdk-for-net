@@ -93,7 +93,12 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 function Get-dotnet-Package-Artifacts ($Location)
 {
   $pkgs = Get-ChildItem "${Location}" -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
-  if ($pkgs -and $pkgs.Count -ne 1)
+  if (!$pkgs)
+  {
+    Write-Host "$($Location) does not have any package"
+    exit(1)
+  }
+  elseif ($pkgs.Count -ne 1)
   {
     Write-Host "$($Location) should contain only one (1) published package"
     Write-Host "No of Packages $($pkgs.Count)"
