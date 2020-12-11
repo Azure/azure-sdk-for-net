@@ -33,11 +33,14 @@ namespace Azure.Identity
                 }
             }
 
-            foreach (System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>> header in request.Content.Headers)
+            if (request.Content != null)
             {
-                foreach (var value in header.Value)
+                foreach (System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>> header in request.Content.Headers)
                 {
-                    pipelineRequest.Headers.Add(header.Key, value);
+                    foreach (var value in header.Value)
+                    {
+                        pipelineRequest.Headers.Add(header.Key, value);
+                    }
                 }
             }
 
@@ -59,7 +62,7 @@ namespace Azure.Identity
                 {
                     if (!responseMessage.Headers.TryAddWithoutValidation(header.Name, values))
                     {
-                        if (!responseMessage.Content.Headers.TryAddWithoutValidation(header.Name, values))
+                        if ((responseMessage.Content == null) || !responseMessage.Content.Headers.TryAddWithoutValidation(header.Name, values))
                         {
                             throw new InvalidOperationException("Unable to add header to response or content");
                         }
