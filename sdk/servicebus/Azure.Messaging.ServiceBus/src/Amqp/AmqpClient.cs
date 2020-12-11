@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static TimeSpan CredentialRefreshBuffer { get; } = TimeSpan.FromMinutes(5);
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed = false;
+        private bool _closed;
 
         /// <summary>The currently active token to use for authorization with the Service Bus service.</summary>
         private AccessToken _accessToken;
@@ -91,7 +91,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 Scheme = options.TransportType.GetUriScheme(),
                 Host = host
-
             }.Uri;
 
             Credential = credential;
@@ -100,7 +99,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 credential,
                 options.TransportType,
                 options.WebProxy);
-
         }
 
         /// <summary>
@@ -136,7 +134,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
+        /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
@@ -147,7 +145,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override TransportReceiver CreateReceiver(
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
-            ReceiveMode receiveMode,
+            ServiceBusReceiveMode receiveMode,
             uint prefetchCount,
             string identifier,
             string sessionId,

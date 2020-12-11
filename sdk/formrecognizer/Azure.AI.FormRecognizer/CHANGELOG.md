@@ -1,21 +1,31 @@
 # Release History
 
-## 3.1.0-beta.1 (Unreleased)
+## 3.1.0-beta.2 (Unreleased)
+
+
+## 3.1.0-beta.1 (2020-11-23)
 
 ### Breaking changes
-- It defaults to the latest supported API version, which currently is `2.1-preview.1`.
+- It defaults to the latest supported service version, which currently is `2.1-preview.2`.
 
 ### New Features
+- Added integration for ASP.NET Core.
 - Added support for pre-built business card recognition.
-- Added support for providing locale info when recognizing receipts and business cards. Supported locales include support EN-US, EN-AU, EN-CA, EN-GB, EN-IN.
+- Added support for pre-built invoices recognition.
+- Added support for providing locale information when recognizing receipts and business cards. Supported locales include EN-US, EN-AU, EN-CA, EN-GB, EN-IN.
+- Added support for providing the document language in `StartRecognizeContent` when recognizing a form.
 - Added support to train and recognize custom forms with selection marks such as check boxes and radio buttons. This functionality is only available in train with labels scenarios.
+- Added support to `StartRecognizeContent` to recognize selection marks such as check boxes and radio buttons.
 - Added ability to create a composed model from the `FormTrainingClient` by calling method `StartCreateComposedModel`.
 - Added ability to pass parameter `ModelName` to `StartTraining` methods.
 - Added the properties `ModelName` and `Properties` to types `CustomFormModel` and `CustomFormModelInfo`.
 - Added type `CustomFormModelProperties` that includes information like if a model is a composed model.
 - Added property `ModelId` to `CustomFormSubmodel` and `TrainingDocumentInfo`.
 - Added properties `ModelId` and `FormTypeConfidence` to `RecognizedForm`.
-- Added support to `StartRecognizeContent` to recognize selection marks such as check boxes and radio buttons.
+- Added property `Appearance` to `FormLine` to indicate the style of the extracted text. For example, "handwriting" or "other".
+- Added property `BoundingBox` to `FormTable`.
+- Added support for `ContentType` `image/bmp` in recognize content and prebuilt models.
+- Added property `Pages` to `RecognizeContentOptions` to specify the page numbers to analyze.
 
 ## 3.0.0 (2020-08-20)
 

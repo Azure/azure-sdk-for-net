@@ -16,8 +16,9 @@ Deploys live test resources defined for a service directory to Azure.
 ```
 New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-ServiceDirectory] <String>
  [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
- [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>]
- [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>] [-ArmTemplateParameters <Hashtable>]
+ [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ### Provisioner
@@ -26,8 +27,8 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
  -TenantId <String> [-SubscriptionId <String>] -ProvisionerApplicationId <String>
  -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
- [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-Environment <String>] [-ArmTemplateParameters <Hashtable>] [-AdditionalParameters <Hashtable>]
+ [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,12 +56,7 @@ specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
 ### EXAMPLE 1
 ```
 Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
-$testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
-New-TestResources.ps1 `
-    -BaseName 'uuid123' `
-    -ServiceDirectory 'keyvault' `
-    -TestApplicationId $testAadApp.ApplicationId.ToString() `
-    -TestApplicationSecret (ConvertFrom-SecureString $testAadApp.Secret -AsPlainText)
+New-TestResources.ps1 -ServiceDirectory 'keyvault'
 ```
 
 Run this in a desktop environment to create new AAD apps and Service Principals
@@ -339,7 +335,7 @@ Accept wildcard characters: False
 ### -Environment
 Name of the cloud environment.
 The default is the Azure Public Cloud
-('PublicCloud')
+('AzureCloud')
 
 ```yaml
 Type: String
@@ -353,7 +349,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AdditionalParameters
+### -ArmTemplateParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).
 
 ```yaml
@@ -364,6 +360,36 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AdditionalParameters
+Optional key-value pairs of parameters to pass to the ARM template(s) and pre-post scripts.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnvironmentVariables
+Optional key-value pairs of parameters to set as environment variables to the shell.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: @{}
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

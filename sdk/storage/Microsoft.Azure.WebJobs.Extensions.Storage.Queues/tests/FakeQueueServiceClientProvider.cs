@@ -5,14 +5,14 @@ using System;
 using Azure.Core;
 using Azure.Storage.Queues;
 
-namespace Azure.WebJobs.Extensions.Storage.Queues.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     internal class FakeQueueServiceClientProvider : QueueServiceClientProvider
     {
         private readonly QueueServiceClient _queueServiceClient;
 
         public FakeQueueServiceClientProvider(QueueServiceClient queueServiceClient)
-            : base(null, null, null)
+            : base(null, null, null, null)
         {
             _queueServiceClient = queueServiceClient;
         }

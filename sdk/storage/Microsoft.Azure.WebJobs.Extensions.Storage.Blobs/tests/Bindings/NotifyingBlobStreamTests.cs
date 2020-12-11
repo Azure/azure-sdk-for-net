@@ -5,11 +5,10 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
 using Moq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 {
     public class NotifyingBlobStreamTests
     {
@@ -1320,7 +1319,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             // Act
             using (Stream product = CreateProductUnderTest(innerStream, committedAction))
             {
-
             }
 
             // Assert

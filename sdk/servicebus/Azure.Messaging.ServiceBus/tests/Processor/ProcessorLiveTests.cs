@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
-                    AutoComplete = autoComplete,
+                    AutoCompleteMessages = autoComplete,
                     MaxReceiveWaitTime = TimeSpan.FromSeconds(30),
                     PrefetchCount = 20
                 };
@@ -68,7 +68,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     finally
                     {
-
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
                         if (setIndex < numThreads)
                         {
@@ -111,7 +110,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
-                    AutoComplete = true,
+                    AutoCompleteMessages = true,
                     MaxReceiveWaitTime = TimeSpan.FromSeconds(30)
                 };
                 await using var processor = client.CreateProcessor(scope.QueueName, options);
@@ -151,7 +150,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     finally
                     {
-
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
                         if (setIndex < numThreads)
                         {
@@ -193,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
-                    AutoComplete = false
+                    AutoCompleteMessages = false
                 };
                 await using var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageCt = 0;
@@ -265,7 +263,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
-                    AutoComplete = false,
+                    AutoCompleteMessages = false,
                     MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(autoLockRenewalDuration)
                 };
                 await using var processor = client.CreateProcessor(scope.QueueName, options);
@@ -328,7 +326,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
-                    ReceiveMode = ReceiveMode.ReceiveAndDelete
+                    ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete
                 };
                 await using var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageProcessedCt = 0;
@@ -393,7 +391,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     if (sbException.Reason == ServiceBusFailureReason.MessagingEntityNotFound ||
                         // There is a race condition wherein the service closes the connection when getting
-                        // the request for the non-existant queue. If the connection is closed by the time
+                        // the request for the non-existent queue. If the connection is closed by the time
                         // our exception handling kicks in, we throw it as a ServiceCommunicationProblem
                         // as we cannot be sure the error wasn't due to the connection being closed,
                         // as opposed to what we know is the true cause in this case,
@@ -490,7 +488,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await sender.SendMessageAsync(GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
-                    AutoComplete = true
+                    AutoCompleteMessages = true
                 });
                 var tcs = new TaskCompletionSource<bool>();
 
@@ -529,7 +527,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await sender.SendMessageAsync(GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
-                    AutoComplete = true
+                    AutoCompleteMessages = true
                 });
                 var tcs = new TaskCompletionSource<bool>();
 
@@ -559,6 +557,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Task ExceptionHandler(ProcessErrorEventArgs args)
                 {
                     tcs.SetResult(true);
+                    Assert.IsNotNull(args.CancellationToken);
                     if (!(args.Exception is TestException))
                     {
                         Assert.Fail(args.Exception.ToString());

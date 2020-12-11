@@ -11,11 +11,11 @@ description: Samples for the Azure.Messaging.EventHubs client library
 
 # Azure.Messaging.EventHubs Samples
 
-The Azure Event Hubs client library offers samples in two forms.  Common application scenarios are presented as markdown documents, providing a detailed explanation of context while also highlighting the related snippets of code.  More specialized scenarios are presented as stand-alone projects, allowing illustration of the deeper end-to-end context and exploring interactively.
+The Azure Event Hubs client library offers samples in two forms. Common application scenarios are presented as markdown documents, providing a detailed explanation of context while also demonstrating implementation details with snippets of code.  More specialized scenarios are presented as stand-alone projects to both illustrate the deeper end-to-end context and allow exploring interactively.  
 
-The markdown samples make use of a numeric naming scheme, with the lower numbers concentrating on the more basic scenarios to help get started quickly.  Though each of these samples is independent, it will assume an understanding of the content discussed in earlier samples.
+The markdown-based samples are ordered by increasing complexity, starting with more basic scenarios to help get started quickly.  Though each sample is independent, they will assume an understanding of the content discussed in earlier samples.
 
-Each of the application sample are intended to be self-contained and focused on illustrating one specific scenario.  The simplest way to begin is to launch the project for debugging in Visual Studio or your preferred IDE and provide the Event Hubs connection information in response to the prompts.  Each of these sample applications is accompanied by a dedicated README, offering more specific detail about its hosting needs and operation. 
+Each of the application samples are intended to be self-contained and focused on illustrating one specific scenario.  The simplest way to begin is to launch the project for debugging in Visual Studio, or your preferred IDE, and provide the Event Hubs connection information in response to the prompts.  Each of these sample applications is accompanied by a dedicated README, offering more specific detail about its hosting needs and operation. 
 
 ## Getting started
 
@@ -40,14 +40,14 @@ To quickly create a basic set of Event Hubs resources in Azure and to receive a 
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.EventHubs
+dotnet add package Azure.Messaging.EventHubs --version 5.3.0-beta.4
 ```
 
 ### Authenticate the client
 
-For the Event Hubs client library to interact with an Event Hub, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating an Event Hubs namespace.  If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get an Event Hubs connection string](https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string).
+For the Event Hubs client library to interact with an Event Hub, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating an Event Hubs namespace.  If you aren't familiar with using connection strings with Event Hubs, you may wish to follow the step-by-step guide to [get an Event Hubs connection string](https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string).
 
-## Basic samples
+## Common samples
 
 - [Hello world](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample01_HelloWorld.md)  
   An introduction to Event Hubs, illustrating the basic flow of events through an Event Hub, with the goal of quickly allowing you to view events being published and read from the Event Hubs service.  
@@ -69,10 +69,6 @@ For the Event Hubs client library to interact with an Event Hub, it will need to
   
 - [Earlier Language Versions](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample07_EarlierLanguageVersions.md)  
   A demonstration of how to interact with the client library using earlier versions of C#, where newer syntax for asynchronous enumeration and disposal are not available.    
-
-## Scenario samples
-
-**COMING SOON**
 
 ## Contributing  
 

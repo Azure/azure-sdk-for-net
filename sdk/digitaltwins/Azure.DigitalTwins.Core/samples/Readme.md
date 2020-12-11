@@ -22,6 +22,8 @@ The samples project demonstrates the following:
 
 ## Creating the digital twins client
 
+### Simple creation
+
 To create a new digital twins client, you need the endpoint to an Azure Digital Twin instance and credentials.
 In the sample below, you can set `AdtEndpoint`, `TenantId`, `ClientId`, and `ClientSecret` as command-line arguments.
 The client requires an instance of [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
@@ -40,13 +42,31 @@ var client = new DigitalTwinsClient(
     tokenCredential);
 ```
 
-Also, if you need to override pipeline behavior, such as provide your own HttpClient instance, you can do that via the other constructor that takes a client options.
+### Override options
+
+If you need to override pipeline behavior, such as provide your own HttpClient instance, you can do that via the other constructor that takes a
+[DigitalTwinsClientOptions](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/src/DigitalTwinsClientOptions.cs) parameter.
 It provides an opportunity to override default behavior including:
 
-- Specifying API version
 - Overriding [transport](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md)
 - Enabling [diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md)
 - Controlling [retry strategy](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md)
+- Specifying API version
+- Object serializer (see below)
+
+#### Object serializer
+
+The digital twins client has methods that will serialize your custom digital twins and relationship types for transport, and deserialize the response back to a type specified by you.
+The default object serializer, [JsonObjectSerializer](https://docs.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet),
+works using the `System.Text.Json` library.
+It uses a default [JsonSerializerOptions](https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions?view=net-5.0) instance.
+
+Set the `Serializer` property to a custom instance of `JsonObjectSerializer` or your own implementation that inherits from
+[ObjectSerializer](https://docs.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet).
+
+One reason for customizing would be to provide custom de/serialization settings, for example setting the `IgnoreNullValues` property to `true`.
+See more examples and options of working with `JsonSerializerOptions` [here](https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0#ignore-all-null-value-properties).
+This would prevent unset properties on your digital twin or relationship from being included in the payload sent to the service.
 
 ## Create, list, decommission, and delete models
 

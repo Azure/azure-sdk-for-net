@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventHubs
         private SharedAccessSignatureCredential SharedAccessSignatureCredential { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubsSharedAccessKeyCredential"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubsSharedAccessKeyCredential" /> class.
         /// </summary>
         ///
         /// <param name="sharedAccessKeyName">The name of the shared access key to be used for authorization, as reported by the Azure portal.</param>
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubsSharedAccessKeyCredential"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubsSharedAccessKeyCredential" /> class.
         /// </summary>
         ///
         /// <param name="sharedAccessSignature"> The shared access signature that forms the basis of this security token.</param>
@@ -164,7 +164,6 @@ namespace Azure.Messaging.EventHubs
         internal SharedAccessSignatureCredential AsSharedAccessSignatureCredential(string eventHubResource,
                                                                                    TimeSpan? signatureValidityDuration = default)
         {
-
             SharedAccessSignatureCredential = string.IsNullOrEmpty(SharedAccessSignature)
                 ? new SharedAccessSignatureCredential(new SharedAccessSignature(eventHubResource, SharedAccessKeyName, SharedAccessKey, signatureValidityDuration))
                 : new SharedAccessSignatureCredential(new SharedAccessSignature(SharedAccessSignature));

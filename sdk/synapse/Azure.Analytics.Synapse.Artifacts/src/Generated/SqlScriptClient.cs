@@ -224,5 +224,65 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        /// <summary> Renames a sqlScript. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="request"/> is null. </exception>
+        public virtual async Task<SqlScriptRenameSqlScriptOperation> StartRenameSqlScriptAsync(string sqlScriptName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (sqlScriptName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlScriptName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartRenameSqlScript");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RenameSqlScriptAsync(sqlScriptName, request, cancellationToken).ConfigureAwait(false);
+                return new SqlScriptRenameSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameSqlScriptRequest(sqlScriptName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a sqlScript. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="request"/> is null. </exception>
+        public virtual SqlScriptRenameSqlScriptOperation StartRenameSqlScript(string sqlScriptName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (sqlScriptName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlScriptName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartRenameSqlScript");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.RenameSqlScript(sqlScriptName, request, cancellationToken);
+                return new SqlScriptRenameSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameSqlScriptRequest(sqlScriptName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

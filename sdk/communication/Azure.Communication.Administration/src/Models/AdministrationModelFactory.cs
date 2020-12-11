@@ -22,15 +22,6 @@ namespace Azure.Communication.Administration.Models
             => new AcquiredPhoneNumber(phoneNumber, acquiredCapabilities, availableCapabilities);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AcquiredPhoneNumbers"/> class.
-        /// </summary>
-        /// <param name="phoneNumbers"> Represents a list of phone numbers. </param>
-        /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        /// <returns>A new <see cref="AcquiredPhoneNumbers"/> instance for mocking.</returns>
-        public static AcquiredPhoneNumbers AcquiredPhoneNumbers(IReadOnlyList<AcquiredPhoneNumber> phoneNumbers, string nextLink)
-            => new AcquiredPhoneNumbers(phoneNumbers, nextLink);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AreaCodes"/> class.
         /// </summary>
         /// <param name="primaryAreaCodes"> Represents the list of primary area codes. </param>
@@ -60,12 +51,13 @@ namespace Azure.Communication.Administration.Models
             => new CommunicationUserToken(id, token, expiresOn);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateSearchResponse"/> class.
+        /// Initializes a new instance of the <see cref="PhoneNumberReservationOperation"/> class.
         /// </summary>
-        /// <param name="searchId"> The search id of the search that was created. </param>
-        /// <returns>A new <see cref="CreateSearchResponse"/> instance for mocking.</returns>
-        public static CreateSearchResponse CreateSearchResponse(string searchId)
-            => new CreateSearchResponse(searchId);
+        /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>
+        /// <param name="reservationId"> The reservation id that was created. </param>
+        /// <returns>A new <see cref="PhoneNumberReservationOperation"/> instance for mocking.</returns>
+        public static PhoneNumberReservationOperation PhoneNumberReservationOperation(PhoneNumberAdministrationClient client, string reservationId)
+            => new PhoneNumberReservationOperation(client, reservationId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LocationOptions"/> class.
@@ -113,15 +105,6 @@ namespace Azure.Communication.Administration.Models
             => new NumberUpdateCapabilities(@add, @remove);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberCountries"/> class.
-        /// </summary>
-        /// <param name="countries"> Represents the underlying list of countries. </param>
-        /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        /// <returns>A new <see cref="PhoneNumberCountries"/> instance for mocking.</returns>
-        public static PhoneNumberCountries PhoneNumberCountries(IReadOnlyList<PhoneNumberCountry> countries, string nextLink)
-            => new PhoneNumberCountries(countries, nextLink);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberCountry"/> class.
         /// </summary>
         /// <param name="localizedName"> Represents the name of the country. </param>
@@ -129,15 +112,6 @@ namespace Azure.Communication.Administration.Models
         /// <returns>A new <see cref="PhoneNumberCountry"/> instance for mocking.</returns>
         public static PhoneNumberCountry PhoneNumberCountry(string localizedName, string countryCode)
             => new PhoneNumberCountry(localizedName, countryCode);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberEntities"/> class.
-        /// </summary>
-        /// <param name="entities"> The underlying list of entities. </param>
-        /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        /// <returns>A new <see cref="PhoneNumberEntities"/> instance for mocking.</returns>
-        public static PhoneNumberEntities PhoneNumberEntities(IReadOnlyList<PhoneNumberEntity> entities, string nextLink)
-            => new PhoneNumberEntities(entities, nextLink);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberEntity"/> class.
@@ -176,9 +150,9 @@ namespace Azure.Communication.Administration.Models
             => new PhoneNumberReleaseDetails(status, errorCode);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberSearch"/> class.
+        /// Initializes a new instance of the <see cref="PhoneNumberReservation"/> class.
         /// </summary>
-        /// <param name="searchId"> The id of the search. </param>
+        /// <param name="reservationId"> The id of the reservation. </param>
         /// <param name="displayName"> The name of the search. </param>
         /// <param name="createdAt"> The creation time of the search. </param>
         /// <param name="description"> The description of the search. </param>
@@ -190,9 +164,9 @@ namespace Azure.Communication.Administration.Models
         /// <param name="phoneNumbers"> The list of phone numbers in the search, in the case the status is reserved or success. </param>
         /// <param name="reservationExpiryDate"> The date that search expires and the numbers become available. </param>
         /// <param name="errorCode"> The error code of the search. </param>
-        /// <returns>A new <see cref="PhoneNumberSearch"/> instance for mocking.</returns>
-        public static PhoneNumberSearch PhoneNumberSearch(string searchId, string displayName, DateTimeOffset? createdAt, string description, IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, IReadOnlyList<LocationOptionsDetails> locationOptions, SearchStatus? status, IReadOnlyList<string> phoneNumbers, DateTimeOffset? reservationExpiryDate, int? errorCode)
-            => new PhoneNumberSearch(searchId, displayName, createdAt, description, phonePlanIds, areaCode, quantity, locationOptions, status, phoneNumbers, reservationExpiryDate, errorCode);
+        /// <returns>A new <see cref="PhoneNumberReservation"/> instance for mocking.</returns>
+        public static PhoneNumberReservation PhoneNumberReservation(string reservationId, string displayName, DateTimeOffset? createdAt, string description, IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, IReadOnlyList<LocationOptionsDetails> locationOptions, ReservationStatus? status, IReadOnlyList<string> phoneNumbers, DateTimeOffset? reservationExpiryDate, int? errorCode)
+            => new PhoneNumberReservation(reservationId, displayName, createdAt, description, phonePlanIds, areaCode, quantity, locationOptions, status, phoneNumbers, reservationExpiryDate, errorCode);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhonePlan"/> class.
@@ -215,15 +189,6 @@ namespace Azure.Communication.Administration.Models
             => new PhonePlanGroup(phonePlanGroupId, localizedName, localizedDescription);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PhonePlanGroups"/> class.
-        /// </summary>
-        /// <param name="phonePlanGroupsValue"> The underlying list of phone plan groups. </param>
-        /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        /// <returns>A new <see cref="PhonePlanGroups"/> instance for mocking.</returns>
-        public static PhonePlanGroups PhonePlanGroups(IReadOnlyList<PhonePlanGroup> phonePlanGroupsValue, string nextLink)
-            => new PhonePlanGroups(phonePlanGroupsValue, nextLink);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PhonePlansResponse"/> class.
         /// </summary>
         /// <param name="phonePlans"> Represents the underlying list of phone plans. </param>
@@ -244,12 +209,22 @@ namespace Azure.Communication.Administration.Models
             => new RateInformation(monthlyRate, currencyType, rateErrorMessage);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReleaseResponse"/> class.
+        /// Initializes a new instance of the <see cref="ReleasePhoneNumberOperation"/> class.
         /// </summary>
         /// <param name="releaseId"> The release id of a created release. </param>
-        /// <returns>A new <see cref="ReleaseResponse"/> instance for mocking.</returns>
-        public static ReleaseResponse ReleaseResponse(string releaseId)
-            => new ReleaseResponse(releaseId);
+        /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>
+        /// <returns>A new <see cref="ReleasePhoneNumberOperation"/> instance for mocking.</returns>
+        public static ReleasePhoneNumberOperation ReleasePhoneNumberOperation(PhoneNumberAdministrationClient client, string releaseId)
+            => new ReleasePhoneNumberOperation(client, releaseId);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PhoneNumberReservationPurchaseOperation"/> class.
+        /// </summary>
+        /// <param name="reservationId"> The reservation id of a created reservation. </param>
+        /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>
+        /// <returns>A new <see cref="PhoneNumberReservationPurchaseOperation"/> instance for mocking.</returns>
+        public static PhoneNumberReservationPurchaseOperation PhoneNumberReservationPurchaseOperation(PhoneNumberAdministrationClient client, string reservationId)
+            => new PhoneNumberReservationPurchaseOperation(client, reservationId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateNumberCapabilitiesResponse"/> class.

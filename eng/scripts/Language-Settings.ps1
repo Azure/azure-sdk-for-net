@@ -82,6 +82,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
   return New-Object PSObject -Property @{
     PackageId      = $pkgId
     PackageVersion = $pkgVersion
+    ReleaseTag     = "$($pkgId)_$($pkgVersion)"
     Deployable     = $forceCreate -or !(IsNugetPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion)
     ReleaseNotes   = $releaseNotes
     ReadmeContent  = $readmeContent
@@ -109,7 +110,7 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
   New-Item -ItemType directory -Path $TempDir
 
   Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath $DocsStagingDir
-  $pkgProperties = ParseNugetPackage -pkg $PublishedPkgs[0].FullName -workingDirectory $TempDir
+  $pkgProperties = Get-dotnet-PackageInfoFromPackageFile -pkg $PublishedPkgs[0].FullName -workingDirectory $TempDir
 
   Write-Host "Start Upload for $($pkgProperties.ReleaseTag)"
   Write-Host "DocDir $($DocsStagingDir)"
@@ -119,6 +120,8 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 }
 
 function Get-dotnet-GithubIoDocIndex() {
+  # Update the main.js and docfx.json language content
+  UpdateDocIndexFiles -appTitleLang ".NET"
   # Fetch out all package metadata from csv file.
   $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
   # Get the artifacts name from blob storage
@@ -127,4 +130,47 @@ function Get-dotnet-GithubIoDocIndex() {
   $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
   # Generate yml/md toc files and build site.
   GenerateDocfxTocContent -tocContent $tocContent -lang "NET"
+}
+
+# details on CSV schema can be found here
+# https://review.docs.microsoft.com/en-us/help/onboard/admin/reference/dotnet/documenting-nuget?branch=master#set-up-the-ci-job
+function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$null){
+  $csvLoc = (Join-Path -Path $ciRepo -ChildPath $locationInDocRepo)
+  
+  if (-not (Test-Path $csvLoc)) {
+    Write-Error "Unable to locate package csv at location $csvLoc, exiting."
+    exit(1)
+  }
+
+  $allCSVRows = Get-Content $csvLoc
+  $visibleInCI = @{}
+
+  # first pull what's already available
+  for ($i=0; $i -lt $allCSVRows.Length; $i++) {
+    $pkgDef = $allCSVRows[$i]
+
+    # get rid of the modifiers to get just the package id
+    $id = $pkgDef.split(",")[1] -replace "\[.*?\]", ""
+
+    $visibleInCI[$id] = $i
+  }
+
+  foreach ($releasingPkg in $pkgs) {
+    $installModifiers = "tfm=netstandard2.0"
+    if ($releasingPkg.IsPrerelease) {
+      $installModifiers += ";isPrerelease=true"
+    }
+    $lineId = $releasingPkg.PackageId.Replace(".","").ToLower()
+
+    if ($visibleInCI.ContainsKey($releasingPkg.PackageId)) {
+      $packagesIndex = $visibleInCI[$releasingPkg.PackageId]
+      $allCSVRows[$packagesIndex] = "$($lineId),[$installModifiers]$($releasingPkg.PackageId)"
+    }
+    else {
+      $newItem = "$($lineId),[$installModifiers]$($releasingPkg.PackageId)"
+      $allCSVRows += ($newItem)
+    }
+  }
+
+  Set-Content -Path $csvLoc -Value $allCSVRows
 }

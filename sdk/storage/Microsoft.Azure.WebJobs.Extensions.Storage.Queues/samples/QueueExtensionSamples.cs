@@ -1,19 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests
 {
     public class BlobExtensionSamples
     {

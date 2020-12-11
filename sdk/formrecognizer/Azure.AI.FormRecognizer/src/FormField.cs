@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Models
             Value = new FieldValue(new FieldValue_internal(field.Value.Text), readResults);
         }
 
-        internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults, bool isBusinessCard = default)
+        internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults)
         {
             Confidence = fieldValue.Confidence ?? Constants.DefaultConfidenceValue;
             Name = name;
@@ -53,15 +53,12 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 IReadOnlyList<FormElement> fieldElements = ConvertTextReferences(fieldValue.Elements, readResults);
 
-                // TODO: FormEnum<T> ?
                 FieldBoundingBox boundingBox = new FieldBoundingBox(fieldValue.BoundingBox);
 
-                int fieldPage = isBusinessCard ? CalculatePage(fieldValue) : fieldValue.Page.Value;
-
-                ValueData = new FieldData(boundingBox, fieldPage, fieldValue.Text, fieldElements);
+                ValueData = new FieldData(boundingBox, fieldValue.Page.Value, fieldValue.Text, fieldElements);
             }
 
-            Value = new FieldValue(fieldValue, readResults, isBusinessCard);
+            Value = new FieldValue(fieldValue, readResults);
         }
 
         /// <summary>
@@ -122,9 +119,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         private static FormElement ResolveTextReference(IReadOnlyList<ReadResult> readResults, string reference)
         {
-            // TODO: Add additional validations here.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10363
-
             // Example: the following should result in PageIndex = 3, LineIndex = 7, WordIndex = 12
             // "#/analyzeResult/readResults/3/lines/7/words/12" from DocumentResult
             // "#/readResults/3/lines/7/words/12" from PageResult
@@ -161,30 +155,6 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             throw new InvalidOperationException($"Failed to parse element reference: {reference}");
-        }
-
-        /// <summary>
-        /// Business Cards pre-built model doesn't return a page number for the `ContactNames` field.
-        /// This function looks into the FieldValue_internal to see if it corresponds to
-        /// `ContactNames` and verifies that the page value before returning it.
-        /// </summary>
-        /// <returns>Page value if the field is `ContactNames` for Business cards. If not, defaults to 1.</returns>
-        private static int CalculatePage(FieldValue_internal field)
-        {
-            int page = 1;
-            if (field.Type == FieldValueType.Dictionary)
-            {
-                IReadOnlyDictionary<string, FieldValue_internal> possibleContactNamesField = field.ValueObject;
-                if (possibleContactNamesField.Count == 2 && possibleContactNamesField.ContainsKey("FirstName")
-                    && possibleContactNamesField.ContainsKey("LastName"))
-                {
-                    if (possibleContactNamesField["FirstName"].Page == possibleContactNamesField["LastName"].Page)
-                    {
-                        page = possibleContactNamesField["FirstName"].Page.Value;
-                    }
-                }
-            }
-            return page;
         }
     }
 }

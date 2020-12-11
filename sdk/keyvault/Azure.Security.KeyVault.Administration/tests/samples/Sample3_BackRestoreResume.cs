@@ -39,19 +39,19 @@ namespace Azure.Security.KeyVault.Administration.Tests
             BackupOperation backupOperation = new BackupOperation(client, backupOperationId);
 
             // Wait for completion of the BackupOperation.
-            Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             // Get the Uri for the location of you backup blob.
-            Uri backupFolderUri = backupResult.Value;
+            Uri folderUri = backupResult.Value.FolderUri;
             #endregion
 
-            Assert.That(backupFolderUri, Is.Not.Null);
+            Assert.That(folderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
 
             await WaitForOperationAsync();
 
             // Start the restore using the backupBlobUri returned from a previous BackupOperation.
-            RestoreOperation originalRestoreOperation = await Client.StartRestoreAsync(backupFolderUri, sasToken);
+            RestoreOperation originalRestoreOperation = await Client.StartRestoreAsync(folderUri, sasToken);
             var restoreOperationId = originalRestoreOperation.Id;
 
             #region Snippet:ResumeRestoreAsync
@@ -62,11 +62,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
             RestoreOperation restoreOperation = new RestoreOperation(client, restoreOperationId);
 
             // Wait for completion of the RestoreOperation.
-            Response restoreResult = await restoreOperation.WaitForCompletionAsync();
+            RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
 
-            Assert.That(restoreResult, Is.Not.Null);
             Assert.That(restoreOperation.HasValue, Is.True);
+            Assert.That(restoreResult.StartTime, Is.Not.EqualTo(default));
+            Assert.That(restoreResult.EndTime, Is.Not.EqualTo(default));
 
             await WaitForOperationAsync();
         }

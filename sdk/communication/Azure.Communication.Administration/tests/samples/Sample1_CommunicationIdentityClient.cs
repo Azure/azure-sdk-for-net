@@ -121,6 +121,5 @@ namespace Azure.Communication.Administration.Samples
                 Assert.Fail($"Unexpected error: {ex}");
             }
         }
-
     }
 }

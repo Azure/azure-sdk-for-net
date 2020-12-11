@@ -1,14 +1,51 @@
 {
   "Entries": [
     {
+        "RequestUri": "https://aiimdssavault.vault.azure.net/secrets/identitytestsecret/?api-version=7.0",
+        "RequestMethod": "GET",
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "User-Agent": [
+                "azsdk-net-Security.KeyVault.Secrets/4.0.2",
+                "(.NET Core 3.1.9; Linux 5.4.0-1031-azure #32~18.04.1-Ubuntu SMP Tue Oct 6 10:03:22 UTC 2020)"
+            ],
+            "x-ms-client-request-id": "6694c83fbb39aeaa4b3c379c4de8753e",
+            "x-ms-return-client-request-id": "true"
+        },
+        "RequestBody": null,
+        "StatusCode": 401,
+        "ResponseHeaders": {
+            "Cache-Control": "no-cache",
+            "Content-Length": "87",
+            "Content-Type": "application/json; charset=utf-8",
+            "Date": "Wed, 11 Nov 2020 22:25:20 GMT",
+            "Expires": "-1",
+            "Pragma": "no-cache",
+            "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+            "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://vault.azure.net\u0022",
+            "X-Content-Type-Options": "nosniff",
+            "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=52.247.196.8;act_addr_fam=InterNetwork;",
+            "x-ms-keyvault-region": "westus",
+            "x-ms-keyvault-service-version": "1.2.58.0",
+            "x-ms-request-id": "482d9328-3345-4f08-9afb-1e7d5b7071b2",
+            "X-Powered-By": "ASP.NET"
+        },
+        "ResponseBody": {
+            "error": {
+                "code": "Unauthorized",
+                "message": "Request is missing a Bearer or PoP token."
+            }
+        }
+    },
+    {
       "RequestUri": "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01\u0026resource=https%3A%2F%2Fvault.azure.net",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Metadata": "true",
-        "traceparent": "00-993c29186250454487046bd92331f959-6e93c3a1bb41374d-00",
         "User-Agent": [
-          "azsdk-net-Identity/1.2.0-dev.20200127.1\u002Bb092cdd7b50515ee1d30d938b97630f791599312",
-          "(.NET Core 4.6.27617.05; Linux 5.0.0-1027-azure #29~18.04.1-Ubuntu SMP Mon Nov 25 21:18:57 UTC 2019)"
+          "azsdk-net-Identity/1.3.0-alpha.20201111.1",
+          "(.NET Core 3.1.9; Linux 5.4.0-1031-azure #32~18.04.1-Ubuntu SMP Tue Oct 6 10:03:22 UTC 2020)"
         ],
         "x-ms-client-request-id": "416eff64d671f0c7f63b09ffb7151b7c",
         "x-ms-return-client-request-id": "true"
@@ -16,18 +53,18 @@
       "RequestBody": "U2FuaXRpemVk",
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1563",
+        "Content-Length": "236",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 27 Jan 2020 18:58:14 GMT",
-        "Server": "Microsoft-IIS/10.0"
+        "Date": "Wed, 11 Nov 2020 22:25:20 GMT",
+        "Server": "IMDS/150.870.65.478"
       },
       "ResponseBody": {
         "access_token": "Sanitized",
         "client_id": "e01dc05f-d1ad-4937-9354-4253a70ede84",
-        "expires_in": "28799",
-        "expires_on": "1580179303",
-        "ext_expires_in": "28799",
-        "not_before": "1580150203",
+        "expires_in": "83571",
+        "expires_on": "1605217091",
+        "ext_expires_in": "86399",
+        "not_before": "1605130391",
         "resource": "https://vault.azure.net",
         "token_type": "Bearer"
       }
@@ -39,10 +76,9 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "traceparent": "00-993c29186250454487046bd92331f959-e082d305fd183042-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Secrets/4.0.1\u002Bd9d93df6c75797a6027c125ab3ff61b2ac894102",
-          "(.NET Core 4.6.27617.05; Linux 5.0.0-1027-azure #29~18.04.1-Ubuntu SMP Mon Nov 25 21:18:57 UTC 2019)"
+          "azsdk-net-Security.KeyVault.Secrets/4.0.2",
+          "(.NET Core 3.1.9; Linux 5.4.0-1031-azure #32~18.04.1-Ubuntu SMP Tue Oct 6 10:03:22 UTC 2020)"
         ],
         "x-ms-client-request-id": "60d9a245e61148b8bc0818e19d4cf067",
         "x-ms-return-client-request-id": "true"
@@ -51,32 +87,27 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "255",
+        "Content-Length": "222",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 27 Jan 2020 18:58:14 GMT",
+        "Date": "Wed, 11 Nov 2020 22:25:20 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=52.233.71.49;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=52.247.196.8;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
-        "x-ms-keyvault-service-version": "1.1.0.891",
-        "x-ms-request-id": "4254aaa9-c530-45f6-bdef-dbe2f01fc178",
+        "x-ms-keyvault-service-version": "1.2.58.0",
+        "x-ms-request-id": "132e5844-7b84-4b82-8f2b-83f0f8db5e73",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "value": "value",
-        "id": "https://aiimdssavault.vault.azure.net/secrets/identitytestsecret/7eb9f2488300498b8695d6dc6c6cdf83",
+        "id": "https://aiimdssavault.vault.azure.net/secrets/identitytestsecret/1d6f7abfa7b1409284a181751d3650b6",
         "attributes": {
           "enabled": true,
-          "created": 1576100636,
-          "updated": 1576100636,
+          "created": 1605131038,
+          "updated": 1605131038,
           "recoveryLevel": "Purgeable"
-        },
-        "tags": {
-          "file-encoding": "utf-8"
         }
       }
     }
@@ -84,6 +115,12 @@
   "Variables": {
     "IDENTITYTEST_IMDSTEST_ENABLE": "true",
     "IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT": "https://aiimdssavault.vault.azure.net/",
+    "IDENTITY_ENDPOINT": null,
+    "IDENTITY_HEADER": null,
+    "IDENTITY_SERVER_THUMBPRINT": null,
+    "IMDS_ENDPOINT": null,
+    "MSI_ENDPOINT": null,
+    "MSI_SECRET": null,
     "RandomSeed": "2115137680"
   }
 }

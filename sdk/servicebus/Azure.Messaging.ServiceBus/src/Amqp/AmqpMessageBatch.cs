@@ -31,10 +31,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly long _reservedSize;
 
         /// <summary>A flag that indicates whether or not the instance has been disposed.</summary>
-        private bool _disposed = false;
+        private bool _disposed;
 
         /// <summary>The size of the batch, in bytes, as it will be sent via the AMQP transport.</summary>
-        private long _sizeBytes = 0;
+        private long _sizeBytes;
 
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the messages in the batch as

@@ -291,7 +291,6 @@ namespace Azure.ResourceManager.Compute.Tests
             await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, vm.Name));
         }
 
-
         //Not used
         public static string ReadFromEmbeddedResource(Type type, string resourceName)
         {

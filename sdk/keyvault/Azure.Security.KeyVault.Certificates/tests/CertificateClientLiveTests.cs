@@ -9,7 +9,6 @@ using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Operators;
 using Org.BouncyCastle.Math;
-using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.X509;
 using System;
@@ -17,6 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -293,7 +293,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.NotNull(certificate);
 
             Assert.AreEqual(certificate.Name, certName);
-
         }
 
         [Test]
@@ -511,7 +510,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             AsymmetricCipherKeyPair caPrivateKey;
             using (StringReader caPrivateKeyReader = new StringReader(CaPrivateKeyPem))
             {
-                PemReader reader = new PemReader(caPrivateKeyReader);
+                Org.BouncyCastle.OpenSsl.PemReader reader = new Org.BouncyCastle.OpenSsl.PemReader(caPrivateKeyReader);
                 caPrivateKey = (AsymmetricCipherKeyPair)reader.ReadObject();
             }
 
@@ -737,6 +736,130 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual(certificatePolicy.CertificateTransparency, updatePolicy.CertificateTransparency);
             Assert.AreEqual(certificatePolicy.ContentType, updatePolicy.ContentType);
             Assert.AreEqual(certificatePolicy.KeySize, updatePolicy.KeySize);
+        }
+
+        [TestCase("application/x-pkcs12")]
+        [TestCase("application/x-pem-file", Ignore = "Investigate downlevel creation with PEM: https://github.com/Azure/azure-sdk-for-net/issues/16897")]
+        public async Task DownloadLatestCertificate(string contentType)
+        {
+            string name = Recording.GenerateId();
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Rsa,
+                Exportable = true,
+                ReuseKey = false,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DataEncipherment,
+                },
+                CertificateTransparency = false,
+                ContentType = contentType,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await operation.WaitForCompletionAsync();
+
+            KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
+
+            using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+            using RSA pubkey = (RSA)pub.PublicKey.Key;
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");
+            byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
+
+            using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
+            Assert.IsTrue(x509certificate.HasPrivateKey);
+
+            using RSA rsa = (RSA)x509certificate.PrivateKey;
+            byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
+
+            CollectionAssert.AreEqual(plaintext, decrypted);
+        }
+
+        [TestCase("application/x-pkcs12")]
+        [TestCase("application/x-pem-file", Ignore = "Investigate downlevel creation with PEM: https://github.com/Azure/azure-sdk-for-net/issues/16897")]
+        public async Task DownloadVersionedCertificate(string contentType)
+        {
+            string name = Recording.GenerateId();
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Rsa,
+                Exportable = true,
+                ReuseKey = false,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DataEncipherment,
+                },
+                CertificateTransparency = false,
+                ContentType = contentType,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await operation.WaitForCompletionAsync();
+
+            KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
+            string version = certificate.Properties.Version;
+
+            using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+            using RSA pubkey = (RSA)pub.PublicKey.Key;
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");
+            byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
+
+            // Create a new certificate version that is not exportable just to further prove we are not downloading it.
+            policy.Exportable = false;
+            operation = await Client.StartCreateCertificateAsync(name, policy);
+
+            await operation.WaitForCompletionAsync();
+
+            certificate = await Client.GetCertificateAsync(name);
+            Assert.AreNotEqual(version, certificate.Properties.Version);
+
+            // Now download the certificate and test decryption.
+            using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name, version);
+            Assert.IsTrue(x509certificate.HasPrivateKey);
+
+            using RSA rsa = (RSA)x509certificate.PrivateKey;
+            byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
+
+            CollectionAssert.AreEqual(plaintext, decrypted);
+        }
+
+        [TestCase("application/x-pkcs12")]
+        [TestCase("application/x-pem-file", Ignore = "Investigate downlevel creation with PEM: https://github.com/Azure/azure-sdk-for-net/issues/16897")]
+        public async Task DownloadNonExportableCertificate(string contentType)
+        {
+            string name = Recording.GenerateId();
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Rsa,
+                Exportable = false,
+                ReuseKey = false,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DataEncipherment,
+                },
+                CertificateTransparency = false,
+                ContentType = contentType,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await operation.WaitForCompletionAsync();
+
+            using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
+            Assert.IsFalse(x509certificate.HasPrivateKey);
         }
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy

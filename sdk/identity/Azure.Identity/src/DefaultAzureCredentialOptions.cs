@@ -60,13 +60,13 @@ namespace Azure.Identity
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading
         /// authentication details from the process' environment variables.
         /// </summary>
-        public bool ExcludeEnvironmentCredential { get; set; } = false;
+        public bool ExcludeEnvironmentCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="ManagedIdentityCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables authenticating with managed identity endpoints.
         /// </summary>
-        public bool ExcludeManagedIdentityCredential { get; set; } = false;
+        public bool ExcludeManagedIdentityCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="SharedTokenCacheCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
@@ -83,17 +83,16 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies whether the <see cref="AzureCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// </summary>
-        public bool ExcludeAzureCliCredential { get; set; } = false;
+        public bool ExcludeAzureCliCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="VisualStudioCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// </summary>
-        public bool ExcludeVisualStudioCredential { get; set; } = false;
-
+        public bool ExcludeVisualStudioCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="VisualStudioCodeCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// </summary>
-        public bool ExcludeVisualStudioCodeCredential { get; set; } = false;
+        public bool ExcludeVisualStudioCodeCredential { get; set; }
     }
 }

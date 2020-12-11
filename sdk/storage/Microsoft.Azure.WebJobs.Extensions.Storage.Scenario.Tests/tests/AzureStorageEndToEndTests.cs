@@ -11,14 +11,15 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 {
     /// <summary>
     /// Various E2E tests that use only the public surface and the real Azure storage
@@ -373,7 +374,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     })
                     .Build();
 
-                this.QueueServiceClient = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
+                var queueOptions = new QueueClientOptions() { MessageEncoding = QueueMessageEncoding.Base64 };
+                this.QueueServiceClient = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString, queueOptions);
                 this.BlobServiceClient = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
             }
 

@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/qnamaker/v5.0-preview.1/alterations/some-placeholder-string",
-      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2FsdGVyYXRpb25zL3NvbWUtcGxhY2Vob2xkZXItc3RyaW5n",
+      "RequestUri": "/qnamaker/v5.0-preview.1/alterations",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2FsdGVyYXRpb25z",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"wordAlterations\": [\r\n    {\r\n      \"alterations\": [\r\n        \"qnamaker\",\r\n        \"qna maker\"\r\n      ]\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "FxVersion/4.6.29220.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/3.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -24,10 +24,10 @@
       },
       "ResponseHeaders": {
         "x-envoy-upstream-service-time": [
-          "375"
+          "667"
         ],
         "apim-request-id": [
-          "e4919bf7-2b56-49a5-8404-5b5762b35373"
+          "4743075b-3e1a-4da3-b5b5-713d94f2c3cc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -36,7 +36,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 19 Oct 2020 18:06:33 GMT"
+          "Tue, 10 Nov 2020 17:47:43 GMT"
         ],
         "Content-Length": [
           "0"
@@ -46,8 +46,8 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/qnamaker/v5.0-preview.1/alterations/any-other-placeholder-string",
-      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2FsdGVyYXRpb25zL2FueS1vdGhlci1wbGFjZWhvbGRlci1zdHJpbmc=",
+      "RequestUri": "/qnamaker/v5.0-preview.1/alterations",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2FsdGVyYXRpb25z",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -58,15 +58,15 @@
           "FxVersion/4.6.29220.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "x-envoy-upstream-service-time": [
-          "323"
+          "208"
         ],
         "apim-request-id": [
-          "361ee1f8-6f74-456a-86ea-b70bf484b43b"
+          "6f813420-5ba3-472b-9c05-2280a99998fc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -75,7 +75,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 19 Oct 2020 18:06:35 GMT"
+          "Tue, 10 Nov 2020 17:47:44 GMT"
         ],
         "Content-Length": [
           "113"

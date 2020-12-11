@@ -6,7 +6,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// The mode in which links will be closed.
     /// </summary>
-    public enum LinkCloseMode
+    internal enum LinkCloseMode
     {
         /// <summary>
         /// The link will be detached when closing.

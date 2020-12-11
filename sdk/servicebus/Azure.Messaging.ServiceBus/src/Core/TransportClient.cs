@@ -35,8 +35,6 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         public virtual Uri ServiceEndpoint { get; }
 
-
-
         /// <summary>
         ///   Creates a sender strongly aligned with the active protocol and transport,
         ///   responsible for sending <see cref="ServiceBusMessage" /> to the entity.
@@ -56,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
+        /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
@@ -67,7 +65,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract TransportReceiver CreateReceiver(
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
-            ReceiveMode receiveMode,
+            ServiceBusReceiveMode receiveMode,
             uint prefetchCount,
             string identifier,
             string sessionId,

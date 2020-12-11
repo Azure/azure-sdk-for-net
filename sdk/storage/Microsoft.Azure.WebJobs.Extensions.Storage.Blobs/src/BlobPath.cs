@@ -4,7 +4,7 @@
 using System;
 using Azure.Storage.Blobs;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal class BlobPath
     {
@@ -121,7 +121,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
                 errorMessage = null;
                 return true;
             }
-
 
             if (!TryParse(value, isContainerBinding, out possiblePath))
             {

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
@@ -33,7 +34,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="body">The payload of the message as a string.</param>
         public ServiceBusMessage(string body) :
-            this(new BinaryData(body))
+            this(Encoding.UTF8.GetBytes(body))
         {
         }
 
@@ -41,18 +42,18 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
-        public ServiceBusMessage(ReadOnlyMemory<byte> body) :
-            this(BinaryData.FromBytes(body))
+        public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
+            AmqpMessageBody amqpBody = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body });
+            AmqpMessage = new AmqpAnnotatedMessage(amqpBody);
         }
 
         /// <summary>
         /// Creates a new message from the specified <see cref="BinaryData"/> instance.
         /// </summary>
         /// <param name="body">The payload of the message.</param>
-        public ServiceBusMessage(BinaryData body)
+        public ServiceBusMessage(BinaryData body) : this (body?.ToMemory() ?? default)
         {
-            AmqpMessage = new AmqpAnnotatedMessage(new ReadOnlyMemory<byte>[] { body ?? new BinaryData(Array.Empty<byte>()) });
         }
 
         /// <summary>
@@ -62,7 +63,13 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
-            AmqpMessage = new AmqpAnnotatedMessage(new ReadOnlyMemory<byte>[] { receivedMessage.Body });
+            if (!receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                throw new NotSupportedException($"{receivedMessage.AmqpMessage.Body.BodyType} is not a supported message body type.");
+            }
+
+            AmqpMessageBody body = new AmqpMessageBody(dataBody);
+            AmqpMessage = new AmqpAnnotatedMessage(body);
 
             // copy properties
             AmqpMessageProperties properties = AmqpMessage.Properties;
@@ -133,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
             get => AmqpMessage.GetBody();
             set
             {
-                AmqpMessage.Body = new AmqpDataMessageBody(new ReadOnlyMemory<byte>[] { value });
+                AmqpMessage.Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { value });
             }
         }
 
@@ -193,7 +200,7 @@ namespace Azure.Messaging.ServiceBus
         ///    messages are kept together and in order as they are transferred.
         ///    See <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</see>.
         /// </remarks>
-        public string TransactionPartitionKey
+        internal string TransactionPartitionKey
         {
             get
             {
@@ -398,7 +405,7 @@ namespace Azure.Messaging.ServiceBus
         /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
         /// </summary>
         /// <returns>The raw Amqp message.</returns>
-        public AmqpAnnotatedMessage GetRawMessage() => AmqpMessage;
+        public AmqpAnnotatedMessage GetRawAmqpMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the application properties bag, which can be used for custom message metadata.

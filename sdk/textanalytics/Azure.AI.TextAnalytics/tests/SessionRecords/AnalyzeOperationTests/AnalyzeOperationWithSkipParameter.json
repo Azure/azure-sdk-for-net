@@ -1,0 +1,245 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "315",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-5985db7e3db9af4c93acf6f354db1920-fb2be06893ab184f-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201112.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "66213f11f688828028a07f5921c888bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "1",
+              "text": "Tesla stock is up by 400% this year.",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": {
+          "keyPhraseExtractionTasks": [
+            {
+              "parameters": {
+                "model-version": "latest"
+              }
+            }
+          ]
+        },
+        "displayName": "AnalyzeOperationWithSkipParameter"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "20c4da02-dfe3-438a-8f16-9d828272beb8",
+        "Date": "Thu, 12 Nov 2020 19:27:01 GMT",
+        "operation-location": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/9de28acd-54d3-47c9-a2c3-a0c67d45e4ca_637407360000000000",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "321"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/9de28acd-54d3-47c9-a2c3-a0c67d45e4ca_637407360000000000?showStats=false\u0026$skip=1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201112.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "7550f4ca3d1aa83453b335a4cb28f918",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "5635158a-0052-4b32-8763-58e913637778",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 12 Nov 2020 19:27:01 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationWithSkipParameter",
+        "jobId": "9de28acd-54d3-47c9-a2c3-a0c67d45e4ca_637407360000000000",
+        "lastUpdateDateTime": "2020-11-12T19:27:01Z",
+        "createdDateTime": "2020-11-12T19:27:01Z",
+        "expirationDateTime": "2020-11-13T19:27:01Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithSkipParameter",
+            "lastUpdateDateTime": "2020-11-12T19:27:01Z"
+          },
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/9de28acd-54d3-47c9-a2c3-a0c67d45e4ca_637407360000000000?showStats=false\u0026$skip=1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201112.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6e334389d8cbd526e03ccbc674f1465c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c74ecb78-7ff4-48de-961d-f6fdd38b44c6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 12 Nov 2020 19:27:02 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "39"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationWithSkipParameter",
+        "jobId": "9de28acd-54d3-47c9-a2c3-a0c67d45e4ca_637407360000000000",
+        "lastUpdateDateTime": "2020-11-12T19:27:02Z",
+        "createdDateTime": "2020-11-12T19:27:01Z",
+        "expirationDateTime": "2020-11-13T19:27:01Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithSkipParameter",
+            "lastUpdateDateTime": "2020-11-12T19:27:02Z"
+          },
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/9de28acd-54d3-47c9-a2c3-a0c67d45e4ca_637407360000000000?showStats=false\u0026$skip=1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201112.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "de1aa601b91bd3c80b7813d4c0dbb700",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "61576e37-0f26-4062-bfcc-6eae305e99da",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 12 Nov 2020 19:27:03 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "39"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationWithSkipParameter",
+        "jobId": "9de28acd-54d3-47c9-a2c3-a0c67d45e4ca_637407360000000000",
+        "lastUpdateDateTime": "2020-11-12T19:27:02Z",
+        "createdDateTime": "2020-11-12T19:27:01Z",
+        "expirationDateTime": "2020-11-13T19:27:01Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithSkipParameter",
+            "lastUpdateDateTime": "2020-11-12T19:27:02Z"
+          },
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/9de28acd-54d3-47c9-a2c3-a0c67d45e4ca_637407360000000000?showStats=false\u0026$skip=1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201112.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "decf67a71a95f2f0ce7b95dd726d3461",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7cb83c03-7b55-4fff-ba77-7c567b27bade",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 12 Nov 2020 19:27:06 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "65"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationWithSkipParameter",
+        "jobId": "9de28acd-54d3-47c9-a2c3-a0c67d45e4ca_637407360000000000",
+        "lastUpdateDateTime": "2020-11-12T19:27:02Z",
+        "createdDateTime": "2020-11-12T19:27:01Z",
+        "expirationDateTime": "2020-11-13T19:27:01Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithSkipParameter",
+            "lastUpdateDateTime": "2020-11-12T19:27:02Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationWithSkipParameter",
+              "lastUpdateDateTime": "2020-11-12T19:27:02.6694869Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Tesla stock",
+                      "year"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1647574859",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
+  }
+}

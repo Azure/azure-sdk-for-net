@@ -72,6 +72,10 @@ namespace Azure.Storage.Queues
         /// </summary>
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
+        private readonly QueueMessageEncoding _messageEncoding;
+
+        internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
+
         /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
@@ -98,10 +102,15 @@ namespace Azure.Storage.Queues
         private StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateAccountSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateAccountSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -158,6 +167,7 @@ namespace Azure.Storage.Queues
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            _messageEncoding = options.MessageEncoding;
         }
 
         /// <summary>
@@ -253,6 +263,7 @@ namespace Azure.Storage.Queues
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = storageSharedKeyCredential;
+            _messageEncoding = options.MessageEncoding;
         }
         #endregion ctors
 
@@ -269,7 +280,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption);
+            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, SharedKeyCredential, Version, ClientDiagnostics, ClientSideEncryption, MessageEncoding);
 
         #region GetQueues
         /// <summary>
@@ -896,7 +907,7 @@ namespace Azure.Storage.Queues
                     nameof(AccountSasServices.Queues));
             }
             QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
             return sasUri.ToUri();
         }
         #endregion

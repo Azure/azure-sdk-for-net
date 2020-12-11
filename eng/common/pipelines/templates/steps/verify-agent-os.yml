@@ -1,4 +1,4 @@
-parameters: 
+parameters:
   OSVmImage: $(OSVmImage)
 
 steps:

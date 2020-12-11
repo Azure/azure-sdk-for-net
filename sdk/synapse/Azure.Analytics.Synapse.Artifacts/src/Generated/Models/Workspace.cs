@@ -30,9 +30,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of Workspace. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> Identity of the workspace. </param>
@@ -45,9 +45,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="connectivityEndpoints"> Connectivity endpoints. </param>
         /// <param name="managedVirtualNetwork"> Setting this to &apos;default&apos; will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections to the workspace. </param>
+        /// <param name="encryption"> The encryption details of the workspace. </param>
+        /// <param name="workspaceUID"> The workspace unique identifier. </param>
         /// <param name="extraProperties"> Workspace level configs and feature flags. </param>
         /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
-        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings) : base(id, name, type, tags, location)
+        /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
+        /// <param name="purviewConfiguration"> Purview Configuration. </param>
+        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration) : base(id, name, type, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -59,8 +63,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ConnectivityEndpoints = connectivityEndpoints;
             ManagedVirtualNetwork = managedVirtualNetwork;
             PrivateEndpointConnections = privateEndpointConnections;
+            Encryption = encryption;
+            WorkspaceUID = workspaceUID;
             ExtraProperties = extraProperties;
             ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
+            WorkspaceRepositoryConfiguration = workspaceRepositoryConfiguration;
+            PurviewConfiguration = purviewConfiguration;
         }
 
         /// <summary> Identity of the workspace. </summary>
@@ -83,9 +91,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string ManagedVirtualNetwork { get; set; }
         /// <summary> Private endpoint connections to the workspace. </summary>
         public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; }
+        /// <summary> The encryption details of the workspace. </summary>
+        public EncryptionDetails Encryption { get; set; }
+        /// <summary> The workspace unique identifier. </summary>
+        public Guid? WorkspaceUID { get; }
         /// <summary> Workspace level configs and feature flags. </summary>
         public IReadOnlyDictionary<string, object> ExtraProperties { get; }
         /// <summary> Managed Virtual Network Settings. </summary>
         public ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
+        /// <summary> Git integration settings. </summary>
+        public WorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
+        /// <summary> Purview Configuration. </summary>
+        public PurviewConfiguration PurviewConfiguration { get; set; }
     }
 }

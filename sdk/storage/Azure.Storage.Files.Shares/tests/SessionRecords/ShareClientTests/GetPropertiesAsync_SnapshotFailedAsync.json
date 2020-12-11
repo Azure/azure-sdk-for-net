@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "9d94c50e-cca3-92a0-8234-6909635a77e2",
         "x-ms-date": "Fri, 26 Jun 2020 01:35:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "9d94c50e-cca3-92a0-8234-6909635a77e2",
         "x-ms-request-id": "e1cd00ce-501a-0034-755a-4b7e68000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         "x-ms-client-request-id": "c953b1f1-e74b-732e-b782-b6ee28888aac",
         "x-ms-date": "Fri, 26 Jun 2020 01:35:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -60,7 +60,7 @@
         "x-ms-client-request-id": "c953b1f1-e74b-732e-b782-b6ee28888aac",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "e1cd00d1-501a-0034-765a-4b7e68000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
@@ -82,7 +82,7 @@
         "x-ms-date": "Fri, 26 Jun 2020 01:35:49 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -95,7 +95,7 @@
         ],
         "x-ms-client-request-id": "b11806d0-ad06-7096-d230-0d2a167410a7",
         "x-ms-request-id": "e1cd00d3-501a-0034-775a-4b7e68000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

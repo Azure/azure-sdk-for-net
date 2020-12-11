@@ -11,6 +11,8 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class BigDataPoolsClient
     {
         protected BigDataPoolsClient() { }
+        public BigDataPoolsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public BigDataPoolsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions options) { }
         public virtual Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.BigDataPoolResourceInfo> Get(string bigDataPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.BigDataPoolResourceInfo>> GetAsync(string bigDataPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.BigDataPoolResourceInfoListResult> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -29,6 +31,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.DataFlowCreateOrUpdateDataFlowOperation> StartCreateOrUpdateDataFlowAsync(string dataFlowName, Azure.Analytics.Synapse.Artifacts.Models.DataFlowResource dataFlow, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Analytics.Synapse.Artifacts.DataFlowDeleteDataFlowOperation StartDeleteDataFlow(string dataFlowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.DataFlowDeleteDataFlowOperation> StartDeleteDataFlowAsync(string dataFlowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Artifacts.DataFlowRenameDataFlowOperation StartRenameDataFlow(string dataFlowName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.DataFlowRenameDataFlowOperation> StartRenameDataFlowAsync(string dataFlowName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataFlowCreateOrUpdateDataFlowOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.DataFlowResource>
     {
@@ -98,6 +102,19 @@ namespace Azure.Analytics.Synapse.Artifacts
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DataFlowRenameDataFlowOperation : Azure.Operation<Azure.Response>
+    {
+        internal DataFlowRenameDataFlowOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class DatasetClient
     {
         protected DatasetClient() { }
@@ -111,6 +128,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.DatasetCreateOrUpdateDatasetOperation> StartCreateOrUpdateDatasetAsync(string datasetName, Azure.Analytics.Synapse.Artifacts.Models.DatasetResource dataset, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Analytics.Synapse.Artifacts.DatasetDeleteDatasetOperation StartDeleteDataset(string datasetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.DatasetDeleteDatasetOperation> StartDeleteDatasetAsync(string datasetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Artifacts.DatasetRenameDatasetOperation StartRenameDataset(string datasetName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.DatasetRenameDatasetOperation> StartRenameDatasetAsync(string datasetName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DatasetCreateOrUpdateDatasetOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.DatasetResource>
     {
@@ -138,9 +157,24 @@ namespace Azure.Analytics.Synapse.Artifacts
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DatasetRenameDatasetOperation : Azure.Operation<Azure.Response>
+    {
+        internal DatasetRenameDatasetOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class IntegrationRuntimesClient
     {
         protected IntegrationRuntimesClient() { }
+        public IntegrationRuntimesClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public IntegrationRuntimesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions options) { }
         public virtual Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeResource> Get(string integrationRuntimeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeResource>> GetAsync(string integrationRuntimeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeListResponse> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -159,6 +193,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.LinkedServiceCreateOrUpdateLinkedServiceOperation> StartCreateOrUpdateLinkedServiceAsync(string linkedServiceName, Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceResource linkedService, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Analytics.Synapse.Artifacts.LinkedServiceDeleteLinkedServiceOperation StartDeleteLinkedService(string linkedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.LinkedServiceDeleteLinkedServiceOperation> StartDeleteLinkedServiceAsync(string linkedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Artifacts.LinkedServiceRenameLinkedServiceOperation StartRenameLinkedService(string linkedServiceName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.LinkedServiceRenameLinkedServiceOperation> StartRenameLinkedServiceAsync(string linkedServiceName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LinkedServiceCreateOrUpdateLinkedServiceOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceResource>
     {
@@ -203,6 +239,19 @@ namespace Azure.Analytics.Synapse.Artifacts
         public static bool operator !=(Azure.Analytics.Synapse.Artifacts.LinkedServiceReferenceType left, Azure.Analytics.Synapse.Artifacts.LinkedServiceReferenceType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class LinkedServiceRenameLinkedServiceOperation : Azure.Operation<Azure.Response>
+    {
+        internal LinkedServiceRenameLinkedServiceOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class NotebookClient
     {
         protected NotebookClient() { }
@@ -218,6 +267,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.NotebookCreateOrUpdateNotebookOperation> StartCreateOrUpdateNotebookAsync(string notebookName, Azure.Analytics.Synapse.Artifacts.Models.NotebookResource notebook, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Analytics.Synapse.Artifacts.NotebookDeleteNotebookOperation StartDeleteNotebook(string notebookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.NotebookDeleteNotebookOperation> StartDeleteNotebookAsync(string notebookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Artifacts.NotebookRenameNotebookOperation StartRenameNotebook(string notebookName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.NotebookRenameNotebookOperation> StartRenameNotebookAsync(string notebookName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NotebookCreateOrUpdateNotebookOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.NotebookResource>
     {
@@ -245,6 +296,19 @@ namespace Azure.Analytics.Synapse.Artifacts
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class NotebookRenameNotebookOperation : Azure.Operation<Azure.Response>
+    {
+        internal NotebookRenameNotebookOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class PipelineClient
     {
         protected PipelineClient() { }
@@ -260,6 +324,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.PipelineCreateOrUpdatePipelineOperation> StartCreateOrUpdatePipelineAsync(string pipelineName, Azure.Analytics.Synapse.Artifacts.Models.PipelineResource pipeline, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Analytics.Synapse.Artifacts.PipelineDeletePipelineOperation StartDeletePipeline(string pipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.PipelineDeletePipelineOperation> StartDeletePipelineAsync(string pipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Artifacts.PipelineRenamePipelineOperation StartRenamePipeline(string pipelineName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.PipelineRenamePipelineOperation> StartRenamePipelineAsync(string pipelineName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PipelineCreateOrUpdatePipelineOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.PipelineResource>
     {
@@ -277,6 +343,19 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class PipelineDeletePipelineOperation : Azure.Operation<Azure.Response>
     {
         internal PipelineDeletePipelineOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PipelineRenamePipelineOperation : Azure.Operation<Azure.Response>
+    {
+        internal PipelineRenamePipelineOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -318,6 +397,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.SparkJobDefinitionDebugSparkJobDefinitionOperation> StartDebugSparkJobDefinitionAsync(Azure.Analytics.Synapse.Artifacts.Models.SparkJobDefinitionResource sparkJobDefinitionAzureResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Analytics.Synapse.Artifacts.SparkJobDefinitionExecuteSparkJobDefinitionOperation StartExecuteSparkJobDefinition(string sparkJobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.SparkJobDefinitionExecuteSparkJobDefinitionOperation> StartExecuteSparkJobDefinitionAsync(string sparkJobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Artifacts.SparkJobDefinitionRenameSparkJobDefinitionOperation StartRenameSparkJobDefinition(string sparkJobDefinitionName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.SparkJobDefinitionRenameSparkJobDefinitionOperation> StartRenameSparkJobDefinitionAsync(string sparkJobDefinitionName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SparkJobDefinitionDebugSparkJobDefinitionOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.SparkBatchJob>
     {
@@ -345,9 +426,24 @@ namespace Azure.Analytics.Synapse.Artifacts
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.SparkBatchJob>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.SparkBatchJob>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SparkJobDefinitionRenameSparkJobDefinitionOperation : Azure.Operation<Azure.Response>
+    {
+        internal SparkJobDefinitionRenameSparkJobDefinitionOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class SqlPoolsClient
     {
         protected SqlPoolsClient() { }
+        public SqlPoolsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public SqlPoolsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions options) { }
         public virtual Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.SqlPool> Get(string sqlPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.SqlPool>> GetAsync(string sqlPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.SqlPoolInfoListResult> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -366,6 +462,21 @@ namespace Azure.Analytics.Synapse.Artifacts
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.SqlScriptResource>> GetSqlScriptAsync(string sqlScriptName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Analytics.Synapse.Artifacts.Models.SqlScriptResource> GetSqlScriptsByWorkspace(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Analytics.Synapse.Artifacts.Models.SqlScriptResource> GetSqlScriptsByWorkspaceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Artifacts.SqlScriptRenameSqlScriptOperation StartRenameSqlScript(string sqlScriptName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Artifacts.SqlScriptRenameSqlScriptOperation> StartRenameSqlScriptAsync(string sqlScriptName, Azure.Analytics.Synapse.Artifacts.Models.ArtifactRenameRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlScriptRenameSqlScriptOperation : Azure.Operation<Azure.Response>
+    {
+        internal SqlScriptRenameSqlScriptOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TriggerClient
     {
@@ -484,8 +595,18 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class WorkspaceClient
     {
         protected WorkspaceClient() { }
+        public WorkspaceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public WorkspaceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions options) { }
         public virtual Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.Workspace> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.Workspace>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class WorkspaceGitRepoManagementClient
+    {
+        protected WorkspaceGitRepoManagementClient() { }
+        public WorkspaceGitRepoManagementClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public WorkspaceGitRepoManagementClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions options) { }
+        public virtual Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.GitHubAccessTokenResponse> GetGitHubAccessToken(Azure.Analytics.Synapse.Artifacts.Models.GitHubAccessTokenRequest gitHubAccessTokenRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Artifacts.Models.GitHubAccessTokenResponse>> GetGitHubAccessTokenAsync(Azure.Analytics.Synapse.Artifacts.Models.GitHubAccessTokenRequest gitHubAccessTokenRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -674,6 +795,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public AppendVariableActivity(string name) : base (default(string)) { }
         public object Value { get { throw null; } set { } }
         public string VariableName { get { throw null; } set { } }
+    }
+    public partial class ArtifactRenameRequest
+    {
+        public ArtifactRenameRequest() { }
+        public string NewName { get { throw null; } set { } }
     }
     public partial class AutoPauseProperties
     {
@@ -1291,12 +1417,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.AutoScaleProperties AutoScale { get { throw null; } set { } }
         public System.DateTimeOffset? CreationDate { get { throw null; } set { } }
         public string DefaultSparkLogFolder { get { throw null; } set { } }
+        public bool? HaveLibraryRequirementsChanged { get { throw null; } set { } }
         public bool? IsComputeIsolationEnabled { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.LibraryRequirements LibraryRequirements { get { throw null; } set { } }
         public int? NodeCount { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.NodeSize? NodeSize { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.NodeSizeFamily? NodeSizeFamily { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
+        public bool? SessionLevelPackagesEnabled { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.LibraryRequirements SparkConfigProperties { get { throw null; } set { } }
         public string SparkEventsFolder { get { throw null; } set { } }
         public string SparkVersion { get { throw null; } set { } }
@@ -1325,29 +1453,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     }
     public partial class BlobEventsTrigger : Azure.Analytics.Synapse.Artifacts.Models.MultiplePipelineTrigger
     {
-        public BlobEventsTrigger(System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes> events, string scope) { }
+        public BlobEventsTrigger(System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.BlobEventType> events, string scope) { }
         public string BlobPathBeginsWith { get { throw null; } set { } }
         public string BlobPathEndsWith { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes> Events { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.BlobEventType> Events { get { throw null; } }
         public bool? IgnoreEmptyBlobs { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BlobEventTypes : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes>
+    public readonly partial struct BlobEventType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.BlobEventType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public BlobEventTypes(string value) { throw null; }
-        public static Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes MicrosoftStorageBlobCreated { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes MicrosoftStorageBlobDeleted { get { throw null; } }
-        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes other) { throw null; }
+        public BlobEventType(string value) { throw null; }
+        public static Azure.Analytics.Synapse.Artifacts.Models.BlobEventType MicrosoftStorageBlobCreated { get { throw null; } }
+        public static Azure.Analytics.Synapse.Artifacts.Models.BlobEventType MicrosoftStorageBlobDeleted { get { throw null; } }
+        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.BlobEventType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes left, Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes right) { throw null; }
-        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes (string value) { throw null; }
-        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes left, Azure.Analytics.Synapse.Artifacts.Models.BlobEventTypes right) { throw null; }
+        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.BlobEventType left, Azure.Analytics.Synapse.Artifacts.Models.BlobEventType right) { throw null; }
+        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.BlobEventType (string value) { throw null; }
+        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.BlobEventType left, Azure.Analytics.Synapse.Artifacts.Models.BlobEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class BlobSink : Azure.Analytics.Synapse.Artifacts.Models.CopySink
@@ -1682,6 +1810,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public CustomDataSourceLinkedService(object typeProperties) { }
         public object TypeProperties { get { throw null; } set { } }
+    }
+    public partial class CustomerManagedKeyDetails
+    {
+        public CustomerManagedKeyDetails() { }
+        public Azure.Analytics.Synapse.Artifacts.Models.WorkspaceKeyDetails Key { get { throw null; } set { } }
+        public string Status { get { throw null; } }
     }
     public partial class CustomSetupBase
     {
@@ -2453,6 +2587,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public EloquaSource() { }
         public object Query { get { throw null; } set { } }
     }
+    public partial class EncryptionDetails
+    {
+        public EncryptionDetails() { }
+        public Azure.Analytics.Synapse.Artifacts.Models.CustomerManagedKeyDetails Cmk { get { throw null; } set { } }
+        public bool? DoubleEncryptionEnabled { get { throw null; } }
+    }
     public partial class EntityReference
     {
         public EntityReference() { }
@@ -2683,6 +2823,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public GetMetadataActivity(string name, Azure.Analytics.Synapse.Artifacts.Models.DatasetReference dataset) : base (default(string)) { }
         public Azure.Analytics.Synapse.Artifacts.Models.DatasetReference Dataset { get { throw null; } set { } }
         public System.Collections.Generic.IList<object> FieldList { get { throw null; } }
+    }
+    public partial class GitHubAccessTokenRequest
+    {
+        public GitHubAccessTokenRequest(string gitHubClientId, string gitHubAccessCode, string gitHubAccessTokenBaseUrl) { }
+        public string GitHubAccessCode { get { throw null; } }
+        public string GitHubAccessTokenBaseUrl { get { throw null; } }
+        public string GitHubClientId { get { throw null; } }
+    }
+    public partial class GitHubAccessTokenResponse
+    {
+        internal GitHubAccessTokenResponse() { }
+        public string GitHubAccessToken { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GoogleAdWordsAuthenticationType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.GoogleAdWordsAuthenticationType>
@@ -3774,7 +3926,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public ManagedIdentity() { }
         public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
         public Azure.Analytics.Synapse.Artifacts.Models.ResourceIdentityType? Type { get { throw null; } set { } }
     }
     public partial class ManagedIntegrationRuntime : Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntime
@@ -4028,6 +4180,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static Azure.Analytics.Synapse.Artifacts.Models.NodeSize Small { get { throw null; } }
         public static Azure.Analytics.Synapse.Artifacts.Models.NodeSize XLarge { get { throw null; } }
         public static Azure.Analytics.Synapse.Artifacts.Models.NodeSize XXLarge { get { throw null; } }
+        public static Azure.Analytics.Synapse.Artifacts.Models.NodeSize XXXLarge { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.NodeSize other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -4207,10 +4360,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.NotebookReferenceType left, Azure.Analytics.Synapse.Artifacts.Models.NotebookReferenceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NotebookResource : Azure.Analytics.Synapse.Artifacts.Models.AzureEntityResource
+    public partial class NotebookResource
     {
-        public NotebookResource(Azure.Analytics.Synapse.Artifacts.Models.Notebook properties) { }
+        public NotebookResource(string name, Azure.Analytics.Synapse.Artifacts.Models.Notebook properties) { }
+        public string Etag { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.Notebook Properties { get { throw null; } set { } }
+        public string Type { get { throw null; } }
     }
     public partial class NotebookSessionProperties
     {
@@ -4828,31 +4985,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public PrivateLinkServiceConnectionState() { }
         public string ActionsRequired { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus? Status { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PrivateLinkServiceConnectionStateStatus : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PrivateLinkServiceConnectionStateStatus(string value) { throw null; }
-        public static Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus Approved { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus Disconnected { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus Pending { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus Rejected { get { throw null; } }
-        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus left, Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus right) { throw null; }
-        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus left, Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionStateStatus right) { throw null; }
-        public override string ToString() { throw null; }
+        public string Status { get { throw null; } set { } }
     }
     public partial class ProxyResource : Azure.Analytics.Synapse.Artifacts.Models.Resource
     {
         public ProxyResource() { }
+    }
+    public partial class PurviewConfiguration
+    {
+        public PurviewConfiguration() { }
+        public string PurviewResourceId { get { throw null; } set { } }
     }
     public partial class QueryDataFlowDebugSessionsResponse
     {
@@ -6153,7 +6295,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public long? MaxSizeBytes { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
         public string RecoverableDatabaseId { get { throw null; } set { } }
-        public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
+        public string RestorePointInTime { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.Sku Sku { get { throw null; } set { } }
         public string SourceDatabaseId { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
@@ -6261,10 +6403,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
-    public partial class SqlScriptResource : Azure.Analytics.Synapse.Artifacts.Models.AzureEntityResource
+    public partial class SqlScriptResource
     {
-        public SqlScriptResource(Azure.Analytics.Synapse.Artifacts.Models.SqlScript properties) { }
+        public SqlScriptResource(string name, Azure.Analytics.Synapse.Artifacts.Models.SqlScript properties) { }
+        public string Etag { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.SqlScript Properties { get { throw null; } set { } }
+        public string Type { get { throw null; } }
     }
     public partial class SqlScriptsListResponse
     {
@@ -6613,7 +6759,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SybaseTableDataset(Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference)) { }
         public object TableName { get { throw null; } set { } }
     }
-    public partial class SynapseNotebookActivity : Azure.Analytics.Synapse.Artifacts.Models.Activity
+    public partial class SynapseNotebookActivity : Azure.Analytics.Synapse.Artifacts.Models.ExecutionActivity
     {
         public SynapseNotebookActivity(string name, Azure.Analytics.Synapse.Artifacts.Models.SynapseNotebookReference notebook) : base (default(string)) { }
         public Azure.Analytics.Synapse.Artifacts.Models.SynapseNotebookReference Notebook { get { throw null; } set { } }
@@ -6625,7 +6771,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string ReferenceName { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.NotebookReferenceType Type { get { throw null; } set { } }
     }
-    public partial class SynapseSparkJobDefinitionActivity : Azure.Analytics.Synapse.Artifacts.Models.Activity
+    public partial class SynapseSparkJobDefinitionActivity : Azure.Analytics.Synapse.Artifacts.Models.ExecutionActivity
     {
         public SynapseSparkJobDefinitionActivity(string name, Azure.Analytics.Synapse.Artifacts.Models.SynapseSparkJobReference sparkJob) : base (default(string)) { }
         public Azure.Analytics.Synapse.Artifacts.Models.SynapseSparkJobReference SparkJob { get { throw null; } set { } }
@@ -7101,6 +7247,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Workspace(string location) : base (default(string)) { }
         public System.Collections.Generic.IDictionary<string, string> ConnectivityEndpoints { get { throw null; } }
         public Azure.Analytics.Synapse.Artifacts.Models.DataLakeStorageAccountDetails DefaultDataLakeStorage { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.EncryptionDetails Encryption { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> ExtraProperties { get { throw null; } }
         public Azure.Analytics.Synapse.Artifacts.Models.ManagedIdentity Identity { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
@@ -7108,9 +7255,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.PrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+        public Azure.Analytics.Synapse.Artifacts.Models.PurviewConfiguration PurviewConfiguration { get { throw null; } set { } }
         public string SqlAdministratorLogin { get { throw null; } set { } }
         public string SqlAdministratorLoginPassword { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.VirtualNetworkProfile VirtualNetworkProfile { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.WorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get { throw null; } set { } }
+        public System.Guid? WorkspaceUID { get { throw null; } }
+    }
+    public partial class WorkspaceKeyDetails
+    {
+        public WorkspaceKeyDetails() { }
+        public string KeyVaultUrl { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
+    public partial class WorkspaceRepositoryConfiguration
+    {
+        public WorkspaceRepositoryConfiguration() { }
+        public string AccountName { get { throw null; } set { } }
+        public string CollaborationBranch { get { throw null; } set { } }
+        public string HostName { get { throw null; } set { } }
+        public string ProjectName { get { throw null; } set { } }
+        public string RepositoryName { get { throw null; } set { } }
+        public string RootFolder { get { throw null; } set { } }
+        public string Type { get { throw null; } set { } }
     }
     public partial class XeroLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
     {

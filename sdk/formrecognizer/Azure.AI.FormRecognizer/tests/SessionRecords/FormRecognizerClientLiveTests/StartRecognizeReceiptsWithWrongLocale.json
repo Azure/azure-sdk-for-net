@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/receipt/analyze?includeTextDetails=false\u0026locale=not-locale",
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/receipt/analyze?includeTextDetails=false\u0026locale=not-locale",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "22",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-737b7be95cf82045aac782d32e5adb9d-80e295e93282e74a-00",
+        "traceparent": "00-bdfff1fe45485948a72caac4afa8e7e2-4eabed605bcdd347-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201015.1",
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "307cfc684d40c8c378390ad52e6fc30f",
@@ -21,19 +21,19 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "5b50d39d-4351-450f-b96a-c3a4bd9e3c29",
+        "apim-request-id": "d572ca33-a3c4-404c-8bfd-e15e1695ddba",
         "Content-Length": "200",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 15 Oct 2020 23:59:02 GMT",
+        "Date": "Tue, 17 Nov 2020 00:32:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "422"
+        "x-envoy-upstream-service-time": "397"
       },
       "ResponseBody": {
         "error": {
           "code": "UnsupportedLocale",
           "innerError": {
-            "requestId": "5b50d39d-4351-450f-b96a-c3a4bd9e3c29"
+            "requestId": "d572ca33-a3c4-404c-8bfd-e15e1695ddba"
           },
           "message": "Locale unsupported. Supported locales include en-AU, en-CA, en-GB, en-IN and en-US."
         }
@@ -42,7 +42,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-centraluseuap.cognitiveservices.azure.com/",
     "RandomSeed": "1546482383"
   }
 }

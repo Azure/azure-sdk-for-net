@@ -21,7 +21,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         DataLakeClientOptions.ServiceVersion.V2019_02_02,
         DataLakeClientOptions.ServiceVersion.V2019_07_07,
         DataLakeClientOptions.ServiceVersion.V2019_12_12,
-        DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        DataLakeClientOptions.ServiceVersion.V2020_02_10,
+        DataLakeClientOptions.ServiceVersion.V2020_04_08)]
     public abstract class DataLakeTestBase : StorageTestBase
     {
         protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
@@ -68,8 +69,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60),
+                    NetworkTimeout = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 100 : 400),
                 },
                 Transport = GetTransport()
             };
@@ -183,7 +185,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.AreEqual(expected.Count, actual.Count, "Metadata counts are not equal");
             }
 
-
             foreach (KeyValuePair<string, string> kvp in expected)
             {
                 if (!actual.TryGetValue(kvp.Key, out var value) ||
@@ -248,7 +249,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new DataLakeServiceClient(
                     (new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceIdentitySasCredentialsPath(fileSystemName: fileSystemName, path: path, userDelegationKey: userDelegationKey, accountName: TestConfigHierarchicalNamespace.AccountName)}")).ToHttps(),
                     GetOptions()));
-
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(

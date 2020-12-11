@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "7f62d957-e491-35fc-cea8-ee64168472b3",
         "x-ms-date": "Mon, 03 Aug 2020 20:21:12 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -27,7 +27,7 @@
         "x-ms-client-request-id": "7f62d957-e491-35fc-cea8-ee64168472b3",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "6baa0d6a-901a-0036-08d3-6957b2000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

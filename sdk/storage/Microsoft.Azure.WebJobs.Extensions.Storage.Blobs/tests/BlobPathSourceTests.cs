@@ -4,10 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.WebJobs.Host.Blobs;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     public class BlobPathSourceTests
     {
@@ -100,7 +99,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             Assert.AreEqual(1, d.Count);
             Assert.AreEqual("foo.csv", d["name"]);
         }
-
 
         [Test]
         public void TestMethodExtension()

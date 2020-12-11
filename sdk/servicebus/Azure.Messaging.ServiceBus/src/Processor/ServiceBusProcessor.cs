@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus
 
         private Func<ProcessSessionMessageEventArgs, Task> _processSessionMessageAsync;
 
-        private Func<ProcessErrorEventArgs, Task> _processErrorAsync = default;
+        private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         private Func<ProcessSessionEventArgs, Task> _sessionInitializingAsync;
 
@@ -73,7 +73,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
-        public ReceiveMode ReceiveMode { get; }
+        public ServiceBusReceiveMode ReceiveMode { get; }
 
         /// <summary>
         /// Gets whether the processor is configured to process session entities.
@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>true to complete the message processing automatically on
         /// successful execution of the operation; otherwise, false.</value>
-        public bool AutoComplete { get; }
+        public bool AutoCompleteMessages { get; }
 
         /// <summary>
         /// Gets the maximum duration within which the lock will be renewed automatically. This
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus
                 maxAcceptSessions,
                 maxAcceptSessions);
 
-            AutoComplete = _options.AutoComplete;
+            AutoCompleteMessages = _options.AutoCompleteMessages;
 
             EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
@@ -280,7 +280,6 @@ namespace Azure.Messaging.ServiceBus
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 EnsureNotRunningAndInvoke(() => _processMessageAsync = value);
-
             }
 
             remove
@@ -315,7 +314,6 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _processSessionMessageAsync = value);
-
             }
 
             remove
@@ -385,7 +383,6 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _sessionInitializingAsync = value);
-
             }
 
             remove
@@ -417,7 +414,6 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _sessionClosingAsync = value);
-
             }
 
             remove
@@ -718,11 +714,9 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
         /// </summary>
-        /// <param name="closeMode">The mode indicating what should happen to the link when closing.</param>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
         public virtual async Task CloseAsync(
-            LinkCloseMode closeMode = LinkCloseMode.Detach,
             CancellationToken cancellationToken = default)
         {
             IsClosed = true;

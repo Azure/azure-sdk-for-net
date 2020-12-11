@@ -10,11 +10,11 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Resources" (https://www.nuget.org/packages/Azure.ResourceManager.Resources/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
-		<Version>3.10.1-preview</Version>
+		<Version>3.11.0-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Resource Manager SDK. This release includes Resources API version 2020-06-01. Updated Azure Policy Aliases contract to include additional information regarding whether an alias is modifiable.
+        This is a public release of the Azure Resource Manager SDK. This release includes Resources API version 2020-10-01. This release adds support for TemplateLink.queryString parameter for template deployments
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>

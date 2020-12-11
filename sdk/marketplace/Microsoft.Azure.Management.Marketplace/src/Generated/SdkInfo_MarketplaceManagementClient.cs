@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Marketplace
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/marketplace/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\repo\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "9e59dd6e6ad44b9719c035a43d2f6cd002337d76";
+      public static readonly String GithubCommidId = "d0a293561d4e54e8cc08e5092076c11e636caf30";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

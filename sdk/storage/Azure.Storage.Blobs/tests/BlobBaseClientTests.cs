@@ -1278,7 +1278,6 @@ namespace Azure.Storage.Blobs.Test
             // Act
             for (int i = 0; i < length / readSize; i++)
             {
-
                 await outputStream.ReadAsync(actualData, 0, readSize);
                 for (int j = 0; j < readSize; j++)
                 {
@@ -1327,25 +1326,19 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                 stream.ReadAsync(buffer: null, offset: 0, count: 10),
-                e => Assert.AreEqual($"buffer cannot be null.{Environment.NewLine}Parameter name: buffer", e.Message));
+                new ArgumentNullException("buffer", $"buffer cannot be null."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot be less than 0.", "Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot exceed buffer length.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot exceed buffer length.", "Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: count cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("count cannot be less than 0.", "Specified argument was out of the range of valid values."));
         }
 
         [Test]
@@ -1414,6 +1407,8 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(1025, SeekOrigin.Begin),
                 new ArgumentException("You cannot seek past the last known length of the underlying blob or file."));
+
+            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -1458,6 +1453,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 Assert.AreEqual(size + offset, outputStream.Position);
             }
+
+            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -1503,6 +1500,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
+            Assert.AreEqual(size, openReadStream.Length);
             TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
         }
 
@@ -1695,7 +1693,6 @@ namespace Azure.Storage.Blobs.Test
                         source: srcBlob.Uri,
                         options),
                     e => { });
-
             }
         }
 
@@ -1776,7 +1773,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
 
-
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
                 BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -1808,7 +1804,6 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-
             }
         }
 
@@ -1819,7 +1814,6 @@ namespace Azure.Storage.Blobs.Test
             foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
-
 
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
@@ -1849,7 +1843,6 @@ namespace Azure.Storage.Blobs.Test
                         source: srcBlob.Uri,
                         options),
                     e => { });
-
             }
         }
 
@@ -2000,7 +1993,6 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destBlob.StartCopyFromUriAsync(srcBlob.Uri),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
-
         }
 
         [Test]
@@ -2055,7 +2047,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual("rehydrate-pending-to-cool", propertiesResponse.Value.ArchiveStatus);
-
         }
 
         [Test]
@@ -2077,7 +2068,6 @@ namespace Azure.Storage.Blobs.Test
                 srcBlob.Uri,
                 options),
                 e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
-
         }
 
         [Test]
@@ -2125,8 +2115,6 @@ namespace Azure.Storage.Blobs.Test
 
             BlobServiceClient secondaryService = GetServiceClient_SecondaryAccount_SharedKey();
             await using DisposingContainer destTest = await GetTestContainerAsync(service: secondaryService);
-
-
             {
                 BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
 
@@ -2144,7 +2132,6 @@ namespace Azure.Storage.Blobs.Test
                 {
                     WarnCopyCompletedTooQuickly();
                 }
-
             }
         }
 
@@ -2165,7 +2152,6 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient secondaryService = GetServiceClient_SecondaryAccount_SharedKey();
             await using DisposingContainer destTest = await GetTestContainerAsync(service: secondaryService);
 
-
             BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
             using (var stream = new MemoryStream(data))
             {
@@ -2179,7 +2165,6 @@ namespace Azure.Storage.Blobs.Test
             Operation<long> operation = await destBlob.StartCopyFromUriAsync(
                 source: srcBlob.Uri,
                 destinationConditions: new BlobRequestConditions { LeaseId = leaseResponse.Value.LeaseId });
-
 
             // Act
             try
@@ -2198,14 +2183,12 @@ namespace Azure.Storage.Blobs.Test
             {
                 WarnCopyCompletedTooQuickly();
             }
-
         }
 
         [Test]
         public async Task AbortCopyFromUriAsync_LeaseFail()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
-
 
             // Arrange
             await test.Container.SetAccessPolicyAsync(PublicAccessType.Blob);
@@ -2257,7 +2240,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 WarnCopyCompletedTooQuickly();
             }
-
         }
 
         [Test]
@@ -2416,7 +2398,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
 
-
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
                 BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2448,7 +2429,6 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-
             }
         }
 
@@ -2459,7 +2439,6 @@ namespace Azure.Storage.Blobs.Test
             foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
-
 
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
@@ -2629,7 +2608,6 @@ namespace Azure.Storage.Blobs.Test
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
@@ -2644,7 +2622,6 @@ namespace Azure.Storage.Blobs.Test
         public async Task DeleteAsync_Options()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
-
 
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
@@ -3177,7 +3154,6 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.UndeleteAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
-
         }
 
         [Test]
@@ -3369,7 +3345,6 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertCacheableProperty(accountName, () => blob.AccountName);
             TestHelper.AssertCacheableProperty(containerName, () => blob.BlobContainerName);
             TestHelper.AssertCacheableProperty(blobName, () => blob.Name);
-
         }
 
         [Test]
@@ -3566,7 +3541,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-
         }
 
         [Test]
@@ -3715,7 +3689,6 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-
             }
         }
 
@@ -4197,7 +4170,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-
         }
 
         [Test]
@@ -4255,7 +4227,6 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-
             }
         }
 
@@ -4276,7 +4247,6 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CreateSnapshotAsync(conditions: accessConditions),
                     e => { });
-
             }
         }
 
@@ -4351,7 +4321,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Value.VersionId);
-
         }
 
         [Test]
@@ -5728,6 +5697,75 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task GetSetTagsAsync_Lease()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            await InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(duration);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            Dictionary<string, string> tags = BuildTags();
+            await blob.SetTagsAsync(tags, conditions);
+
+            // Act
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync(conditions);
+
+            // Assert
+            AssertDictionaryEquality(tags, response.Value.Tags);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task GetTagsAsync_LeaseFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            string leaseId = Recording.Random.NewGuid().ToString();
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetTagsAsync(conditions),
+                e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithBlobOperation.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SetTagsAsync_LeaseFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            string leaseId = Recording.Random.NewGuid().ToString();
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetTagsAsync(tags, conditions),
+                e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithBlobOperation.ToString(), e.ErrorCode));
+        }
+
         #region GenerateSasTests
         [Test]
         public void CanGenerateSas_ClientConstructors()
@@ -5740,40 +5778,184 @@ namespace Azure.Storage.Blobs.Test
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - BlobBaseClient(string connectionString, string blobContainerName, string blobName)
-            BlobBaseClient blob = new BlobBaseClient(
+            BlobBaseClient blob = InstrumentClient(new BlobBaseClient(
                 connectionString,
                 GetNewContainerName(),
-                GetNewBlobName());
+                GetNewBlobName()));
             Assert.IsTrue(blob.CanGenerateSasUri);
 
             // Act - BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
-            BlobBaseClient blob2 = new BlobBaseClient(
+            BlobBaseClient blob2 = InstrumentClient(new BlobBaseClient(
                 connectionString,
                 GetNewContainerName(),
                 GetNewBlobName(),
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(blob2.CanGenerateSasUri);
 
             // Act - BlobBaseClient(Uri blobContainerUri, BlobClientOptions options = default)
-            BlobBaseClient blob3 = new BlobBaseClient(
+            BlobBaseClient blob3 = InstrumentClient(new BlobBaseClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(blob3.CanGenerateSasUri);
 
             // Act - BlobBaseClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            BlobBaseClient blob4 = new BlobBaseClient(
+            BlobBaseClient blob4 = InstrumentClient(new BlobBaseClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(blob4.CanGenerateSasUri);
 
             // Act - BlobBaseClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
-            BlobBaseClient blob5 = new BlobBaseClient(
+            BlobBaseClient blob5 = InstrumentClient(new BlobBaseClient(
                 blobEndpoint,
                 tokenCredentials,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(blob5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetParentBlobContainerClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - BlobBaseClient(string connectionString, string blobContainerName, string blobName)
+            BlobBaseClient blob = InstrumentClient(new BlobBaseClient(
+                connectionString,
+                GetNewContainerName(),
+                GetNewBlobName()));
+            BlobContainerClient container = blob.GetParentBlobContainerClient();
+            Assert.IsTrue(container.CanGenerateSasUri);
+
+            // Act - BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            BlobBaseClient blob2 = InstrumentClient(new BlobBaseClient(
+                connectionString,
+                GetNewContainerName(),
+                GetNewBlobName(),
+                GetOptions()));
+            BlobContainerClient container2 = blob2.GetParentBlobContainerClient();
+            Assert.IsTrue(container2.CanGenerateSasUri);
+
+            // Act - BlobBaseClient(Uri blobContainerUri, BlobClientOptions options = default)
+            BlobBaseClient blob3 = InstrumentClient(new BlobBaseClient(
+                blobEndpoint,
+                GetOptions()));
+            BlobContainerClient container3 = blob3.GetParentBlobContainerClient();
+            Assert.IsFalse(container3.CanGenerateSasUri);
+
+            // Act - BlobBaseClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            BlobBaseClient blob4 = InstrumentClient(new BlobBaseClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            BlobContainerClient container4 = blob4.GetParentBlobContainerClient();
+            Assert.IsTrue(container4.CanGenerateSasUri);
+
+            // Act - BlobBaseClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            BlobBaseClient blob5 = InstrumentClient(new BlobBaseClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions()));
+            BlobContainerClient container5 = blob5.GetParentBlobContainerClient();
+            Assert.IsFalse(container5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithSnapshot_True()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Create blob
+            BlobBaseClient blob = InstrumentClient(new BlobBaseClient(
+                connectionString,
+                GetNewContainerName(),
+                GetNewBlobName()));
+            Assert.IsTrue(blob.CanGenerateSasUri);
+
+            // Act
+            string snapshot = "2020-04-17T20:37:16.5129130Z";
+            BlobBaseClient snapshotBlob = blob.WithSnapshot(snapshot);
+
+            // Assert
+            Assert.IsTrue(snapshotBlob.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithSnapshot_False()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            // Create blob
+            BlobBaseClient blob = InstrumentClient(new BlobBaseClient(
+                blobEndpoint,
+                GetOptions()));
+            Assert.IsFalse(blob.CanGenerateSasUri);
+
+            // Act
+            string snapshot = "2020-04-17T20:37:16.5129130Z";
+            BlobBaseClient snapshotBlob = blob.WithSnapshot(snapshot);
+
+            // Assert
+            Assert.IsFalse(snapshotBlob.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithVersion_True()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Create blob
+            BlobBaseClient blob = InstrumentClient(new BlobBaseClient(
+                connectionString,
+                GetNewContainerName(),
+                GetNewBlobName()));
+            Assert.IsTrue(blob.CanGenerateSasUri);
+
+            // Act
+            string version = "2020-04-17T21:55:48.6692074Z";
+            BlobBaseClient versionBlob = blob.WithVersion(version);
+
+            // Assert
+            Assert.IsTrue(versionBlob.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithVersion_False()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            // Create blob
+            BlobBaseClient blob = InstrumentClient(new BlobBaseClient(
+                blobEndpoint,
+                GetOptions()));
+            Assert.IsFalse(blob.CanGenerateSasUri);
+
+            // Act
+            string version = "2020-04-17T21:55:48.6692074Z";
+            BlobBaseClient versionBlob = blob.WithVersion(version);
+
+            // Assert
+            Assert.IsFalse(versionBlob.CanGenerateSasUri);
         }
 
         [Test]
@@ -5789,11 +5971,11 @@ namespace Azure.Storage.Blobs.Test
             string blobName = GetNewBlobName();
             BlobSasPermissions permissions = BlobSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            BlobBaseClient blobClient = new BlobBaseClient(
+            BlobBaseClient blobClient = InstrumentClient(new BlobBaseClient(
                 connectionString,
                 containerName,
                 blobName,
-                GetOptions());
+                GetOptions()));
 
             //Act
             Uri sasUri = blobClient.GenerateSasUri(permissions, expiresOn);
@@ -5826,11 +6008,11 @@ namespace Azure.Storage.Blobs.Test
             BlobSasPermissions permissions = BlobSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
-            BlobBaseClient blobClient = new BlobBaseClient(
+            BlobBaseClient blobClient = InstrumentClient(new BlobBaseClient(
                 connectionString,
                 containerName,
                 blobName,
-                GetOptions());
+                GetOptions()));
 
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
             {
@@ -5869,10 +6051,10 @@ namespace Azure.Storage.Blobs.Test
             blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewContainerName() + "/" + blobName;
             BlobSasPermissions permissions = BlobSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            BlobBaseClient blobClient = new BlobBaseClient(
+            BlobBaseClient blobClient = InstrumentClient(new BlobBaseClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
             {
@@ -5906,10 +6088,10 @@ namespace Azure.Storage.Blobs.Test
             blobUriBuilder.Path += constants.Sas.Account + "/" + containerName + "/" + GetNewBlobName();
             BlobSasPermissions permissions = BlobSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            BlobBaseClient blobClient = new BlobBaseClient(
+            BlobBaseClient blobClient = InstrumentClient(new BlobBaseClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
             {
@@ -5946,10 +6128,10 @@ namespace Azure.Storage.Blobs.Test
             blobUriBuilder.Path += constants.Sas.Account + "/" + containerName + "/" + blobName;
             BlobSasPermissions permissions = BlobSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            BlobBaseClient blobClient = new BlobBaseClient(
+            BlobBaseClient blobClient = InstrumentClient(new BlobBaseClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
             {
@@ -5987,10 +6169,10 @@ namespace Azure.Storage.Blobs.Test
             blobUriBuilder.Path += constants.Sas.Account + "/" + containerName + "/" + blobName;
             BlobSasPermissions permissions = BlobSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            BlobBaseClient blobClient = new BlobBaseClient(
+            BlobBaseClient blobClient = InstrumentClient(new BlobBaseClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
             {
@@ -6161,6 +6343,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CanGetParentContainerClient_WithAccountSAS()
         {
             // Arrange

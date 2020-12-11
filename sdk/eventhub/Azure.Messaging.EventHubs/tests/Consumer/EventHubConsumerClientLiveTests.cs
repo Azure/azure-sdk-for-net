@@ -396,7 +396,6 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
-
         /// <summary>
         ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
@@ -801,7 +800,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(100).ToList();
 
                 await using (var customConsumer = new EventHubConsumerClient(customConsumerGroup, connectionString))
                 await using (var defaultConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
@@ -848,7 +847,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var credential = EventHubsTestEnvironment.Instance.Credential;
-                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(100).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
@@ -888,23 +887,23 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateEvents(25).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(250).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
                     var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                     await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
 
-                    // Read the events and validate the resulting state.
-
                     // Create a local function that will close the consumer after five events have
-                    // been read.
+                    // been read.  Because the close happens in the middle of iteration, allow for a short
+                    // delay to ensure that the state transition has been fully captured.
 
                     async Task<bool> closeAfterRead(ReadState state)
                     {
                         if (state.Events.Count >= 2)
                         {
-                            await consumer.CloseAsync(cancellationSource.Token).ConfigureAwait(false);
+                            await consumer.CloseAsync(cancellationSource.Token);
+                            await Task.Yield();
                         }
 
                         return true;

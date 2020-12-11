@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Firewall Policy NAT Rule Collection.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FirewallPolicyNatRuleCollection")]
     public partial class FirewallPolicyNatRuleCollection : FirewallPolicyRuleCollection
     {
         /// <summary>

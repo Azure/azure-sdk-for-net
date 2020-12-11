@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer
     /// <summary>
     /// The client to use to connect to the Form Recognizer Azure Cognitive Service to recognize
     /// information from forms and images and extract it into structured data. It provides the ability to analyze receipts,
-    /// to recognize form content, and to extract fields from custom forms with models trained on custom form types.
+    /// business cards, and invoices, to recognize form content, and to extract fields from custom forms with models trained on custom form types.
     /// </summary>
     public class FormRecognizerClient
     {
@@ -120,7 +120,8 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -135,9 +136,14 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                FormContentType contentType = recognizeContentOptions.ContentType ?? DetectContentType(form, nameof(form));
+                FormContentType formContentType = recognizeContentOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-                Response response = ServiceClient.AnalyzeLayoutAsync(contentType, form, cancellationToken);
+                Response response = ServiceClient.AnalyzeLayoutAsync(
+                    formContentType.ConvertToContentType1(),
+                    form,
+                    recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
+                    recognizeContentOptions.Pages,
+                    cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
@@ -153,7 +159,8 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -168,9 +175,14 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                FormContentType contentType = recognizeContentOptions.ContentType ?? DetectContentType(form, nameof(form));
+                FormContentType formContentType = recognizeContentOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(contentType, form, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
+                    formContentType.ConvertToContentType1(),
+                    form,
+                    recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
+                    recognizeContentOptions.Pages,
+                    cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
@@ -186,7 +198,8 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -202,7 +215,11 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
-                Response response = ServiceClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+                Response response = ServiceClient.AnalyzeLayoutAsync(
+                    recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
+                    recognizeContentOptions.Pages,
+                    sourcePath,
+                    cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
@@ -218,7 +235,8 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeContentOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the language of the form, and which pages in a multi-page document to analyze.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -234,7 +252,11 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
-                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
+                    recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
+                    recognizeContentOptions.Pages,
+                    sourcePath,
+                    cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
@@ -255,7 +277,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
-        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
@@ -270,9 +293,14 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                FormContentType contentType = recognizeReceiptsOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
+                FormContentType formContentType = recognizeReceiptsOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
 
-                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(contentType, receipt, recognizeReceiptsOptions.IncludeFieldElements, recognizeReceiptsOptions.Locale, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(
+                    formContentType.ConvertToContentType1(),
+                    receipt,
+                    recognizeReceiptsOptions.IncludeFieldElements,
+                    recognizeReceiptsOptions.Locale == null ? (Locale?)null : recognizeReceiptsOptions.Locale,
+                    cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
@@ -289,7 +317,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
-        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
@@ -304,9 +333,14 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                FormContentType contentType = recognizeReceiptsOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
+                FormContentType formContentType = recognizeReceiptsOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
 
-                Response response = ServiceClient.AnalyzeReceiptAsync(contentType, receipt, recognizeReceiptsOptions.IncludeFieldElements, recognizeReceiptsOptions.Locale, cancellationToken);
+                Response response = ServiceClient.AnalyzeReceiptAsync(
+                    formContentType.ConvertToContentType1(),
+                    receipt,
+                    recognizeReceiptsOptions.IncludeFieldElements,
+                    recognizeReceiptsOptions.Locale == null ? (Locale?)null : recognizeReceiptsOptions.Locale,
+                    cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
@@ -323,7 +357,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receiptUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
@@ -339,7 +374,11 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = receiptUri.AbsoluteUri };
-                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, locale: recognizeReceiptsOptions.Locale, fileStream: sourcePath, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(
+                    recognizeReceiptsOptions.IncludeFieldElements,
+                    recognizeReceiptsOptions.Locale == null ? (Locale?)null : recognizeReceiptsOptions.Locale,
+                    sourcePath,
+                    cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
@@ -356,7 +395,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receiptUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
@@ -372,7 +412,11 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = receiptUri.AbsoluteUri };
-                Response response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, locale: recognizeReceiptsOptions.Locale, fileStream:sourcePath, cancellationToken);
+                Response response = ServiceClient.AnalyzeReceiptAsync(
+                    recognizeReceiptsOptions.IncludeFieldElements,
+                    recognizeReceiptsOptions.Locale == null ? (Locale?)null : recognizeReceiptsOptions.Locale,
+                    sourcePath,
+                    cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
@@ -393,7 +437,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCard">The stream containing the one or more business cards to recognize values from.</param>
-        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -408,9 +453,14 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                FormContentType contentType = recognizeBusinessCardsOptions.ContentType ?? DetectContentType(businessCard, nameof(businessCard));
+                FormContentType formContentType = recognizeBusinessCardsOptions.ContentType ?? DetectContentType(businessCard, nameof(businessCard));
 
-                Response response = await ServiceClient.AnalyzeBusinessCardAsyncAsync(contentType, businessCard, recognizeBusinessCardsOptions.IncludeFieldElements, recognizeBusinessCardsOptions.Locale, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeBusinessCardAsyncAsync(
+                    formContentType.ConvertToContentType1(),
+                    businessCard,
+                    recognizeBusinessCardsOptions.IncludeFieldElements,
+                    recognizeBusinessCardsOptions.Locale == null ? (Locale?)null : recognizeBusinessCardsOptions.Locale,
+                    cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeBusinessCardsOperation(ServiceClient, Diagnostics, location);
@@ -427,7 +477,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCard">The stream containing the one or more business cards to recognize values from.</param>
-        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -442,9 +493,14 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                FormContentType contentType = recognizeBusinessCardsOptions.ContentType ?? DetectContentType(businessCard, nameof(businessCard));
+                FormContentType formContentType = recognizeBusinessCardsOptions.ContentType ?? DetectContentType(businessCard, nameof(businessCard));
 
-                Response response = ServiceClient.AnalyzeBusinessCardAsync(contentType, businessCard, recognizeBusinessCardsOptions.IncludeFieldElements, recognizeBusinessCardsOptions.Locale, cancellationToken);
+                Response response = ServiceClient.AnalyzeBusinessCardAsync(
+                    formContentType.ConvertToContentType1(),
+                    businessCard,
+                    recognizeBusinessCardsOptions.IncludeFieldElements,
+                    recognizeBusinessCardsOptions.Locale == null ? (Locale?)null : recognizeBusinessCardsOptions.Locale,
+                    cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeBusinessCardsOperation(ServiceClient, Diagnostics, location);
@@ -461,7 +517,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCardUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -477,7 +534,11 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = businessCardUri.AbsoluteUri };
-                Response response = await ServiceClient.AnalyzeBusinessCardAsyncAsync(includeTextDetails: recognizeBusinessCardsOptions.IncludeFieldElements, locale: recognizeBusinessCardsOptions.Locale, fileStream: sourcePath, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeBusinessCardAsyncAsync(
+                    recognizeBusinessCardsOptions.IncludeFieldElements,
+                    recognizeBusinessCardsOptions.Locale == null ? (Locale?)null : recognizeBusinessCardsOptions.Locale,
+                    sourcePath,
+                    cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeBusinessCardsOperation(ServiceClient, Diagnostics, location);
@@ -494,7 +555,8 @@ namespace Azure.AI.FormRecognizer
         /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCardUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -510,7 +572,11 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = businessCardUri.AbsoluteUri };
-                Response response = ServiceClient.AnalyzeBusinessCardAsync(includeTextDetails: recognizeBusinessCardsOptions.IncludeFieldElements, locale: recognizeBusinessCardsOptions.Locale, fileStream: sourcePath, cancellationToken);
+                Response response = ServiceClient.AnalyzeBusinessCardAsync(
+                    recognizeBusinessCardsOptions.IncludeFieldElements,
+                    recognizeBusinessCardsOptions.Locale == null ? (Locale?)null : recognizeBusinessCardsOptions.Locale,
+                    sourcePath,
+                    cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeBusinessCardsOperation(ServiceClient, Diagnostics, location);
@@ -524,6 +590,165 @@ namespace Azure.AI.FormRecognizer
 
         #endregion
 
+        #region Invoices
+
+        /// <summary>
+        /// Recognizes values from one or more invoices.
+        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// </summary>
+        /// <param name="invoice">The stream containing the one or more invoices to recognize values from.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
+        /// completion will contain the extracted invoices.</returns>
+        public virtual async Task<RecognizeInvoicesOperation> StartRecognizeInvoicesAsync(Stream invoice, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(invoice, nameof(invoice));
+
+            recognizeInvoicesOptions ??= new RecognizeInvoicesOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeInvoices)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType formContentType = recognizeInvoicesOptions.ContentType ?? DetectContentType(invoice, nameof(invoice));
+
+                Response response = await ServiceClient.AnalyzeInvoiceAsyncAsync(
+                    formContentType.ConvertToContentType1(),
+                    invoice,
+                    recognizeInvoicesOptions.IncludeFieldElements,
+                    recognizeInvoicesOptions.Locale == null ? (Locale?)null : recognizeInvoicesOptions.Locale,
+                    cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeInvoicesOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognizes values from one or more invoices.
+        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// </summary>
+        /// <param name="invoice">The stream containing the one or more invoices to recognize values from.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
+        /// completion will contain the extracted invoices.</returns>
+        public virtual RecognizeInvoicesOperation StartRecognizeInvoices(Stream invoice, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(invoice, nameof(invoice));
+
+            recognizeInvoicesOptions ??= new RecognizeInvoicesOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeInvoices)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType formContentType = recognizeInvoicesOptions.ContentType ?? DetectContentType(invoice, nameof(invoice));
+
+                Response response = ServiceClient.AnalyzeInvoiceAsync(
+                    formContentType.ConvertToContentType1(),
+                    invoice,
+                    recognizeInvoicesOptions.IncludeFieldElements,
+                    recognizeInvoicesOptions.Locale == null ? (Locale?)null : recognizeInvoicesOptions.Locale,
+                    cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeInvoicesOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognizes values from one or more invoices.
+        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// </summary>
+        /// <param name="invoiceUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
+        /// completion will contain the extracted invoices.</returns>
+        public virtual async Task<RecognizeInvoicesOperation> StartRecognizeInvoicesFromUriAsync(Uri invoiceUri, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(invoiceUri, nameof(invoiceUri));
+
+            recognizeInvoicesOptions ??= new RecognizeInvoicesOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeInvoicesFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath sourcePath = new SourcePath() { Source = invoiceUri.AbsoluteUri };
+                Response response = await ServiceClient.AnalyzeInvoiceAsyncAsync(
+                    recognizeInvoicesOptions.IncludeFieldElements,
+                    recognizeInvoicesOptions.Locale == null ? (Locale?)null : recognizeInvoicesOptions.Locale,
+                    sourcePath,
+                    cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeInvoicesOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognizes values from one or more invoices.
+        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// </summary>
+        /// <param name="invoiceUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, the locale of the form, or whether or not to include form elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
+        /// completion will contain the extracted invoices.</returns>
+        public virtual RecognizeInvoicesOperation StartRecognizeInvoicesFromUri(Uri invoiceUri, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(invoiceUri, nameof(invoiceUri));
+
+            recognizeInvoicesOptions ??= new RecognizeInvoicesOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeInvoicesFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath sourcePath = new SourcePath() { Source = invoiceUri.AbsoluteUri };
+                Response response = ServiceClient.AnalyzeInvoiceAsync(
+                    recognizeInvoicesOptions.IncludeFieldElements,
+                    recognizeInvoicesOptions.Locale == null ? (Locale?)null : recognizeInvoicesOptions.Locale,
+                    sourcePath,
+                    cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeInvoicesOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        #endregion
+
         #region Custom Forms
 
         /// <summary>
@@ -531,7 +756,8 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
@@ -548,9 +774,9 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-                FormContentType contentType = recognizeCustomFormsOptions.ContentType ?? DetectContentType(form, nameof(form));
+                FormContentType formContentType = recognizeCustomFormsOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-                Response response = ServiceClient.AnalyzeWithCustomModel(guid, contentType, form, includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements, cancellationToken);
+                Response response = ServiceClient.AnalyzeWithCustomModel(guid, formContentType, form, includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements, cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, location);
@@ -567,7 +793,8 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
@@ -603,7 +830,8 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
@@ -620,9 +848,9 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-                FormContentType contentType = recognizeCustomFormsOptions.ContentType ?? DetectContentType(form, nameof(form));
+                FormContentType formContentType = recognizeCustomFormsOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-                Response response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, contentType, form, includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, formContentType, form, includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements, cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, location);
@@ -639,7 +867,8 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="recognizeCustomFormsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>

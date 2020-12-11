@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
@@ -36,7 +37,7 @@ namespace Azure.Messaging.ServiceBus
         internal string Identifier => _innerProcessor.Identifier;
 
         /// <inheritdoc cref="ServiceBusProcessor.ReceiveMode"/>
-        public ReceiveMode ReceiveMode => _innerProcessor.ReceiveMode;
+        public ServiceBusReceiveMode ReceiveMode => _innerProcessor.ReceiveMode;
 
         /// <inheritdoc cref="ServiceBusProcessor.PrefetchCount"/>
         public int PrefetchCount => _innerProcessor.PrefetchCount;
@@ -44,8 +45,8 @@ namespace Azure.Messaging.ServiceBus
         /// <inheritdoc cref="ServiceBusProcessor.IsProcessing"/>
         public bool IsProcessing => _innerProcessor.IsProcessing;
 
-        /// <inheritdoc cref="ServiceBusProcessor.AutoComplete"/>
-        public bool AutoComplete => _innerProcessor.AutoComplete;
+        /// <inheritdoc cref="ServiceBusProcessor.AutoCompleteMessages"/>
+        public bool AutoCompleteMessages => _innerProcessor.AutoCompleteMessages;
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusSessionProcessor"/> has been closed.
@@ -94,7 +95,7 @@ namespace Azure.Messaging.ServiceBus
                 true,
                 plugins,
                 options.ToProcessorOptions(),
-                options.SessionIds,
+                options.SessionIds.ToArray(),
                 options.MaxConcurrentSessions,
                 options.MaxConcurrentCallsPerSession);
         }
@@ -116,7 +117,6 @@ namespace Azure.Messaging.ServiceBus
             add
             {
                 _innerProcessor.ProcessSessionMessageAsync += value;
-
             }
 
             remove
@@ -154,7 +154,6 @@ namespace Azure.Messaging.ServiceBus
             add
             {
                 _innerProcessor.SessionInitializingAsync += value;
-
             }
 
             remove
@@ -222,13 +221,11 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSessionProcessor" />.
         /// </summary>
-        /// <param name="closeMode">The mode indicating what should happen to the link when closing.</param>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
         public virtual async Task CloseAsync(
-            LinkCloseMode closeMode = LinkCloseMode.Detach,
             CancellationToken cancellationToken = default) =>
-            await _innerProcessor.CloseAsync(closeMode).ConfigureAwait(false);
+            await _innerProcessor.CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSessionProcessor" />.
