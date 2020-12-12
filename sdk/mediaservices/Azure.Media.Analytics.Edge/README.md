@@ -14,8 +14,9 @@ Use the client library for Live Video Analytics on IoT Edge to:
 n/a
 ### Install the package
 
-Install the Live Video Analytics client library for .NET with pip:
+Install the Live Video Analytics client library for .NET with NuGet:
 
+`dotnet add package Azure.Media.Analytics.Edge`
 
 ### Prerequisites
 

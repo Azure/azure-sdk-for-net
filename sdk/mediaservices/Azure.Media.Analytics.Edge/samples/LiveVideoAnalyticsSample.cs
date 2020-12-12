@@ -14,7 +14,7 @@ using System.Text;
 using Azure.Core;
 using System.Linq;
 
-namespace Azure.Media.Analytics.Tests.Samples
+namespace Azure.Media.Analytics.Edge.Samples
 {
     public class LiveVideoAnalyticsSample
     {
