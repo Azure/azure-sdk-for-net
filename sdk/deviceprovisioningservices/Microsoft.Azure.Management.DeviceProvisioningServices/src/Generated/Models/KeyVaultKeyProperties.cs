@@ -14,25 +14,25 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Available SKUs of tier and units.
+    /// The properties of the KeyVault key.
     /// </summary>
-    public partial class IotDpsSkuDefinition
+    public partial class KeyVaultKeyProperties
     {
         /// <summary>
-        /// Initializes a new instance of the IotDpsSkuDefinition class.
+        /// Initializes a new instance of the KeyVaultKeyProperties class.
         /// </summary>
-        public IotDpsSkuDefinition()
+        public KeyVaultKeyProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IotDpsSkuDefinition class.
+        /// Initializes a new instance of the KeyVaultKeyProperties class.
         /// </summary>
-        /// <param name="name">Sku name. Possible values include: 'S1'</param>
-        public IotDpsSkuDefinition(string name = default(string))
+        /// <param name="keyIdentifier">The identifier of the key.</param>
+        public KeyVaultKeyProperties(string keyIdentifier = default(string))
         {
-            Name = name;
+            KeyIdentifier = keyIdentifier;
             CustomInit();
         }
 
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sku name. Possible values include: 'S1'
+        /// Gets or sets the identifier of the key.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "keyIdentifier")]
+        public string KeyIdentifier { get; set; }
 
     }
 }

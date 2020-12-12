@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// Initializes a new instance of the IotHubDefinitionDescription
         /// class.
         /// </summary>
-        /// <param name="connectionString">Connection string og the IoT
+        /// <param name="connectionString">Connection string of the IoT
         /// hub.</param>
         /// <param name="location">ARM region of the IoT hub.</param>
         /// <param name="applyAllocationPolicy">flag for applying
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets connection string og the IoT hub.
+        /// Gets or sets connection string of the IoT hub.
         /// </summary>
         [JsonProperty(PropertyName = "connectionString")]
         public string ConnectionString { get; set; }

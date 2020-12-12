@@ -14,25 +14,27 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Available SKUs of tier and units.
+    /// The ARM UserAssigned identity information
     /// </summary>
-    public partial class IotDpsSkuDefinition
+    public partial class ArmUserIdentity
     {
         /// <summary>
-        /// Initializes a new instance of the IotDpsSkuDefinition class.
+        /// Initializes a new instance of the ArmUserIdentity class.
         /// </summary>
-        public IotDpsSkuDefinition()
+        public ArmUserIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IotDpsSkuDefinition class.
+        /// Initializes a new instance of the ArmUserIdentity class.
         /// </summary>
-        /// <param name="name">Sku name. Possible values include: 'S1'</param>
-        public IotDpsSkuDefinition(string name = default(string))
+        /// <param name="principalId">Principal Id</param>
+        /// <param name="clientId">Client Id</param>
+        public ArmUserIdentity(string principalId = default(string), string clientId = default(string))
         {
-            Name = name;
+            PrincipalId = principalId;
+            ClientId = clientId;
             CustomInit();
         }
 
@@ -42,10 +44,16 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sku name. Possible values include: 'S1'
+        /// Gets principal Id
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "principalId")]
+        public string PrincipalId { get; private set; }
+
+        /// <summary>
+        /// Gets client Id
+        /// </summary>
+        [JsonProperty(PropertyName = "clientId")]
+        public string ClientId { get; private set; }
 
     }
 }

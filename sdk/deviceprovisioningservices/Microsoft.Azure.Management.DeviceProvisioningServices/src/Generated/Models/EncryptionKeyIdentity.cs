@@ -14,25 +14,27 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Available SKUs of tier and units.
+    /// The properties of the identity used to access the key encryption key in
+    /// KeyVault.
     /// </summary>
-    public partial class IotDpsSkuDefinition
+    public partial class EncryptionKeyIdentity
     {
         /// <summary>
-        /// Initializes a new instance of the IotDpsSkuDefinition class.
+        /// Initializes a new instance of the EncryptionKeyIdentity class.
         /// </summary>
-        public IotDpsSkuDefinition()
+        public EncryptionKeyIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IotDpsSkuDefinition class.
+        /// Initializes a new instance of the EncryptionKeyIdentity class.
         /// </summary>
-        /// <param name="name">Sku name. Possible values include: 'S1'</param>
-        public IotDpsSkuDefinition(string name = default(string))
+        /// <param name="userAssignedIdentity">The user assigned
+        /// identity.</param>
+        public EncryptionKeyIdentity(string userAssignedIdentity = default(string))
         {
-            Name = name;
+            UserAssignedIdentity = userAssignedIdentity;
             CustomInit();
         }
 
@@ -42,10 +44,10 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sku name. Possible values include: 'S1'
+        /// Gets or sets the user assigned identity.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "userAssignedIdentity")]
+        public string UserAssignedIdentity { get; set; }
 
     }
 }
