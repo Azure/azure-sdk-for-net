@@ -340,6 +340,197 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
         /// </exception>
         Task<AzureOperationResponse<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> ListKeysForKeyNameWithHttpMessagesAsync(string provisioningServiceName, string keyName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// List private link resources
+        /// </summary>
+        /// <remarks>
+        /// List private link resources for the given provisioning service
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the provisioning
+        /// service.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the provisioning service.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateLinkResources>> ListPrivateLinkResourcesWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get the specified private link resource
+        /// </summary>
+        /// <remarks>
+        /// Get the specified private link resource for the given provisioning
+        /// service
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the provisioning
+        /// service.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the provisioning service.
+        /// </param>
+        /// <param name='groupId'>
+        /// The name of the private link resource
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<GroupIdInformation>> GetPrivateLinkResourcesWithHttpMessagesAsync(string resourceGroupName, string resourceName, string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List private endpoint connections
+        /// </summary>
+        /// <remarks>
+        /// List private endpoint connection properties
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the provisioning
+        /// service.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the provisioning service.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IList<PrivateEndpointConnection>>> ListPrivateEndpointConnectionsWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get private endpoint connection
+        /// </summary>
+        /// <remarks>
+        /// Get private endpoint connection properties
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the provisioning
+        /// service.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the provisioning service.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnection>> GetPrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create or update private endpoint connection
+        /// </summary>
+        /// <remarks>
+        /// Create or update the status of a private endpoint connection with
+        /// the specified name
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the provisioning
+        /// service.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the provisioning service.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection
+        /// </param>
+        /// <param name='privateEndpointConnection'>
+        /// The private endpoint connection with updated properties
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnection>> CreateOrUpdatePrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete private endpoint connection
+        /// </summary>
+        /// <remarks>
+        /// Delete private endpoint connection with the specified name
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the provisioning
+        /// service.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the provisioning service.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnection>> DeletePrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update the metadata of the provisioning service.
         /// </summary>
         /// <remarks>
@@ -432,6 +623,74 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string provisioningServiceName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create or update private endpoint connection
+        /// </summary>
+        /// <remarks>
+        /// Create or update the status of a private endpoint connection with
+        /// the specified name
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the provisioning
+        /// service.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the provisioning service.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection
+        /// </param>
+        /// <param name='privateEndpointConnection'>
+        /// The private endpoint connection with updated properties
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginCreateOrUpdatePrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete private endpoint connection
+        /// </summary>
+        /// <remarks>
+        /// Delete private endpoint connection with the specified name
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the provisioning
+        /// service.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the provisioning service.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginDeletePrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all the provisioning services in a subscription.
         /// </summary>

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// not</param>
         /// <param name="reason">specifies the reason a name is unavailable.
         /// Possible values include: 'Invalid', 'AlreadyExists'</param>
-        /// <param name="message">message containing a etailed reason name is
+        /// <param name="message">message containing a detailed reason name is
         /// unavailable</param>
         public NameAvailabilityInfo(bool? nameAvailable = default(bool?), string reason = default(string), string message = default(string))
         {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         public string Reason { get; set; }
 
         /// <summary>
-        /// Gets or sets message containing a etailed reason name is
+        /// Gets or sets message containing a detailed reason name is
         /// unavailable
         /// </summary>
         [JsonProperty(PropertyName = "message")]
