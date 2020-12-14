@@ -235,14 +235,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateInDocumenResult(DetectedLanguage language)
         {
-            Assert.That(language.Name, Is.Not.Null.Or.Not.Empty);
-            Assert.That(language.Iso6391Name, Is.Not.Null.Or.Not.Empty);
+            Assert.That(language.Name, Is.Not.Null.And.Not.Empty);
+            Assert.That(language.Iso6391Name, Is.Not.Null.And.Not.Empty);
             Assert.GreaterOrEqual(language.ConfidenceScore, 0.0);
         }
 
         private void ValidateBatchDocumentsResult(DetectLanguageResultCollection results, bool includeStatistics = default)
         {
-            Assert.IsNotEmpty(results.ModelVersion);
+            Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
             if (includeStatistics)
             {
@@ -255,9 +255,10 @@ namespace Azure.AI.TextAnalytics.Tests
             else
                 Assert.IsNull(results.Statistics);
 
+            Assert.Greater(results.Count, 0);
             foreach (DetectLanguageResult languageInDocument in results)
             {
-                Assert.IsNotEmpty(languageInDocument.Id);
+                Assert.That(languageInDocument.Id, Is.Not.Null.And.Not.Empty);
                 Assert.False(languageInDocument.HasError);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
