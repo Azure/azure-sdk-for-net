@@ -1,36 +1,111 @@
 # Azure WebJobs Event Hubs client library for .NET
 
-TODO
+This extension provides functionality for accessing Azure Event Hubs in Azure Functions.
 
 ## Getting started
 
 ### Install the package
 
-Install the Event Grid extension with [NuGet][nuget]:
+Install the Event Hubs extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.Event Hubs):
 
 ```Powershell
-dotnet add package Microsoft.Azure.WebJobs.Extensions.EventHubs --version 5.0.0-beta.1
+dotnet add package Microsoft.Azure.WebJobs.Extensions.Event Hubs --version 5.0.0-beta.1
 ```
 
 ### Prerequisites
 
-TODO
+- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+
+- **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
+
+[![Deploy button](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fevent hub%2FAzure.Messaging.Event Hubs%2Fassets%2Fsamples-azure-deploy.json)
 
 ### Authenticate the Client
 
-TODO
+For the Event Hubs client library to interact with an Event Hub, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating an Event Hubs namespace.  If you aren't familiar with using connection strings with Event Hubs, you may wish to follow the step-by-step guide to [get an Event Hubs connection string](https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string).
+
+The `Connection` property of `Event HubAttribute` and `Event HubTriggerAttribute` is used to specify the configuration property that stores the connection string.
+
+For the local development use the `local.settings.json` file to store the connection string:
+
+``` json
+{
+  "Values": {
+    "<connection_name>": "Endpoint=sb://<event_hub_name>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Jya7Eh76HU92ibsxuk1ITN8CM8Bt76YLKf5ISjU3jZ8="
+  }
+}
+```
+
+When deployed use the [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to set the connection string.
+
+#### Managed identity authentication
+
+If your environment has [managed identity](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet) enabled you can use it to authenticate the Event Hubs extension.
+To use managed identity provide the `<connection_name>__fullyQualifiedNamespace` configuration setting.
+
+
+``` json
+{
+  "Values": {
+    "<connection_name>__fullyQualifiedNamespace": "<event_hub_name>.servicebus.windows.net"
+  }
+}
+```
+
+Or in the case of deployed app set the same setting in [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings):
+
+```
+<connection_name>__fullyQualifiedNamespace=<event_hub_name>.servicebus.windows.net
+```
 
 ## Key concepts
 
-TODO
+### Event Hub Trigger
+
+The Event Hub Trigger allows a function to be executed when a message is sent to an Event Hub.
+
+Please follow the [Azure Event Hubs trigger tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-event-hubs-trigger?tabs=csharp) to learn more about Event Hub triggers.
+
+### Event Hub Binding
+
+The Event Hub Binding allows a function to send Event Hub events.
+
+Please follow the [Azure Event Hubs output binding](https://docs.microsoft.com/azure/azure-functions/functions-bindings-event-hubs-output?tabs=csharp) to learn more about Event Hub bindings.
 
 ## Examples
 
-TODO
+### Sending individual event
+
+You can send individual events to an Event Hub by applying the `EventHubAttribute` the function return value. The return value can be of `string` or `EventData` type.
+
+```C# Snippet:BindingReturnValue
+```
+
+### Sending multiple events
+
+To send multiple events from a single Azure Function invocation you can apply the `EventHubAttribute` to the `IAsyncCollector<string>` or `IAsyncCollector<EventData>` parameter.
+
+
+```C# Snippet:BindingToCollector
+```
+
+### Per-event triggers
+
+To run a function every time an event is sent to Event Hub apply the `EventHubTriggerAttribute` to a `string` or `EventData` parameter.
+
+```C# Snippet:TriggerSingle
+```
+
+### Batch triggers
+
+To run a function for a batch of received events apply the `EventHubTriggerAttribute` to a `string[]` or `EventData[]` parameter.
+
+```C# Snippet:TriggerBatch
+```
 
 ## Troubleshooting
 
-TODO
+Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
 
 ## Next steps
 
@@ -51,12 +126,12 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.EventHubs%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.Event Hubs%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/Microsoft.Azure.WebJobs.Extensions.EventHubs/src
-[package]: https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.EventHubs/
-[docs]: https://docs.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.EventHubs
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/Microsoft.Azure.WebJobs.Extensions.Event Hubs/src
+[package]: https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.Event Hubs/
+[docs]: https://docs.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.Event Hubs
 [nuget]: https://www.nuget.org/
 
 [contrib]: https://github.com/Azure/azure-sdk-for-net/tree/master/CONTRIBUTING.md
