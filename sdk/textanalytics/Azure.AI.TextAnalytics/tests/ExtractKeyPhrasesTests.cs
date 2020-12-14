@@ -190,7 +190,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateBatchDocumentsResult(ExtractKeyPhrasesResultCollection results, int minKeyPhrasesCount = default, bool includeStatistics = default)
         {
-            Assert.IsNotEmpty(results.ModelVersion);
+            Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
             if (includeStatistics)
             {
@@ -205,7 +205,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             foreach (ExtractKeyPhrasesResult keyPhrasesInDocument in results)
             {
-                Assert.IsNotEmpty(keyPhrasesInDocument.Id);
+                Assert.That(keyPhrasesInDocument.Id, Is.Not.Null.And.Not.Empty);
+
                 Assert.False(keyPhrasesInDocument.HasError);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
@@ -222,7 +223,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, keyPhrasesInDocument.Statistics.TransactionCount);
                 }
 
-                ValidateInDocumenResult(keyPhrasesInDocument.KeyPhrases);
+                ValidateInDocumenResult(keyPhrasesInDocument.KeyPhrases, minKeyPhrasesCount);
             }
         }
     }
