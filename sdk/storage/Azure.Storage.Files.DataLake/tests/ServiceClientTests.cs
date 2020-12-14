@@ -71,33 +71,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public void Ctor_ConnectionString()
-        {
-            string accountName = "accountName";
-            string accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
-
-            StorageSharedKeyCredential credentials = new StorageSharedKeyCredential(accountName, accountKey);
-            Uri blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
-            Uri blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
-
-            StorageConnectionString connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
-
-            DataLakeServiceClient service1 = InstrumentClient(new DataLakeServiceClient(connectionString.ToString(true)));
-            DataLakeServiceClient service2 = InstrumentClient(new DataLakeServiceClient(connectionString.ToString(true), GetOptions()));
-
-            DataLakeUriBuilder builder1 = new DataLakeUriBuilder(service1.Uri);
-            DataLakeUriBuilder builder2 = new DataLakeUriBuilder(service2.Uri);
-
-            Assert.IsEmpty(builder1.FileSystemName);
-            Assert.IsEmpty(builder1.DirectoryOrFilePath);
-            Assert.AreEqual(accountName, builder1.AccountName);
-
-            Assert.IsEmpty(builder2.FileSystemName);
-            Assert.IsEmpty(builder2.DirectoryOrFilePath);
-            Assert.AreEqual(accountName, builder2.AccountName);
-        }
-
-        [Test]
         public async Task Ctor_ConnectionString_RoundTrip()
         {
             // Arrage
