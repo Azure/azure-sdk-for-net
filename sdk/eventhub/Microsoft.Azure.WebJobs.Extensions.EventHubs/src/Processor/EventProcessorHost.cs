@@ -80,6 +80,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 EventHubName = EventHubName,
                 FullyQualifiedNamespace = FullyQualifiedNamespace
             }, checkpointEvent, cancellationToken).ConfigureAwait(false);
+            var leaseInfo = new LeaseInfo(checkpointEvent.Offset, checkpointEvent.SequenceNumber);
+            _leaseInfos.AddOrUpdate(partitionId, leaseInfo, (key, oldValue) => leaseInfo);
         }
 
         internal virtual LeaseInfo GetLeaseInfo(string partitionId)
