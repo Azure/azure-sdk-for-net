@@ -16,22 +16,20 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
     public sealed class DownloadFile : PerfTest<SizeOptions>
     {
         /// <summary>
-        /// Access manager to the Azure storage Share.
-        /// This is shared across all instances of the test run.
+        /// The client to interact with an Azure storage file inside an Azure storage share.
         /// </summary>
-        private static ShareClientManager s_shareClientManager;
+        private ShareFileClient _fileClient;
 
         /// <summary>
-        /// The path of the local file uploaded to Azure storage.
-        /// This is shared across all instances of the test run.
+        /// Local stream uploaded to Azure storage.
         /// </summary>
-        private static string s_uploadFilePath;
+        private readonly Stream _stream;
 
-        /// <summary>
-        /// Name of the <see cref="ShareFileClient"/> where the file is uploaded.
-        /// This is shared across all instances of the test run.
-        /// </summary>
-        private static string s_fileClientName;
+        ///// <summary>
+        ///// Name of the <see cref="ShareFileClient"/> where the file is uploaded.
+        ///// This is shared across all instances of the test run.
+        ///// </summary>
+        //private static string s_fileClientName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadFile"/> class.
@@ -39,40 +37,36 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         public DownloadFile(SizeOptions options) : base(options)
         {
+            _stream = RandomStream.Create(options.Size);
         }
 
-        /// <summary>
-        /// Instantiates and creates a <see cref="ShareClient"/> and a <see cref="ShareDirectoryClient"/> for the test.
-        /// Also, creates a local file and uploads it to Azure File storage.
-        /// </summary>
-        public override async Task GlobalSetupAsync()
+        public override void Dispose(bool disposing)
         {
-            await base.GlobalSetupAsync();
-
-            s_shareClientManager = new ShareClientManager();
-            await s_shareClientManager.CreateShareClientAsync();
-
-            s_uploadFilePath = await ShareClientManager.CreateRandomFileAsync(Options.Size);
-            s_fileClientName = await s_shareClientManager.UploadFileAsync(s_uploadFilePath, CancellationToken.None);
+            _stream.Dispose();
+            base.Dispose(disposing);
         }
 
-        /// <summary>
-        /// Marks the <see cref="ShareClient"/> used by the test for deletion.
-        /// Also, deletes the local file created at setup.
-        /// </summary>
-        public override async Task GlobalCleanupAsync()
+        public override async Task SetupAsync()
         {
-            await base.GlobalCleanupAsync();
+            await base.SetupAsync();
 
-            await s_shareClientManager.DisposeAsync();
+            // See https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata for
+            // restrictions on file share naming.
+            var FilesShareClient = new ShareClient(PerfTestEnvironment.Instance.FileSharesConnectionString, Guid.NewGuid().ToString());
 
-            try
-            {
-                File.Delete(s_uploadFilePath);
-            }
-            catch
-            {
-            }
+            ShareDirectoryClient DirectoryClient = FilesShareClient.GetDirectoryClient(Path.GetRandomFileName());
+            await DirectoryClient.CreateAsync();
+
+            _fileClient = DirectoryClient.GetFileClient(Path.GetRandomFileName());
+            await _fileClient.CreateAsync(_stream.Length, cancellationToken: CancellationToken.None);
+
+            await _fileClient.UploadAsync(_stream, cancellationToken: CancellationToken.None);
+        }
+
+        public override async Task CleanupAsync()
+        {
+            await _fileClient.DeleteAsync();
+            await base.CleanupAsync();
         }
 
         /// <summary>
@@ -81,9 +75,7 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
         /// <param name="cancellationToken">The token used to signal cancellation request.</param>
         public override void Run(CancellationToken cancellationToken)
         {
-            ShareFileClient fileClient = s_shareClientManager.DirectoryClient.GetFileClient(s_fileClientName);
-
-            Models.ShareFileDownloadInfo fileDownloadInfo = fileClient.Download(cancellationToken: cancellationToken);
+            Models.ShareFileDownloadInfo fileDownloadInfo = _fileClient.Download(cancellationToken: cancellationToken);
 
             // Copy the stream so it is actually downloaded. We use a memory stream as destination to avoid the cost of copying to a file on disk.
             using (var localStream = new MemoryStream())
@@ -102,9 +94,7 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
         /// <param name="cancellationToken">The token used to signal cancellation request.</param>
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            ShareFileClient fileClient = s_shareClientManager.DirectoryClient.GetFileClient(s_fileClientName);
-
-            Models.ShareFileDownloadInfo fileDownloadInfo = await fileClient.DownloadAsync(cancellationToken: cancellationToken);
+            Models.ShareFileDownloadInfo fileDownloadInfo = await _fileClient.DownloadAsync(cancellationToken: cancellationToken);
 
             // Copy the stream so it is actually downloaded. We use a local memory stream as destination to avoid the cost of copying to a file on disk.
             using (var localStream = new MemoryStream())

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Shares.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{BC2C1207-3C0A-4217-A867-81B0C03D2519}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Shares", "..\..\src\Azure.Storage.Files.Shares.csproj", "{22482B2B-BEA2-4302-A75C-5E5AAC4233A6}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{3830DDDD-5BAB-44BD-9589-57B71E21381A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{9FF53FB2-81D1-47D0-9FF3-C9E4993A53FC}"
@@ -21,6 +23,10 @@ Global
 		{556A5868-96C5-4672-ABB2-1E5A0F093B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{556A5868-96C5-4672-ABB2-1E5A0F093B1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{556A5868-96C5-4672-ABB2-1E5A0F093B1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22482B2B-BEA2-4302-A75C-5E5AAC4233A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22482B2B-BEA2-4302-A75C-5E5AAC4233A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22482B2B-BEA2-4302-A75C-5E5AAC4233A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22482B2B-BEA2-4302-A75C-5E5AAC4233A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3830DDDD-5BAB-44BD-9589-57B71E21381A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3830DDDD-5BAB-44BD-9589-57B71E21381A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3830DDDD-5BAB-44BD-9589-57B71E21381A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -34,6 +40,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{22482B2B-BEA2-4302-A75C-5E5AAC4233A6} = {BC2C1207-3C0A-4217-A867-81B0C03D2519}
 		{3830DDDD-5BAB-44BD-9589-57B71E21381A} = {BC2C1207-3C0A-4217-A867-81B0C03D2519}
 		{9FF53FB2-81D1-47D0-9FF3-C9E4993A53FC} = {BC2C1207-3C0A-4217-A867-81B0C03D2519}
 	EndGlobalSection
