@@ -6,6 +6,8 @@ jobs:
       name: azsdk-pool-mms2019-ds2v2-general # Comment this line back-out to switch to public pools.
       # vmImage: windows-2019 # Comment this line back-in to switch to public pools.
     steps:
+      - checkout: self
+        fetchDepth: 20
       - ${{if eq(parameters.TestPipeline, 'true')}}:
         - task: PowerShell@2
           displayName: Prep template pipeline for release
