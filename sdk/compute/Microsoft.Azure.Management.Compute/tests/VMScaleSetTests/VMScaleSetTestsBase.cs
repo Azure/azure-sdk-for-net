@@ -416,6 +416,9 @@ namespace Compute.Tests
 
             string subnetId = null;
             LoadBalancer loadBalancer = null;
+            // For extended location scenario, we need to pass Extended Location for creating networking components as well
+            // Since Networking SDK is not yet updated, creating networking components through ARM Template Deployment
+            // Will replace the code once Networking SDK allows passing in Extended Location
             if (extendedLocation == null)
             {
                 var getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);

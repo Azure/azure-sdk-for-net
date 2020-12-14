@@ -621,7 +621,7 @@ namespace Compute.Tests
                 }
 
                 var listResponse = m_CrpClient.VirtualMachineScaleSets.List(rgName);
-                ValidateVMScaleSet(inputVMScaleSet, listResponse.FirstOrDefault(x => x.Name == vmssName), hasManagedDisks);
+                ValidateVMScaleSet(inputVMScaleSet, listResponse.FirstOrDefault(x => x.Name == vmssName), hasManagedDisks, extendedLocation: extendedLocation);
 
                 if (validateListSku)
                 {

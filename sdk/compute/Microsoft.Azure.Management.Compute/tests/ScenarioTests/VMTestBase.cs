@@ -213,9 +213,10 @@ namespace Compute.Tests
             Action<VirtualMachine> vmCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
-            bool hasManagedDisks = false)
+            bool hasManagedDisks = false,
+            string extendedLocation = null)
         {
-            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks);
+            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks, extendedLocation: extendedLocation);
         }
 
         protected VirtualMachine CreateVM(
@@ -251,6 +252,9 @@ namespace Compute.Tests
                     });
 
                 string nicId = null;
+                // For extended location scenario, we need to pass Extended Location for creating networking components as well
+                // Since Networking SDK is not yet updated, creating networking components through ARM Template Deployment
+                // Will replace the code once Networking SDK allows passing in Extended Location
                 if (extendedLocation == null)
                 {
                     PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);

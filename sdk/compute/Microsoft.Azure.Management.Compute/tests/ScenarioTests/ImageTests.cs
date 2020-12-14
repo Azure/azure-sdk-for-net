@@ -70,7 +70,16 @@ namespace Compute.Tests
                 {
                     Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                     EnsureClientsInitialized(context);
-                    CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null, extendedLocation: "MicrosoftRRDCLab1");
+                    // Passing custom image for Extended Location Scenario
+                    ImageReference imageReference = new ImageReference
+                    {
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2016-Datacenter",
+                        Version = "14393.4048.2011170655"
+                    };
+                    CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null, extendedLocation: "MicrosoftRRDCLab1", hasManagedDisks: true,
+                        imageReference: imageReference);
                 }
             }
             finally
@@ -79,7 +88,8 @@ namespace Compute.Tests
             }
         }
 
-        private void CreateImageTestHelper(string originalTestLocation, string diskEncryptionSetId, string extendedLocation = null)
+        private void CreateImageTestHelper(string originalTestLocation, string diskEncryptionSetId, string extendedLocation = null, 
+            bool hasManagedDisks = false, ImageReference imageReference = null)
         {
             VirtualMachine inputVM = null;
 
@@ -91,7 +101,7 @@ namespace Compute.Tests
             // Create a VM, so we can use its OS disk for creating the image
             string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
             string asName = ComputeManagementTestUtilities.GenerateName("as");
-            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+            ImageReference imageRef = imageReference ?? GetPlatformVMImage(useWindowsImage: true);
 
             try
             {
@@ -136,8 +146,18 @@ namespace Compute.Tests
                     var testStatusList = new List<InstanceViewStatus> { testStatus };
                 };
 
+                // Customization for Extended Location Scenario
+                Action<VirtualMachine> addVMToExtendedLocation = vm =>
+                {
+                    vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardD2sV3;
+                    vm.StorageProfile.OsDisk.ManagedDisk.StorageAccountType = StorageAccountTypes.PremiumLRS;
+                    vm.StorageProfile.DataDisks[0].ManagedDisk.StorageAccountType = StorageAccountTypes.PremiumLRS;
+                };
+
+                Action<VirtualMachine> vmAction = string.IsNullOrEmpty(extendedLocation) ? addDataDiskToVM : addVMToExtendedLocation;
+
                 // Create the VM, whose OS disk will be used in creating the image
-                var createdVM = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, addDataDiskToVM);
+                var createdVM = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, vmAction, hasManagedDisks: hasManagedDisks, extendedLocation: extendedLocation);
 
                 int expectedDiskLunWithDiskEncryptionSet = createdVM.StorageProfile.DataDisks[0].Lun;
 
@@ -154,7 +174,7 @@ namespace Compute.Tests
                     {
                         OsDisk = new ImageOSDisk()
                         {
-                            BlobUri = createdVM.StorageProfile.OsDisk.Vhd.Uri,
+                            BlobUri = createdVM.StorageProfile.OsDisk.Vhd?.Uri,
                             DiskEncryptionSet = diskEncryptionSetId == null ? null : new DiskEncryptionSetParameters()
                             {
                                 Id = diskEncryptionSetId
@@ -163,17 +183,17 @@ namespace Compute.Tests
                             OsType = OperatingSystemTypes.Windows,
                         },
                         DataDisks = new List<ImageDataDisk>()
+                        {
+                            new ImageDataDisk()
                             {
-                                new ImageDataDisk()
+                                BlobUri = createdVM.StorageProfile.DataDisks[0].Vhd?.Uri,
+                                DiskEncryptionSet = diskEncryptionSetId == null ? null: new DiskEncryptionSetParameters()
                                 {
-                                    BlobUri = createdVM.StorageProfile.DataDisks[0].Vhd.Uri,
-                                    DiskEncryptionSet = diskEncryptionSetId == null ? null: new DiskEncryptionSetParameters()
-                                    {
-                                        Id = diskEncryptionSetId
-                                    },
-                                    Lun = expectedDiskLunWithDiskEncryptionSet,
-                                }
+                                    Id = diskEncryptionSetId
+                                },
+                                Lun = expectedDiskLunWithDiskEncryptionSet,
                             }
+                        }
                     },
 
                     HyperVGeneration = HyperVGeneration.V1
@@ -181,6 +201,15 @@ namespace Compute.Tests
 
                 if (extendedLocation != null)
                 {
+                    // Managed Disks are required for Extended Location Scenario
+                    imageInput.StorageProfile.OsDisk.ManagedDisk = new ManagedDiskParameters()
+                    {
+                        Id = createdVM.StorageProfile.OsDisk.ManagedDisk.Id
+                    };
+                    imageInput.StorageProfile.DataDisks[0].ManagedDisk = new ManagedDiskParameters()
+                    {
+                        Id = createdVM.StorageProfile.DataDisks[0].ManagedDisk.Id
+                    };
                     imageInput.ExtendedLocation = new ExtendedLocation(extendedLocation);
                 }
 
@@ -264,7 +293,10 @@ namespace Compute.Tests
                             d => int.Equals(dataDisk.Lun, d.Lun));
 
                     Assert.NotNull(dataDiskOut);
-                    Assert.NotNull(dataDiskOut.BlobUri);
+                    if (imageIn.ExtendedLocation == null)
+                    {
+                        Assert.NotNull(dataDiskOut.BlobUri);
+                    }
                     Assert.NotNull(dataDiskOut.DiskSizeGB);
                 }
             }
