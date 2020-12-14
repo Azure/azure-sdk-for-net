@@ -7,8 +7,5 @@ namespace Azure.ResourceManager.Insights.Tests
 {
     public class InsightsManagementTestEnvironment : TestEnvironment
     {
-        public InsightsManagementTestEnvironment() : base("insights")
-        {
-        }
     }
 }
