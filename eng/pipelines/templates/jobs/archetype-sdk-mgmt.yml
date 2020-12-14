@@ -4,8 +4,8 @@ jobs:
       vmImage: windows-2019
     steps:
       # - script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
-      - script: |
-          pwsh eng/scripts/Track1CodeCheck.ps1
+      - pwsh: |
+          eng/scripts/Track1CodeCheck.ps1
         displayName: "Code-gen Force Check"
         env:
           REPOSITORY_NAME: $(Build.Repository.Name)
