@@ -79,9 +79,10 @@ try {
     }
 
     # Get Metadata file path
-    $Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
+    $Response = Invoke-WebRequest -URI https://api.github.com/repos/Azure/azure-sdk-for-net/pulls/17062/files
+    #$Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
     $changeList = $Response.Content | ConvertFrom-Json
-    if ($Response.RelationLink) {
+    if ($Response.RelationLink.Count -ne 0) {
         $lastLink = $Response.RelationLink.Get_Item('last')
         $lastPage = $lastLink.Substring($lastLink.indexof("=") + 1)
         for ($i = 2; $i -le $lastPage; $i++) {
