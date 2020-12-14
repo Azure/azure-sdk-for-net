@@ -238,6 +238,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.That(language.Name, Is.Not.Null.And.Not.Empty);
             Assert.That(language.Iso6391Name, Is.Not.Null.And.Not.Empty);
             Assert.GreaterOrEqual(language.ConfidenceScore, 0.0);
+            Assert.IsNotNull(language.Warnings);
         }
 
         private void ValidateBatchDocumentsResult(DetectLanguageResultCollection results, bool includeStatistics = default)
