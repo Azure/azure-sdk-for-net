@@ -3,7 +3,7 @@ jobs:
     variables:
       - template: ../variables/globals.yml
     pool:
-      name: azsdk-pool-mms2019-ds2v2-general # Comment this line back-out to switch to public pools.
+      name: azsdk-pool-mms-win-2019-general # Comment this line back-out to switch to public pools.
       # vmImage: windows-2019 # Comment this line back-in to switch to public pools.
     steps:
       - ${{if eq(parameters.TestPipeline, 'true')}}:
@@ -125,21 +125,21 @@ jobs:
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
-          Pool: azsdk-pool-mms2019-ds2v2-general # Comment out to swap back to public hosted pool.
+          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: netcoreapp2.1
           CollectCoverage: true
         Windows_NetCoreApp_ProjectReferences:
-          Pool: azsdk-pool-mms2019-ds2v2-general # Comment out to swap back to public hosted pool.
+          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: netcoreapp2.1
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
-          Pool: azsdk-pool-mms2019-ds2v2-general # Comment out to swap back to public hosted pool.
+          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net461
         Windows_NetFramework_ProjectReferences:
-          Pool: azsdk-pool-mms2019-ds2v2-general # Comment out to swap back to public hosted pool.
+          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net461
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
@@ -148,7 +148,7 @@ jobs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
         Windows_Net50:
-          Pool: azsdk-pool-mms2019-ds2v2-general # Comment out to swap back to public hosted pool.
+          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net5.0
     pool:
