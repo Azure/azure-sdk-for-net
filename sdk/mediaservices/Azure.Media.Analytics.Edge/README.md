@@ -15,7 +15,11 @@ This is a models only sdk. All client operations are done using the [Microsoft A
 
 ### Authenticate the client
 
-As mentioned above the client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: https://github.com/Azure/azure-iot-sdk-csharp
+As mentioned above the client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: https://github.com/Azure/azure-iot-sdk-csharp. 
+```C# Snippet:Azure_Search_Samples_ConnectionString
+var connectionString = "connection-string";
+this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+```
 
 ### Install the package
 

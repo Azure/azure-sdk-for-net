@@ -24,8 +24,11 @@ namespace Azure.Media.Analytics.Edge.Samples
 
         public LiveVideoAnalyticsSample()
         {
+            #region Snippet:Azure_Search_Samples_ConnectionString
             var connectionString = "connection-string";
             this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+            #endregion Snippet:Azure_Search_Samples_ConnectionString
+
         }
 
         [Test]
