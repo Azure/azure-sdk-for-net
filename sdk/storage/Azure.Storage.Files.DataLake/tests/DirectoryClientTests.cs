@@ -109,6 +109,46 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task Ctor_ConnectionString_RoundTrip()
+        {
+            // Arrange
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewDirectoryName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(path));
+            await directoryClient.CreateAsync();
+
+            // Act
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            DataLakeDirectoryClient connStringDirectory = InstrumentClient(new DataLakeDirectoryClient(connectionString, fileSystemName, path, GetOptions()));
+
+            // Assert
+            await connStringDirectory.GetPropertiesAsync();
+            await connStringDirectory.GetAccessControlAsync();
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_GenerateSas()
+        {
+            // Arrange
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewDirectoryName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(path));
+            await directoryClient.CreateAsync();
+
+            // Act
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            DataLakeDirectoryClient connStringDirectory = InstrumentClient(new DataLakeDirectoryClient(connectionString, fileSystemName, path, GetOptions()));
+            Uri sasUri = connStringDirectory.GenerateSasUri(DataLakeSasPermissions.All, Recording.UtcNow.AddDays(1));
+            DataLakeDirectoryClient sasDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(sasUri, GetOptions()));
+
+            // Assert
+            await sasDirectoryClient.GetPropertiesAsync();
+            await sasDirectoryClient.GetAccessControlAsync();
+        }
+
+        [Test]
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
