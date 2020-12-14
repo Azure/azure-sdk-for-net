@@ -24,10 +24,10 @@ namespace Azure.Media.Analytics.Edge.Samples
 
         public LiveVideoAnalyticsSample()
         {
-            #region Snippet:Azure_Search_Samples_ConnectionString
+            #region Snippet:Azure_MediaServices_Samples_ConnectionString
             var connectionString = "connection-string";
             this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
-            #endregion Snippet:Azure_Search_Samples_ConnectionString
+            #endregion Snippet:Azure_MediaServices_Samples_ConnectionString
 
         }
 
@@ -41,14 +41,14 @@ namespace Azure.Media.Analytics.Edge.Samples
                 var graphInstance = BuildGraphInstance(graphTopology.Name);
 
                 //set graph topology without using helper function
-                #region Snippet:Azure_Search_Samples_InvokeDirectMethod
+                #region Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
                 var setGraphRequest = new MediaGraphTopologySetRequest(graphTopology);
 
                 var directMethod = new CloudToDeviceMethod(setGraphRequest.MethodName);
                 directMethod.SetPayloadJson(setGraphRequest.GetPayloadAsJson());
 
                 await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
-                #endregion Snippet:Azure_Search_Samples_InvokeDirectMethod
+                #endregion Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
 
                 // get a graph topology using helper function
                 var getGraphResponse = await InvokeDirectMethodHelper(new MediaGraphTopologyGetRequest(graphTopology.Name));
@@ -88,7 +88,7 @@ namespace Azure.Media.Analytics.Edge.Samples
             return await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
         }
 
-        #region Snippet:Azure_Search_Samples_BuildInstance
+        #region Snippet:Azure_MediaServices_Samples_BuildInstance
         private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
         {
             var graphInstanceProperties = new MediaGraphInstanceProperties
@@ -104,9 +104,9 @@ namespace Azure.Media.Analytics.Edge.Samples
                 Properties = graphInstanceProperties
             };
         }
-        #endregion Snippet:Azure_Search_Samples_BuildInstance
+        #endregion Snippet:Azure_MediaServices_Samples_BuildInstance
 
-        #region Snippet:Azure_Search_Samples_BuildTopology
+        #region Snippet:Azure_MediaServices_Samples_BuildTopology
         private MediaGraphTopology BuildGraphTopology()
         {
             var graphProperties = new MediaGraphTopologyProperties
@@ -121,9 +121,9 @@ namespace Azure.Media.Analytics.Edge.Samples
                 Properties = graphProperties
             };
         }
-        #endregion Snippet:Azure_Search_Samples_BuildTopology
+        #endregion Snippet:Azure_MediaServices_Samples_BuildTopology
 
-        #region Snippet:Azure_Search_Samples_SetParameters
+        #region Snippet:Azure_MediaServices_Samples_SetParameters
         // Add parameters to Topology
         private void SetParameters(MediaGraphTopologyProperties graphProperties)
         {
@@ -142,32 +142,36 @@ namespace Azure.Media.Analytics.Edge.Samples
                 Description = "rtsp Url"
             });
         }
-        #endregion Snippet:Azure_Search_Samples_SetParameters
+        #endregion Snippet:Azure_MediaServices_Samples_SetParameters
 
-        #region Snippet:Azure_Search_Samples_SetSourcesSinks
+        #region Snippet:Azure_MediaServices_Samples_SetSourcesSinks
         // Add sources to Topology
         private void SetSources(MediaGraphTopologyProperties graphProperties)
         {
             graphProperties.Sources.Add(new MediaGraphRtspSource("rtspSource", new MediaGraphUnsecuredEndpoint("${rtspUrl}")
-            {
-                Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}")
                 {
-                    Password = "${rtspPassword}"
-                }
-            })
-                );
+                    Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}")
+                    {
+                        Password = "${rtspPassword}"
+                    }
+                })
+            );
         }
 
         // Add sinks to Topology
         private void SetSinks(MediaGraphTopologyProperties graphProperties)
         {
-            graphProperties.Sinks.Add(new MediaGraphAssetSink("assetSink", new List<MediaGraphNodeInput> {
-                        { new MediaGraphNodeInput{NodeName = "rtspSource" } }
-                    }, "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}", "/var/lib/azuremediaservices/tmp/", "2048")
+            var graphNodeInput = new List<MediaGraphNodeInput>
+            {
+                { new MediaGraphNodeInput{NodeName = "rtspSource"} }
+            };
+            var cachePath = "/var/lib/azuremediaservices/tmp/";
+            var cacheMaxSize = "2048";
+            graphProperties.Sinks.Add(new MediaGraphAssetSink("assetSink", graphNodeInput, "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}", cachePath, cacheMaxSize)
             {
                 SegmentLength = System.Xml.XmlConvert.ToString(TimeSpan.FromSeconds(30)),
             });
         }
-        #endregion Snippet:Azure_Search_Samples_SetSourcesSinks
+        #endregion Snippet:Azure_MediaServices_Samples_SetSourcesSinks
     }
 }

@@ -16,7 +16,7 @@ This is a models only sdk. All client operations are done using the [Microsoft A
 ### Authenticate the client
 
 As mentioned above the client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: https://github.com/Azure/azure-iot-sdk-csharp. 
-```C# Snippet:Azure_Search_Samples_ConnectionString
+```C# Snippet:Azure_MediaServices_Samples_ConnectionString
 var connectionString = "connection-string";
 this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
 ```
@@ -26,6 +26,10 @@ this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString)
 Install the Live Video Analytics client library for .NET with NuGet:
 
 `dotnet add package Azure.Media.Analytics.Edge --version 1.0.0-beta.1`
+
+Install the Azure IoT Hub SDk for .Net with NuGet:
+
+`dotnet add package Microsoft.Azure.Devices --version 1.28.1`
 
 ### Prerequisites
 
@@ -46,17 +50,17 @@ A _graph topology_ is a blueprint or template of a graph. It defines the paramet
 
 ### CloudToDeviceMethod
 
-The `CloudToDeviceMethod` is part of the [azure-iot-hub SDk][iot-hub-sdk]. This method allows you to communicate one way notifications to a device in your IoT hub. In our case, we want to communicate various graph methods such as `MediaGraphTopologySetRequest` and `MediaGraphTopologyGetRequest`. To use `CloudToDeviceMethod` you need to pass in two parameters: `method_name` and `payload`. 
+The `CloudToDeviceMethod` is part of the [azure-iot-hub SDk][iot-hub-sdk]. This method allows you to communicate one way notifications to a device in your IoT hub. In our case, we want to communicate various graph methods such as `MediaGraphTopologySetRequest` and `MediaGraphTopologyGetRequest`. To use `CloudToDeviceMethod` you need to pass in one parameter: `method_name` and then set the Json payload of that method. 
 
-The first parameter, `method_name`, is the name of the media graph request you are sending. Make sure to use each method's predefined `method_name` property. For example, `MediaGraphTopologySetRequest.method_name`. 
+The parameter `method_name` is the name of the media graph request you are sending. Make sure to use each method's predefined `method_name` property. For example, `MediaGraphTopologySetRequest.method_name`. 
 
-The second parameter, `payload`, sends the entire serialization of the media graph request. For example, `MediaGraphTopologySetRequest.serialize()`
+To set the Json payload of the cloud method, use the media graph request method's `GetPayloadAsJson()` function. For example, `directCloudMethod.SetPayloadJson(MediaGraphTopologySetRequest.GetPayloadAsJson())`
 
 ## Examples
 
 ### Creating a graph topology
 To create a graph topology you need to define parameters, sources, and sinks.
-```C# Snippet:Azure_Search_Samples_SetParameters
+```C# Snippet:Azure_MediaServices_Samples_SetParameters
 // Add parameters to Topology
 private void SetParameters(MediaGraphTopologyProperties graphProperties)
 {
@@ -77,33 +81,37 @@ private void SetParameters(MediaGraphTopologyProperties graphProperties)
 }
 ```
 
-```C# Snippet:Azure_Search_Samples_SetSourcesSinks
+```C# Snippet:Azure_MediaServices_Samples_SetSourcesSinks
 // Add sources to Topology
 private void SetSources(MediaGraphTopologyProperties graphProperties)
 {
     graphProperties.Sources.Add(new MediaGraphRtspSource("rtspSource", new MediaGraphUnsecuredEndpoint("${rtspUrl}")
-    {
-        Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}")
         {
-            Password = "${rtspPassword}"
-        }
-    })
-        );
+            Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}")
+            {
+                Password = "${rtspPassword}"
+            }
+        })
+    );
 }
 
 // Add sinks to Topology
 private void SetSinks(MediaGraphTopologyProperties graphProperties)
 {
-    graphProperties.Sinks.Add(new MediaGraphAssetSink("assetSink", new List<MediaGraphNodeInput> {
-                { new MediaGraphNodeInput{NodeName = "rtspSource" } }
-            }, "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}", "/var/lib/azuremediaservices/tmp/", "2048")
+    var graphNodeInput = new List<MediaGraphNodeInput>
+    {
+        { new MediaGraphNodeInput{NodeName = "rtspSource"} }
+    };
+    var cachePath = "/var/lib/azuremediaservices/tmp/";
+    var cacheMaxSize = "2048";
+    graphProperties.Sinks.Add(new MediaGraphAssetSink("assetSink", graphNodeInput, "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}", cachePath, cacheMaxSize)
     {
         SegmentLength = System.Xml.XmlConvert.ToString(TimeSpan.FromSeconds(30)),
     });
 }
 ```
 
-```C# Snippet:Azure_Search_Samples_BuildTopology
+```C# Snippet:Azure_MediaServices_Samples_BuildTopology
 private MediaGraphTopology BuildGraphTopology()
 {
     var graphProperties = new MediaGraphTopologyProperties
@@ -122,7 +130,7 @@ private MediaGraphTopology BuildGraphTopology()
 
 ### Creating a graph instance 
 To create a graph instance, you need to have an existing graph topology.
-```C# Snippet:Azure_Search_Samples_BuildInstance
+```C# Snippet:Azure_MediaServices_Samples_BuildInstance
 private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
 {
     var graphInstanceProperties = new MediaGraphInstanceProperties
@@ -142,7 +150,7 @@ private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
 
 ### Invoking a graph method request
 To invoke a graph method on your device you need to first define the request using the lva sdk. Then send that method request using the iot sdk's `CloudToDeviceMethod`
-```C# Snippet:Azure_Search_Samples_InvokeDirectMethod
+```C# Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
 var setGraphRequest = new MediaGraphTopologySetRequest(graphTopology);
 
 var directMethod = new CloudToDeviceMethod(setGraphRequest.MethodName);
