@@ -172,6 +172,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.0.2" />
 
+    <PackageReference Update="Microsoft.Azure.WebJobs.Extensions" Version="4.0.1" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.2" />
 
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
