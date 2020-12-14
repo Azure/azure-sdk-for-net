@@ -160,12 +160,12 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.Event Hubs%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.EventHubs%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/Microsoft.Azure.WebJobs.Extensions.EventHubs/src
-[package]: https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.Event Hubs/
-[docs]: https://docs.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.Event Hubs
+[package]: https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.EventHubs/
+[docs]: https://docs.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.EventHubs
 [nuget]: https://www.nuget.org/
 
 [contrib]: https://github.com/Azure/azure-sdk-for-net/tree/master/CONTRIBUTING.md
