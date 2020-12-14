@@ -22,9 +22,9 @@ namespace Azure.Analytics.Synapse.Samples
             const string PipelineName = "Test-Pipeline";
             const string JobName = "SparkJobName";
             const string ActivityName = "ActivityName";
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
+            string endpoint = TestEnvironment.EndpointUrl;
 
-            var pipelineClient = new PipelineClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            var pipelineClient = new PipelineClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 
             var sparkJob = new SynapseSparkJobReference(SparkJobReferenceType.SparkJobDefinitionReference, JobName);
             var activity = new SynapseSparkJobDefinitionActivity(ActivityName, sparkJob);
@@ -44,9 +44,9 @@ namespace Azure.Analytics.Synapse.Samples
         public async Task RunPipeline()
         {
             const string PipelineName = "Test-Pipeline";
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
+            string endpoint = TestEnvironment.EndpointUrl;
 
-            var pipelineClient = new PipelineClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            var pipelineClient = new PipelineClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 
             Console.WriteLine("Running pipeline.");
             CreateRunResponse runOperation = await pipelineClient.CreatePipelineRunAsync(PipelineName);
