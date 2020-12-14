@@ -6,7 +6,7 @@ This extension provides functionality for accessing Azure Event Hubs in Azure Fu
 
 ### Install the package
 
-Install the Event Hubs extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.Event Hubs):
+Install the Event Hubs extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.EventHubs):
 
 ```Powershell
 dotnet add package Microsoft.Azure.WebJobs.Extensions.Event Hubs --version 5.0.0-beta.1
@@ -18,7 +18,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.Event Hubs --version 5.0.0
 
 - **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
-[![Deploy button](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fevent hub%2FAzure.Messaging.Event Hubs%2Fassets%2Fsamples-azure-deploy.json)
+[![Deploy button](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fevent hub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
 
 ### Authenticate the Client
 
@@ -28,7 +28,7 @@ The `Connection` property of `Event HubAttribute` and `Event HubTriggerAttribute
 
 For the local development use the `local.settings.json` file to store the connection string:
 
-``` json
+```json
 {
   "Values": {
     "<connection_name>": "Endpoint=sb://<event_hub_name>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Jya7Eh76HU92ibsxuk1ITN8CM8Bt76YLKf5ISjU3jZ8="
@@ -43,8 +43,7 @@ When deployed use the [application settings](https://docs.microsoft.com/azure/az
 If your environment has [managed identity](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet) enabled you can use it to authenticate the Event Hubs extension.
 To use managed identity provide the `<connection_name>__fullyQualifiedNamespace` configuration setting.
 
-
-``` json
+```json
 {
   "Values": {
     "<connection_name>__fullyQualifiedNamespace": "<event_hub_name>.servicebus.windows.net"
@@ -78,7 +77,15 @@ Please follow the [Azure Event Hubs output binding](https://docs.microsoft.com/a
 
 You can send individual events to an Event Hub by applying the `EventHubAttribute` the function return value. The return value can be of `string` or `EventData` type.
 
-```C# Snippet:BindingReturnValue
+```C# Snippet:BindingToReturnValue
+[FunctionName("BindingToReturnValue")]
+[return: EventHub("<event_hub_name>", Connection = "<connection_name>")]
+public static string Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer)
+{
+    // This value would get stored in EventHub event body.
+    // The string would be UTF8 encoded
+    return $"C# Timer trigger function executed at: {DateTime.Now}";
+}
 ```
 
 ### Sending multiple events
@@ -87,6 +94,15 @@ To send multiple events from a single Azure Function invocation you can apply th
 
 
 ```C# Snippet:BindingToCollector
+[FunctionName("BindingToCollector")]
+public static async Task Run(
+    [TimerTrigger("0 */5 * * * *")] TimerInfo myTimer,
+    [EventHub("<event_hub_name>", Connection = "<connection_name>")] IAsyncCollector<EventData> collector)
+{
+    // IAsyncCollector allows sending multiple events in a single function invocation
+    await collector.AddAsync(new EventData(new BinaryData($"Event 1 added at: {DateTime.Now}")));
+    await collector.AddAsync(new EventData(new BinaryData($"Event 2 added at: {DateTime.Now}")));
+}
 ```
 
 ### Per-event triggers
@@ -94,6 +110,13 @@ To send multiple events from a single Azure Function invocation you can apply th
 To run a function every time an event is sent to Event Hub apply the `EventHubTriggerAttribute` to a `string` or `EventData` parameter.
 
 ```C# Snippet:TriggerSingle
+[FunctionName("TriggerSingle")]
+public static void Run(
+    [EventHubTrigger("<event_hub_name>", Connection = "<connection_name>")] string eventBodyAsString,
+    ILogger logger)
+{
+    logger.LogInformation($"C# function triggered to process a message: {eventBodyAsString}");
+}
 ```
 
 ### Batch triggers
@@ -101,6 +124,17 @@ To run a function every time an event is sent to Event Hub apply the `EventHubTr
 To run a function for a batch of received events apply the `EventHubTriggerAttribute` to a `string[]` or `EventData[]` parameter.
 
 ```C# Snippet:TriggerBatch
+[FunctionName("TriggerBatch")]
+public static void Run(
+    [EventHubTrigger("<event_hub_name>", Connection = "<connection_name>")] EventData[] events,
+    ILogger logger)
+{
+    foreach (var e in events)
+    {
+        logger.LogInformation($"C# function triggered to process a message: {e.EventBody}");
+        logger.LogInformation($"EnqueuedTime={e.EnqueuedTime}");
+    }
+}
 ```
 
 ## Troubleshooting
@@ -129,7 +163,7 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.Event Hubs%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/Microsoft.Azure.WebJobs.Extensions.Event Hubs/src
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/Microsoft.Azure.WebJobs.Extensions.EventHubs/src
 [package]: https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.Event Hubs/
 [docs]: https://docs.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.Event Hubs
 [nuget]: https://www.nuget.org/
