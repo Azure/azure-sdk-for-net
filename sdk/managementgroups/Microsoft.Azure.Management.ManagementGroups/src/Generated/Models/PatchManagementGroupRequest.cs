@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// </summary>
         /// <param name="displayName">The friendly name of the management
         /// group.</param>
-        /// <param name="parentId">(Optional) The fully qualified ID for the
-        /// parent management group.  For example,
+        /// <param name="parentGroupId">(Optional) The fully qualified ID for
+        /// the parent management group.  For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000</param>
-        public PatchManagementGroupRequest(string displayName = default(string), string parentId = default(string))
+        public PatchManagementGroupRequest(string displayName = default(string), string parentGroupId = default(string))
         {
             DisplayName = displayName;
-            ParentId = parentId;
+            ParentGroupId = parentGroupId;
             CustomInit();
         }
 
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// management group.  For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
         /// </summary>
-        [JsonProperty(PropertyName = "parentId")]
-        public string ParentId { get; set; }
+        [JsonProperty(PropertyName = "parentGroupId")]
+        public string ParentGroupId { get; set; }
 
     }
 }
