@@ -6,7 +6,7 @@
 - `System.Text.Json.JsonConverter` implementation for the `ETag`
 - Synchronous `HttpClient` support on .NET 5.
 
-### Fixes
+### Fixed
 - System proxy settings are correctly applied on .NET Framework
 
 ## 1.6.0 (2020-10-28)
