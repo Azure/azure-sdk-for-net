@@ -130,7 +130,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                 && x.FormattedMessage.Contains("CheckpointAsync")
-                && x.FormattedMessage.Contains("lease")
+                && x.FormattedMessage.Contains("checkpoint")
                 && x.FormattedMessage.Contains("offset")
                 && x.FormattedMessage.Contains("sequenceNumber")).Count() > 0);
 
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                 && x.FormattedMessage.Contains("CheckpointAsync")
-                && x.FormattedMessage.Contains("lease")
+                && x.FormattedMessage.Contains("checkpoint")
                 && x.FormattedMessage.Contains("offset")
                 && x.FormattedMessage.Contains("sequenceNumber")).Count() > 0);
 
@@ -302,6 +302,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class EventHubTestMultipleDispatchJobs
         {
             private static int s_eventCount;
+            private static int s_processedEventCount;
             public static void SendEvents_TestHub(int numEvents, string input, [EventHub(TestHubName)] out EventData[] events)
             {
                 s_eventCount = numEvents;
@@ -327,11 +328,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 for (int i = 0; i < events.Length; i++)
                 {
-                    Assert.AreEqual(i, propertiesArray[i]["TestIndex"]);
+                    Assert.AreEqual(s_processedEventCount++, propertiesArray[i]["TestIndex"]);
                 }
 
                 // filter for the ID the current test is using
-                if (events[0] == _testId && events.Length == s_eventCount)
+                if (events[0] == _testId && s_processedEventCount == s_eventCount)
                 {
                     _results.AddRange(events);
                     _eventWait.Set();

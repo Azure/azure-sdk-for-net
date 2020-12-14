@@ -312,12 +312,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     writer.WriteEndObject();
 
                     // Log partition lease
-                    if (context.Lease != null)
+                    if (context.Checkpoint != null)
                     {
-                        writer.WritePropertyName("lease");
+                        writer.WritePropertyName("checkpoint");
                         writer.WriteStartObject();
-                        WritePropertyIfNotNull(writer, "offset", context.Lease.Offset.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "sequenceNumber", context.Lease.SequenceNumber.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "offset", context.Checkpoint.Offset.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "sequenceNumber", context.Checkpoint.SequenceNumber.ToString(CultureInfo.InvariantCulture));
                         writer.WriteEndObject();
                     }
 
