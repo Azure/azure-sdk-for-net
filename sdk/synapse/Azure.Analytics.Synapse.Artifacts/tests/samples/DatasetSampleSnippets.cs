@@ -2,66 +2,45 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
-using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class DatasetSnippets : SampleFixture
     {
-        private DatasetClient DatasetClient;
-
-        [OneTimeSetUp]
-        public void CreateClient()
+        [Test]
+        public async Task DatasetSample()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
-
             #region Snippet:CreateDatasetClient
-            // Create a new Dataset client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            DatasetClient client = new DatasetClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            // Replace the string below with your actual endpoint url.
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+            DatasetClient client = new DatasetClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
-            this.DatasetClient = client;
-        }
-
-        [Test]
-        public void CreateDataset()
-        {
             #region Snippet:CreateDataset
-            DatasetCreateOrUpdateDatasetOperation operation = DatasetClient.StartCreateOrUpdateDataset("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
-            DatasetResource dataset = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            DatasetCreateOrUpdateDatasetOperation operation = client.StartCreateOrUpdateDataset("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
+            Response<DatasetResource> createdDataset = await operation.WaitForCompletionAsync();
             #endregion
-        }
 
-        [Test]
-        public void RetrieveDataset()
-        {
             #region Snippet:RetrieveDataset
-            DatasetResource dataset = DatasetClient.GetDataset("MyDataset");
+            DatasetResource retrievedDataset = client.GetDataset("MyDataset");
             #endregion
-        }
 
-        [Test]
-        public void ListDatasets()
-        {
             #region Snippet:ListDatasets
-            Pageable<DatasetResource> datasets = DatasetClient.GetDatasetsByWorkspace();
+            Pageable<DatasetResource> datasets = client.GetDatasetsByWorkspace();
             foreach (DatasetResource dataset in datasets)
             {
                 System.Console.WriteLine(dataset.Name);
             }
             #endregion
-        }
 
-        [Test]
-        public void DeleteDataset()
-        {
             #region Snippet:DeleteDataset
-            DatasetClient.StartDeleteDataset("MyDataset");
+            client.StartDeleteDataset("MyDataset");
             #endregion
         }
     }

@@ -11,36 +11,21 @@ namespace Azure.Analytics.Synapse.Monitoring.Samples
 {
     public partial class Snippets : SampleFixture
     {
-#pragma warning disable IDE1006 // Naming Styles
-        private MonitoringClient client;
-#pragma warning restore IDE1006 // Naming Styles
-
-        [OneTimeSetUp]
-        public void CreateClient()
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
+        public void MonitoringSample()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
-
             #region Snippet:CreateMonitoringClient
-            // Create a new monitoring client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            MonitoringClient client = new MonitoringClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            // Replace the string below with your actual endpoint url.
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+            MonitoringClient client = new MonitoringClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
-            this.client = client;
-        }
-
-        [Test]
-        public void GetSparkJobList()
-        {
             #region Snippet:GetSparkJobList
             SparkJobListViewResponse sparkJobList = client.GetSparkJobList();
             #endregion
-        }
 
-        [Test]
-        public void GetSqlJobQueryString()
-        {
             #region Snippet:GetSqlJobQueryString
             SqlQueryStringDataModel sqlQuery = client.GetSqlJobQueryString();
             #endregion
