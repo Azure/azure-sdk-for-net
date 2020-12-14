@@ -3,9 +3,9 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.Template.Tests
+namespace Azure.MixedReality.Authentication.Tests
 {
-    public class MixedRealityStsClientTestEnvironment : TestEnvironment
+    public class MixedRealityTestEnvironment : TestEnvironment
     {
         /// <summary>
         /// Gets the account domain.
@@ -13,7 +13,7 @@ namespace Azure.Template.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_ACCOUNT_DOMAIN environment variable.
         /// </remarks>
-        public string AccountDomain => GetVariable("ACCOUNT_DOMAIN");
+        public string AccountDomain => GetRecordedVariable("ACCOUNT_DOMAIN");
 
         /// <summary>
         /// Gets the account identifier.
@@ -21,7 +21,7 @@ namespace Azure.Template.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_ACCOUNT_ID environment variable.
         /// </remarks>
-        public string AccountId => GetVariable("ACCOUNT_ID");
+        public string AccountId => GetRecordedVariable("ACCOUNT_ID");
 
         /// <summary>
         /// Gets the account key.
@@ -29,11 +29,6 @@ namespace Azure.Template.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_ACCOUNT_KEY environment variable.
         /// </remarks>
-        public string AccountKey => GetVariable("ACCOUNT_KEY");
-
-        public MixedRealityStsClientTestEnvironment()
-            : base("mixedreality")
-        {
-        }
+        public string AccountKey => GetRecordedVariable("ACCOUNT_KEY");
     }
 }

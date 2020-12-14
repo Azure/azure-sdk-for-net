@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.MixedReality.Authentication;
 using NUnit.Framework;
 
-namespace Azure.Template.Tests.Samples
+namespace Azure.MixedReality.Authentication.Tests.Samples
 {
-    public class MixedRealityStsClientSamples : SamplesBase<MixedRealityStsClientTestEnvironment>
+    public class MixedRealityStsClientSamples : SamplesBase<MixedRealityTestEnvironment>
     {
         [Test]
         public void GetTokenUsingAccountKeyCredential()

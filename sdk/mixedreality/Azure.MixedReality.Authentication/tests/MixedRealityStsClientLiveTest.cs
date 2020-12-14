@@ -4,18 +4,19 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.MixedReality.Authentication;
 using NUnit.Framework;
 
-namespace Azure.Template.Tests
+namespace Azure.MixedReality.Authentication.Tests
 {
-    public class MixedRealityStsClientLiveTest : RecordedTestBase<MixedRealityStsClientTestEnvironment>
+    public class MixedRealityStsClientLiveTest : RecordedTestBase<MixedRealityTestEnvironment>
     {
         public MixedRealityStsClientLiveTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Playback)
+            : base(isAsync)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;
+
+            Matcher = new MixedRealityRecordMatcher();
         }
 
         private MixedRealityStsClient CreateClient()
@@ -33,7 +34,7 @@ namespace Azure.Template.Tests
         }
 
         [Test]
-        public async Task GetTokenAsync()
+        public async Task GetToken()
         {
             MixedRealityStsClient client = CreateClient();
 
