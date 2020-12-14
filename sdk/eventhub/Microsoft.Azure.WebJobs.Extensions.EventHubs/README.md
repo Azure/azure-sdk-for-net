@@ -9,7 +9,7 @@ This extension provides functionality for accessing Azure Event Hubs in Azure Fu
 Install the Event Hubs extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.EventHubs):
 
 ```Powershell
-dotnet add package Microsoft.Azure.WebJobs.Extensions.Event Hubs --version 5.0.0-beta.1
+dotnet add package Microsoft.Azure.WebJobs.Extensions.EventHubs --version 5.0.0-beta.1
 ```
 
 ### Prerequisites
@@ -24,7 +24,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.Event Hubs --version 5.0.0
 
 For the Event Hubs client library to interact with an Event Hub, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating an Event Hubs namespace.  If you aren't familiar with using connection strings with Event Hubs, you may wish to follow the step-by-step guide to [get an Event Hubs connection string](https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string).
 
-The `Connection` property of `Event HubAttribute` and `Event HubTriggerAttribute` is used to specify the configuration property that stores the connection string.
+The `Connection` property of `EventHubAttribute` and `EventHubTriggerAttribute` is used to specify the configuration property that stores the connection string.
 
 For the local development use the `local.settings.json` file to store the connection string:
 
@@ -65,9 +65,9 @@ The Event Hub Trigger allows a function to be executed when a message is sent to
 
 Please follow the [Azure Event Hubs trigger tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-event-hubs-trigger?tabs=csharp) to learn more about Event Hub triggers.
 
-### Event Hub Binding
+### Event Hub Output Binding
 
-The Event Hub Binding allows a function to send Event Hub events.
+The Event Hub Output Binding allows a function to send Event Hub events.
 
 Please follow the [Azure Event Hubs output binding](https://docs.microsoft.com/azure/azure-functions/functions-bindings-event-hubs-output?tabs=csharp) to learn more about Event Hub bindings.
 
