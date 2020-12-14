@@ -1,9 +1,10 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0
 
 ### Added
 - `System.Text.Json.JsonConverter` implementation for the `ETag`
+- Synchronous `HttpClient` support on .NET 5.
 
 ### Fixes
 - System proxy settings are correctly applied on .NET Framework
