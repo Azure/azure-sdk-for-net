@@ -73,7 +73,7 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
             Models.ShareFileUploadInfo fileUploadInfo = _fileClient.Upload(_stream, cancellationToken: cancellationToken);
 
 #if DEBUG
-            Console.WriteLine($"Uploaded stream to {fileClient.Path}. Hash: {fileUploadInfo.ContentHash.Length}");
+            Console.WriteLine($"Uploaded stream to {_fileClient.Path}. Hash: {fileUploadInfo.ContentHash.Length}");
 #endif
         }
 
@@ -88,7 +88,7 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
             Models.ShareFileUploadInfo fileUploadInfo = await _fileClient.UploadAsync(_stream, cancellationToken: cancellationToken);
 
 #if DEBUG
-            Console.WriteLine($"Uploaded stream to {fileClient.Path}. Hash: {fileUploadInfo.ContentHash.Length}");
+            Console.WriteLine($"Uploaded stream to {_fileClient.Path}. Hash: {fileUploadInfo.ContentHash.Length}");
 #endif
         }
     }

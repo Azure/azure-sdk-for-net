@@ -76,7 +76,7 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
             fileDownloadInfo.Content.CopyTo(Stream.Null);
 
 #if DEBUG
-            Console.WriteLine($"Downloaded file from {fileClient.Path}. Stream length: {localStream.Length}");
+            Console.WriteLine($"Downloaded file from {_fileClient.Path}. Content length: {fileDownloadInfo.ContentLength}");
 #endif
         }
 
@@ -89,10 +89,10 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
             Models.ShareFileDownloadInfo fileDownloadInfo = await _fileClient.DownloadAsync(cancellationToken: cancellationToken);
 
             // Copy the stream so it is actually downloaded. We use a local memory stream as destination to avoid the cost of copying to a file on disk.
-            await fileDownloadInfo.Content.CopyToAsync(Stream.Null);
+            await fileDownloadInfo.Content.CopyToAsync(Stream.Null, (int)_stream.Length, cancellationToken: cancellationToken);
 
 #if DEBUG
-            Console.WriteLine($"Downloaded file from {fileClient.Path}. Stream length: {localStream.Length}");
+            Console.WriteLine($"Downloaded file from {_fileClient.Path}. Content length: {fileDownloadInfo.ContentLength}");
 #endif
         }
     }
