@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Samples
         public void SubmitSparkJobSync()
         {
             // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
+            string endpoint = TestEnvironment.EndpointUrl;
 
             // Environment variable with the Synapse Spark pool name.
             string sparkPoolName = TestEnvironment.SparkPoolName;
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Samples
             string fileSystem = TestEnvironment.StorageFileSystemName;
 
             #region Snippet:SparkBatchSample1SparkBatchClient
-            SparkBatchClient client = new SparkBatchClient(new Uri(workspaceUrl), sparkPoolName, new DefaultAzureCredential());
+            SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
             #endregion
 
             #region Snippet:SparkBatchSample1SubmitSparkJob

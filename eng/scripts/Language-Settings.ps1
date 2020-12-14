@@ -89,16 +89,39 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
   }
 }
 
+# Return list of nupkg artifacts
+function Get-dotnet-Package-Artifacts ($Location)
+{
+  $pkgs = Get-ChildItem "${Location}" -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+  if (!$pkgs)
+  {
+    Write-Host "$($Location) does not have any package"
+    return $null
+  }
+  elseif ($pkgs.Count -ne 1)
+  {
+    Write-Host "$($Location) should contain only one (1) published package"
+    Write-Host "No of Packages $($pkgs.Count)"
+    return $null
+  }
+  return $pkgs[0]
+}
+
 # Stage and Upload Docs to blob Storage
 function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 {
-  $PublishedPkgs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
-  $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith("docs.zip")}
+  $PublishedPkg = Get-dotnet-Package-Artifacts $DocLocation
+  if (!$PublishedPkg)
+  {
+    Write-Host "Package is not available in artifact path $($DocLocation)"
+    exit 1
+  }
 
-  if (($PublishedPkgs.Count -gt 1) -or ($PublishedDoc.Count -gt 1))
+  $PublishedDocs = Get-ChildItem "${DocLocation}" | Where-Object -FilterScript {$_.Name.EndsWith("docs.zip")}
+
+  if ($PublishedDoc.Count -gt 1)
   {
       Write-Host "$($DocLocation) should contain only one (1) published package and docs"
-      Write-Host "No of Packages $($PublishedPkgs.Count)"
       Write-Host "No of Docs $($PublishedDoc.Count)"
       exit 1
   }
@@ -110,7 +133,7 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
   New-Item -ItemType directory -Path $TempDir
 
   Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath $DocsStagingDir
-  $pkgProperties = Get-dotnet-PackageInfoFromPackageFile -pkg $PublishedPkgs[0].FullName -workingDirectory $TempDir
+  $pkgProperties = Get-dotnet-PackageInfoFromPackageFile -pkg $PublishedPkg.FullName -workingDirectory $TempDir
 
   Write-Host "Start Upload for $($pkgProperties.ReleaseTag)"
   Write-Host "DocDir $($DocsStagingDir)"
@@ -173,4 +196,19 @@ function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$
   }
 
   Set-Content -Path $csvLoc -Value $allCSVRows
+}
+
+
+# function is used to auto generate API View
+function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName = "")
+{
+  # Find all nupkg files in given artifact directory
+  $pkg = Get-dotnet-Package-Artifacts $artifactDir
+  if (!$pkg)
+  {
+    Write-Host "Package is not available in artifact path $($artifactDir)"
+    return $null
+  }
+  $packages = @{ $pkg.Name = $pkg.FullName }
+  return $packages
 }
