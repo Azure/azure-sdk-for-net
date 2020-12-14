@@ -8,9 +8,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class MetricsAdvisorTestEnvironment : TestEnvironment
     {
-        public MetricsAdvisorTestEnvironment() : base("metricsadvisor")
-        { }
-
         public const string DefaultEndpointSuffix = "azure.com";
         public string MetricsAdvisorApiKey => GetRecordedVariable("METRICSADVISOR_PRIMARY_API_KEY", options => options.IsSecret());
         public string MetricsAdvisorSubscriptionKey => GetRecordedVariable("METRICSADVISOR_SUBSCRIPTION_KEY", options => options.IsSecret());

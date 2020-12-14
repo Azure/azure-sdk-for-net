@@ -7,11 +7,6 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
 {
     public class TimeSeriesInsightsTestEnvironment : TestEnvironment
     {
-        public TimeSeriesInsightsTestEnvironment()
-            : base(TestSettings.TsiEnvironmentVariablesPrefix.ToLower())
-        {
-        }
-
         public string TimeSeriesInsightsHostname => GetRecordedVariable($"{TestSettings.TsiEnvironmentVariablesPrefix}_URL", options => options.IsSecret(TestUrlSanitizer.FAKE_HOST));
     }
 }

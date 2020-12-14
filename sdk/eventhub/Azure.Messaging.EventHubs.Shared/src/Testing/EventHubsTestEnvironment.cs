@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Initializes a new instance of <see cref="EventHubsTestEnvironment"/>.
         /// </summary>
         ///
-        public EventHubsTestEnvironment() : base("eventhub")
+        public EventHubsTestEnvironment()
         {
             ParsedConnectionString = new Lazy<EventHubsConnectionStringProperties>(() => EventHubsConnectionStringProperties.Parse(EventHubsConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
             ActiveEventHubsNamespace = new Lazy<NamespaceProperties>(EnsureEventHubsNamespace, LazyThreadSafetyMode.ExecutionAndPublication);

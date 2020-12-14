@@ -62,11 +62,6 @@ To use the environment provided by the `New-TestResources.ps1`, create a class t
 ``` C#
 public class AppConfigurationTestEnvironment : TestEnvironment
 {
-    // Call the base constructor passing the service directory name
-    public AppConfigurationTestEnvironment() : base("appconfiguration")
-    {
-    }
-
     // Variables retrieved using GetRecordedVariable will be recorded in recorded tests
     // Argument is the output name in the test-resources.json
     public string Endpoint => GetRecordedVariable("APPCONFIGURATION_ENDPOINT");
