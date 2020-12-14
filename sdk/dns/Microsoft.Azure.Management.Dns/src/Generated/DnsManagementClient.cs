@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Dns
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    // Some Manual Change
 
     /// <summary>
     /// The DNS Management Client.

@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Marketplace
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    // Some Manual Change
 
     /// <summary>
     /// REST APIs for Azure Marketplace

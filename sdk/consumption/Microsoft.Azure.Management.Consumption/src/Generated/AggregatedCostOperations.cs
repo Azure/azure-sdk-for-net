@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    // Some Manual Change
 
     /// <summary>
     /// AggregatedCostOperations operations.

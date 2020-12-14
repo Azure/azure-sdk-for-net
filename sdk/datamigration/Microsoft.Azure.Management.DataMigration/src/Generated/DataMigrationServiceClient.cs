@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataMigration
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    // Some Manual Change
 
     /// <summary>
     /// Data Migration Client

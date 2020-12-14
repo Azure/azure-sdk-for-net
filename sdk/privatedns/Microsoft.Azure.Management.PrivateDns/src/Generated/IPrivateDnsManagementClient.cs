@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.PrivateDns
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    // Some Manual Change
 
     /// <summary>
     /// The Private DNS Management Client.

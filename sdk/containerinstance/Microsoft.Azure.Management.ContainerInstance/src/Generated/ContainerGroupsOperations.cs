@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    // Some Manual Change
 
     /// <summary>
     /// ContainerGroupsOperations operations.

@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.ManagedServices
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    // Some Manual Change
 
     /// <summary>
     /// Specification for ManagedServices.

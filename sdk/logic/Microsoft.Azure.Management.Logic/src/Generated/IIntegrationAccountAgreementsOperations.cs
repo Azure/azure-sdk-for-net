@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Logic
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    // Some Manual Change
 
     /// <summary>
     /// IntegrationAccountAgreementsOperations operations.

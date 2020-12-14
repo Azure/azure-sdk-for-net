@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    // Some Manual Change
 
     /// <summary>
     /// Operations operations.

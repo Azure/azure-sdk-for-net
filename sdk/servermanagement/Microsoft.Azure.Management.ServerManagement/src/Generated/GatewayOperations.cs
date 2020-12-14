@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.ServerManagement
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    // Some Manual Change
 
     /// <summary>
     /// GatewayOperations operations.
