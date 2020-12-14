@@ -73,14 +73,11 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
             Models.ShareFileDownloadInfo fileDownloadInfo = _fileClient.Download(cancellationToken: cancellationToken);
 
             // Copy the stream so it is actually downloaded. We use a memory stream as destination to avoid the cost of copying to a file on disk.
-            using (var localStream = new MemoryStream())
-            {
-                fileDownloadInfo.Content.CopyTo(localStream);
+            fileDownloadInfo.Content.CopyTo(Stream.Null);
 
 #if DEBUG
-                Console.WriteLine($"Downloaded file from {fileClient.Path}. Stream length: {localStream.Length}");
+            Console.WriteLine($"Downloaded file from {fileClient.Path}. Stream length: {localStream.Length}");
 #endif
-            }
         }
 
         /// <summary>
@@ -92,14 +89,11 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
             Models.ShareFileDownloadInfo fileDownloadInfo = await _fileClient.DownloadAsync(cancellationToken: cancellationToken);
 
             // Copy the stream so it is actually downloaded. We use a local memory stream as destination to avoid the cost of copying to a file on disk.
-            using (var localStream = new MemoryStream())
-            {
-                fileDownloadInfo.Content.CopyTo(localStream);
+            await fileDownloadInfo.Content.CopyToAsync(Stream.Null);
 
 #if DEBUG
-                Console.WriteLine($"Downloaded file from {fileClient.Path}. Stream length: {localStream.Length}");
+            Console.WriteLine($"Downloaded file from {fileClient.Path}. Stream length: {localStream.Length}");
 #endif
-            }
         }
     }
 }
