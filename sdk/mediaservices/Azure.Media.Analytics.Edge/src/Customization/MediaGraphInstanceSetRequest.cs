@@ -10,7 +10,9 @@ namespace Azure.Media.Analytics.Edge.Models
         /// <summary>
         ///  Serialize .
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// The method payload as a Json string.
+        /// </returns>
         public override string GetPayloadAsJson()
         {
             InstanceBody = new MediaGraphInstanceSetRequestBody(Instance.Name);

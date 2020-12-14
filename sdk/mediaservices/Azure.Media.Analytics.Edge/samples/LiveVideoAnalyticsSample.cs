@@ -27,6 +27,7 @@ namespace Azure.Media.Analytics.Edge.Samples
             var connectionString = "connection-string";
             this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
         }
+
         [Test]
         public async Task SendGraphRequests()
         {
@@ -36,10 +37,17 @@ namespace Azure.Media.Analytics.Edge.Samples
                 var graphTopology = BuildGraphTopology();
                 var graphInstance = BuildGraphInstance(graphTopology.Name);
 
-                //set graph topology
-                var setGraphResult = await InvokeDirectMethodHelper(new MediaGraphTopologySetRequest(graphTopology));
+                //set graph topology without using helper function
+                #region Snippet:Azure_Search_Samples_InvokeDirectMethod
+                var setGraphRequest = new MediaGraphTopologySetRequest(graphTopology);
 
-                // get a graph topology
+                var directMethod = new CloudToDeviceMethod(setGraphRequest.MethodName);
+                directMethod.SetPayloadJson(setGraphRequest.GetPayloadAsJson());
+
+                await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+                #endregion Snippet:Azure_Search_Samples_InvokeDirectMethod
+
+                // get a graph topology using helper function
                 var getGraphResponse = await InvokeDirectMethodHelper(new MediaGraphTopologyGetRequest(graphTopology.Name));
                 var getGraphResult = MediaGraphTopology.Deserialize(getGraphResponse.GetPayloadAsJson());
 
@@ -77,6 +85,7 @@ namespace Azure.Media.Analytics.Edge.Samples
             return await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
         }
 
+        #region Snippet:Azure_Search_Samples_BuildInstance
         private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
         {
             var graphInstanceProperties = new MediaGraphInstanceProperties
@@ -92,7 +101,9 @@ namespace Azure.Media.Analytics.Edge.Samples
                 Properties = graphInstanceProperties
             };
         }
+        #endregion Snippet:Azure_Search_Samples_BuildInstance
 
+        #region Snippet:Azure_Search_Samples_BuildTopology
         private MediaGraphTopology BuildGraphTopology()
         {
             var graphProperties = new MediaGraphTopologyProperties
@@ -107,7 +118,9 @@ namespace Azure.Media.Analytics.Edge.Samples
                 Properties = graphProperties
             };
         }
+        #endregion Snippet:Azure_Search_Samples_BuildTopology
 
+        #region Snippet:Azure_Search_Samples_SetParameters
         // Add parameters to Topology
         private void SetParameters(MediaGraphTopologyProperties graphProperties)
         {
@@ -126,7 +139,9 @@ namespace Azure.Media.Analytics.Edge.Samples
                 Description = "rtsp Url"
             });
         }
+        #endregion Snippet:Azure_Search_Samples_SetParameters
 
+        #region Snippet:Azure_Search_Samples_SetSourcesSinks
         // Add sources to Topology
         private void SetSources(MediaGraphTopologyProperties graphProperties)
         {
@@ -150,5 +165,6 @@ namespace Azure.Media.Analytics.Edge.Samples
                 SegmentLength = System.Xml.XmlConvert.ToString(TimeSpan.FromSeconds(30)),
             });
         }
+        #endregion Snippet:Azure_Search_Samples_SetSourcesSinks
     }
 }

@@ -16,7 +16,9 @@ namespace Azure.Media.Analytics.Edge.Models
         /// <summary>
         ///  Serialize MediaGraphTopologyCollection.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// Serialized Graph Topology Collection.
+        /// </returns>
         public string Serialize()
         {
             return SerializeMediaGraphTopologyCollectionInternal(this);
@@ -38,7 +40,9 @@ namespace Azure.Media.Analytics.Edge.Models
         ///  Deserialize MediaGraphTopology.
         /// </summary>
         /// <param name="json"></param>
-        /// <returns></returns>
+        /// <returns>
+        /// Deserialized Graph Topologogy Collection.
+        /// </returns>
         public static MediaGraphTopologyCollection Deserialize(string json)
         {
             JsonElement element = JsonDocument.Parse(json).RootElement;

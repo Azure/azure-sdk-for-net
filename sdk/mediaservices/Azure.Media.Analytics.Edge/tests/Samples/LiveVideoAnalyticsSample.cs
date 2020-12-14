@@ -20,6 +20,10 @@ namespace Azure.Media.Analytics.Tests.Samples
 {
     public class LiveVideoAnalyticsSample
     {
+        /// <summary>
+        /// We do not have live tests for this sdk because this is a models only sdk. All of its operations are done through the azure-iot-hub sdk.
+        /// We are including a dummy test because without any tests our PR fails some checks
+        /// </summary>
         [Test]
         public void TestSample()
         {

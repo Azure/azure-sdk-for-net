@@ -10,18 +10,23 @@ Use the client library for Live Video Analytics on IoT Edge to:
 [Product documentation][doc_product] | [Direct methods][doc_direct_methods] | [Media graphs][doc_media_graph] | [Source code][source] | [Samples][samples]
 
 ## Getting started
+
+This is a models only sdk. All client operations are done using the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks). This sdk provides models you can use to interact with the Azure Iot SDKs.
+
 ### Authenticate the client
-n/a
+
+As mentioned above the client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: https://github.com/Azure/azure-iot-sdk-csharp
+
 ### Install the package
 
 Install the Live Video Analytics client library for .NET with NuGet:
 
-`dotnet add package Azure.Media.Analytics.Edge`
+`dotnet add package Azure.Media.Analytics.Edge --version 1.0.0-beta.1`
 
 ### Prerequisites
 
 * C# is required to use this package.
-* You need an active [Azure subscription][azure_sub], and a [IoT device connection string][iot_device_connection_string] to use this package.
+* You need an active [Azure subscription][azure_sub], and an [IoT device connection string][iot_device_connection_string] to use this package.
 * You will need to use the version of the SDK that corresponds to the version of the LVA Edge module you are using.
 
     | SDK  | LVA Edge Module  |
@@ -47,27 +52,29 @@ The second parameter, `payload`, sends the entire serialization of the media gra
 
 ### Creating a graph topology
 To create a graph topology you need to define parameters, sources, and sinks.
-```
-// Parameters
+```C# Snippet:Azure_Search_Samples_SetParameters
+// Add parameters to Topology
 private void SetParameters(MediaGraphTopologyProperties graphProperties)
-        {
-            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUserName", MediaGraphParameterType.String)
-            {
-                Description = "rtsp source user name.",
-                Default = "dummyUserName"
-            });
-            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspPassword", MediaGraphParameterType.SecretString)
-            {
-                Description = "rtsp source password.",
-                Default = "dummyPassword"
-            });
-            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUrl", MediaGraphParameterType.String)
-            {
-                Description = "rtsp Url"
-            });
-        }
+{
+    graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUserName", MediaGraphParameterType.String)
+    {
+        Description = "rtsp source user name.",
+        Default = "dummyUserName"
+    });
+    graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspPassword", MediaGraphParameterType.SecretString)
+    {
+        Description = "rtsp source password.",
+        Default = "dummyPassword"
+    });
+    graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUrl", MediaGraphParameterType.String)
+    {
+        Description = "rtsp Url"
+    });
+}
+```
 
-// Source and Sink
+```C# Snippet:Azure_Search_Samples_SetSourcesSinks
+// Add sources to Topology
 private void SetSources(MediaGraphTopologyProperties graphProperties)
 {
     graphProperties.Sources.Add(new MediaGraphRtspSource("rtspSource", new MediaGraphUnsecuredEndpoint("${rtspUrl}")
@@ -80,6 +87,7 @@ private void SetSources(MediaGraphTopologyProperties graphProperties)
         );
 }
 
+// Add sinks to Topology
 private void SetSinks(MediaGraphTopologyProperties graphProperties)
 {
     graphProperties.Sinks.Add(new MediaGraphAssetSink("assetSink", new List<MediaGraphNodeInput> {
@@ -89,7 +97,9 @@ private void SetSinks(MediaGraphTopologyProperties graphProperties)
         SegmentLength = System.Xml.XmlConvert.ToString(TimeSpan.FromSeconds(30)),
     });
 }
+```
 
+```C# Snippet:Azure_Search_Samples_BuildTopology
 private MediaGraphTopology BuildGraphTopology()
 {
     var graphProperties = new MediaGraphTopologyProperties
@@ -104,12 +114,11 @@ private MediaGraphTopology BuildGraphTopology()
         Properties = graphProperties
     };
 }
-
 ```
 
 ### Creating a graph instance 
 To create a graph instance, you need to have an existing graph topology.
-```
+```C# Snippet:Azure_Search_Samples_BuildInstance
 private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
 {
     var graphInstanceProperties = new MediaGraphInstanceProperties
@@ -129,11 +138,11 @@ private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
 
 ### Invoking a graph method request
 To invoke a graph method on your device you need to first define the request using the lva sdk. Then send that method request using the iot sdk's `CloudToDeviceMethod`
-```
+```C# Snippet:Azure_Search_Samples_InvokeDirectMethod
 var setGraphRequest = new MediaGraphTopologySetRequest(graphTopology);
 
 var directMethod = new CloudToDeviceMethod(setGraphRequest.MethodName);
-directMethod.SetPayloadJson(bc.GetPayloadAsJSON());
+directMethod.SetPayloadJson(setGraphRequest.GetPayloadAsJson());
 
 await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
 ```
@@ -187,8 +196,8 @@ additional questions or comments.
 [doc_media_graph]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/media-graph-concept#media-graph-topologies-and-instances
 [doc_product]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/
 
-[iot-device-sdk]: https://pypi.org/project/azure-iot-device/
-[iot-hub-sdk]: https://pypi.org/project/azure-iot-hub/
+[iot-device-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices.Client/
+[iot-hub-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices/
 [iot_device_connection_string]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/get-started-detect-motion-emit-events-quickstart
 
 [github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues

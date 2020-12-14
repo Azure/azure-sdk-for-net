@@ -18,7 +18,9 @@ namespace Azure.Media.Analytics.Edge.Models
         /// <summary>
         /// GetPayloadAsJSON function.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// Method payload as Json string.
+        /// </returns>
         public virtual string GetPayloadAsJson()
         {
             return SerializeItemRequestInternal(this);
