@@ -135,9 +135,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         }
 
         [Test]
+        [Timeout(60 * 1000 * 100)]
         public async Task PluginsCanAlterTopicSessionMessage()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 await using (var scope = await ServiceBusScope.CreateWithTopic(
                     enablePartitioning: false,
