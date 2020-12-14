@@ -16,6 +16,11 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
     public sealed class UploadFile : PerfTest<SizeOptions>
     {
         /// <summary>
+        /// The client to interact with an Azure storage share.
+        /// </summary>
+        private ShareClient _shareClient;
+
+        /// <summary>
         /// The client to interact with an Azure storage file inside an Azure storage share.
         /// </summary>
         private ShareFileClient _fileClient;
@@ -46,10 +51,10 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
 
             // See https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata for
             // restrictions on file share naming.
-            var FilesShareClient = new ShareClient(PerfTestEnvironment.Instance.FileSharesConnectionString, Guid.NewGuid().ToString());
-            await FilesShareClient.CreateAsync();
+            _shareClient = new ShareClient(PerfTestEnvironment.Instance.FileSharesConnectionString, Guid.NewGuid().ToString());
+            await _shareClient.CreateAsync();
 
-            ShareDirectoryClient DirectoryClient = FilesShareClient.GetDirectoryClient(Path.GetRandomFileName());
+            ShareDirectoryClient DirectoryClient = _shareClient.GetDirectoryClient(Path.GetRandomFileName());
             await DirectoryClient.CreateAsync();
 
             _fileClient = DirectoryClient.GetFileClient(Path.GetRandomFileName());
@@ -58,7 +63,7 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
 
         public override async Task CleanupAsync()
         {
-            await _fileClient.DeleteAsync();
+            await _shareClient.DeleteAsync();
             await base.CleanupAsync();
         }
 
