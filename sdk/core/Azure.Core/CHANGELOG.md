@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0
+## 1.7.0 (2020-12-14)
 
 ### Added
 - `System.Text.Json.JsonConverter` implementation for the `ETag`
