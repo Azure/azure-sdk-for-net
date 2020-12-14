@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Automanage
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// AccountsOperations operations.

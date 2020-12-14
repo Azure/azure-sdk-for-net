@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.MySQL
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// AdvisorsOperations operations.

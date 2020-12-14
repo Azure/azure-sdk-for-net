@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    // Some Manual Change
 
     public partial class AuthorizationManagementClient : ServiceClient<AuthorizationManagementClient>, IAuthorizationManagementClient, IAzureClient
     {

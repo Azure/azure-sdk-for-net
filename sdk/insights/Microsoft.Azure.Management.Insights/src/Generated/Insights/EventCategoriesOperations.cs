@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Insights
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    // Some Manual Change
 
     /// <summary>
     /// EventCategoriesOperations operations.

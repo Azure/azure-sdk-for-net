@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Redis
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// FirewallRulesOperations operations.

@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Datadog
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// ApiKeysOperations operations.

@@ -22,7 +22,6 @@ namespace Microsoft.Azure.Management.Cdn
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// Cdn Management Client

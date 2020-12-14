@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.NotificationHubs
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// NamespacesOperations operations.

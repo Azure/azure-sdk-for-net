@@ -22,7 +22,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// ArmTemplatesOperations operations.

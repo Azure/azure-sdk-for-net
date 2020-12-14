@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.ManagementPartner
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    // Some Manual Change
 
     /// <summary>
     /// This API describe ACE Provisioning ManagementPartner

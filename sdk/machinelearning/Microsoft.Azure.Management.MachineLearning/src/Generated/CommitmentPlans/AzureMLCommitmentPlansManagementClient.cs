@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.MachineLearning.CommitmentPlans
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    // Some Manual Change
 
     /// <summary>
     /// These APIs allow end users to operate on Azure Machine Learning

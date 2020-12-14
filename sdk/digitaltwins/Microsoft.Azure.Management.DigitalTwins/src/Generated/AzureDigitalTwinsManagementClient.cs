@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.DigitalTwins
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    // Some Manual Change
 
     /// <summary>
     /// Azure Digital Twins Client for managing DigitalTwinsInstance

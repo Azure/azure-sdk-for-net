@@ -22,7 +22,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// AccountsOperations operations.

@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Billing
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// AddressOperations operations.

@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// MoveCollectionsOperations operations.

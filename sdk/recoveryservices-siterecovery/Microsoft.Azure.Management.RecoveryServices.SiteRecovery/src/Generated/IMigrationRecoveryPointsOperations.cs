@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// MigrationRecoveryPointsOperations operations.

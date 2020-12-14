@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.MixedReality
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    // Some Manual Change
 
     /// <summary>
     /// Mixed Reality Client
