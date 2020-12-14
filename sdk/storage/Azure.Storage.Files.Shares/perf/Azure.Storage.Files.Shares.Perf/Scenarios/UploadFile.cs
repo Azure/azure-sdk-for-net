@@ -47,6 +47,7 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
             // See https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata for
             // restrictions on file share naming.
             var FilesShareClient = new ShareClient(PerfTestEnvironment.Instance.FileSharesConnectionString, Guid.NewGuid().ToString());
+            await FilesShareClient.CreateAsync();
 
             ShareDirectoryClient DirectoryClient = FilesShareClient.GetDirectoryClient(Path.GetRandomFileName());
             await DirectoryClient.CreateAsync();

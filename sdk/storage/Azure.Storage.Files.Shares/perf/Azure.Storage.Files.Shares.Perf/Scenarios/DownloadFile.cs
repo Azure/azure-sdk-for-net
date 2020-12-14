@@ -25,12 +25,6 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
         /// </summary>
         private readonly Stream _stream;
 
-        ///// <summary>
-        ///// Name of the <see cref="ShareFileClient"/> where the file is uploaded.
-        ///// This is shared across all instances of the test run.
-        ///// </summary>
-        //private static string s_fileClientName;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadFile"/> class.
         /// </summary>
@@ -53,6 +47,7 @@ namespace Azure.Storage.Files.Shares.Perf.Scenarios
             // See https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata for
             // restrictions on file share naming.
             var FilesShareClient = new ShareClient(PerfTestEnvironment.Instance.FileSharesConnectionString, Guid.NewGuid().ToString());
+            await FilesShareClient.CreateAsync();
 
             ShareDirectoryClient DirectoryClient = FilesShareClient.GetDirectoryClient(Path.GetRandomFileName());
             await DirectoryClient.CreateAsync();
