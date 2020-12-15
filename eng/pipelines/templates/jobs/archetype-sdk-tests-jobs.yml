@@ -94,7 +94,7 @@ jobs:
           --framework $(TestTargetFramework)
           --filter "(TestCategory!=Manually) & (TestCategory!=Live)"
           --logger "trx"
-          --logger:"console;verbosity=normal"
+          --logger:"console;verbosity=minimal"
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
