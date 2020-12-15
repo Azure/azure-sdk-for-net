@@ -83,6 +83,24 @@ namespace Compute.Tests
             };
         }
 
+        protected List<VirtualMachineImageResource> ListVMImagesInEdgeZone(string location, string edgeZone, string publisher, string offer, string sku, int? top = null, string orderby = null)
+        {
+            var images = m_CrpClient.VirtualMachineImagesEdgeZone.List(
+                location: location, edgeZone: edgeZone, publisherName: publisher, offer: offer, skus: sku,
+                top: top, orderby: orderby);
+
+            return images.ToList();
+        }
+
+        protected VirtualMachineImageResource GetVMImageInEdgeZone(string location, string edgeZone, string publisher, string offer, string sku, string version)
+        {
+            var image = m_CrpClient.VirtualMachineImagesEdgeZone.Get(
+                location: location, edgeZone: edgeZone, publisherName: publisher, offer: offer, skus: sku,
+                version: version);
+
+            return image;
+        }
+
         protected ImageReference GetPlatformVMImage(bool useWindowsImage, string sku = null)
         {
             if (useWindowsImage)

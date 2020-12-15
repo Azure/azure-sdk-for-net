@@ -79,7 +79,7 @@ namespace Compute.Tests
                         Version = "14393.4048.2011170655"
                     };
                     CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null, extendedLocation: "MicrosoftRRDCLab1", hasManagedDisks: true,
-                        imageReference: imageReference);
+                        imageReference: imageReference, deleteAsPartOfTest: false);
                 }
             }
             finally
@@ -89,7 +89,7 @@ namespace Compute.Tests
         }
 
         private void CreateImageTestHelper(string originalTestLocation, string diskEncryptionSetId, string extendedLocation = null, 
-            bool hasManagedDisks = false, ImageReference imageReference = null)
+            bool hasManagedDisks = false, ImageReference imageReference = null, bool deleteAsPartOfTest = true)
         {
             VirtualMachine inputVM = null;
 
@@ -255,7 +255,15 @@ namespace Compute.Tests
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                 }
 
-                m_ResourcesClient.ResourceGroups.Delete(rgName);
+                if (deleteAsPartOfTest)
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+                else
+                {
+                    // Fire and forget. No need to wait for RG deletion completion
+                    m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                }
             }
         }
         
