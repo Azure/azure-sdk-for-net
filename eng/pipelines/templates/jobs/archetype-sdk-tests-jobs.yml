@@ -92,7 +92,7 @@ jobs:
       - pwsh: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
-          --filter "(TestCategory!=Manually) & (TestCategory!=Live)"
+          --filter "TestCategory!=Manually"
           --logger "trx"
           --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
