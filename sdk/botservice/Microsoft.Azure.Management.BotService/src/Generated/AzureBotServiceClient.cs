@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.BotService
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    // Simple Test 2
 
     /// <summary>
     /// Azure Bot Service is a platform for creating smart conversational

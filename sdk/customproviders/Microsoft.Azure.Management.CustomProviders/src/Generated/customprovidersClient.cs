@@ -20,6 +20,7 @@ namespace Microsoft.CustomProviders
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    // Simple Test 2
 
     /// <summary>
     /// Allows extension of ARM control plane with custom resource providers.

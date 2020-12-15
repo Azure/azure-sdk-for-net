@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Blueprint
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    // Simple Test 2
 
     /// <summary>
     /// ArtifactsOperations operations.

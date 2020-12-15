@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    // Simple Test 2
 
     /// <summary>
     /// AvailabilitySetsOperations operations.

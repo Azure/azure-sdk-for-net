@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using System.Net;
     using System.Net.Http;
     using System.Threading;
+    // Simple Test 2
 
     /// <summary>
     /// AgentPoolsOperations operations.
