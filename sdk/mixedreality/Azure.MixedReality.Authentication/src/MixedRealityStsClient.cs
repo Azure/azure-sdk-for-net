@@ -123,7 +123,7 @@ namespace Azure.MixedReality.Authentication
         }
 
         /// <summary>
-        /// Retrieve a token from the STS service for the specified account identifier asyncronously.
+        /// Retrieve a token from the STS service for the specified account identifier asynchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns><see cref="Response{AccessToken}"/>.</returns>
