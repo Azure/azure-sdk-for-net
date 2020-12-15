@@ -57,6 +57,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     _logger));
         }
 
+        /// <summary>
+        /// Cancel any in progress listen operation.
+        /// </summary>
         void IListener.Cancel()
         {
             StopAsync(CancellationToken.None).Wait();
