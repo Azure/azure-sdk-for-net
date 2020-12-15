@@ -5,6 +5,8 @@ extends:
   parameters:
     ServiceDirectory: textanalytics
     CloudConfig:
+      Public:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
       Canary:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'centraluseuap'
-    UnsupportedClouds: 'China'
