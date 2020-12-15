@@ -1793,10 +1793,6 @@ namespace Azure.Storage.Blobs
                         version: Version.ToVersionString(),
                         sourceContainerName: sourceContainerName,
                         sourceLeaseId: sourceConditions?.LeaseId,
-                        sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
-                        sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                        sourceIfMatch: sourceConditions?.IfMatch,
-                        sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
                         async: async,
                         operationName: $"{nameof(BlobServiceClient)}.{nameof(RenameBlobContainer)}",
                         cancellationToken: cancellationToken)
