@@ -622,7 +622,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 {
                     await adminClient.DeleteHookAsync(hookId);
 
-                    Assert.That(async () => await adminClient.GetHookAsync(hookId), Throws.InstanceOf<RequestFailedException>());
+                    var errorCause = "hookId is invalid";
+                    Assert.That(async () => await adminClient.GetHookAsync(hookId), Throws.InstanceOf<RequestFailedException>().With.Message.Contains(errorCause));
                 }
             }
         }
