@@ -87,6 +87,9 @@ namespace Azure.Messaging.EventGrid
 
         internal CloudEvent(string id, string source, string type, DateTimeOffset? time, string dataSchema, string dataContentType, string subject, JsonElement serializedData, byte[] dataBase64)
         {
+            // we only validate that the type is required when deserializing since the service allows sending a CloudEvent without a Source.
+            Argument.AssertNotNull(type, nameof(type));
+
             Id = id;
             Source = source;
             Type = type;
