@@ -55,7 +55,7 @@ namespace Azure.Communication.Administration.Tests
 
         [Test]
         [TestCase("chat", TestName = "IdentityClientFromTokenWithSingleScope")]
-        [TestCase("chat", "pstn", TestName = "IdentityClientFromTokenWithMultipleScope")]
+        [TestCase("chat", "pstn", TestName = "IdentityClientFromTokenWithMultipleScopes")]
         public async Task GeneratesIdentityUsingTokenCredentialWithScopes(params string[] scopes)
         {
             TokenCredential tokenCredential;
