@@ -31,6 +31,7 @@ namespace Azure.Storage.Test.Shared
 #if !NETCOREAPP
             ServicePointManager.DefaultConnectionLimit = int.MaxValue;
 #endif
+            ThreadPool.SetMinThreads(100, 100);
         }
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
