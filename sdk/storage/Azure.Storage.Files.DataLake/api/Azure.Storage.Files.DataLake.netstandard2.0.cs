@@ -17,8 +17,8 @@ namespace Azure.Storage.Files.DataLake
     public partial class DataLakeDirectoryClient : Azure.Storage.Files.DataLake.DataLakePathClient
     {
         protected DataLakeDirectoryClient() { }
-        public DataLakeDirectoryClient(string connectionString, string fileSystemName, string path) { }
-        public DataLakeDirectoryClient(string connectionString, string fileSystemName, string path, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
+        public DataLakeDirectoryClient(string connectionString, string fileSystemName, string directoryPath) { }
+        public DataLakeDirectoryClient(string connectionString, string fileSystemName, string directoryPath, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeDirectoryClient(System.Uri directoryUri) { }
         public DataLakeDirectoryClient(System.Uri directoryUri, Azure.Core.TokenCredential credential) { }
         public DataLakeDirectoryClient(System.Uri directoryUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
@@ -65,8 +65,8 @@ namespace Azure.Storage.Files.DataLake
     public partial class DataLakeFileClient : Azure.Storage.Files.DataLake.DataLakePathClient
     {
         protected DataLakeFileClient() { }
-        public DataLakeFileClient(string connectionString, string fileSystemName, string path) { }
-        public DataLakeFileClient(string connectionString, string fileSystemName, string path, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
+        public DataLakeFileClient(string connectionString, string fileSystemName, string filePath) { }
+        public DataLakeFileClient(string connectionString, string fileSystemName, string filePath, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeFileClient(System.Uri fileUri) { }
         public DataLakeFileClient(System.Uri fileUri, Azure.Core.TokenCredential credential) { }
         public DataLakeFileClient(System.Uri fileUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }

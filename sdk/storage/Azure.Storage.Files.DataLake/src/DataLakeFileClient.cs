@@ -99,14 +99,14 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileSystemName">
         /// The name of the file system containing this path.
         /// </param>
-        /// <param name="path">
+        /// <param name="filePath">
         /// The path to the file.
         /// </param>
         public DataLakeFileClient(
             string connectionString,
             string fileSystemName,
-            string path)
-            : this(connectionString, fileSystemName, path, null)
+            string filePath)
+            : this(connectionString, fileSystemName, filePath, null)
         {
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileSystemName">
         /// The name of the file system containing this path.
         /// </param>
-        /// <param name="path">
+        /// <param name="filePath">
         /// The path to the file.
         /// </param>
         /// <param name="options">
@@ -136,9 +136,9 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeFileClient(
             string connectionString,
             string fileSystemName,
-            string path,
+            string filePath,
             DataLakeClientOptions options)
-            : base(connectionString, fileSystemName, path, options)
+            : base(connectionString, fileSystemName, filePath, options)
         {
         }
 
