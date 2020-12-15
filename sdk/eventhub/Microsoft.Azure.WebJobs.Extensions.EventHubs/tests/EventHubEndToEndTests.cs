@@ -130,7 +130,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                 && x.FormattedMessage.Contains("CheckpointAsync")
-                && x.FormattedMessage.Contains("checkpoint")
+                && x.FormattedMessage.Contains("lease")
                 && x.FormattedMessage.Contains("offset")
                 && x.FormattedMessage.Contains("sequenceNumber")).Count() > 0);
 
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                 && x.FormattedMessage.Contains("CheckpointAsync")
-                && x.FormattedMessage.Contains("checkpoint")
+                && x.FormattedMessage.Contains("lease")
                 && x.FormattedMessage.Contains("offset")
                 && x.FormattedMessage.Contains("sequenceNumber")).Count() > 0);
 

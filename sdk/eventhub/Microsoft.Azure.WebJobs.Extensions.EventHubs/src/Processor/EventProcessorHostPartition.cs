@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         public string Owner => ProcessorHost.Identifier;
         public string EventHubPath => ProcessorHost.EventHubName;
-        public CheckpointInfo Checkpoint { get; set; }
+        public CheckpointInfo? Checkpoint { get; set; }
 
         public LastEnqueuedEventProperties? LastEnqueuedEventProperties
         {

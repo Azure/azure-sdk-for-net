@@ -3,7 +3,7 @@
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
-    internal class CheckpointInfo
+    internal struct CheckpointInfo
     {
         public long Offset { get; }
         public long SequenceNumber { get; }
