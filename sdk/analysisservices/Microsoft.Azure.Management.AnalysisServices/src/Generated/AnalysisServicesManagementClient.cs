@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Analysis
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    // Simple Test 1
 
     /// <summary>
     /// The Azure Analysis Services Web API provides a RESTful set of web
