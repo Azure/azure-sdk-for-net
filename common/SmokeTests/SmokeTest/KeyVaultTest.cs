@@ -14,10 +14,10 @@ namespace SmokeTest
     {
         private static Dictionary<string, Uri> authorityHostMap = new Dictionary<string, Uri>
         {
-            { "AzureCloud", AzureAuthorityHosts.AzureCloud },
-            { "AzureChinaCloud", AzureAuthorityHosts.AzureChinaCloud },
-            { "AzureGermanCloud", AzureAuthorityHosts.AzureGermanCloud },
-            { "AzureUSGovernment", AzureAuthorityHosts.AzureUSGovernment },
+            { "AzureCloud", AzureAuthorityHosts.AzurePublicCloudHostUrl },
+            { "AzureChinaCloud", AzureAuthorityHosts.AzureChinaHostUrl },
+            { "AzureGermanCloud", AzureAuthorityHosts.AzureGermanyHostUrl },
+            { "AzureUSGovernment", AzureAuthorityHosts.AzureGovernmentHostUrl },
         };
 
         private static string SecretName = $"SmokeTestSecret-{Guid.NewGuid()}";
