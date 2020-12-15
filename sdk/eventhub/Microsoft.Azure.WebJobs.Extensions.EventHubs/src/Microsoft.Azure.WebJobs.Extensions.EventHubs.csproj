@@ -15,7 +15,7 @@
     <!-- TODO: Switch to centralized versions when Microsoft.Extensions.Azure GA -->
     <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.1.0-beta.1" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="../../Azure.Messaging.EventHubs/src/Azure.Messaging.EventHubs.csproj" />
   </ItemGroup>
