@@ -12,6 +12,7 @@ namespace Azure.Security.Attestation.Models
     /// </summary>
     public partial class TpmAttestationRequest
     {
+
         /// <summary>
         /// Attestation Response data. See  https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol for more details
         /// </summary>

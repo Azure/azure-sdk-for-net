@@ -7,5 +7,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class AppConfigurationManagementTestEnvironment : TestEnvironment
     {
+        public AppConfigurationManagementTestEnvironment() : base("appconfiguration")
+        {
+        }
     }
 }

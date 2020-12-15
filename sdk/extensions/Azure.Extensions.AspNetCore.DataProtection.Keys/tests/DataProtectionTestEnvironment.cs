@@ -7,6 +7,10 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 {
     public class DataProtectionTestEnvironment: TestEnvironment
     {
+        public DataProtectionTestEnvironment() : base("extensions")
+        {
+        }
+
         public string KeyVaultUrl => GetVariable("AZURE_KEYVAULT_URL");
     }
 }

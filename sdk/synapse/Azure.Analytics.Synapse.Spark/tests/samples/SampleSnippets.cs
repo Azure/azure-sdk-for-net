@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
@@ -13,17 +12,29 @@ namespace Azure.Analytics.Synapse.Spark.Samples
 {
     public partial class Snippets : SampleFixture
     {
-        [Test]
-        public void SparkSample()
+        private SparkBatchClient batchClient;
+
+        [OneTimeSetUp]
+        public void CreateClient()
         {
-            #region Snippet:CreateBatchClient
-            // Replace the string below with your actual endpoint url.
-            string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+            // Environment variable with the Synapse workspace endpoint.
+            string workspaceUrl = TestEnvironment.WorkspaceUrl;
+
+            // Environment variable with the Synapse Spark pool name.
             string sparkPoolName = TestEnvironment.SparkPoolName;
-            SparkBatchClient client = new SparkBatchClient(endpoint: new Uri(endpoint), sparkPoolName: sparkPoolName, credential: new DefaultAzureCredential());
+
+            #region Snippet:CreateBatchClient
+            // Create a new access Spark batch client using the default credential from Azure.Identity using environment variables previously set,
+            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+            SparkBatchClient client = new SparkBatchClient(endpoint: new Uri(workspaceUrl), sparkPoolName: sparkPoolName, credential: new DefaultAzureCredential());
             #endregion
 
+            this.batchClient = client;
+        }
+
+        [Test]
+        public void CreateSparkBatchJob()
+        {
             // Environment variable with the storage account associated with the Synapse workspace endpoint.
             string storageAccount = TestEnvironment.StorageAccountName;
 
@@ -48,22 +59,29 @@ namespace Azure.Analytics.Synapse.Spark.Samples
                 ExecutorCount = 2
             };
 
-            SparkBatchJob jobCreated = client.CreateSparkBatchJob(options);
+            SparkBatchJob jobCreated = batchClient.CreateSparkBatchJob(options);
             #endregion
+        }
 
+        [Test]
+        public void ListSparkBatchJobs()
+        {
             #region Snippet:ListSparkBatchJobs
-            Response<SparkBatchJobCollection> jobs = client.GetSparkBatchJobs();
+            Response<SparkBatchJobCollection> jobs = batchClient.GetSparkBatchJobs();
             foreach (SparkBatchJob job in jobs.Value.Sessions)
             {
                 Console.WriteLine(job.Name);
             }
             #endregion
+        }
+
+        [Test]
+        public void CancelSparkBatchJob()
+        {
+            int jobId = 0;
 
             #region Snippet:DeleteSparkBatchJob
-            /*@@*/int jobId = jobs.Value.Sessions.First().Id;
-            // Replace the integer below with your actual job ID.
-            //@@ string jobId = 0;
-            Response operation = client.CancelSparkBatchJob(jobId);
+            Response operation = batchClient.CancelSparkBatchJob(jobId);
             #endregion
         }
     }

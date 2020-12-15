@@ -5,6 +5,7 @@ containers.addClass("container-fluid");
 
 WINDOW_CONTENTS = window.location.href.split('/')
 var SELECTED_LANGUAGE = ''
+var INDEX_HTML = ''
 var PACKAGE_REGEX = ''
 var PACKAGE_REPLACEMENT = ''
 
@@ -197,7 +198,7 @@ function populateIndexList(selector, packageName) {
 }
 
 function getPackageUrl(language, package, version) {
-    return "https://azuresdkdocs.blob.core.windows.net/$web/" + language + "/" + package + "/" + version + "/index.html"
+    return "https://azuresdkdocs.blob.core.windows.net/$web/" + language + "/" + package + "/" + version + "/" + INDEX_HTML
 }
 
 // Populate Versions

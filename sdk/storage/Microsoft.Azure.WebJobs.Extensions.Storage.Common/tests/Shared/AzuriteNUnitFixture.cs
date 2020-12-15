@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
 
@@ -16,29 +14,12 @@ public class AzuriteNUnitFixture
     [OneTimeSetUp]
     public void SetUp()
     {
-        Instance = InitializeAzuriteWithRetry(2);
-    }
-
-    private AzuriteFixture InitializeAzuriteWithRetry(int numberOfTries)
-    {
-        List<Exception> exceptions = null;
-        for (int i = 0; i<numberOfTries; i++)
-        {
-            try
-            {
-                return new AzuriteFixture();
-            } catch (Exception e)
-            {
-                exceptions ??= new List<Exception>();
-                exceptions.Add(e);
-            }
-        }
-        throw new AggregateException(exceptions);
+        Instance = new AzuriteFixture();
     }
 
     [OneTimeTearDown]
     public void TearDown()
     {
-        Instance?.Dispose();
+        Instance.Dispose();
     }
 }

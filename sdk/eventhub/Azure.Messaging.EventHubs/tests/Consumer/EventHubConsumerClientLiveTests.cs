@@ -31,14 +31,9 @@ namespace Azure.Messaging.EventHubs.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class EventHubConsumerClientLiveTests
     {
-        /// <summary>The value to use as the prefetch count for low-prefetch scenarios.</summary>
-        private const int LowPrefetchCount = 5;
-
         /// <summary>The default set of options for reading, allowing an infinite wait time.</summary>
         private readonly ReadEventOptions DefaultReadOptions = new ReadEventOptions { MaximumWaitTime = null };
 
-        /// <summary>A set of options for reading using a small prefetch buffer.</summary>
-        private readonly ReadEventOptions LowPrefetchReadOptions = new ReadEventOptions { PrefetchCount = LowPrefetchCount };
         /// <summary>
         ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
@@ -892,7 +887,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateSmallEvents(100).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(250).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
@@ -914,7 +909,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         return true;
                     }
 
-                    var readTask = ReadEventsFromPartitionAsync(consumer, partition, sourceEvents.Count, cancellationSource.Token, readOptions: LowPrefetchReadOptions, iterationCallback: closeAfterRead);
+                    var readTask = ReadEventsFromPartitionAsync(consumer, partition, sourceEvents.Count, cancellationSource.Token, iterationCallback: closeAfterRead);
 
                     Assert.That(async () => await readTask, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1028,11 +1023,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var exclusiveOptions = DefaultReadOptions.Clone();
-                exclusiveOptions.PrefetchCount = LowPrefetchCount;
                 exclusiveOptions.OwnerLevel = 20;
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(200).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
@@ -1043,7 +1037,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     await Task.WhenAny(exclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-                    var nonExclusiveReadTask = ReadEventsFromPartitionAsync(consumer, partition, int.MaxValue, cancellationSource.Token, readOptions: LowPrefetchReadOptions);
+                    var nonExclusiveReadTask = ReadEventsFromPartitionAsync(consumer, partition, int.MaxValue, cancellationSource.Token);
                     Assert.That(async () => await nonExclusiveReadTask, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ConsumerDisconnected), "The non-exclusive read should be rejected.");
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
@@ -1067,15 +1061,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var higherOptions = DefaultReadOptions.Clone();
-                higherOptions.PrefetchCount = LowPrefetchCount;
                 higherOptions.OwnerLevel = 40;
 
                 var lowerOptions = DefaultReadOptions.Clone();
-                lowerOptions.PrefetchCount = LowPrefetchCount;
                 lowerOptions.OwnerLevel = 20;
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(200).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
@@ -1110,15 +1102,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var higherOptions = DefaultReadOptions.Clone();
-                higherOptions.PrefetchCount = LowPrefetchCount;
                 higherOptions.OwnerLevel = 40;
 
                 var lowerOptions = DefaultReadOptions.Clone();
-                lowerOptions.PrefetchCount = LowPrefetchCount;
                 lowerOptions.OwnerLevel = 20;
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateSmallEvents(100).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
@@ -1169,15 +1159,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var higherOptions = DefaultReadOptions.Clone();
-                higherOptions.PrefetchCount = LowPrefetchCount;
                 higherOptions.OwnerLevel = 40;
 
                 var lowerOptions = DefaultReadOptions.Clone();
-                lowerOptions.PrefetchCount = LowPrefetchCount;
                 lowerOptions.OwnerLevel = 20;
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateSmallEvents(100).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var firstGroupConsumer = new EventHubConsumerClient(scope.ConsumerGroups[0], connectionString))
                 await using (var secondGroupConsumer = new EventHubConsumerClient(scope.ConsumerGroups[1], connectionString))
@@ -1220,11 +1208,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var exclusiveOptions = DefaultReadOptions.Clone();
-                exclusiveOptions.PrefetchCount = LowPrefetchCount;
                 exclusiveOptions.OwnerLevel = 20;
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
@@ -1233,7 +1220,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Start the non-exclusive read, waiting until at least some events were read before starting the exclusive reader.
 
-                    var nonExclusiveMonitor = MonitorReadingEventsFromPartition(consumer, partition, sourceEvents.Count, cancellationSource.Token, readOptions: LowPrefetchReadOptions);
+                    var nonExclusiveMonitor = MonitorReadingEventsFromPartition(consumer, partition, sourceEvents.Count, cancellationSource.Token);
 
                     await Task.WhenAny(nonExclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1278,15 +1265,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var higherOptions = DefaultReadOptions.Clone();
-                higherOptions.PrefetchCount = LowPrefetchCount;
                 higherOptions.OwnerLevel = 40;
 
                 var lowerOptions = DefaultReadOptions.Clone();
-                higherOptions.PrefetchCount = LowPrefetchCount;
                 lowerOptions.OwnerLevel = 20;
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
@@ -1340,11 +1325,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var exclusiveOptions = DefaultReadOptions.Clone();
-                exclusiveOptions.PrefetchCount = LowPrefetchCount;
                 exclusiveOptions.OwnerLevel = 20;
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateSmallEvents(100).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
@@ -1360,7 +1344,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Start the non-exclusive read, waiting until at least some events were read before starting the exclusive reader.
 
-                    var nonExclusiveMonitor = MonitorReadingEventsFromPartition(consumer, partitions[0], sourceEvents.Count, cancellationSource.Token, readOptions: LowPrefetchReadOptions);
+                    var nonExclusiveMonitor = MonitorReadingEventsFromPartition(consumer, partitions[0], sourceEvents.Count, cancellationSource.Token);
 
                     await Task.WhenAny(nonExclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1406,11 +1390,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var exclusiveOptions = DefaultReadOptions.Clone();
-                exclusiveOptions.PrefetchCount = LowPrefetchCount;
                 exclusiveOptions.OwnerLevel = 20;
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var nonExclusiveConsumer = new EventHubConsumerClient(scope.ConsumerGroups[0], connectionString))
                 await using (var exclusiveConsumer = new EventHubConsumerClient(scope.ConsumerGroups[1], connectionString))
@@ -1420,7 +1403,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Start the non-exclusive read, waiting until at least some events were read before starting the exclusive reader.
 
-                    var nonExclusiveMonitor = MonitorReadingEventsFromPartition(nonExclusiveConsumer, partition, sourceEvents.Count, cancellationSource.Token, readOptions: LowPrefetchReadOptions);
+                    var nonExclusiveMonitor = MonitorReadingEventsFromPartition(nonExclusiveConsumer, partition, sourceEvents.Count, cancellationSource.Token);
 
                     await Task.WhenAny(nonExclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1507,15 +1490,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var higherOptions = DefaultReadOptions.Clone();
-                higherOptions.PrefetchCount = LowPrefetchCount;
                 higherOptions.OwnerLevel = 40;
 
                 var lowerOptions = DefaultReadOptions.Clone();
-                lowerOptions.PrefetchCount = LowPrefetchCount;
                 lowerOptions.OwnerLevel = 20;
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(100).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {

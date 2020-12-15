@@ -159,5 +159,6 @@ namespace Azure.Security.Attestation
             returnValue += "\"";
             return returnValue;
         }
+
     }
 }

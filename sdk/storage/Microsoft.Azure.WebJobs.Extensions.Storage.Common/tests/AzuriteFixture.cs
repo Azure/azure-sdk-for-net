@@ -123,16 +123,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             var didAzuriteStart = countdownEvent.Wait(TimeSpan.FromSeconds(15));
             if (!didAzuriteStart)
             {
-                if (process.HasExited)
-                {
-                    throw new InvalidOperationException(ErrorMessage($"azurite process could not start with following output:\n{azuriteOutput}\nerror:\n{azuriteError}\nexit code: {process.ExitCode}"));
-                }
-                else
-                {
-                    process.Kill();
-                    process.WaitForExit();
-                    throw new InvalidOperationException(ErrorMessage($"azurite process could not initialize within timeout with following output:\n{azuriteOutput}\nerror:\n{azuriteError}"));
-                }
+                throw new InvalidOperationException(ErrorMessage($"azurite process could not start with following output:\n{azuriteOutput}\nand error:\n{azuriteError}"));
             }
             account.BlobsPort = blobsPort;
             account.QueuesPort = queuesPort;

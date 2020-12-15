@@ -200,7 +200,7 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -273,22 +273,19 @@ await using var client = new ServiceBusClient(connectionString);
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
-// create a set of messages that we can send
-ServiceBusMessage[] messages = new ServiceBusMessage[]
-{
-    new ServiceBusMessage("First"),
-    new ServiceBusMessage("Second")
-};
+// create a message batch that we can send
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
-await sender.SendMessagesAsync(messages);
+await sender.SendMessagesAsync(messageBatch);
 
-// create the options to use for configuring the processor
+// get the options to use for configuring the processor
 var options = new ServiceBusProcessorOptions
 {
-    // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
-    // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
+    // By default after the message handler returns, the processor will complete the message
+    // If I want more fine-grained control over settlement, I can set this to false.
     AutoCompleteMessages = false,
 
     // I can also allow for multi-threading
@@ -296,9 +293,12 @@ var options = new ServiceBusProcessorOptions
 };
 
 // create a processor that we can use to process the messages
-await using ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
+ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
 
-// configure the message and error handler to use
+// since the message handler will run in a background thread, in order to prevent
+// this sample from terminating immediately, we can use a task completion source that
+// we complete from within the message handler.
+TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 processor.ProcessMessageAsync += MessageHandler;
 processor.ProcessErrorAsync += ErrorHandler;
 
@@ -309,6 +309,7 @@ async Task MessageHandler(ProcessMessageEventArgs args)
 
     // we can evaluate application logic and use that to determine how to settle the message.
     await args.CompleteMessageAsync(args.Message);
+    tcs.SetResult(true);
 }
 
 Task ErrorHandler(ProcessErrorEventArgs args)
@@ -322,12 +323,13 @@ Task ErrorHandler(ProcessErrorEventArgs args)
     Console.WriteLine(args.Exception.ToString());
     return Task.CompletedTask;
 }
-
-// start processing
 await processor.StartProcessingAsync();
 
-// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
-Console.ReadKey();
+// await our task completion source task so that the message handler will be invoked at least once.
+await tcs.Task;
+
+// stop processing once the task completion source was completed.
+await processor.StopProcessingAsync();
 ```
 
 ### Authenticating with Azure.Identity

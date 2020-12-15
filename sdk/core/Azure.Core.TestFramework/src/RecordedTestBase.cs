@@ -94,7 +94,7 @@ namespace Azure.Core.TestFramework
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
 
-            string path = TestEnvironment.GetSourcePath(GetType().Assembly);
+            string path = GetType().Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "SourcePath").Value;
 
             return Path.Combine(path,
                 "SessionRecords",

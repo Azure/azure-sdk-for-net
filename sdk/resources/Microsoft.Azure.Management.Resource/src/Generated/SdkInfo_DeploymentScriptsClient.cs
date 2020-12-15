@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ResourceManager
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Resources", "DeploymentScripts", "2020-10-01"),
+                new Tuple<string, string, string>("Resources", "DeploymentScripts", "2019-10-01-preview"),
               }.AsEnumerable();
           }
       }

@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -15,8 +13,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public AlertTriggeringTests(bool isAsync) : base(isAsync)
         {
         }
-
-        private string FakeGuid => "00000000-0000-0000-0000-000000000000";
 
         [Test]
         public void GetAlertsValidatesArguments()
@@ -32,23 +28,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(() => client.GetAlerts(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAlerts("", options), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.GetAlerts("configId", null), Throws.InstanceOf<ArgumentNullException>());
-        }
-
-        [Test]
-        public void GetAlertsRespectsTheCancellationToken()
-        {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
-
-            var options = new GetAlertsOptions(default, default, AlertQueryTimeMode.AnomalyTime);
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.Cancel();
-
-            IAsyncEnumerator<AnomalyAlert> asyncEnumerator = client.GetAlertsAsync(FakeGuid, options, cancellationSource.Token).GetAsyncEnumerator();
-            Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
-
-            IEnumerator<AnomalyAlert> enumerator = client.GetAlerts(FakeGuid, options, cancellationSource.Token).GetEnumerator();
-            Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]
@@ -68,21 +47,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetAnomaliesRespectsTheCancellationToken()
-        {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.Cancel();
-
-            IAsyncEnumerator<DataPointAnomaly> asyncEnumerator = client.GetAnomaliesAsync(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
-            Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
-
-            IEnumerator<DataPointAnomaly> enumerator = client.GetAnomalies(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetEnumerator();
-            Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
-        }
-
-        [Test]
         public void GetIncidentsValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
@@ -96,21 +60,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(() => client.GetIncidents("", "alertId"), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.GetIncidents("configId", alertId: null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetIncidents("configId", ""), Throws.InstanceOf<ArgumentException>());
-        }
-
-        [Test]
-        public void GetIncidentsRespectsTheCancellationToken()
-        {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.Cancel();
-
-            IAsyncEnumerator<AnomalyIncident> asyncEnumerator = client.GetIncidentsAsync(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
-            Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
-
-            IEnumerator<AnomalyIncident> enumerator = client.GetIncidents(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetEnumerator();
-            Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 
         private MetricsAdvisorClient GetMetricsAdvisorClient()

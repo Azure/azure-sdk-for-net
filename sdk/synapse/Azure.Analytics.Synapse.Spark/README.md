@@ -61,7 +61,7 @@ The Microsoft.Azure.Synapse supports the CRUD of spark batch job.
 List the spark batch job under the specific spark pool of a specific synapse workspace
 
 ```C# Snippet:ListSparkBatchJobs
-Response<SparkBatchJobCollection> jobs = client.GetSparkBatchJobs();
+Response<SparkBatchJobCollection> jobs = batchClient.GetSparkBatchJobs();
 foreach (SparkBatchJob job in jobs.Value.Sessions)
 {
     Console.WriteLine(job.Name);
@@ -89,16 +89,14 @@ SparkBatchJobOptions options = new SparkBatchJobOptions(name: name, file: file)
     ExecutorCount = 2
 };
 
-SparkBatchJob jobCreated = client.CreateSparkBatchJob(options);
+SparkBatchJob jobCreated = batchClient.CreateSparkBatchJob(options);
 ```
 
 ### Cancel spark batch job
 Cancel a Spark batch job with Spark batch id under specific workspace and Spark pool.
 
 ```C# Snippet:DeleteSparkBatchJob
-// Replace the integer below with your actual job ID.
-string jobId = 0;
-Response operation = client.CancelSparkBatchJob(jobId);
+Response operation = batchClient.CancelSparkBatchJob(jobId);
 ```
        
 ## To build

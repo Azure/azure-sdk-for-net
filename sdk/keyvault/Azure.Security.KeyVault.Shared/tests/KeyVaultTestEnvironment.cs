@@ -17,6 +17,10 @@ namespace Azure.Security.KeyVault.Tests
 
         private const string StorageUriFormat = "https://{0}.blob.core.windows.net";
 
+        public KeyVaultTestEnvironment() : base("keyvault")
+        {
+        }
+
         /// <summary>
         /// Gets the URI to Key Vault.
         /// </summary>

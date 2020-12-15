@@ -751,7 +751,7 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 if (OwnsConnection)
                 {
-                    await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                    await Connection.CloseAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -781,11 +781,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync()
-        {
-            await CloseAsync().ConfigureAwait(false);
-            GC.SuppressFinalize(this);
-        }
+        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

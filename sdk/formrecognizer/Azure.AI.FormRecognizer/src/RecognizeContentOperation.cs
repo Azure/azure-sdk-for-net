@@ -77,7 +77,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="client">The client used to check for completion.</param>
         public RecognizeContentOperation(string operationId, FormRecognizerClient client)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            // TODO: Add argument validation here.
 
             Id = operationId;
             _serviceClient = client.ServiceClient;

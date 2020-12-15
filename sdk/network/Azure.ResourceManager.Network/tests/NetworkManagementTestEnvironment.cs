@@ -7,5 +7,8 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class NetworkManagementTestEnvironment : TestEnvironment
     {
+        public NetworkManagementTestEnvironment() : base("network")
+        {
+        }
     }
 }

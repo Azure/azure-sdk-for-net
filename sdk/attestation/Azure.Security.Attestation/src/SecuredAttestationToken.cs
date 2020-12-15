@@ -38,8 +38,9 @@ namespace Azure.Security.Attestation
         {
         }
 
+
         /// <summary>
-        /// Creates a new attestation token based on the supplied body, certificate, and private key.
+        /// Creates a new attestation token based on the supplied body, certificateand private key.
         /// </summary>
         /// <param name="body"></param>
         /// <param name="signingKey"></param>
@@ -93,6 +94,7 @@ namespace Azure.Security.Attestation
             var serializationOptions = new JsonSerializerOptions
             {
                 IgnoreNullValues = true,
+
             };
             byte[] jwtHeader = JsonSerializer.SerializeToUtf8Bytes<JsonWebTokenHeader>(header, serializationOptions);
             string encodedHeader = Base64Url.Encode(jwtHeader);

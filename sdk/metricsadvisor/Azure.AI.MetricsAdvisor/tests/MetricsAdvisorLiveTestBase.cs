@@ -97,11 +97,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     new ChangeThresholdCondition(12, 5, true, AnomalyDetectorDirection.Both, new SuppressCondition(1, 1))));
         }
 
-        protected void ValidateSeriesKey(DimensionKey seriesKey)
+        protected void ValidateDimensionKey(DimensionKey dimensionKey)
         {
-            Assert.That(seriesKey, Is.Not.Null);
+            Assert.That(dimensionKey, Is.Not.Null);
 
-            Dictionary<string, string> dimensionColumns = seriesKey.AsDictionary();
+            Dictionary<string, string> dimensionColumns = dimensionKey.AsDictionary();
 
             Assert.That(dimensionColumns.Count, Is.EqualTo(2));
             Assert.That(dimensionColumns.ContainsKey("city"));
@@ -109,22 +109,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(dimensionColumns["city"], Is.Not.Null.And.Not.Empty);
             Assert.That(dimensionColumns["category"], Is.Not.Null.And.Not.Empty);
-        }
-
-        protected void ValidateGroupKey(DimensionKey groupKey)
-        {
-            Assert.That(groupKey, Is.Not.Null);
-
-            Dictionary<string, string> dimensionColumns = groupKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.GreaterThan(0));
-            Assert.That(dimensionColumns.Count, Is.LessThanOrEqualTo(2));
-
-            foreach (KeyValuePair<string, string> column in dimensionColumns)
-            {
-                Assert.That(column.Key, Is.EqualTo("city").Or.EqualTo("category"));
-                Assert.That(column.Value, Is.Not.Null.And.Not.Empty);
-            }
         }
 
         internal string _blobFeedName;

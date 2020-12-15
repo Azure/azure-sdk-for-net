@@ -7,6 +7,10 @@ namespace Azure.Communication.Administration.Tests
 {
     public class PhoneNumberAdministrationClientTestEnvironment : TestEnvironment
     {
+        public PhoneNumberAdministrationClientTestEnvironment() : base("communication")
+        {
+        }
+
         private const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
 
         public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);

@@ -18,6 +18,7 @@ namespace Azure.Security.Attestation.Models
         /// <inheritdoc/>
         public override AttestationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+
             string serializedJson = Utilities.SerializeJsonObject(ref reader, options);
 
             if (typeToConvert != typeof(AttestationResult))

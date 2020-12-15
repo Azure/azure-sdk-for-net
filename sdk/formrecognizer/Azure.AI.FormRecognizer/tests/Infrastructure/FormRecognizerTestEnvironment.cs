@@ -14,6 +14,7 @@ namespace Azure.AI.FormRecognizer.Tests
     public class FormRecognizerTestEnvironment: TestEnvironment
     {
         public FormRecognizerTestEnvironment()
+            : base("formrecognizer")
         {
         }
 

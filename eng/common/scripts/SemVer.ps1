@@ -7,9 +7,6 @@ See https://azure.github.io/azure-sdk/policies_releases.html#package-versioning
 Example: 1.2.3-beta.4
 Components: Major.Minor.Patch-PrereleaseLabel.PrereleaseNumber
 
-Example: 1.2.3-alpha.20200828.4
-Components: Major.Minor.Patch-PrereleaseLabel.PrereleaseNumber.BuildNumber
-
 Note: A builtin Powershell version of SemVer exists in 'System.Management.Automation'. At this time, it does not parsing of PrereleaseNumber. It's name is also type accelerated to 'SemVer'.
 #>
 
@@ -20,19 +17,14 @@ class AzureEngSemanticVersion {
   [string] $PrereleaseLabelSeparator
   [string] $PrereleaseLabel
   [string] $PrereleaseNumberSeparator
-  [string] $BuildNumberSeparator
-  # BuildNumber is string to preserve zero-padding where applicable
-  [string] $BuildNumber
   [int] $PrereleaseNumber
   [bool] $IsPrerelease
   [string] $RawVersion
   [bool] $IsSemVerFormat
   [string] $DefaultPrereleaseLabel
-  [string] $DefaultAlphaReleaseLabel
 
   # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
-  # Validation: https://regex101.com/r/vkijKf/426
-  static [string] $SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:(?<presep>-?)(?<prelabel>[a-zA-Z]+)(?:(?<prenumsep>\.?)(?<prenumber>[0-9]{1,8})(?:(?<buildnumsep>\.?)(?<buildnumber>\d{1,3}))?)?)?"
+  static [string] $SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:(?<presep>-?)(?<prelabel>[a-zA-Z-]*)(?<prenumsep>\.?)(?<prenumber>0|[1-9]\d*))?"
   static [string] $ParseLanguage = $Language
 
   static [AzureEngSemanticVersion] ParseVersionString([string] $versionString)
@@ -78,7 +70,7 @@ class AzureEngSemanticVersion {
       {
         # artifically provide these values for non-prereleases to enable easy sorting of them later than prereleases.
         $this.PrereleaseLabel = "zzz"
-        $this.PrereleaseNumber = 99999999
+        $this.PrereleaseNumber = 999
         $this.IsPrerelease = $false
       }
       else
@@ -88,9 +80,6 @@ class AzureEngSemanticVersion {
         $this.PrereleaseNumber = [int]$matches["prenumber"]
         $this.PrereleaseNumberSeparator = $matches["prenumsep"]
         $this.IsPrerelease = $true
-
-        $this.BuildNumberSeparator = $matches["buildnumsep"]
-        $this.BuildNumber = $matches["buildnumber"]
       }
     }
     else
@@ -105,9 +94,8 @@ class AzureEngSemanticVersion {
   [bool] HasValidPrereleaseLabel()
   {
     if ($this.IsPrerelease -eq $true) {
-      if ($this.PrereleaseLabel -ne $this.DefaultPrereleaseLabel -and $this.PrereleaseLabel -ne $this.DefaultAlphaReleaseLabel) {
-        Write-Host "Unexpected pre-release identifier '$($this.PrereleaseLabel)', "`
-                   "should be '$($this.DefaultPrereleaseLabel)' or '$($this.DefaultAlphaReleaseLabel)'"
+      if ($this.PrereleaseLabel -ne $this.DefaultPrereleaseLabel) {
+        Write-Host "Unexpected pre-release identifier '$($this.PrereleaseLabel)', should be '$($this.DefaultPrereleaseLabel)'"
         return $false;
       }
       if ($this.PrereleaseNumber -lt 1)
@@ -116,7 +104,6 @@ class AzureEngSemanticVersion {
         return $false;
       }
     }
-
     return $true;
   }
 
@@ -126,11 +113,7 @@ class AzureEngSemanticVersion {
 
     if ($this.IsPrerelease)
     {
-      $versionString += $this.PrereleaseLabelSeparator + $this.PrereleaseLabel + `
-                        $this.PrereleaseNumberSeparator + $this.PrereleaseNumber
-      if ($this.BuildNumber) {
-          $versionString += $this.BuildNumberSeparator + $this.BuildNumber
-      }
+      $versionString += $this.PrereleaseLabelSeparator + $this.PrereleaseLabel + $this.PrereleaseNumberSeparator + $this.PrereleaseNumber
     }
     return $versionString;
   }
@@ -146,9 +129,6 @@ class AzureEngSemanticVersion {
     }
     else
     {
-      if ($this.BuildNumber) {
-        throw "Cannot increment releases tagged with azure pipelines build numbers"
-      }
       $this.PrereleaseNumber++
     }
   }
@@ -156,9 +136,8 @@ class AzureEngSemanticVersion {
   [void] SetupPythonConventions() 
   {
     # Python uses no separators and "b" for beta so this sets up the the object to work with those conventions
-    $this.PrereleaseLabelSeparator = $this.PrereleaseNumberSeparator = $this.BuildNumberSeparator = ""
+    $this.PrereleaseLabelSeparator = $this.PrereleaseNumberSeparator = ""
     $this.DefaultPrereleaseLabel = "b"
-    $this.DefaultAlphaReleaseLabel = "a"
   }
 
   [void] SetupDefaultConventions() 
@@ -166,9 +145,7 @@ class AzureEngSemanticVersion {
     # Use the default common conventions
     $this.PrereleaseLabelSeparator = "-"
     $this.PrereleaseNumberSeparator = "."
-    $this.BuildNumberSeparator = "."
     $this.DefaultPrereleaseLabel = "beta"
-    $this.DefaultAlphaReleaseLabel = "alpha"
   }
 
   static [string[]] SortVersionStrings([string[]] $versionStrings)
@@ -180,10 +157,7 @@ class AzureEngSemanticVersion {
 
   static [AzureEngSemanticVersion[]] SortVersions([AzureEngSemanticVersion[]] $versions)
   {
-    return ($versions | `
-            Sort-Object -Descending -Property `
-              Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber, `
-              @{ Expression = { [int]$_.BuildNumber }; Descending = $true })
+    return ($versions | Sort-Object -Property Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber -Descending)
   }
 
   static [void] QuickTests()
@@ -191,15 +165,9 @@ class AzureEngSemanticVersion {
     $versions = @(
       "1.0.1", 
       "2.0.0", 
-      "2.0.0-alpha.20200920",
-      "2.0.0-alpha.20200920.1",
+      "2.0.0-alpha.20200920", 
       "2.0.0-beta.2", 
       "1.0.10", 
-      "2.0.0-alpha.20201221.03",
-      "2.0.0-alpha.20201221.1",
-      "2.0.0-alpha.20201221.5",
-      "2.0.0-alpha.20201221.2",
-      "2.0.0-alpha.20201221.10",
       "2.0.0-beta.1", 
       "2.0.0-beta.10", 
       "1.0.0", 
@@ -211,12 +179,6 @@ class AzureEngSemanticVersion {
       "2.0.0-beta.10",
       "2.0.0-beta.2",
       "2.0.0-beta.1",
-      "2.0.0-alpha.20201221.10",
-      "2.0.0-alpha.20201221.5",
-      "2.0.0-alpha.20201221.03",
-      "2.0.0-alpha.20201221.2",
-      "2.0.0-alpha.20201221.1",
-      "2.0.0-alpha.20200920.1",
       "2.0.0-alpha.20200920",
       "1.0.10",
       "1.0.2",
@@ -229,7 +191,7 @@ class AzureEngSemanticVersion {
     for ($i = 0; $i -lt $expectedSort.Count; $i++)
     {
       if ($sort[$i] -ne $expectedSort[$i]) { 
-        Write-Host "Error: Incorrect version sort:"
+        Write-Host "Error: Incorrect sort:"
         Write-Host "Expected: "
         Write-Host $expectedSort
         Write-Host "Actual:"
@@ -238,53 +200,15 @@ class AzureEngSemanticVersion {
       }
     }
 
-    $alphaVerString = "1.2.3-alpha.20200828.9"
-    $alphaVer = [AzureEngSemanticVersion]::new($alphaVerString)
-    if (!$alphaVer.IsPrerelease) {
-      Write-Host "Expected alpha version to be marked as prerelease"
+    $devVerString = "1.2.3-alpha.20200828.1"
+    $devVerNew = [AzureEngSemanticVersion]::new($devVerString)
+    if (!$devVerNew -or $devVerNew.IsSemVerFormat -ne $false) {
+      Write-Host "Error: Didn't expect daily dev version to match our semver regex because of the extra .r"
     }
-    if ($alphaVer.Major -ne 1 -or $alphaVer.Minor -ne 2 -or $alphaVer.Patch -ne 3 -or `
-        $alphaVer.PrereleaseLabel -ne "alpha" -or $alphaVer.PrereleaseNumber -ne 20200828 -or $alphaVer.BuildNumber -ne 9) {
-      Write-Host "Error: Didn't correctly parse alpha version string $alphaVerString"
+    $devVerparse = [AzureEngSemanticVersion]::ParseVersionString($devVerString)
+    if ($devVerparse) {
+      Write-Host "Error: Didn't expect daily dev version to parse because of the extra .r"
     }
-    if ($alphaVerString -ne $alphaVer.ToString()) {
-      Write-Host "Error: alpha string did not correctly round trip with ToString. Expected: $($alphaVerString), Actual: $($alphaVer)"
-    }
-
-    [AzureEngSemanticVersion]::ParseLanguage = "python"
-    $pythonAlphaVerString = "1.2.3a20200828009"
-    $pythonAlphaVer = [AzureEngSemanticVersion]::new($pythonAlphaVerString)
-    if (!$pythonAlphaVer.IsPrerelease) {
-      Write-Host "Expected python alpha version to be marked as prerelease"
-    }
-    # Note: For python we lump build number into prerelease number, since it simplifies the code and regex, and is behaviorally the same
-    if ($pythonAlphaVer.Major -ne 1 -or $pythonAlphaVer.Minor -ne 2 -or $pythonAlphaVer.Patch -ne 3 `
-        -or $pythonAlphaVer.PrereleaseLabel -ne "a" -or $pythonAlphaVer.PrereleaseNumber -ne 20200828 `
-        -or $pythonAlphaVer.BuildNumber -ne "009") {
-      Write-Host "Error: Didn't correctly parse python alpha version string $pythonAlphaVerString"
-    }
-    if ($pythonAlphaVerString -ne $pythonAlphaVer.ToString()) {
-      Write-Host "Error: python alpha string did not correctly round trip with ToString. Expected: $($pythonAlphaVerString), Actual: $($pythonAlphaVer)"
-    }
-
-    $versions = @("1.0.1", "2.0.0", "2.0.0a20201208001", "2.0.0a20201105020", "2.0.0a20201208012", `
-                  "2.0.0b2", "1.0.10", "2.0.0b1", "2.0.0b10", "1.0.0", "1.0.0b2", "1.0.2")
-    $expectedSort = @("2.0.0", "2.0.0b10", "2.0.0b2", "2.0.0b1", "2.0.0a20201208012", "2.0.0a20201208001", `
-                      "2.0.0a20201105020", "1.0.10", "1.0.2", "1.0.1", "1.0.0", "1.0.0b2")
-    $sort = [AzureEngSemanticVersion]::SortVersionStrings($versions)
-    for ($i = 0; $i -lt $expectedSort.Count; $i++)
-    {
-      if ($sort[$i] -ne $expectedSort[$i]) { 
-        Write-Host "Error: Incorrect python version sort:"
-        Write-Host "Expected: "
-        Write-Host $expectedSort
-        Write-Host "Actual:"
-        Write-Host $sort
-        break
-      }
-    }
-
-    [AzureEngSemanticVersion]::ParseLanguage = ""
 
     $gaVerString = "1.2.3"
     $gaVer = [AzureEngSemanticVersion]::ParseVersionString($gaVerString)
@@ -292,7 +216,7 @@ class AzureEngSemanticVersion {
       Write-Host "Error: Didn't correctly parse ga version string $gaVerString"
     }
     if ($gaVerString -ne $gaVer.ToString()) {
-      Write-Host "Error: Ga string did not correctly round trip with ToString. Expected: $($gaVerString), Actual: $($gaVer)"
+      Write-Host "Error: Ga string did not correctly round trip with ToString"
     }
     $gaVer.IncrementAndSetToPrerelease()
     if ("1.3.0-beta.1" -ne $gaVer.ToString()) {
@@ -305,7 +229,7 @@ class AzureEngSemanticVersion {
       Write-Host "Error: Didn't correctly parse beta version string $betaVerString"
     }
     if ($betaVerString -ne $betaVer.ToString()) {
-      Write-Host "Error: beta string did not correctly round trip with ToString. Expected: $($betaVerString), Actual: $($betaVer)"
+      Write-Host "Error: beta string did not correctly round trip with ToString"
     }
     $betaVer.IncrementAndSetToPrerelease()
     if ("1.2.3-beta.5" -ne $betaVer.ToString()) {

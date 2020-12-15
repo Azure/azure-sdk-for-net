@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
@@ -17,12 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
         }
 
-        /// <param name="populateOptionalMembers">
-        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
-        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
-        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
-        /// </param>
-        [RecordedTest]
+        [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task GetDimensionValues(bool populateOptionalMembers)
@@ -59,12 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(valueCount, Is.GreaterThan(0));
         }
 
-        /// <param name="populateOptionalMembers">
-        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
-        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
-        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
-        /// </param>
-        [RecordedTest]
+        [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task GetMetricSeriesDefinitions(bool populateOptionalMembers)
@@ -89,7 +78,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(definition, Is.Not.Null);
                 Assert.That(definition.MetricId, Is.EqualTo(MetricId));
 
-                ValidateSeriesKey(definition.SeriesKey);
+                ValidateDimensionKey(definition.SeriesKey);
 
                 if (populateOptionalMembers)
                 {
@@ -111,7 +100,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(definitionCount, Is.GreaterThan(0));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetMetricSeriesData()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
@@ -149,10 +138,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 returnedKeys.Add(seriesData.Definition.SeriesKey);
             }
 
-            Assert.That(seriesKeys, Is.EquivalentTo(returnedKeys));
+            IEnumerable<List<KeyValuePair<string, string>>> expectedKvps = seriesKeys.Select(key => key.AsDictionary().ToList());
+            IEnumerable<List<KeyValuePair<string, string>>> returnedKvps = returnedKeys.Select(key => key.AsDictionary().ToList());
+
+            Assert.That(returnedKvps, Is.EquivalentTo(expectedKvps));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetMetricEnrichmentStatuses()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();

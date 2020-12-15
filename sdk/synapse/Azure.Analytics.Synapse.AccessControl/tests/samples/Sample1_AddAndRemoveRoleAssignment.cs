@@ -21,28 +21,38 @@ namespace Azure.Analytics.Synapse.Samples
         public void AddAndRemoveRoleAssignmentSync()
         {
             // Environment variable with the Synapse workspace endpoint.
-            string endpoint = TestEnvironment.EndpointUrl;
+            string workspaceUrl = TestEnvironment.WorkspaceUrl;
 
-            AccessControlClient client = new AccessControlClient(new Uri(endpoint), new DefaultAzureCredential());
+            #region Snippet:AccessControlSample1AccessControlClient
+            AccessControlClient client = new AccessControlClient(new Uri(workspaceUrl), new DefaultAzureCredential());
+            #endregion
 
-            Pageable<SynapseRole> roles = client.GetRoleDefinitions();
-            SynapseRole role = roles.Single(role => role.Name == "Workspace Admin");
+            #region Snippet:AccessControlSample1GetWorkspaceAdminRole
+            SynapseRole role = client.GetRoleDefinitions().Single(role => role.Name == "Workspace Admin");
+            #endregion
 
+            #region Snippet:AccessControlSample1AddRoleAssignment
             string principalId = Guid.NewGuid().ToString();
-            RoleAssignmentOptions request = new RoleAssignmentOptions(role.Id, principalId);
-            Response<RoleAssignmentDetails> response = client.CreateRoleAssignment(request);
-            RoleAssignmentDetails roleAssignmentAdded = response.Value;
+            RoleAssignmentOptions request = new RoleAssignmentOptions(roleId:role.Id, principalId:principalId);
+            RoleAssignmentDetails roleAssignmentAdded = client.CreateRoleAssignment(request);
+            #endregion
 
-            RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(roleAssignmentAdded.Id);
+            #region Snippet:AccessControlSample1GetRoleAssignment
+            RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(principalId);
             Debug.WriteLine($"Role {roleAssignment.RoleId} is assigned to {roleAssignment.PrincipalId}. Role assignment id: {roleAssignment.Id}");
+            #endregion
 
+            #region Snippet:AccessControlSample1ListRoleAssignments
             IReadOnlyList<RoleAssignmentDetails> roleAssignments = client.GetRoleAssignments().Value;
             foreach (RoleAssignmentDetails assignment in roleAssignments)
             {
                 Console.WriteLine(assignment.Id);
             }
+            #endregion
 
+            #region Snippet:AccessControlSample1RemoveRoleAssignment
             client.DeleteRoleAssignmentById(roleAssignment.Id);
+            #endregion
         }
     }
 }

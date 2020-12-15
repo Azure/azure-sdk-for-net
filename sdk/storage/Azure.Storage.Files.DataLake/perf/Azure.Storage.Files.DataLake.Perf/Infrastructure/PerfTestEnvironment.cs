@@ -60,7 +60,7 @@ namespace Azure.Storage.Files.DataLake.Perf
         ///   Initializes a new instance of the <see cref="PerfTestEnvironment"/> class.
         /// </summary>
         ///
-        public PerfTestEnvironment()
+        public PerfTestEnvironment() : base("storage")
         {
             DataLakeServiceUri = new Uri($"{ Uri.UriSchemeHttps }{ Uri.SchemeDelimiter }{ DataLakeAccountName }.dfs.{ StorageEndpointSuffix }");
             DataLakeCredential = new StorageSharedKeyCredential(DataLakeAccountName, DataLakeAccountKey);

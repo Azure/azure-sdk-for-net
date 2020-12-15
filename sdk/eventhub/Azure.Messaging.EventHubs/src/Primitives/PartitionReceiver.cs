@@ -449,7 +449,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 if (OwnsConnection)
                 {
-                    await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                    await Connection.CloseAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -476,11 +476,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   including ensuring that the client itself has been closed.
         /// </summary>
         ///
-        public virtual async ValueTask DisposeAsync()
-        {
-            await CloseAsync().ConfigureAwait(false);
-            GC.SuppressFinalize(this);
-        }
+        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

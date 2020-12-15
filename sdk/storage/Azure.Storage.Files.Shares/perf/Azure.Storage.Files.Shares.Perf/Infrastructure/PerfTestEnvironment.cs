@@ -41,7 +41,7 @@ namespace Azure.Storage.Files.Shares.Perf
         /// <summary>
         /// Initializes a new instance of the <see cref="PerfTestEnvironment"/> class.
         /// </summary>
-        public PerfTestEnvironment()
+        public PerfTestEnvironment() : base("storage")
         {
             FileSharesConnectionString = $"DefaultEndpointsProtocol={Uri.UriSchemeHttps};AccountName={FilesSharesAccountName};AccountKey={FilesSharesAccountKey};EndpointSuffix={StorageEndpointSuffix}";
         }

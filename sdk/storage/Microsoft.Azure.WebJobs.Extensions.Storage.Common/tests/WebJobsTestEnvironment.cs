@@ -7,6 +7,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public class WebJobsTestEnvironment : TestEnvironment
     {
+        public WebJobsTestEnvironment()
+        : base("storage") { }
+
         public string PrimaryStorageAccountConnectionString => GetVariable("AZUREWEBJOBSSTORAGE");
 
         public string SecondaryStorageAccountConnectionString => GetVariable("AZUREWEBJOBSSECONDARYSTORAGE");

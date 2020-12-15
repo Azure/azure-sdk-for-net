@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///   Initializes a new instance of the <see cref="StorageTestEnvironment"/> class.
         /// </summary>
         ///
-        public StorageTestEnvironment()
+        public StorageTestEnvironment() : base("eventhub")
         {
             ActiveStorageAccount = new Lazy<StorageProperties>(EnsureStorageAccount, LazyThreadSafetyMode.ExecutionAndPublication);
         }

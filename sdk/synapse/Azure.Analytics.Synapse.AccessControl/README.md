@@ -59,40 +59,26 @@ The way you control access to Synapse resources is to create role assignments. A
 The Azure.Analytics.Synapse.AccessControl package supports synchronous and asynchronous APIs. The following section covers some of the most common Azure Synapse Analytics access control related tasks:
 
 ### Role assignment examples
-* [Create access control client](#create-access-control-client)
 * [Create a role assignment](#create-a-role-assignment)
 * [Retrieve a role assignment](#retrieve-a-role-assignment)
 * [List role assignments](#list-role-assignments)
 * [Delete a role assignment](#delete-a-role-assignment)
-
-### Create access control client
-
-`CreateAccessControlClient` creates a role assignment.
-
-```C# Snippet:CreateAccessControlClient
-// Replace the string below with your actual endpoint url.
-string endpoint = "<my-endpoint-url>";
-AccessControlClient client = new AccessControlClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
-```
 
 ### Create a role assignment
 
 `CreateRoleAssignment` creates a role assignment.
 
 ```C# Snippet:CreateRoleAssignment
-Pageable<SynapseRole> roles = client.GetRoleDefinitions();
-SynapseRole sqlAdminRole = roles.Single(role => role.Name == "Sql Admin");
-
-RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRole.Id, principalId);
-RoleAssignmentDetails createdRoleAssignment = client.CreateRoleAssignment(options);
+RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
+RoleAssignmentDetails roleAssignment = client.CreateRoleAssignment(options);
 ```
 
 ### Retrieve a role assignment
 
-`GetRoleAssignmentById` retrieves a role assignment by the given assignment ID.
+`GetRoleAssignmentById` retrieves a role assignment by the given principal ID.
 
 ```C# Snippet:RetrieveRoleAssignment
-RoleAssignmentDetails retrievedRoleAssignment = client.GetRoleAssignmentById(createdRoleAssignment.Id);
+RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(principalId);
 ```
 
 ### List role assignments
@@ -100,9 +86,9 @@ RoleAssignmentDetails retrievedRoleAssignment = client.GetRoleAssignmentById(cre
 
 ```C# Snippet:ListRoleAssignments
 IReadOnlyList<RoleAssignmentDetails> roleAssignments = client.GetRoleAssignments().Value;
-foreach (RoleAssignmentDetails roleAssignment in roleAssignments)
+foreach (RoleAssignmentDetails assignment in roleAssignments)
 {
-    Console.WriteLine(roleAssignment.Id);
+    Console.WriteLine(assignment.Id);
 }
 ```
 
@@ -111,7 +97,7 @@ foreach (RoleAssignmentDetails roleAssignment in roleAssignments)
 `DeleteRoleAssignmentById` deletes a role assignment by the given principal ID.
 
 ```C# Snippet:DeleteRoleAssignment
-client.DeleteRoleAssignmentById(retrievedRoleAssignment.Id);
+client.DeleteRoleAssignmentById(roleAssignment.Id);
 ```
 
 ## To build

@@ -48,6 +48,7 @@ namespace Azure.Security.Attestation.Models
                     _certificateList = certificates;
                 }
                 return _certificateList;
+
             }
         }
 
@@ -58,4 +59,5 @@ namespace Azure.Security.Attestation.Models
         internal JsonWebKeySet InternalPolicyCertificates
         { get; private set; }
     }
+
 }

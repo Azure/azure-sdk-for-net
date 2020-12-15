@@ -5,6 +5,8 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -21,90 +23,67 @@ namespace Azure.AI.TextAnalytics.Samples
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesBatch
-            string documentA = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
-                                Steve Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped
-                                down as CEO of Microsoft, and was succeeded by Satya Nadella.
-                                Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
-                                headquartered in Redmond";
-
-            string documentB = @"El CEO de Microsoft es Satya Nadella, quien asumió esta posición en Febrero de 2014. Él
-                                empezó como Ingeniero de Software en el año 1992.";
-
-            string documentC = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and 
-                                sell BASIC interpreters for the Altair 8800. During his career at Microsoft, Gates held
-                                the positions of chairman chief executive officer, president and chief software architect
-                                while also being the largest individual shareholder until May 2014.";
-
             var documents = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1", documentA)
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("2", documentB)
-                {
-                     Language = "es",
-                },
-                new TextDocumentInput("3", documentC)
+                new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("4", string.Empty)
+                new TextDocumentInput("3", "Pike place market is my favorite Seattle attraction.")
+                {
+                     Language = "en",
+                }
             };
 
-            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
-            Response<RecognizeLinkedEntitiesResultCollection> response = client.RecognizeLinkedEntitiesBatch(documents, options);
-            RecognizeLinkedEntitiesResultCollection entitiesPerDocuments = response.Value;
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            #endregion
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{entitiesPerDocuments.ModelVersion}\"");
-            Console.WriteLine("");
+            Debug.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{results.ModelVersion}\"");
+            Debug.WriteLine("");
 
-            foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesPerDocuments)
+            foreach (RecognizeLinkedEntitiesResult result in results)
             {
                 TextDocumentInput document = documents[i++];
 
-                Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
+                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
-                if (entitiesInDocument.HasError)
+                if (result.HasError)
                 {
-                    Console.WriteLine("  Error!");
-                    Console.WriteLine($"  Document error code: {entitiesInDocument.Error.ErrorCode}.");
-                    Console.WriteLine($"  Message: {entitiesInDocument.Error.Message}");
+                    Debug.WriteLine($"    Document error code: {result.Error.ErrorCode}.");
+                    Debug.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {
-                    Console.WriteLine($"Recognized {entitiesInDocument.Entities.Count} entities:");
-                    foreach (LinkedEntity linkedEntity in entitiesInDocument.Entities)
+                    Debug.WriteLine($"    Extracted the following {result.Entities.Count()} linked entities:");
+
+                    foreach (LinkedEntity linkedEntity in result.Entities)
                     {
-                        Console.WriteLine($"  Name: {linkedEntity.Name}");
-                        Console.WriteLine($"  Language: {linkedEntity.Language}");
-                        Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
-                        Console.WriteLine($"  URL: {linkedEntity.Url}");
-                        Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
+                        Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: \"{linkedEntity.DataSourceEntityId}\"");
                         foreach (LinkedEntityMatch match in linkedEntity.Matches)
                         {
-                            Console.WriteLine($"    Match Text: {match.Text}");
-                            Console.WriteLine($"    Offset: {match.Offset}");
-                            Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
+                            Debug.WriteLine($"        Match Text: \"{match.Text}\", Offset (in UTF-16 code units): {match.Offset}");
+                            Debug.WriteLine($"        Confidence score: {match.ConfidenceScore}");
                         }
-                        Console.WriteLine("");
                     }
 
-                    Console.WriteLine($"  Document statistics:");
-                    Console.WriteLine($"    Character count: {entitiesInDocument.Statistics.CharacterCount}");
-                    Console.WriteLine($"    Transaction count: {entitiesInDocument.Statistics.TransactionCount}");
+                    Debug.WriteLine($"    Document statistics:");
+                    Debug.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine("");
                 }
-                Console.WriteLine("");
             }
 
-            Console.WriteLine($"Batch operation statistics:");
-            Console.WriteLine($"  Document count: {entitiesPerDocuments.Statistics.DocumentCount}");
-            Console.WriteLine($"  Valid document count: {entitiesPerDocuments.Statistics.ValidDocumentCount}");
-            Console.WriteLine($"  Invalid document count: {entitiesPerDocuments.Statistics.InvalidDocumentCount}");
-            Console.WriteLine($"  Transaction count: {entitiesPerDocuments.Statistics.TransactionCount}");
-            Console.WriteLine("");
-            #endregion
+            Debug.WriteLine($"Batch operation statistics:");
+            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
+            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
+            Debug.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
+            Debug.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
+            Debug.WriteLine("");
         }
     }
 }

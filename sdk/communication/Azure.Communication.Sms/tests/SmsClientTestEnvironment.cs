@@ -7,6 +7,10 @@ namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientTestEnvironment : TestEnvironment
     {
+        public SmsClientTestEnvironment() : base("communication")
+        {
+        }
+
         internal const string ConnectionStringEnvironmentVariableName = "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING";
         internal const string PhoneNumberEnvironmentVariableName = "AZURE_PHONE_NUMBER";
 

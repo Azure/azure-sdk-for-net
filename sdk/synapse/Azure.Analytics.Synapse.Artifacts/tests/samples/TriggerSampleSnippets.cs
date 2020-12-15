@@ -2,46 +2,66 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
+using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class TriggerSnippets : SampleFixture
     {
-        [Test]
-        public async Task TriggerSample()
+        private TriggerClient TriggerClient;
+
+        [OneTimeSetUp]
+        public void CreateClient()
         {
+            // Environment variable with the Synapse workspace endpoint.
+            string workspaceUrl = TestEnvironment.WorkspaceUrl;
+
             #region Snippet:CreateTriggerClient
-            // Replace the string below with your actual endpoint url.
-            string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
-            TriggerClient client = new TriggerClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
+            // Create a new Trigger client using the default credential from Azure.Identity using environment variables previously set,
+            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+            TriggerClient client = new TriggerClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
             #endregion
 
+            this.TriggerClient = client;
+        }
+
+        [Test]
+        public void CreateTrigger()
+        {
             #region Snippet:CreateTrigger
-            TriggerResource triggerResource = new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence()));
-            TriggerCreateOrUpdateTriggerOperation operation = client.StartCreateOrUpdateTrigger("MyTrigger", triggerResource);
-            Response<TriggerResource> createdTrigger = await operation.WaitForCompletionAsync();
+            TriggerCreateOrUpdateTriggerOperation operation = TriggerClient.StartCreateOrUpdateTrigger("MyTrigger", new TriggerResource(new Trigger()));
+            TriggerResource trigger = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
+        }
 
+        [Test]
+        public void RetrieveTrigger()
+        {
             #region Snippet:RetrieveTrigger
-            TriggerResource retrievedTrigger = client.GetTrigger("MyTrigger");
+            TriggerResource trigger = TriggerClient.GetTrigger("MyTrigger");
             #endregion
+        }
 
+        [Test]
+        public void ListTriggers()
+        {
             #region Snippet:ListTriggers
-            Pageable<TriggerResource> triggers = client.GetTriggersByWorkspace();
+            Pageable<TriggerResource> triggers = TriggerClient.GetTriggersByWorkspace();
             foreach (TriggerResource trigger in triggers)
             {
                 System.Console.WriteLine(trigger.Name);
             }
             #endregion
+        }
 
+        [Test]
+        public void DeleteTrigger()
+        {
             #region Snippet:DeleteTrigger
-            client.StartDeleteTrigger("MyTrigger");
+            TriggerClient.StartDeleteTrigger("MyTrigger");
             #endregion
         }
     }

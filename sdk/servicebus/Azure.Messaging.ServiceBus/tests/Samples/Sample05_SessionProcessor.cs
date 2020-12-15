@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -10,7 +12,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
     public class Sample05_SessionProcessor : ServiceBusLiveTestBase
     {
         [Test]
-        [Ignore("Only verifying that the code builds")]
         public async Task ProcessSessionMessages()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
@@ -31,12 +32,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // create a message batch that we can send
                 ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
                 messageBatch.TryAddMessage(
-                    new ServiceBusMessage("First")
+                    new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
                     {
                         SessionId = "Session1"
                     });
                 messageBatch.TryAddMessage(
-                    new ServiceBusMessage("Second")
+                    new ServiceBusMessage(Encoding.UTF8.GetBytes("Second"))
                     {
                         SessionId = "Session2"
                     });
@@ -44,8 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the message batch
                 await sender.SendMessagesAsync(messageBatch);
 
-                #region Snippet:ServiceBusConfigureSessionProcessor
-                // create the options to use for configuring the processor
+                // get the options to use for configuring the processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     // By default after the message handler returns, the processor will complete the message
@@ -55,19 +55,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     // I can also allow for processing multiple sessions
                     MaxConcurrentSessions = 5,
 
-                    // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-                    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
-                    // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
-                    MaxConcurrentCallsPerSession = 2,
-
-                    // Processing can be optionally limited to a subset of session Ids.
-                    SessionIds = { "my-session", "your-session" },
+                    // By default, there will be a single concurrent call per session. I can
+                    // increase that here to enable parallel processing within each session.
+                    MaxConcurrentCallsPerSession = 2
                 };
 
                 // create a session processor that we can use to process the messages
-                await using ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
+                ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
 
-                // configure the message and error handler to use
+                // since the message handler will run in a background thread, in order to prevent
+                // this sample from terminating immediately, we can use a task completion source that
+                // we complete from within the message handler.
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                int processedMessageCount = 0;
                 processor.ProcessMessageAsync += MessageHandler;
                 processor.ProcessErrorAsync += ErrorHandler;
 
@@ -81,6 +81,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     // we can also set arbitrary session state using this receiver
                     // the state is specific to the session, and not any particular message
                     await args.SetSessionStateAsync(new BinaryData("some state"));
+
+                    // Once we've received the last message, complete the
+                    // task completion source.
+                    if (Interlocked.Increment(ref processedMessageCount) == 2)
+                    {
+                        tcs.SetResult(true);
+                    }
                 }
 
                 Task ErrorHandler(ProcessErrorEventArgs args)
@@ -94,13 +101,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     Console.WriteLine(args.Exception.ToString());
                     return Task.CompletedTask;
                 }
-
-                // start processing
                 await processor.StartProcessingAsync();
 
-                // since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
-                Console.ReadKey();
-                #endregion
+                // await our task completion source task so that the message handler will be invoked at least once.
+                await tcs.Task;
+
+                // stop processing once the task completion source was completed.
+                await processor.StopProcessingAsync();
                 #endregion
             }
         }

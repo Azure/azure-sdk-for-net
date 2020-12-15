@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Administration;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples

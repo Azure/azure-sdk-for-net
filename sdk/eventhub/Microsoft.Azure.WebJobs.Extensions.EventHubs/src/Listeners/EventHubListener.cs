@@ -23,6 +23,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 {
     internal sealed class EventHubListener : IListener, IEventProcessorFactory, IScaleMonitorProvider
     {
+        private static readonly Dictionary<string, object> EmptyScope = new Dictionary<string, object>();
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly EventProcessorHost _eventProcessorHost;
         private readonly bool _singleDispatch;
@@ -132,11 +133,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages)
             {
-                var events = messages.ToArray();
-
                 var triggerInput = new EventHubTriggerInput
                 {
-                    Events = events,
+                    Events = messages.ToArray(),
                     PartitionContext = context
                 };
 
@@ -160,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                             TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
                         };
 
-                        Task task = _executor.TryExecuteAsync(input, _cts.Token);
+                        Task task = TryExecuteWithLoggingAsync(input, triggerInput.Events[i]);
                         invocationTasks.Add(task);
                     }
 
@@ -179,7 +178,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         TriggerDetails = triggerInput.GetTriggerDetails(context)
                     };
 
-                    await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
+                    using (_logger.BeginScope(GetLinksScope(triggerInput.Events)))
+                    {
+                        await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
+                    }
                 }
 
                 // Checkpoint if we processed any events.
@@ -189,9 +191,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 // so that is the responsibility of the user's function currently. E.g.
                 // the function should have try/catch handling around all event processing
                 // code, and capture/log/persist failed events, since they won't be retried.
-                if (events.Any())
+                if (messages.Any())
                 {
-                    await CheckpointAsync(events.Last(), context).ConfigureAwait(false);
+                    await CheckpointAsync(messages.Last(), context).ConfigureAwait(false);
+                }
+            }
+
+            private async Task TryExecuteWithLoggingAsync(TriggeredFunctionData input, EventData message)
+            {
+                using (_logger.BeginScope(GetLinksScope(message)))
+                {
+                    await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
                 }
             }
 
@@ -235,6 +245,56 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             public void Dispose()
             {
                 Dispose(true);
+            }
+
+            private static Dictionary<string, object> GetLinksScope(EventData message)
+            {
+                if (TryGetLinkedActivity(message, out var link))
+                {
+                    return new Dictionary<string, object> {["Links"] = new[] {link}};
+                }
+
+                return EmptyScope;
+            }
+
+            private static Dictionary<string, object> GetLinksScope(EventData[] messages)
+            {
+                List<Activity> links = null;
+
+                foreach (var message in messages)
+                {
+                    if (TryGetLinkedActivity(message, out var link))
+                    {
+                        if (links == null)
+                        {
+                            links = new List<Activity>(messages.Length);
+                        }
+
+                        links.Add(link);
+                    }
+                }
+
+                if (links != null)
+                {
+                    return new Dictionary<string, object> {["Links"] = links};
+                }
+
+                return EmptyScope;
+            }
+
+            private static bool TryGetLinkedActivity(EventData message, out Activity link)
+            {
+                link = null;
+
+                if (((message.SystemProperties != null && message.SystemProperties.TryGetValue("Diagnostic-Id", out var diagnosticIdObj)) || message.Properties.TryGetValue("Diagnostic-Id", out diagnosticIdObj))
+                    && diagnosticIdObj is string diagnosticIdString)
+                {
+                    link = new Activity("Microsoft.Azure.EventHubs.Process");
+                    link.SetParentId(diagnosticIdString);
+                    return true;
+                }
+
+                return false;
             }
 
             private static string GetOperationDetails(EventProcessorHostPartition context, string operation)

@@ -1407,8 +1407,6 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(1025, SeekOrigin.Begin),
                 new ArgumentException("You cannot seek past the last known length of the underlying blob or file."));
-
-            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -1453,8 +1451,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 Assert.AreEqual(size + offset, outputStream.Position);
             }
-
-            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -1500,7 +1496,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
-            Assert.AreEqual(size, openReadStream.Length);
             TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
         }
 

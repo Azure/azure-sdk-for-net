@@ -16,13 +16,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// Error Response
+    /// The resource management error response.
     /// </summary>
-    /// <remarks>
-    /// Common error response for all Azure Resource Manager APIs to return
-    /// error details for failed operations. (This also follows the OData error
-    /// response format.)
-    /// </remarks>
     public partial class ErrorResponse
     {
         /// <summary>
