@@ -254,24 +254,25 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     WritePropertyIfNotNull(writer, "eventHubPath", context.EventHubPath);
                     writer.WriteEndObject();
 
-                    // Log partition lease
-                    if (context.Lease != null)
+                    // Log partition checkpoint info
+                    if (context.Checkpoint != null)
                     {
+                        // leave the property name as lease for backcompat with T1
                         writer.WritePropertyName("lease");
                         writer.WriteStartObject();
-                        WritePropertyIfNotNull(writer, "offset", context.Lease.Offset.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "sequenceNumber", context.Lease.SequenceNumber.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "offset", context.Checkpoint.Value.Offset.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "sequenceNumber", context.Checkpoint.Value.SequenceNumber.ToString(CultureInfo.InvariantCulture));
                         writer.WriteEndObject();
                     }
 
                     // Log RuntimeInformation if EnableReceiverRuntimeMetric is enabled
                     if (context.LastEnqueuedEventProperties != null)
                     {
-                        writer.WritePropertyName("lastEnquedEventProperties");
+                        writer.WritePropertyName("runtimeInformation");
                         writer.WriteStartObject();
-                        WritePropertyIfNotNull(writer, "offset", context.LastEnqueuedEventProperties.Value.Offset?.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "sequenceNumber", context.LastEnqueuedEventProperties.Value.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "enqueuedTimeUtc", context.LastEnqueuedEventProperties.Value.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastEnqueuedOffset", context.LastEnqueuedEventProperties.Value.Offset?.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastSequenceNumber", context.LastEnqueuedEventProperties.Value.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastEnqueuedTimeUtc", context.LastEnqueuedEventProperties.Value.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
                         writer.WriteEndObject();
                     }
                     writer.WriteEndObject();
