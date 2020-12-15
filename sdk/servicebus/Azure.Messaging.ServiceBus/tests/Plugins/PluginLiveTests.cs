@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Plugins;
@@ -12,6 +13,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 {
     public class PluginLiveTests : ServiceBusLiveTestBase
     {
+        public PluginLiveTests() : base()
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(60));
+        }
+
         [Test]
         public async Task OrderOfPluginsRespected()
         {
