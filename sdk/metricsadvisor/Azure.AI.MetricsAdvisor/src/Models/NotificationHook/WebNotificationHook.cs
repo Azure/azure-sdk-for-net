@@ -62,7 +62,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The certificate password for authenticating to the API address. Leave this blank if authentication isn't needed.
         /// </summary>
-        public string CertificatePassword { get => HookParameter.Username; set => HookParameter.Username = value; }
+        public string CertificatePassword { get => HookParameter.CertificatePassword; set => HookParameter.CertificatePassword = value; }
 
         /// <summary>
         /// Custom headers to send in the API call.
