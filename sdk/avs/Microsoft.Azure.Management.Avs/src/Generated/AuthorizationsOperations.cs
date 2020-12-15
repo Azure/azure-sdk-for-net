@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Avs
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 1
 
     /// <summary>
     /// AuthorizationsOperations operations.

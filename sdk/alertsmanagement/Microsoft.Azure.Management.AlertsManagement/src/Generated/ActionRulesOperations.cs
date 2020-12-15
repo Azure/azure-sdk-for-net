@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 1
+    // Simple TEst
 
     /// <summary>
     /// ActionRulesOperations operations.
