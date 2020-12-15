@@ -53,13 +53,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   refreshing authorization.  Authorization will be refreshed earlier
         ///   than the expected expiration by this amount.
         /// </summary>
-        private static TimeSpan AuthorizationRefreshBuffer { get; } = TimeSpan.FromMinutes(5);
+        private static TimeSpan AuthorizationRefreshBuffer { get; } = TimeSpan.FromMinutes(10);
 
         /// <summary>
         ///   The minimum amount of time for authorization to be refreshed; any calculations that
         ///   call for refreshing more frequently will be substituted with this value.
         /// </summary>
-        private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(4);
+        private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(2);
 
         /// <summary>
         ///   The amount time to allow to refresh authorization of an AMQP link.
@@ -956,6 +956,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string[] requiredClaims,
             TimeSpan timeout)
         {
+            ServiceBusEventSource.Log.RequestAuthorizationStart(ActiveConnection.ToString(), exception.ToString());
+
             AmqpCbsLink authLink = connection.Extensions.Find<AmqpCbsLink>();
             DateTime cbsTokenExpiresAtUtc = DateTime.MaxValue;
             foreach (string resource in audience)
@@ -967,6 +969,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     cbsTokenExpiresAtUtc = expiresAt;
                 }
             }
+            ServiceBusEventSource.Log.(ActiveConnection.ToString(), exception.ToString());
             return cbsTokenExpiresAtUtc;
         }
 

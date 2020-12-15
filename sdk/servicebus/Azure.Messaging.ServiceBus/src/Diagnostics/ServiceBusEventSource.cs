@@ -186,6 +186,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorMessageHandlerCompleteEvent = 103;
         internal const int ProcessorMessageHandlerExceptionEvent = 104;
 
+        internal const int RequestAuthorizationStartEvent = 105;
+        internal const int RequestAuthorizationCompleteEvent = 106;
+        internal const int RequestAuthorizationExceptionEvent = 107;
+
         #endregion
         // add new event numbers here incrementing from previous
 
