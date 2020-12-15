@@ -42,19 +42,6 @@ function Find-Mapping([string]$path) {
     return $name
 }
 
-# helper to turn PSCustomObject into a list of key/value pairs
-function Get-ObjectMembers {
-    [CmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $True, ValueFromPipeline = $True)]
-        [PSCustomObject]$obj
-    )
-    $obj | Get-Member -MemberType NoteProperty | ForEach-Object {
-        $key = $_.Name
-        [PSCustomObject]@{Key = $key; Value = $obj."$key" }
-    }
-}
-
 try {
     # Get RP Mapping
     $RPMapping = [ordered]@{ }
@@ -79,8 +66,7 @@ try {
     }
 
     # Get Metadata file path
-    $Response = Invoke-WebRequest -URI https://api.github.com/repos/Azure/azure-sdk-for-net/pulls/17062/files
-    #$Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
+    $Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
     $changeList = $Response.Content | ConvertFrom-Json
     if ($Response.RelationLink.Count -ne 0) {
         $lastLink = $Response.RelationLink.Get_Item('last')
