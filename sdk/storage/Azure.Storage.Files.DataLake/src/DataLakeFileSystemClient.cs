@@ -183,6 +183,68 @@ namespace Azure.Storage.Files.DataLake
         /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
         /// class.
         /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="fileSystemName">
+        /// The name of the blob container in the storage account to reference.
+        /// </param>
+        public DataLakeFileSystemClient(string connectionString, string fileSystemName)
+            : this(connectionString, fileSystemName, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="fileSystemName">
+        /// The name of the blob container in the storage account to reference.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakeFileSystemClient(string connectionString, string fileSystemName, DataLakeClientOptions options)
+        {
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            StorageSharedKeyCredential sharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(conn.BlobEndpoint)
+            {
+                FileSystemName = fileSystemName
+            };
+            options ??= new DataLakeClientOptions();
+
+            _uri = uriBuilder.ToUri();
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
+            _pipeline = options.Build(conn.Credentials);
+            _storageSharedKeyCredential = sharedKeyCredential;
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
+        /// class.
+        /// </summary>
         /// <param name="fileSystemUri">
         /// A <see cref="Uri"/> referencing the share that includes the
         /// name of the account and the name of the file system.

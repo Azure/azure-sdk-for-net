@@ -71,6 +71,59 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task Ctor_ConnectionString_RoundTrip()
+        {
+            // Arrage
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(connectionString, GetOptions()));
+            DataLakeFileSystemClient fileSystem = InstrumentClient(serviceClient.GetFileSystemClient(GetNewFileSystemName()));
+
+            // Act
+            try
+            {
+                await fileSystem.CreateAsync();
+            }
+
+            // Cleanup
+            finally
+            {
+                await fileSystem.DeleteAsync();
+            }
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_GenerateSas()
+        {
+            // Arrage
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(connectionString, GetOptions()));
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystem = InstrumentClient(serviceClient.GetFileSystemClient(fileSystemName));
+
+            try
+            {
+                await fileSystem.CreateAsync();
+
+                Uri accountSasUri = serviceClient.GenerateAccountSasUri(
+                    AccountSasPermissions.All,
+                    Recording.UtcNow.AddDays(1),
+                    AccountSasResourceTypes.All);
+
+                DataLakeServiceClient sasServiceClient = InstrumentClient(new DataLakeServiceClient(accountSasUri, GetOptions()));
+                DataLakeFileSystemClient sasFileSystem = InstrumentClient(sasServiceClient.GetFileSystemClient(fileSystemName));
+
+                // Act
+                await sasFileSystem.GetPropertiesAsync();
+            }
+
+            // Cleanup
+            finally
+            {
+                await fileSystem.DeleteAsync();
+            }
+        }
+
+        [Test]
         public void Ctor_TokenCredential_Http()
         {
             // Arrange

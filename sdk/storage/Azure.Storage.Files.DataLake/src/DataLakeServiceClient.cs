@@ -154,6 +154,59 @@ namespace Azure.Storage.Files.DataLake
         /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
         /// class.
         /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
+        /// </param>
+        public DataLakeServiceClient(string connectionString)
+            : this(connectionString, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakeServiceClient(string connectionString, DataLakeClientOptions options)
+        {
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            StorageSharedKeyCredential sharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            options ??= new DataLakeClientOptions();
+            HttpPipelinePolicy authPolicy = sharedKeyCredential.AsPolicy();
+
+            _pipeline = options.Build(authPolicy);
+            _uri = conn.BlobEndpoint;
+            _blobUri = new DataLakeUriBuilder(_uri).ToBlobUri();
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = sharedKeyCredential;
+            _blobServiceClient = BlobServiceClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                authPolicy,
+                Version.AsBlobsVersion(),
+                _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the Data Lake service.
         /// </param>
