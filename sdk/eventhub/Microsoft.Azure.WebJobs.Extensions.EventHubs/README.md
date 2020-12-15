@@ -1,6 +1,6 @@
 # Azure WebJobs Event Hubs client library for .NET
 
-This extension provides functionality for accessing Azure Event Hubs in Azure Functions.
+This extension provides functionality for accessing Azure Event Hubs from an Azure Function.
 
 ## Getting started
 
