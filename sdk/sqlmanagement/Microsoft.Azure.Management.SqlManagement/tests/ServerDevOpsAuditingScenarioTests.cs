@@ -18,37 +18,13 @@ namespace Sql.Tests
         [Fact]
         public async void TestServerDevOpsAuditingSettings()
         {
-            // Remove this flag once API is available in Prod
-            bool isProd = true;
-
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
                 SqlManagementClient client = context.GetClient<SqlManagementClient>();
-                StorageAccountInformation storageAccountInformation;
-                string resourceGroupName;
-                string serverName;
 
-                if (isProd)
-                {
-                    ResourceGroup resourceGroup = context.CreateResourceGroup();
-                    Server server = context.CreateServer(resourceGroup);
-                    storageAccountInformation = await CreateStorageAccountAsync(context, resourceGroup);
-
-                    resourceGroupName = resourceGroup.Name;
-                    serverName = server.Name;
-                }
-                else
-                {
-                    resourceGroupName = "Default-SQL-SoutheastAsia";
-                    serverName = "lubaseaserver";
-
-                    storageAccountInformation = new StorageAccountInformation
-                    {
-                        Name = "olsternbstorageaccount",
-                        Endpoint = "https://olsternbstorageaccount.blob.core.windows.net/",
-                        PrimaryKey = "RDyxx3ORhww2iA6todWBYfNQor15ScEC4mF1VDrbwHz0q/smzD1GVMEBpODRz0yvaV1T8wi2CfG1cQYyEiPx3w=="
-                    };
-                }
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                StorageAccountInformation storageAccountInformation = await CreateStorageAccountAsync(context, resourceGroup);
 
                 ServerDevOpsAuditingSettings devOpsSettings = new ServerDevOpsAuditingSettings
                 {
@@ -58,13 +34,13 @@ namespace Sql.Tests
                     IsAzureMonitorTargetEnabled = true
                 };
 
-                ServerDevOpsAuditingSettings resultDevOpsSettings = await client.ServerDevOpsAuditSettings.CreateOrUpdateAsync(resourceGroupName, serverName, PolicyName, devOpsSettings);
+                ServerDevOpsAuditingSettings resultDevOpsSettings = await client.ServerDevOpsAuditSettings.CreateOrUpdateAsync(resourceGroup.Name, server.Name, PolicyName, devOpsSettings);
                 VerifyPolicy(devOpsSettings, resultDevOpsSettings);
 
-                resultDevOpsSettings = await client.ServerDevOpsAuditSettings.GetAsync(resourceGroupName, serverName, PolicyName);
+                resultDevOpsSettings = await client.ServerDevOpsAuditSettings.GetAsync(resourceGroup.Name, server.Name, PolicyName);
                 VerifyPolicy(devOpsSettings, resultDevOpsSettings);
 
-                IPage<ServerDevOpsAuditingSettings> resultItems = await client.ServerDevOpsAuditSettings.ListByServerAsync(resourceGroupName, serverName);
+                IPage<ServerDevOpsAuditingSettings> resultItems = await client.ServerDevOpsAuditSettings.ListByServerAsync(resourceGroup.Name, server.Name);
 
                 foreach (ServerDevOpsAuditingSettings resultItem in resultItems)
                 {
@@ -73,11 +49,8 @@ namespace Sql.Tests
 
                 Assert.Null(resultItems.NextPageLink);
 
-                if (isProd)
-                {
-                    await client.Servers.DeleteAsync(resourceGroupName, serverName);
-                    await DeleteStorageAccountAsync(context, resourceGroupName, storageAccountInformation.Name);
-                }
+                await client.Servers.DeleteAsync(resourceGroup.Name, server.Name);
+                await DeleteStorageAccountAsync(context, resourceGroup.Name, storageAccountInformation.Name);
             }
         }
 
