@@ -16,8 +16,8 @@
   </PropertyGroup>
 
   <!--
-     Exclude projects passed as a parameter; assume each item identifies a project name
-     under the service directory and build the appropriate path mask.
+     Exclude projects requeted by the assocaited parameter; assume each item identifies a
+     project name under the service directory and build the appropriate path mask.
   -->
   <ItemGroup>
     <_ExcludePathsSource Include="$(ExcludeProjects.Split('$(ExcludeProjectsDelimiter)'))" />
@@ -42,13 +42,15 @@
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
 
-  <Target Name="Dump" BeforeTargets="Build">
+  <!-- JESSE: Remove Debug Logging -->
+  <Target Name="JESSE-Debug" AfterTargets="Build">
     <Message Text="Delimiter: $(ExcludeProjectsDelimiter)" />
     <Message Text="|| Exclude Definition ||" />
     <Message Text="@(ExcludePaths)" />
     <Message Text="|| Project References ||" />
     <Message Text="@(ProjectReference)" />
   </Target>
+  <!-- END JESSE: Remove Debug Logging -->
 
   <Target Name="CheckProjects" AfterTargets="Build">
     <!-- If scope is set this likely came from a call to build.proj and in cases where there is only mgmt projects we don't want to error so skip this extra check -->
