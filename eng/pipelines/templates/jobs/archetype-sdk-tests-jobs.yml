@@ -65,9 +65,6 @@ jobs:
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
       container: $[ variables['Container'] ]
 
-    ${{ if gt(0, length(parameters.ExcludeProjects)) }}:
-       excludeProjects: format('/p:ExcludeProjects="{0}"', join('|', parameters.ExcludeProjects))
-
     steps:
       - ${{ parameters.PreSteps }}
 
@@ -101,7 +98,7 @@ jobs:
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
-          $(excludeProjects)
+          /p:ExcludeProjects="${{ join('|', parameters.ExcludeProjects) }}"
           $(AdditionalTestArguments)
 
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
