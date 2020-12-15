@@ -13,7 +13,7 @@
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
     <PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
-    <PackageReference Update="Azure.Core" Version="1.6.0" />
+    <PackageReference Update="Azure.Core" Version="1.7.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.0.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.7" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
