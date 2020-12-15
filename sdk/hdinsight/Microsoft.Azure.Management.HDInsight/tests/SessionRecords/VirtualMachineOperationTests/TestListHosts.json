@@ -1,0 +1,1733 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074?api-version=2018-06-01-preview",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6\",\r\n    \"osType\": \"Linux\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"configurations\": {\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"admin5303\",\r\n          \"restAuthCredential.password\": \"Password1!6597\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5529\",\r\n              \"password\": \"Password1!9201\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5529\",\r\n              \"password\": \"Password1!9201\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5529\",\r\n              \"password\": \"Password1!9201\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"storageProfile\": {\r\n      \"storageaccounts\": [\r\n        {\r\n          \"name\": \"hdicsharpstorage920.blob.core.windows.net\",\r\n          \"isDefault\": true,\r\n          \"container\": \"default7547\",\r\n          \"key\": \"oSrc43uDabukIryHCa9eDf24csu2N9pIGnRNkm3kEtUUXmDSX5C9kXUVL/OGpzQmPgTUpGzn3z+s58DTgwFJVw==\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0e100454-ef00-4c39-9736-c261eba17ab3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "1898"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"89965db1-fd24-4d94-9c11-946588d1d462\""
+        ],
+        "x-ms-hdi-clusteruri": [
+          "https://management.azure.com/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074?api-version=2018-06-01-preview"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com:443/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview"
+        ],
+        "x-ms-request-id": [
+          "d584541d-3886-427f-815e-e7f276e17376"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "4501e28d-4193-4a1a-8486-1cf48044812b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T082651Z:4501e28d-4193-4a1a-8486-1cf48044812b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:26:51 GMT"
+        ],
+        "Content-Length": [
+          "1846"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074\",\r\n  \"name\": \"hdisdk-nodereboot9074\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"etag\": \"89965db1-fd24-4d94-9c11-946588d1d462\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6.2000.67\",\r\n    \"clusterHdpVersion\": \"\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.6.2000.67.2012080609.json\",\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {\r\n        \"Hadoop\": \"2.7\"\r\n      }\r\n    },\r\n    \"clusterId\": \"91993305384343acaf62975b70b72ee2\",\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"standard_a4_v2\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5529\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"standard_a4_v2\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5529\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"standard_a4_v2\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5529\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2020-12-15T08:26:49.677\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"tier\": \"standard\",\r\n    \"encryptionInTransitProperties\": {\r\n      \"isEncryptionInTransitEnabled\": false\r\n    },\r\n    \"storageProfile\": {\r\n      \"storageaccounts\": [\r\n        {\r\n          \"name\": \"hdicsharpstorage920.blob.core.windows.net\",\r\n          \"resourceId\": null,\r\n          \"msiResourceId\": null,\r\n          \"key\": null,\r\n          \"fileSystem\": null,\r\n          \"container\": \"default7547\",\r\n          \"saskey\": null,\r\n          \"isDefault\": true,\r\n          \"fileshare\": null\r\n        }\r\n      ]\r\n    },\r\n    \"minSupportedTlsVersion\": \"1.2\",\r\n    \"excludedServicesConfig\": {\r\n      \"excludedServicesConfigId\": \"default\",\r\n      \"excludedServicesList\": \"\"\r\n    },\r\n    \"computeIsolationProperties\": {\r\n      \"enableComputeIsolation\": false,\r\n      \"hostSku\": null\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e0195d71-92c9-4311-9ae8-938ffea96609"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "f2b8ccdc-1738-467a-93fb-09d00d4e78cc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11989"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T082721Z:f2b8ccdc-1738-467a-93fb-09d00d4e78cc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:27:21 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "257a7dfd-f594-4cb9-8c8f-7ab16771d2c1"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "aacd936d-9bc9-42eb-828f-a9b6fcf0cf66"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T082752Z:aacd936d-9bc9-42eb-828f-a9b6fcf0cf66"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:27:51 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d5fc1410-ce27-4776-87aa-58f35c4ced43"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "a1359a3c-f5f2-4fd5-b3af-78a5f17985fc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T082822Z:a1359a3c-f5f2-4fd5-b3af-78a5f17985fc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:28:21 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "51a5f32c-983c-418f-b615-b38afeb14f53"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "b4cb50bb-18a9-483d-8183-b4ea595cf421"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11986"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T082853Z:b4cb50bb-18a9-483d-8183-b4ea595cf421"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:28:52 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "96544b7d-4120-43dd-8f67-f95bac55d851"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "fec56437-d222-4ea7-8132-bf9fc5860450"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11985"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T082923Z:fec56437-d222-4ea7-8132-bf9fc5860450"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:29:23 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c97821f1-84dc-48e8-bd72-daed4fe3114e"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "2e64e476-e967-47aa-af8e-2e26e6fdf87d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T082953Z:2e64e476-e967-47aa-af8e-2e26e6fdf87d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:29:53 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "bac45d74-118d-4448-8910-3e80fbad12ed"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "a2f95869-6b62-4838-9227-cbea00384429"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083024Z:a2f95869-6b62-4838-9227-cbea00384429"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:30:23 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c2d55df4-9c23-4b66-a8a3-7635bf3a104c"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "85ccf8e0-756d-4108-8744-fbcb817e61f7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083054Z:85ccf8e0-756d-4108-8744-fbcb817e61f7"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:30:54 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5aae784a-8c5c-42fb-8b76-2c419f1a7da6"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "08623dbd-f161-4307-8f18-6918f15b7f15"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11989"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083125Z:08623dbd-f161-4307-8f18-6918f15b7f15"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:31:24 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "eaa4b858-6036-4356-8380-fd4f7edbba84"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "7618b7d0-c17f-4b18-bb87-944c1c723498"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083155Z:7618b7d0-c17f-4b18-bb87-944c1c723498"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:31:55 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dad8b894-e173-4fd8-83da-4f95ead1ec2a"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "943ac581-dcb7-4fa0-b0dd-9c818006da8f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083226Z:943ac581-dcb7-4fa0-b0dd-9c818006da8f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:32:25 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "8d4259e4-bc2a-4e0a-97ab-0f08813aed71"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "810c086d-29f3-4687-8ec8-6ce6c4e3ba99"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11986"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083256Z:810c086d-29f3-4687-8ec8-6ce6c4e3ba99"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:32:56 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "8bd4edae-5e94-4846-b426-e5e760be13d7"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "399a96e3-4cdd-43b1-973e-54a83729f47c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11985"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083327Z:399a96e3-4cdd-43b1-973e-54a83729f47c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:33:26 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f56e3f90-ac1d-4004-8ce2-06efa7f63084"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "aadaa2f4-9788-4595-81b4-5648187160dc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083358Z:aadaa2f4-9788-4595-81b4-5648187160dc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:33:57 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5ff4cd5c-c85d-45c1-a439-3e4729b22912"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "f46bddf4-7b56-4f4a-8806-bb60e4d7ff52"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11983"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083428Z:f46bddf4-7b56-4f4a-8806-bb60e4d7ff52"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:34:28 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "edc37d09-e39b-4f52-b7e0-50a25a1a6c7c"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "9a089c94-268a-4946-8d31-a470c6119d03"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11982"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083458Z:9a089c94-268a-4946-8d31-a470c6119d03"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:34:58 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "71737c77-ccef-40ab-bcff-64a3423245f2"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "aeb9d95a-9fef-4a74-9350-9bd5768ac39c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11981"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083529Z:aeb9d95a-9fef-4a74-9350-9bd5768ac39c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:35:28 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5b554109-ae39-4137-9ac3-f4286d4615e2"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "ab8cfbf2-0229-4f82-af94-76f9b12cbfe5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11980"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083559Z:ab8cfbf2-0229-4f82-af94-76f9b12cbfe5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:35:59 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "094a3de4-0c33-4578-9458-6493befe6a79"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "e3c0a661-5f71-4c8b-8db4-8ae006e28914"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11979"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083630Z:e3c0a661-5f71-4c8b-8db4-8ae006e28914"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:36:29 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0507743d-bcac-4ca4-80af-87c2c4d188dc"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "f42931cd-9a73-4c98-aa73-90408b691a4c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11978"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083700Z:f42931cd-9a73-4c98-aa73-90408b691a4c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:37:00 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5609f710-c46b-4d22-8fcc-4a08088e744c"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "09cfe1bd-b74f-4f98-986e-84fd54ae6d01"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11977"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083731Z:09cfe1bd-b74f-4f98-986e-84fd54ae6d01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:37:30 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "df52b2c7-0c2e-4325-806e-bb0e5de60d5a"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "27292ac2-4d93-4b24-b551-6307892c234a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11976"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083801Z:27292ac2-4d93-4b24-b551-6307892c234a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:38:00 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7a0213d4-15db-4f0e-8d73-1095702b7b12"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "88ab3b62-97cf-4225-b7f8-d7e9b7d9df9a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11975"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083831Z:88ab3b62-97cf-4225-b7f8-d7e9b7d9df9a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:38:31 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "962ad4c2-6b61-4597-a224-518b0ff65ce8"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "a18dabbc-7526-4925-9ff4-41138abcb135"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11974"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083902Z:a18dabbc-7526-4925-9ff4-41138abcb135"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:39:01 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "68665da9-56c9-4edd-91bd-7051a41481d9"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "0d783a00-6663-4292-afd9-1095e35119c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11973"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T083932Z:0d783a00-6663-4292-afd9-1095e35119c2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:39:32 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "76bcbaaf-a900-4740-bd5f-1cb0cfd4c994"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "26b8b907-8e3e-460f-ad6f-fa3e460bfce6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11972"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T084004Z:26b8b907-8e3e-460f-ad6f-fa3e460bfce6"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:40:04 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "727af9b1-df5c-4644-9521-da671823e4be"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "11a9b7f5-1d9a-4952-b135-864fae6899c1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11971"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T084034Z:11a9b7f5-1d9a-4952-b135-864fae6899c1"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:40:34 GMT"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "53feb44d-38e8-409d-9358-2a54e3b4cb99"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "2a2973ca-9791-41ce-be90-6ca3f94654d7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11970"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T084035Z:2a2973ca-9791-41ce-be90-6ca3f94654d7"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:40:34 GMT"
+        ],
+        "Content-Length": [
+          "2081"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074\",\r\n  \"name\": \"hdisdk-nodereboot9074\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"etag\": \"89965db1-fd24-4d94-9c11-946588d1d462\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6.2000.67\",\r\n    \"clusterHdpVersion\": \"2.6.5.3026-7\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.6.2000.67.2012080609.json\",\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {\r\n        \"Hadoop\": \"2.7\"\r\n      }\r\n    },\r\n    \"clusterId\": \"91993305384343acaf62975b70b72ee2\",\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"standard_a4_v2\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5529\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"standard_a4_v2\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5529\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"standard_a4_v2\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5529\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2020-12-15T08:26:49.677\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-nodereboot9074-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-nodereboot9074.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\",\r\n    \"encryptionInTransitProperties\": {\r\n      \"isEncryptionInTransitEnabled\": false\r\n    },\r\n    \"storageProfile\": {\r\n      \"storageaccounts\": [\r\n        {\r\n          \"name\": \"hdicsharpstorage920.blob.core.windows.net\",\r\n          \"resourceId\": null,\r\n          \"msiResourceId\": null,\r\n          \"key\": null,\r\n          \"fileSystem\": null,\r\n          \"container\": \"default7547\",\r\n          \"saskey\": null,\r\n          \"isDefault\": true,\r\n          \"fileshare\": null\r\n        }\r\n      ]\r\n    },\r\n    \"minSupportedTlsVersion\": \"1.2\",\r\n    \"excludedServicesConfig\": {\r\n      \"excludedServicesConfigId\": \"default\",\r\n      \"excludedServicesList\": \"\"\r\n    },\r\n    \"computeIsolationProperties\": {\r\n      \"enableComputeIsolation\": false,\r\n      \"hostSku\": null\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e8db84f5-367a-48cc-8fdb-f559ba965615/resourceGroups/hdicsharprg1385/providers/Microsoft.HDInsight/clusters/hdisdk-nodereboot9074/listHosts?api-version=2018-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c2e1fde9-b388-4290-a8d6-f8587430f727"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "50eac777-1762-4e37-8496-8026fc14ff25"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "50eac777-1762-4e37-8496-8026fc14ff25"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20201215T084035Z:50eac777-1762-4e37-8496-8026fc14ff25"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2020 08:40:35 GMT"
+        ],
+        "Content-Length": [
+          "961"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"name\": \"gw-hdisdk000000\",\r\n    \"fqdn\": \"gw-hdisdk000000.5egxatjymw4ergubrdlkvv3pje.jx.internal.cloudapp.net\"\r\n  },\r\n  {\r\n    \"name\": \"gw-hdisdk000003\",\r\n    \"fqdn\": \"gw-hdisdk000003.5egxatjymw4ergubrdlkvv3pje.jx.internal.cloudapp.net\"\r\n  },\r\n  {\r\n    \"name\": \"hn0-hdisdk\",\r\n    \"fqdn\": \"hn0-hdisdk.5egxatjymw4ergubrdlkvv3pje.jx.internal.cloudapp.net\"\r\n  },\r\n  {\r\n    \"name\": \"hn1-hdisdk\",\r\n    \"fqdn\": \"hn1-hdisdk.5egxatjymw4ergubrdlkvv3pje.jx.internal.cloudapp.net\"\r\n  },\r\n  {\r\n    \"name\": \"wn1-hdisdk\",\r\n    \"fqdn\": \"wn1-hdisdk.5egxatjymw4ergubrdlkvv3pje.jx.internal.cloudapp.net\"\r\n  },\r\n  {\r\n    \"name\": \"wn3-hdisdk\",\r\n    \"fqdn\": \"wn3-hdisdk.5egxatjymw4ergubrdlkvv3pje.jx.internal.cloudapp.net\"\r\n  },\r\n  {\r\n    \"name\": \"wn4-hdisdk\",\r\n    \"fqdn\": \"wn4-hdisdk.5egxatjymw4ergubrdlkvv3pje.jx.internal.cloudapp.net\"\r\n  },\r\n  {\r\n    \"name\": \"zk1-hdisdk\",\r\n    \"fqdn\": \"zk1-hdisdk.5egxatjymw4ergubrdlkvv3pje.jx.internal.cloudapp.net\"\r\n  },\r\n  {\r\n    \"name\": \"zk4-hdisdk\",\r\n    \"fqdn\": \"zk4-hdisdk.5egxatjymw4ergubrdlkvv3pje.jx.internal.cloudapp.net\"\r\n  },\r\n  {\r\n    \"name\": \"zk5-hdisdk\",\r\n    \"fqdn\": \"zk5-hdisdk.5egxatjymw4ergubrdlkvv3pje.jx.internal.cloudapp.net\"\r\n  }\r\n]",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    ".ctor": [
+      "admin5303",
+      "Password1!6597",
+      "sshuser5529",
+      "Password1!9201",
+      "56ca4fd6-e910-4622-be42-95cd2325932a",
+      "hdicsharprg1385",
+      "hdicsharpstorage920",
+      "hdicsharpmsi3709",
+      "hdicsharpvault570",
+      "hdicsharpadls6311",
+      "default7547",
+      "storageaccountkey391"
+    ],
+    "TestInitialize": [
+      "e8db84f5-367a-48cc-8fdb-f559ba965615"
+    ],
+    "TestListHosts": [
+      "hdisdk-nodereboot9074"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "e8db84f5-367a-48cc-8fdb-f559ba965615"
+  }
+}
