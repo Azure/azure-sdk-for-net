@@ -10,9 +10,9 @@
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
     <ExcludeProjectsDelimiter Condition="'$(ExcludeProjectsDelimiter)' == ''">|</ExcludeProjectsDelimiter>
-    <!--TraversalGlobalProperties>
+    <TraversalGlobalProperties>
       CodeCoverageDirectory=$([System.IO.Path]::GetFullPath("$(CodeCoverageDirectory)", "$(MSBuildThisFileDirectory)..\sdk"));
-    </TraversalGlobalProperties-->
+    </TraversalGlobalProperties>
   </PropertyGroup>
 
   <!--
@@ -41,16 +41,6 @@
   </ItemGroup>
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
-
-  <!-- JESSE: Remove Debug Logging -->
-  <Target Name="JESSE-Debug" AfterTargets="Build">
-    <Message Text="Delimiter: $(ExcludeProjectsDelimiter)" />
-    <Message Text="|| Exclude Definition ||" />
-    <Message Text="@(ExcludePaths)" />
-    <Message Text="|| Project References ||" />
-    <Message Text="@(ProjectReference)" />
-  </Target>
-  <!-- END JESSE: Remove Debug Logging -->
 
   <Target Name="CheckProjects" AfterTargets="Build">
     <!-- If scope is set this likely came from a call to build.proj and in cases where there is only mgmt projects we don't want to error so skip this extra check -->
