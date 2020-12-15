@@ -10,7 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" Version="1.5.1" />
+    <PackageReference Include="Azure.Core" Version="1.7.0" />
     <PackageReference Include="Azure.Messaging.EventHubs" Version="5.2.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.16.0" />
   </ItemGroup>
 </Project>
