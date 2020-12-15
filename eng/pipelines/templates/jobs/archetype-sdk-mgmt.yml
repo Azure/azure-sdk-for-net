@@ -7,6 +7,7 @@ jobs:
       - pwsh: |
           eng/scripts/Track1CodeCheck.ps1
         displayName: "Code-gen Force Check"
+        continueOnError: true
         env:
           REPOSITORY_NAME: $(Build.Repository.Name)
           PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
