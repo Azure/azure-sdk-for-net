@@ -235,6 +235,77 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
+        /// </param>
+        /// <param name="fileSystemName">
+        /// The name of the file system containing this path.
+        /// </param>
+        /// <param name="path">
+        /// The path to the file or directory.
+        /// </param>
+        public DataLakePathClient(string connectionString, string fileSystemName, string path)
+            : this(connectionString, fileSystemName, path, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
+        /// </param>
+        /// <param name="fileSystemName">
+        /// The name of the file system containing this path.
+        /// </param>
+        /// <param name="path">
+        /// The path to the file or directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakePathClient(
+            string connectionString,
+            string fileSystemName,
+            string path,
+            DataLakeClientOptions options)
+        {
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            StorageSharedKeyCredential sharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(conn.BlobEndpoint)
+            {
+                FileSystemName = fileSystemName,
+                DirectoryOrFilePath = path
+            };
+            options ??= new DataLakeClientOptions();
+
+            _uri = uriBuilder.ToUri();
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
+            _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = sharedKeyCredential;
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
         /// class.
         /// </summary>

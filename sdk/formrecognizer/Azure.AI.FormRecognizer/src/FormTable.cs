@@ -62,10 +62,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Bounding box of the table. </summary>
         public FieldBoundingBox BoundingBox { get; }
 
-        // TODO: implement table indexer
-        // TODO: Handling column-span?
-        // https://github.com/Azure/azure-sdk-for-net/issues/9975
-
         /// <summary>
         /// </summary>
 #pragma warning disable CA1822 // Mark as static

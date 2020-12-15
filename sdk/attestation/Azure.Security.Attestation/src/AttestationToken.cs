@@ -42,7 +42,6 @@ namespace Azure.Security.Attestation
 
             _options.Converters.Add(new PolicyResultConverter());
             _options.Converters.Add(new AttestationResultConverter());
-
         }
 
         /// <summary>
@@ -50,7 +49,6 @@ namespace Azure.Security.Attestation
         /// </summary>
         protected AttestationToken()
         {
-
         }
 
         /// <summary>
@@ -152,6 +150,5 @@ namespace Azure.Security.Attestation
         {
             return _token ??  GetType().Name;
         }
-
     }
 }

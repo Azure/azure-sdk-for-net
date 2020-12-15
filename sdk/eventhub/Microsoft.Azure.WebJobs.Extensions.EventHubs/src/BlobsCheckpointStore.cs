@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public BlobsCheckpointStore(BlobContainerClient blobContainerClient,
             EventHubsRetryPolicy retryPolicy,
             string functionId,
-            ILogger logger): this(blobContainerClient, retryPolicy)
+            ILogger logger): this(blobContainerClient, retryPolicy, initializeWithLegacyCheckpoints: true)
         {
             _functionId = functionId;
             _logger = logger;

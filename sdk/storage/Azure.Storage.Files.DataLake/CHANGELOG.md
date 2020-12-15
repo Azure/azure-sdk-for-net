@@ -1,5 +1,9 @@
 # Release History
 
+## 12.6.0-beta.2 (Unreleased)
+- Fixed bug where the Stream returned by DataLakeFileClient.OpenRead() would return a different Length after calls to Seek().
+- Added constructors taking connection string to DataLakeServiceClient, DataLakeFileSystemClient, DataLakeDirectoryClient, and DataLakeFileClient.
+
 ## 12.6.0-beta.1 (2020-12-07)
 - Added support for service version 2020-04-08.
 - Fixed bug where DataLakeServiceClient.GetFileSystemClient(), DataLakeFileSystemClient.GetFileClient(), DataLakeFileSystemClient.GetDirectoryClient(),

@@ -199,7 +199,7 @@
 
   <!-- InheritDoc-->
   <ItemGroup>
-    <PackageReference Update="SauceControl.InheritDoc" Version="1.1.1" />
+    <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">

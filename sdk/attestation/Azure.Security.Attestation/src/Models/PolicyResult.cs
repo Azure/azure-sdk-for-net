@@ -21,7 +21,6 @@ namespace Azure.Security.Attestation.Models
         /// </summary>
         public PolicyResult()
         {
-
         }
 
         /// <summary>
@@ -57,7 +56,6 @@ namespace Azure.Security.Attestation.Models
         /// JSON Web Token containing the policy retrieved.
         /// </summary>
         internal AttestationToken PolicyToken { get => new AttestationToken(BasePolicy); }
-
 
         [CodeGenMember("PolicyTokenHash")]
         internal string BasePolicyTokenHash { get; private set; }

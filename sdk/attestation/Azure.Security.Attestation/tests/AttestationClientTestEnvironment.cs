@@ -10,15 +10,10 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 
-
 namespace Azure.Security.Attestation.Tests
 {
     public class AttestationClientTestEnvironment : TestEnvironment
     {
-        public AttestationClientTestEnvironment() : base("attestation")
-        {
-        }
-
         public string IsolatedAttestationUrl => GetRecordedVariable("ISOLATED_ATTESTATION_URL");
         public string AadAttestationUrl => GetRecordedVariable("AAD_ATTESTATION_URL");
 
@@ -33,7 +28,6 @@ namespace Azure.Security.Attestation.Tests
         // Policy management keys.
         public X509Certificate2 PolicyManagementCertificate => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("isolatedSigningCertificate")));
         public RSA PolicyManagementKey => GetRSACryptoServiceProvider("serializedIsolatedSigningKey");
-
 
         public string SharedEusTest => "https://sharedeus.eus.test.attest.azure.net";
         public string SharedUkSouth => "https://shareduks.uks.test.attest.azure.net";
