@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Samples
             pipelineResource.Activities.Add(activity);
 
             Console.WriteLine("Create pipeline if not already exists.");
-            var operation = await pipelineClient.StartCreateOrUpdatePipelineAsync(pipelineName, pipelineResource);
+            PipelineCreateOrUpdatePipelineOperation operation = await pipelineClient.StartCreateOrUpdatePipelineAsync(pipelineName, pipelineResource);
             await operation.WaitForCompletionAsync ();
             Console.WriteLine("Pipeline created");
         }
