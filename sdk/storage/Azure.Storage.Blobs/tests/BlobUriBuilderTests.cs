@@ -220,24 +220,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void DataLakeUriBuilder_AccountNamePeriod()
+        {
+            var blobUriBuilder = new BlobUriBuilder(new Uri("https://account.z.blob.core.windows.net/share/dir"));
+
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+        }
+
+        [Test]
         public void BlobUriBuilder_RegularUrl_MalformedSubdomain()
         {
-            // core and blob swapped
-            var blobUriBuilder1 = new BlobUriBuilder(new Uri("https://account.core.blob.windows.net/container/blob"));
-
             // account and blob swapped
-            var blobUriBuilder2 = new BlobUriBuilder(new Uri("https://blob.account.core.windows.net/container/blob"));
+            var blobUriBuilder1 = new BlobUriBuilder(new Uri("https://blob.account.core.windows.net/container/blob"));
 
             // wrong service
-            var blobUriBuilder3 = new BlobUriBuilder(new Uri("https://account.file.core.windows.net/container/blob"));
+            var blobUriBuilder2 = new BlobUriBuilder(new Uri("https://account.file.core.windows.net/container/blob"));
 
             // empty service
-            var blobUriBuilder4 = new BlobUriBuilder(new Uri("https://account./container/blob"));
+            var blobUriBuilder3 = new BlobUriBuilder(new Uri("https://account./container/blob"));
 
             Assert.AreEqual(string.Empty, blobUriBuilder1.AccountName);
             Assert.AreEqual(string.Empty, blobUriBuilder2.AccountName);
             Assert.AreEqual(string.Empty, blobUriBuilder3.AccountName);
-            Assert.AreEqual(string.Empty, blobUriBuilder4.AccountName);
         }
 
         [Test]
