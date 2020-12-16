@@ -66,3 +66,4 @@ namespace Microsoft.Azure.Management.Compute
       // END: Code Generation Metadata Section
   }
 }
+
