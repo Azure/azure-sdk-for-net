@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -169,6 +170,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var createdGroupConditions0 = createdConfig.SeriesGroupDetectionConditions[0];
 
+            Assert.That(createdGroupConditions0, Is.Not.Null);
+
             ValidateGroupKey(createdGroupConditions0.SeriesGroupKey);
 
             Dictionary<string, string> dimensionColumns = createdGroupConditions0.SeriesGroupKey.AsDictionary();
@@ -176,7 +179,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dimensionColumns.Count, Is.EqualTo(1));
             Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
 
-            Assert.That(createdGroupConditions0, Is.Not.Null);
             Assert.That(createdGroupConditions0.CrossConditionsOperator, Is.Null);
             Assert.That(createdGroupConditions0.HardThresholdCondition, Is.Null);
             Assert.That(createdGroupConditions0.ChangeThresholdCondition, Is.Null);
@@ -187,6 +189,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var createdGroupConditions1 = createdConfig.SeriesGroupDetectionConditions[1];
 
+            Assert.That(createdGroupConditions1, Is.Not.Null);
+
             ValidateGroupKey(createdGroupConditions1.SeriesGroupKey);
 
             dimensionColumns = createdGroupConditions1.SeriesGroupKey.AsDictionary();
@@ -194,7 +198,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dimensionColumns.Count, Is.EqualTo(1));
             Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
 
-            Assert.That(createdGroupConditions1, Is.Not.Null);
             Assert.That(createdGroupConditions1.CrossConditionsOperator, Is.Null);
             Assert.That(createdGroupConditions1.HardThresholdCondition, Is.Null);
             Assert.That(createdGroupConditions1.SmartDetectionCondition, Is.Null);
@@ -278,6 +281,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var createdSeriesConditions0 = createdConfig.SeriesDetectionConditions[0];
 
+            Assert.That(createdSeriesConditions0, Is.Not.Null);
+
             ValidateSeriesKey(createdSeriesConditions0.SeriesKey);
 
             Dictionary<string, string> dimensionColumns = createdSeriesConditions0.SeriesKey.AsDictionary();
@@ -285,7 +290,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
             Assert.That(dimensionColumns["category"], Is.EqualTo("Handmade"));
 
-            Assert.That(createdSeriesConditions0, Is.Not.Null);
             Assert.That(createdSeriesConditions0.CrossConditionsOperator, Is.Null);
             Assert.That(createdSeriesConditions0.HardThresholdCondition, Is.Null);
             Assert.That(createdSeriesConditions0.ChangeThresholdCondition, Is.Null);
@@ -296,6 +300,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var createdSeriesConditions1 = createdConfig.SeriesDetectionConditions[1];
 
+            Assert.That(createdSeriesConditions1, Is.Not.Null);
+
             ValidateSeriesKey(createdSeriesConditions1.SeriesKey);
 
             dimensionColumns = createdSeriesConditions1.SeriesKey.AsDictionary();
@@ -303,12 +309,538 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
             Assert.That(dimensionColumns["category"], Is.EqualTo("Grocery & Gourmet Food"));
 
-            Assert.That(createdSeriesConditions1, Is.Not.Null);
             Assert.That(createdSeriesConditions1.CrossConditionsOperator, Is.Null);
             Assert.That(createdSeriesConditions1.HardThresholdCondition, Is.Null);
             Assert.That(createdSeriesConditions1.SmartDetectionCondition, Is.Null);
 
             ValidateChangeThresholdCondition(createdSeriesConditions1.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
+        }
+
+        [RecordedTest]
+        public async Task UpdateDetectionConfigurationWithMinimumSetupAndGetInstance()
+        {
+            // Set required parameters of the configuration to be created.
+
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            string configName = Recording.GenerateAlphaNumericId("config");
+
+            var wholeConditions = new MetricWholeSeriesDetectionCondition()
+            {
+                CrossConditionsOperator = DetectionConditionsOperator.Or,
+                HardThresholdCondition = new (AnomalyDetectorDirection.Down, new (1, 2.0))
+                {
+                    LowerBound = 10.0
+                },
+                SmartDetectionCondition = new (60.0, AnomalyDetectorDirection.Up, new (5, 6.0))
+            };
+
+            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+
+            // Set the series group conditions.
+
+            var groupKey = new DimensionKey();
+
+            groupKey.AddDimensionColumn("city", "Koltaka");
+
+            var groupConditions = new MetricSeriesGroupDetectionCondition(groupKey)
+            {
+                ChangeThresholdCondition = new (40.0, 12, false, AnomalyDetectorDirection.Up, new (5, 6.0))
+            };
+
+            configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
+
+            // Set the series conditions and create the configuration.
+
+            var seriesKey = new DimensionKey();
+
+            seriesKey.AddDimensionColumn("city", "Delhi");
+            seriesKey.AddDimensionColumn("category", "Handmade");
+
+            var seriesConditions = new MetricSingleSeriesDetectionCondition(seriesKey)
+            {
+                SmartDetectionCondition = new (30.0, AnomalyDetectorDirection.Both, new (3, 4.0))
+            };
+
+            configToCreate.SeriesDetectionConditions.Add(seriesConditions);
+
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
+
+            // Update the created configuration.
+
+            AnomalyDetectionConfiguration configToUpdate = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+
+            configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
+
+            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+
+            // Get the updated configuration and validate top-level members.
+
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+
+            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(updatedConfig.Name, Is.EqualTo(configName));
+            Assert.That(updatedConfig.Description, Is.Empty);
+
+            // Validate whole series detection conditions.
+
+            MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
+
+            Assert.That(updatedWholeConditions, Is.Not.Null);
+            Assert.That(updatedWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.Or));
+            Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
+
+            ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Down, null, 12.0, 1, 2.0);
+            ValidateSmartDetectionCondition(updatedWholeConditions.SmartDetectionCondition, 60.0, AnomalyDetectorDirection.Up, 5, 6.0);
+
+            // Validate series group conditions.
+
+            Assert.That(updatedConfig.SeriesGroupDetectionConditions, Is.Not.Null);
+
+            var updatedGroupConditions = updatedConfig.SeriesGroupDetectionConditions.Single();
+
+            Assert.That(updatedGroupConditions, Is.Not.Null);
+
+            ValidateGroupKey(updatedGroupConditions.SeriesGroupKey);
+
+            Dictionary<string, string> dimensionColumns = updatedGroupConditions.SeriesGroupKey.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
+            Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
+
+            Assert.That(updatedGroupConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions.HardThresholdCondition, Is.Null);
+            Assert.That(updatedGroupConditions.SmartDetectionCondition, Is.Null);
+
+            ValidateChangeThresholdCondition(updatedGroupConditions.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
+
+            // Validates series conditions.
+
+            Assert.That(updatedConfig.SeriesDetectionConditions, Is.Not.Null);
+
+            var updatedSeriesConditions = updatedConfig.SeriesDetectionConditions.Single();
+
+            ValidateSeriesKey(updatedSeriesConditions.SeriesKey);
+
+            dimensionColumns = updatedSeriesConditions.SeriesKey.AsDictionary();
+
+            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
+            Assert.That(dimensionColumns["category"], Is.EqualTo("Handmade"));
+
+            Assert.That(updatedSeriesConditions, Is.Not.Null);
+            Assert.That(updatedSeriesConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedSeriesConditions.HardThresholdCondition, Is.Null);
+            Assert.That(updatedSeriesConditions.ChangeThresholdCondition, Is.Null);
+
+            ValidateSmartDetectionCondition(updatedSeriesConditions.SmartDetectionCondition, 30.0, AnomalyDetectorDirection.Both, 3, 4.0);
+        }
+
+        [RecordedTest]
+        public async Task UpdateDetectionConfigurationWithMinimumSetupAndNewInstance()
+        {
+            // Set required parameters of the configuration to be created.
+
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            string configName = Recording.GenerateAlphaNumericId("config");
+
+            var wholeConditions = new MetricWholeSeriesDetectionCondition()
+            {
+                CrossConditionsOperator = DetectionConditionsOperator.Or,
+                HardThresholdCondition = new (AnomalyDetectorDirection.Down, new (1, 2.0))
+                {
+                    LowerBound = 10.0
+                },
+                SmartDetectionCondition = new (60.0, AnomalyDetectorDirection.Up, new (5, 6.0))
+            };
+
+            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+
+            // Set the series group conditions.
+
+            var groupKey = new DimensionKey();
+
+            groupKey.AddDimensionColumn("city", "Koltaka");
+
+            var groupConditions = new MetricSeriesGroupDetectionCondition(groupKey)
+            {
+                ChangeThresholdCondition = new (40.0, 12, false, AnomalyDetectorDirection.Up, new (5, 6.0))
+            };
+
+            configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
+
+            // Set the series conditions and create the configuration.
+
+            var seriesKey = new DimensionKey();
+
+            seriesKey.AddDimensionColumn("city", "Delhi");
+            seriesKey.AddDimensionColumn("category", "Handmade");
+
+            var seriesConditions = new MetricSingleSeriesDetectionCondition(seriesKey)
+            {
+                SmartDetectionCondition = new (30.0, AnomalyDetectorDirection.Both, new (3, 4.0))
+            };
+
+            configToCreate.SeriesDetectionConditions.Add(seriesConditions);
+
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
+
+            // Update the created configuration.
+
+            var configToUpdate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+
+            configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
+
+            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+
+            // Get the updated configuration and validate top-level members.
+
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+
+            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(updatedConfig.Name, Is.EqualTo(configName));
+            Assert.That(updatedConfig.Description, Is.Empty);
+
+            // Validate whole series detection conditions.
+
+            MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
+
+            Assert.That(updatedWholeConditions, Is.Not.Null);
+            Assert.That(updatedWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.Or));
+            Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
+
+            ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Down, null, 12.0, 1, 2.0);
+            ValidateSmartDetectionCondition(updatedWholeConditions.SmartDetectionCondition, 60.0, AnomalyDetectorDirection.Up, 5, 6.0);
+
+            // Validate series group conditions.
+
+            Assert.That(updatedConfig.SeriesGroupDetectionConditions, Is.Not.Null);
+
+            var updatedGroupConditions = updatedConfig.SeriesGroupDetectionConditions.Single();
+
+            Assert.That(updatedGroupConditions, Is.Not.Null);
+
+            ValidateGroupKey(updatedGroupConditions.SeriesGroupKey);
+
+            Dictionary<string, string> dimensionColumns = updatedGroupConditions.SeriesGroupKey.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
+            Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
+
+            Assert.That(updatedGroupConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions.HardThresholdCondition, Is.Null);
+            Assert.That(updatedGroupConditions.SmartDetectionCondition, Is.Null);
+
+            ValidateChangeThresholdCondition(updatedGroupConditions.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
+
+            // Validates series conditions.
+
+            Assert.That(updatedConfig.SeriesDetectionConditions, Is.Not.Null);
+
+            var updatedSeriesConditions = updatedConfig.SeriesDetectionConditions.Single();
+
+            ValidateSeriesKey(updatedSeriesConditions.SeriesKey);
+
+            dimensionColumns = updatedSeriesConditions.SeriesKey.AsDictionary();
+
+            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
+            Assert.That(dimensionColumns["category"], Is.EqualTo("Handmade"));
+
+            Assert.That(updatedSeriesConditions, Is.Not.Null);
+            Assert.That(updatedSeriesConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedSeriesConditions.HardThresholdCondition, Is.Null);
+            Assert.That(updatedSeriesConditions.ChangeThresholdCondition, Is.Null);
+
+            ValidateSmartDetectionCondition(updatedSeriesConditions.SmartDetectionCondition, 30.0, AnomalyDetectorDirection.Both, 3, 4.0);
+        }
+
+        [RecordedTest]
+        public async Task UpdateDetectionConfigurationWithEveryMemberAndGetInstance()
+        {
+            // Set parameters of the configuration to be created.
+
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            string configName = Recording.GenerateAlphaNumericId("config");
+            var description = "This hook was created to test the .NET client.";
+
+            var wholeConditions = new MetricWholeSeriesDetectionCondition()
+            {
+                CrossConditionsOperator = DetectionConditionsOperator.Or,
+                HardThresholdCondition = new (AnomalyDetectorDirection.Down, new (1, 2.0))
+                {
+                    LowerBound = 10.0
+                },
+                ChangeThresholdCondition = new (50.0, 15, true, AnomalyDetectorDirection.Both, new (7, 8.0)),
+                SmartDetectionCondition = new (60.0, AnomalyDetectorDirection.Up, new (5, 6.0))
+            };
+
+            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+
+            // Set the series group conditions.
+
+            var groupKey = new DimensionKey();
+
+            groupKey.AddDimensionColumn("city", "Koltaka");
+
+            var groupConditions = new MetricSeriesGroupDetectionCondition(groupKey)
+            {
+                ChangeThresholdCondition = new (40.0, 12, false, AnomalyDetectorDirection.Up, new (5, 6.0))
+            };
+
+            configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
+
+            // Set the series conditions and create the configuration.
+
+            var seriesKey = new DimensionKey();
+
+            seriesKey.AddDimensionColumn("city", "Delhi");
+            seriesKey.AddDimensionColumn("category", "Handmade");
+
+            var seriesConditions = new MetricSingleSeriesDetectionCondition(seriesKey)
+            {
+                SmartDetectionCondition = new (30.0, AnomalyDetectorDirection.Both, new (3, 4.0))
+            };
+
+            configToCreate.SeriesDetectionConditions.Add(seriesConditions);
+
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
+
+            // Update the created configuration.
+
+            AnomalyDetectionConfiguration configToUpdate = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+
+            configToUpdate.Description = description;
+
+            configToUpdate.WholeSeriesDetectionConditions.CrossConditionsOperator = DetectionConditionsOperator.And;
+            configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition = new (AnomalyDetectorDirection.Up, new (11, 12.0)) { UpperBound = 9.0 };
+            configToUpdate.WholeSeriesDetectionConditions.ChangeThresholdCondition = null;
+            configToUpdate.WholeSeriesDetectionConditions.SmartDetectionCondition = new (75.0, AnomalyDetectorDirection.Both, new (15, 16.0));
+
+            var newGroupKey = new DimensionKey();
+
+            newGroupKey.AddDimensionColumn("city", "Delhi");
+
+            var newGroupConditions = new MetricSeriesGroupDetectionCondition(newGroupKey)
+            {
+                SmartDetectionCondition = new (95.0, AnomalyDetectorDirection.Both, new (25, 26.0))
+            };
+
+            configToUpdate.SeriesGroupDetectionConditions.Add(newGroupConditions);
+
+            configToUpdate.SeriesDetectionConditions.Clear();
+
+            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+
+            // Get the updated configuration and validate top-level members.
+
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+
+            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(updatedConfig.Name, Is.EqualTo(configName));
+            Assert.That(updatedConfig.Description, Is.EqualTo(description));
+            Assert.That(updatedConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+
+            // Validate whole series detection conditions.
+
+            MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
+
+            Assert.That(updatedWholeConditions, Is.Not.Null);
+            Assert.That(updatedWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.And));
+            Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
+
+            ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Up, 9.0, null, 11, 12.0);
+            ValidateSmartDetectionCondition(updatedWholeConditions.SmartDetectionCondition, 75.0, AnomalyDetectorDirection.Both, 15, 16.0);
+
+            // Start series group conditions validation.
+
+            Assert.That(updatedConfig.SeriesGroupDetectionConditions, Is.Not.Null);
+            Assert.That(updatedConfig.SeriesGroupDetectionConditions.Count, Is.EqualTo(2));
+
+            // Validate first series group conditions.
+
+            var updatedGroupConditions0 = updatedConfig.SeriesGroupDetectionConditions[0];
+
+            Assert.That(updatedGroupConditions0, Is.Not.Null);
+
+            ValidateGroupKey(updatedGroupConditions0.SeriesGroupKey);
+
+            Dictionary<string, string> dimensionColumns = updatedGroupConditions0.SeriesGroupKey.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
+            Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
+
+            Assert.That(updatedGroupConditions0.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions0.HardThresholdCondition, Is.Null);
+            Assert.That(updatedGroupConditions0.SmartDetectionCondition, Is.Null);
+
+            ValidateChangeThresholdCondition(updatedGroupConditions0.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
+
+            // Validate last series group conditions.
+
+            var updatedGroupConditions1 = updatedConfig.SeriesGroupDetectionConditions[1];
+
+            Assert.That(updatedGroupConditions1, Is.Not.Null);
+
+            ValidateGroupKey(updatedGroupConditions1.SeriesGroupKey);
+
+            dimensionColumns = updatedGroupConditions1.SeriesGroupKey.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
+            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
+
+            Assert.That(updatedGroupConditions1.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions1.HardThresholdCondition, Is.Null);
+            Assert.That(updatedGroupConditions1.ChangeThresholdCondition, Is.Null);
+
+            ValidateSmartDetectionCondition(updatedGroupConditions1.SmartDetectionCondition, 95.0, AnomalyDetectorDirection.Both, 25, 26.0);
+        }
+
+        [RecordedTest]
+        public async Task UpdateDetectionConfigurationWithEveryMemberAndNewInstance()
+        {
+            // Set parameters of the configuration to be created.
+
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            string configName = Recording.GenerateAlphaNumericId("config");
+            var description = "This hook was created to test the .NET client.";
+
+            var wholeConditions = new MetricWholeSeriesDetectionCondition()
+            {
+                CrossConditionsOperator = DetectionConditionsOperator.Or,
+                HardThresholdCondition = new (AnomalyDetectorDirection.Down, new (1, 2.0))
+                {
+                    LowerBound = 10.0
+                },
+                ChangeThresholdCondition = new (50.0, 15, true, AnomalyDetectorDirection.Both, new (7, 8.0)),
+                SmartDetectionCondition = new (60.0, AnomalyDetectorDirection.Up, new (5, 6.0))
+            };
+
+            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+
+            // Set the series group conditions.
+
+            var groupKey = new DimensionKey();
+
+            groupKey.AddDimensionColumn("city", "Koltaka");
+
+            var groupConditions = new MetricSeriesGroupDetectionCondition(groupKey)
+            {
+                ChangeThresholdCondition = new (40.0, 12, false, AnomalyDetectorDirection.Up, new (5, 6.0))
+            };
+
+            configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
+
+            // Set the series conditions and create the configuration.
+
+            var seriesKey = new DimensionKey();
+
+            seriesKey.AddDimensionColumn("city", "Delhi");
+            seriesKey.AddDimensionColumn("category", "Handmade");
+
+            var seriesConditions = new MetricSingleSeriesDetectionCondition(seriesKey)
+            {
+                SmartDetectionCondition = new (30.0, AnomalyDetectorDirection.Both, new (3, 4.0))
+            };
+
+            configToCreate.SeriesDetectionConditions.Add(seriesConditions);
+
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
+
+            // Update the created configuration.
+
+            var configToUpdate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+
+            configToUpdate.Description = description;
+
+            configToUpdate.WholeSeriesDetectionConditions.CrossConditionsOperator = DetectionConditionsOperator.And;
+            configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition = new (AnomalyDetectorDirection.Up, new (11, 12.0)) { UpperBound = 9.0 };
+            configToUpdate.WholeSeriesDetectionConditions.ChangeThresholdCondition = null;
+            configToUpdate.WholeSeriesDetectionConditions.SmartDetectionCondition = new (75.0, AnomalyDetectorDirection.Both, new (15, 16.0));
+
+            var newGroupKey = new DimensionKey();
+
+            newGroupKey.AddDimensionColumn("city", "Delhi");
+
+            var newGroupConditions = new MetricSeriesGroupDetectionCondition(newGroupKey)
+            {
+                SmartDetectionCondition = new (95.0, AnomalyDetectorDirection.Both, new (25, 26.0))
+            };
+
+            configToUpdate.SeriesGroupDetectionConditions.Add(groupConditions);
+            configToUpdate.SeriesGroupDetectionConditions.Add(newGroupConditions);
+
+            configToUpdate.SeriesDetectionConditions.Clear();
+
+            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+
+            // Get the updated configuration and validate top-level members.
+
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+
+            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(updatedConfig.Name, Is.EqualTo(configName));
+            Assert.That(updatedConfig.Description, Is.EqualTo(description));
+            Assert.That(updatedConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+
+            // Validate whole series detection conditions.
+
+            MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
+
+            Assert.That(updatedWholeConditions, Is.Not.Null);
+            Assert.That(updatedWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.And));
+            Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
+
+            ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Up, 9.0, null, 11, 12.0);
+            ValidateSmartDetectionCondition(updatedWholeConditions.SmartDetectionCondition, 75.0, AnomalyDetectorDirection.Both, 15, 16.0);
+
+            // Start series group conditions validation.
+
+            Assert.That(updatedConfig.SeriesGroupDetectionConditions, Is.Not.Null);
+            Assert.That(updatedConfig.SeriesGroupDetectionConditions.Count, Is.EqualTo(2));
+
+            // Validate first series group conditions.
+
+            var updatedGroupConditions0 = updatedConfig.SeriesGroupDetectionConditions[0];
+
+            Assert.That(updatedGroupConditions0, Is.Not.Null);
+
+            ValidateGroupKey(updatedGroupConditions0.SeriesGroupKey);
+
+            Dictionary<string, string> dimensionColumns = updatedGroupConditions0.SeriesGroupKey.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
+            Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
+
+            Assert.That(updatedGroupConditions0.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions0.HardThresholdCondition, Is.Null);
+            Assert.That(updatedGroupConditions0.SmartDetectionCondition, Is.Null);
+
+            ValidateChangeThresholdCondition(updatedGroupConditions0.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
+
+            // Validate last series group conditions.
+
+            var updatedGroupConditions1 = updatedConfig.SeriesGroupDetectionConditions[1];
+
+            Assert.That(updatedGroupConditions1, Is.Not.Null);
+
+            ValidateGroupKey(updatedGroupConditions1.SeriesGroupKey);
+
+            dimensionColumns = updatedGroupConditions1.SeriesGroupKey.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
+            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
+
+            Assert.That(updatedGroupConditions1.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions1.HardThresholdCondition, Is.Null);
+            Assert.That(updatedGroupConditions1.ChangeThresholdCondition, Is.Null);
+
+            ValidateSmartDetectionCondition(updatedGroupConditions1.SmartDetectionCondition, 95.0, AnomalyDetectorDirection.Both, 25, 26.0);
         }
 
         [RecordedTest]
