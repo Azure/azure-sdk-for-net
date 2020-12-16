@@ -49,7 +49,7 @@ This will allow you to create, get, or delete chat threads.
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 ChatClient chatClient = new ChatClient(
     new Uri(endpoint),
-    new CommunicationUserCredential(userToken));
+    new CommunicationTokenCredential(userToken));
 ```
 
 ### Create a ChatThreadClient
@@ -165,7 +165,7 @@ Use `CreateChatThread` to create a chat thread client object.
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 ChatClient chatClient = new ChatClient(
     new Uri(endpoint),
-    new CommunicationUserCredential(userToken));
+    new CommunicationTokenCredential(userToken));
 ```
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
 var chatThreadMember = new ChatThreadMember(new CommunicationUser(threadCreatorId))

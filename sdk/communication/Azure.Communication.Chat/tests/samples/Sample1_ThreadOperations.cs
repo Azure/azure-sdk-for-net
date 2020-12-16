@@ -27,7 +27,7 @@ namespace Azure.Communication.Chat.Tests.samples
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
             ChatClient chatClient = new ChatClient(
                 new Uri(endpoint),
-                new CommunicationUserCredential(userToken));
+                new CommunicationTokenCredential(userToken));
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
