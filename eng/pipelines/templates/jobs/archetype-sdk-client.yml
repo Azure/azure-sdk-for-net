@@ -59,7 +59,7 @@ jobs:
         inputs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
-      
+
       - template: /eng/pipelines/templates/steps/create-apireview.yml
         parameters:
           Artifacts: ${{parameters.Artifacts}}
