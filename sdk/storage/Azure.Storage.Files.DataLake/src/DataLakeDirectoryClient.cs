@@ -1246,7 +1246,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public override Response<PathInfo> SetPermissions(
-            PathPermissions permissions,
+            PathPermissions permissions = default,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
@@ -1310,7 +1310,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public override async Task<Response<PathInfo>> SetPermissionsAsync(
-            PathPermissions permissions,
+            PathPermissions permissions = default,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
