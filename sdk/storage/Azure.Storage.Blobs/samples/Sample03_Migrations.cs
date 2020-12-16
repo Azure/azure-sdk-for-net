@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Samples
             string accountUri = this.StorageAccountBlobUri.ToString();
 
             #region Snippet:SampleSnippetsBlobMigration_TokenCredential
-            BlobServiceClient client = new BlobServiceClient(new Uri(accountUri), new DefaultAzureCredential());
+            BlobServiceClient client = new BlobServiceClient(new Uri(serviceUri), new DefaultAzureCredential());
             #endregion
 
             client.GetProperties();
