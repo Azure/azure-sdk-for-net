@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity
 {
-    internal interface ITokenCredential : IDisposable
+    internal interface ICommunicationTokenCredential : IDisposable
     {
         AccessToken GetToken(CancellationToken cancellationToken);
         ValueTask<AccessToken> GetTokenAsync(CancellationToken cancellationToken);

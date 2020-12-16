@@ -4,16 +4,17 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.Identity;
 using Azure.Core;
 
-namespace Azure.Communication.Identity
+namespace Azure.Communication
 {
     /// <summary>
     /// The Azure Communication Services Token Credential.
     /// </summary>
     public sealed class CommunicationTokenCredential : IDisposable
     {
-        private readonly ITokenCredential _tokenCredential;
+        private readonly ICommunicationTokenCredential _tokenCredential;
         private bool _isDisposed;
 
         /// <summary>
