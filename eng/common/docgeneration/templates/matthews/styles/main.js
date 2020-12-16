@@ -76,7 +76,7 @@ $(function () {
     // Add text to empty links
     $("p > a").each(function () {
         var link = $(this).attr('href')
-        if ($(this).text() === "") {
+        if ($(this).text() === "" && $(this).children().attr("src") === "") {
             $(this).html(link)
         }
     });
