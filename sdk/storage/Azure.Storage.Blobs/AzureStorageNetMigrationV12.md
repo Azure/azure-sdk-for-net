@@ -66,7 +66,7 @@ v12
 A `TokenCredential` abstract class (different API surface than v11) exists in the Azure.Core package that all libraries of the new Azure SDK family depend on, and can be used to construct Storage clients. Implementations of this class can be found separately in the [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) package. [`DefaultAzureCredential`](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential) is a good starting point, with code as simple as the following:
 
 ```C# Snippet:SampleSnippetsBlobMigration_TokenCredential
-BlobServiceClient client = new BlobServiceClient(new Uri(accountUri), new DefaultAzureCredential());
+BlobServiceClient client = new BlobServiceClient(new Uri(serviceUri), new DefaultAzureCredential());
 ```
 
 You can view more [Identity samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#examples) for how to authenticate with the Identity package.
@@ -196,7 +196,7 @@ The legacy SDK used a stateful model. There were container and blob objects that
 
 The modern SDK has taken a client-based approach. There are no objects designed to be representations of storage resources, but instead clients that act as your mechanism to interact with your storage resources in the cloud. Clients hold no state of your resources.
 
-The hierarchical structure of Azure Blob Storage can be understood by the following diagram:
+The hierarchical structure of Azure Blob Storage can be understood by the following diagram:  
 ![Blob Storage Hierarchy](https://docs.microsoft.com/en-us/azure/storage/blobs/media/storage-blobs-introduction/blob1.png)
 
 In the interest of simplifying the API surface, v12 uses three top level clients to match this structure that can be used to interact with a majority of your resources: `BlobServiceClient`, `BlobContainerClient`, and `BlobClient`. Note that blob-type-specific operations can still be accessed by their specific clients, as in v11.
@@ -209,7 +209,7 @@ We recommend `BlobClient` as a starting place when migrating code that used v11'
 
 #### Migrating from CloudBlobDirectory
 
-Note the absence of a v12 equivalent for v11's `CloudBlobDirectory`. Directories were an SDK-only concept that did not exist in Azure Blob Storage, and which were not brought forwards into the modern Storage SDK. As shown by the diagram in [Client Structure](#client-structure)], containers only contain a flat list of blobs, but those blobs can be named and listed in ways that imply a folder-like structure. See our [Listing Blobs in a Container](#listing-blobs-in-a-container) migration samples later in this guide for more information.
+Note the absence of a v12 equivalent for v11's `CloudBlobDirectory`. Directories were an SDK-only concept that did not exist in Azure Blob Storage, and which were not brought forwards into the modern Storage SDK. As shown by the diagram in [Client Structure](#client-structure), containers only contain a flat list of blobs, but those blobs can be named and listed in ways that imply a folder-like structure. See our [Listing Blobs in a Container](#listing-blobs-in-a-container) migration samples later in this guide for more information.
 
 For those whose workloads revolve around manipulating directories and heavily relied on the leagacy SDKs abstraction of this structure, consider the [pros and cons of enabling hierarchical namespace](https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-namespace) on your storage account, which would allow switching to the [Data Lake gen 2 SDK](https://docs.microsoft.com/dotnet/api/overview/azure/storage.files.datalake-readme), whose migration is not covered in this document.
 
