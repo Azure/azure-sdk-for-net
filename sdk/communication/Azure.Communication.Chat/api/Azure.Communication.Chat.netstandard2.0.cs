@@ -3,7 +3,7 @@ namespace Azure.Communication.Chat
     public partial class ChatClient
     {
         protected ChatClient() { }
-        public ChatClient(System.Uri endpointUrl, Azure.Communication.Identity.CommunicationTokenCredential communicationTokenCredential, Azure.Communication.Chat.ChatClientOptions? options = null) { }
+        public ChatClient(System.Uri endpointUrl, Azure.Communication.CommunicationTokenCredential communicationTokenCredential, Azure.Communication.Chat.ChatClientOptions? options = null) { }
         public virtual Azure.Communication.Chat.ChatThreadClient CreateChatThread(string topic, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatThreadMember> members, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.Chat.ChatThreadClient> CreateChatThreadAsync(string topic, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatThreadMember> members, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteChatThread(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
