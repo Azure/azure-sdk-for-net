@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// The maximum size of a block blob is therefore approximately 190.73 TiB
     /// (4,000 MB X 50,000 blocks).  If you are writing a block blob that is
     /// no more than 5,000 MB in size, you can upload it in its entirety with a
-    /// single write operation; see <see cref="BlockBlobClient.UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>.
+    /// single write operation; see <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>.
     ///
     /// When you upload a block to a blob in your storage account, it is
     /// associated with the specified block blob, but it does not become part
