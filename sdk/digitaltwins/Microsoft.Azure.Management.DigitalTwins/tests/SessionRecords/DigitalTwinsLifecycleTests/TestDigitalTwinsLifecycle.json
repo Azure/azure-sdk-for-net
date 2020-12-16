@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourcegroups/DigitalTwinsSDKResourceGroup?api-version=2019-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTM4NmQ1ZWEtZWE5MC00NDFhLTgyNjMtZDgxNjM2OGM4NGExL3Jlc291cmNlZ3JvdXBzL0RpZ2l0YWxUd2luc1NES1Jlc291cmNlR3JvdXA/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourcegroups/DigitalTwinsSdkRg?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Jlc291cmNlZ3JvdXBzL0RpZ2l0YWxUd2luc1Nka1JnP2FwaS12ZXJzaW9uPTIwMTktMTAtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f5d41cb8-4843-49a8-8a4a-5f800b1ef50e"
+          "634c2d66-9480-433a-a51b-b08a88aa4980"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.7.0.0"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "31562266-5d2a-460a-a4ec-01cecd09ba01"
+          "dc263844-4bb0-4525-82ea-7680c003b5a2"
         ],
         "x-ms-correlation-request-id": [
-          "31562266-5d2a-460a-a4ec-01cecd09ba01"
+          "dc263844-4bb0-4525-82ea-7680c003b5a2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20201013T194619Z:31562266-5d2a-460a-a4ec-01cecd09ba01"
+          "WESTUS2:20201218T020829Z:dc263844-4bb0-4525-82ea-7680c003b5a2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,10 +51,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 13 Oct 2020 19:46:19 GMT"
+          "Fri, 18 Dec 2020 02:08:29 GMT"
         ],
         "Content-Length": [
-          "254"
+          "232"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,26 +63,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup\",\r\n  \"name\": \"DigitalTwinsSDKResourceGroup\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg\",\r\n  \"name\": \"DigitalTwinsSdkRg\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/providers/Microsoft.DigitalTwins/locations/westus2/checkNameAvailability?api-version=2020-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTM4NmQ1ZWEtZWE5MC00NDFhLTgyNjMtZDgxNjM2OGM4NGExL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL2xvY2F0aW9ucy93ZXN0dXMyL2NoZWNrTmFtZUF2YWlsYWJpbGl0eT9hcGktdmVyc2lvbj0yMDIwLTEwLTMx",
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/providers/Microsoft.DigitalTwins/locations/westus2/checkNameAvailability?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL2xvY2F0aW9ucy93ZXN0dXMyL2NoZWNrTmFtZUF2YWlsYWJpbGl0eT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"DigitalTwinsSdk\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "18b8fb82-52c0-47f2-9e1f-7a24fab56dd5"
+          "7e7ae998-970e-4e01-a7fb-cf61cc353ca1"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.0.0"
+          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -108,19 +108,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "adbd0efd-7dd6-4150-b1ab-51f9681ba8f2"
+          "dec52987-34ac-46c9-99db-064f4d8ae57c"
         ],
         "x-ms-correlation-request-id": [
-          "adbd0efd-7dd6-4150-b1ab-51f9681ba8f2"
+          "dec52987-34ac-46c9-99db-064f4d8ae57c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20201013T194620Z:adbd0efd-7dd6-4150-b1ab-51f9681ba8f2"
+          "WESTUS2:20201218T020829Z:dec52987-34ac-46c9-99db-064f4d8ae57c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 13 Oct 2020 19:46:19 GMT"
+          "Fri, 18 Dec 2020 02:08:29 GMT"
         ],
         "Content-Length": [
           "66"
@@ -132,26 +132,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"nameAvailable\": true,\r\n  \"message\": \"'DigitalTwinsSDK' is available.\"\r\n}",
+      "ResponseBody": "{\r\n  \"nameAvailable\": true,\r\n  \"message\": \"'DigitalTwinsSdk' is available.\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK?api-version=2020-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTM4NmQ1ZWEtZWE5MC00NDFhLTgyNjMtZDgxNjM2OGM4NGExL3Jlc291cmNlR3JvdXBzL0RpZ2l0YWxUd2luc1NES1Jlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EaWdpdGFsVHdpbnMvZGlnaXRhbFR3aW5zSW5zdGFuY2VzL0RpZ2l0YWxUd2luc1NESz9hcGktdmVyc2lvbj0yMDIwLTEwLTMx",
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSdk?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Jlc291cmNlR3JvdXBzL0RpZ2l0YWxUd2luc1Nka1JnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL2RpZ2l0YWxUd2luc0luc3RhbmNlcy9EaWdpdGFsVHdpbnNTZGs/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c3d4b9c5-685e-4ace-83a0-58644510f2b1"
+          "c2256ccb-0599-47cb-88c4-83f876335fd9"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.0.0"
+          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -168,7 +168,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK/operationResults/Create?api-version=2020-10-31"
+          "https://management.azure.com/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/providers/Microsoft.DigitalTwins/locations/westus2/operationResults/eyJvcGVyYXRpb25LaW5kIjoiQ3JlYXRlIiwicmVzb3VyY2VLaW5kIjoiRGlnaXRhbFR3aW5zSW5zdGFuY2UiLCJyZXNvdXJjZUdyb3VwTmFtZSI6IkRpZ2l0YWxUd2luc1Nka1JnIiwicmVzb3VyY2VOYW1lIjoiRGlnaXRhbFR3aW5zU2RrIn0=?api-version=2020-12-01"
         ],
         "Retry-After": [
           "10"
@@ -183,22 +183,22 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "fc13b054-21c8-4cd4-8a0c-2672f02aef31"
+          "9060d4fa-b87f-48a3-8c81-d66d67526406"
         ],
         "x-ms-correlation-request-id": [
-          "fc13b054-21c8-4cd4-8a0c-2672f02aef31"
+          "9060d4fa-b87f-48a3-8c81-d66d67526406"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20201013T194621Z:fc13b054-21c8-4cd4-8a0c-2672f02aef31"
+          "WESTUS2:20201218T020830Z:9060d4fa-b87f-48a3-8c81-d66d67526406"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 13 Oct 2020 19:46:20 GMT"
+          "Fri, 18 Dec 2020 02:08:29 GMT"
         ],
         "Content-Length": [
-          "447"
+          "484"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -207,20 +207,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"createdTime\": \"2020-10-13T19:46:20.8153775Z\",\r\n    \"lastUpdatedTime\": \"2020-10-13T19:46:20.8153775Z\",\r\n    \"hostName\": null\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSdk\",\r\n  \"name\": \"DigitalTwinsSdk\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"createdTime\": \"2020-12-18T02:08:30.1645082Z\",\r\n    \"lastUpdatedTime\": \"2020-12-18T02:08:30.1645082Z\",\r\n    \"hostName\": null,\r\n    \"publicNetworkAccess\": \"Enabled\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"identity\": null,\r\n  \"tags\": null\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK/operationResults/Create?api-version=2020-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTM4NmQ1ZWEtZWE5MC00NDFhLTgyNjMtZDgxNjM2OGM4NGExL3Jlc291cmNlR3JvdXBzL0RpZ2l0YWxUd2luc1NES1Jlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EaWdpdGFsVHdpbnMvZGlnaXRhbFR3aW5zSW5zdGFuY2VzL0RpZ2l0YWxUd2luc1NESy9vcGVyYXRpb25SZXN1bHRzL0NyZWF0ZT9hcGktdmVyc2lvbj0yMDIwLTEwLTMx",
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/providers/Microsoft.DigitalTwins/locations/westus2/operationResults/eyJvcGVyYXRpb25LaW5kIjoiQ3JlYXRlIiwicmVzb3VyY2VLaW5kIjoiRGlnaXRhbFR3aW5zSW5zdGFuY2UiLCJyZXNvdXJjZUdyb3VwTmFtZSI6IkRpZ2l0YWxUd2luc1Nka1JnIiwicmVzb3VyY2VOYW1lIjoiRGlnaXRhbFR3aW5zU2RrIn0=?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvZXlKdmNHVnlZWFJwYjI1TGFXNWtJam9pUTNKbFlYUmxJaXdpY21WemIzVnlZMlZMYVc1a0lqb2lSR2xuYVhSaGJGUjNhVzV6U1c1emRHRnVZMlVpTENKeVpYTnZkWEpqWlVkeWIzVndUbUZ0WlNJNklrUnBaMmwwWVd4VWQybHVjMU5rYTFKbklpd2ljbVZ6YjNWeVkyVk9ZVzFsSWpvaVJHbG5hWFJoYkZSM2FXNXpVMlJySW4wPT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.0.0"
+          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -240,22 +240,22 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "db882376-564e-4d55-b82a-f4b7c87a9c1d"
+          "40724472-1cdb-4f38-a315-98a0a54c9afb"
         ],
         "x-ms-correlation-request-id": [
-          "db882376-564e-4d55-b82a-f4b7c87a9c1d"
+          "40724472-1cdb-4f38-a315-98a0a54c9afb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20201013T194631Z:db882376-564e-4d55-b82a-f4b7c87a9c1d"
+          "WESTUS2:20201218T020840Z:40724472-1cdb-4f38-a315-98a0a54c9afb"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 13 Oct 2020 19:46:30 GMT"
+          "Fri, 18 Dec 2020 02:08:39 GMT"
         ],
         "Content-Length": [
-          "489"
+          "526"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -264,26 +264,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdTime\": \"2020-10-13T19:46:20.8153775Z\",\r\n    \"lastUpdatedTime\": \"2020-10-13T19:46:29.3666493Z\",\r\n    \"hostName\": \"DigitalTwinsSDK.api.wus2.digitaltwins.azure.net\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSdk\",\r\n  \"name\": \"DigitalTwinsSdk\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdTime\": \"2020-12-18T02:08:30.1645082Z\",\r\n    \"lastUpdatedTime\": \"2020-12-18T02:08:37.9890101Z\",\r\n    \"hostName\": \"DigitalTwinsSdk.api.wus2.digitaltwins.azure.net\",\r\n    \"publicNetworkAccess\": \"Enabled\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"identity\": null,\r\n  \"tags\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK?api-version=2020-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTM4NmQ1ZWEtZWE5MC00NDFhLTgyNjMtZDgxNjM2OGM4NGExL3Jlc291cmNlR3JvdXBzL0RpZ2l0YWxUd2luc1NES1Jlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EaWdpdGFsVHdpbnMvZGlnaXRhbFR3aW5zSW5zdGFuY2VzL0RpZ2l0YWxUd2luc1NESz9hcGktdmVyc2lvbj0yMDIwLTEwLTMx",
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSdk?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Jlc291cmNlR3JvdXBzL0RpZ2l0YWxUd2luc1Nka1JnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL2RpZ2l0YWxUd2luc0luc3RhbmNlcy9EaWdpdGFsVHdpbnNTZGs/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "618a0d94-11f9-4b93-b4b9-6e8cd1cbb20a"
+          "df0e3ab7-8e55-4248-ab27-f5b08ce945b8"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.0.0"
+          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -299,6 +299,12 @@
         "Pragma": [
           "no-cache"
         ],
+        "Location": [
+          "https://management.azure.com/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/providers/Microsoft.DigitalTwins/locations/westus2/operationResults/eyJvcGVyYXRpb25LaW5kIjoiUGF0Y2giLCJyZXNvdXJjZUtpbmQiOiJEaWdpdGFsVHdpbnNJbnN0YW5jZSIsInJlc291cmNlR3JvdXBOYW1lIjoiRGlnaXRhbFR3aW5zU2RrUmciLCJyZXNvdXJjZU5hbWUiOiJEaWdpdGFsVHdpbnNTZGsifQ==?api-version=2020-12-01"
+        ],
+        "Retry-After": [
+          "10"
+        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
@@ -309,22 +315,22 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "9272e66b-dfa1-4bb4-848a-035f51888db1"
+          "5efabab7-d42d-4fd9-a9ae-5e30704132d0"
         ],
         "x-ms-correlation-request-id": [
-          "9272e66b-dfa1-4bb4-848a-035f51888db1"
+          "5efabab7-d42d-4fd9-a9ae-5e30704132d0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20201013T194631Z:9272e66b-dfa1-4bb4-848a-035f51888db1"
+          "WESTUS2:20201218T020840Z:5efabab7-d42d-4fd9-a9ae-5e30704132d0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 13 Oct 2020 19:46:31 GMT"
+          "Fri, 18 Dec 2020 02:08:40 GMT"
         ],
         "Content-Length": [
-          "517"
+          "525"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -333,26 +339,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdTime\": \"2020-10-13T19:46:20.8153775Z\",\r\n    \"lastUpdatedTime\": \"2020-10-13T19:46:31.508647Z\",\r\n    \"hostName\": \"DigitalTwinsSDK.api.wus2.digitaltwins.azure.net\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
-      "StatusCode": 200
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSdk\",\r\n  \"name\": \"DigitalTwinsSdk\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"createdTime\": \"2020-12-18T02:08:30.1645082Z\",\r\n    \"lastUpdatedTime\": \"2020-12-18T02:08:40.7999121Z\",\r\n    \"hostName\": \"DigitalTwinsSdk.api.wus2.digitaltwins.azure.net\",\r\n    \"publicNetworkAccess\": \"Enabled\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"identity\": null,\r\n  \"tags\": null\r\n}",
+      "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances?api-version=2020-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTM4NmQ1ZWEtZWE5MC00NDFhLTgyNjMtZDgxNjM2OGM4NGExL3Jlc291cmNlR3JvdXBzL0RpZ2l0YWxUd2luc1NES1Jlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EaWdpdGFsVHdpbnMvZGlnaXRhbFR3aW5zSW5zdGFuY2VzP2FwaS12ZXJzaW9uPTIwMjAtMTAtMzE=",
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/providers/Microsoft.DigitalTwins/locations/westus2/operationResults/eyJvcGVyYXRpb25LaW5kIjoiUGF0Y2giLCJyZXNvdXJjZUtpbmQiOiJEaWdpdGFsVHdpbnNJbnN0YW5jZSIsInJlc291cmNlR3JvdXBOYW1lIjoiRGlnaXRhbFR3aW5zU2RrUmciLCJyZXNvdXJjZU5hbWUiOiJEaWdpdGFsVHdpbnNTZGsifQ==?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvZXlKdmNHVnlZWFJwYjI1TGFXNWtJam9pVUdGMFkyZ2lMQ0p5WlhOdmRYSmpaVXRwYm1RaU9pSkVhV2RwZEdGc1ZIZHBibk5KYm5OMFlXNWpaU0lzSW5KbGMyOTFjbU5sUjNKdmRYQk9ZVzFsSWpvaVJHbG5hWFJoYkZSM2FXNXpVMlJyVW1jaUxDSnlaWE52ZFhKalpVNWhiV1VpT2lKRWFXZHBkR0ZzVkhkcGJuTlRaR3NpZlE9PT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "48960526-5710-4a4d-9bc9-df0316488e1f"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.0.0"
+          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -372,22 +372,22 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "92ddeb13-3167-40ca-9da9-eadb2e74bffa"
+          "49904193-e55a-487a-92d7-7652b496c5f1"
         ],
         "x-ms-correlation-request-id": [
-          "92ddeb13-3167-40ca-9da9-eadb2e74bffa"
+          "49904193-e55a-487a-92d7-7652b496c5f1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20201013T194631Z:92ddeb13-3167-40ca-9da9-eadb2e74bffa"
+          "WESTUS2:20201218T020851Z:49904193-e55a-487a-92d7-7652b496c5f1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 13 Oct 2020 19:46:31 GMT"
+          "Fri, 18 Dec 2020 02:08:50 GMT"
         ],
         "Content-Length": [
-          "530"
+          "555"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -396,26 +396,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n      \"name\": \"DigitalTwinsSDK\",\r\n      \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdTime\": \"2020-10-13T19:46:20.8153775Z\",\r\n        \"lastUpdatedTime\": \"2020-10-13T19:46:31.5009305Z\",\r\n        \"hostName\": \"DigitalTwinsSDK.api.wus2.digitaltwins.azure.net\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSdk\",\r\n  \"name\": \"DigitalTwinsSdk\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdTime\": \"2020-12-18T02:08:30.1645082Z\",\r\n    \"lastUpdatedTime\": \"2020-12-18T02:08:41.7839703Z\",\r\n    \"hostName\": \"DigitalTwinsSdk.api.wus2.digitaltwins.azure.net\",\r\n    \"publicNetworkAccess\": \"Enabled\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"identity\": null,\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.DigitalTwins/operations?api-version=2020-10-31",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAyMC0xMC0zMQ==",
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg/providers/Microsoft.DigitalTwins/digitalTwinsInstances?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Jlc291cmNlR3JvdXBzL0RpZ2l0YWxUd2luc1Nka1JnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL2RpZ2l0YWxUd2luc0luc3RhbmNlcz9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8b43238d-9ecd-453d-8db1-9841a0484c81"
+          "88820046-9d21-449b-b1d7-da10a663dcd0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.0.0"
+          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -431,26 +431,26 @@
         "Server": [
           "Kestrel"
         ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
         ],
         "x-ms-request-id": [
-          "720654cc-384d-4216-9550-9d65c8da7b86"
+          "ad78da77-e5fc-44ef-981b-24e1a68cf510"
         ],
         "x-ms-correlation-request-id": [
-          "720654cc-384d-4216-9550-9d65c8da7b86"
+          "ad78da77-e5fc-44ef-981b-24e1a68cf510"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20201013T194632Z:720654cc-384d-4216-9550-9d65c8da7b86"
+          "WESTUS2:20201218T020851Z:ad78da77-e5fc-44ef-981b-24e1a68cf510"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 13 Oct 2020 19:46:31 GMT"
+          "Fri, 18 Dec 2020 02:08:50 GMT"
         ],
         "Content-Length": [
-          "12767"
+          "599"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -459,26 +459,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/register/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Digital Twins Resource Provider\",\r\n        \"operation\": \"Register the Digital Twins Resource Provider\",\r\n        \"description\": \"Register the Subscription for the Digital Twins resource provider and enable the creation of Digital Twins instances.\"\r\n      },\r\n      \"isDataAction\": false,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitalTwinsInstances/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.DigitalTwins\",\r\n        \"resource\": \"digitalTwinsInstances\",\r\n        \"operation\": \"Read Azure Digital Twins resource\",\r\n        \"description\": \"Read any Microsoft.DigitalTwins/digitalTwinsInstances resource\"\r\n      },\r\n      \"isDataAction\": false,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitalTwinsInstances/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.DigitalTwins\",\r\n        \"resource\": \"digitalTwinsInstances\",\r\n        \"operation\": \"Create or Update Azure Digital Twins resource\",\r\n        \"description\": \"Create or update any Microsoft.DigitalTwins/digitalTwinsInstances resource\"\r\n      },\r\n      \"isDataAction\": false,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitalTwinsInstances/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.DigitalTwins\",\r\n        \"resource\": \"digitalTwinsInstances\",\r\n        \"operation\": \"Delete Azure Digital Twins resource\",\r\n        \"description\": \"Delete an Microsoft.DigitalTwins/digitalTwinsInstances resource\"\r\n      },\r\n      \"isDataAction\": false,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitaltwins/read\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Digital Twin\",\r\n        \"operation\": \"Read Digital Twin\",\r\n        \"description\": \"Read any Digital Twin\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitaltwins/write\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Digital Twin\",\r\n        \"operation\": \"Create Digital Twin\",\r\n        \"description\": \"Create or Update any Digital Twin\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitaltwins/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Digital Twin\",\r\n        \"operation\": \"Delete Digital Twin\",\r\n        \"description\": \"Delete any Digital Twin\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitaltwins/commands/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Digital Twin Command\",\r\n        \"operation\": \"Invoke Command on Digital Twin\",\r\n        \"description\": \"Invoke any Command on a Digital Twin\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitaltwins/relationships/read\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Digital Twin Relationship\",\r\n        \"operation\": \"Read Digital Twin Relationship\",\r\n        \"description\": \"Read any Digital Twin Relationship\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitaltwins/relationships/write\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Digital Twin Relationship\",\r\n        \"operation\": \"Create Digital Twin Relationship\",\r\n        \"description\": \"Create or Update any Digital Twin Relationship\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitaltwins/relationships/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Digital Twin Relationship\",\r\n        \"operation\": \"Delete Digital Twin Relationship\",\r\n        \"description\": \"Delete any Digital Twin Relationship\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/eventroutes/read\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Event Route\",\r\n        \"operation\": \"Read Event Route\",\r\n        \"description\": \"Read any Event Route\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/eventroutes/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Event Route\",\r\n        \"operation\": \"Delete Event Route\",\r\n        \"description\": \"Delete any Event Route\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/eventroutes/write\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Event Route\",\r\n        \"operation\": \"Create Event Route\",\r\n        \"description\": \"Create or Update any Event Route\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/models/read\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Model\",\r\n        \"operation\": \"Read Model\",\r\n        \"description\": \"Read any Model\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/models/write\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Model\",\r\n        \"operation\": \"Create Model\",\r\n        \"description\": \"Create or Update any Model\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/models/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Model\",\r\n        \"operation\": \"Delete Model\",\r\n        \"description\": \"Delete any Model\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/query/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"Digital Twins Graph\",\r\n        \"operation\": \"Query Digital Twins Graph\",\r\n        \"description\": \"Query any Digital Twins Graph\"\r\n      },\r\n      \"isDataAction\": true,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitalTwinsInstances/diagnosticSettings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"digitalTwinsInstances\",\r\n        \"operation\": \"Get Diagnostic Settings\",\r\n        \"description\": \"Gets the diagnostic settings for the resource\"\r\n      },\r\n      \"isDataAction\": false,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitalTwinsInstances/diagnosticSettings/write\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"digitalTwinsInstances\",\r\n        \"operation\": \"Set Diagnostic Settings\",\r\n        \"description\": \"Sets the diagnostic settings for the resource\"\r\n      },\r\n      \"isDataAction\": false,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitalTwinsInstances/metricDefinitions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"digitalTwinsInstances\",\r\n        \"operation\": \"Get Azure Monitor Metric Settings\",\r\n        \"description\": \"Gets the metric settings for the resource's Azure Monitor\"\r\n      },\r\n      \"isDataAction\": false,\r\n      \"properties\": {\r\n        \"serviceSpecification\": {\r\n          \"metricSpecifications\": [\r\n            {\r\n              \"name\": \"Routing\",\r\n              \"displayName\": \"Messages Routed\",\r\n              \"displayDescription\": \"The number of messages routed to an endpoint Azure service such as Event Hub, Service Bus or Event Grid.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Total\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"EndpointType\",\r\n                  \"displayName\": \"Endpoint Type\",\r\n                  \"internalName\": \"Operation\"\r\n                },\r\n                {\r\n                  \"name\": \"Result\",\r\n                  \"displayName\": \"Result\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"RoutingFailureRate\",\r\n              \"displayName\": \"Routing Failure Rate\",\r\n              \"displayDescription\": \"The percentage of events that result in an error as they are routed from Azure Digital Twins to an endpoint Azure service such as Event Hub, Service Bus or Event Grid.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Percent\",\r\n              \"aggregationType\": \"Average\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Average\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"EndpointType\",\r\n                  \"displayName\": \"Endpoint Type\",\r\n                  \"internalName\": \"Operation\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"RoutingLatency\",\r\n              \"displayName\": \"Routing Latency\",\r\n              \"displayDescription\": \"Time elapsed between an event getting routed from Azure Digital Twins to when it is posted to the endpoint Azure service such as Event Hub, Service Bus or Event Grid.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Milliseconds\",\r\n              \"aggregationType\": \"Average\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Average\",\r\n                \"Minimum\",\r\n                \"Maximum\",\r\n                \"Total\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"EndpointType\",\r\n                  \"displayName\": \"Endpoint Type\",\r\n                  \"internalName\": \"Operation\"\r\n                },\r\n                {\r\n                  \"name\": \"Result\",\r\n                  \"displayName\": \"Result\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"ApiRequests\",\r\n              \"displayName\": \"API Requests\",\r\n              \"displayDescription\": \"The number of API requests made for Digital Twins read, write, delete and query operations.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Total\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"Operation\",\r\n                  \"displayName\": \"Operation\"\r\n                },\r\n                {\r\n                  \"name\": \"Authentication\",\r\n                  \"displayName\": \"Authentication\"\r\n                },\r\n                {\r\n                  \"name\": \"Protocol\",\r\n                  \"displayName\": \"Protocol\"\r\n                },\r\n                {\r\n                  \"name\": \"StatusCode\",\r\n                  \"displayName\": \"Status Code\"\r\n                },\r\n                {\r\n                  \"name\": \"StatusCodeClass\",\r\n                  \"displayName\": \"Status Code Class\"\r\n                },\r\n                {\r\n                  \"name\": \"StatusText\",\r\n                  \"displayName\": \"Status Text\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"ApiRequestsFailureRate\",\r\n              \"displayName\": \"API Requests Failure Rate\",\r\n              \"displayDescription\": \"The percentage of API requests that the service receives for your instance that return an internal error (500) response code for Digital Twins read, write, delete and query operations.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Percent\",\r\n              \"aggregationType\": \"Average\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Average\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"Operation\",\r\n                  \"displayName\": \"Operation\"\r\n                },\r\n                {\r\n                  \"name\": \"Authentication\",\r\n                  \"displayName\": \"Authentication\"\r\n                },\r\n                {\r\n                  \"name\": \"Protocol\",\r\n                  \"displayName\": \"Protocol\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"ApiRequestsLatency\",\r\n              \"displayName\": \"API Requests Latency\",\r\n              \"displayDescription\": \"The response time for API requests, i.e. from when the request is received by Azure Digital Twins until the service sends a success/fail result for Digital Twins read, write, delete and query operations.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Milliseconds\",\r\n              \"aggregationType\": \"Average\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Average\",\r\n                \"Minimum\",\r\n                \"Maximum\",\r\n                \"Total\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"Operation\",\r\n                  \"displayName\": \"Operation\"\r\n                },\r\n                {\r\n                  \"name\": \"Authentication\",\r\n                  \"displayName\": \"Authentication\"\r\n                },\r\n                {\r\n                  \"name\": \"Protocol\",\r\n                  \"displayName\": \"Protocol\"\r\n                },\r\n                {\r\n                  \"name\": \"StatusCode\",\r\n                  \"displayName\": \"Status Code\"\r\n                },\r\n                {\r\n                  \"name\": \"StatusCodeClass\",\r\n                  \"displayName\": \"Status Code Class\"\r\n                },\r\n                {\r\n                  \"name\": \"StatusText\",\r\n                  \"displayName\": \"Status Text\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"BillingApiOperations\",\r\n              \"displayName\": \"Billing API Operations\",\r\n              \"displayDescription\": \"Billing metric for the count of all API requests made against the Azure Digital Twins service.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Average\",\r\n                \"Minimum\",\r\n                \"Maximum\",\r\n                \"Total\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"MeterId\",\r\n                  \"displayName\": \"Meter Id\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"BillingMessagesProcessed\",\r\n              \"displayName\": \"Billing Messages Processed\",\r\n              \"displayDescription\": \"Billing metric for the number of messages sent out from Azure Digital Twins to external endpoints.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Average\",\r\n                \"Minimum\",\r\n                \"Maximum\",\r\n                \"Total\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"MeterId\",\r\n                  \"displayName\": \"Meter Id\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"BillingQueryUnits\",\r\n              \"displayName\": \"Billing Query Units\",\r\n              \"displayDescription\": \"The number of Query Units, an internally computed measure of service resource usage, consumed to execute queries.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Average\",\r\n                \"Minimum\",\r\n                \"Maximum\",\r\n                \"Total\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"MeterId\",\r\n                  \"displayName\": \"Meter Id\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"IngressEvents\",\r\n              \"displayName\": \"Ingress Events\",\r\n              \"displayDescription\": \"The number of incoming telemetry events into Azure Digital Twins.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Total\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"Result\",\r\n                  \"displayName\": \"Result\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"IngressEventsFailureRate\",\r\n              \"displayName\": \"Ingress Events Failure Rate\",\r\n              \"displayDescription\": \"The percentage of incoming telemetry events for which the service returns an internal error (500) response code.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Percent\",\r\n              \"aggregationType\": \"Average\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Average\"\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"IngressEventsLatency\",\r\n              \"displayName\": \"Ingress Events Latency\",\r\n              \"displayDescription\": \"The time from when an event arrives to when it is ready to be egressed by Azure Digital Twins, at which point the service sends a success/fail result.\",\r\n              \"fillGapWithZero\": true,\r\n              \"unit\": \"Milliseconds\",\r\n              \"aggregationType\": \"Average\",\r\n              \"supportedAggregationTypes\": [\r\n                \"Average\",\r\n                \"Minimum\",\r\n                \"Maximum\",\r\n                \"Total\"\r\n              ],\r\n              \"dimensions\": [\r\n                {\r\n                  \"name\": \"Result\",\r\n                  \"displayName\": \"Result\"\r\n                }\r\n              ],\r\n              \"availabilities\": [\r\n                {\r\n                  \"timeGrain\": \"PT1M\",\r\n                  \"blobDuration\": \"PT1H\"\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DigitalTwins/digitalTwinsInstances/logDefinitions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Digital Twins\",\r\n        \"resource\": \"digitalTwinsInstances\",\r\n        \"operation\": \"Get Azure Monitor Log Settings\",\r\n        \"description\": \"Gets the log settings for the resource's Azure Monitor\"\r\n      },\r\n      \"isDataAction\": false,\r\n      \"properties\": {\r\n        \"serviceSpecification\": {\r\n          \"logSpecifications\": [\r\n            {\r\n              \"name\": \"DigitalTwinsOperation\",\r\n              \"displayName\": \"DigitalTwinsOperation\",\r\n              \"blobDuration\": \"PT1H\"\r\n            },\r\n            {\r\n              \"name\": \"EventRoutesOperation\",\r\n              \"displayName\": \"EventRoutesOperation\",\r\n              \"blobDuration\": \"PT1H\"\r\n            },\r\n            {\r\n              \"name\": \"ModelsOperation\",\r\n              \"displayName\": \"ModelsOperation\",\r\n              \"blobDuration\": \"PT1H\"\r\n            },\r\n            {\r\n              \"name\": \"QueryOperation\",\r\n              \"displayName\": \"QueryOperation\",\r\n              \"blobDuration\": \"PT1H\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSdk\",\r\n      \"name\": \"DigitalTwinsSdk\",\r\n      \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdTime\": \"2020-12-18T02:08:30.1645082Z\",\r\n        \"lastUpdatedTime\": \"2020-12-18T02:08:41.7839703Z\",\r\n        \"hostName\": \"DigitalTwinsSdk.api.wus2.digitaltwins.azure.net\",\r\n        \"privateEndpointConnections\": [],\r\n        \"publicNetworkAccess\": \"Enabled\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"identity\": null,\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK?api-version=2020-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTM4NmQ1ZWEtZWE5MC00NDFhLTgyNjMtZDgxNjM2OGM4NGExL3Jlc291cmNlR3JvdXBzL0RpZ2l0YWxUd2luc1NES1Jlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EaWdpdGFsVHdpbnMvZGlnaXRhbFR3aW5zSW5zdGFuY2VzL0RpZ2l0YWxUd2luc1NESz9hcGktdmVyc2lvbj0yMDIwLTEwLTMx",
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSdk?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Jlc291cmNlR3JvdXBzL0RpZ2l0YWxUd2luc1Nka1JnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL2RpZ2l0YWxUd2luc0luc3RhbmNlcy9EaWdpdGFsVHdpbnNTZGs/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "24a5fb0b-9ddc-4d59-9e76-f5249fb838d0"
+          "5b0c11df-2f19-470b-a1b5-1af6c7e4d070"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.0.0"
+          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -489,7 +489,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK/operationResults/Delete?api-version=2020-10-31"
+          "https://management.azure.com/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/providers/Microsoft.DigitalTwins/locations/westus2/operationResults/eyJvcGVyYXRpb25LaW5kIjoiRGVsZXRlIiwicmVzb3VyY2VLaW5kIjoiRGlnaXRhbFR3aW5zSW5zdGFuY2UiLCJyZXNvdXJjZUdyb3VwTmFtZSI6IkRpZ2l0YWxUd2luc1Nka1JnIiwicmVzb3VyY2VOYW1lIjoiRGlnaXRhbFR3aW5zU2RrIn0=?api-version=2020-12-01"
         ],
         "Retry-After": [
           "10"
@@ -504,22 +504,22 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "0ec755a4-8503-42d5-910e-831b2412e3f3"
+          "1ef95501-0c08-42a7-9ca0-ae638e75894e"
         ],
         "x-ms-correlation-request-id": [
-          "0ec755a4-8503-42d5-910e-831b2412e3f3"
+          "1ef95501-0c08-42a7-9ca0-ae638e75894e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20201013T194632Z:0ec755a4-8503-42d5-910e-831b2412e3f3"
+          "WESTUS2:20201218T020851Z:1ef95501-0c08-42a7-9ca0-ae638e75894e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 13 Oct 2020 19:46:32 GMT"
+          "Fri, 18 Dec 2020 02:08:50 GMT"
         ],
         "Content-Length": [
-          "420"
+          "554"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -528,12 +528,393 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Deleting\",\r\n    \"createdTime\": \"0001-01-01T00:00:00\",\r\n    \"lastUpdatedTime\": \"0001-01-01T00:00:00\",\r\n    \"hostName\": null\r\n  },\r\n  \"location\": null,\r\n  \"tags\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourceGroups/DigitalTwinsSdkRg/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSdk\",\r\n  \"name\": \"DigitalTwinsSdk\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Deleting\",\r\n    \"createdTime\": \"2020-12-18T02:08:30.1645082Z\",\r\n    \"lastUpdatedTime\": \"2020-12-18T02:08:41.7839703Z\",\r\n    \"hostName\": \"DigitalTwinsSdk.api.wus2.digitaltwins.azure.net\",\r\n    \"publicNetworkAccess\": \"Enabled\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"identity\": null,\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/providers/Microsoft.DigitalTwins/locations/westus2/operationResults/eyJvcGVyYXRpb25LaW5kIjoiRGVsZXRlIiwicmVzb3VyY2VLaW5kIjoiRGlnaXRhbFR3aW5zSW5zdGFuY2UiLCJyZXNvdXJjZUdyb3VwTmFtZSI6IkRpZ2l0YWxUd2luc1Nka1JnIiwicmVzb3VyY2VOYW1lIjoiRGlnaXRhbFR3aW5zU2RrIn0=?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvZXlKdmNHVnlZWFJwYjI1TGFXNWtJam9pUkdWc1pYUmxJaXdpY21WemIzVnlZMlZMYVc1a0lqb2lSR2xuYVhSaGJGUjNhVzV6U1c1emRHRnVZMlVpTENKeVpYTnZkWEpqWlVkeWIzVndUbUZ0WlNJNklrUnBaMmwwWVd4VWQybHVjMU5rYTFKbklpd2ljbVZ6YjNWeVkyVk9ZVzFsSWpvaVJHbG5hWFJoYkZSM2FXNXpVMlJySW4wPT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-request-id": [
+          "95ff5ee2-6620-4141-be0c-515d1c43a5aa"
+        ],
+        "x-ms-correlation-request-id": [
+          "95ff5ee2-6620-4141-be0c-515d1c43a5aa"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201218T020901Z:95ff5ee2-6620-4141-be0c-515d1c43a5aa"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 18 Dec 2020 02:09:01 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/providers/Microsoft.DigitalTwins/locations/westus2/operationResults/eyJvcGVyYXRpb25LaW5kIjoiRGVsZXRlIiwicmVzb3VyY2VLaW5kIjoiRGlnaXRhbFR3aW5zSW5zdGFuY2UiLCJyZXNvdXJjZUdyb3VwTmFtZSI6IkRpZ2l0YWxUd2luc1Nka1JnIiwicmVzb3VyY2VOYW1lIjoiRGlnaXRhbFR3aW5zU2RrIn0=?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGlnaXRhbFR3aW5zL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvZXlKdmNHVnlZWFJwYjI1TGFXNWtJam9pUkdWc1pYUmxJaXdpY21WemIzVnlZMlZMYVc1a0lqb2lSR2xuYVhSaGJGUjNhVzV6U1c1emRHRnVZMlVpTENKeVpYTnZkWEpqWlVkeWIzVndUbUZ0WlNJNklrUnBaMmwwWVd4VWQybHVjMU5rYTFKbklpd2ljbVZ6YjNWeVkyVk9ZVzFsSWpvaVJHbG5hWFJoYkZSM2FXNXpVMlJySW4wPT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DigitalTwins.AzureDigitalTwinsManagementClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-request-id": [
+          "0f943dad-a4fd-44c9-9f5e-02740ca11e29"
+        ],
+        "x-ms-correlation-request-id": [
+          "0f943dad-a4fd-44c9-9f5e-02740ca11e29"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201218T020901Z:0f943dad-a4fd-44c9-9f5e-02740ca11e29"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 18 Dec 2020 02:09:01 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/resourcegroups/DigitalTwinsSdkRg?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL3Jlc291cmNlZ3JvdXBzL0RpZ2l0YWxUd2luc1Nka1JnP2FwaS12ZXJzaW9uPTIwMTktMTAtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "411d7d52-0a63-4e17-b332-a08846186048"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ESUdJVEFMVFdJTlNTREtSRy1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "f70c311e-4a0e-4a95-a965-aa870b734c26"
+        ],
+        "x-ms-correlation-request-id": [
+          "f70c311e-4a0e-4a95-a965-aa870b734c26"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201218T020901Z:f70c311e-4a0e-4a95-a965-aa870b734c26"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 18 Dec 2020 02:09:01 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ESUdJVEFMVFdJTlNTREtSRy1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFU1VkSlZFRk1WRmRKVGxOVFJFdFNSeTFYUlZOVVZWTXlJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNeUluMD9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ESUdJVEFMVFdJTlNTREtSRy1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "d4d82d43-37af-4969-bec8-be34ad8cbddc"
+        ],
+        "x-ms-correlation-request-id": [
+          "d4d82d43-37af-4969-bec8-be34ad8cbddc"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201218T020916Z:d4d82d43-37af-4969-bec8-be34ad8cbddc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 18 Dec 2020 02:09:16 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ESUdJVEFMVFdJTlNTREtSRy1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFU1VkSlZFRk1WRmRKVGxOVFJFdFNSeTFYUlZOVVZWTXlJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNeUluMD9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ESUdJVEFMVFdJTlNTREtSRy1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "bceb592c-1772-451b-ba86-f0d693b7859e"
+        ],
+        "x-ms-correlation-request-id": [
+          "bceb592c-1772-451b-ba86-f0d693b7859e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201218T020931Z:bceb592c-1772-451b-ba86-f0d693b7859e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 18 Dec 2020 02:09:30 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ESUdJVEFMVFdJTlNTREtSRy1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFU1VkSlZFRk1WRmRKVGxOVFJFdFNSeTFYUlZOVVZWTXlJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNeUluMD9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "cb663cac-914d-44a4-a962-229dcc806184"
+        ],
+        "x-ms-correlation-request-id": [
+          "cb663cac-914d-44a4-a962-229dcc806184"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201218T020946Z:cb663cac-914d-44a4-a962-229dcc806184"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 18 Dec 2020 02:09:45 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/335edbf3-9f1f-4175-9336-8d332bea0a0e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ESUdJVEFMVFdJTlNTREtSRy1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM1ZWRiZjMtOWYxZi00MTc1LTkzMzYtOGQzMzJiZWEwYTBlL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFU1VkSlZFRk1WRmRKVGxOVFJFdFNSeTFYUlZOVVZWTXlJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wZFhNeUluMD9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-request-id": [
+          "2864d0be-1071-496b-8b9c-0488b24b9e59"
+        ],
+        "x-ms-correlation-request-id": [
+          "2864d0be-1071-496b-8b9c-0488b24b9e59"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201218T020946Z:2864d0be-1071-496b-8b9c-0488b24b9e59"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 18 Dec 2020 02:09:45 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "a386d5ea-ea90-441a-8263-d816368c84a1"
+    "SubscriptionId": "335edbf3-9f1f-4175-9336-8d332bea0a0e"
   }
 }
