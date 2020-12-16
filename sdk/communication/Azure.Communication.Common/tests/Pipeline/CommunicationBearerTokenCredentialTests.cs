@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Pipeline
 {
-    public class CommunicationTokenCredentialTests
+    public class CommunicationBearerTokenCredentialTests
     {
         private const string SampleToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjMyNTAzNjgwMDAwfQ.9i7FNNHHJT8cOzo-yrAUJyBSfJ-tPPk2emcHavOEpWc";
         private const long SampleTokenExpiry = 32503680000;
@@ -24,7 +24,7 @@ namespace Azure.Communication.Pipeline
         }
 
         [Test]
-        public async Task CommunicationTokenCredential_CreateStaticToken()
+        public async Task CommunicationBearerTokenCredential_CreateStaticToken()
         {
             var token = ExpiredToken;
 
@@ -35,7 +35,7 @@ namespace Azure.Communication.Pipeline
         }
 
         [Test]
-        public async Task CommunicationTokenCredential_CreateRefreshableWithoutInitialToken()
+        public async Task CommunicationBearerTokenCredential_CreateRefreshableWithoutInitialToken()
         {
             var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
@@ -49,7 +49,7 @@ namespace Azure.Communication.Pipeline
         }
 
         [Test]
-        public async Task CommunicationTokenCredential_CreateRefreshableWithInitialToken()
+        public async Task CommunicationBearerTokenCredential_CreateRefreshableWithInitialToken()
         {
             var initialToken = ExpiredToken;
             var tokenCredential = new CommunicationTokenCredential(
@@ -65,7 +65,7 @@ namespace Azure.Communication.Pipeline
         }
 
         [Test]
-        public async Task CommunicationTokenCredential_DecodesToken()
+        public async Task CommunicationBearerTokenCredential_DecodesToken()
         {
             var initialToken = SampleToken;
             var tokenCredential = new CommunicationTokenCredential(initialToken);
@@ -78,7 +78,7 @@ namespace Azure.Communication.Pipeline
         }
 
         [Test]
-        public void CommunicationTokenCredential_StaticTokenReturnsExpiredToken()
+        public void CommunicationBearerTokenCredential_StaticTokenReturnsExpiredToken()
         {
             var tokenCredential = new CommunicationTokenCredential(ExpiredToken);
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
@@ -88,7 +88,7 @@ namespace Azure.Communication.Pipeline
         }
 
         [Test]
-        public async Task CommunicationTokenCredential_StaticTokenAsyncReturnsExpiredToken()
+        public async Task CommunicationBearerTokenCredential_StaticTokenAsyncReturnsExpiredToken()
         {
             var tokenCredential = new CommunicationTokenCredential(ExpiredToken);
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
@@ -100,7 +100,7 @@ namespace Azure.Communication.Pipeline
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public void CommunicationTokenCredential_PassesCancelToken(bool refreshProactively)
+        public void CommunicationBearerTokenCredential_PassesCancelToken(bool refreshProactively)
         {
             var cancellationToken = new CancellationToken();
             CancellationToken? actualCancellationToken = null;
@@ -127,7 +127,7 @@ namespace Azure.Communication.Pipeline
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task CommunicationTokenCredential_PassesAsyncCancelToken(bool refreshProactively)
+        public async Task CommunicationBearerTokenCredential_PassesAsyncCancelToken(bool refreshProactively)
         {
             var cancellationToken = new CancellationToken();
             CancellationToken? actualCancellationToken = null;
