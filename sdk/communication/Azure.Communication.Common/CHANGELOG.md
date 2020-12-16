@@ -3,8 +3,8 @@
 ## 1.0.0-beta.4 (Unreleased)
 ### Breaking Changes
 - Renamed `CommunicationUserCredential` to `CommunicationTokenCredential`.
-- Replace `CommunicationTokenCredential(bool refreshProactively, Func<CancellationToken, string> tokenRefresher,Func<CancellationToken, ValueTask<string>>? asyncTokenRefresher = null, string? initialToken = null)`
-- with `CommunicationTokenCredential(CommunicationTokenRefreshOptions tokenRefreshOptions)`.
+- Replace `CommunicationTokenCredential(bool refreshProactively, Func<CancellationToken, string> tokenRefresher,Func<CancellationToken, ValueTask<string>>? asyncTokenRefresher = null, string? initialToken = null)` 
+with `CommunicationTokenCredential(CommunicationTokenRefreshOptions tokenRefreshOptions)`.
 
 ## 1.0.0-beta.3 (2020-11-16)
 Updated `Azure.Communication.Common` version.
