@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.HDInsight
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 4
 
     /// <summary>
     /// ApplicationsOperations operations.

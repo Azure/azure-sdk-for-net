@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Insights
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    // Simple Test 4
 
     /// <summary>
     /// AlertRuleIncidentsOperations operations.

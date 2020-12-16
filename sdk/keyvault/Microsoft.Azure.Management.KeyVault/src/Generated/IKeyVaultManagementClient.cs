@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.KeyVault
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
-    // Simple Test 4
 
     /// <summary>
     /// The Azure management API provides a RESTful set of web services that

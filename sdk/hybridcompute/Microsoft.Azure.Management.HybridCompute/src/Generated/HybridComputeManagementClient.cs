@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.HybridCompute
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    // Simple Test 4
 
     /// <summary>
     /// The Hybrid Compute Management Client.
