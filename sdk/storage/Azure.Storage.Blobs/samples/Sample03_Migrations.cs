@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Samples
         [Test]
         public void AuthWithTokenCredential()
         {
-            string accountUri = this.StorageAccountBlobUri.ToString();
+            string serviceUri = this.StorageAccountBlobUri.ToString();
 
             #region Snippet:SampleSnippetsBlobMigration_TokenCredential
             BlobServiceClient client = new BlobServiceClient(new Uri(serviceUri), new DefaultAzureCredential());
