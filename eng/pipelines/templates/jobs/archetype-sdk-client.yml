@@ -1,8 +1,3 @@
-parameters:
-- name: ExcludeProjects
-  type: object
-  default: []
-
 jobs:
   - job: Build
     variables:
