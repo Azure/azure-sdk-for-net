@@ -33,7 +33,7 @@ namespace Azure.Communication.Identity
             _tokenCredential = new AutoRefreshTokenCredential(
                tokenRefreshOptions.TokenRefresher,
                tokenRefreshOptions.AsyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefreshOptions.TokenRefresher(cancellationToken))),
-               tokenRefreshOptions.Token,
+               tokenRefreshOptions.UserToken,
                tokenRefreshOptions.RefreshProactively);
         }
 

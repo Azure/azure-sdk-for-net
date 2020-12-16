@@ -1532,16 +1532,49 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [Test]
-        public void CloudEventParseDoesNotThrowIfMissingRequiredProperties()
+        public void CloudEventParseDoesNotThrowIfMissingSource()
         {
-            // missing Id, Source, SpecVersion, and Type
-            string requestContent = "[{ \"subject\": \"Subject-0\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}]";
+            // missing Id, Source, SpecVersion
+            string requestContent = "[{ \"subject\": \"Subject-0\", \"type\": \"type\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}]";
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             var cloudEvent = events[0];
             Assert.IsNull(cloudEvent.Id);
             Assert.IsNull(cloudEvent.Source);
-            Assert.IsNull(cloudEvent.Type);
+            Assert.AreEqual("type", cloudEvent.Type);
             Assert.AreEqual("Subject-0", cloudEvent.Subject);
+        }
+
+        [Test]
+        public void ToCloudEventDoesNotThrowIfMissingSource()
+        {
+            // missing Id, Source, SpecVersion
+            BinaryData requestContent = new BinaryData("{ \"subject\": \"Subject-0\", \"type\": \"type\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}");
+            var cloudEvent = requestContent.ToCloudEvent();
+            Assert.IsNull(cloudEvent.Id);
+            Assert.IsNull(cloudEvent.Source);
+            Assert.AreEqual("type", cloudEvent.Type);
+            Assert.AreEqual("Subject-0", cloudEvent.Subject);
+        }
+
+        [Test]
+        public void CloudEventParseThrowsIfMissingType()
+        {
+            // missing Id, Source, SpecVersion, and Type
+            string requestContent = "[{ \"subject\": \"Subject-0\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}]";
+
+            Assert.That(
+                () => CloudEvent.Parse(requestContent),
+                Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void ToCloudEventThrowsIfMissingType()
+        {
+            // missing Id, Source, SpecVersion, and Type
+            BinaryData requestContent = new BinaryData("{ \"subject\": \"Subject-0\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}");
+            Assert.That(
+                () => requestContent.ToCloudEvent(),
+                Throws.InstanceOf<ArgumentNullException>());
         }
         #endregion
 
@@ -1602,7 +1635,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeCloudEventWithNoData()
         {
-            string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",\"specversion\":\"1.0\"}]";
+            string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"type\":\"type\",\"source\":\"Subject-0\",\"specversion\":\"1.0\"}]";
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             var eventData1 = events[0].GetData<object>();
@@ -1610,13 +1643,13 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual(eventData2, null);
-            Assert.IsNull(events[0].Type);
+            Assert.AreEqual("type", events[0].Type);
         }
 
         [Test]
         public void ConsumeCloudEventWithExplicitlyNullData()
         {
-            string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\", \"data\":null, \"specversion\":\"1.0\"}]";
+            string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\", \"type\":\"type\", \"source\":\"Subject-0\", \"data\":null, \"specversion\":\"1.0\"}]";
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             var eventData1 = events[0].GetData<object>();
@@ -1624,7 +1657,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual(eventData2, null);
-            Assert.IsNull(events[0].Type);
+            Assert.AreEqual("type", events[0].Type);
         }
         #endregion
 

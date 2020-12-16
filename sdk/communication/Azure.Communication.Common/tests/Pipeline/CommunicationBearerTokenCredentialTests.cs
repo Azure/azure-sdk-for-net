@@ -39,10 +39,11 @@ namespace Azure.Communication.Pipeline
         {
             var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
-                    refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-                    tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
-                    asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken))
-                );
+                refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
+                tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
+                asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
+                )
+            );
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
 
             await communicationBearerTokenCredential.GetTokenAsync(MockTokenRequestContext(), CancellationToken.None);
@@ -54,11 +55,12 @@ namespace Azure.Communication.Pipeline
             var initialToken = ExpiredToken;
             var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
-                    refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-                    tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
-                    asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken),
-                    initialToken)
-                );
+                refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
+                tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
+                asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken),
+                initialToken
+                )
+            );
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
 
             await communicationBearerTokenCredential.GetTokenAsync(MockTokenRequestContext(), CancellationToken.None);
@@ -110,7 +112,8 @@ namespace Azure.Communication.Pipeline
                     refreshProactively,
                     RefreshToken,
                     c => new ValueTask<string>(RefreshToken(c)),
-                    ExpiredToken)
+                    ExpiredToken
+                    )
                 );
 
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
@@ -137,7 +140,8 @@ namespace Azure.Communication.Pipeline
                     refreshProactively,
                     RefreshToken,
                     c => new ValueTask<string>(RefreshToken(c)),
-                    ExpiredToken)
+                    ExpiredToken
+                    )
                 );
 
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
