@@ -18,7 +18,9 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.EventHubs --version 5.0.0-
 
 - **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
-[![Deploy button](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fevent hub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
+- **Azure Storage account with blob storage:** To persist checkpoints as blobs in Azure Storage, you'll need to have an Azure Storage account with blobs available.  If you are not familiar with Azure Storage accounts, you may wish to follow the step-by-step guide for [creating a storage account using the Azure portal](https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=azure-portal).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create storage accounts.
+
+[![Deploy button](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.Processor%2Fassets%2Fsamples-azure-deploy.json)
 
 ### Authenticate the Client
 
@@ -26,11 +28,14 @@ For the Event Hubs client library to interact with an Event Hub, it will need to
 
 The `Connection` property of `EventHubAttribute` and `EventHubTriggerAttribute` is used to specify the configuration property that stores the connection string.
 
+The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information.
+
 For the local development use the `local.settings.json` file to store the connection string:
 
 ```json
 {
   "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "<connection_name>": "Endpoint=sb://<event_hub_name>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Jya7Eh76HU92ibsxuk1ITN8CM8Bt76YLKf5ISjU3jZ8="
   }
 }
@@ -46,6 +51,7 @@ To use managed identity provide the `<connection_name>__fullyQualifiedNamespace`
 ```json
 {
   "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "<connection_name>__fullyQualifiedNamespace": "<event_hub_name>.servicebus.windows.net"
   }
 }
