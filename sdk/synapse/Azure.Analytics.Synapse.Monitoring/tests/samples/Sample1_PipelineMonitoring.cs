@@ -15,14 +15,17 @@ namespace Azure.Analytics.Synapse.Samples
     /// <summary>
     /// This sample demonstrates how to monitor pipeline runs using synchronous methods of <see cref="MonitoringClient"/>.
     /// </summary>
-    public partial class PipelineMonitoring
+    public partial class Sample1_PipelineMonitoring : SampleFixture
     {
         [Test]
         public void MonitorPipelineRuns()
         {
+            #region Snippet:CreateMonitoringClient
             string endpoint = TestEnvironment.EndpointUrl;
             MonitoringClient client = new MonitoringClient(new Uri(endpoint), new DefaultAzureCredential());
+            #endregion
 
+            #region Snippet:GetSparkJobList
             SparkJobListViewResponse sparkJobList = client.GetSparkJobList();
             foreach (var sparkJob in sparkJobList.SparkJobs)
             {
@@ -35,6 +38,11 @@ namespace Azure.Analytics.Synapse.Samples
                     Console.WriteLine ($"{sparkJob.Name} has been in {sparkJob.State} for {sparkJob.QueuedDuration}");
                 }
             }
+            #endregion
+
+            #region Snippet:GetSqlJobQueryString
+            SqlQueryStringDataModel sqlQuery = client.GetSqlJobQueryString();
+            #endregion
         }
     }
 }
