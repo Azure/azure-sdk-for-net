@@ -1,6 +1,6 @@
 # Create, Retrieve and Delete a Synapse Role Assignment
 
-This sample demonstrates basic operations with two core classes in this library: AccessControlClient and RoleAssignmentDetails. AccessControlClient is used to call the Azure Synapse service - each method call sends a request to the service's REST API. RoleAssignmentDetails is an entity that represents a role assignment within Synapse. The sample walks through the basics of adding, retrieving, and deleting role assignment. To get started, you'll need a connection string to the Azure Synapse. See the README for links and instructions.
+This sample demonstrates basic operations with two core classes in this library: AccessControlClient and RoleAssignmentDetails. AccessControlClient is used to call the Azure Synapse service - each method call sends a request to the service's REST API. RoleAssignmentDetails is an entity that represents a role assignment within Synapse. The sample walks through the basics of adding, retrieving, and deleting role assignment. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
 
 ## Create access control client
 
@@ -36,7 +36,7 @@ RoleAssignmentDetails roleAssignmentAdded = response.Value;
 
 ## Retrieve a role assignment
 
-You can retrieve the details of assignment by calling `GetRoleAssignmentById`, passing in the given assignment ID.
+You can retrieve the details of assignment by calling `GetRoleAssignmentById`, passing in the respective assignment ID.
 
 ```C# Snippet:RetrieveRoleAssignment
 RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(roleAssignmentAdded.Id);
@@ -57,7 +57,7 @@ foreach (RoleAssignmentDetails assignment in roleAssignments.Value)
 
 ## Delete a role assignment
 
-To delete a role assignment no longer needed you can call `DeleteRoleAssignmentById`. deletes a role assignment by the given role assignment ID.
+To delete a role assignment no longer needed you can call `DeleteRoleAssignmentById`, passing in the respective assignment ID.
 
 ```C# Snippet:DeleteRoleAssignment
 client.DeleteRoleAssignmentById(roleAssignment.Id);
