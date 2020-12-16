@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.ResourceGraph
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 6
 
     /// <summary>
     /// Operations operations.
