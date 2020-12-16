@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    // Simple Test 6
 
     /// <summary>
     /// AadPropertiesOperations operations.
