@@ -26,7 +26,9 @@
     <PackageReference Update="Microsoft.ServiceFabric.Services" Version="3.3.624" />
     <PackageReference Update="Microsoft.ServiceFabric" Version="6.4.624" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
+
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
+
     <PackageReference Update="System.Collections.Concurrent" Version="4.3.0" />
     <PackageReference Update="System.Collections" Version="4.3.0" />
     <PackageReference Update="System.Data.SqlClient" Version="4.3.1" />
@@ -44,6 +46,7 @@
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
+
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
