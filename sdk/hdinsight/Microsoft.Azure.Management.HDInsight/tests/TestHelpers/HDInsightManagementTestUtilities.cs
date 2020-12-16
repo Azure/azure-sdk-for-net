@@ -304,7 +304,7 @@ namespace Management.HDInsight.Tests
                                 TargetInstanceCount = 3,
                                 HardwareProfile = new HardwareProfile
                                 {
-                                    VmSize = "Large"
+                                    VmSize = "Small"
                                 },
                                 OsProfile = new OsProfile
                                 {
