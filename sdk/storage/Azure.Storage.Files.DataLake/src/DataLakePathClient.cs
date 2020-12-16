@@ -2932,7 +2932,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
-                            permissions: permissions.ToSymbolicPermissions(),
+                            permissions: permissions?.ToSymbolicPermissions(),
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             ifModifiedSince: conditions?.IfModifiedSince,
