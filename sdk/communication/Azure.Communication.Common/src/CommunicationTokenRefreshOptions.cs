@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.Communication.Identity
+namespace Azure.Communication
 {
     /// <summary>
     /// The Communication Token Refresh Options
@@ -16,7 +16,7 @@ namespace Azure.Communication.Identity
         internal bool RefreshProactively { get; }
         internal Func<CancellationToken, string> TokenRefresher { get; }
         internal Func<CancellationToken, ValueTask<string>>? AsyncTokenRefresher { get; }
-        internal string? UserToken { get; }
+        internal string? Token { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationTokenRefreshOptions"/>.
@@ -24,17 +24,17 @@ namespace Azure.Communication.Identity
         /// <param name="refreshProactively">Indicates whether the token should be proactively renewed prior to expiry or renew on demand.</param>
         /// <param name="tokenRefresher">The function that provides the token acquired from the configurtaion SDK.</param>
         /// <param name="asyncTokenRefresher">The async function that provides the token acquired from the configurtaion SDK.</param>
-        /// <param name="userToken">Optional token value.</param>
+        /// <param name="token">Optional token value.</param>
         public CommunicationTokenRefreshOptions(
             bool refreshProactively,
             Func<CancellationToken, string> tokenRefresher,
             Func<CancellationToken, ValueTask<string>>? asyncTokenRefresher,
-            string? userToken = null)
+            string? token = null)
         {
             RefreshProactively = refreshProactively;
             TokenRefresher = tokenRefresher;
             AsyncTokenRefresher = asyncTokenRefresher;
-            UserToken = userToken;
+            Token = token;
         }
     }
 }

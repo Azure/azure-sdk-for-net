@@ -102,7 +102,7 @@ namespace Azure.Communication.Identity
 
         [Test]
         public void CommunicationTokenCredential_ThrowsIfTokenIsNull()
-            => Assert.Throws<ArgumentNullException>(() => new CommunicationTokenCredential(userToken: null!));
+            => Assert.Throws<ArgumentNullException>(() => new CommunicationTokenCredential(token: null!));
 
         [Test]
         [TestCase(false)]

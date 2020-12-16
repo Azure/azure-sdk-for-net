@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Identity;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -20,9 +20,9 @@ namespace Azure.Communication
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationTokenCredential"/>.
         /// </summary>
-        /// <param name="userToken">User token acquired from Azure.Communication.Administration package.</param>
-        public CommunicationTokenCredential(string userToken)
-            => _tokenCredential = new StaticTokenCredential(userToken);
+        /// <param name="token">User token acquired from Azure.Communication.Administration package.</param>
+        public CommunicationTokenCredential(string token)
+            => _tokenCredential = new StaticTokenCredential(token);
 
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationTokenCredential"/> that automatically renews the token upon expiry or proactively prior to expiration to speed up the requests.
@@ -34,7 +34,7 @@ namespace Azure.Communication
             _tokenCredential = new AutoRefreshTokenCredential(
                tokenRefreshOptions.TokenRefresher,
                tokenRefreshOptions.AsyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefreshOptions.TokenRefresher(cancellationToken))),
-               tokenRefreshOptions.UserToken,
+               tokenRefreshOptions.Token,
                tokenRefreshOptions.RefreshProactively);
         }
 
