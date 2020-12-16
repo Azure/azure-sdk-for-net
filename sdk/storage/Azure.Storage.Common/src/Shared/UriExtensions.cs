@@ -77,7 +77,8 @@ namespace Azure.Storage
             GetAccountNameFromDomain(uri.Host, serviceSubDomain);
 
         /// <summary>
-        /// Get the account name from the host.
+        /// Get the account name from the host. We assume the storage account name characters
+        /// before the service subdomain section.
         /// </summary>
         /// <param name="host">Host.</param>
         /// <param name="serviceSubDomain">The service subdomain used to validate that the
@@ -86,19 +87,11 @@ namespace Azure.Storage
         /// <returns>Account name or null if not able to be parsed.</returns>
         public static string GetAccountNameFromDomain(string host, string serviceSubDomain)
         {
-            var accountEndIndex = host.IndexOf(".", StringComparison.InvariantCulture);
+            string subDomainPeriodAdded = '.' + serviceSubDomain + '.';
+            var accountEndIndex = host.IndexOf(subDomainPeriodAdded, StringComparison.InvariantCulture);
             if (accountEndIndex >= 0)
             {
-                var serviceStartIndex = accountEndIndex + 1;
-                var serviceEndIndex = host.IndexOf(".", serviceStartIndex, StringComparison.InvariantCulture);
-                if (serviceEndIndex > serviceStartIndex)
-                {
-                    var service = host.Substring(serviceStartIndex, serviceEndIndex - serviceStartIndex);
-                    if (service == serviceSubDomain)
-                    {
-                        return host.Substring(0, accountEndIndex);
-                    }
-                }
+                return host.Substring(0, accountEndIndex);
             }
             return null;
         }

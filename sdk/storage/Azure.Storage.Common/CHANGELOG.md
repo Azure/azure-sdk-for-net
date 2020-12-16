@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.7.0-beta.2 (Unreleased)
-
+- Fixed bug where parsing an Account Name that is partioned was returning an empty account name when building the full Uri
 
 ## 12.7.0-beta.1 (2020-12-07)
 - This release contains bug fixes to improve quality.

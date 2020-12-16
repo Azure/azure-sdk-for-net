@@ -96,24 +96,28 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void DataLakeUriBuilder_PartitionedAccountName()
+        {
+            var datalakeUriBuilder = new DataLakeUriBuilder(new Uri("https://account.zone.blob.core.windows.net/share/dir"));
+
+            Assert.AreEqual("account.zone", datalakeUriBuilder.AccountName);
+        }
+
+        [Test]
         public void DataLakeUriBuilder_MalformedSubdomain()
         {
-            // core and file swapped
-            var datalakeUriBuilder1 = new DataLakeUriBuilder(new Uri("https://account.core.blob.windows.net/share/dir"));
-
             // account and file swapped
-            var datalakeUriBuilder2 = new DataLakeUriBuilder(new Uri("https://blob.account.core.windows.net/share/dir"));
+            var datalakeUriBuilder1 = new DataLakeUriBuilder(new Uri("https://blob.account.core.windows.net/share/dir"));
 
             // wrong service
-            var datalakeUriBuilder3 = new DataLakeUriBuilder(new Uri("https://account.queue.core.windows.net/share/dir"));
+            var datalakeUriBuilder2 = new DataLakeUriBuilder(new Uri("https://account.queue.core.windows.net/share/dir"));
 
             // empty service
-            var datalakeUriBuilder4 = new DataLakeUriBuilder(new Uri("https://account./share/dir"));
+            var datalakeUriBuilder3 = new DataLakeUriBuilder(new Uri("https://account./share/dir"));
 
             Assert.AreEqual(string.Empty, datalakeUriBuilder1.AccountName);
             Assert.AreEqual(string.Empty, datalakeUriBuilder2.AccountName);
             Assert.AreEqual(string.Empty, datalakeUriBuilder3.AccountName);
-            Assert.AreEqual(string.Empty, datalakeUriBuilder4.AccountName);
         }
 
         [Test]
