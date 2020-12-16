@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    // Simple Test 4
 
     /// <summary>
     /// Azure Healthcare APIs Client
