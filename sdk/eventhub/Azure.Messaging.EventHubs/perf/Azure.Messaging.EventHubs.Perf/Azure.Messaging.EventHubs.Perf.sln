@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Perf", "Azure.Messaging.EventHubs.Perf\Azure.Messaging.EventHubs.Perf.csproj", "{5E5FEAF1-F630-4619-B268-7CCF289C8DD5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{6806BEC3-6DB2-4F63-B923-8A73DE89CD78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\..\..\core\Azure.Core\src\Azure.Core.csproj", "{58373DE8-7FE1-40C9-A3B3-606DEF687E2E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs", "..\..\src\Azure.Messaging.EventHubs.csproj", "{7DEE867D-6DE7-41AB-9FAF-83E870F96144}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E5FEAF1-F630-4619-B268-7CCF289C8DD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E5FEAF1-F630-4619-B268-7CCF289C8DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E5FEAF1-F630-4619-B268-7CCF289C8DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E5FEAF1-F630-4619-B268-7CCF289C8DD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6806BEC3-6DB2-4F63-B923-8A73DE89CD78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6806BEC3-6DB2-4F63-B923-8A73DE89CD78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6806BEC3-6DB2-4F63-B923-8A73DE89CD78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6806BEC3-6DB2-4F63-B923-8A73DE89CD78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58373DE8-7FE1-40C9-A3B3-606DEF687E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58373DE8-7FE1-40C9-A3B3-606DEF687E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58373DE8-7FE1-40C9-A3B3-606DEF687E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58373DE8-7FE1-40C9-A3B3-606DEF687E2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DEE867D-6DE7-41AB-9FAF-83E870F96144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DEE867D-6DE7-41AB-9FAF-83E870F96144}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DEE867D-6DE7-41AB-9FAF-83E870F96144}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DEE867D-6DE7-41AB-9FAF-83E870F96144}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {63CC810D-E0CE-457E-8EC2-E304C7098073}
+	EndGlobalSection
+EndGlobal
