@@ -11,13 +11,13 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Samples
 {
-    public partial class Snippets : SampleFixture
+    public partial class ManagedPrivateEndpointSample : SampleFixture
     {
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         public void TestManagedPrivateEndpoint()
         {
-            #region Snippet:CreateClient
+            #region Snippet:CreateManagedPrivateClient
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
             /*@@*/endpoint = TestEnvironment.EndpointUrl;

@@ -67,51 +67,63 @@ The Azure.Analytics.Synapse.AccessControl package supports synchronous and async
 
 ### Create access control client
 
-`CreateAccessControlClient` creates a role assignment.
+To interact with Azure Synapse, you need to instantiate a CreateAccessControlClient. It requires an endpoint URL and a TokenCredential.
 
 ```C# Snippet:CreateAccessControlClient
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
-AccessControlClient client = new AccessControlClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
+
+AccessControlClient client = new AccessControlClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ### Create a role assignment
 
-`CreateRoleAssignment` creates a role assignment.
+First, you need to the determine the ID of the role you wish to assign, along with the ID of the principal you wish to assign that role.
+
+```C# Snippet:PrepCreateRoleAssignment
+Pageable<SynapseRole> roles = client.GetRoleDefinitions();
+SynapseRole role = roles.Single(role => role.Name == "Workspace Admin");
+string roleID = role.Id;
+
+// Replace the string below with the ID you'd like to assign the role
+string principalId = "<my-principal-id>";
+```
+
+Then create an instance of `RoleAssignmentOptions` with the requested values. Finally call `CreateRoleAssignment` with the options to create the role assignment.
 
 ```C# Snippet:CreateRoleAssignment
-Pageable<SynapseRole> roles = client.GetRoleDefinitions();
-SynapseRole sqlAdminRole = roles.Single(role => role.Name == "Sql Admin");
-
-RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRole.Id, principalId);
-RoleAssignmentDetails createdRoleAssignment = client.CreateRoleAssignment(options);
+RoleAssignmentOptions request = new RoleAssignmentOptions(roleID, principalId);
+Response<RoleAssignmentDetails> response = client.CreateRoleAssignment(request);
+RoleAssignmentDetails roleAssignmentAdded = response.Value;
 ```
 
 ### Retrieve a role assignment
 
-`GetRoleAssignmentById` retrieves a role assignment by the given assignment ID.
+You can retrieve the details of assignment by calling `GetRoleAssignmentById`, passing in the given assignment ID.
 
 ```C# Snippet:RetrieveRoleAssignment
-RoleAssignmentDetails retrievedRoleAssignment = client.GetRoleAssignmentById(createdRoleAssignment.Id);
+RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(roleAssignmentAdded.Id);
+Console.WriteLine($"Role {roleAssignment.RoleId} is assigned to {roleAssignment.PrincipalId}.");
 ```
 
 ### List role assignments
-`GetRoleAssignments` enumerates the role assignments in the Synapse workspace.
+
+To enumerate all role assignments in the Synapse workspace you can call `GetRoleAssignments`.
 
 ```C# Snippet:ListRoleAssignments
-IReadOnlyList<RoleAssignmentDetails> roleAssignments = client.GetRoleAssignments().Value;
-foreach (RoleAssignmentDetails roleAssignment in roleAssignments)
+Response<IReadOnlyList<RoleAssignmentDetails>> roleAssignments = client.GetRoleAssignments();
+foreach (RoleAssignmentDetails assignment in roleAssignments.Value)
 {
-    Console.WriteLine(roleAssignment.Id);
+    Console.WriteLine(assignment.Id);
 }
 ```
 
 ### Delete a role assignment
 
-`DeleteRoleAssignmentById` deletes a role assignment by the given principal ID.
+To delete a role assignment no longer needed you can call `DeleteRoleAssignmentById`. deletes a role assignment by the given role assignment ID.
 
 ```C# Snippet:DeleteRoleAssignment
-client.DeleteRoleAssignmentById(retrievedRoleAssignment.Id);
+client.DeleteRoleAssignmentById(roleAssignment.Id);
 ```
 
 ## To build

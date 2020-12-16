@@ -61,18 +61,9 @@ The Azure.Analytics.Synapse.Artifacts package supports synchronous and asynchron
 `CreateOrUpdateNotebook` creates a notebook.
 
 ```C# Snippet:CreateNotebook
-Notebook newNotebook = new Notebook(
-    new NotebookMetadata
-    {
-        LanguageInfo = new NotebookLanguageInfo(name: "Python")
-    },
-    nbformat: 4,
-    nbformatMinor: 2,
-    new List<NotebookCell>()
-);
-string notebookName = "MyNotebook";
-NotebookCreateOrUpdateNotebookOperation operation = client.StartCreateOrUpdateNotebook(notebookName, new NotebookResource(notebookName, newNotebook));
-Response<NotebookResource> createdNotebook = await operation.WaitForCompletionAsync();
+NotebookCreateOrUpdateNotebookOperation operation = await client.StartCreateOrUpdateNotebookAsync(notebookName, notebookResource);
+await operation.WaitForCompletionAsync();
+Console.WriteLine("Notebook is created");
 ```
 
 ### Retrieve a notebook
@@ -80,7 +71,7 @@ Response<NotebookResource> createdNotebook = await operation.WaitForCompletionAs
 `GetNoteBook` retrieves a notebook.
 
 ```C# Snippet:RetrieveNotebook
-NotebookResource retrievedNotebook = client.GetNotebook("MyNotebook");
+NotebookResource retrievedNotebook = client.GetNotebook(notebookName);
 ```
 
 ### List notebooks
@@ -90,7 +81,7 @@ NotebookResource retrievedNotebook = client.GetNotebook("MyNotebook");
 Pageable<NotebookResource> notebooks = client.GetNotebooksByWorkspace();
 foreach (NotebookResource notebook in notebooks)
 {
-    System.Console.WriteLine(notebook.Name);
+    Console.WriteLine(notebook.Name);
 }
 ```
 
@@ -99,7 +90,7 @@ foreach (NotebookResource notebook in notebooks)
 `DeleteNotebook` deletes a notebook.
 
 ```C# Snippet:DeleteNotebook
-client.StartDeleteNotebook("MyNotebook");
+client.StartDeleteNotebook(notebookName);
 ```
 
 ## To build

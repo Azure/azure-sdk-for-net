@@ -15,20 +15,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         [Test]
         public async Task DataFlowSample()
         {
-            #region Snippet:CreateDataFlowClient
+            #region Snippet:CreateDataFlowClientPrep
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
             /*@@*/endpoint = TestEnvironment.EndpointUrl;
+
+            string dataFlowName = "Test-DataFlow";
+            #endregion
+
+            #region Snippet:CreateDataFlowClient
             DataFlowClient client = new DataFlowClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateDataFlow
-            DataFlowCreateOrUpdateDataFlowOperation operation = client.StartCreateOrUpdateDataFlow("MyDataFlow", new DataFlowResource(new DataFlow()));
+            DataFlowCreateOrUpdateDataFlowOperation operation = client.StartCreateOrUpdateDataFlow(dataFlowName, new DataFlowResource(new DataFlow()));
             Response<DataFlowResource> createdDataflow = await operation.WaitForCompletionAsync();
             #endregion
 
             #region Snippet:RetrieveDataFlow
-            DataFlowResource retrievedDataflow = client.GetDataFlow("MyDataFlow");
+            DataFlowResource retrievedDataflow = client.GetDataFlow(dataFlowName);
             #endregion
 
             #region Snippet:ListDataFlows
@@ -40,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:DeleteDataFlow
-            client.StartDeleteDataFlow("MyDataFlow");
+            client.StartDeleteDataFlow(dataFlowName);
             #endregion
         }
     }

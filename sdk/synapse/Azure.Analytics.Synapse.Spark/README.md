@@ -71,10 +71,10 @@ foreach (SparkBatchJob job in jobs.Value.Sessions)
 ### Create spark batch job
 Create spark batch job under specific workspace and spark pool.
 
-```C# Snippet:CreateBatchJob
-string name = $"batchSample";
+```C# Snippet:SubmitSparkBatchJob
+string name = $"batch-{Guid.NewGuid()}";
 string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/wordcount.jar", fileSystem, storageAccount);
-SparkBatchJobOptions options = new SparkBatchJobOptions(name: name, file: file)
+SparkBatchJobOptions request = new SparkBatchJobOptions(name, file)
 {
     ClassName = "WordCount",
     Arguments =
@@ -89,16 +89,14 @@ SparkBatchJobOptions options = new SparkBatchJobOptions(name: name, file: file)
     ExecutorCount = 2
 };
 
-SparkBatchJob jobCreated = client.CreateSparkBatchJob(options);
+SparkBatchJob jobCreated = client.CreateSparkBatchJob(request);
 ```
 
 ### Cancel spark batch job
 Cancel a Spark batch job with Spark batch id under specific workspace and Spark pool.
 
 ```C# Snippet:DeleteSparkBatchJob
-// Replace the integer below with your actual job ID.
-string jobId = 0;
-Response operation = client.CancelSparkBatchJob(jobId);
+Response operation = client.CancelSparkBatchJob(jobCreated.Id);
 ```
        
 ## To build

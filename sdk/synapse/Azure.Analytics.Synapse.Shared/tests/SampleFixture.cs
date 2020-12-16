@@ -25,6 +25,7 @@ namespace Azure.Analytics.Synapse.Samples
     public partial class ExecuteSparkStatement : SampleFixture { }
     public partial class AddAndRemoveRoleAssignment : SampleFixture { }
     public partial class ExecutePipelines : SampleFixture { }
+    public partial class CreatePipelines : SampleFixture { }
     public partial class NotebookSample : SampleFixture { }
     public partial class PipelineMonitoring : SampleFixture { }
 
