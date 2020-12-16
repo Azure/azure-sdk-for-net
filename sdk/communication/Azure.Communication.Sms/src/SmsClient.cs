@@ -45,7 +45,7 @@ namespace Azure.Communication.Sms
         private SmsClient(SmsClientOptions options, ConnectionString connectionString)
             : this(
                   clientDiagnostics: new ClientDiagnostics(options),
-                  pipeline: options.BuildHttpPipline(connectionString),
+                  pipeline: options.BuildHttpPipeline(connectionString),
                   endpointUrl: connectionString.GetRequired("endpoint"),
                   apiVersion: options.ApiVersion)
         { }

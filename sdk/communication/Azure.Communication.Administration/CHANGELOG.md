@@ -2,6 +2,8 @@
 
 ## 1.0.0-beta.4 (Unreleased)
 
+### Added
+- Added support to create CommunicationIdentityClient with TokenCredential
 ### Fixed
 - Issue with paging results not pulling next pages
 

@@ -29,14 +29,32 @@ namespace Azure.Communication.Administration
                   options ?? new CommunicationIdentityClientOptions(),
                   ConnectionString.Parse(AssertNotNull(connectionString, nameof(connectionString))))
         { }
-
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityClient"/>.</summary>
+        /// <param name="tokenCredential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CommunicationIdentityClient(Uri endpoint, TokenCredential tokenCredential, CommunicationIdentityClientOptions? options = default)
+            : this(
+                AssertNotNull(endpoint, nameof(endpoint)),
+                options ?? new CommunicationIdentityClientOptions(),
+                AssertNotNull(tokenCredential, nameof(tokenCredential)))
+        { }
         private CommunicationIdentityClient(CommunicationIdentityClientOptions options, ConnectionString connectionString)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
-                options.BuildHttpPipline(connectionString),
+                options.BuildHttpPipeline(connectionString),
                 connectionString.GetRequired("endpoint"));
+        }
+
+        private CommunicationIdentityClient(Uri endpoint, CommunicationIdentityClientOptions options, TokenCredential tokenCredential)
+        {
+            _clientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new CommunicationIdentityRestClient(
+                _clientDiagnostics,
+                options.BuildHttpPipeline(tokenCredential),
+                endpoint.AbsoluteUri);
         }
 
         /// <summary>Initializes a new instance of <see cref="CommunicationIdentityClient"/> for mocking.</summary>
