@@ -57,7 +57,7 @@ Add a package reference:
 - You must have an account with an [Azure Mixed Reality service](https://azure.microsoft.com/topic/mixed-reality/):
   - [Azure Remote Rendering](https://docs.microsoft.com/azure/remote-rendering/)
   - [Azure Spatial Anchors](https://docs.microsoft.com/azure/spatial-anchors/)
-- Familiarity with the authentication and credential concepts from [Azure.Identity](../../identity/Azure.Identity/README.md).
+- Familiarity with the authentication and credential concepts from [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md).
 
 ### Authenticate the client
 
@@ -79,7 +79,7 @@ See [here](https://docs.microsoft.com/azure/spatial-anchors/concepts/authenticat
 #### Authentication examples
 
 Below are some examples of some common authentication scenarios, but more examples and information can be found at
-[Azure.Identity](../../identity/Azure.Identity/README.md).
+[Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md).
 
 ##### Authenticating with account key authentication
 
@@ -161,8 +161,8 @@ See the authentication examples [above](#authenticate-the-client) for more compl
 
 ## Troubleshooting
 
-- See [Error Handling](../../identity/Azure.Identity/README.md#error-handling) for Azure.Identity.
-- See [Logging](../../identity/Azure.Identity/README.md#logging) for Azure.Identity.
+- See [Error Handling](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#error-handling) for Azure.Identity.
+- See [Logging](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#logging) for Azure.Identity.
 
 ## Next steps
 
