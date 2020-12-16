@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.ManagedNetwork
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 5
 
     /// <summary>
     /// ManagedNetworkGroupsOperations operations.

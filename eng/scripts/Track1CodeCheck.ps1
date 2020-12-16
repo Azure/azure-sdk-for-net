@@ -102,7 +102,8 @@ try {
             }
         }
         else {
-            LogError "Can't get proper RP name with folder $item `n Please edit the readme.md or readme.csharp.md file under https://github.com/Azure/azure-rest-api-specs/tree/master/specification/<RP_Name>/resource-manager"
+            LogError "Can't get proper RP name with folder $item `n 
+            Please edit the readme.md or readme.csharp.md file under https://github.com/Azure/azure-rest-api-specs/tree/master/specification/<RP_Name>/resource-manager"
         } 
     }
     $rpIndex | ForEach-Object {

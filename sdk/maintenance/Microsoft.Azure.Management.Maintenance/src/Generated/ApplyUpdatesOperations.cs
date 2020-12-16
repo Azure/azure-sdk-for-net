@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Maintenance
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 5
 
     /// <summary>
     /// ApplyUpdatesOperations operations.
