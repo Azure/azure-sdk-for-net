@@ -38,6 +38,7 @@
     <ProjectReference Include="@(StressProjects)" Exclude="@(MgmtExcludePaths);@(ExcludePaths)" Condition="'$(IncludeStress)' == 'true'" />
     <ProjectReference Include="@(SampleApplications)" Exclude="@(MgmtExcludePaths);@(ExcludePaths)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
     <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths);@(ExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
+    <ProjectReference Remove="@(ExcludePaths)" />
   </ItemGroup>
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
