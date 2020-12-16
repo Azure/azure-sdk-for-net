@@ -65,6 +65,10 @@ namespace Azure.Analytics.Synapse.Samples
             Response operation = client.CancelSparkSession(sessionCreated.Id);
         }
 
+        // https://github.com/Azure/azure-sdk-for-net/issues/17587
+        // This code is copied from SparkTestUtilities.cs and modified, as there is no current way to monitor/poll for spark completion
+        // It belongs in a helper class, likely a LRO
+        // It is being left here only temporarily.
         private const string Error = "error";
         private const string Dead = "dead";
         private const string Success = "success";
