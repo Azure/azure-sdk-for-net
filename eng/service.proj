@@ -15,29 +15,29 @@
     </TraversalGlobalProperties>
   </PropertyGroup>
 
-  <!--
-     Exclude projects requeted by the assocaited parameter; assume each item identifies a
-     project name under the service directory and build the appropriate path mask.
-  -->
   <ItemGroup>
-    <_ExcludePathsSource Include="$(ExcludeProjects.Split('$(ExcludeProjectsDelimiter)'))" />
-    <ExcludePaths Include="@(_ExcludePathsSource -> '$(MSBuildThisFileDirectory)..\sdk\$(ServiceDirectory)\%(Identity)\**\*.csproj')" />
     <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\**\samples\**\*.csproj" />
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\**\perf\**\*.csproj" />
     <StressProjects Include="..\sdk\$(ServiceDirectory)\**\stress\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
-    <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects);@(ExcludePaths)"/>
-    <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths);@(ExcludePaths)" Condition="'$(IncludeTests)' == 'true'" />
-    <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths);@(ExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
-    <ProjectReference Include="@(PerfProjects)" Exclude="@(MgmtExcludePaths);@(ExcludePaths)" Condition="'$(IncludePerf)' == 'true'" />
-    <ProjectReference Include="@(StressProjects)" Exclude="@(MgmtExcludePaths);@(ExcludePaths)" Condition="'$(IncludeStress)' == 'true'" />
-    <ProjectReference Include="@(SampleApplications)" Exclude="@(MgmtExcludePaths);@(ExcludePaths)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
-    <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths);@(ExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
+    <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
+    <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true'" />
+    <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
+    <ProjectReference Include="@(PerfProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludePerf)' == 'true'" />
+    <ProjectReference Include="@(StressProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeStress)' == 'true'" />
+    <ProjectReference Include="@(SampleApplications)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
+    <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
+  </ItemGroup>
+
+  <!--
+     Override project inclusions and force removal of those that have been explicitly excluded by the associated parameter.
+     Assume each item identifies a project name under the service directory and build the appropriate path mask.
+  -->
+  <ItemGroup>
+    <_ExcludePathsSource Include="$(ExcludeProjects.Split('$(ExcludeProjectsDelimiter)'))" />
+    <ExcludePaths Include="@(_ExcludePathsSource -> '$(MSBuildThisFileDirectory)..\sdk\$(ServiceDirectory)\%(Identity)\**\*.csproj')" />
     <ProjectReference Remove="@(ExcludePaths)" />
   </ItemGroup>
 
