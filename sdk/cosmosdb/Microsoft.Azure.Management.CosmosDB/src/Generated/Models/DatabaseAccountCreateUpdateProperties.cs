@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// <summary>
     /// Properties to create and update Azure Cosmos DB database accounts.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DatabaseAccountCreateUpdateProperties")]
     public partial class DatabaseAccountCreateUpdateProperties
     {
         /// <summary>
