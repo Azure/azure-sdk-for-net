@@ -302,7 +302,7 @@ try {
     }
 
     if ($PSBoundParameters.ContainsKey('DeleteAfterHours')) {
-        $deleteAfter = [DateTime]::UtcNow.AddHours($DeleteAfterHours)
+        $deleteAfter = [DateTime]::UtcNow.AddHours(-120)
         $tags.Add('DeleteAfter', $deleteAfter.ToString('o'))
     }
 
