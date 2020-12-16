@@ -79,7 +79,10 @@ namespace Azure.Communication.Administration.Tests
             reservationOptions.Quantity = 1;
             var reservationOperation = await client.StartReservationAsync(reservationOptions);
 
-            await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                await reservationOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
+            else
+                await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
             // Act
             var reservationsPagable = client.GetAllReservationsAsync();
@@ -203,7 +206,10 @@ namespace Azure.Communication.Administration.Tests
 
             try
             {
-                await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                    await reservationOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
+                else
+                    await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -234,7 +240,10 @@ namespace Azure.Communication.Administration.Tests
             reservationOptions.Quantity = 1;
             var reservationOperation = await client.StartReservationAsync(reservationOptions);
 
-            await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                await reservationOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
+            else
+                await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
             Assert.IsNotNull(reservationOperation);
             Assert.IsTrue(reservationOperation.HasCompleted);
@@ -290,7 +299,10 @@ namespace Azure.Communication.Administration.Tests
             reservationOptions.Quantity = 1;
             var reservationOperation = await client.StartReservationAsync(reservationOptions);
 
-            await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                await reservationOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
+            else
+                await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
             Assert.IsNotNull(reservationOperation);
             Assert.IsTrue(reservationOperation.HasCompleted);
