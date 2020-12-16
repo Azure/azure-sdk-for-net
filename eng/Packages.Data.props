@@ -123,6 +123,7 @@
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
@@ -176,7 +177,6 @@
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.8.0" />
-    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.4.0]" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.7, 2.0.0)" />
     <PackageReference Update="Microsoft.ServiceFabric.Data" Version="3.3.624" />
