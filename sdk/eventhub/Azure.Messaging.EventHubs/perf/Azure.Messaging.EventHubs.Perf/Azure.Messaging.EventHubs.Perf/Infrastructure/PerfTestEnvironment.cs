@@ -4,7 +4,7 @@
 using System;
 using Azure.Core.TestFramework;
 
-namespace Azure.Storage.Files.Shares.Perf
+namespace Azure.Messafging.EventHub.Perf
 {
     /// <summary>
     /// Represents the ambient environment in which the test suite is being run, offering access to information such as environment variables.
@@ -19,11 +19,11 @@ namespace Azure.Storage.Files.Shares.Perf
         /// <summary>
         /// The name of the EventHub to test against.
         /// </summary>
-        /// <value>The Files Shares storage account name, read from the "AZURE_STORAGE_ACCOUNT_NAME" environment variable.</value>
+        /// <value>The EventHub name, read from the "EVENTHUB_NAME" environment variable.</value>
         public string EventHubName => GetVariable("EVENTHUB_NAME");
 
         /// <summary>
-        /// The connection string for accessing the Files Shares storage account used for testing.
+        /// The connection string for accessing the Azure EventHubs used for testing.
         /// </summary>
         public string EventHubConnectionString => GetVariable("EVENTHUB_CONNECTION_STRING");
 

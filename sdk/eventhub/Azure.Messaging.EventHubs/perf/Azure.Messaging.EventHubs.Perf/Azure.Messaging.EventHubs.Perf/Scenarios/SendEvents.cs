@@ -2,18 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Producer;
-using Azure.Storage.Files.Shares.Perf;
 using Azure.Test.Perf;
 
 namespace Azure.Messafging.EventHub.Perf.Scenarios
 {
     /// <summary>
-    /// The performance test scenario focused on downloading files from the Azure Files Shares storage.
+    /// The performance test scenario focused on sending events to Azure EventHubs.
     /// </summary>
     /// <seealso cref="Azure.Test.Perf.PerfTest{SizeOptions}" />
     public sealed class SendEvents : PerfTest<EventHubsPerfOptions>
@@ -65,7 +63,7 @@ namespace Azure.Messafging.EventHub.Perf.Scenarios
         }
 
         /// <summary>
-        /// Downloads a file from the Azure Shares files storage by calling <see cref="ShareFileClient.Download(HttpRange, bool, CancellationToken)"/>.
+        /// Method Not Supported
         /// </summary>
         /// <param name="cancellationToken">The token used to signal cancellation request.</param>
         public override void Run(CancellationToken cancellationToken)
@@ -74,7 +72,7 @@ namespace Azure.Messafging.EventHub.Perf.Scenarios
         }
 
         /// <summary>
-        /// Downloads a file from the Azure Shares files storage by calling <see cref="ShareFileClient.DownloadAsync(HttpRange, bool, CancellationToken)"/>.
+        /// Send Events TO Azure EventHubs by calling <see cref="EventHubProducerClient.SendAsync(EventData, CancellationToken)"/>.
         /// </summary>
         /// <param name="cancellationToken">The token used to signal cancellation request.</param>
         public override async Task RunAsync(CancellationToken cancellationToken)
