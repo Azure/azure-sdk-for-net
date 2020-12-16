@@ -25,7 +25,6 @@ extends:
   parameters:
     ServiceDirectory: mixedreality
     ArtifactName: packages
-    TestPipeline: true
     Artifacts:
     - name: Azure.MixedReality.Authentication
       safeName: AzureMixedRealityAuthentication
