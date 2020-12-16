@@ -26,6 +26,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         {
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
         public async Task TestGetNotebook()
         {

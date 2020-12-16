@@ -16,12 +16,21 @@ namespace Azure.Analytics.Synapse.Samples
     /// </summary>
     public partial class ExecutePipelines
     {
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
         public async Task CreateAndRunPipeline()
         {
             const string PipelineName = "Test-Pipeline";
+
+            await CreatePipeline(PipelineName);
+            await RunPipeline(PipelineName);
+        }
+
+        private async Task CreatePipeline (string pipelineName)
+        {
             const string JobName = "SparkJobName";
             const string ActivityName = "ActivityName";
+
             string endpoint = TestEnvironment.EndpointUrl;
 
             var pipelineClient = new PipelineClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
@@ -32,24 +41,19 @@ namespace Azure.Analytics.Synapse.Samples
             pipelineResource.Activities.Add(activity);
 
             Console.WriteLine("Create pipeline if not already exists.");
-            await pipelineClient.StartCreateOrUpdatePipelineAsync(PipelineName, pipelineResource);
+            PipelineCreateOrUpdatePipelineOperation operation = await pipelineClient.StartCreateOrUpdatePipelineAsync(pipelineName, pipelineResource);
+            await operation.WaitForCompletionAsync ();
             Console.WriteLine("Pipeline created");
-
-            Console.WriteLine("Running pipeline.");
-            CreateRunResponse runOperation = await pipelineClient.CreatePipelineRunAsync(PipelineName);
-            Console.WriteLine("Run started. ID: {0}", runOperation.RunId);
         }
 
-        [Test]
-        public async Task RunPipeline()
+        private async Task RunPipeline(string pipelineName)
         {
-            const string PipelineName = "Test-Pipeline";
             string endpoint = TestEnvironment.EndpointUrl;
 
             var pipelineClient = new PipelineClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 
             Console.WriteLine("Running pipeline.");
-            CreateRunResponse runOperation = await pipelineClient.CreatePipelineRunAsync(PipelineName);
+            CreateRunResponse runOperation = await pipelineClient.CreatePipelineRunAsync(pipelineName);
             Console.WriteLine("Run started. ID: {0}", runOperation.RunId);
         }
     }
