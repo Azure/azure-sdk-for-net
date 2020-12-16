@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 3
 
     /// <summary>
     /// DpsCertificateOperations operations.

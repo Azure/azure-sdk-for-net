@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.DeploymentManager
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 3
 
     /// <summary>
     /// ArtifactSourcesOperations operations.
