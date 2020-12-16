@@ -10,9 +10,11 @@ trigger:
     include:
     - sdk/eventhub/
     exclude:
+    - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/eventhub/Microsoft.Azure.EventHubs
     - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
     - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
+    - sdk/eventhub/Microsoft.Azure.Management.EventHub
 pr:
   branches:
     include:
@@ -24,9 +26,11 @@ pr:
     include:
     - sdk/eventhub/
     exclude:
+    - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/eventhub/Microsoft.Azure.EventHubs
     - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
     - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
+    - sdk/eventhub/Microsoft.Azure.Management.EventHub
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
