@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.Attestation
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    // Simple Test 1
 
     /// <summary>
     /// Various APIs for managing resources in attestation service. This

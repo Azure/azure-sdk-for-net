@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 1
 
     /// <summary>
     /// AnalyticsItemsOperations operations.

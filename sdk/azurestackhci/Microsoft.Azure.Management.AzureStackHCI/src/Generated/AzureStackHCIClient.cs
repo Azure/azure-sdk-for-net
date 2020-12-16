@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.AzureStackHCI
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    // Simple Test 1
 
     /// <summary>
     /// Azure Stack HCI management service
