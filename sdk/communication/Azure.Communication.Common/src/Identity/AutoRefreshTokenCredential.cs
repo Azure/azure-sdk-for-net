@@ -8,11 +8,11 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity
 {
-    internal sealed class AutoRefreshUserCredential : IUserCredential
+    internal sealed class AutoRefreshTokenCredential : ITokenCredential
     {
         private readonly ThreadSafeRefreshableAccessTokenCache _accessTokenCache;
 
-        public AutoRefreshUserCredential(
+        public AutoRefreshTokenCredential(
             Func<CancellationToken, string> tokenRefresher,
             Func<CancellationToken, ValueTask<string>> asyncTokenRefresher,
             string? initialToken,
@@ -20,7 +20,7 @@ namespace Azure.Communication.Identity
             : this(tokenRefresher, asyncTokenRefresher, initialToken, refreshProactively, null, null)
         { }
 
-        internal AutoRefreshUserCredential(
+        internal AutoRefreshTokenCredential(
             Func<CancellationToken, string> tokenRefresher,
             Func<CancellationToken, ValueTask<string>> asyncTokenRefresher,
             string? initialToken,

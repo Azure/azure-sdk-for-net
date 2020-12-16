@@ -35,8 +35,8 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             };
 
             //act
-            var communicationUserCredential = new CommunicationUserCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var chatThreadClient = new ChatThreadClient(threadId, uri, communicationUserCredential, chatClientOptions);
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var chatThreadClient = new ChatThreadClient(threadId, uri, communicationTokenCredential, chatClientOptions);
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
 
             //assert
@@ -76,8 +76,8 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             };
 
             //act
-            var communicationUserCredential = new CommunicationUserCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
-            var chatThreadClient = new ChatThreadClient(threadId, uri, communicationUserCredential, chatClientOptions);
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var chatThreadClient = new ChatThreadClient(threadId, uri, communicationTokenCredential, chatClientOptions);
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
 
             //assert

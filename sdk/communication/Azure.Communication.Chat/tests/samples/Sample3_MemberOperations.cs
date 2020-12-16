@@ -31,7 +31,7 @@ namespace Azure.Communication.Chat.Tests.samples
 
             ChatClient chatClient = new ChatClient(
                 new Uri(endpoint),
-                new CommunicationUserCredential(userToken));
+                new CommunicationTokenCredential(userToken));
 
             var chatThreadMember = new ChatThreadMember(new CommunicationUser(theadCreatorMemberId))
             {

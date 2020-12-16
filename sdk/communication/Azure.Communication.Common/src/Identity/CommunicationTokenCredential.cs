@@ -9,33 +9,33 @@ using Azure.Core;
 namespace Azure.Communication.Identity
 {
     /// <summary>
-    /// The Azure Communication Services User token credential.
+    /// The Azure Communication Services Token Credential.
     /// </summary>
-    public sealed class CommunicationUserCredential : IDisposable
+    public sealed class CommunicationTokenCredential : IDisposable
     {
-        private readonly IUserCredential _userTokenCredential;
+        private readonly ITokenCredential _tokenCredential;
         private bool _isDisposed;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="CommunicationUserCredential"/>.
+        /// Initializes a new instance of <see cref="CommunicationTokenCredential"/>.
         /// </summary>
         /// <param name="userToken">User token acquired from Azure.Communication.Administration package.</param>
-        public CommunicationUserCredential(string userToken)
-            => _userTokenCredential = new StaticUserCredential(userToken);
+        public CommunicationTokenCredential(string userToken)
+            => _tokenCredential = new StaticTokenCredential(userToken);
 
         /// <summary>
-        /// Initializes a new instance of <see cref="CommunicationUserCredential"/> that automatically renews the token upon expiry or proactively prior to expiration to speed up the requests.
+        /// Initializes a new instance of <see cref="CommunicationTokenCredential"/> that automatically renews the token upon expiry or proactively prior to expiration to speed up the requests.
         /// </summary>
-        /// <param name="refreshProactively">Indicates wheter user token should be proactively renewed prior to expiry or renew on demand.</param>
-        /// <param name="tokenRefresher">The function that provides the user token acquired from the configurtaion SDK.</param>
-        /// <param name="asyncTokenRefresher">The async function that provides the user token acquired from the configurtaion SDK.</param>
-        /// <param name="initialToken">Optional user token to initialize.</param>
-        public CommunicationUserCredential(
+        /// <param name="refreshProactively">Indicates whether the token should be proactively renewed prior to expiry or renew on demand.</param>
+        /// <param name="tokenRefresher">The function that provides the token acquired from the configurtaion SDK.</param>
+        /// <param name="asyncTokenRefresher">The async function that provides the token acquired from the configurtaion SDK.</param>
+        /// <param name="initialToken">Optional token to initialize.</param>
+        public CommunicationTokenCredential(
             bool refreshProactively,
             Func<CancellationToken, string> tokenRefresher,
             Func<CancellationToken, ValueTask<string>>? asyncTokenRefresher = null,
             string? initialToken = null)
-            => _userTokenCredential = new AutoRefreshUserCredential(
+            => _tokenCredential = new AutoRefreshTokenCredential(
                 tokenRefresher,
                 asyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefresher(cancellationToken))),
                 initialToken,
@@ -51,9 +51,9 @@ namespace Azure.Communication.Identity
         public ValueTask<AccessToken> GetTokenAsync(CancellationToken cancellationToken = default)
         {
             if (_isDisposed)
-                throw new ObjectDisposedException(nameof(CommunicationUserCredential));
+                throw new ObjectDisposedException(nameof(CommunicationTokenCredential));
 
-            return _userTokenCredential.GetTokenAsync(cancellationToken);
+            return _tokenCredential.GetTokenAsync(cancellationToken);
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace Azure.Communication.Identity
         public AccessToken GetToken(CancellationToken cancellationToken = default)
         {
             if (_isDisposed)
-                throw new ObjectDisposedException(nameof(CommunicationUserCredential));
+                throw new ObjectDisposedException(nameof(CommunicationTokenCredential));
 
-            return _userTokenCredential.GetToken(cancellationToken);
+            return _tokenCredential.GetToken(cancellationToken);
         }
 
         /// <inheritdoc />
@@ -75,7 +75,7 @@ namespace Azure.Communication.Identity
             if (_isDisposed)
                 return;
 
-            _userTokenCredential.Dispose();
+            _tokenCredential.Dispose();
             _isDisposed = true;
         }
     }

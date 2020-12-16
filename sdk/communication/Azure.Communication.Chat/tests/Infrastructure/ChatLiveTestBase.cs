@@ -38,8 +38,8 @@ namespace Azure.Communication.Chat.Tests
                 token = ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue;
             }
 
-            CommunicationUserCredential communicationUserCredential = new CommunicationUserCredential(token);
-            return InstrumentClient(new ChatClient(new Uri(TestEnvironment.ChatApiUrl()), communicationUserCredential,
+            CommunicationTokenCredential communicationTokenCredential = new CommunicationTokenCredential(token);
+            return InstrumentClient(new ChatClient(new Uri(TestEnvironment.ChatApiUrl()), communicationTokenCredential,
                 InstrumentClientOptions(new ChatClientOptions())));
         }
 
