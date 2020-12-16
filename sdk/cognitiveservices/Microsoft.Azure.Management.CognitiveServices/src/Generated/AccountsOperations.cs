@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.CognitiveServices
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 2
 
     /// <summary>
     /// AccountsOperations operations.

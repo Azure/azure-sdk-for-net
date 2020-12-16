@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Advisor
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    // Simple TEst
 
     /// <summary>
     /// REST APIs for Azure Advisor

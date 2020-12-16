@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.BatchAI
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    // Simple Test 2
 
     /// <summary>
     /// The Azure BatchAI Management API.

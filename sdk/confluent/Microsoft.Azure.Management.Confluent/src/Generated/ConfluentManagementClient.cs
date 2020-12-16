@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.Confluent
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    // Simple Test 2
 
     public partial class ConfluentManagementClient : ServiceClient<ConfluentManagementClient>, IConfluentManagementClient, IAzureClient
     {
