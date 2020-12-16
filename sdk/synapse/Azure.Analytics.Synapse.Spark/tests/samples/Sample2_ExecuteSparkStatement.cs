@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:CreateSparkSession
-            SparkSession sessionCreated = client.CreateSparkSession(request);        
+            SparkSession sessionCreated = client.CreateSparkSession(request);
 
             // Waiting session creation completion
             sessionCreated = PollSparkSession(client, sessionCreated);
