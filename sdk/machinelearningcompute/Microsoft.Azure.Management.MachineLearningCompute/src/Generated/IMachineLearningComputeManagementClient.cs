@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.MachineLearningCompute
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    // Simple Test 5
 
     /// <summary>
     /// These APIs allow end users to operate on Azure Machine Learning Compute
