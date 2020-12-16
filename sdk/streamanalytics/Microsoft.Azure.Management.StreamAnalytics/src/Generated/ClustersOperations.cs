@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    // Simple Test 7
 
     /// <summary>
     /// ClustersOperations operations.

@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.SignalR
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    // Simple Test 7
 
     /// <summary>
     /// Operations operations.

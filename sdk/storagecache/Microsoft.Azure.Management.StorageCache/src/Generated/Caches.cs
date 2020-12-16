@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.StorageCache
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    // Simple Test 7
 
     /// <summary>
     /// Caches operations.

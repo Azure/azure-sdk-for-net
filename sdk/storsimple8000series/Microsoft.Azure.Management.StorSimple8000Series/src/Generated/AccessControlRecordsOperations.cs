@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    // Simple Test 7
 
     /// <summary>
     /// AccessControlRecordsOperations operations.
