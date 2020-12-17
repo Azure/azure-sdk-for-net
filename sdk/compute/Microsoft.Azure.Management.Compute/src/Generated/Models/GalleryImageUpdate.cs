@@ -85,56 +85,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the GalleryImageUpdate class.
-        /// </summary>
-        /// <param name="osType">This property allows you to specify the type
-        /// of the OS that is included in the disk when creating a VM from a
-        /// managed image. &lt;br&gt;&lt;br&gt; Possible values are:
-        /// &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**.
-        /// Possible values include: 'Windows', 'Linux'</param>
-        /// <param name="osState">This property allows the user to specify
-        /// whether the virtual machines created under this image are
-        /// 'Generalized' or 'Specialized'. Possible values include:
-        /// 'Generalized', 'Specialized'</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="description">The description of this gallery image
-        /// definition resource. This property is updatable.</param>
-        /// <param name="eula">The Eula agreement for the gallery image
-        /// definition.</param>
-        /// <param name="privacyStatementUri">The privacy statement
-        /// uri.</param>
-        /// <param name="releaseNoteUri">The release note uri.</param>
-        /// <param name="hyperVGeneration">The hypervisor generation of the
-        /// Virtual Machine. Applicable to OS disks only. Possible values
-        /// include: 'V1', 'V2'</param>
-        /// <param name="endOfLifeDate">The end of life date of the gallery
-        /// image definition. This property can be used for decommissioning
-        /// purposes. This property is updatable.</param>
-        /// <param name="provisioningState">The current state of the gallery
-        /// image definition.</param>
-        public GalleryImageUpdate(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), string hyperVGeneration = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string))
-            : base(id, name, type, tags)
-        {
-            Description = description;
-            Eula = eula;
-            PrivacyStatementUri = privacyStatementUri;
-            ReleaseNoteUri = releaseNoteUri;
-            OsType = osType;
-            OsState = osState;
-            HyperVGeneration = hyperVGeneration;
-            EndOfLifeDate = endOfLifeDate;
-            Identifier = identifier;
-            Recommended = recommended;
-            Disallowed = disallowed;
-            PurchasePlan = purchasePlan;
-            ProvisioningState = provisioningState;
-            CustomInit();
-        }
-
-        /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();

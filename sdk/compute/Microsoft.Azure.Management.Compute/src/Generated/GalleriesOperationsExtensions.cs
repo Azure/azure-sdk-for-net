@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Retrieves information about a Shared Image Gallery.
+            /// Delete a Shared Image Gallery.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -179,34 +179,12 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='galleryName'>
-            /// The name of the Shared Image Gallery.
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
+            /// The name of the Shared Image Gallery to be deleted.
             /// </param>
-            public static async Task<Gallery> GetAsync(this IGalleriesOperations operations, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, galleryName, null, cancellationToken).ConfigureAwait(false))
+            public static void Delete(this IGalleriesOperations operations, string resourceGroupName, string galleryName)
                 {
-                    return _result.Body;
+                    operations.DeleteAsync(resourceGroupName, galleryName).GetAwaiter().GetResult();
                 }
-            }
-
-        /// <summary>
-        /// Delete a Shared Image Gallery.
-        /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='galleryName'>
-        /// The name of the Shared Image Gallery to be deleted.
-        /// </param>
-        public static void Delete(this IGalleriesOperations operations, string resourceGroupName, string galleryName)
-            {
-                operations.DeleteAsync(resourceGroupName, galleryName).GetAwaiter().GetResult();
-            }
 
             /// <summary>
             /// Delete a Shared Image Gallery.
