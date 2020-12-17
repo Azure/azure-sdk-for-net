@@ -7,9 +7,9 @@ extends:
     ServiceDirectory: eventhub
     TimeoutInMinutes: 190
     ExcludeProjects:
-      - Azure.ResourceManager.EventHubs
-      - Microsoft.Azure.EventHubs
-      - Microsoft.Azure.EventHubs.*
-      - Microsoft.Azure.EventHubs.Processor
-      - Microsoft.Azure.EventHubs.ServiceFabricProcessor
+    - Azure.ResourceManager.EventHubs
+    - Microsoft.Azure.EventHubs
+    - Microsoft.Azure.EventHubs.*
+    - Microsoft.Azure.EventHubs.Processor
+    - Microsoft.Azure.EventHubs.ServiceFabricProcessor
     Clouds: 'Public,Canary'
