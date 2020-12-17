@@ -6,66 +6,40 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Core.Tests
 {
     public class AzureSasCredentialPolicyTests : PolicyTestBase
     {
-        [Test]
-        public async Task SetsSignatureEmptyQuery()
+        [TestCase("sig=test_signature_value")]
+        [TestCase("?sig=test_signature_value")]
+        public async Task SetsSignatureEmptyQuery(string signatureValue)
         {
-            string signatureValue = "sig=test_signature_value";
             var transport = new MockTransport(new MockResponse(200));
             var sasPolicy = new AzureSasCredentialPolicy(new AzureSasCredential(signatureValue));
 
             await SendGetRequest(transport, sasPolicy);
 
-            Assert.AreEqual($"?{signatureValue}", transport.SingleRequest.Uri.Query);
+            Assert.AreEqual("?sig=test_signature_value", transport.SingleRequest.Uri.Query);
         }
 
-        [Test]
-        public async Task SetsSignatureNonEmptyQuery()
+        [TestCase("sig=test_signature_value")]
+        [TestCase("?sig=test_signature_value")]
+        public async Task SetsSignatureNonEmptyQuery(string signatureValue)
         {
-            string signatureValue = "sig=test_signature_value";
             var transport = new MockTransport(new MockResponse(200));
             var sasPolicy = new AzureSasCredentialPolicy(new AzureSasCredential(signatureValue));
             string query = "?foo=bar";
 
             await SendGetRequest(transport, sasPolicy, query: query);
 
-            Assert.AreEqual($"{query}&{signatureValue}", transport.SingleRequest.Uri.Query);
+            Assert.AreEqual($"?foo=bar&sig=test_signature_value", transport.SingleRequest.Uri.Query);
         }
 
-        [Test]
-        public async Task SetsSignatureThatHasQuestionMarkEmptyQuery()
+        [TestCase("sig=test_signature_value")]
+        [TestCase("?sig=test_signature_value")]
+        public async Task VerifyRetryEmptyQuery(string signatureValue)
         {
-            string signatureValue = "?sig=test_signature_value";
-            var transport = new MockTransport(new MockResponse(200));
-            var sasPolicy = new AzureSasCredentialPolicy(new AzureSasCredential(signatureValue));
-
-            await SendGetRequest(transport, sasPolicy);
-
-            Assert.AreEqual(signatureValue, transport.SingleRequest.Uri.Query);
-        }
-
-        [Test]
-        public async Task SetsSignatureThatHasQuestionMarkNonEmptyQuery()
-        {
-            string signatureValue = "?sig=test_signature_value";
-            var transport = new MockTransport(new MockResponse(200));
-            var sasPolicy = new AzureSasCredentialPolicy(new AzureSasCredential(signatureValue));
-            string query = "?foo=bar";
-
-            await SendGetRequest(transport, sasPolicy, query: query);
-
-            Assert.AreEqual("?foo=bar&sig=test_signature_value", transport.SingleRequest.Uri.Query);
-        }
-
-        [Test]
-        public async Task VerifyRetry()
-        {
-            string signatureValue = "sig=test_signature_value";
             var transport = new MockTransport(new MockResponse(200), new MockResponse(200));
             var sasPolicy = new AzureSasCredentialPolicy(new AzureSasCredential(signatureValue));
 
@@ -77,7 +51,27 @@ namespace Azure.Core.Tests
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
 
-            Assert.AreEqual($"?{signatureValue}", transport.Requests[0].Uri.Query);
+            Assert.AreEqual("?sig=test_signature_value", transport.Requests[0].Uri.Query);
+        }
+
+        [TestCase("sig=test_signature_value")]
+        [TestCase("?sig=test_signature_value")]
+        public async Task VerifyRetryNonEmptyQuery(string signatureValue)
+        {
+            var transport = new MockTransport(new MockResponse(200), new MockResponse(200));
+            var sasPolicy = new AzureSasCredentialPolicy(new AzureSasCredential(signatureValue));
+            string query = "?foo=bar";
+
+            using (Request request = transport.CreateRequest())
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Query = query;
+                var pipeline = new HttpPipeline(transport, new[] { sasPolicy });
+                await pipeline.SendRequestAsync(request, CancellationToken.None);
+                await pipeline.SendRequestAsync(request, CancellationToken.None);
+            }
+
+            Assert.AreEqual("?foo=bar&sig=test_signature_value", transport.Requests[0].Uri.Query);
         }
     }
 }

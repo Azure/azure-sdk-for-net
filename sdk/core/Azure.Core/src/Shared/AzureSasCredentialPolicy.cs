@@ -25,13 +25,13 @@ namespace Azure.Core
         {
             base.OnSendingRequest(message);
             string query = message.Request.Uri.Query;
-            if (!query.Contains(_credential.Signature))
+            string signature = _credential.Signature;
+            if (signature.StartsWith("?", StringComparison.InvariantCulture))
             {
-                string signature = _credential.Signature;
-                if (signature.StartsWith("?", StringComparison.InvariantCulture))
-                {
-                    signature = signature.Substring(1);
-                }
+                signature = signature.Substring(1);
+            }
+            if (!query.Contains(signature))
+            {
                 query = string.IsNullOrEmpty(query) ? '?' + signature : query + '&' + signature;
                 message.Request.Uri.Query = query;
             }
