@@ -36,7 +36,7 @@ RoleAssignmentDetails roleAssignmentAdded = response.Value;
 
 ## Retrieve a role assignment
 
-You can retrieve the details of assignment by calling `GetRoleAssignmentById`, passing in the respective assignment ID.
+To retrieve the details of assignment call `GetRoleAssignmentById`, passing in the respective assignment ID.
 
 ```C# Snippet:RetrieveRoleAssignment
 RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(roleAssignmentAdded.Id);
@@ -45,7 +45,7 @@ Console.WriteLine($"Role {roleAssignment.RoleId} is assigned to {roleAssignment.
 
 ## List role assignments
 
-To enumerate all role assignments in the Synapse workspace you can call `GetRoleAssignments`.
+To enumerate all role assignments in the Synapse workspace call `GetRoleAssignments`.
 
 ```C# Snippet:ListRoleAssignments
 Response<IReadOnlyList<RoleAssignmentDetails>> roleAssignments = client.GetRoleAssignments();

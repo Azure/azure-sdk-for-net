@@ -40,7 +40,7 @@ Console.WriteLine("Notebook is created");
 
 ## Retrieve a pipeline
 
-You can retrieve a notebook by calling `GetNotebook`, passing in the notebook name.
+To retrieve a notebook call `GetNotebook`, passing in the notebook name.
 
 ```C# Snippet:RetrieveNotebook
 NotebookResource retrievedNotebook = client.GetNotebook(notebookName);
@@ -48,7 +48,7 @@ NotebookResource retrievedNotebook = client.GetNotebook(notebookName);
 
 ## List notebooks
 
-To enumerate all notebooks in the Synapse workspace you can call `GetNotebooksByWorkspace`.
+To enumerate all notebooks in the Synapse workspace call `GetNotebooksByWorkspace`.
 
 ```C# Snippet:ListNotebooks
 Pageable<NotebookResource> notebooks = client.GetNotebooksByWorkspace();
@@ -60,7 +60,7 @@ foreach (NotebookResource notebook in notebooks)
 
 ## Delete a notebook
 
-To delete a notebook no longer needed you can call `StartDeleteNotebook`, passing in the notebook name.
+To delete a notebook no longer needed call `StartDeleteNotebook`, passing in the notebook name.
 
 ```C# Snippet:DeleteNotebook
 client.StartDeleteNotebook(notebookName);

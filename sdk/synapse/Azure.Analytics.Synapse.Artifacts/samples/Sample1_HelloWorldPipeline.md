@@ -1,4 +1,4 @@
-# Create, Retrieve and Delete a Synapse Pipelines
+# Create, Retrieve and Delete Synapse Pipelines
 
 This sample demonstrates basic operations with two core classes in this library: PipelineClient and PipelineResource. PipelineClient is used to call the Azure Synapse Pipeline service - each method call sends a request to the service's REST API. PipelineResource is an entity that represents a pipeline within Synapse. The sample walks through the basics of adding, retrieving, and deleting pipeline. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
 
@@ -49,7 +49,7 @@ Console.WriteLine("Run started. ID: {0}", runOperation.RunId);
 
 ## List pipelines
 
-To enumerate all pipelines in the Synapse workspace you can call `GetPipelinesByWorkspace`.
+To enumerate all pipelines in the Synapse workspace call `GetPipelinesByWorkspace`.
 
 ```C# Snippet:ListPipelines
 Pageable<PipelineResource> pipelines = client.GetPipelinesByWorkspace();
@@ -61,7 +61,7 @@ foreach (PipelineResource pipeline in pipelines)
 
 ## Delete a pipeline
 
-To delete a pipeline no longer needed you can call `StartDeletePipeline`, passing in the pipeline name.
+To delete a pipeline no longer needed call `StartDeletePipeline`, passing in the pipeline name.
 
 ```C# Snippet:DeletePipeline
 client.StartDeletePipeline(pipelineName);

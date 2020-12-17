@@ -29,7 +29,9 @@ namespace Azure.Analytics.Synapse.Samples
 
             #region Snippet:CreateSparkSessionClient
             SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
+            #endregion
 
+            #region Snippet:CreateSparkSession
             SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewGuid()}")
             {
                 DriverMemory = "28g",
@@ -38,9 +40,7 @@ namespace Azure.Analytics.Synapse.Samples
                 ExecutorCores = 4,
                 ExecutorCount = 2
             };
-            #endregion
 
-            #region Snippet:CreateSparkSession
             SparkSession sessionCreated = client.CreateSparkSession(request);
 
             // Waiting session creation completion

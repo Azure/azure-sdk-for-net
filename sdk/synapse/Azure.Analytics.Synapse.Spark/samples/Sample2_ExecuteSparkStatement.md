@@ -1,6 +1,20 @@
+# Create, Run and Cancel Synapse Spark statements and sessions
+
+This sample demonstrates basic operations with three core classes in this library: SparkSessionClient SparkSession, and SparkStatement. SparkSessionClient is used to submit statements for execution on Azure Synapse - each method call sends a request to the service's REST API. SparkStatement is an entity that represents an individual statement executed within a Spark Job within Synapse. These SparkStatement are grouped within a containing SparkSession. The sample walks through the basics of creating, running, and canceling job requests. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
+
+## Create Spark batch client
+
+To submit statements to Spark running on Azure Synapse, you need to instantiate a `SparkSessionClient`. It requires an endpoint URL and a TokenCredential.
+
 ```C# Snippet:CreateSparkSessionClient
 SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
+```
 
+## Create Spark session
+
+All `SparkStatement` are created within the context of a `SparkSession`, so first create a spark session passing in details on the requested host.
+
+```C# Snippet:CreateSparkSession
 SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewGuid()}")
 {
     DriverMemory = "28g",
@@ -9,17 +23,28 @@ SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewG
     ExecutorCores = 4,
     ExecutorCount = 2
 };
-```
-```C# Snippet:CreateSparkSession
+
 SparkSession sessionCreated = client.CreateSparkSession(request);        
 
 // Waiting session creation completion
 sessionCreated = PollSparkSession(client, sessionCreated);
 ```
+
+## Retrieve a Spark Session
+
+To retrieve an existing session call `GetSparkSession`, passing in the session ID.
+
 ```C# Snippet:GetSparkSession
 SparkSession session = client.GetSparkSession(sessionCreated.Id);
 Debug.WriteLine($"Session is returned with name {session.Name} and state {session.State}");
 ```
+
+## Creating Spark statements
+
+To create statements within a session call `CreateSparkStatement`, passing in both the statements details in a `SparkStatementOptions` along with the ID of the session.
+
+To wait for the statement's completion a `PollSparkStatement` call is required. This support code will be detailed below, and it hoped to be temporary. 
+
 ```C# Snippet:CreateSparkStatement
 SparkStatementOptions sparkStatementRequest = new SparkStatementOptions
 {
@@ -31,17 +56,39 @@ SparkStatement statementCreated = client.CreateSparkStatement(sessionCreated.Id,
 // Wait operation completion
 statementCreated = PollSparkStatement(client, sessionCreated.Id, statementCreated);
 ```
+
+## Retrieve a statement
+
+To retrieve an existing statement call `GetSparkStatement`, passing in both the session ID and the ID of the statement.
+
 ```C# Snippet:GetSparkStatement
 SparkStatement statement = client.GetSparkStatement(sessionCreated.Id, statementCreated.Id);
 Debug.WriteLine($"Statement is returned with id {statement.Id} and state {statement.State}");
 ```
+
+## Cancel a statement
+
+To cancel a submitted statement call `CancelSparkStatement`, passing in both the session ID and the ID of the statement.
+
 ```C# Snippet:CancelSparkStatement
 SparkStatementCancellationResult cancellationResult = client.CancelSparkStatement(sessionCreated.Id, statementCreated.Id);
 Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Msg}");
 ```
+
+## Cancel a session
+
+To cancel the entire Spark session  call `CancelSparkSession`, passing in the session ID.
+
 ```C# Snippet:CancelSparkSession
 Response operation = client.CancelSparkSession(sessionCreated.Id);
 ```
+
+## Support Code
+
+Today the following support code is needed to poll the status of submitted Spark statements and sessions.
+
+It is hoped to be temporary.
+
 ```C# Snippet:TemporarySparkSupportCode
  private const string Error = "error";
  private const string Dead = "dead";
