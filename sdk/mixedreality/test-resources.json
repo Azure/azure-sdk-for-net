@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
+            }
+        }
+    },
+    "variables": {
+        "apiVersion": "2020-05-01",
+        "asaAccountName": "[concat(parameters('baseName'), '-asa-account')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.MixedReality/spatialAnchorsAccounts",
+            "name": "[variables('asaAccountName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[parameters('location')]",
+            "properties": {}
+        }
+    ],
+    "outputs": {
+        "MIXEDREALITY_ACCOUNT_ID": {
+            "type": "string",
+            "value": "[reference(variables('asaAccountName')).accountId]"
+        },
+        "MIXEDREALITY_ACCOUNT_DOMAIN": {
+            "type": "string",
+            "value": "[reference(variables('asaAccountName')).accountDomain]"
+        },
+        "MIXEDREALITY_ACCOUNT_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.MixedReality/spatialAnchorsAccounts', variables('asaAccountName')), variables('apiVersion')).primaryKey]"
+        }
+    }
+}
