@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Storage
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 7
 
     /// <summary>
     /// BlobContainersOperations operations.

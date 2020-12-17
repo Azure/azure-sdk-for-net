@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Support
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 7
 
     /// <summary>
     /// CommunicationsOperations operations.
