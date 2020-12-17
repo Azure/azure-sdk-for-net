@@ -40,6 +40,8 @@ extends:
     - Azure.ResourceManager.EventHubs
     - Microsoft.Azure.EventHubs
     - Microsoft.Azure.EventHubs.*
+    - Microsoft.Azure.EventHubs.Processor
+    - Microsoft.Azure.EventHubs.ServiceFabricProcessor
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.EventHubs
