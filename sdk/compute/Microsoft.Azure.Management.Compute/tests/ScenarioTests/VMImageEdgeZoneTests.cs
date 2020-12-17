@@ -151,7 +151,7 @@ namespace Compute.Tests
                 EnsureClientsInitialized(context);
 
                 var publishers = m_CrpClient.VirtualMachineImagesEdgeZone.ListPublishers(
-                    ComputeManagementTestUtilities.DefaultLocation,
+                    Location,
                     Edgezone);
 
                 Assert.True(publishers.Count > 0);
@@ -167,7 +167,7 @@ namespace Compute.Tests
                 EnsureClientsInitialized(context);
 
                 var offers = m_CrpClient.VirtualMachineImagesEdgeZone.ListOffers(
-                    ComputeManagementTestUtilities.DefaultLocation,
+                    Location,
                     Edgezone,
                     Publisher);
 
@@ -184,7 +184,7 @@ namespace Compute.Tests
                 EnsureClientsInitialized(context);
 
                 var skus = m_CrpClient.VirtualMachineImagesEdgeZone.ListSkus(
-                    ComputeManagementTestUtilities.DefaultLocation,
+                    Location,
                     Edgezone,
                     Publisher,
                     Offer);
