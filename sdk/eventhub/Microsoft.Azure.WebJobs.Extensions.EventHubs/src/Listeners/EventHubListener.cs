@@ -71,6 +71,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            await _checkpointStore.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
             await _eventProcessorHost.StartProcessingAsync(this, _checkpointStore, cancellationToken).ConfigureAwait(false);
         }
 
