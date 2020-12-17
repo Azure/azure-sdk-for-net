@@ -17,8 +17,14 @@ namespace Azure.Communication.Administration.Samples
     /// </summary>
     public partial class Sample1_CommunicationIdentityClient : CommunicationIdentityClientLiveTestBase
     {
-        public Sample1_CommunicationIdentityClient(bool isAsync): base(isAsync)
-            => Matcher.IgnoredHeaders.Add("x-ms-content-sha256");
+        public Sample1_CommunicationIdentityClient(bool isAsync) : base(isAsync)
+        {
+            Matcher.IgnoredHeaders.Add("x-ms-content-sha256");
+            Matcher.LegacyExcludedHeaders.Add("x-ms-client-request-id");
+            Matcher.LegacyExcludedHeaders.Add("User-Agent");
+            Matcher.LegacyExcludedHeaders.Add("traceparent");
+            Matcher.LegacyExcludedHeaders.Add("Date");
+        }
 
         [Test]
         [AsyncOnly]
