@@ -5,16 +5,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
-<<<<<<< HEAD
 using Azure.Communication;
 using Azure.Core;
-=======
->>>>>>> e12f3e0f673cc1b234451f9b89a45d7cb8d1f2c6
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
-using Azure.Core;
-using Azure.Communication.Identity;
 
 namespace Azure.Communication.Administration.Tests
 {
