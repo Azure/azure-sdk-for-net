@@ -10,4 +10,6 @@ extends:
       - Azure.ResourceManager.EventHubs
       - Microsoft.Azure.EventHubs
       - Microsoft.Azure.EventHubs.*
+      - Microsoft.Azure.EventHubs.Processor
+      - Microsoft.Azure.EventHubs.ServiceFabricProcessor
     Clouds: 'Public,Canary'
