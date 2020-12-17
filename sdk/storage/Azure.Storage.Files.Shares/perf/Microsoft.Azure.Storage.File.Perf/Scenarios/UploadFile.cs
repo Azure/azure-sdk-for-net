@@ -18,12 +18,12 @@ namespace Microsoft.Azure.Storage.File.Perf.Scenarios
         /// <summary>
         /// Reference to the Share used by the test in the Microsoft Azure File service.
         /// </summary>
-        private CloudFileShare _cloudFileShare;
+        private static CloudFileShare s_cloudFileShare;
 
         /// <summary>
         /// Reference to the file used by the test in the Microsoft Azure File service.
         /// </summary>
-        private CloudFile _cloudFile;
+        private static CloudFile s_cloudFile;
 
         /// <summary>
         /// Local stream uploaded to Microsoft Azure File service.
@@ -50,26 +50,26 @@ namespace Microsoft.Azure.Storage.File.Perf.Scenarios
         /// Also, creates a file reference in the cloud file share.
         /// </summary>
         /// <returns></returns>
-        public override async Task SetupAsync()
+        public override async Task GlobalSetupAsync()
         {
-            await base.SetupAsync();
+            await base.GlobalSetupAsync();
 
             PerfTestEnvironment testEnvironment = PerfTestEnvironment.Instance;
-            _cloudFileShare = new CloudFileShare(new Uri($"{testEnvironment.FileShareAddressString}/{Guid.NewGuid()}"), testEnvironment.StorageCredentials);
+            s_cloudFileShare = new CloudFileShare(new Uri($"{testEnvironment.FileShareAddressString}/{Guid.NewGuid()}"), testEnvironment.StorageCredentials);
 
-            await _cloudFileShare.CreateAsync();
+            await s_cloudFileShare.CreateAsync();
 
-            _cloudFile = _cloudFileShare.GetRootDirectoryReference().GetFileReference(Path.GetRandomFileName());
-            await _cloudFile.CreateAsync(Options.Size);
+            s_cloudFile = s_cloudFileShare.GetRootDirectoryReference().GetFileReference(Path.GetRandomFileName());
+            await s_cloudFile.CreateAsync(Options.Size);
         }
 
         /// <summary>
         /// Deletes the cloud file share created by the test.
         /// </summary>
-        public override async Task CleanupAsync()
+        public override async Task GlobalCleanupAsync()
         {
-            await _cloudFileShare.DeleteAsync();
-            await base.CleanupAsync();
+            await s_cloudFileShare.DeleteAsync();
+            await base.GlobalCleanupAsync();
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Storage.File.Perf.Scenarios
         {
             _stream.Seek(0, SeekOrigin.Begin);
 
-            _cloudFile.UploadFromStream(_stream);
+            s_cloudFile.UploadFromStream(_stream);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Storage.File.Perf.Scenarios
         {
             _stream.Seek(0, SeekOrigin.Begin);
 
-            await _cloudFile.UploadFromStreamAsync(_stream, cancellationToken);
+            await s_cloudFile.UploadFromStreamAsync(_stream, cancellationToken);
         }
     }
 }
