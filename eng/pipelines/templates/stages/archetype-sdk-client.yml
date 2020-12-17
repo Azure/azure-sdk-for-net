@@ -57,4 +57,4 @@ stages:
         TestPipeline: ${{ parameters.TestPipeline }}
         ArtifactName: packages
         TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
-        TargetDocRepoName: ${{ parameters.TargetDocRepoName }} 
+        TargetDocRepoName: ${{ parameters.TargetDocRepoName }}

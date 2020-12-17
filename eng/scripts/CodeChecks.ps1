@@ -80,14 +80,14 @@ try {
         }
     }
 
-    Write-Host "Re-generating readmes"
+    Write-Host "Re-generating snippets"
     Invoke-Block {
         & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
     }
 
     Write-Host "Re-generating listings"
     Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory
+        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -ExcludeProjects "$ExcludeProjects"
     }
 
     if (-not $ProjectDirectory)
