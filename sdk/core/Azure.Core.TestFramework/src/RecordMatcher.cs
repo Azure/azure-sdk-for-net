@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -39,6 +40,15 @@ namespace Azure.Core.TestFramework
             "Request-Id",
             "traceparent"
         };
+
+        /// <summary>
+        /// Legacy header exclusion set that will disregard any headers listed here when matching. Headers listed here are not matched for value,
+        /// or for presence or absence of the header key. For that reason, IgnoredHeaders should be used instead as this will ensure that the header's
+        /// presence or absence from the request is considered when matching.
+        /// This property is only included only for backwards compat.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public HashSet<string> LegacyExcludedHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         // Headers that don't indicate meaningful changes between updated recordings
         public HashSet<string> VolatileHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
@@ -280,6 +290,11 @@ namespace Azure.Core.TestFramework
             {
                 var requestHeaderValues = header.Value;
                 var headerName = header.Key;
+
+                if (LegacyExcludedHeaders.Contains(headerName))
+                {
+                    continue;
+                }
 
                 if (remaining.TryGetValue(headerName, out string[] entryHeaderValues))
                 {
