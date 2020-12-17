@@ -79,12 +79,12 @@ namespace Azure.Core.TestFramework
             }
             else if (genericType == typeof(ValueTask))
             {
-                invocation.ReturnValue = ValidateDiagnosticScope<object>(async () =>
+                invocation.ReturnValue = new ValueTask(ValidateDiagnosticScope<object>(async () =>
                 {
                     invocation.Proceed();
                     await (ValueTask)invocation.ReturnValue;;
                     return default;
-                }, expectedName, methodName, strict).AsTask();
+                }, expectedName, methodName, strict).AsTask());
             }
             else
             {
