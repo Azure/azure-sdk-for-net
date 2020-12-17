@@ -28,6 +28,8 @@ jobs:
             Write-Host "Setting RunSmokeTests to $($env:RunSmokeTests)"
             Write-Host "##vso[task.setvariable variable=RunSmokeTests;isOutput=true]$($env:RunSmokeTests)"
           name: output_eligibility
+          env:
+            RunSmokeTests: $(RunSmokeTests)
 
   - job: SmokeTest
     ${{ if eq(parameters.Nightly, false) }}:
