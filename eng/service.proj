@@ -35,7 +35,7 @@
      Override project inclusions and force removal of those that have been explicitly excluded by the associated parameter.
      Assume each item identifies a project name under the service directory and build the appropriate path mask.
   -->
-  <ItemGroup>
+  <ItemGroup Condition="'$(ExcludeProjects)' != ''">
     <_ExcludePathsSource Include="$(ExcludeProjects.Split('$(ExcludeProjectsDelimiter)'))" />
     <ExcludePaths Include="@(_ExcludePathsSource -> '$(MSBuildThisFileDirectory)..\sdk\$(ServiceDirectory)\%(Identity)\**\*.csproj')" />
     <ProjectReference Remove="@(ExcludePaths)" />
@@ -44,6 +44,8 @@
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
 
   <Target Name="CheckProjects" AfterTargets="Build">
+    <Error Text="PROJECTS:: @(ProjectReference" />
+
     <!-- If scope is set this likely came from a call to build.proj and in cases where there is only mgmt projects we don't want to error so skip this extra check -->
     <Error Condition="'$(Scope)' == '' and '@(ProjectReference)' == ''"
         Text="No Projects found with patttern [..\sdk\$(ServiceDirectory)\**\*.csproj], please make sure you have passed in the correct ServiceDirectory." />
