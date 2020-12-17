@@ -12,12 +12,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SoftwareUpdateRebootBehavior.
+    /// Defines values for SharedToValues.
     /// </summary>
-    public static class SoftwareUpdateRebootBehavior
+    public static class SharedToValues
     {
-        public const string NeverReboots = "NeverReboots";
-        public const string AlwaysRequiresReboot = "AlwaysRequiresReboot";
-        public const string CanRequestReboot = "CanRequestReboot";
+        public const string Tenant = "tenant";
     }
 }

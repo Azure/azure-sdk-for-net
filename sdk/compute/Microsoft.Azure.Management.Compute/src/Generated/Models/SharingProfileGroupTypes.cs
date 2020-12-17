@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for InGuestPatchMode.
+    /// Defines values for SharingProfileGroupTypes.
     /// </summary>
-    public static class InGuestPatchMode
+    public static class SharingProfileGroupTypes
     {
-        public const string Manual = "Manual";
-        public const string AutomaticByOS = "AutomaticByOS";
-        public const string AutomaticByPlatform = "AutomaticByPlatform";
+        public const string Subscriptions = "Subscriptions";
+        public const string AADTenants = "AADTenants";
     }
 }

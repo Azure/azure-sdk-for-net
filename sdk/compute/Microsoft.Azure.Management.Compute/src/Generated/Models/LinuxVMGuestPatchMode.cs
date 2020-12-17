@@ -12,16 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for ExecutionState.
+    /// Defines values for LinuxVMGuestPatchMode.
     /// </summary>
-    public static class ExecutionState
+    public static class LinuxVMGuestPatchMode
     {
-        public const string Unknown = "Unknown";
-        public const string Pending = "Pending";
-        public const string Running = "Running";
-        public const string Failed = "Failed";
-        public const string Succeeded = "Succeeded";
-        public const string TimedOut = "TimedOut";
-        public const string Canceled = "Canceled";
+        public const string ImageDefault = "ImageDefault";
+        public const string AutomaticByPlatform = "AutomaticByPlatform";
     }
 }
