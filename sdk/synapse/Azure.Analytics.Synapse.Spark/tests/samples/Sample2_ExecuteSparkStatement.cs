@@ -40,14 +40,23 @@ namespace Azure.Analytics.Synapse.Samples
                 ExecutorCount = 2
             };
 
-            SparkSession sessionCreated = client.CreateSparkSession(request);
-
-            // Waiting session creation completion
-            sessionCreated = PollSparkSession(client, sessionCreated);
+            SparkSessionOperation createOperation = client.StartCreateSparkSession(request);
+            while (!createOperation.HasCompleted)
+            {
+                System.Threading.Thread.Sleep(2000);
+                createOperation.UpdateStatus();
+            }
+            SparkSession sessionCreated = createOperation.Value;
             #endregion
 
             #region Snippet:GetSparkSession
-            SparkSession session = client.GetSparkSession(sessionCreated.Id);
+            SparkSessionOperation getOperation = client.StartGetSparkSession(sessionCreated.Id);
+            while (!getOperation.HasCompleted)
+            {
+                System.Threading.Thread.Sleep(2000);
+                getOperation.UpdateStatus();
+            }
+            SparkSession session = getOperation.Value;
             Debug.WriteLine($"Session is returned with name {session.Name} and state {session.State}");
             #endregion
 
@@ -57,10 +66,14 @@ namespace Azure.Analytics.Synapse.Samples
                 Kind = SparkStatementLanguageType.Spark,
                 Code = @"print(""Hello world\n"")"
             };
-            SparkStatement statementCreated = client.CreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
 
-            // Wait operation completion
-            statementCreated = PollSparkStatement(client, sessionCreated.Id, statementCreated);
+            SparkStatementOperation statementOperation = client.StartCreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
+            while (!statementOperation.HasCompleted)
+            {
+                System.Threading.Thread.Sleep(2000);
+                statementOperation.UpdateStatus();
+            }
+            SparkStatement statementCreated = statementOperation.Value;
             #endregion
 
             #region Snippet:GetSparkStatement
@@ -77,119 +90,5 @@ namespace Azure.Analytics.Synapse.Samples
             Response operation = client.CancelSparkSession(sessionCreated.Id);
             #endregion
         }
-
-        // https://github.com/Azure/azure-sdk-for-net/issues/17587
-        // This code is copied from SparkTestUtilities.cs and modified, as there is no current way to monitor/poll for spark completion
-        // It belongs in a helper class, likely a LRO
-        // It is being left here only temporarily.
-        #region Snippet:TemporarySparkSupportCode
-        private const string Error = "error";
-        private const string Dead = "dead";
-        private const string Success = "success";
-        private const string Killed = "killed";
-        private const string Idle = "idle";
-
-       public static List<string> SessionSubmissionFinalStates = new List<string>
-        {
-            Idle,
-            Error,
-            Dead,
-            Success,
-            Killed
-        };
-
-        public static SparkSession PollSparkSession(
-            SparkSessionClient client,
-            SparkSession session,
-            IList<string> livyReadyStates = null)
-        {
-            if (livyReadyStates == null)
-            {
-                livyReadyStates = SessionSubmissionFinalStates;
-            }
-
-            return Poll(
-                session,
-                s => s.Result.ToString(),
-                s => s.State,
-                s => client.GetSparkSession(s.Id, true),
-                livyReadyStates);
-        }
-
-        private const string Starting = "starting";
-        private const string Waiting = "waiting";
-        private const string Running = "running";
-        private const string Cancelling = "cancelling";
-
-        private static List<string> ExecutingStates = new List<string>
-        {
-            Starting,
-            Waiting,
-            Running,
-            Cancelling
-        };
-
-        private static SparkStatement PollSparkStatement(
-            SparkSessionClient client,
-            int sessionId,
-            SparkStatement statement)
-        {
-            return Poll(
-                statement,
-                s => null,
-                s => s.State,
-                s => client.GetSparkStatement(sessionId, s.Id),
-                ExecutingStates,
-                isFinalState: false);
-        }
-
-        private static T Poll<T>(
-            T job,
-            Func<T, string> getJobState,
-            Func<T, string> getLivyState,
-            Func<T, T> refresh,
-            IList<string> livyReadyStates,
-            bool isFinalState = true,
-            int pollingInMilliseconds = 0,
-            int timeoutInMilliseconds = 0,
-            Action<T> writeLog = null)
-        {
-            var timeWaitedInMilliSeconds = 0;
-            if (pollingInMilliseconds == 0)
-            {
-                pollingInMilliseconds = 5000;
-            }
-
-            while (IsJobRunning(getJobState(job), getLivyState(job), livyReadyStates, isFinalState))
-            {
-                if (timeoutInMilliseconds > 0 && timeWaitedInMilliSeconds >= timeoutInMilliseconds)
-                {
-                    throw new TimeoutException();
-                }
-
-                writeLog?.Invoke(job);
-                //TestMockSupport.Delay(pollingInMilliseconds);
-                System.Threading.Thread.Sleep(pollingInMilliseconds);
-                timeWaitedInMilliSeconds += pollingInMilliseconds;
-
-                // TODO: handle retryable excetpion
-                job = refresh(job);
-            }
-
-            return job;
-        }
-
-        private static bool IsJobRunning(string jobState, string livyState, IList<string> livyStates, bool isFinalState = true)
-        {
-            if ("Succeeded".Equals(jobState, StringComparison.OrdinalIgnoreCase)
-                || "Failed".Equals(jobState, StringComparison.OrdinalIgnoreCase)
-                || "Cancelled".Equals(jobState, StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            return isFinalState ? !livyStates.Contains(livyState) : livyStates.Contains(livyState);
-        }
-        #endregion
     }
 }
