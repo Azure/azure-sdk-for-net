@@ -814,24 +814,24 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhoneNumberEntity}"/>. </returns>
         public virtual AsyncPageable<PhoneNumberEntity> GetAllReservationsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
+                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
+                scope.Start();
+                try
                 {
                     Response<PhoneNumberEntities> response = nextLink is null
                         ? await RestClient.GetAllSearchesAsync(skip: null, take: null, cancellationToken).ConfigureAwait(false)
                         : await RestClient.GetAllSearchesNextPageAsync(nextLink, skip: null, take: null, cancellationToken).ConfigureAwait(false);
 
                     return Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary> Gets a list of all reservations. </summary>
@@ -839,24 +839,24 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Pageable{PhoneNumberEntity}"/>. </returns>
         public virtual Pageable<PhoneNumberEntity> GetAllReservations(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable(nextLink =>
             {
-                return PageResponseEnumerator.CreateEnumerable(nextLink =>
+                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
+                scope.Start();
+                try
                 {
                     Response<PhoneNumberEntities> response = nextLink is null
                         ? RestClient.GetAllSearches(skip: null, take: null, cancellationToken)
                         : RestClient.GetAllSearchesNextPage(nextLink, skip: null, take: null, cancellationToken);
 
                     return Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary> Cancels the reservation. This means existing numbers in the reservation will be made available. </summary>
