@@ -12,7 +12,7 @@ using Azure.Core.TestFramework;
 namespace Azure.Analytics.Synapse.Samples
 {
     /// <summary>
-    /// This sample demonstrates how to create  execute an existing pipline in Azure Synapse Analytics using asynchronous methods of <see cref="PipelineClient"/>.
+    /// This sample demonstrates how to create an empty pipline and execute it in Azure Synapse Analytics using asynchronous methods of <see cref="PipelineClient"/>.
     /// </summary>
     public partial class ExecutePipelines
     {
