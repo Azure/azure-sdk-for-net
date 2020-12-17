@@ -203,10 +203,11 @@ function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$
 function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName = "")
 {
   # Find all nupkg files in given artifact directory
-  $pkg = Get-dotnet-Package-Artifacts $artifactDir
+  $pkgPath = Join-Path $artifactDir $packageName
+  $pkg = Get-dotnet-Package-Artifacts $pkgPath
   if (!$pkg)
   {
-    Write-Host "Package is not available in artifact path $($artifactDir)"
+    Write-Host "Package is not available in artifact path $($pkgPath)"
     return $null
   }
   $packages = @{ $pkg.Name = $pkg.FullName }

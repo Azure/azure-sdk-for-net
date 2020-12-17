@@ -51,15 +51,15 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
 }
 
 
-. (Join-Path $PSScriptRoot Language-Settings.ps1)
+. (Join-Path $PSScriptRoot common.ps1)
 $packages = @{}
-if (Test-Path "Function:Find-dotnet-Artifacts-For-Apireview")
+if ($FindArtifactForApiReviewFn -and Test-Path "Function:$FindArtifactForApiReviewFn")
 {
-    $packages = Find-dotnet-Artifacts-For-Apireview $ArtifactPath $PackageName
+    $packages = &$FindArtifactForApiReviewFn $ArtifactPath $PackageName
 }
 else
 {
-    Write-Host "Function Find-dotnet-Artifacts-For-Apireview is not found"
+    Write-Host "Function $($FindArtifactForApiReviewFn) is not found"
     exit(1)
 }
 
@@ -76,7 +76,6 @@ if ($packages)
 else
 {
     Write-Host "No package is found in artifact path to submit review request"
-    exit(1)
 }
 
 $FoundFailure = $False
