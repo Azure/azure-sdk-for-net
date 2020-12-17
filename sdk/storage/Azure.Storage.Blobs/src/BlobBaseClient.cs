@@ -36,71 +36,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public virtual Uri Uri => _uri;
 
-        /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
-        /// </summary>
-        private readonly HttpPipeline _pipeline;
+        private readonly BlobStorageContext _context;
 
-        /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
-        /// </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        private readonly BlobClientOptions.ServiceVersion _version;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        internal virtual BlobClientOptions.ServiceVersion Version => _version;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
-        /// </summary>
-        internal readonly CustomerProvidedKey? _customerProvidedKey;
-
-        /// <summary>
-        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
-        /// </summary>
-        internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
-
-        /// <summary>
-        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
-        /// </summary>
-        private readonly ClientSideEncryptionOptions _clientSideEncryption;
-
-        /// <summary>
-        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
-        /// </summary>
-        internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
-
-        internal bool UsingClientSideEncryption => ClientSideEncryption != default;
-
-        /// <summary>
-        /// The name of the Encryption Scope to be used when sending requests.
-        /// </summary>
-        internal readonly string _encryptionScope;
-
-        /// <summary>
-        /// The name of the Encryption Scope to be used when sending requests.
-        /// </summary>
-        internal virtual string EncryptionScope => _encryptionScope;
+        internal virtual BlobStorageContext Context => _context;
 
         /// <summary>
         /// Optional. The snapshot of the blob.
@@ -164,20 +102,22 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
         /// </summary>
-        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+        private readonly ClientSideEncryptionOptions _clientSideEncryption;
 
         /// <summary>
-        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
         /// </summary>
-        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+        internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
+
+        internal bool UsingClientSideEncryption => ClientSideEncryption != default;
 
         /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => SharedKeyCredential != null;
+        public bool CanGenerateSasUri => Context.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -247,15 +187,17 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobName = blobName
                 };
             _uri = builder.ToUri();
-            _pipeline = options.Build(conn.Credentials);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _customerProvidedKey = options.CustomerProvidedKey;
+            _context = new BlobStorageContext(
+                pipeline: options.Build(conn.Credentials),
+                sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                encryptionScope: options.EncryptionScope);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _encryptionScope = options.EncryptionScope;
-            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
+
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _context.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_context.CustomerProvidedKey, _context.EncryptionScope);
         }
 
         /// <summary>
@@ -366,15 +308,17 @@ namespace Azure.Storage.Blobs.Specialized
                     _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
                 }
             }
-            _pipeline = options.Build(authentication);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _customerProvidedKey = options.CustomerProvidedKey;
+            _context = new BlobStorageContext(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                encryptionScope: options.EncryptionScope);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _encryptionScope = options.EncryptionScope;
-            _storageSharedKeyCredential = storageSharedKeyCredential;
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
+
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _context.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_context.CustomerProvidedKey, _context.EncryptionScope);
         }
 
         /// <summary>
@@ -387,28 +331,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
+        /// <param name="context">
+        /// <see cref="BlobStorageContext"/>.
         /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
+        /// <param name="clientSideEncryption">
+        /// <see cref="ClientSideEncryptionOptions"/>
         /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="clientDiagnostics">Client diagnostics.</param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        /// <param name="clientSideEncryption">Client-side encryption options.</param>
-        /// <param name="encryptionScope">Encryption scope.</param>
         internal BlobBaseClient(
             Uri blobUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            BlobClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics,
-            CustomerProvidedKey? customerProvidedKey,
-            ClientSideEncryptionOptions clientSideEncryption,
-            string encryptionScope)
+            BlobStorageContext context,
+            ClientSideEncryptionOptions clientSideEncryption)
         {
             _uri = blobUri;
             if (!string.IsNullOrEmpty(blobUri.Query))
@@ -423,15 +355,10 @@ namespace Azure.Storage.Blobs.Specialized
                     _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
                 }
             }
-            _pipeline = pipeline;
-            _storageSharedKeyCredential = storageSharedKeyCredential;
-            _version = version;
-            _clientDiagnostics = clientDiagnostics;
-            _customerProvidedKey = customerProvidedKey;
-            _clientSideEncryption = clientSideEncryption?.Clone();
-            _encryptionScope = encryptionScope;
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
+            _context = context;
+            _clientSideEncryption = clientSideEncryption;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, Context.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(Context.CustomerProvidedKey, Context.EncryptionScope);
         }
         #endregion ctors
 
@@ -469,13 +396,8 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                ClientSideEncryption,
-                EncryptionScope);
+                Context,
+                ClientSideEncryption);
         }
 
         /// <summary>
@@ -509,13 +431,8 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                ClientSideEncryption,
-                EncryptionScope);
+                Context,
+                ClientSideEncryption);
         }
 
         /// <summary>
@@ -808,9 +725,9 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             HttpRange requestedRange = range;
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
+                Context.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     if (UsingClientSideEncryption)
@@ -858,7 +775,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 cancellationToken)
                                 .ConfigureAwait(false))
                             .Item2,
-                        Pipeline.ResponseClassifier,
+                        Context.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
                     // if using clientside encryption, wrap the auto-retry stream in a decryptor
@@ -877,12 +794,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -944,20 +861,20 @@ namespace Azure.Storage.Blobs.Specialized
                         (long?)null);
             }
 
-            Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
+            Context.Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
 
             (Response<FlattenedDownloadProperties> response, Stream stream) =
                 await BlobRestClient.Blob.DownloadAsync(
-                    ClientDiagnostics,
-                    Pipeline,
+                    Context.ClientDiagnostics,
+                    Context.Pipeline,
                     Uri,
-                    version: Version.ToVersionString(),
+                    version: Context.Version.ToVersionString(),
                     range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
-                    encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                    encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                    encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                    encryptionKey: Context.CustomerProvidedKey?.EncryptionKey,
+                    encryptionKeySha256: Context.CustomerProvidedKey?.EncryptionKeyHash,
+                    encryptionAlgorithm: Context.CustomerProvidedKey?.EncryptionAlgorithm,
                     ifModifiedSince: conditions?.IfModifiedSince,
                     ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                     ifMatch: conditions?.IfMatch,
@@ -970,7 +887,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             // Watch out for exploding Responses
             long length = response.IsUnavailable() ? 0 : response.Value.ContentLength;
-            Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
+            Context.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
             return (response, stream);
         }
@@ -1387,7 +1304,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var client = new BlobBaseClient(Uri, Pipeline, SharedKeyCredential, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
+            var client = new BlobBaseClient(Uri, Context, ClientSideEncryption);
 
             PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions);
 
@@ -1648,16 +1565,16 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                 nameof(BlobBaseClient),
                 message:
                 $"{nameof(position)}: {position}\n" +
                 $"{nameof(bufferSize)}: {bufferSize}\n" +
                 $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(OpenRead)}");
+                DiagnosticScope scope = Context.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(OpenRead)}");
                 try
                 {
                     scope.Start();
@@ -1694,13 +1611,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     scope.Failed(ex);
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
                     scope.Dispose();
-                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobContainerClient));
                 }
             }
         }
@@ -2089,9 +2006,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -2101,11 +2018,11 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.StartCopyFromUriAsync(
-                        ClientDiagnostics,
-                        Pipeline,
+                        Context.ClientDiagnostics,
+                        Context.Pipeline,
                         Uri,
                         copySource: source,
-                        version: Version.ToVersionString(),
+                        version: Context.Version.ToVersionString(),
                         rehydratePriority: rehydratePriority,
                         tier: accessTier,
                         sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
@@ -2129,12 +2046,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2253,9 +2170,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -2264,11 +2181,11 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.AbortCopyFromUriAsync(
-                        ClientDiagnostics,
-                        Pipeline,
+                        Context.ClientDiagnostics,
+                        Context.Pipeline,
                         Uri,
                         copyId: copyId,
-                        version: Version.ToVersionString(),
+                        version: Context.Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: "BlobBaseClient.AbortCopyFromUri",
@@ -2277,12 +2194,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2452,11 +2369,11 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 try
                 {
-                    Pipeline.LogMethodEnter(
+                    Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -2465,11 +2382,11 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(destinationConditions)}: {destinationConditions}");
 
                     return await BlobRestClient.Blob.CopyFromUriAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
+                        clientDiagnostics: Context.ClientDiagnostics,
+                        pipeline: Context.Pipeline,
                         resourceUri: Uri,
                         copySource: source,
-                        version: Version.ToVersionString(),
+                        version: Context.Version.ToVersionString(),
                         tier: accessTier,
                         sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                         sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
@@ -2490,12 +2407,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2712,9 +2629,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -2739,12 +2656,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2793,9 +2710,9 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken,
             string operationName = null)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -2804,10 +2721,10 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.DeleteAsync(
-                        ClientDiagnostics,
-                        Pipeline,
+                        Context.ClientDiagnostics,
+                        Context.Pipeline,
                         Uri,
-                        version: Version.ToVersionString(),
+                        version: Context.Version.ToVersionString(),
                         deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
@@ -2822,12 +2739,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -2902,9 +2819,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
@@ -2928,12 +2845,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -3021,16 +2938,16 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
+                Context.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await BlobRestClient.Blob.UndeleteAsync(
-                        ClientDiagnostics,
-                        Pipeline,
+                        Context.ClientDiagnostics,
+                        Context.Pipeline,
                         Uri,
-                        version: Version.ToVersionString(),
+                        version: Context.Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
                         operationName: "BlobBaseClient.Undelete")
@@ -3038,12 +2955,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -3159,9 +3076,9 @@ namespace Azure.Storage.Blobs.Specialized
             string operationName = default)
         {
             operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetProperties)}";
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -3169,14 +3086,14 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     Response<BlobPropertiesInternal> response = await BlobRestClient.Blob.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
+                        Context.ClientDiagnostics,
+                        Context.Pipeline,
                         Uri,
-                        version: Version.ToVersionString(),
+                        version: Context.Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionKey: Context.CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: Context.CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: Context.CustomerProvidedKey?.EncryptionAlgorithm,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
@@ -3193,12 +3110,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -3318,9 +3235,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -3330,10 +3247,10 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Response<SetHttpHeadersOperation> response =
                         await BlobRestClient.Blob.SetHttpHeadersAsync(
-                            ClientDiagnostics,
-                            Pipeline,
+                            Context.ClientDiagnostics,
+                            Context.Pipeline,
                             Uri,
-                            version: Version.ToVersionString(),
+                            version: Context.Version.ToVersionString(),
                             blobCacheControl: httpHeaders?.CacheControl,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentHash: httpHeaders?.ContentHash,
@@ -3360,12 +3277,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -3484,9 +3401,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -3495,16 +3412,16 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Response<SetMetadataOperation> response =
                         await BlobRestClient.Blob.SetMetadataAsync(
-                            ClientDiagnostics,
-                            Pipeline,
+                            Context.ClientDiagnostics,
+                            Context.Pipeline,
                             Uri,
-                            version: Version.ToVersionString(),
+                            version: Context.Version.ToVersionString(),
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: Context.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: Context.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: Context.CustomerProvidedKey?.EncryptionAlgorithm,
+                            encryptionScope: Context.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
@@ -3524,12 +3441,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -3648,9 +3565,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -3658,15 +3575,15 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.CreateSnapshotAsync(
-                        ClientDiagnostics,
-                        Pipeline,
+                        Context.ClientDiagnostics,
+                        Context.Pipeline,
                         Uri,
-                        version: Version.ToVersionString(),
+                        version: Context.Version.ToVersionString(),
                         metadata: metadata,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
+                        encryptionKey: Context.CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: Context.CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: Context.CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: Context.EncryptionScope,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
@@ -3680,12 +3597,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -3845,9 +3762,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -3856,11 +3773,11 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.SetAccessTierAsync(
-                        ClientDiagnostics,
-                        Pipeline,
+                        Context.ClientDiagnostics,
+                        Context.Pipeline,
                         Uri,
                         tier: accessTier,
-                        version: Version.ToVersionString(),
+                        version: Context.Version.ToVersionString(),
                         rehydratePriority: rehydratePriority,
                         leaseId: conditions?.LeaseId,
                         ifTags: conditions?.TagConditions,
@@ -3871,12 +3788,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -3978,9 +3895,9 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
@@ -3988,10 +3905,10 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     Response<BlobTags> response = await BlobRestClient.Blob.GetTagsAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
+                        clientDiagnostics: Context.ClientDiagnostics,
+                        pipeline: Context.Pipeline,
                         resourceUri: Uri,
-                        version: Version.ToVersionString(),
+                        version: Context.Version.ToVersionString(),
                         ifTags: conditions?.TagConditions,
                         leaseId: conditions?.LeaseId,
                         async: async,
@@ -4010,12 +3927,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -4141,9 +4058,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (Context.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                Context.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -4151,10 +4068,10 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     return await BlobRestClient.Blob.SetTagsAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
+                        clientDiagnostics: Context.ClientDiagnostics,
+                        pipeline: Context.Pipeline,
                         resourceUri: Uri,
-                        version: Version.ToVersionString(),
+                        version: Context.Version.ToVersionString(),
                         tags: tags.ToBlobTags(),
                         ifTags: conditions?.TagConditions,
                         leaseId: conditions?.LeaseId,
@@ -4165,12 +4082,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    Context.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    Context.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -4268,7 +4185,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(Context.SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }
@@ -4299,13 +4216,13 @@ namespace Azure.Storage.Blobs.Specialized
 
                 _parentBlobContainerClient = new BlobContainerClient(
                     blobUriBuilder.ToUri(),
-                    Pipeline,
-                    SharedKeyCredential,
-                    Version,
-                    ClientDiagnostics,
-                    CustomerProvidedKey,
+                    Context.Pipeline,
+                    Context.SharedKeyCredential,
+                    Context.Version,
+                    Context.ClientDiagnostics,
+                    Context.CustomerProvidedKey,
                     ClientSideEncryption,
-                    EncryptionScope);
+                    Context.EncryptionScope);
             }
 
             return _parentBlobContainerClient;

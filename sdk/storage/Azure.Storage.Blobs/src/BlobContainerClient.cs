@@ -424,13 +424,14 @@ namespace Azure.Storage.Blobs
 
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
-                _pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                ClientSideEncryption,
-                EncryptionScope);
+                new BlobStorageContext(
+                    Pipeline,
+                    SharedKeyCredential,
+                    ClientDiagnostics,
+                    Version,
+                    CustomerProvidedKey,
+                    EncryptionScope),
+                ClientSideEncryption);
         }
 
         /// <summary>
@@ -450,13 +451,14 @@ namespace Azure.Storage.Blobs
 
             return new BlobClient(
                 blobUriBuilder.ToUri(),
-                _pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                ClientSideEncryption,
-                EncryptionScope);
+                new BlobStorageContext(
+                    Pipeline,
+                    SharedKeyCredential,
+                    ClientDiagnostics,
+                    Version,
+                    CustomerProvidedKey,
+                    EncryptionScope),
+                ClientSideEncryption);
         }
 
         /// <summary>
@@ -483,12 +485,13 @@ namespace Azure.Storage.Blobs
 
             return new BlockBlobClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                EncryptionScope);
+                new BlobStorageContext(
+                    Pipeline,
+                    SharedKeyCredential,
+                    ClientDiagnostics,
+                    Version,
+                    CustomerProvidedKey,
+                    EncryptionScope));
         }
 
         /// <summary>
@@ -515,12 +518,13 @@ namespace Azure.Storage.Blobs
 
             return new AppendBlobClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                EncryptionScope);
+                new BlobStorageContext(
+                    Pipeline,
+                    SharedKeyCredential,
+                    ClientDiagnostics,
+                    Version,
+                    CustomerProvidedKey,
+                    EncryptionScope));
         }
 
         /// <summary>
@@ -547,12 +551,13 @@ namespace Azure.Storage.Blobs
 
             return new PageBlobClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                EncryptionScope);
+                new BlobStorageContext(
+                    Pipeline,
+                    SharedKeyCredential,
+                    ClientDiagnostics,
+                    Version,
+                    CustomerProvidedKey,
+                    EncryptionScope));
         }
 
         /// <summary>

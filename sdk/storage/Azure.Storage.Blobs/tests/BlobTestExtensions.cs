@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
@@ -27,12 +28,13 @@ namespace Azure.Storage
             CustomerProvidedKey customerProvidedKey) =>
             new AppendBlobClient(
                 ToHttps(blob.Uri),
-                blob.Pipeline,
-                blob.SharedKeyCredential,
-                blob.Version,
-                blob.ClientDiagnostics,
-                customerProvidedKey,
-                null);
+                new BlobStorageContext(
+                    blob.Context.Pipeline,
+                    blob.Context.SharedKeyCredential,
+                    blob.Context.ClientDiagnostics,
+                    blob.Context.Version,
+                    customerProvidedKey,
+                    blob.Context.EncryptionScope));
 
         //TODO remove ToHttps() after service fixes HTTPS bug.
         public static AppendBlobClient WithEncryptionScope(
@@ -40,24 +42,26 @@ namespace Azure.Storage
             string encryptionScope) =>
             new AppendBlobClient(
                 ToHttps(blob.Uri),
-                blob.Pipeline,
-                blob.SharedKeyCredential,
-                blob.Version,
-                blob.ClientDiagnostics,
-                null,
-                encryptionScope);
+                new BlobStorageContext(
+                    blob.Context.Pipeline,
+                    blob.Context.SharedKeyCredential,
+                    blob.Context.ClientDiagnostics,
+                    blob.Context.Version,
+                    blob.Context.CustomerProvidedKey,
+                    encryptionScope));
 
         public static BlockBlobClient WithCustomerProvidedKey(
             this BlockBlobClient blob,
             CustomerProvidedKey customerProvidedKey) =>
             new BlockBlobClient(
                 ToHttps(blob.Uri),
-                blob.Pipeline,
-                blob.SharedKeyCredential,
-                blob.Version,
-                blob.ClientDiagnostics,
-                customerProvidedKey,
-                null);
+                new BlobStorageContext(
+                    blob.Context.Pipeline,
+                    blob.Context.SharedKeyCredential,
+                    blob.Context.ClientDiagnostics,
+                    blob.Context.Version,
+                    customerProvidedKey,
+                    blob.Context.EncryptionScope));
 
         //TODO remove ToHttps() after service fixes HTTPS bug.
         public static BlockBlobClient WithEncryptionScope(
@@ -65,24 +69,26 @@ namespace Azure.Storage
             string encryptionScope) =>
             new BlockBlobClient(
                 ToHttps(blob.Uri),
-                blob.Pipeline,
-                blob.SharedKeyCredential,
-                blob.Version,
-                blob.ClientDiagnostics,
-                null,
-                encryptionScope);
+                new BlobStorageContext(
+                    blob.Context.Pipeline,
+                    blob.Context.SharedKeyCredential,
+                    blob.Context.ClientDiagnostics,
+                    blob.Context.Version,
+                    blob.Context.CustomerProvidedKey,
+                    encryptionScope));
 
         public static PageBlobClient WithCustomerProvidedKey(
             this PageBlobClient blob,
             CustomerProvidedKey customerProvidedKey) =>
             new PageBlobClient(
                 ToHttps(blob.Uri),
-                blob.Pipeline,
-                blob.SharedKeyCredential,
-                blob.Version,
-                blob.ClientDiagnostics,
-                customerProvidedKey,
-                null);
+                new BlobStorageContext(
+                    blob.Context.Pipeline,
+                    blob.Context.SharedKeyCredential,
+                    blob.Context.ClientDiagnostics,
+                    blob.Context.Version,
+                    customerProvidedKey,
+                    blob.Context.EncryptionScope));
 
         //TODO remove ToHttps() after service fixes HTTPS bug.
         public static PageBlobClient WithEncryptionScope(
@@ -90,12 +96,13 @@ namespace Azure.Storage
             string encryptionScope) =>
             new PageBlobClient(
                 ToHttps(blob.Uri),
-                blob.Pipeline,
-                blob.SharedKeyCredential,
-                blob.Version,
-                blob.ClientDiagnostics,
-                null,
-                encryptionScope);
+                new BlobStorageContext(
+                    blob.Context.Pipeline,
+                    blob.Context.SharedKeyCredential,
+                    blob.Context.ClientDiagnostics,
+                    blob.Context.Version,
+                    blob.Context.CustomerProvidedKey,
+                    encryptionScope));
 
         /// <summary>
         /// Convert a base RequestConditions to BlobRequestConditions.

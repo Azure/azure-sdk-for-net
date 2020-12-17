@@ -52,18 +52,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        private HttpPipeline Pipeline => BlobClient?.Pipeline ?? BlobContainerClient.Pipeline;
+        private HttpPipeline Pipeline => BlobClient?.Context.Pipeline ?? BlobContainerClient.Pipeline;
 
         /// <summary>
         /// The version of the service to use when sending requests.
         /// </summary>
-        internal virtual BlobClientOptions.ServiceVersion Version => BlobClient?.Version ?? BlobContainerClient.Version;
+        internal virtual BlobClientOptions.ServiceVersion Version => BlobClient?.Context.Version ?? BlobContainerClient.Version;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => BlobClient?.ClientDiagnostics ?? BlobContainerClient.ClientDiagnostics;
+        internal virtual ClientDiagnostics ClientDiagnostics => BlobClient?.Context.ClientDiagnostics ?? BlobContainerClient.ClientDiagnostics;
 
         /// <summary>
         /// The <see cref="TimeSpan"/> representing an infinite lease duration.

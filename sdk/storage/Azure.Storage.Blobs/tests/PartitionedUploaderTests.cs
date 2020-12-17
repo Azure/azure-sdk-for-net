@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -47,7 +48,14 @@ namespace Azure.Storage.Blobs.Test
             StagingSink sink = new StagingSink();
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            BlobStorageContext blobStorageContext = new BlobStorageContext(
+                null,
+                null,
+                new ClientDiagnostics(new BlobClientOptions()),
+                BlobClientOptions.LatestVersion,
+                null,
+                null);
+            clientMock.SetupGet(c => c.Context).Returns(blobStorageContext);
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, arrayPool: testPool);
@@ -68,7 +76,14 @@ namespace Azure.Storage.Blobs.Test
             TrackingArrayPool testPool = new TrackingArrayPool();
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            BlobStorageContext blobStorageContext = new BlobStorageContext(
+                null,
+                null,
+                new ClientDiagnostics(new BlobClientOptions()),
+                BlobClientOptions.LatestVersion,
+                null,
+                null);
+            clientMock.SetupGet(c => c.Context).Returns(blobStorageContext);
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
@@ -97,7 +112,14 @@ namespace Azure.Storage.Blobs.Test
             StagingSink sink = new StagingSink();
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            BlobStorageContext blobStorageContext = new BlobStorageContext(
+                null,
+                null,
+                new ClientDiagnostics(new BlobClientOptions()),
+                BlobClientOptions.LatestVersion,
+                null,
+                null);
+            clientMock.SetupGet(c => c.Context).Returns(blobStorageContext);
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20}, arrayPool: testPool);
@@ -122,7 +144,14 @@ namespace Azure.Storage.Blobs.Test
             StagingSink sink = new StagingSink();
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            BlobStorageContext blobStorageContext = new BlobStorageContext(
+                null,
+                null,
+                new ClientDiagnostics(new BlobClientOptions()),
+                BlobClientOptions.LatestVersion,
+                null,
+                null);
+            clientMock.SetupGet(c => c.Context).Returns(blobStorageContext);
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, arrayPool: testPool);
@@ -146,7 +175,14 @@ namespace Azure.Storage.Blobs.Test
             StagingSink sink = new StagingSink();
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            BlobStorageContext blobStorageContext = new BlobStorageContext(
+                null,
+                null,
+                new ClientDiagnostics(new BlobClientOptions()),
+                BlobClientOptions.LatestVersion,
+                null,
+                null);
+            clientMock.SetupGet(c => c.Context).Returns(blobStorageContext);
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 100 }, arrayPool: testPool);
@@ -176,7 +212,14 @@ namespace Azure.Storage.Blobs.Test
             StagingSink sink = new StagingSink();
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            BlobStorageContext blobStorageContext = new BlobStorageContext(
+                null,
+                null,
+                new ClientDiagnostics(new BlobClientOptions()),
+                BlobClientOptions.LatestVersion,
+                null,
+                null);
+            clientMock.SetupGet(c => c.Context).Returns(blobStorageContext);
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20}, arrayPool: testPool);
@@ -202,7 +245,14 @@ namespace Azure.Storage.Blobs.Test
             StagingSink sink = new StagingSink();
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            BlobStorageContext blobStorageContext = new BlobStorageContext(
+                null,
+                null,
+                new ClientDiagnostics(new BlobClientOptions()),
+                BlobClientOptions.LatestVersion,
+                null,
+                null);
+            clientMock.SetupGet(c => c.Context).Returns(blobStorageContext);
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20});
@@ -260,7 +310,7 @@ namespace Azure.Storage.Blobs.Test
             StagingSink sink = new StagingSink(false); // sink can't hold long blocks, and we don't need to look at their data anyway.
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            clientMock.SetupGet(c => c.Context.ClientDiagnostics).CallBase();
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
@@ -297,7 +347,14 @@ namespace Azure.Storage.Blobs.Test
             StagingSink sink = new StagingSink();
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            BlobStorageContext blobStorageContext = new BlobStorageContext(
+                null,
+                null,
+                new ClientDiagnostics(new BlobClientOptions()),
+                BlobClientOptions.LatestVersion,
+                null,
+                null);
+            clientMock.SetupGet(c => c.Context).Returns(blobStorageContext);
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(

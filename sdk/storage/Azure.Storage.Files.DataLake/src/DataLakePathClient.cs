@@ -302,7 +302,12 @@ namespace Azure.Storage.Files.DataLake
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = sharedKeyCredential;
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+            _blockBlobClient = BlockBlobClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                Version.AsBlobsVersion(),
+                _clientDiagnostics,
+                _storageSharedKeyCredential);
         }
 
         /// <summary>
@@ -434,7 +439,12 @@ namespace Azure.Storage.Files.DataLake
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+            _blockBlobClient = BlockBlobClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                Version.AsBlobsVersion(),
+                _clientDiagnostics,
+                _storageSharedKeyCredential);
         }
 
         /// <summary>
@@ -472,7 +482,12 @@ namespace Azure.Storage.Files.DataLake
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+            _blockBlobClient = BlockBlobClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                Version.AsBlobsVersion(),
+                _clientDiagnostics,
+                _storageSharedKeyCredential);
 
             uriBuilder.DirectoryOrFilePath = null;
             _fileSystemClient = new DataLakeFileSystemClient(
@@ -519,7 +534,8 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _pipeline,
                 Version.AsBlobsVersion(),
-                _clientDiagnostics);
+                _clientDiagnostics,
+                _storageSharedKeyCredential);
 
             uriBuilder.DirectoryOrFilePath = null;
             _fileSystemClient = new DataLakeFileSystemClient(
@@ -553,7 +569,8 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _pipeline,
                 Version.AsBlobsVersion(),
-                _clientDiagnostics);
+                _clientDiagnostics,
+                _storageSharedKeyCredential);
 
             uriBuilder.DirectoryOrFilePath = null;
             _fileSystemClient = new DataLakeFileSystemClient(
@@ -570,7 +587,12 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         private class BlockBlobClientInternals : BlockBlobClient
         {
-            public static BlockBlobClient Create(Uri uri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics diagnostics)
+            public static BlockBlobClient Create(
+                Uri uri,
+                HttpPipeline pipeline,
+                BlobClientOptions.ServiceVersion version,
+                ClientDiagnostics diagnostics,
+                StorageSharedKeyCredential sharedKeyCredential)
             {
                 return BlockBlobClient.CreateClient(
                     uri,
@@ -578,7 +600,8 @@ namespace Azure.Storage.Files.DataLake
                     {
                         Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
                     },
-                    pipeline);
+                    pipeline,
+                    sharedKeyCredential);
             }
         }
         #endregion
