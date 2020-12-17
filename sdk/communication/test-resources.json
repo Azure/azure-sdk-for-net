@@ -50,6 +50,10 @@
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2020-08-20-preview').primaryConnectionString]"
         },
+        "COMMUNICATION_ENDPOINT_STRING": {
+            "type": "string",
+            "value": "[concat('https://', parameters('baseName'), '-', parameters('endpointPrefix'), '.communication.azure.com')]"
+        },
         "RESOURCE_GROUP_NAME": {
             "type": "string",
             "value": "[resourceGroup().Name]"
