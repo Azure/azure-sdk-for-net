@@ -26,7 +26,7 @@ namespace Azure.Core.TestFramework
                 genericType.GetGenericTypeDefinition() == typeof(AsyncPageable<>))
             {
                 invocation.Proceed();
-                invocation.ReturnValue = Activator.CreateInstance(typeof(DiagnosticScopeValidatingAsyncEnumerable<>).MakeGenericType(genericType.GenericTypeArguments[0]), invocation.ReturnValue, expectedName, strict);
+                invocation.ReturnValue = Activator.CreateInstance(typeof(DiagnosticScopeValidatingAsyncEnumerable<>).MakeGenericType(genericType.GenericTypeArguments[0]), invocation.ReturnValue, expectedName, methodName, strict);
             }
             else if (methodName.EndsWith("Async") &&
                       !invocation.Method.ReturnType.Name.Contains("IAsyncEnumerable"))
@@ -42,7 +42,7 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        // Await ValueTask or Task<T>
+                        // Await ValueTask
                         Type returnType = returnValue.GetType();
                         MethodInfo getAwaiterMethod = returnType.GetMethod("GetAwaiter", BindingFlags.Instance | BindingFlags.Public);
                         MethodInfo getResultMethod = getAwaiterMethod.ReturnType.GetMethod("GetResult", BindingFlags.Instance | BindingFlags.Public);
@@ -125,10 +125,11 @@ namespace Azure.Core.TestFramework
         {
             private readonly AsyncPageable<T> _pageable;
             private readonly string _expectedName;
+            private readonly string _methodName;
             private readonly bool _strict;
-            private bool _overridesGetAsyncEnumerator;
+            private readonly bool _overridesGetAsyncEnumerator;
 
-            public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, string expectedName, bool strict)
+            public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, string expectedName, string methodName, bool strict)
             {
                 if (pageable == null) throw new ArgumentNullException(nameof(pageable), "Operations returning [Async]Pageable should never return null.");
 
@@ -140,6 +141,7 @@ namespace Azure.Core.TestFramework
 
                 _pageable = pageable;
                 _expectedName = expectedName;
+                _methodName = methodName;
                 _strict = strict;
             }
 
@@ -160,8 +162,9 @@ namespace Azure.Core.TestFramework
                 while (await ValidateDiagnosticScope(async () =>
                 {
                     bool movedNext = await enumerator.MoveNextAsync();
+                    // Don't expect the MoveNextAsync call that returns false to create scope
                     return (movedNext, !movedNext);
-                }, _expectedName, "AsPages() implementation", _strict))
+                }, _expectedName, $"AsPages() implementation returned from {_methodName}", _strict))
                 {
                     yield return enumerator.Current;
                 }
