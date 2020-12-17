@@ -1100,6 +1100,33 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 WriteEvent(ManagementLinkClosedEvent, identifier, linkException);
             }
         }
+
+        [Event(RequestAuthorizationStartEvent, Level = EventLevel.Verbose, Message = "{0}: Requesting authorization to {1}")]
+        public virtual void RequestAuthorizationStart(string identifier, string endpoint)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(RequestAuthorizationStartEvent, identifier, endpoint);
+            }
+        }
+
+        [Event(RequestAuthorizationCompleteEvent, Level = EventLevel.Verbose, Message = "{0}: Authorization to {1} complete. Expiration time: {2}")]
+        public virtual void RequestAuthorizationComplete(string identifier, string endpoint, string expiration)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(RequestAuthorizationCompleteEvent, identifier, endpoint, expiration);
+            }
+        }
+
+        [Event(RequestAuthorizationExceptionEvent, Level = EventLevel.Verbose, Message = "{0}: An exception occured while requesting authorization to {1}. Exception: {2}.")]
+        public virtual void RequestAuthorizationException(string identifier, string endpoint, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(RequestAuthorizationExceptionEvent, identifier, endpoint, exception);
+            }
+        }
         #endregion
 
         #region Retries
