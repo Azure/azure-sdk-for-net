@@ -4,7 +4,8 @@
 param (
     [Parameter(Position=0)]
     [string] $ServiceDirectory,
-    [string] $ProjectDirectory
+    [string] $ProjectDirectory,
+    [string] $ExcludeProjects
 )
 
 $ErrorActionPreference = 'Stop'
@@ -72,7 +73,7 @@ try {
 
         Write-Host "Re-generating clients"
         Invoke-Block {
-            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:ServiceDirectory=$ServiceDirectory
+            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:ServiceDirectory=$ServiceDirectory /p:ExcludeProjects="$ExcludeProjects"
 
             # https://github.com/Azure/azure-sdk-for-net/issues/8584
             # & $repoRoot\storage\generate.ps1
