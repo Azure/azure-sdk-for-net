@@ -53,7 +53,7 @@ namespace Compute.Tests
 
             // The following variables are defined here to allow validation
             string autoLogonContent = null;
-            var patchSetting = new PatchSettings
+            var patchSetting = new WindowsPatchSettings
             {
                 PatchMode = patchSettingMode
             };
@@ -141,7 +141,7 @@ namespace Compute.Tests
                 "</AutoLogon>", logonCount, userName, password);
         }
 
-        private void SetWindowsConfigurationPatchSettings(PatchSettings patchSetting,  bool enableAutomaticUpdates, string autoLogonContent, VirtualMachine inputVM)
+        private void SetWindowsConfigurationPatchSettings(WindowsPatchSettings patchSetting,  bool enableAutomaticUpdates, string autoLogonContent, VirtualMachine inputVM)
         {
             var osProfile = inputVM.OsProfile;
             osProfile.WindowsConfiguration = new WindowsConfiguration
