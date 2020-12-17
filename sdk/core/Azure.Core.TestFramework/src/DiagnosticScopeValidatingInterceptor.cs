@@ -80,6 +80,8 @@ namespace Azure.Core.TestFramework
                     // Don't expect scope for argument validation failures
                     skipChecks = true;
                 }
+
+                throw;
             }
             finally
             {
