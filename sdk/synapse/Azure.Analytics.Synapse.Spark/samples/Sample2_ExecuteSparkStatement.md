@@ -24,7 +24,7 @@ SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewG
     ExecutorCount = 2
 };
 
-SparkSession sessionCreated = client.CreateSparkSession(request);        
+SparkSession sessionCreated = client.CreateSparkSession(request);
 
 // Waiting session creation completion
 sessionCreated = PollSparkSession(client, sessionCreated);
