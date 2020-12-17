@@ -15,9 +15,9 @@ using Microsoft.Rest.Azure;
 namespace Sql.Tests
 {
 	/// <summary>
-	/// Contains tests for the lifecycle of a sanaged instance and managed database security alert policy
+	/// Contains tests for testing API for Server Trust Groups
 	/// </summary>
-	public class ServerTrustGroupsTest
+	public class ServerTrustGroupsTests
 	{
 		private void createManagedInstances(SqlManagementTestContext context, ResourceGroup resourceGroup, IList<string> managedInstanceNames)
 		{
