@@ -53,13 +53,13 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
 
 . (Join-Path $PSScriptRoot common.ps1)
 $packages = @{}
-if ($FindArtifactForApiReviewFn -and Test-Path "Function:$FindArtifactForApiReviewFn")
+if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn"))
 {
     $packages = &$FindArtifactForApiReviewFn $ArtifactPath $PackageName
 }
 else
 {
-    Write-Host "Function $($FindArtifactForApiReviewFn) is not found"
+    Write-Host "Function 'FindArtifactForApiReviewFn' is not found"
     exit(1)
 }
 
@@ -99,5 +99,3 @@ if ($FoundFailure)
 {
     Write-Host "Atleast one API review is not yet approved"
 }
-
-
