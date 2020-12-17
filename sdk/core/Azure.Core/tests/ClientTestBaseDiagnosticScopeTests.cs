@@ -35,7 +35,7 @@ namespace Azure.Core.Tests
             // Make the error message more helpful
             StringAssert.Contains($"{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.GetPageableNoPageableScopes)}", ex.Message);
             StringAssert.Contains("ForwardsClientCalls", ex.Message);
-            StringAssert.Contains("operat1ionId", ex.Message);
+            StringAssert.Contains("operationId", ex.Message);
         }
 
         [Test]
