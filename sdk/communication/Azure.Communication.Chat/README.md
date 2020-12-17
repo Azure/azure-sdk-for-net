@@ -168,7 +168,7 @@ ChatClient chatClient = new ChatClient(
     new CommunicationTokenCredential(userToken));
 ```
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-var chatThreadMember = new ChatThreadMember(new CommunicationUser(threadCreatorId))
+var chatThreadMember = new ChatThreadMember(new CommunicationUserIdentifier(threadCreatorId))
 {
     DisplayName = "UserDisplayName"
 };
@@ -295,9 +295,9 @@ Use `AddMembers` to add members to the chat thread. The following are the suppor
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_AddMembers
 var members = new[]
 {
-    new ChatThreadMember(new CommunicationUser(memberId1)) { DisplayName ="display name member 1"},
-    new ChatThreadMember(new CommunicationUser(memberId2)) { DisplayName ="display name member 2"},
-    new ChatThreadMember(new CommunicationUser(memberId3)) { DisplayName ="display name member 3"}
+    new ChatThreadMember(new CommunicationUserIdentifier(memberId1)) { DisplayName ="display name member 1"},
+    new ChatThreadMember(new CommunicationUserIdentifier(memberId2)) { DisplayName ="display name member 2"},
+    new ChatThreadMember(new CommunicationUserIdentifier(memberId3)) { DisplayName ="display name member 3"}
 };
 await chatThreadClient.AddMembersAsync(members);
 ```
@@ -308,7 +308,7 @@ Use `RemoveMember` to remove a thread member from the thread.
 `communicationUser` is the identification of the chat member.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_RemoveMember
-await chatThreadClient.RemoveMemberAsync(new CommunicationUser(memberId));
+await chatThreadClient.RemoveMemberAsync(new CommunicationUserIdentifier(memberId));
 ```
 
 ## Events Operations

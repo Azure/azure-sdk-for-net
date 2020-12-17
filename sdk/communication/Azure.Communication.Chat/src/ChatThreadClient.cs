@@ -426,10 +426,10 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Remove a member from a thread asynchronously.</summary>
-        /// <param name="user"><see cref="CommunicationUser" /> to be removed from the chat thread members.</param>
+        /// <param name="user"><see cref="CommunicationUserIdentifier" /> to be removed from the chat thread members.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> RemoveMemberAsync(CommunicationUser user, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveMemberAsync(CommunicationUserIdentifier user, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(RemoveMember)}");
             scope.Start();
@@ -445,10 +445,10 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Remove a member from a thread .</summary>
-        /// <param name="user"><see cref="CommunicationUser" /> to be removed from the chat thread members.</param>
+        /// <param name="user"><see cref="CommunicationUserIdentifier" /> to be removed from the chat thread members.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response RemoveMember(CommunicationUser user, CancellationToken cancellationToken = default)
+        public virtual Response RemoveMember(CommunicationUserIdentifier user, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(RemoveMember)}");
             scope.Start();

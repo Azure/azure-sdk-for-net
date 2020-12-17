@@ -48,8 +48,8 @@ var client = new CommunicationIdentityClient(connectionString);
 
 ### Create a new identity
 ```C# Snippet:CreateCommunicationUserAsync
-Response<CommunicationUser> userResponse = await client.CreateUserAsync();
-CommunicationUser user = userResponse.Value;
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+CommunicationUserIdentifier user = userResponse.Value;
 Console.WriteLine($"User id: {user.Id}");
 ```
 
@@ -85,7 +85,7 @@ var client = new CommunicationIdentityClient(connectionString);
 
 try
 {
-    Response<CommunicationUser> response = await client.CreateUserAsync();
+    Response<CommunicationUserIdentifier> response = await client.CreateUserAsync();
 }
 catch (RequestFailedException ex)
 {

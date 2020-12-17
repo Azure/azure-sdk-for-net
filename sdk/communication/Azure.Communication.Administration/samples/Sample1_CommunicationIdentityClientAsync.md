@@ -20,8 +20,8 @@ var client = new CommunicationIdentityClient(connectionString);
 The `CommunicationIdentityClient` can be used to create users and issue tokens.
 
 ```C# Snippet:CreateCommunicationUserAsync
-Response<CommunicationUser> userResponse = await client.CreateUserAsync();
-CommunicationUser user = userResponse.Value;
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+CommunicationUserIdentifier user = userResponse.Value;
 Console.WriteLine($"User id: {user.Id}");
 ```
 

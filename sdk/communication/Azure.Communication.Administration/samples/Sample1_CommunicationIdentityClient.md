@@ -20,8 +20,8 @@ var client = new CommunicationIdentityClient(connectionString);
 The `CommunicationIdentityClient` can be used to create users and issue tokens.
 
 ```C# Snippet:CreateCommunicationUser
-Response<CommunicationUser> userResponse = client.CreateUser();
-CommunicationUser user = userResponse.Value;
+Response<CommunicationUserIdentifier> userResponse = client.CreateUser();
+CommunicationUserIdentifier user = userResponse.Value;
 Console.WriteLine($"User id: {user.Id}");
 ```
 

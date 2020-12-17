@@ -5,11 +5,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
-using Azure.Communication.Identity;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
+using Azure.Core;
+using Azure.Communication.Identity;
 
 namespace Azure.Communication.Administration.Tests
 {
@@ -36,7 +36,7 @@ namespace Azure.Communication.Administration.Tests
         public async Task IssuingTokenGeneratesTokenAndIdentityWithScopes(params string[] scopes)
         {
             CommunicationIdentityClient client = CreateInstrumentedCommunicationIdentityClient();
-            Response<CommunicationUser> userResponse = await client.CreateUserAsync();
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
             Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
@@ -68,7 +68,7 @@ namespace Azure.Communication.Administration.Tests
                 tokenCredential = new DefaultAzureCredential();
             }
             CommunicationIdentityClient client = CreateInstrumentedCommunicationIdentityClientWithToken(tokenCredential);
-            Response<CommunicationUser> userResponse = await client.CreateUserAsync();
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
             Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
 
             Assert.IsNotNull(tokenResponse.Value);
