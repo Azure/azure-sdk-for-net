@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.ContainerRegistry
 
         #endregion
 
-        #region Instance Variables        
+        #region Instance Variables
         private string _authHeader { get; set; }
         private LoginMode _mode { get; set; }
         private string _loginServerUrl { get; set; } // does not contain scheme prefix (e.g. "https://")
@@ -55,7 +56,7 @@ namespace Microsoft.Azure.ContainerRegistry
         private AuthToken _aadAccess;
 
         #endregion
-        
+
         #region Constructors
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 {
                     throw new ValidationException($"\"{nameof(AzureContainerRegistryClient)}'s\" LoginUrl: '{acrClient.LoginUri}' does not match \"{nameof(ContainerRegistryCredentials)} LoginUrl: '{this._loginServerUrl}'");
                 }
-            } 
+            }
         }
 
         /// <summary>
@@ -224,7 +225,7 @@ namespace Microsoft.Azure.ContainerRegistry
 
         private async Task<string> GetScope(string operation, string method, string path)
         {
-            string methodOperationKey = $"{method}>{operation}";         
+            string methodOperationKey = $"{method}>{operation}";
 
             if (_acrScopes.TryGetValue(methodOperationKey, out string result))
             {
@@ -265,12 +266,12 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// Parse value of scope key from the 'Www-Authenticate' challenge header. See RFC 7235 section 4.1 for more info on the 
-        /// Ex challenge header value: 
+        /// Parse value of scope key from the 'Www-Authenticate' challenge header. See RFC 7235 section 4.1 for more info on the
+        /// Ex challenge header value:
         ///  Bearer realm="https://test.azurecr.io/oauth2/token",service="test.azurecr.io",scope="repository:hello-txt:metadata_read"
         /// Return null if it is not present
         /// </summary>
-        private string GetScopeFromHeaders(HttpHeaders headers)
+        public string GetScopeFromHeaders(HttpHeaders headers)
         {
             string challengeHeader = "Www-Authenticate".ToLower();
             string headerValue = "";
@@ -280,29 +281,31 @@ namespace Microsoft.Azure.ContainerRegistry
                 if (headerKVP.Key.ToLower() == challengeHeader)
                 {
                     headerValue = string.Join(",", headerKVP.Value);
-                    
+
                     break;
                 }
             }
 
-            string scope = "";
             int position = headerValue.IndexOf("scope=");
-            if (position > 0)
+            string scope = headerValue.Substring(position);
+            string[] keyValues = scope.Split('=');
+            int length = keyValues.Length;
+            var scopeContainedIn = keyValues[1];
+
+            if (length < 2)
             {
-                scope = headerValue.Substring(position);
+               throw new Exception($"Could not find a scope in the {headerValue}");
+            }
+            else if(length > 2)
+            {
+                var pattern = "\".+:.+:.+\"";
+                var regex = new Regex(pattern);
+                return TrimDoubleQuotes(regex.Match(scopeContainedIn).Value);
             }
             else
             {
-                throw new Exception($"Could not find a scope in the {headerValue}");
+                return TrimDoubleQuotes(scopeContainedIn);
             }
-
-            string[] keyValues = scope.Split(new char[] { '=' }, 2);
-            if (keyValues[0].ToLower().Trim() == "scope")
-            {
-                return TrimDoubleQuotes(keyValues[1]);
-            }
-
-            return null;
         }
 
         /// <summary>
