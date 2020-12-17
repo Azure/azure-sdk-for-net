@@ -843,8 +843,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Logger = mockLogger.Object
             };
 
-            var mockClient = new Mock<ServiceBusClient>();
-
             var msg = new ServiceBusReceivedMessage() { LockTokenGuid = Guid.NewGuid() };
             await receiver.AbandonMessageAsync(msg);
 
