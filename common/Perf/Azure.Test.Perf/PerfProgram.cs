@@ -125,7 +125,7 @@ namespace Azure.Test.Perf
                     {
                         foreach (Exception e in ae.InnerExceptions)
                         {
-                            Console.WriteLine($"Exception: '{e.Message}'{Environment.NewLine}{e.StackTrace}");
+                            Console.WriteLine($"Exception: {e}");
                         }
                         throw;
                     }
