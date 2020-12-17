@@ -296,7 +296,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessageLockLost));
                         Interlocked.Increment(ref messageCt);
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
-                        completionSources[setIndex].SetResult(true);
+                        if (setIndex < numThreads)
+                        {
+                            completionSources[setIndex].SetResult(true);
+                        }
                     }
                 }
                 await Task.WhenAll(completionSources.Select(source => source.Task));

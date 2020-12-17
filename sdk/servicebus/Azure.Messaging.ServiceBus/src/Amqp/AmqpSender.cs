@@ -583,9 +583,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             try
             {
                 SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
-                    _entityPath,
-                    timeout,
-                    cancellationToken).ConfigureAwait(false);
+                    entityPath: _entityPath,
+                    identifier: _identifier,
+                    timeout: timeout,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 if (!MaxMessageSize.HasValue)
                 {
