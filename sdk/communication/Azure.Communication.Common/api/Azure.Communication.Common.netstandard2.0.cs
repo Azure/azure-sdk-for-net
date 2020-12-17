@@ -28,10 +28,10 @@ namespace Azure.Communication
 }
 namespace Azure.Communication.Identity
 {
-    public sealed partial class CommunicationUserCredential : System.IDisposable
+    public sealed partial class CommunicationTokenCredential : System.IDisposable
     {
-        public CommunicationUserCredential(bool refreshProactively, System.Func<System.Threading.CancellationToken, string> tokenRefresher, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<string>>? asyncTokenRefresher = null, string? initialToken = null) { }
-        public CommunicationUserCredential(string userToken) { }
+        public CommunicationTokenCredential(bool refreshProactively, System.Func<System.Threading.CancellationToken, string> tokenRefresher, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<string>>? asyncTokenRefresher = null, string? initialToken = null) { }
+        public CommunicationTokenCredential(string userToken) { }
         public void Dispose() { }
         public Azure.Core.AccessToken GetToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

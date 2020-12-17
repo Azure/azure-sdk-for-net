@@ -27,11 +27,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetAnomaliesAsync(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAnomaliesAsync("", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetAnomaliesAsync("configId", options: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomaliesAsync("configId", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetAnomaliesAsync(FakeGuid, options: null), Throws.InstanceOf<ArgumentNullException>());
 
             Assert.That(() => client.GetAnomalies(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAnomalies("", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetAnomalies("configId", options: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomalies("configId", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetAnomalies(FakeGuid, options: null), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -60,11 +62,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetIncidentsAsync(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetIncidentsAsync("", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetIncidentsAsync("configId", options: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetIncidentsAsync("configId", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetIncidentsAsync(FakeGuid, options: null), Throws.InstanceOf<ArgumentNullException>());
 
             Assert.That(() => client.GetIncidents(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetIncidents("", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetIncidents("configId", options: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetIncidents("configId", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetIncidents(FakeGuid, options: null), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -91,13 +95,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetIncidentRootCausesAsync(null, "incidentId"), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetIncidentRootCausesAsync("", "incidentId"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetIncidentRootCausesAsync("configId", null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetIncidentRootCausesAsync("configId", ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetIncidentRootCausesAsync("configId", "incidentId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetIncidentRootCausesAsync(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetIncidentRootCausesAsync(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
 
             Assert.That(() => client.GetIncidentRootCauses(null, "incidentId"), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetIncidentRootCauses("", "incidentId"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetIncidentRootCauses("configId", null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetIncidentRootCauses("configId", ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetIncidentRootCauses("configId", "incidentId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetIncidentRootCauses(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetIncidentRootCauses(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
@@ -156,15 +162,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync(null, "dimensionName", options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync("", "dimensionName", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync("configId", null, options), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync("configId", "", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync("configId", "dimensionName", null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync("configId", "dimensionName", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync(FakeGuid, null, options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync(FakeGuid, "", options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync(FakeGuid, "dimensionName", null), Throws.InstanceOf<ArgumentNullException>());
 
             Assert.That(() => client.GetValuesOfDimensionWithAnomalies(null, "dimensionName", options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetValuesOfDimensionWithAnomalies("", "dimensionName", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomalies("configId", null, options), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomalies("configId", "", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomalies("configId", "dimensionName", null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetValuesOfDimensionWithAnomalies("configId", "dimensionName", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetValuesOfDimensionWithAnomalies(FakeGuid, null, options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetValuesOfDimensionWithAnomalies(FakeGuid, "", options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetValuesOfDimensionWithAnomalies(FakeGuid, "dimensionName", null), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -192,15 +200,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var emptyList = new List<DimensionKey>();
             var seriesKeys = new List<DimensionKey>() { new DimensionKey() };
 
-            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(null, "configId", default, default), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(emptyList, "configId", default, default), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(null, FakeGuid, default, default), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(emptyList, FakeGuid, default, default), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(seriesKeys, null, default, default), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(seriesKeys, "", default, default), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(seriesKeys, "configId", default, default), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
 
-            Assert.That(() => client.GetMetricEnrichedSeriesData(null, "configId", default, default), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesData(emptyList, "configId", default, default), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesData(null, FakeGuid, default, default), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesData(emptyList, FakeGuid, default, default), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.GetMetricEnrichedSeriesData(seriesKeys, null, default, default), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetMetricEnrichedSeriesData(seriesKeys, "", default, default), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesData(seriesKeys, "configId", default, default), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
         }
 
         [Test]

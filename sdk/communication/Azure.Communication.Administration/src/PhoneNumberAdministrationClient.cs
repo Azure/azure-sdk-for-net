@@ -38,7 +38,7 @@ namespace Azure.Communication.Administration
         { }
 
         internal PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
-            : this(new ClientDiagnostics(options), options.BuildHttpPipline(connectionString), connectionString.GetRequired("endpoint"))
+            : this(new ClientDiagnostics(options), options.BuildHttpPipeline(connectionString), connectionString.GetRequired("endpoint"))
         { }
 
         internal PhoneNumberAdministrationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)

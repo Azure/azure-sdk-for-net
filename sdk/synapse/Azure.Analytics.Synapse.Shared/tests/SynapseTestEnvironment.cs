@@ -7,10 +7,6 @@ namespace Azure.Analytics.Synapse.Tests
 {
     public class SynapseTestEnvironment : TestEnvironment
     {
-        public SynapseTestEnvironment() : base("synapse")
-        {
-        }
-
         public string EndpointUrl => GetRecordedVariable("AZURE_SYNAPSE_WORKSPACE_URL");
         public string SparkPoolName => GetRecordedVariable("AZURE_SYNAPSE_SPARK_POOL_NAME");
         public string StorageAccountName => GetRecordedVariable("AZURE_STORAGE_ACCOUNT_NAME");
