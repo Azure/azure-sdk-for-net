@@ -67,7 +67,7 @@ The Azure.Analytics.Synapse.AccessControl package supports synchronous and async
 
 ### Create access control client
 
-To interact with Azure Synapse, you need to instantiate a CreateAccessControlClient. It requires an endpoint URL and a TokenCredential.
+To interact with Azure Synapse, you need to instantiate a `AccessControlClient`. It requires an endpoint URL and a TokenCredential.
 
 ```C# Snippet:CreateAccessControlClient
 // Replace the string below with your actual endpoint url.
@@ -99,7 +99,7 @@ RoleAssignmentDetails roleAssignmentAdded = response.Value;
 
 ### Retrieve a role assignment
 
-You can retrieve the details of assignment by calling `GetRoleAssignmentById`, passing in the given assignment ID.
+You can retrieve the details of assignment by calling `GetRoleAssignmentById`, passing in the assignment ID.
 
 ```C# Snippet:RetrieveRoleAssignment
 RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(roleAssignmentAdded.Id);
@@ -120,7 +120,7 @@ foreach (RoleAssignmentDetails assignment in roleAssignments.Value)
 
 ### Delete a role assignment
 
-To delete a role assignment no longer needed you can call `DeleteRoleAssignmentById`. deletes a role assignment by the given role assignment ID.
+To delete a role assignment no longer needed you can call `DeleteRoleAssignmentById`, passing in the assignment ID.
 
 ```C# Snippet:DeleteRoleAssignment
 client.DeleteRoleAssignmentById(roleAssignment.Id);
