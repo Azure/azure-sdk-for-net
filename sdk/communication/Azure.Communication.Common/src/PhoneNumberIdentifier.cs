@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.Communication
 {
-    /// <summary>Represents a Phone Number Identifier.</summary>
+    /// <summary>Represents a Phone Number.</summary>
     [DebuggerDisplay("{Value}")]
     public class PhoneNumberIdentifier : CommunicationIdentifier
     {

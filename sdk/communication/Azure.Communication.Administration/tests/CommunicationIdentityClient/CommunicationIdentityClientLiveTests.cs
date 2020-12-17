@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
-using Azure.Communication;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
