@@ -326,7 +326,7 @@ namespace Azure.Core.TestFramework
 
             foreach (KeyValuePair<string, string[]> header in remaining)
             {
-                if (!ignoredHeaders.Contains(header.Key))
+                if (!LegacyExcludedHeaders.Contains(header.Key))
                 {
                     difference++;
                     descriptionBuilder?.AppendLine($"    <{header.Key}> is absent in request, value <{JoinHeaderValues(header.Value)}>");
