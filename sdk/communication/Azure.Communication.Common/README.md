@@ -30,33 +30,33 @@ This module does not contain a client and instead libraries that help other Azur
 
 ### Key concepts
 
-### CommunicationUserCredential
+### CommunicationTokenCredential
 
-`CommunicationUserCredential` authenticates a user with Communication Services, such as Chat or Calling. It optionally provides an auto-refresh mechanism to ensure a continuously stable authentication state during communications.
+`CommunicationTokenCredential` authenticates a user with Communication Services, such as Chat or Calling. It optionally provides an auto-refresh mechanism to ensure a continuously stable authentication state during communications.
 
-It is up to you the developer to first create valid user tokens with the Communication Administration SDK. Then you use these tokens with the `CommunicationUserCredential`.
+It is up to you the developer to first create valid user tokens with the Communication Administration SDK. Then you use these tokens with the `CommunicationTokenCredential`.
 
 ## Examples
 
 ### Create a credential with a static token
 
-For a short-lived clents when refreshing token upon expiry is not needed, `CommunicationUserCredential` can be instantited with a static token.
+For a short-lived clents when refreshing token upon expiry is not needed, `CommunicationTokenCredential` can be instantited with a static token.
 
-```C# Snippet:CommunicationUserCredential_CreateWithStaticToken
+```C# Snippet:CommunicationTokenCredential_CreateWithStaticToken
 string token = Environment.GetEnvironmentVariable("COMMUNICATION_SERVICES_USER_TOKEN");
-using var userCredential = new CommunicationUserCredential(token);
+using var tokenCredential = new CommunicationTokenCredential(token);
 ```
 
-Alternatively, you can create a `CommunicationUserCredential` with callback to renew tokens if expired.
+Alternatively, you can create a `CommunicationTokenCredential` with callback to renew tokens if expired.
 Here we pass two imagined functions that make network requests to retrieve token strings for user Bob.
-If callbacks are passed, upon requests (sending a chat message), `CommunicationUserCredential` ensures
+If callbacks are passed, upon requests (sending a chat message), `CommunicationTokenCredential` ensures
 that a valid token is acquired prior to executing the request.
 
 Optionally, you can enable proactive token refreshing where a fresh token will be acquired as soon as the
 previous token approaches expiry. Using this method, your requests are less likely to be blocked to acquire a fresh token:
 
-```C# Snippet:CommunicationUserCredential_CreateRefreshableWithoutInitialToken
-using var userCredential = new CommunicationUserCredential(
+```C# Snippet:CommunicationTokenCredential_CreateRefreshableWithoutInitialToken
+using var tokenCredential = new CommunicationTokenCredential(
     refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
     tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
     asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken));
@@ -64,9 +64,9 @@ using var userCredential = new CommunicationUserCredential(
 
 If you already have a token, you can optimize the token refreshing even further by passing that initial token:
 
-```C# Snippet:CommunicationUserCredential_CreateRefreshableWithInitialToken
+```C# Snippet:CommunicationTokenCredential_CreateRefreshableWithInitialToken
 string initialToken = Environment.GetEnvironmentVariable("COMMUNICATION_SERVICES_USER_TOKEN");
-using var userCredential = new CommunicationUserCredential(
+using var tokenCredential = new CommunicationTokenCredential(
     refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
     tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
     asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken),

@@ -3229,6 +3229,30 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task SetPermissionsAsync_JustOwner_JustGroup()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            string owner = Recording.Random.NewGuid().ToString();
+            string group = Recording.Random.NewGuid().ToString();
+
+            Response<PathAccessControl> initalGetAccessControlResponse = await directory.GetAccessControlAsync();
+
+            // Act
+            Response<PathInfo> response = await directory.SetPermissionsAsync(owner: owner);
+
+            // Assert
+            AssertValidStoragePathInfo(response);
+
+            // Act
+            response = await directory.SetPermissionsAsync(group: group);
+
+            // Assert
+            await directory.GetAccessControlAsync();
+            AssertValidStoragePathInfo(response);
+        }
+
+        [Test]
         public async Task SetPermissionsAsync_RootDirectory()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
