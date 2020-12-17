@@ -144,7 +144,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RecordMatcherIgnoresIgnoredHeaders()
+        public void RecordMatcherIgnoresValuesOfIgnoredHeaders()
         {
             var matcher = new RecordMatcher();
 
@@ -152,6 +152,18 @@ namespace Azure.Core.Tests
             {
                 RequestUri = "http://localhost",
                 RequestMethod = RequestMethod.Put,
+                Request =
+                    {
+                        Headers =
+                        {
+                            { "Request-Id", new[] { "Non-Random value"}},
+                            { "Date", new[] { "Fri, 05 Nov 2020 02:42:26 GMT"} },
+                            { "x-ms-date", new[] { "Fri, 05 Nov 2020 02:42:26 GMT"} },
+                            { "x-ms-client-request-id", new[] {"non random requestid"} },
+                            { "User-Agent", new[] {"non random sdk"} },
+                            { "traceparent", new[] { "non random traceparent" } }
+                        }
+                    }
             };
 
             RecordEntry[] entries = new[]
@@ -164,13 +176,111 @@ namespace Azure.Core.Tests
                     {
                         Headers =
                         {
-                            { "Request-Id", new[] { "Non-Random value"}},
+                            { "Request-Id", new[] { "Some Random value"}},
+                            { "Date", new[] { "Fri, 06 Nov 2020 02:42:26 GMT"} },
+                            { "x-ms-date", new[] { "Fri, 06 Nov 2020 02:42:26 GMT"} },
+                            { "x-ms-client-request-id", new[] {"some random requestid"} },
+                            { "User-Agent", new[] {"some random sdk"} },
+                            { "traceparent", new[] {"some random traceparent"} }
                         }
                     }
                 }
             };
 
             Assert.NotNull(matcher.FindMatch(mockRequest, entries));
+        }
+
+        [Test]
+        public void RecordMatcherIgnoresLegacyExcludedHeaders()
+        {
+            var matcher = new RecordMatcher
+            {
+                LegacyExcludedHeaders = { "some header", "another" }
+            };
+
+            var mockRequest = new RecordEntry()
+            {
+                RequestUri = "http://localhost",
+                RequestMethod = RequestMethod.Put,
+                Request =
+                    {
+                        Headers =
+                        {
+                            { "some header", new[] { "Non-Random value"}},
+                        }
+                    }
+            };
+
+            RecordEntry[] entries = new[]
+            {
+                new RecordEntry()
+                {
+                    RequestUri = "http://localhost",
+                    RequestMethod = RequestMethod.Put,
+                    Request =
+                    {
+                        Headers =
+                        {
+                            { "another", new[] { "Some Random value"}},
+                        }
+                    }
+                }
+            };
+
+            Assert.NotNull(matcher.FindMatch(mockRequest, entries));
+        }
+
+        [Test]
+        public void RecordMatcheRequiresPresenceOfIgnoredHeaders()
+        {
+            var matcher = new RecordMatcher();
+
+            var mockRequest = new RecordEntry()
+            {
+                RequestUri = "http://localhost",
+                RequestMethod = RequestMethod.Put,
+                Request =
+                {
+                    Headers =
+                    {
+                        { "Request-Id", new[] { "Some Random value"}},
+                        { "Date", new[] { "Fri, 06 Nov 2020 02:42:26 GMT"} },
+                        { "x-ms-date", new[] { "Fri, 06 Nov 2020 02:42:26 GMT"} },
+                    }
+                }
+            };
+
+            RecordEntry[] entries = new[]
+            {
+                new RecordEntry()
+                {
+                    RequestUri = "http://localhost",
+                    RequestMethod = RequestMethod.Put,
+                    Request =
+                    {
+                        Headers =
+                        {
+                            { "x-ms-client-request-id", new[] {"some random requestid"} },
+                            { "User-Agent", new[] {"some random sdk"} },
+                            { "traceparent", new[] {"some random traceparent"} }
+                        }
+                    }
+                }
+            };
+
+            TestRecordingMismatchException exception = Assert.Throws<TestRecordingMismatchException>(() => matcher.FindMatch(mockRequest, entries));
+
+            Assert.AreEqual(
+                "Unable to find a record for the request PUT http://localhost" + Environment.NewLine +
+                "Header differences:" + Environment.NewLine +
+                "    <Date> is absent in record, value <Fri, 06 Nov 2020 02:42:26 GMT>" + Environment.NewLine +
+                "    <Request-Id> is absent in record, value <Some Random value>" + Environment.NewLine +
+                "    <x-ms-date> is absent in record, value <Fri, 06 Nov 2020 02:42:26 GMT>" + Environment.NewLine +
+                "    <traceparent> is absent in request, value <some random traceparent>" + Environment.NewLine +
+                "    <User-Agent> is absent in request, value <some random sdk>" + Environment.NewLine +
+                "    <x-ms-client-request-id> is absent in request, value <some random requestid>" + Environment.NewLine +
+                "Body differences:" + Environment.NewLine,
+                exception.Message);
         }
 
         [Test]

@@ -18,8 +18,6 @@ namespace Azure.Identity.Tests
         public ManagedIdentityCredentialArcLiveTests(bool isAsync) : base(isAsync)
         {
             Matcher = new ArcMiRecordedTestMatcher();
-            Matcher.LegacyExcludedHeaders.Add("x-ms-client-request-id");
-            Matcher.LegacyExcludedHeaders.Add("User-Agent");
             Matcher.LegacyExcludedHeaders.Add("traceparent");
         }
 

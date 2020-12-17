@@ -300,6 +300,7 @@ namespace Azure.Core.TestFramework
                 {
                     if (ignoredHeaders.Contains(headerName))
                     {
+                        remaining.Remove(headerName);
                         continue;
                     }
 
