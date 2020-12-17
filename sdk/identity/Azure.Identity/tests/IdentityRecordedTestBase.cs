@@ -26,7 +26,12 @@ namespace Azure.Identity.Tests
             Matcher.LegacyExcludedHeaders.Add("x-client-SKU");
             Matcher.LegacyExcludedHeaders.Add("x-client-CPU");
             Matcher.LegacyExcludedHeaders.Add("x-client-Ver");
-
+            Matcher.LegacyExcludedHeaders.Add("Date");
+            Matcher.LegacyExcludedHeaders.Add("x-ms-date");
+            Matcher.LegacyExcludedHeaders.Add("x-ms-client-request-id");
+            Matcher.LegacyExcludedHeaders.Add("User-Agent");
+            Matcher.LegacyExcludedHeaders.Add("Request-Id");
+            Matcher.LegacyExcludedHeaders.Add("traceparent");
             Sanitizer = new IdentityRecordedTestSanitizer();
         }
     }
