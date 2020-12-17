@@ -284,7 +284,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response{NumberConfigurationResponse}"/>. </returns>
-        public virtual async Task<Response<NumberConfigurationResponse>> GetNumberConfigurationAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NumberConfigurationResponse>> GetNumberConfigurationAsync(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetNumberConfiguration)}");
             scope.Start();
@@ -303,7 +303,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response{NumberConfigurationResponse}"/>. </returns>
-        public virtual Response<NumberConfigurationResponse> GetNumberConfiguration(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+        public virtual Response<NumberConfigurationResponse> GetNumberConfiguration(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetNumberConfiguration)}");
             scope.Start();
@@ -323,7 +323,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number to configure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response"/>. </returns>
-        public virtual async Task<Response> ConfigureNumberAsync(PstnConfiguration pstnConfiguration, PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ConfigureNumberAsync(PstnConfiguration pstnConfiguration, PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ConfigureNumber)}");
             scope.Start();
@@ -343,7 +343,7 @@ namespace Azure.Communication.Administration
         /// <param name="pstnConfiguration"> Definition for pstn number configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response"/>. </returns>
-        public virtual Response ConfigureNumber(PstnConfiguration pstnConfiguration, PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+        public virtual Response ConfigureNumber(PstnConfiguration pstnConfiguration, PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ConfigureNumber)}");
             scope.Start();
@@ -362,7 +362,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response"/>. </returns>
-        public virtual async Task<Response> UnconfigureNumberAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UnconfigureNumberAsync(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UnconfigureNumber)}");
             scope.Start();
@@ -381,7 +381,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response"/>. </returns>
-        public virtual Response UnconfigureNumber(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+        public virtual Response UnconfigureNumber(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UnconfigureNumber)}");
             scope.Start();
@@ -594,7 +594,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
-        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumber)}");
             scope.Start();
@@ -613,7 +613,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
-        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumbersAsync(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
+        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumbersAsync(IEnumerable<PhoneNumberIdentifier> phoneNumbers, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
             scope.Start();
@@ -637,7 +637,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
-        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumber)}");
             scope.Start();
@@ -656,7 +656,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
-        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumbers(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
+        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumbers(IEnumerable<PhoneNumberIdentifier> phoneNumbers, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
             scope.Start();
