@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Logging;
 
@@ -11,6 +13,7 @@ namespace Azure.Messaging.EventHubs.Processor
     {
         private readonly string _functionId;
         private readonly ILogger _logger;
+        private BlobContainerClient _client;
 
         /// <summary>
         /// The mocking constructor.
@@ -35,6 +38,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             _functionId = functionId;
             _logger = logger;
+            _client = blobContainerClient;
         }
 
         /// <summary>
@@ -67,6 +71,16 @@ namespace Azure.Messaging.EventHubs.Processor
             _logger.LogWarning(exception,
                 "Function '{functionId}': An exception occurred when listing checkpoints for FullyQualifiedNamespace: '{fullyQualifiedNamespace}'; EventHubName: '{eventHubName}'; ConsumerGroup: '{consumerGroup}'.",
                 _functionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+        }
+
+        /// <summary>
+        /// Attempts to create a storage container if one doesn't exists.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        public async Task CreateIfNotExistsAsync(CancellationToken cancellationToken)
+        {
+            await _client.CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -1,8 +1,8 @@
 namespace Azure.Communication
 {
-    public partial class CallingApplication : Azure.Communication.CommunicationIdentifier
+    public partial class CallingApplicationIdentifier : Azure.Communication.CommunicationIdentifier
     {
-        public CallingApplication(string id) { }
+        public CallingApplicationIdentifier(string id) { }
         public string Id { get { throw null; } }
     }
     public abstract partial class CommunicationIdentifier
@@ -21,15 +21,15 @@ namespace Azure.Communication
     {
         public CommunicationTokenRefreshOptions(bool refreshProactively, System.Func<System.Threading.CancellationToken, string> tokenRefresher, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<string>>? asyncTokenRefresher, string? token = null) { }
     }
-    public partial class CommunicationUser : Azure.Communication.CommunicationIdentifier
+    public partial class CommunicationUserIdentifier : Azure.Communication.CommunicationIdentifier
     {
-        public CommunicationUser(string id) { }
+        public CommunicationUserIdentifier(string id) { }
         public string Id { get { throw null; } }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{Value}")]
-    public partial class PhoneNumber : Azure.Communication.CommunicationIdentifier
+    public partial class PhoneNumberIdentifier : Azure.Communication.CommunicationIdentifier
     {
-        public PhoneNumber(string phoneNumber) { }
+        public PhoneNumberIdentifier(string phoneNumber) { }
         public string Value { get { throw null; } }
     }
     public partial class UnknownIdentifier : Azure.Communication.CommunicationIdentifier
