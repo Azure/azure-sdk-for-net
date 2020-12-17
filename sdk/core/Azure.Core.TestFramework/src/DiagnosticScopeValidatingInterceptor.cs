@@ -14,6 +14,7 @@ namespace Azure.Core.TestFramework
 {
     public class DiagnosticScopeValidatingInterceptor : IInterceptor
     {
+        private static readonly MethodInfo ValidateDiagnosticScopeMethod = typeof(DiagnosticScopeValidatingInterceptor).GetMethod(nameof(AwaitAndValidateDiagnosticScope), BindingFlags.NonPublic | BindingFlags.Static);
         public void Intercept(IInvocation invocation)
         {
             var methodName = invocation.Method.Name;
@@ -28,31 +29,17 @@ namespace Azure.Core.TestFramework
                 invocation.Proceed();
                 invocation.ReturnValue = Activator.CreateInstance(typeof(DiagnosticScopeValidatingAsyncEnumerable<>).MakeGenericType(genericType.GenericTypeArguments[0]), invocation.ReturnValue, expectedName, methodName, strict);
             }
-            else if (methodName.EndsWith("Async") &&
-                      !invocation.Method.ReturnType.Name.Contains("IAsyncEnumerable"))
+            else if (methodName.EndsWith("Async") && !invocation.Method.ReturnType.Name.Contains("IAsyncEnumerable"))
             {
-                ValidateDiagnosticScope<object>(() =>
+                Type genericArgument = typeof(object);
+                Type awaitableType = invocation.Method.ReturnType;
+                if (invocation.Method.ReturnType is {IsGenericType: true, GenericTypeArguments: {Length: 1} genericTypeArguments})
                 {
-                    invocation.Proceed();
-
-                    object returnValue = invocation.ReturnValue;
-                    if (returnValue is Task t)
-                    {
-                        t.GetAwaiter().GetResult();
-                    }
-                    else
-                    {
-                        // Await ValueTask
-                        Type returnType = returnValue.GetType();
-                        MethodInfo getAwaiterMethod = returnType.GetMethod("GetAwaiter", BindingFlags.Instance | BindingFlags.Public);
-                        MethodInfo getResultMethod = getAwaiterMethod.ReturnType.GetMethod("GetResult", BindingFlags.Instance | BindingFlags.Public);
-
-                        getResultMethod.Invoke(
-                            getAwaiterMethod.Invoke(returnValue, Array.Empty<object>()),
-                            Array.Empty<object>());
-                    }
-                    return default;
-                }, expectedName, methodName, strict).GetAwaiter().GetResult();
+                    genericArgument = genericTypeArguments[0];
+                    awaitableType = invocation.Method.ReturnType.GetGenericTypeDefinition();
+                }
+                ValidateDiagnosticScopeMethod.MakeGenericMethod(genericArgument)
+                    .Invoke(null, new object[]{awaitableType, invocation, expectedName, methodName, strict});
             }
             else
             {
@@ -60,11 +47,60 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        internal static void AwaitAndValidateDiagnosticScope<T>(Type genericType, IInvocation invocation, string expectedName, string methodName, bool strict)
+        {
+            // All this ceremony is not to await the returned Task/ValueTask syncronously
+            // instead we are replacing the invocation.ReturnValue with the ValidateDiagnosticScope task
+            // but we need to make sure the types match
+            if (genericType == typeof(Task<>))
+            {
+                invocation.ReturnValue = ValidateDiagnosticScope(async () =>
+                {
+                    invocation.Proceed();
+                    return (await (Task<T>)invocation.ReturnValue, false);
+                }, expectedName, methodName, strict).AsTask();
+            }
+            else if (genericType == typeof(Task))
+            {
+                invocation.ReturnValue = ValidateDiagnosticScope<object>(async () =>
+                {
+                    invocation.Proceed();
+                    await (Task)invocation.ReturnValue;
+                    return default;
+                }, expectedName, methodName, strict).AsTask();
+            }
+            else if (genericType == typeof(ValueTask<>))
+            {
+                invocation.ReturnValue = ValidateDiagnosticScope(async () =>
+                {
+                    invocation.Proceed();
+                    return (await (ValueTask<T>)invocation.ReturnValue, false);
+                }, expectedName, methodName, strict);
+            }
+            else if (genericType == typeof(ValueTask))
+            {
+                invocation.ReturnValue = ValidateDiagnosticScope<object>(async () =>
+                {
+                    invocation.Proceed();
+                    await (ValueTask)invocation.ReturnValue;;
+                    return default;
+                }, expectedName, methodName, strict).AsTask();
+            }
+            else
+            {
+                ValidateDiagnosticScope<object>(() =>
+                {
+                    invocation.Proceed();
+                    return default;
+                }, expectedName, methodName, strict).GetAwaiter().GetResult();
+            }
+        }
+
         internal static async ValueTask<T> ValidateDiagnosticScope<T>(Func<ValueTask<(T Result, bool SkipChecks)>> action, string expectedName, string methodName, bool strict)
         {
             bool expectFailure = false;
             bool skipChecks = false;
-            T result = default;
+            T result;
 
             using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
             try
