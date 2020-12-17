@@ -4,7 +4,7 @@ This sample demonstrates basic operations with two core classes in this library:
 
 ## Create pipeline client
 
-To interact with Notebooks on Azure Synapse, you need to instantiate a `NotebookClient`. It requires an endpoint URL and a TokenCredential.
+To interact with notebooks on Azure Synapse, you need to instantiate a `NotebookClient`. It requires an endpoint URL and a TokenCredential.
 
 ```C# Snippet:CreateNotebookClient
 // Replace the string below with your actual endpoint url.
