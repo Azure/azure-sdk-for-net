@@ -131,7 +131,7 @@ namespace Azure.Test.Perf
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"Exception: '{e}");
+                        Console.WriteLine($"Exception: {e}");
                         throw;
                     }
                     finally
@@ -149,7 +149,7 @@ namespace Azure.Test.Perf
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"Exception: '{e}");
+                    Console.WriteLine($"Exception: {e}");
                     throw;
                 }
                 finally
