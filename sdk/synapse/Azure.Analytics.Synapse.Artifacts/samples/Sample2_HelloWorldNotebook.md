@@ -1,8 +1,20 @@
+# Create, Retrieve and Delete a Synapse Pipelines
+
+This sample demonstrates basic operations with two core classes in this library: NotebookClient and NotebookResource. NotebookClient is used to interact with Notebooks on Azure Synapse - each method call sends a request to the service's REST API. NotebookResource, along with related classes Notebook and NotebookCell, represent a notebook within Synapse. The sample walks through the basics of adding, retrieving, deleting a notebook. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
+
+## Create pipeline client
+
+To interact with Notebooks on Azure Synapse, you need to instantiate a `NotebookClient`. It requires an endpoint URL and a TokenCredential.
+
 ```C# Snippet:CreateNotebookClient
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
 var client = new NotebookClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
+
+## Create a notebook
+
+To create an notebook, first create one or more `NotebookCell` with contents, and pass those into the Notebook constructor. 
 
 ```C# Snippet:ConfigureNotebookResource
 string notebookName = "Test-Notebook";
@@ -18,15 +30,25 @@ var newNotebook = new Notebook(new NotebookMetadata(), 4, 2, new NotebookCell[] 
 var notebookResource = new NotebookResource(notebookName, newNotebook);
 ```
 
+One a notebook is created, it cas be added to a NotebookResource, which is uploaded with the `StartCreateOrUpdateNotebookAsync` method on `NotebookClient`.
+
 ```C# Snippet:CreateNotebook
 NotebookCreateOrUpdateNotebookOperation operation = await client.StartCreateOrUpdateNotebookAsync(notebookName, notebookResource);
 await operation.WaitForCompletionAsync();
 Console.WriteLine("Notebook is created");
 ```
 
+## Retrieve a pipeline
+
+You can retrieve a notebook by calling `GetNotebook`, passing in the notebook name.
+
 ```C# Snippet:RetrieveNotebook
 NotebookResource retrievedNotebook = client.GetNotebook(notebookName);
 ```
+
+## List notebooks
+
+To enumerate all notebooks in the Synapse workspace you can call `GetNotebooksByWorkspace`.
 
 ```C# Snippet:ListNotebooks
 Pageable<NotebookResource> notebooks = client.GetNotebooksByWorkspace();
@@ -36,6 +58,9 @@ foreach (NotebookResource notebook in notebooks)
 }
 ```
 
+## Delete a notebook
+
+To delete a notebook no longer needed you can call `StartDeleteNotebook`, passing in the notebook name.
 
 ```C# Snippet:DeleteNotebook
 client.StartDeleteNotebook(notebookName);
