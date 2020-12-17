@@ -17,7 +17,7 @@ namespace Azure.Communication.Administration.Samples
     /// </summary>
     public partial class Sample1_CommunicationIdentityClient : CommunicationIdentityClientLiveTestBase
     {
-        public Sample1_CommunicationIdentityClient(bool isAsync) : base(isAsync)
+        public Sample1_CommunicationIdentityClient(bool isAsync): base(isAsync)
             => Matcher.IgnoredHeaders.Add("x-ms-content-sha256");
 
         [Test]
