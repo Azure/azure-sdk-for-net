@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    // Simple Test 8
 
     /// <summary>
     /// HealthMonitorsOperations operations.
