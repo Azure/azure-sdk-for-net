@@ -490,13 +490,13 @@ namespace Compute.Tests
             try
             {
 
-                var rgName = TestUtilities.GenerateName(TestPrefix);
-                var vmssName = TestUtilities.GenerateName("vmss");
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-                VirtualMachineScaleSet inputVMScaleSet;
-
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
+                    var rgName = TestUtilities.GenerateName(TestPrefix);
+                    var vmssName = TestUtilities.GenerateName("vmss");
+                    string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                    VirtualMachineScaleSet inputVMScaleSet;
+
                     Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
                     EnsureClientsInitialized(context);
 
