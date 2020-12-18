@@ -624,7 +624,7 @@ namespace Azure.Storage
         private static ConnectionStringFilter AllRequired(params AccountSetting[] requiredSettings) =>
             (settings) =>
             {
-                IDictionary<string, string> result = new Dictionary<string, string>(settings);
+                IDictionary<string, string> result = new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
 
                 foreach (AccountSetting requirement in requiredSettings)
                 {
