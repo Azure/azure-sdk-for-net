@@ -40,6 +40,8 @@ namespace Azure.Storage.Queues
         /// </summary>
         private readonly Uri _messagesUri;
 
+        private readonly QueueRestClient _queueRestClient;
+
         /// <summary>
         /// Gets the Uri endpoint used by the object's messages.
         /// </summary>
@@ -221,6 +223,11 @@ namespace Azure.Storage.Queues
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             _messageEncoding = options.MessageEncoding;
+            _queueRestClient = new QueueRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                _uri.ToString(),
+                _version.ToVersionString());
             AssertEncodingForEncryption();
         }
 
@@ -480,10 +487,14 @@ namespace Azure.Storage.Queues
         /// <see cref="Response"/>
         /// </returns>
         private async Task<Response> CreateInternal(
+#pragma warning disable CA1801 // Review unused parameters
             Metadata metadata,
+#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
+#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -492,16 +503,27 @@ namespace Azure.Storage.Queues
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await QueueRestClient.Queue.CreateAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        async: async,
-                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(Create)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<QueueCreateHeaders> reponse;
+                    if (async)
+                    {
+                        reponse = await _queueRestClient.CreateAsync(
+                            Name,
+                            timeout: null,
+                            //TODO fix this
+                            metadata: null,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        reponse = _queueRestClient.Create(
+                            Name,
+                            timeout: null,
+                            //TODO fix this
+                            metadata: null,
+                            cancellationToken);
+                    }
+                    return reponse.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
@@ -933,7 +955,9 @@ namespace Azure.Storage.Queues
         private async Task<Response> DeleteInternal(
             bool async,
             CancellationToken cancellationToken,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
+#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -942,15 +966,24 @@ namespace Azure.Storage.Queues
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await QueueRestClient.Queue.DeleteAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(Delete)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<QueueDeleteHeaders> response;
+                    if (async)
+                    {
+                        response = await _queueRestClient.DeleteAsync(
+                            Name,
+                            timeout: null,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _queueRestClient.Delete(
+                            Name,
+                            timeout: null,
+                            cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
@@ -1031,7 +1064,9 @@ namespace Azure.Storage.Queues
         private async Task<Response<QueueProperties>> GetPropertiesInternal(
             bool async,
             CancellationToken cancellationToken,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
+#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -1040,15 +1075,25 @@ namespace Azure.Storage.Queues
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await QueueRestClient.Queue.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(GetProperties)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<QueueProperties> response;
+                    if (async)
+                    {
+                        response = await _queueRestClient.GetPropertiesAsync(
+                            Name,
+                            timeout: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _queueRestClient.GetProperties(
+                            Name,
+                            timeout: null,
+                            cancellationToken: cancellationToken);
+                    }
+                    return Response.FromValue(
+                        response.Headers,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
