@@ -151,7 +151,7 @@ namespace Azure.Core.TestFramework
         [TearDown]
         public virtual void StopTestRecording()
         {
-            if (_hadInstrumentedClient && Recording.HasRequests)
+            if (!_hadInstrumentedClient && Recording?.HasRequests == true)
             {
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please use call InstrumentClient for the client being recorded.");
             }
@@ -162,7 +162,7 @@ namespace Azure.Core.TestFramework
             Recording?.Dispose(save);
         }
 
-        protected override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
+        protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
         {
             _hadInstrumentedClient = true;
             return base.InstrumentClient(clientType, client, preInterceptors);
