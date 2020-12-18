@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
@@ -11,57 +12,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class LinkedServiceSnippets : SampleFixture
     {
-        private LinkedServiceClient LinkedServiceClient;
-
-        [OneTimeSetUp]
-        public void CreateClient()
+        [Test]
+        public async Task LinkedServiceSample()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
-
             #region Snippet:CreateLinkedServiceClient
-            // Create a new LinkedService client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            LinkedServiceClient client = new LinkedServiceClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            // Replace the string below with your actual endpoint url.
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+            LinkedServiceClient client = new LinkedServiceClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
-            this.LinkedServiceClient = client;
-        }
-
-        [Test]
-        public void CreateLinkedService()
-        {
             #region Snippet:CreateLinkedService
-            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = LinkedServiceClient.StartCreateOrUpdateLinkedService("MyLinkedService", new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
-            LinkedServiceResource linkedService = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            LinkedServiceResource serviceResource = new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/"));
+            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = client.StartCreateOrUpdateLinkedService("MyLinkedService", serviceResource);
+            Response<LinkedServiceResource> createdService = await operation.WaitForCompletionAsync();
             #endregion
-        }
 
-        [Test]
-        public void RetrieveLinkedService()
-        {
             #region Snippet:RetrieveLinkedService
-            LinkedServiceResource linkedService = LinkedServiceClient.GetLinkedService("MyLinkedService");
+            LinkedServiceResource retrievedService = client.GetLinkedService("MyLinkedService");
             #endregion
-        }
 
-        [Test]
-        public void ListLinkedServices()
-        {
             #region Snippet:ListLinkedServices
-            Pageable<LinkedServiceResource> linkedServices = LinkedServiceClient.GetLinkedServicesByWorkspace();
+            Pageable<LinkedServiceResource> linkedServices = client.GetLinkedServicesByWorkspace();
             foreach (LinkedServiceResource linkedService in linkedServices)
             {
                 System.Console.WriteLine(linkedService.Name);
             }
             #endregion
-        }
 
-        [Test]
-        public void DeleteLinkedService()
-        {
             #region Snippet:DeleteLinkedService
-            LinkedServiceClient.StartDeleteLinkedService("MyLinkedService");
+            client.StartDeleteLinkedService("MyLinkedService");
             #endregion
         }
     }

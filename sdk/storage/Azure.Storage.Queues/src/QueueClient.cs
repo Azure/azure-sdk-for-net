@@ -148,10 +148,15 @@ namespace Azure.Storage.Queues
         private StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -405,7 +410,7 @@ namespace Azure.Storage.Queues
             return new QueueClient(
                 Uri,
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 clientSideEncryptionOptions,
@@ -1467,7 +1472,11 @@ namespace Azure.Storage.Queues
         #region SendMessage
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
@@ -1479,6 +1488,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual Response<SendReceipt> SendMessage(string messageText) =>
             SendMessage(
                 messageText,
@@ -1486,7 +1500,11 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
@@ -1498,6 +1516,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText) =>
             await SendMessageAsync(
                 messageText,
@@ -1506,7 +1529,11 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
@@ -1521,6 +1548,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual Response<SendReceipt> SendMessage(string messageText, CancellationToken cancellationToken = default) =>
             SendMessage(
                 messageText,
@@ -1529,7 +1561,11 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
@@ -1544,6 +1580,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText, CancellationToken cancellationToken = default) =>
             await SendMessageAsync(messageText,
                 cancellationToken: cancellationToken,
@@ -1552,7 +1593,11 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
@@ -1573,6 +1618,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual Response<SendReceipt> SendMessage(
             string messageText,
             TimeSpan? visibilityTimeout = default,
@@ -1588,7 +1638,11 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
@@ -1609,6 +1663,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual Response<SendReceipt> SendMessage(
             BinaryData message,
             TimeSpan? visibilityTimeout = default,
@@ -1624,7 +1683,11 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
@@ -1645,6 +1708,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(
             string messageText,
             TimeSpan? visibilityTimeout = default,
@@ -1660,7 +1728,11 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
@@ -1681,6 +1753,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(
             BinaryData message,
             TimeSpan? visibilityTimeout = default,
@@ -1696,7 +1773,11 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
@@ -1720,6 +1801,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendMessageResult}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         private async Task<Response<SendReceipt>> SendMessageInternal(
             BinaryData message,
             TimeSpan? visibilityTimeout,
@@ -2508,7 +2594,11 @@ namespace Azure.Storage.Queues
 
         #region UpdateMessage
         /// <summary>
-        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// Changes a message's visibility timeout and contents.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
@@ -2532,6 +2622,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual Response<UpdateReceipt> UpdateMessage(
             string messageId,
             string popReceipt,
@@ -2548,7 +2643,11 @@ namespace Azure.Storage.Queues
                 .EnsureCompleted();
 
         /// <summary>
-        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// Changes a message's visibility timeout and contents.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
@@ -2572,6 +2671,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual Response<UpdateReceipt> UpdateMessage(
             string messageId,
             string popReceipt,
@@ -2588,7 +2692,11 @@ namespace Azure.Storage.Queues
                 .EnsureCompleted();
 
         /// <summary>
-        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// Changes a message's visibility timeout and contents.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
@@ -2612,6 +2720,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
             string messageId,
             string popReceipt,
@@ -2628,7 +2741,11 @@ namespace Azure.Storage.Queues
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// Changes a message's visibility timeout and contents.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
@@ -2652,6 +2769,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
             string messageId,
             string popReceipt,
@@ -2668,7 +2790,11 @@ namespace Azure.Storage.Queues
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// Changes a message's visibility timeout and contents.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
@@ -2695,6 +2821,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         private async Task<Response<UpdateReceipt>> UpdateMessageInternal(
             BinaryData message,
             string messageId,
@@ -2813,7 +2944,7 @@ namespace Azure.Storage.Queues
                     nameof(Name));
             }
             QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
             return sasUri.ToUri();
         }
         #endregion

@@ -24,5 +24,9 @@ namespace Azure.Analytics.Synapse.Samples
     public partial class SubmitSparkJob : SampleFixture { }
     public partial class ExecuteSparkStatement : SampleFixture { }
     public partial class AddAndRemoveRoleAssignment : SampleFixture { }
+    public partial class ExecutePipelines : SampleFixture { }
+    public partial class NotebookSample : SampleFixture { }
+    public partial class PipelineMonitoring : SampleFixture { }
+
 #pragma warning restore SA1402 // File may only contain a single type
 }

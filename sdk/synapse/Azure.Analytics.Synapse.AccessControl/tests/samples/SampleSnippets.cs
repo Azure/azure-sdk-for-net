@@ -13,67 +13,40 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 {
     public partial class Snippets : SampleFixture
     {
-#pragma warning disable IDE1006 // Naming Styles
-        private AccessControlClient client;
-#pragma warning restore IDE1006 // Naming Styles
-
-        [OneTimeSetUp]
-        public void CreateClient()
+        [Test]
+        public void RoleAssignmentSample()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
-
             #region Snippet:CreateAccessControlClient
-            // Create a new access control client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            AccessControlClient client = new AccessControlClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            // Replace the string below with your actual endpoint url.
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+            AccessControlClient client = new AccessControlClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
-            this.client = client;
-        }
-
-        [Test]
-        public void CreateRoleAssignment()
-        {
             string principalId = TestEnvironment.PrincipalId;
-            string sqlAdminRoleId = client.GetRoleDefinitions().AsEnumerable().Single(role => role.Name == "Sql Admin").Id;
 
             #region Snippet:CreateRoleAssignment
-            RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
-            RoleAssignmentDetails roleAssignment = client.CreateRoleAssignment(options);
-            #endregion
-        }
+            Pageable<SynapseRole> roles = client.GetRoleDefinitions();
+            SynapseRole sqlAdminRole = roles.Single(role => role.Name == "Sql Admin");
 
-        [Test]
-        public void RetrieveRoleAssignment()
-        {
-            string principalId = TestEnvironment.PrincipalId;
+            RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRole.Id, principalId);
+            RoleAssignmentDetails createdRoleAssignment = client.CreateRoleAssignment(options);
+            #endregion
 
             #region Snippet:RetrieveRoleAssignment
-            RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(principalId);
+            RoleAssignmentDetails retrievedRoleAssignment = client.GetRoleAssignmentById(createdRoleAssignment.Id);
             #endregion
-        }
 
-        [Test]
-        public void ListRoleAssignments()
-        {
             #region Snippet:ListRoleAssignments
             IReadOnlyList<RoleAssignmentDetails> roleAssignments = client.GetRoleAssignments().Value;
-            foreach (RoleAssignmentDetails assignment in roleAssignments)
+            foreach (RoleAssignmentDetails roleAssignment in roleAssignments)
             {
-                Console.WriteLine(assignment.Id);
+                Console.WriteLine(roleAssignment.Id);
             }
             #endregion
-        }
-
-        [Test]
-        public void DeleteRoleAssignment()
-        {
-            string principalId = TestEnvironment.PrincipalId;
-            RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(principalId);
 
             #region Snippet:DeleteRoleAssignment
-            client.DeleteRoleAssignmentById(roleAssignment.Id);
+            client.DeleteRoleAssignmentById(retrievedRoleAssignment.Id);
             #endregion
         }
     }

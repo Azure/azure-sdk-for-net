@@ -184,7 +184,6 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>Returns a list of rules description</returns>
         public virtual async Task<IList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken = default)
         {
-
             Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleStart(Identifier);

@@ -8,12 +8,9 @@
         "Content-Length": "69",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201105.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "0a3de901348cb728541af01767bbd82d",
+        "x-ms-client-request-id": "1c3315590d7865a0ce7785a606f28aa2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,81 +19,81 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0ad57f38-5ee8-4875-a156-44a7964d0b88",
+        "apim-request-id": "ebe60740-5338-4dbf-83c9-6e2b78133b41",
         "Content-Length": "4828",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 15:30:06 GMT",
+        "Date": "Tue, 15 Dec 2020 01:35:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5372",
-        "X-Request-ID": "0ad57f38-5ee8-4875-a156-44a7964d0b88"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "207",
+        "x-request-id": "ebe60740-5338-4dbf-83c9-6e2b78133b41"
       },
       "ResponseBody": {
         "value": [
           {
             "timestamp": "2020-10-23T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-05T00:56:53.037Z\u0022,\u0022CreateTime\u0022:\u00222020-11-05T00:56:53.037Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-20T00:15:42.384Z\u0022,\u0022CreateTime\u0022:\u00222020-11-20T00:15:42.384Z\u0022}"
           },
           {
             "timestamp": "2020-10-26T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-05T00:56:53.039Z\u0022,\u0022CreateTime\u0022:\u00222020-11-05T00:56:53.039Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-24T00:05:44.059Z\u0022,\u0022CreateTime\u0022:\u00222020-11-24T00:05:44.059Z\u0022}"
           },
           {
             "timestamp": "2020-10-28T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-05T00:56:53.039Z\u0022,\u0022CreateTime\u0022:\u00222020-11-05T00:56:53.039Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-18T00:16:19.569Z\u0022,\u0022CreateTime\u0022:\u00222020-11-18T00:16:19.569Z\u0022}"
           },
           {
             "timestamp": "2020-10-22T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-20T00:10:21.548Z\u0022,\u0022CreateTime\u0022:\u00222020-11-20T00:10:21.548Z\u0022}"
           },
           {
             "timestamp": "2020-10-25T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-05T00:56:53.038Z\u0022,\u0022CreateTime\u0022:\u00222020-11-05T00:56:53.038Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-20T00:10:41.549Z\u0022,\u0022CreateTime\u0022:\u00222020-11-20T00:10:41.549Z\u0022}"
           },
           {
             "timestamp": "2020-10-24T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-05T00:56:53.038Z\u0022,\u0022CreateTime\u0022:\u00222020-11-05T00:56:53.038Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-20T00:16:02.385Z\u0022,\u0022CreateTime\u0022:\u00222020-11-20T00:16:02.385Z\u0022}"
           },
           {
             "timestamp": "2020-10-29T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-05T00:56:53.039Z\u0022,\u0022CreateTime\u0022:\u00222020-11-05T00:56:53.039Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-27T00:05:26.028Z\u0022,\u0022CreateTime\u0022:\u00222020-11-27T00:05:26.028Z\u0022}"
           },
           {
             "timestamp": "2020-10-27T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-05T00:56:53.039Z\u0022,\u0022CreateTime\u0022:\u00222020-11-05T00:56:53.039Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-20T00:10:41.549Z\u0022,\u0022CreateTime\u0022:\u00222020-11-20T00:10:41.549Z\u0022}"
           },
           {
             "timestamp": "2020-10-30T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-05T00:56:53.039Z\u0022,\u0022CreateTime\u0022:\u00222020-11-05T00:56:53.039Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-25T00:05:53.040Z\u0022,\u0022CreateTime\u0022:\u00222020-11-25T00:05:53.040Z\u0022}"
           },
           {
             "timestamp": "2020-10-12T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:11:01.639Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:11:01.639Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-09T00:16:43.450Z\u0022,\u0022CreateTime\u0022:\u00222020-11-09T00:16:43.450Z\u0022}"
           },
           {
             "timestamp": "2020-10-15T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-13T00:15:44.366Z\u0022,\u0022CreateTime\u0022:\u00222020-11-13T00:15:44.366Z\u0022}"
           },
           {
             "timestamp": "2020-10-17T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-15T00:05:29.926Z\u0022,\u0022CreateTime\u0022:\u00222020-11-15T00:05:29.926Z\u0022}"
           },
           {
             "timestamp": "2020-10-16T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-10-31T00:05:18.360Z\u0022,\u0022CreateTime\u0022:\u00222020-10-31T00:05:18.360Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-14T00:05:37.915Z\u0022,\u0022CreateTime\u0022:\u00222020-11-14T00:05:37.915Z\u0022}"
           },
           {
             "timestamp": "2020-10-05T00:00:00Z",
@@ -106,12 +103,12 @@
           {
             "timestamp": "2020-10-19T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-03T00:06:11.544Z\u0022,\u0022CreateTime\u0022:\u00222020-11-03T00:06:11.544Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-16T00:06:52.093Z\u0022,\u0022CreateTime\u0022:\u00222020-11-16T00:06:52.093Z\u0022}"
           },
           {
             "timestamp": "2020-10-09T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:10:41.637Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:10:41.637Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-07T00:06:56.474Z\u0022,\u0022CreateTime\u0022:\u00222020-11-07T00:06:56.474Z\u0022}"
           },
           {
             "timestamp": "2020-10-04T00:00:00Z",
@@ -131,22 +128,22 @@
           {
             "timestamp": "2020-10-10T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:10:41.637Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:10:41.637Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-08T00:06:41.982Z\u0022,\u0022CreateTime\u0022:\u00222020-11-08T00:06:41.982Z\u0022}"
           },
           {
             "timestamp": "2020-10-14T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-12T00:16:08.020Z\u0022,\u0022CreateTime\u0022:\u00222020-11-12T00:16:08.020Z\u0022}"
           },
           {
             "timestamp": "2020-10-18T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-03T00:10:21.310Z\u0022,\u0022CreateTime\u0022:\u00222020-11-03T00:10:21.310Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-14T00:15:34.311Z\u0022,\u0022CreateTime\u0022:\u00222020-11-14T00:15:34.311Z\u0022}"
           },
           {
             "timestamp": "2020-10-20T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-18T00:11:15.607Z\u0022,\u0022CreateTime\u0022:\u00222020-11-18T00:11:15.607Z\u0022}"
           },
           {
             "timestamp": "2020-10-07T00:00:00Z",
@@ -156,22 +153,22 @@
           {
             "timestamp": "2020-10-11T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:10:41.637Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:10:41.637Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-09T00:06:41.596Z\u0022,\u0022CreateTime\u0022:\u00222020-11-09T00:06:41.596Z\u0022}"
           },
           {
             "timestamp": "2020-10-13T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:11:01.639Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:11:01.639Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-11T00:05:28.702Z\u0022,\u0022CreateTime\u0022:\u00222020-11-11T00:05:28.701Z\u0022}"
           },
           {
             "timestamp": "2020-10-01T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-05T09:38:41.889Z\u0022,\u0022CreateTime\u0022:\u00222020-11-05T09:38:41.889Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-12-14T09:24:24.150Z\u0022,\u0022CreateTime\u0022:\u00222020-12-14T09:24:24.150Z\u0022}"
           },
           {
             "timestamp": "2020-10-02T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-05T09:39:01.891Z\u0022,\u0022CreateTime\u0022:\u00222020-11-05T09:39:01.891Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-12-14T09:24:44.151Z\u0022,\u0022CreateTime\u0022:\u00222020-12-14T09:24:44.151Z\u0022}"
           },
           {
             "timestamp": "2020-10-03T00:00:00Z",
@@ -181,7 +178,7 @@
           {
             "timestamp": "2020-10-21T00:00:00Z",
             "status": "Succeeded",
-            "message": "{\u0022UpdateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022,\u0022CreateTime\u0022:\u00222020-11-04T00:11:01.640Z\u0022}"
+            "message": "{\u0022UpdateTime\u0022:\u00222020-11-18T00:11:15.607Z\u0022,\u0022CreateTime\u0022:\u00222020-11-18T00:11:15.607Z\u0022}"
           }
         ],
         "@nextLink": null
@@ -193,6 +190,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "1364633956"
+    "RandomSeed": "1668926559"
   }
 }

@@ -134,6 +134,5 @@ namespace Azure.Data.Tables
             }
             return parameters;
         }
-
     }
 }

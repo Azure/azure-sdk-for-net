@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK EventHubs Extension</Description>
     <Version>5.0.0-beta.1</Version>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636</NoWarn>
@@ -11,11 +11,13 @@
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
+    
+    <!-- TODO: Switch to centralized versions when Microsoft.Extensions.Azure GA -->
+    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.1.0-beta.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../../Azure.Messaging.EventHubs/src/Azure.Messaging.EventHubs.csproj" />
-    <ProjectReference Include="../../../extensions/Microsoft.Extensions.Azure/src/Microsoft.Extensions.Azure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

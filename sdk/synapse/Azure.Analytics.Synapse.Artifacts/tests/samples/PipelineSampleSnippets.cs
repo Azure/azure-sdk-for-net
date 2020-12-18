@@ -2,66 +2,45 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
-using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class PipelineSnippets : SampleFixture
     {
-        private PipelineClient PipelineClient;
-
-        [OneTimeSetUp]
-        public void CreateClient()
+        [Test]
+        public async Task PipelineSample()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
-
             #region Snippet:CreatePipelineClient
-            // Create a new Pipeline client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            PipelineClient client = new PipelineClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            // Replace the string below with your actual endpoint url.
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+            PipelineClient client = new PipelineClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
-            this.PipelineClient = client;
-        }
-
-        [Test]
-        public void CreatePipeline()
-        {
             #region Snippet:CreatePipeline
-            PipelineCreateOrUpdatePipelineOperation operation = PipelineClient.StartCreateOrUpdatePipeline("MyPipeline", new PipelineResource());
-            PipelineResource pipeline = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            PipelineCreateOrUpdatePipelineOperation operation = client.StartCreateOrUpdatePipeline("MyPipeline", new PipelineResource());
+            Response<PipelineResource> createdPipeline = await operation.WaitForCompletionAsync();
             #endregion
-        }
 
-        [Test]
-        public void RetrievePipeline()
-        {
             #region Snippet:RetrievePipeline
-            PipelineResource pipeline = PipelineClient.GetPipeline("MyPipeline");
+            PipelineResource retrievedPipeline = client.GetPipeline("MyPipeline");
             #endregion
-        }
 
-        [Test]
-        public void ListPipelines()
-        {
             #region Snippet:ListPipelines
-            Pageable<PipelineResource> pipelines = PipelineClient.GetPipelinesByWorkspace();
+            Pageable<PipelineResource> pipelines = client.GetPipelinesByWorkspace();
             foreach (PipelineResource pipeline in pipelines)
             {
                 System.Console.WriteLine(pipeline.Name);
             }
             #endregion
-        }
 
-        [Test]
-        public void DeletePipeline()
-        {
             #region Snippet:DeletePipeline
-            PipelineClient.StartDeletePipeline("MyPipeline");
+            client.StartDeletePipeline("MyPipeline");
             #endregion
         }
     }

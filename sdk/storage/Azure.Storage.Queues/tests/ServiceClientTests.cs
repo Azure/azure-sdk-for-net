@@ -15,9 +15,9 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
+    [NonParallelizable]
     public class ServiceClientTests : QueueTestBase
     {
-
         public ServiceClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
@@ -341,27 +341,27 @@ namespace Azure.Storage.Queues.Test
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - QueueServiceClient(string connectionString)
-            QueueServiceClient serviceClient = new QueueServiceClient(
-                connectionString);
+            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(
+                connectionString));
             Assert.IsTrue(serviceClient.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            QueueServiceClient serviceClient2 = new QueueServiceClient(
+            QueueServiceClient serviceClient2 = InstrumentClient(new QueueServiceClient(
                 connectionString,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(serviceClient2.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
-            QueueServiceClient serviceClient3 = new QueueServiceClient(
+            QueueServiceClient serviceClient3 = InstrumentClient(new QueueServiceClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(serviceClient3.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            QueueServiceClient serviceClient4 = new QueueServiceClient(
+            QueueServiceClient serviceClient4 = InstrumentClient(new QueueServiceClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(serviceClient4.CanGenerateAccountSasUri);
         }
 
@@ -376,30 +376,30 @@ namespace Azure.Storage.Queues.Test
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - QueueServiceClient(string connectionString)
-            QueueServiceClient serviceClient = new QueueServiceClient(
-                connectionString);
+            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(
+                connectionString));
             QueueClient queueClient = serviceClient.GetQueueClient(GetNewQueueName());
             Assert.IsTrue(queueClient.CanGenerateSasUri);
 
             // Act - QueueServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            QueueServiceClient serviceClient2 = new QueueServiceClient(
+            QueueServiceClient serviceClient2 = InstrumentClient(new QueueServiceClient(
                 connectionString,
-                GetOptions());
+                GetOptions()));
             QueueClient queueClient2 = serviceClient2.GetQueueClient(GetNewQueueName());
             Assert.IsTrue(queueClient2.CanGenerateSasUri);
 
             // Act - QueueServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
-            QueueServiceClient serviceClient3 = new QueueServiceClient(
+            QueueServiceClient serviceClient3 = InstrumentClient(new QueueServiceClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             QueueClient queueClient3 = serviceClient3.GetQueueClient(GetNewQueueName());
             Assert.IsFalse(queueClient3.CanGenerateSasUri);
 
             // Act - QueueServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            QueueServiceClient serviceClient4 = new QueueServiceClient(
+            QueueServiceClient serviceClient4 = InstrumentClient(new QueueServiceClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             QueueClient queueClient4 = serviceClient4.GetQueueClient(GetNewQueueName());
             Assert.IsTrue(queueClient4.CanGenerateSasUri);
         }
@@ -416,7 +416,7 @@ namespace Azure.Storage.Queues.Test
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            QueueServiceClient serviceClient = new QueueServiceClient(connectionString, GetOptions());
+            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(connectionString, GetOptions()));
 
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(
@@ -446,7 +446,7 @@ namespace Azure.Storage.Queues.Test
             DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             AccountSasServices services = AccountSasServices.Queues;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            QueueServiceClient serviceClient = new QueueServiceClient(connectionString, GetOptions());
+            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(connectionString, GetOptions()));
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
             {
@@ -480,7 +480,7 @@ namespace Azure.Storage.Queues.Test
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasServices services = AccountSasServices.Blobs; // Wrong Service
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            QueueServiceClient serviceClient = new QueueServiceClient(connectionString, GetOptions());
+            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(connectionString, GetOptions()));
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
             {

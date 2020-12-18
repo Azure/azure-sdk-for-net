@@ -116,7 +116,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 enablePartitioning: false,
                 enableSession: true))
             {
-
                 var plugin = new SendReceivePlugin();
                 var options = new ServiceBusClientOptions();
                 options.AddPlugin(plugin);
@@ -139,7 +138,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 enablePartitioning: false,
                 enableSession: true))
             {
-
                 var plugin = new SendReceivePlugin();
                 var options = new ServiceBusClientOptions();
                 options.AddPlugin(plugin);
@@ -192,7 +190,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 enablePartitioning: false,
                 enableSession: true))
             {
-
                 var plugin = new SendReceivePlugin();
                 var options = new ServiceBusClientOptions();
                 options.AddPlugin(plugin);

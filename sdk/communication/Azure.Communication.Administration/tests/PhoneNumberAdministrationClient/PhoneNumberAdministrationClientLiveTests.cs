@@ -79,13 +79,18 @@ namespace Azure.Communication.Administration.Tests
             reservationOptions.Quantity = 1;
             var reservationOperation = await client.StartReservationAsync(reservationOptions);
 
-            await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                await reservationOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
+            else
+                await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
             // Act
             var reservationsPagable = client.GetAllReservationsAsync();
             var reservations = await reservationsPagable.ToEnumerableAsync();
 
             Assert.IsNotEmpty(reservations);
+
+            await client.CancelReservationAsync(reservationOperation.Id);
         }
 
         [Test]
@@ -179,12 +184,8 @@ namespace Azure.Communication.Administration.Tests
         [Test]
         [TestCase(null)]
         [TestCase("en-US")]
-        [AsyncOnly]
         public async Task CreateReservationErrorState(string? locale)
         {
-            if (!IncludePhoneNumberLiveTests)
-                Assert.Ignore("Include phone number live tests flag is off.");
-
             var client = CreateClient();
             const string countryCode = "US";
 
@@ -205,7 +206,10 @@ namespace Azure.Communication.Administration.Tests
 
             try
             {
-                await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                    await reservationOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
+                else
+                    await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -219,12 +223,8 @@ namespace Azure.Communication.Administration.Tests
         [Test]
         [TestCase(null)]
         [TestCase("en-US")]
-        [AsyncOnly]
         public async Task CreateReservation(string? locale)
         {
-            if (!IncludePhoneNumberLiveTests)
-                Assert.Ignore("Include phone number live tests flag is off.");
-
             var client = CreateClient();
             const string countryCode = "US";
 
@@ -240,7 +240,10 @@ namespace Azure.Communication.Administration.Tests
             reservationOptions.Quantity = 1;
             var reservationOperation = await client.StartReservationAsync(reservationOptions);
 
-            await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                await reservationOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
+            else
+                await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
             Assert.IsNotNull(reservationOperation);
             Assert.IsTrue(reservationOperation.HasCompleted);
@@ -253,6 +256,67 @@ namespace Azure.Communication.Administration.Tests
             Assert.AreEqual(areaCode, reservation.AreaCode);
             Assert.IsNull(reservation.ErrorCode);
             Assert.AreEqual(1, reservation.PhoneNumbers?.Count);
+
+            await client.CancelReservationAsync(reservationOperation.Id);
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("en-US")]
+        public async Task CreateGeographicalReservation(string? locale)
+        {
+            var client = CreateClient();
+            const string countryCode = "US";
+
+            var pageablePhonePlanGroups = client.GetPhonePlanGroupsAsync(countryCode, locale);
+            var phonePlanGroups = await pageablePhonePlanGroups.ToEnumerableAsync().ConfigureAwait(false);
+
+            var phonePlanGroup = phonePlanGroups.First(group => group.PhoneNumberType == PhoneNumberType.Geographic);
+            var pageablePhonePlans = client.GetPhonePlansAsync(countryCode, phonePlanGroup.PhonePlanGroupId, locale);
+            var phonePlan = (await pageablePhonePlans.ToEnumerableAsync()).First();
+
+            var locationOptionsResponse = await client.GetPhonePlanLocationOptionsAsync(countryCode, phonePlanGroup.PhonePlanGroupId, phonePlan.PhonePlanId);
+            var state = locationOptionsResponse.Value.LocationOptions.Options.First();
+
+            var locationOptionsQueries = new List<LocationOptionsQuery>
+            {
+                new LocationOptionsQuery
+                {
+                    LabelId = "state",
+                    OptionsValue = state.Value
+                },
+                new LocationOptionsQuery
+                {
+                    LabelId = "city",
+                    OptionsValue = state.LocationOptions.First().Options.First().Value
+                }
+            };
+
+            var areaCodes = await client.GetAllAreaCodesAsync(phonePlan.LocationType.ToString(), countryCode, phonePlan.PhonePlanId, locationOptionsQueries);
+            var areaCode = areaCodes.Value.PrimaryAreaCodes.First();
+
+            var reservationOptions = new CreateReservationOptions("My reservation", "my description", new[] { phonePlan.PhonePlanId }, areaCode);
+            reservationOptions.Quantity = 1;
+            var reservationOperation = await client.StartReservationAsync(reservationOptions);
+
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                await reservationOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
+            else
+                await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
+
+            Assert.IsNotNull(reservationOperation);
+            Assert.IsTrue(reservationOperation.HasCompleted);
+            Assert.IsTrue(reservationOperation.HasValue);
+
+            var reservation = reservationOperation.Value;
+            Assert.IsNotNull(reservation);
+
+            Assert.AreEqual(ReservationStatus.Reserved, reservation.Status);
+            Assert.AreEqual(areaCode, reservation.AreaCode);
+            Assert.IsNull(reservation.ErrorCode);
+            Assert.AreEqual(1, reservation.PhoneNumbers?.Count);
+
+            await client.CancelReservationAsync(reservationOperation.Id);
         }
     }
 }

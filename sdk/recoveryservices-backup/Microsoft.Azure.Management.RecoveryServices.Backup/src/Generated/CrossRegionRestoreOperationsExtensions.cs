@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='parameters'>
             /// resource cross region restore request
             /// </param>
-            public static void Trigger(this ICrossRegionRestoreOperations operations, string azureRegion, CrossRegionRestoreRequestResource parameters)
+            public static void Trigger(this ICrossRegionRestoreOperations operations, string azureRegion, CrossRegionRestoreRequest parameters)
             {
                 operations.TriggerAsync(azureRegion, parameters).GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task TriggerAsync(this ICrossRegionRestoreOperations operations, string azureRegion, CrossRegionRestoreRequestResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task TriggerAsync(this ICrossRegionRestoreOperations operations, string azureRegion, CrossRegionRestoreRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.TriggerWithHttpMessagesAsync(azureRegion, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='parameters'>
             /// resource cross region restore request
             /// </param>
-            public static void BeginTrigger(this ICrossRegionRestoreOperations operations, string azureRegion, CrossRegionRestoreRequestResource parameters)
+            public static void BeginTrigger(this ICrossRegionRestoreOperations operations, string azureRegion, CrossRegionRestoreRequest parameters)
             {
                 operations.BeginTriggerAsync(azureRegion, parameters).GetAwaiter().GetResult();
             }
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginTriggerAsync(this ICrossRegionRestoreOperations operations, string azureRegion, CrossRegionRestoreRequestResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginTriggerAsync(this ICrossRegionRestoreOperations operations, string azureRegion, CrossRegionRestoreRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginTriggerWithHttpMessagesAsync(azureRegion, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

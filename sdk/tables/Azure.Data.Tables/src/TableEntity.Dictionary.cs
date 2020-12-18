@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-
     public partial class TableEntity : IDictionary<string, object>
     {
         /// <summary>

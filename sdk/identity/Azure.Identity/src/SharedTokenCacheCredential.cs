@@ -40,7 +40,6 @@ namespace Azure.Identity
         public SharedTokenCacheCredential()
             : this(null, null, null, null, null)
         {
-
         }
 
         /// <summary>

@@ -35,5 +35,21 @@ namespace Management.HDInsight.Tests
 
             HDInsightClient.VirtualMachines.RestartHosts(CommonData.ResourceGroupName, cluster.Name, restartHosts);
         }
+
+        [Fact]
+        public void TestListHosts()
+        {
+            TestInitialize();
+
+            string clusterName = TestUtilities.GenerateName("hdisdk-nodereboot");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            createParams.Location = "South Central US";
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+            ValidateCluster(clusterName, createParams, cluster);
+
+            var hosts = HDInsightClient.VirtualMachines.ListHosts(CommonData.ResourceGroupName, clusterName);
+            Assert.NotEmpty(hosts);
+            Assert.NotEmpty(hosts[0].Fqdn);
+        }
     }
 }
