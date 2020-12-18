@@ -382,7 +382,7 @@ namespace Azure.Communication.Chat
         {
             async Task<Page<ChatThreadMember>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetMessages)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetMembers)}");
                 scope.Start();
 
                 try
