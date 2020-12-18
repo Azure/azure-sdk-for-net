@@ -312,6 +312,29 @@ namespace Azure.Storage.Blobs.Specialized
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public BlobBaseClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
+            : this(blobUri, credential.AsPolicy(blobUri), options, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
+        /// </param>
+        /// <param name="credential">
         /// The token credential used to sign requests.
         /// </param>
         /// <param name="options">

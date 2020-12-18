@@ -46,6 +46,23 @@ namespace Azure.Storage
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credential">Credential to use.</param>
+        /// <param name="serviceUri">Service Uri.</param>
+        /// <returns>An authentication policy.</returns>
+        public static HttpPipelinePolicy AsPolicy(this AzureSasCredential credential, Uri serviceUri)
+        {
+            var queryParameters = serviceUri.GetQueryParameters();
+            if (queryParameters.ContainsKey("sig"))
+            {
+                throw Errors.SasCredentialRequiresUriWithoutSas(serviceUri);
+            }
+            return new AzureSasCredentialPolicy(
+                credential ?? throw Errors.ArgumentNull(nameof(credential)));
+        }
+
+        /// <summary>
+        /// Get an authentication policy to sign Storage requests.
+        /// </summary>
+        /// <param name="credential">Credential to use.</param>
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this TokenCredential credential) =>
             new BearerTokenAuthenticationPolicy(
