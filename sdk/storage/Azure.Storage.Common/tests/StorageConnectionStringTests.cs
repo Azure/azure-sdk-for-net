@@ -645,7 +645,7 @@ namespace Azure.Storage.Test
         [Description("Use DevStore with a proxy")]
         public void DevStoreProxyUri()
         {
-            Assert.IsTrue(StorageConnectionString.TryParse(";DevelopmentStorageProxyUri=http://ipv4.fiddler", out StorageConnectionString devstoreAccount));
+            Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler", out StorageConnectionString devstoreAccount));
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), devstoreAccount.BlobEndpoint);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1"), devstoreAccount.QueueEndpoint);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), devstoreAccount.BlobStorageUri.PrimaryUri);
