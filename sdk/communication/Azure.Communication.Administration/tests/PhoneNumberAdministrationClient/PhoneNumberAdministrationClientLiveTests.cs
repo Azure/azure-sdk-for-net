@@ -46,7 +46,13 @@ namespace Azure.Communication.Administration.Tests
                 Assert.IsFalse(string.IsNullOrEmpty(country.LocalizedName));
             }
         }
+        [Test]
+        public void UpdateCapabilitiesStatus()
+        {
+            CapabilitiesUpdateStatus capabilitiesUpdateStatus = new CapabilitiesUpdateStatus("pending");
 
+            Assert.IsNotNull(capabilitiesUpdateStatus);
+        }
         [Test]
         public async Task GetAllPhoneNumbers()
         {
