@@ -85,7 +85,7 @@ Pageable<SynapseRole> roles = client.GetRoleDefinitions();
 SynapseRole role = roles.Single(role => role.Name == "Workspace Admin");
 string roleID = role.Id;
 
-// Replace the string below with the ID you'd like to assign the role
+// Replace the string below with the ID you'd like to assign the role.
 string principalId = "<my-principal-id>";
 ```
 
@@ -99,7 +99,7 @@ RoleAssignmentDetails roleAssignmentAdded = response.Value;
 
 ### Retrieve a role assignment
 
-You can retrieve the details of assignment by calling `GetRoleAssignmentById`, passing in the assignment ID.
+You can retrieve the details of a role assignment by calling `GetRoleAssignmentById`, passing in the assignment ID.
 
 ```C# Snippet:RetrieveRoleAssignment
 RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(roleAssignmentAdded.Id);

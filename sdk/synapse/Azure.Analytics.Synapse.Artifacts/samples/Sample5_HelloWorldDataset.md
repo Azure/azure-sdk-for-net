@@ -29,7 +29,6 @@ foreach (DatasetResource dataset in datasets)
 }
 ```
 
-
 ```C# Snippet:DeleteDataset
 client.StartDeleteDataset(dataSetName);
 ```

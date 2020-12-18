@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Samples
     /// <summary>
     /// This sample demonstrates how to create and upload a notebook using asynchronous methods of <see cref="NotebookClient"/>.
     /// </summary>
-    public partial class NotebookSample
+    public partial class Sample2_HelloWorldNotebook
     {
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Samples
             #region Snippet:CreateNotebook
             NotebookCreateOrUpdateNotebookOperation operation = await client.StartCreateOrUpdateNotebookAsync(notebookName, notebookResource);
             await operation.WaitForCompletionAsync();
-            Console.WriteLine("Notebook is created");
+            Console.WriteLine("The notebook is created");
             #endregion
 
             #region Snippet:RetrieveNotebook

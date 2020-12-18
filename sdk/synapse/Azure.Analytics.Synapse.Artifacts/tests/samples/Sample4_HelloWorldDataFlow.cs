@@ -10,7 +10,7 @@ using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class DataFlowSnippets : SampleFixture
+    public partial class Sample4_HelloWorldDataFlow : SampleFixture
     {
         [Test]
         public async Task DataFlowSample()

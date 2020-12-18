@@ -30,7 +30,6 @@ foreach (LinkedServiceResource linkedService in linkedServices)
 }
 ```
 
-
 ```C# Snippet:DeleteLinkedService
 client.StartDeleteLinkedService(serviceName);
 ```

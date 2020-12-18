@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Samples
 {
-    public partial class ManagedPrivateEndpointSample : SampleFixture
+    public partial class Sample1_HelloManangedPrivateEndpoint : SampleFixture
     {
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]

@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Samples
     /// <summary>
     /// This sample demonstrates how to monitor pipeline runs using synchronous methods of <see cref="MonitoringClient"/>.
     /// </summary>
-    public partial class PipelineMonitoring
+    public partial class Sample1_PipelineMonitoring
     {
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]

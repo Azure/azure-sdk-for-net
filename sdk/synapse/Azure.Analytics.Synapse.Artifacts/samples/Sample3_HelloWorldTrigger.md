@@ -27,7 +27,6 @@ foreach (TriggerResource trigger in triggers)
 }
 ```
 
-
 ```C# Snippet:DeleteTrigger
 client.StartDeleteTrigger(triggerName);
 ```

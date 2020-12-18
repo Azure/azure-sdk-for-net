@@ -10,7 +10,7 @@ using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class LinkedServiceSnippets : SampleFixture
+    public partial class Sample6_HelloWorldLinkedService : SampleFixture
     {
         [Test]
         public async Task LinkedServiceSample()

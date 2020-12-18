@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class DatasetSnippets : SampleFixture
+    public partial class Sample5_HelloWorldDataset : SampleFixture
     {
         [Test]
         public async Task DatasetSample()

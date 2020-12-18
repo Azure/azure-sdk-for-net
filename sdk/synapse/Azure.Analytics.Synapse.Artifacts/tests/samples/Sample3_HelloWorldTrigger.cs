@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class TriggerSnippets : SampleFixture
+    public partial class Sample3_HelloWorldTrigger : SampleFixture
     {
         [Test]
         public async Task TriggerSample()
