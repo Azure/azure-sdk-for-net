@@ -13,9 +13,7 @@ MonitoringClient client = new MonitoringClient(new Uri(endpoint), new DefaultAzu
 
 ## Create monitoring client
 
-Calling `GetSparkJobList` on the `MonitoringClient` returns a list of jobs both currently and previously ran in the Synapse Workspace.
-
-Each `SparkJob` instance contains information the respective Spark job, including its name, current state, and duration of execution.
+Calling `GetSparkJobList` on the `MonitoringClient` returns a list of jobs both currently and previously ran in the Synapse Workspace. Each `SparkJob` instance contains information the respective Spark job, including its name, current state, and duration of execution.
 
 ```C# Snippet:GetSparkJobList
 SparkJobListViewResponse sparkJobList = client.GetSparkJobList();
@@ -34,7 +32,7 @@ foreach (var sparkJob in sparkJobList.SparkJobs)
 
 ## Obtaining SQL Job Query
 
-To obtain a OD/DW Query string for the workspace call `GetSqlJobQueryString`.
+To obtain a OD/DW (Dedicated SQL pool/Data Warehouse) Query string for the workspace call `GetSqlJobQueryString`.
 
 ```C# Snippet:GetSqlJobQueryString
 SqlQueryStringDataModel sqlQuery = client.GetSqlJobQueryString();

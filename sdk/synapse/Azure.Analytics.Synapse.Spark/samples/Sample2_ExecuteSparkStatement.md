@@ -41,9 +41,7 @@ Debug.WriteLine($"Session is returned with name {session.Name} and state {sessio
 
 ## Creating Spark statements
 
-To create statements within a session call `CreateSparkStatement`, passing in both the statements details in a `SparkStatementOptions` along with the ID of the session.
-
-To wait for the statement's completion a `PollSparkStatement` call is required. This support code will be detailed below, and it hoped to be temporary. 
+To create statements within a session call `CreateSparkStatement`, passing in both the statements details in a `SparkStatementOptions` along with the ID of the session. To wait for the statement's completion a `PollSparkStatement` call is required. This support code will be detailed below, and it hoped to be temporary. 
 
 ```C# Snippet:CreateSparkStatement
 SparkStatementOptions sparkStatementRequest = new SparkStatementOptions
@@ -85,9 +83,7 @@ Response operation = client.CancelSparkSession(sessionCreated.Id);
 
 ## Support Code
 
-Today the following support code is needed to poll the status of submitted Spark statements and sessions.
-
-It is hoped to be temporary.
+Today the following support code is needed to poll the status of submitted Spark statements and sessions. It is hoped to be temporary, and folded into a standard LRO (Long Running Operation).
 
 ```C# Snippet:TemporarySparkSupportCode
  private const string Error = "error";
