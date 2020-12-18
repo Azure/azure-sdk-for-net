@@ -13,7 +13,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class NotebookSnippets : SampleFixture
     {
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
         public async Task NotebookSample()
         {

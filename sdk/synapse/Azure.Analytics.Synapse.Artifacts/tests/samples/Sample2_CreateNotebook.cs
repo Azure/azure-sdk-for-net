@@ -16,7 +16,6 @@ namespace Azure.Analytics.Synapse.Samples
     /// </summary>
     public partial class NotebookSample
     {
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
         public async Task CreateAndUploadNotebook()
         {
