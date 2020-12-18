@@ -9,6 +9,18 @@ namespace Azure.Communication
     {
         protected CommunicationIdentifier() { }
     }
+    public sealed partial class CommunicationTokenCredential : System.IDisposable
+    {
+        public CommunicationTokenCredential(Azure.Communication.CommunicationTokenRefreshOptions tokenRefreshOptions) { }
+        public CommunicationTokenCredential(string token) { }
+        public void Dispose() { }
+        public Azure.Core.AccessToken GetToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class CommunicationTokenRefreshOptions
+    {
+        public CommunicationTokenRefreshOptions(bool refreshProactively, System.Func<System.Threading.CancellationToken, string> tokenRefresher, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<string>>? asyncTokenRefresher, string? token = null) { }
+    }
     public partial class CommunicationUserIdentifier : Azure.Communication.CommunicationIdentifier
     {
         public CommunicationUserIdentifier(string id) { }
@@ -24,16 +36,5 @@ namespace Azure.Communication
     {
         public UnknownIdentifier(string id) { }
         public string Id { get { throw null; } }
-    }
-}
-namespace Azure.Communication.Identity
-{
-    public sealed partial class CommunicationTokenCredential : System.IDisposable
-    {
-        public CommunicationTokenCredential(bool refreshProactively, System.Func<System.Threading.CancellationToken, string> tokenRefresher, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<string>>? asyncTokenRefresher = null, string? initialToken = null) { }
-        public CommunicationTokenCredential(string userToken) { }
-        public void Dispose() { }
-        public Azure.Core.AccessToken GetToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }

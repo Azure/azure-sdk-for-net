@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Communication.Identity
+namespace Azure.Communication
 {
     internal class JwtTokenParser
     {

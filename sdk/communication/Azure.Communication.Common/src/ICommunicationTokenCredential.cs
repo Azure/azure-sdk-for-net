@@ -6,9 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.Communication.Identity
+namespace Azure.Communication
 {
-    internal interface ITokenCredential : IDisposable
+    internal interface ICommunicationTokenCredential : IDisposable
     {
         AccessToken GetToken(CancellationToken cancellationToken);
         ValueTask<AccessToken> GetTokenAsync(CancellationToken cancellationToken);

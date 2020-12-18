@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.Identity
+namespace Azure.Communication
 {
     /// <summary>
     /// Represents a type that caches an access token,

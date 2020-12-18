@@ -4,42 +4,39 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication;
 using Azure.Core;
 
-namespace Azure.Communication.Identity
+namespace Azure.Communication
 {
     /// <summary>
     /// The Azure Communication Services Token Credential.
     /// </summary>
     public sealed class CommunicationTokenCredential : IDisposable
     {
-        private readonly ITokenCredential _tokenCredential;
+        private readonly ICommunicationTokenCredential _tokenCredential;
         private bool _isDisposed;
 
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationTokenCredential"/>.
         /// </summary>
-        /// <param name="userToken">User token acquired from Azure.Communication.Administration package.</param>
-        public CommunicationTokenCredential(string userToken)
-            => _tokenCredential = new StaticTokenCredential(userToken);
+        /// <param name="token">User token acquired from Azure.Communication.Administration package.</param>
+        public CommunicationTokenCredential(string token)
+            => _tokenCredential = new StaticTokenCredential(token);
 
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationTokenCredential"/> that automatically renews the token upon expiry or proactively prior to expiration to speed up the requests.
         /// </summary>
-        /// <param name="refreshProactively">Indicates whether the token should be proactively renewed prior to expiry or renew on demand.</param>
-        /// <param name="tokenRefresher">The function that provides the token acquired from the configurtaion SDK.</param>
-        /// <param name="asyncTokenRefresher">The async function that provides the token acquired from the configurtaion SDK.</param>
-        /// <param name="initialToken">Optional token to initialize.</param>
-        public CommunicationTokenCredential(
-            bool refreshProactively,
-            Func<CancellationToken, string> tokenRefresher,
-            Func<CancellationToken, ValueTask<string>>? asyncTokenRefresher = null,
-            string? initialToken = null)
-            => _tokenCredential = new AutoRefreshTokenCredential(
-                tokenRefresher,
-                asyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefresher(cancellationToken))),
-                initialToken,
-                refreshProactively);
+        /// <param name="tokenRefreshOptions">Options for how the token will be refreshed</param>
+        public CommunicationTokenCredential(CommunicationTokenRefreshOptions tokenRefreshOptions)
+        {
+            Argument.AssertNotNull(tokenRefreshOptions, nameof(tokenRefreshOptions));
+            _tokenCredential = new AutoRefreshTokenCredential(
+               tokenRefreshOptions.TokenRefresher,
+               tokenRefreshOptions.AsyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefreshOptions.TokenRefresher(cancellationToken))),
+               tokenRefreshOptions.Token,
+               tokenRefreshOptions.RefreshProactively);
+        }
 
         /// <summary>
         /// Gets an <see cref="AccessToken"/> for the user.

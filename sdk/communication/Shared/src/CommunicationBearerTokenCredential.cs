@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Communication.Identity;
+using Azure.Communication;
 using Azure.Core;
 using System.Threading;
 using System.Threading.Tasks;
