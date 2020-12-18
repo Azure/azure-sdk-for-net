@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Samples
             SynapseRole role = roles.Single(role => role.Name == "Workspace Admin");
             string roleID = role.Id;
 
-            // Replace the string below with the ID you'd like to assign the role
+            // Replace the string below with the ID you'd like to assign the role.
             string principalId = "<my-principal-id>";
             /*@@*/principalId = Guid.NewGuid().ToString();
             #endregion
