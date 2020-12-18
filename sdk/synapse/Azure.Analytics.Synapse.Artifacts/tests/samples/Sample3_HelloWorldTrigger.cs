@@ -46,7 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:DeleteTrigger
-            client.StartDeleteTrigger(triggerName);
+            TriggerDeleteTriggerOperation deleteOperation = client.StartDeleteTrigger(triggerName);
+            await deleteOperation.WaitForCompletionAsync();
             #endregion
         }
     }
