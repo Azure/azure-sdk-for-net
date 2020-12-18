@@ -627,11 +627,11 @@ namespace Azure.Storage.Test
         [Test]
         [Description("UseDevelopmentStorage=true should succeed")]
         public void DevStoreTrueLowerCase() => Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true", out _));
-        
+
         [Test]
         [Description("UseDevelopmentStorage=True should succeed")]
         public void DevStoreTrueUpperCase() => Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=True", out _));
-        
+
         [Test]
         [Description("Custom endpoints")]
         public void DefaultEndpointOverride()
