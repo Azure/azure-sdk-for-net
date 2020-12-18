@@ -4,7 +4,7 @@ This sample demonstrates basic operations with two core classes in this library:
 
 ## Create pipeline client
 
-To interact with Azure Synapse's Pipelines, you need to instantiate a `PipelineClient`. It requires an endpoint URL and a TokenCredential.
+To interact with the Azure Synapse Pipelines, you need to instantiate a `PipelineClient`. It requires an endpoint URL and a `TokenCredential`.
 
 ```C# Snippet:CreatePipelineClientPrep
 // Replace the string below with your actual endpoint url.
