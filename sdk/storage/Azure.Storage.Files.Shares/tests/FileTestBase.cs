@@ -157,18 +157,20 @@ namespace Azure.Storage.Files.Shares.Tests
                 TestConfigDefault.AccountName,
                 TestConfigDefault.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
+        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default,
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.Container,
+            AccountSasPermissions permissions = AccountSasPermissions.Create | AccountSasPermissions.Delete)
         {
             var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Files,
-                ResourceTypes = AccountSasResourceTypes.Container,
+                ResourceTypes = resourceTypes,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
-            builder.SetPermissions(AccountSasPermissions.Create | AccountSasPermissions.Delete);
+            builder.SetPermissions(permissions);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
