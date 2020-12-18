@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -611,7 +611,7 @@ namespace Azure.Storage.Test
             Assert.IsFalse(StorageConnectionString.TryParse(null, out _));
             Assert.IsFalse(StorageConnectionString.TryParse(string.Empty, out _));
         }
-        
+
         [Test]
         [Description("UseDevelopmentStorage=false should fail")]
         public void DevStoreNonTrueFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false", out _));
