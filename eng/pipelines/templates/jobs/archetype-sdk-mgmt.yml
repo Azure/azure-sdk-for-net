@@ -39,6 +39,7 @@ jobs:
         condition: ne(variables['System.TeamProject'], 'public')
       - pwsh: |
           if ("$(checkFlag)" -eq "false") { exit 1 }
+        displayName: "Failure Check"
 
   - job: Test
 
