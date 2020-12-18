@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// <summary>
         /// Validator for the UseDevelopmentStorage setting. Must be "true".
         /// </summary>
-        private static readonly AccountSetting s_useDevelopmentStorageSetting = Setting(Constants.ConnectionStrings.UseDevelopmentSetting, "true");
+        private static readonly AccountSetting s_useDevelopmentStorageSetting = Setting(Constants.ConnectionStrings.UseDevelopmentSetting, "true", "True");
 
         /// <summary>
         /// Validator for the DevelopmentStorageProxyUri setting. Must be a valid Uri.
