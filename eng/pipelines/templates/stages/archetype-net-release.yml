@@ -223,13 +223,14 @@ stages:
                           PRLabels: "auto-merge"
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
-  - stage: SmokeTest_Release_Packages
-    displayName: Smoke Test Release Packages
-    jobs:
-      - template: /eng/pipelines/templates/jobs/smoke-tests.yml
-        parameters:
-          Nightly: false
-          Artifacts: ${{ parameters.Artifacts }}
+  - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+    - stage: SmokeTest_Release_Packages
+      displayName: Smoke Test Release Packages
+      jobs:
+        - template: /eng/pipelines/templates/jobs/smoke-tests.yml
+          parameters:
+            Nightly: false
+            Artifacts: ${{ parameters.Artifacts }}
 
   - stage: Integration
     dependsOn: Signing
