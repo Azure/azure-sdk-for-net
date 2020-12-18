@@ -24,7 +24,7 @@
   </ItemGroup>
   
   <ItemGroup Condition="'$(IsSample)' == 'true'">
-    <PackageReference Include="AutoRest.CSharp.V3" PrivateAssets="All" />
+    <PackageReference Include="AutoRest.CSharp" PrivateAssets="All" />
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\eng\Packages.Data.props" Condition="'$(IsSample)' == 'true'" />
