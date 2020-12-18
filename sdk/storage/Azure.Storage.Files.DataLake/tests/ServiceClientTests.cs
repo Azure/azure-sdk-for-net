@@ -141,6 +141,35 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            Uri uri = GetServiceClient_SharedKey().Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new DataLakeServiceClient(uri, new AzureSasCredential(sas), GetOptions()));
+            var fileSystems = await sasClient.GetFileSystemsAsync().ToListAsync();
+
+            // Assert
+            Assert.IsNotNull(fileSystems);
+        }
+
+        [Test]
+        public void Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            Uri uri = GetServiceClient_SharedKey().Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new DataLakeServiceClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains("must not contain SAS if AzureSasCredential is used"));
+        }
+
+        [Test]
         public async Task GetUserDelegationKey()
         {
             // Arrange
