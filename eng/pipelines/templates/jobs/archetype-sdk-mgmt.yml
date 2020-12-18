@@ -1,6 +1,6 @@
 jobs:
   - job: Build
-  - timeoutInMinutes: 80
+  - cancelTimeoutInMinutes: 80
     pool:
       vmImage: windows-2019
     steps:
