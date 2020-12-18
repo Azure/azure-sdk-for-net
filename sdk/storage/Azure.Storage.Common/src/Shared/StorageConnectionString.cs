@@ -538,7 +538,7 @@ namespace Azure.Storage
         /// <returns>Tokenized collection.</returns>
         private static IDictionary<string, string> ParseStringIntoSettings(string connectionString, Action<string> error)
         {
-            IDictionary<string, string> settings = new Dictionary<string, string>();
+            IDictionary<string, string> settings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             var splitted = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var nameValue in splitted)
