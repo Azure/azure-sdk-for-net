@@ -67,7 +67,7 @@ The Azure.Analytics.Synapse.AccessControl package supports synchronous and async
 
 ### Create access control client
 
-To interact with Azure Synapse, you need to instantiate a `AccessControlClient`. It requires an endpoint URL and a TokenCredential.
+To interact with Azure Synapse, you need to instantiate a `AccessControlClient`. It requires an endpoint URL and a `TokenCredential`.
 
 ```C# Snippet:CreateAccessControlClient
 // Replace the string below with your actual endpoint url.
