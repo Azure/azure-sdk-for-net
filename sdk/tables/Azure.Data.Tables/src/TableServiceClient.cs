@@ -218,34 +218,44 @@ namespace Azure.Data.Tables
         /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of <see cref="TableItem"/>s.</returns>
         public virtual AsyncPageable<TableItem> GetTablesAsync(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-            scope.Start();
-            try
-            {
                 return PageableHelpers.CreateAsyncEnumerable(
                     async pageSizeHint =>
                     {
-                        var response = await _tableOperations.QueryAsync(
-                            null,
-                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
-                            cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                        scope.Start();
+                        try
+                        {
+                            var response = await _tableOperations.QueryAsync(
+                                null,
+                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                                cancellationToken).ConfigureAwait(false);
+                            return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        }
+                        catch (Exception ex)
+                        {
+                            scope.Failed(ex);
+                            throw;
+                        }
                     },
                     async (nextLink, pageSizeHint) =>
                     {
-                        var response = await _tableOperations.QueryAsync(
-                            nextTableName: nextLink,
-                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
-                            cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                        scope.Start();
+                        try
+                        {
+                            var response = await _tableOperations.QueryAsync(
+                                nextTableName: nextLink,
+                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                                cancellationToken).ConfigureAwait(false);
+                            return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        }
+                        catch (Exception ex)
+                        {
+                            scope.Failed(ex);
+                            throw;
+                        }
                     },
                     maxPerPage);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
         }
 
         /// <summary>

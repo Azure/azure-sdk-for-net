@@ -689,6 +689,7 @@ namespace Azure.Storage.Blobs
                         maxresults: pageSizeHint,
                         include: BlobExtensions.AsIncludeItems(traits, states),
                         async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetBlobContainers)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
@@ -1772,6 +1773,7 @@ namespace Azure.Storage.Blobs
                         marker: marker,
                         maxresults: pageSizeHint,
                         async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(FindBlobsByTags)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

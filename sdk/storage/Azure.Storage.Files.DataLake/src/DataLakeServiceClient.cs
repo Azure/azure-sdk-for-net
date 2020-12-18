@@ -529,6 +529,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Pageable<FileSystemItem> GetFileSystems(
             FileSystemTraits traits = FileSystemTraits.None,
             string prefix = default,
@@ -564,6 +565,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<FileSystemItem> GetFileSystemsAsync(
             FileSystemTraits traits = FileSystemTraits.None,
             string prefix = default,

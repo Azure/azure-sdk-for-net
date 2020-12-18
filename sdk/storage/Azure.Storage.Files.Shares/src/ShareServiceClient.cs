@@ -400,6 +400,7 @@ namespace Azure.Storage.Files.Shares
                         maxresults: pageSizeHint,
                         include: ShareExtensions.AsIncludeItems(traits, states),
                         async: async,
+                        operationName: $"{nameof(ShareServiceClient)}.{nameof(GetShares)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     if ((traits & ShareTraits.Metadata) != ShareTraits.Metadata)
