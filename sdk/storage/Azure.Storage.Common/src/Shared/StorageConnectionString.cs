@@ -649,7 +649,7 @@ namespace Azure.Storage
         private static ConnectionStringFilter Optional(params AccountSetting[] optionalSettings) =>
             (settings) =>
             {
-                IDictionary<string, string> result = new Dictionary<string, string>(settings);
+                IDictionary<string, string> result = new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
 
                 foreach (AccountSetting requirement in optionalSettings)
                 {
@@ -671,7 +671,7 @@ namespace Azure.Storage
         private static ConnectionStringFilter AtLeastOne(params AccountSetting[] atLeastOneSettings) =>
             (settings) =>
             {
-                IDictionary<string, string> result = new Dictionary<string, string>(settings);
+                IDictionary<string, string> result = new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
                 var foundOne = false;
 
                 foreach (AccountSetting requirement in atLeastOneSettings)
@@ -695,7 +695,7 @@ namespace Azure.Storage
         private static ConnectionStringFilter None(params AccountSetting[] atLeastOneSettings) =>
             (settings) =>
             {
-                IDictionary<string, string> result = new Dictionary<string, string>(settings);
+                IDictionary<string, string> result = new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
                 var foundOne = false;
 
                 foreach (AccountSetting requirement in atLeastOneSettings)
@@ -717,7 +717,7 @@ namespace Azure.Storage
         private static ConnectionStringFilter MatchesAll(params ConnectionStringFilter[] filters) =>
             (settings) =>
             {
-                IDictionary<string, string> result = new Dictionary<string, string>(settings);
+                IDictionary<string, string> result = new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
 
                 foreach (ConnectionStringFilter filter in filters)
                 {
