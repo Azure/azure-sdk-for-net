@@ -132,6 +132,37 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingQueue test = await GetTestQueueAsync();
+            Uri uri = test.Queue.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new QueueClient(uri, new AzureSasCredential(sas), GetOptions()));
+            QueueProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingQueue test = await GetTestQueueAsync();
+            Uri uri = test.Queue.Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new QueueClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains("must not contain SAS if AzureSasCredential is used"));
+        }
+
+        [Test]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
