@@ -611,7 +611,7 @@ namespace Azure.Storage.Test
             Assert.IsFalse(StorageConnectionString.TryParse(null, out _));
             Assert.IsFalse(StorageConnectionString.TryParse(string.Empty, out _));
         }
-
+        
         [Test]
         [Description("UseDevelopmentStorage=false should fail")]
         public void DevStoreNonTrueFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false", out _));
@@ -625,6 +625,14 @@ namespace Azure.Storage.Test
         public void DevStorePlusEndpointFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false;BlobEndpoint=http://127.0.0.1:1000/devstoreaccount1", out _));
 
         [Test]
+        [Description("UseDevelopmentStorage=true should succeed")]
+        public void DevStoreTrueLowerCase() => Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true", out _));
+        
+        [Test]
+        [Description("UseDevelopmentStorage=True should succeed")]
+        public void DevStoreTrueUpperCase() => Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=True", out _));
+        
+        [Test]
         [Description("Custom endpoints")]
         public void DefaultEndpointOverride()
         {
@@ -637,7 +645,8 @@ namespace Azure.Storage.Test
         [Description("Use DevStore with a proxy")]
         public void DevStoreProxyUri()
         {
-            Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler", out StorageConnectionString devstoreAccount));
+            Assert.IsTrue(StorageConnectionString.TryParse("
+                                                           ;DevelopmentStorageProxyUri=http://ipv4.fiddler", out StorageConnectionString devstoreAccount));
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), devstoreAccount.BlobEndpoint);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1"), devstoreAccount.QueueEndpoint);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), devstoreAccount.BlobStorageUri.PrimaryUri);
