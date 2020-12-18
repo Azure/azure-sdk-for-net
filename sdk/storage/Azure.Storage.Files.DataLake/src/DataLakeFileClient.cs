@@ -186,6 +186,28 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Uri"/> referencing the file that includes the
         /// name of the account, the name of the file system, and the path of the
         /// file.
+        /// Must not contain shared access signature.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        public DataLakeFileClient(Uri fileUri, AzureSasCredential credential, DataLakeClientOptions options = default)
+            : this(fileUri, credential.AsPolicy(fileUri), options, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.

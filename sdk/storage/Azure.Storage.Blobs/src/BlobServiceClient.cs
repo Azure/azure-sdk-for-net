@@ -249,6 +249,28 @@ namespace Azure.Storage.Blobs
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// Must not contain shared access signature.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public BlobServiceClient(Uri serviceUri, AzureSasCredential credential, BlobClientOptions options = default)
+            : this(serviceUri, credential.AsPolicy(serviceUri), options ?? new BlobClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.

@@ -20,6 +20,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeDirectoryClient(string connectionString, string fileSystemName, string directoryPath) { }
         public DataLakeDirectoryClient(string connectionString, string fileSystemName, string directoryPath, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeDirectoryClient(System.Uri directoryUri) { }
+        public DataLakeDirectoryClient(System.Uri directoryUri, Azure.AzureSasCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options = null) { }
         public DataLakeDirectoryClient(System.Uri directoryUri, Azure.Core.TokenCredential credential) { }
         public DataLakeDirectoryClient(System.Uri directoryUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeDirectoryClient(System.Uri directoryUri, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
@@ -68,6 +69,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeFileClient(string connectionString, string fileSystemName, string filePath) { }
         public DataLakeFileClient(string connectionString, string fileSystemName, string filePath, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeFileClient(System.Uri fileUri) { }
+        public DataLakeFileClient(System.Uri fileUri, Azure.AzureSasCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options = null) { }
         public DataLakeFileClient(System.Uri fileUri, Azure.Core.TokenCredential credential) { }
         public DataLakeFileClient(System.Uri fileUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeFileClient(System.Uri fileUri, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
@@ -155,6 +157,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeFileSystemClient(string connectionString, string fileSystemName) { }
         public DataLakeFileSystemClient(string connectionString, string fileSystemName, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeFileSystemClient(System.Uri fileSystemUri) { }
+        public DataLakeFileSystemClient(System.Uri fileSystemUri, Azure.AzureSasCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options = null) { }
         public DataLakeFileSystemClient(System.Uri fileSystemUri, Azure.Core.TokenCredential credential) { }
         public DataLakeFileSystemClient(System.Uri fileSystemUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeFileSystemClient(System.Uri fileSystemUri, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
@@ -228,6 +231,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakePathClient(string connectionString, string fileSystemName, string path) { }
         public DataLakePathClient(string connectionString, string fileSystemName, string path, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakePathClient(System.Uri pathUri) { }
+        public DataLakePathClient(System.Uri pathUri, Azure.AzureSasCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options = null) { }
         public DataLakePathClient(System.Uri pathUri, Azure.Core.TokenCredential credential) { }
         public DataLakePathClient(System.Uri pathUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakePathClient(System.Uri pathUri, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
@@ -278,6 +282,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeServiceClient(string connectionString) { }
         public DataLakeServiceClient(string connectionString, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeServiceClient(System.Uri serviceUri) { }
+        public DataLakeServiceClient(System.Uri serviceUri, Azure.AzureSasCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options = null) { }
         public DataLakeServiceClient(System.Uri serviceUri, Azure.Core.TokenCredential credential) { }
         public DataLakeServiceClient(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeServiceClient(System.Uri serviceUri, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }

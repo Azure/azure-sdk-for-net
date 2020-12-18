@@ -46,7 +46,7 @@ namespace Azure.Storage
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credential">Credential to use.</param>
-        /// <param name="serviceUri">Service Uri.</param>
+        /// <param name="serviceUri">Service Uri. Must not contain shared access signature.</param>
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this AzureSasCredential credential, Uri serviceUri)
         {
