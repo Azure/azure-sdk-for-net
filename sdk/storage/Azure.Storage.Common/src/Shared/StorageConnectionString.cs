@@ -572,7 +572,7 @@ namespace Azure.Storage
         private static AccountSetting Setting(string name, params string[] validValues) =>
             new AccountSetting(
                 name,
-                (settingValue) => validValues.Length == 0 ? true : validValues.Contains(settingValue)
+                (settingValue) => validValues.Length == 0 ? true : validValues.Contains(settingValue, StringComparer.OrdinalIgnoreCase)
                 );
 
         /// <summary>
