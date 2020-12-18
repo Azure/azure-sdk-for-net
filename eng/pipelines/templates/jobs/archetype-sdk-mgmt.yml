@@ -38,7 +38,7 @@ jobs:
         displayName: "Tagging the build"
         condition: ne(variables['System.TeamProject'], 'public')
       - pwsh: |
-          if ("$(checkFlag)" -eq false) { exit 1 }
+          if ("$(checkFlag)" -eq "false") { exit 1 }
 
   - job: Test
 
