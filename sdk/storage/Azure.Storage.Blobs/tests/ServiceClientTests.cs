@@ -121,6 +121,37 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetAccountSasCredentials().SasToken;
+            Uri uri = test.Container.GetParentBlobServiceClient().Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new BlobServiceClient(uri, new AzureSasCredential(sas), GetOptions()));
+            BlobServiceProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetAccountSasCredentials().SasToken;
+            Uri uri = test.Container.GetParentBlobServiceClient().Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new BlobServiceClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains("must not contain SAS if AzureSasCredential is used"));
+        }
+
+        [Test]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange

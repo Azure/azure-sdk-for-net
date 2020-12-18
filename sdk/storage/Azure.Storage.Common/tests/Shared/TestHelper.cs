@@ -61,7 +61,24 @@ namespace Azure.Storage.Test
 
         public static void AssertExpectedException<T>(Action action, Func<T, bool> predicate = null)
             where T : Exception
-            => AssertExpectedException(action, default, GetDefaultExceptionAssertion<T>((_, a) => predicate(a)));
+        {
+            Assert.IsNotNull(action);
+            Assert.IsNotNull(predicate);
+
+            try
+            {
+                action();
+
+                Assert.Fail("Expected exception not found");
+            }
+            catch (T actualException)
+            {
+                if (!predicate(actualException))
+                {
+                    Assert.Fail($"Unexpected exception: {actualException.Message}");
+                }
+            }
+        }
 
         public static void AssertExpectedException<T>(Action action, T expectedException, Action<T, T> assertion)
             where T : Exception

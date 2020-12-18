@@ -3,16 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
@@ -176,6 +173,39 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException(
                 () => new BlobBaseClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.All).ToString();
+            var client = test.Container.GetBlobClient(GetNewBlobName());
+            await client.UploadAsync(new MemoryStream());
+            Uri blobUri = client.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new BlobBaseClient(blobUri, new AzureSasCredential(sas), GetOptions()));
+            BlobProperties blobProperties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(blobProperties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.All).ToString();
+            Uri blobUri = test.Container.GetBlobClient("foo").Uri;
+            blobUri = new Uri(blobUri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new BlobBaseClient(blobUri, new AzureSasCredential(sas)),
+                e => e.Message.Contains("must not contain SAS if AzureSasCredential is used"));
         }
 
         #region Sequential Download
