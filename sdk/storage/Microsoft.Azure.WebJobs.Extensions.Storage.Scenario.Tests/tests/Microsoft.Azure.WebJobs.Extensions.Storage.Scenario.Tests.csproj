@@ -20,6 +20,8 @@
     <ProjectReference Include="..\..\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs\src\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.WebJobs.Extensions.Storage.Common\tests\Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.WebJobs.Extensions.Storage.Queues\src\Microsoft.Azure.WebJobs.Extensions.Storage.Queues.csproj" />
+    <!-- TODO (kasobol-msft) remove this before merge-->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
