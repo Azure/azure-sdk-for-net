@@ -1,10 +1,10 @@
 # Create, Run and Cancel Synapse Spark statements and sessions
 
-This sample demonstrates basic operations with three core classes in this library: SparkSessionClient, SparkSession, and SparkStatement. SparkSessionClient is used to submit statements for execution on Azure Synapse - each method call sends a request to the service's REST API. SparkStatement is an entity that represents an individual statement executed within a Spark Job within Synapse. These SparkStatement are grouped within a containing SparkSession. The sample walks through the basics of creating, running, and canceling of requests. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
+This sample demonstrates basic operations with three core classes in this library: `SparkSessionClient`, `SparkSession`, and `SparkStatement`. `SparkSessionClient` is used to submit statements for execution on Azure Synapse - each method call sends a request to the service's REST API. `SparkStatement` is an entity that represents an individual statement executed within a Spark Job within Synapse. These `SparkStatement` instances are grouped within a containing `SparkSession`. The sample walks through the basics of creating, running, and canceling of requests. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
 
 ## Create Spark batch client
 
-To submit statements to Spark running on Azure Synapse, you need to instantiate a `SparkSessionClient`. It requires an endpoint URL and a TokenCredential.
+To submit statements to Spark running on Azure Synapse, you need to instantiate a `SparkSessionClient`. It requires an endpoint URL and a `TokenCredential`.
 
 ```C# Snippet:CreateSparkSessionClient
 SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());

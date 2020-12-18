@@ -1,10 +1,10 @@
 # Monitoring Synapse Spark Jobs
 
-This sample demonstrates basic operations with a core classes in this library: MonitoringClient. MonitoringClient is used to monitor Spark Jobs running on Azure Synapse - each method call sends a request to the service's REST API. The sample walks through the basics of monitoring Spark jobs. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
+This sample demonstrates basic operations with a core classes in this library: `MonitoringClient`. `MonitoringClient` is used to monitor Spark Jobs running on Azure Synapse - each method call sends a request to the service's REST API. The sample walks through the basics of monitoring Spark jobs. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
 
 ## Create pipeline client
 
-To monitor Spark jobs on Azure Synapse, you need to instantiate a `MonitoringClient`. It requires an endpoint URL and a TokenCredential.
+To monitor Spark jobs on Azure Synapse, you need to instantiate a `MonitoringClient`. It requires an endpoint URL and a `TokenCredential`.
 
 ```C# Snippet:CreateMonitoringClient
 string endpoint = TestEnvironment.EndpointUrl;

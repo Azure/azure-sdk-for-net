@@ -1,6 +1,6 @@
 # Create, Retrieve and Delete a Synapse Role Assignment
 
-This sample demonstrates basic operations with two core classes in this library: AccessControlClient and RoleAssignmentDetails. AccessControlClient is used to call the Azure Synapse service - each method call sends a request to the service's REST API. RoleAssignmentDetails is an entity that represents a role assignment within Synapse. The sample walks through the basics of adding, retrieving, and deleting role assignment. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
+This sample demonstrates basic operations with two core classes in this library: `AccessControlClient` and `RoleAssignmentDetails`. `AccessControlClient` is used to call the Azure Synapse service - each method call sends a request to the service's REST API. `RoleAssignmentDetails` is an entity that represents a role assignment within Synapse. The sample walks through the basics of adding, retrieving, and deleting role assignment. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
 
 ## Create access control client
 

@@ -1,10 +1,10 @@
 # Create, Run and Cancel Synapse Spark jobs
 
-This sample demonstrates basic operations with two core classes in this library: SparkBatchClient and SparkBatchJob. SparkBatchClient is used to interact with Spark jobs running on Azure Synapse - each method call sends a request to the service's REST API. SparkBatchJob is an entity that represents a batched Spark job within Synapse. The sample walks through the basics of creating, running, and canceling job requests. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
+This sample demonstrates basic operations with two core classes in this library: `SparkBatchClient` and `SparkBatchJob`. `SparkBatchClient` is used to interact with Spark jobs running on Azure Synapse - each method call sends a request to the service's REST API. `SparkBatchJob` is an entity that represents a batched Spark job within Synapse. The sample walks through the basics of creating, running, and canceling job requests. To get started, you'll need a connection endpoint to Azure Synapse. See the README for links and instructions.
 
 ## Create Spark batch client
 
-To interact with Spark jobs running on Azure Synapse, you need to instantiate a `SparkBatchClient`. It requires an endpoint URL and a TokenCredential.
+To interact with Spark jobs running on Azure Synapse, you need to instantiate a `SparkBatchClient`. It requires an endpoint URL and a `TokenCredential`.
 
 ```C# Snippet:CreateSparkBatchClient
 SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
