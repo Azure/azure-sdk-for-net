@@ -10,7 +10,7 @@ This is sample app illustrates using Storage, Application insights service. It a
     "BlobServiceUri": "https://cloudclips.blob.core.windows.net/"
 }
 ```
-2. To light up App Insights, add the [InstrumentationKey value](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-resources-app-insights-keys?view=azure-bot-service-4.0#instrumentation-key) in appsettings.json
+2. To light up App Insights, add the [InstrumentationKey value](https://docs.microsoft.com/azure/bot-service/bot-service-resources-app-insights-keys?view=azure-bot-service-4.0#instrumentation-key) in appsettings.json
 ```
 {
     ...
@@ -36,6 +36,3 @@ When you submit a pull request, a CLA bot will automatically determine whether y
 a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
 provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
