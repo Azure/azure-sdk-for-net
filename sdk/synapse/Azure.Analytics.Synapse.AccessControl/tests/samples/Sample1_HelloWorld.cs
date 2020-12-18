@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Samples
     /// <summary>
     /// This sample demonstrates how to submit Spark job in Azure Synapse Analytics using synchronous methods of <see cref="AccessControlClient"/>.
     /// </summary>
-    public partial class Sample1_HelloWorld
+    public partial class Sample1_HelloWorld : SampleFixture
     {
         [Test]
         public void AddAndRemoveRoleAssignmentSync()

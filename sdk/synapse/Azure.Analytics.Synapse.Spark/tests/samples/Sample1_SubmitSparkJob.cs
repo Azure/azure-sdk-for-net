@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Samples
     /// <summary>
     /// This sample demonstrates how to submit Spark job in Azure Synapse Analytics using synchronous methods of <see cref="SparkBatchClient"/>.
     /// </summary>
-    public partial class Sample1_SubmitSparkJob
+    public partial class Sample1_SubmitSparkJob : SampleFixture
     {
         [Test]
         public void SubmitSparkJobSync()

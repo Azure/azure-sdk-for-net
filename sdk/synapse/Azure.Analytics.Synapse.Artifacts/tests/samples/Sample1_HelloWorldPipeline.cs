@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Samples
     /// <summary>
     /// This sample demonstrates how to create an empty pipline and execute it in Azure Synapse Analytics using asynchronous methods of <see cref="PipelineClient"/>.
     /// </summary>
-    public partial class Sample1_HelloWorldPipeline
+    public partial class Sample1_HelloWorldPipeline : SampleFixture
     {
         [Test]
         public async Task RunPipeline()

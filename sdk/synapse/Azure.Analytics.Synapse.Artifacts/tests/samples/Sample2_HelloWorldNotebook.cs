@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Samples
     /// <summary>
     /// This sample demonstrates how to create and upload a notebook using asynchronous methods of <see cref="NotebookClient"/>.
     /// </summary>
-    public partial class Sample2_HelloWorldNotebook
+    public partial class Sample2_HelloWorldNotebook : SampleFixture
     {
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
