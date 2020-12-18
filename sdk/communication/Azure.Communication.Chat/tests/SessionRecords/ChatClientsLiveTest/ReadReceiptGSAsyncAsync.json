@@ -345,6 +345,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-8ecc31fe4de38940a111564344cadf01-eb90e3add013c940-00",
         "User-Agent": [
           "azsdk-net-Communication.Chat/1.0.0-alpha.20201105.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
@@ -385,6 +386,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-8ecc31fe4de38940a111564344cadf01-eb90e3add013c940-00",
         "User-Agent": [
           "azsdk-net-Communication.Chat/1.0.0-alpha.20201105.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
