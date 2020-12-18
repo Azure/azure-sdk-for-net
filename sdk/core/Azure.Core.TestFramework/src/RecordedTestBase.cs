@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
@@ -55,6 +56,7 @@ namespace Azure.Core.TestFramework
             }
         }
         private bool _saveDebugRecordingsOnFailure;
+        private bool _hadInstrumentedClient;
 
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
@@ -143,16 +145,27 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            _hadInstrumentedClient = false;
         }
 
         [TearDown]
         public virtual void StopTestRecording()
         {
+            if (_hadInstrumentedClient && Recording.HasRequests)
+            {
+                throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please use call InstrumentClient for the client being recorded.");
+            }
             bool save = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
+        }
+
+        protected override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
+        {
+            _hadInstrumentedClient = true;
+            return base.InstrumentClient(clientType, client, preInterceptors);
         }
     }
 }
