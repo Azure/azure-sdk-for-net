@@ -27,5 +27,6 @@ foreach (DataFlowResource dataflow in dataFlows)
 ```
 
 ```C# Snippet:DeleteDataFlow
-client.StartDeleteDataFlow(dataFlowName);
+DataFlowDeleteDataFlowOperation deleteOperation = client.StartDeleteDataFlow(dataFlowName);
+await deleteOperation.WaitForCompletionAsync();
 ```

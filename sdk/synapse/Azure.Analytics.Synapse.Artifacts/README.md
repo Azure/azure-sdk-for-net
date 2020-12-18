@@ -63,7 +63,7 @@ The Azure.Analytics.Synapse.Artifacts package supports synchronous and asynchron
 ```C# Snippet:CreateNotebook
 NotebookCreateOrUpdateNotebookOperation operation = await client.StartCreateOrUpdateNotebookAsync(notebookName, notebookResource);
 await operation.WaitForCompletionAsync();
-Console.WriteLine("Notebook is created");
+Console.WriteLine("The notebook is created");
 ```
 
 ### Retrieve a notebook
@@ -90,7 +90,8 @@ foreach (NotebookResource notebook in notebooks)
 `DeleteNotebook` deletes a notebook.
 
 ```C# Snippet:DeleteNotebook
-client.StartDeleteNotebook(notebookName);
+NotebookDeleteNotebookOperation deleteNotebookOperation = client.StartDeleteNotebook(notebookName);
+await deleteNotebookOperation.WaitForCompletionAsync();
 ```
 
 ## To build

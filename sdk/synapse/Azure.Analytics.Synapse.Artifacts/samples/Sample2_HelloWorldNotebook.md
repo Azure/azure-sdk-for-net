@@ -35,7 +35,7 @@ One a notebook is created, it cas be added to a NotebookResource, which is uploa
 ```C# Snippet:CreateNotebook
 NotebookCreateOrUpdateNotebookOperation operation = await client.StartCreateOrUpdateNotebookAsync(notebookName, notebookResource);
 await operation.WaitForCompletionAsync();
-Console.WriteLine("Notebook is created");
+Console.WriteLine("The notebook is created");
 ```
 
 ## Retrieve a pipeline
@@ -63,5 +63,6 @@ foreach (NotebookResource notebook in notebooks)
 To delete a notebook no longer needed call `StartDeleteNotebook`, passing in the notebook name.
 
 ```C# Snippet:DeleteNotebook
-client.StartDeleteNotebook(notebookName);
+NotebookDeleteNotebookOperation deleteNotebookOperation = client.StartDeleteNotebook(notebookName);
+await deleteNotebookOperation.WaitForCompletionAsync();
 ```

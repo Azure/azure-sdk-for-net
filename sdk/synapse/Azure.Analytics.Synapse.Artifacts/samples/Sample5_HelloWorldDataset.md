@@ -30,5 +30,6 @@ foreach (DatasetResource dataset in datasets)
 ```
 
 ```C# Snippet:DeleteDataset
-client.StartDeleteDataset(dataSetName);
+DatasetDeleteDatasetOperation deleteDatasetOperation = client.StartDeleteDataset(dataSetName);
+await deleteDatasetOperation.WaitForCompletionAsync();
 ```

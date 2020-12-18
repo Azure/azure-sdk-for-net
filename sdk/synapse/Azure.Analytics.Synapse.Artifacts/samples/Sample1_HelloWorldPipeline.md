@@ -64,5 +64,6 @@ foreach (PipelineResource pipeline in pipelines)
 To delete a pipeline no longer needed call `StartDeletePipeline`, passing in the pipeline name.
 
 ```C# Snippet:DeletePipeline
-client.StartDeletePipeline(pipelineName);
+PipelineDeletePipelineOperation deleteOperation = client.StartDeletePipeline(pipelineName);
+await deleteOperation.WaitForCompletionAsync();
 ```
