@@ -5,7 +5,6 @@ namespace Azure.Storage.Files.Shares
         protected ShareClient() { }
         public ShareClient(string connectionString, string shareName) { }
         public ShareClient(string connectionString, string shareName, Azure.Storage.Files.Shares.ShareClientOptions options) { }
-        public ShareClient(System.Uri shareUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareClient(System.Uri shareUri, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareClient(System.Uri shareUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
@@ -291,7 +290,6 @@ namespace Azure.Storage.Files.Shares
         protected ShareServiceClient() { }
         public ShareServiceClient(string connectionString) { }
         public ShareServiceClient(string connectionString, Azure.Storage.Files.Shares.ShareClientOptions options) { }
-        public ShareServiceClient(System.Uri serviceUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareServiceClient(System.Uri serviceUri, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareServiceClient(System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }

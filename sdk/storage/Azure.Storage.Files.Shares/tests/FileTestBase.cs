@@ -169,7 +169,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
             builder.SetPermissions(AccountSasPermissions.Create | AccountSasPermissions.Delete);
-            return builder.ToSasQueryParameters(sharedKeyCredentials);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default)

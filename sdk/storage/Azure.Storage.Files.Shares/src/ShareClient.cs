@@ -226,28 +226,6 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareUri">
         /// A <see cref="Uri"/> referencing the share that includes the
         /// name of the account and the name of the share.
-        /// Must not contain shared access signature.
-        /// </param>
-        /// <param name="credential">
-        /// The shared access signature credential used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        public ShareClient(Uri shareUri, AzureSasCredential credential, ShareClientOptions options = default)
-            : this(shareUri, credential.AsPolicy(shareUri), options, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="shareUri">
-        /// A <see cref="Uri"/> referencing the share that includes the
-        /// name of the account and the name of the share.
         /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
