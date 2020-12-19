@@ -30,6 +30,10 @@ parameters:
 - name: TestSetupSteps
   type: stepList
   default: []
+- name: WindowsPool
+  type: string
+- name: LinuxPool
+  type: string
 
 stages:
   - stage: Build
@@ -42,6 +46,8 @@ stages:
         TestPipeline: ${{ parameters.TestPipeline }}
         ArtifactName: packages
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
+        WindowsPool: ${{ parameters.WindowsPool }}
+        LinuxPool: ${{ parameters.LinuxPool }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
