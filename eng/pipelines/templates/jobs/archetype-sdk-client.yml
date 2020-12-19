@@ -71,8 +71,6 @@ jobs:
       name: azsdk-pool-mms-ubuntu-1804-general
       vmImage:
     steps:
-      - script: |
-          ls /mnt/vss-agent-2.179.0/_work/_tool
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
         inputs:
