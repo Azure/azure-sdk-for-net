@@ -18,12 +18,17 @@ namespace Microsoft.Azure.Storage.File.Perf.Scenarios
         /// <summary>
         /// Reference to the Share used by the test in the Microsoft Azure File service.
         /// </summary>
-        private static CloudFileShare s_cloudFileShare;
+        private CloudFileShare _cloudFileShare;
 
         /// <summary>
         /// Reference to the file used by the test in the Microsoft Azure File service.
         /// </summary>
-        private static CloudFile s_cloudFile;
+        private CloudFile _cloudFile;
+
+        /// <summary>
+        /// Local stream uploaded to Microsoft Azure File service.
+        /// </summary>
+        private readonly Stream _stream;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadFile"/> class.
@@ -31,6 +36,13 @@ namespace Microsoft.Azure.Storage.File.Perf.Scenarios
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         public DownloadFile(SizeOptions options) : base(options)
         {
+            _stream = RandomStream.Create(options.Size);
+        }
+
+        public override void Dispose(bool disposing)
+        {
+            _stream.Dispose();
+            base.Dispose(disposing);
         }
 
         /// <summary>
@@ -38,27 +50,27 @@ namespace Microsoft.Azure.Storage.File.Perf.Scenarios
         /// Also, creates a file reference in the cloud file share and uploads data stream to the cloud file.
         /// </summary>
         /// <returns></returns>
-        public override async Task GlobalSetupAsync()
+        public override async Task SetupAsync()
         {
-            await base.GlobalSetupAsync();
+            await base.SetupAsync();
 
             PerfTestEnvironment testEnvironment = PerfTestEnvironment.Instance;
-            s_cloudFileShare = new CloudFileShare(new Uri($"{testEnvironment.FileShareAddressString}/{Guid.NewGuid()}"), testEnvironment.StorageCredentials);
+            _cloudFileShare = new CloudFileShare(new Uri($"{testEnvironment.FileShareAddressString}/{Guid.NewGuid()}"), testEnvironment.StorageCredentials);
 
-            await s_cloudFileShare.CreateAsync();
+            await _cloudFileShare.CreateAsync();
 
-            s_cloudFile = s_cloudFileShare.GetRootDirectoryReference().GetFileReference(Path.GetRandomFileName());
-            await s_cloudFile.CreateAsync(Options.Size);
-            await s_cloudFile.UploadFromStreamAsync(RandomStream.Create(Options.Size));
+            _cloudFile = _cloudFileShare.GetRootDirectoryReference().GetFileReference(Path.GetRandomFileName());
+            await _cloudFile.CreateAsync(Options.Size);
+            await _cloudFile.UploadFromStreamAsync(_stream);
         }
 
         /// <summary>
         /// Deletes the cloud file share created by the test.
         /// </summary>
-        public override async Task GlobalCleanupAsync()
+        public override async Task CleanupAsync()
         {
-            await s_cloudFileShare.DeleteAsync();
-            await base.GlobalCleanupAsync();
+            await _cloudFileShare.DeleteAsync();
+            await base.CleanupAsync();
         }
 
         /// <summary>
@@ -67,7 +79,7 @@ namespace Microsoft.Azure.Storage.File.Perf.Scenarios
         /// <param name="cancellationToken">The token used to signal cancellation request.</param>
         public override void Run(CancellationToken cancellationToken)
         {
-            s_cloudFile.DownloadToStream(Stream.Null);
+            _cloudFile.DownloadToStream(Stream.Null);
         }
 
         /// <summary>
@@ -76,7 +88,7 @@ namespace Microsoft.Azure.Storage.File.Perf.Scenarios
         /// <param name="cancellationToken">The token used to signal cancellation request.</param>
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await s_cloudFile.DownloadToStreamAsync(Stream.Null, cancellationToken);
+            await _cloudFile.DownloadToStreamAsync(Stream.Null, cancellationToken);
         }
     }
 }
