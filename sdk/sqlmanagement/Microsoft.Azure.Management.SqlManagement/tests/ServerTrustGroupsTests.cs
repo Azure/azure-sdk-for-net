@@ -68,7 +68,7 @@ namespace Sql.Tests
 		public void TestCreateGetDropServerTrustGroup()
 		{
 			string stgName = "stg-test";
-			IList<string> managedInstanceNames = new List<string>() { "mi1-test", "mi2-test" };
+			IList<string> managedInstanceNames = new List<string>() { "mi1-stg-test", "mi2-stg-test" };
 			using (SqlManagementTestContext context = new SqlManagementTestContext(this))
 			{
 				SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
@@ -87,59 +87,8 @@ namespace Sql.Tests
 				ServerTrustGroup stg = sqlClient.ServerTrustGroups.Get(resourceGroup.Name, TestEnvironmentUtilities.DefaultLocationId, stgName);
 				Assert.NotNull(stg);
 
-				sqlClient.ServerTrustGroups.Delete(resourceGroup.Name, TestEnvironmentUtilities.DefaultLocationId, stgName);
-				deleteManagedInstances(sqlClient, resourceGroup.Name, managedInstanceNames);
-				context.DeleteResourceGroup(resourceGroup.Name);
-			}
-		}
-
-		[Fact]
-		public void TestListServerTrustGroupsByInstance()
-		{
-			string stgName = "stg-test";
-			IList<string> managedInstanceNames = new List<string>() { "mi1-test",  "mi2-test" };
-			using (SqlManagementTestContext context = new SqlManagementTestContext(this))
-			{
-				SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
-
-				ResourceGroup resourceGroup = context.CreateResourceGroup(TestEnvironmentUtilities.DefaultLocationId);
-				Assert.NotNull(resourceGroup);
-				createManagedInstances(context, resourceGroup, managedInstanceNames);
-
-				IList<ServerInfo> groupMembers = createGroupMembers(sqlClient, resourceGroup.Name, managedInstanceNames);
-				IList<string> trustScopes = new List<string>() {"GlobalTransactions"};
-				ServerTrustGroup parameters = new ServerTrustGroup(groupMembers, trustScopes);
-
-				ServerTrustGroup serverTrustGroup = sqlClient.ServerTrustGroups.CreateOrUpdate(resourceGroup.Name, TestEnvironmentUtilities.DefaultLocationId, stgName, parameters);
-				Assert.NotNull(serverTrustGroup);
-
 				IPage<ServerTrustGroup> stgByInstance = sqlClient.ServerTrustGroups.ListByInstance(resourceGroup.Name, managedInstanceNames[0]);
 				Assert.True(stgByInstance != null && stgByInstance.GetEnumerator().MoveNext());
-
-				sqlClient.ServerTrustGroups.Delete(resourceGroup.Name, TestEnvironmentUtilities.DefaultLocationId, stgName);
-				deleteManagedInstances(sqlClient, resourceGroup.Name, managedInstanceNames);
-				context.DeleteResourceGroup(resourceGroup.Name);
-			}
-		}
-
-		[Fact]
-		public void TestListServerTrustGrouspByLocation()
-		{
-			string stgName = "stg-test";
-			IList<string> managedInstanceNames = new List<string>() { "mi1-test",  "mi2-test" };
-			using (SqlManagementTestContext context = new SqlManagementTestContext(this))
-			{
-				ResourceGroup resourceGroup = context.CreateResourceGroup(TestEnvironmentUtilities.DefaultLocationId);
-				createManagedInstances(context, resourceGroup, managedInstanceNames);
-
-				SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
-
-				IList<ServerInfo> groupMembers = createGroupMembers(sqlClient, resourceGroup.Name, managedInstanceNames);
-				IList<string> trustScopes = new List<string>() {"GlobalTransactions"};
-				ServerTrustGroup parameters = new ServerTrustGroup(groupMembers, trustScopes);
-
-				ServerTrustGroup serverTrustGroup = sqlClient.ServerTrustGroups.CreateOrUpdate(resourceGroup.Name, TestEnvironmentUtilities.DefaultLocationId, stgName, parameters);
-				Assert.NotNull(serverTrustGroup);
 
 				IPage<ServerTrustGroup> stgByLocation = sqlClient.ServerTrustGroups.ListByLocation(resourceGroup.Name, TestEnvironmentUtilities.DefaultLocation);
 				Assert.True(stgByLocation != null && stgByLocation.GetEnumerator().MoveNext());
