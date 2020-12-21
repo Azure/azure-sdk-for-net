@@ -156,7 +156,7 @@ var setGraphRequest = new MediaGraphTopologySetRequest(graphTopology);
 var directMethod = new CloudToDeviceMethod(setGraphRequest.MethodName);
 directMethod.SetPayloadJson(setGraphRequest.GetPayloadAsJson());
 
-await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+var setGraphResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
 ```
 
 To try different media graph topologies with the SDK, please see the official [Samples][samples].

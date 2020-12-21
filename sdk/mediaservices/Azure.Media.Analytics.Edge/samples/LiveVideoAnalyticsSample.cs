@@ -19,8 +19,8 @@ namespace Azure.Media.Analytics.Edge.Samples
     public class LiveVideoAnalyticsSample
     {
         private ServiceClient _serviceClient;
-        private String _deviceId = "deviceid";
-        private String _moduleId = "modulename";
+        private String _deviceId = "deviceId";
+        private String _moduleId = "moduleId";
 
         public LiveVideoAnalyticsSample()
         {
@@ -47,7 +47,7 @@ namespace Azure.Media.Analytics.Edge.Samples
                 var directMethod = new CloudToDeviceMethod(setGraphRequest.MethodName);
                 directMethod.SetPayloadJson(setGraphRequest.GetPayloadAsJson());
 
-                await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+                var setGraphResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
                 #endregion Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
 
                 // get a graph topology using helper function
@@ -66,7 +66,11 @@ namespace Azure.Media.Analytics.Edge.Samples
 
                 //get instance
                 var getGraphInstanceResponse = await InvokeDirectMethodHelper(new MediaGraphInstanceGetRequest(graphInstance.Name));
-                var getGraphInstaceResult = MediaGraphInstance.Deserialize(getGraphInstanceResponse.GetPayloadAsJson());
+                var getGraphInstanceResult = MediaGraphInstance.Deserialize(getGraphInstanceResponse.GetPayloadAsJson());
+
+                // list all graph instance
+                var listGraphInstanceResponse = await InvokeDirectMethodHelper(new MediaGraphInstanceListRequest());
+                var listGraphInstanceResult = MediaGraphInstanceCollection.Deserialize(listGraphInstanceResponse.GetPayloadAsJson());
 
                 //get deactive graph
                 var deactiveGraphInstance = await InvokeDirectMethodHelper(new MediaGraphInstanceDeActivateRequest(graphInstance.Name));
