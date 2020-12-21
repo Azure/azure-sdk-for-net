@@ -21,8 +21,5 @@ namespace Azure.Storage.Queues.Models
         {
             GeoReplication = geoReplication;
         }
-
-        /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
-        public QueueGeoReplication GeoReplication { get; }
     }
 }

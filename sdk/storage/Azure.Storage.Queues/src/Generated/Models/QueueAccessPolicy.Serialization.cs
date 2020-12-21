@@ -12,50 +12,50 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class AccessPolicy : IXmlSerializable
+    public partial class QueueAccessPolicy : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
-            if (Optional.IsDefined(Start))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WriteStartElement("Start");
-                writer.WriteValue(Start.Value, "O");
+                writer.WriteValue(StartsOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Expiry))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WriteStartElement("Expiry");
-                writer.WriteValue(Expiry.Value, "O");
+                writer.WriteValue(ExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Permission))
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WriteStartElement("Permission");
-                writer.WriteValue(Permission);
+                writer.WriteValue(Permissions);
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
         }
 
-        internal static AccessPolicy DeserializeAccessPolicy(XElement element)
+        internal static QueueAccessPolicy DeserializeQueueAccessPolicy(XElement element)
         {
-            DateTimeOffset? start = default;
-            DateTimeOffset? expiry = default;
-            string permission = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? expiresOn = default;
+            string permissions = default;
             if (element.Element("Start") is XElement startElement)
             {
-                start = startElement.GetDateTimeOffsetValue("O");
+                startsOn = startElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Expiry") is XElement expiryElement)
             {
-                expiry = expiryElement.GetDateTimeOffsetValue("O");
+                expiresOn = expiryElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Permission") is XElement permissionElement)
             {
-                permission = (string)permissionElement;
+                permissions = (string)permissionElement;
             }
-            return new AccessPolicy(start, expiry, permission);
+            return new QueueAccessPolicy(startsOn, expiresOn, permissions);
         }
     }
 }

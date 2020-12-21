@@ -45,6 +45,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         protected virtual Uri MessagesUri => _messagesUri;
 
+        //TODO make virtual getters for this.
         private readonly QueueRestClient _queueRestClient;
 
         private readonly MessagesRestClient _messagesRestClient;
@@ -705,7 +706,7 @@ namespace Azure.Storage.Queues
                     }
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == StorageErrorCode.QueueAlreadyExists)
+                when (storageRequestFailedException.ErrorCode == QueueErrorCode.QueueAlreadyExists)
                 {
                     response = default;
                 }
@@ -809,7 +810,7 @@ namespace Azure.Storage.Queues
                     return Response.FromValue(true, response.GetRawResponse());
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == StorageErrorCode.QueueNotFound)
+                when (storageRequestFailedException.ErrorCode == QueueErrorCode.QueueNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -922,7 +923,7 @@ namespace Azure.Storage.Queues
                     return Response.FromValue(true, response);
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == StorageErrorCode.QueueNotFound)
+                when (storageRequestFailedException.ErrorCode == QueueErrorCode.QueueNotFound)
                 {
                     return Response.FromValue(false, default);
                 }

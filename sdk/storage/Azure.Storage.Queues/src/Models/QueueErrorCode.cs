@@ -6,14 +6,10 @@ using Azure.Core;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// QueueCorsRule.
+    /// QueueErrorCode.
     /// </summary>
-    [CodeGenModel("CorsRule")]
-    public partial class QueueCorsRule
+    [CodeGenModel("StorageErrorCode")]
+    public readonly partial struct QueueErrorCode
     {
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public QueueCorsRule() { }
     }
 }

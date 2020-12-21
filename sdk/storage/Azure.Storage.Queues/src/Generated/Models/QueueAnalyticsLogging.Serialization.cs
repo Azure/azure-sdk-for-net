@@ -38,7 +38,7 @@ namespace Azure.Storage.Queues.Models
             bool delete = default;
             bool read = default;
             bool write = default;
-            RetentionPolicy retentionPolicy = default;
+            QueueRetentionPolicy retentionPolicy = default;
             if (element.Element("Version") is XElement versionElement)
             {
                 version = (string)versionElement;
@@ -57,7 +57,7 @@ namespace Azure.Storage.Queues.Models
             }
             if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
             {
-                retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
+                retentionPolicy = QueueRetentionPolicy.DeserializeQueueRetentionPolicy(retentionPolicyElement);
             }
             return new QueueAnalyticsLogging(version, delete, read, write, retentionPolicy);
         }

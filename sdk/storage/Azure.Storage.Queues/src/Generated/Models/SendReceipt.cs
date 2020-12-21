@@ -36,16 +36,5 @@ namespace Azure.Storage.Queues.Models
             PopReceipt = popReceipt;
             TimeNextVisible = timeNextVisible;
         }
-
-        /// <summary> The Id of the Message. </summary>
-        public string MessageId { get; }
-        /// <summary> The time the Message was inserted into the Queue. </summary>
-        public DateTimeOffset InsertionTime { get; }
-        /// <summary> The time that the Message will expire and be automatically deleted. </summary>
-        public DateTimeOffset ExpirationTime { get; }
-        /// <summary> This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client. </summary>
-        public string PopReceipt { get; }
-        /// <summary> The time that the message will again become visible in the Queue. </summary>
-        public DateTimeOffset TimeNextVisible { get; }
     }
 }

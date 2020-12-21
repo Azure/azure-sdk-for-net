@@ -11,5 +11,10 @@ namespace Azure.Storage.Queues.Models
     [CodeGenModel("StorageServiceStats")]
     public partial class QueueServiceStatistics
     {
+        /// <summary>
+        /// GeoReplication
+        /// </summary>
+        [CodeGenMember("GeoReplication")]
+        public QueueGeoReplication GeoReplication { get; internal set;  }
     }
 }

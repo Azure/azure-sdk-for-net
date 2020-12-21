@@ -26,14 +26,14 @@ namespace Azure.Storage.Queues.Models
         internal static QueueSignedIdentifier DeserializeQueueSignedIdentifier(XElement element)
         {
             string id = default;
-            AccessPolicy accessPolicy = default;
+            QueueAccessPolicy accessPolicy = default;
             if (element.Element("Id") is XElement idElement)
             {
                 id = (string)idElement;
             }
             if (element.Element("AccessPolicy") is XElement accessPolicyElement)
             {
-                accessPolicy = AccessPolicy.DeserializeAccessPolicy(accessPolicyElement);
+                accessPolicy = QueueAccessPolicy.DeserializeQueueAccessPolicy(accessPolicyElement);
             }
             return new QueueSignedIdentifier(id, accessPolicy);
         }

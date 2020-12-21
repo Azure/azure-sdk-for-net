@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Error codes returned by the service. </summary>
-    internal readonly partial struct StorageErrorCode : IEquatable<StorageErrorCode>
+    public readonly partial struct QueueErrorCode : IEquatable<QueueErrorCode>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="StorageErrorCode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="QueueErrorCode"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageErrorCode(string value)
+        public QueueErrorCode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -81,131 +81,131 @@ namespace Azure.Storage.Queues.Models
         private const string FeatureVersionMismatchValue = "FeatureVersionMismatch";
 
         /// <summary> AccountAlreadyExists. </summary>
-        public static StorageErrorCode AccountAlreadyExists { get; } = new StorageErrorCode(AccountAlreadyExistsValue);
+        public static QueueErrorCode AccountAlreadyExists { get; } = new QueueErrorCode(AccountAlreadyExistsValue);
         /// <summary> AccountBeingCreated. </summary>
-        public static StorageErrorCode AccountBeingCreated { get; } = new StorageErrorCode(AccountBeingCreatedValue);
+        public static QueueErrorCode AccountBeingCreated { get; } = new QueueErrorCode(AccountBeingCreatedValue);
         /// <summary> AccountIsDisabled. </summary>
-        public static StorageErrorCode AccountIsDisabled { get; } = new StorageErrorCode(AccountIsDisabledValue);
+        public static QueueErrorCode AccountIsDisabled { get; } = new QueueErrorCode(AccountIsDisabledValue);
         /// <summary> AuthenticationFailed. </summary>
-        public static StorageErrorCode AuthenticationFailed { get; } = new StorageErrorCode(AuthenticationFailedValue);
+        public static QueueErrorCode AuthenticationFailed { get; } = new QueueErrorCode(AuthenticationFailedValue);
         /// <summary> AuthorizationFailure. </summary>
-        public static StorageErrorCode AuthorizationFailure { get; } = new StorageErrorCode(AuthorizationFailureValue);
+        public static QueueErrorCode AuthorizationFailure { get; } = new QueueErrorCode(AuthorizationFailureValue);
         /// <summary> ConditionHeadersNotSupported. </summary>
-        public static StorageErrorCode ConditionHeadersNotSupported { get; } = new StorageErrorCode(ConditionHeadersNotSupportedValue);
+        public static QueueErrorCode ConditionHeadersNotSupported { get; } = new QueueErrorCode(ConditionHeadersNotSupportedValue);
         /// <summary> ConditionNotMet. </summary>
-        public static StorageErrorCode ConditionNotMet { get; } = new StorageErrorCode(ConditionNotMetValue);
+        public static QueueErrorCode ConditionNotMet { get; } = new QueueErrorCode(ConditionNotMetValue);
         /// <summary> EmptyMetadataKey. </summary>
-        public static StorageErrorCode EmptyMetadataKey { get; } = new StorageErrorCode(EmptyMetadataKeyValue);
+        public static QueueErrorCode EmptyMetadataKey { get; } = new QueueErrorCode(EmptyMetadataKeyValue);
         /// <summary> InsufficientAccountPermissions. </summary>
-        public static StorageErrorCode InsufficientAccountPermissions { get; } = new StorageErrorCode(InsufficientAccountPermissionsValue);
+        public static QueueErrorCode InsufficientAccountPermissions { get; } = new QueueErrorCode(InsufficientAccountPermissionsValue);
         /// <summary> InternalError. </summary>
-        public static StorageErrorCode InternalError { get; } = new StorageErrorCode(InternalErrorValue);
+        public static QueueErrorCode InternalError { get; } = new QueueErrorCode(InternalErrorValue);
         /// <summary> InvalidAuthenticationInfo. </summary>
-        public static StorageErrorCode InvalidAuthenticationInfo { get; } = new StorageErrorCode(InvalidAuthenticationInfoValue);
+        public static QueueErrorCode InvalidAuthenticationInfo { get; } = new QueueErrorCode(InvalidAuthenticationInfoValue);
         /// <summary> InvalidHeaderValue. </summary>
-        public static StorageErrorCode InvalidHeaderValue { get; } = new StorageErrorCode(InvalidHeaderValueValue);
+        public static QueueErrorCode InvalidHeaderValue { get; } = new QueueErrorCode(InvalidHeaderValueValue);
         /// <summary> InvalidHttpVerb. </summary>
-        public static StorageErrorCode InvalidHttpVerb { get; } = new StorageErrorCode(InvalidHttpVerbValue);
+        public static QueueErrorCode InvalidHttpVerb { get; } = new QueueErrorCode(InvalidHttpVerbValue);
         /// <summary> InvalidInput. </summary>
-        public static StorageErrorCode InvalidInput { get; } = new StorageErrorCode(InvalidInputValue);
+        public static QueueErrorCode InvalidInput { get; } = new QueueErrorCode(InvalidInputValue);
         /// <summary> InvalidMd5. </summary>
-        public static StorageErrorCode InvalidMd5 { get; } = new StorageErrorCode(InvalidMd5Value);
+        public static QueueErrorCode InvalidMd5 { get; } = new QueueErrorCode(InvalidMd5Value);
         /// <summary> InvalidMetadata. </summary>
-        public static StorageErrorCode InvalidMetadata { get; } = new StorageErrorCode(InvalidMetadataValue);
+        public static QueueErrorCode InvalidMetadata { get; } = new QueueErrorCode(InvalidMetadataValue);
         /// <summary> InvalidQueryParameterValue. </summary>
-        public static StorageErrorCode InvalidQueryParameterValue { get; } = new StorageErrorCode(InvalidQueryParameterValueValue);
+        public static QueueErrorCode InvalidQueryParameterValue { get; } = new QueueErrorCode(InvalidQueryParameterValueValue);
         /// <summary> InvalidRange. </summary>
-        public static StorageErrorCode InvalidRange { get; } = new StorageErrorCode(InvalidRangeValue);
+        public static QueueErrorCode InvalidRange { get; } = new QueueErrorCode(InvalidRangeValue);
         /// <summary> InvalidResourceName. </summary>
-        public static StorageErrorCode InvalidResourceName { get; } = new StorageErrorCode(InvalidResourceNameValue);
+        public static QueueErrorCode InvalidResourceName { get; } = new QueueErrorCode(InvalidResourceNameValue);
         /// <summary> InvalidUri. </summary>
-        public static StorageErrorCode InvalidUri { get; } = new StorageErrorCode(InvalidUriValue);
+        public static QueueErrorCode InvalidUri { get; } = new QueueErrorCode(InvalidUriValue);
         /// <summary> InvalidXmlDocument. </summary>
-        public static StorageErrorCode InvalidXmlDocument { get; } = new StorageErrorCode(InvalidXmlDocumentValue);
+        public static QueueErrorCode InvalidXmlDocument { get; } = new QueueErrorCode(InvalidXmlDocumentValue);
         /// <summary> InvalidXmlNodeValue. </summary>
-        public static StorageErrorCode InvalidXmlNodeValue { get; } = new StorageErrorCode(InvalidXmlNodeValueValue);
+        public static QueueErrorCode InvalidXmlNodeValue { get; } = new QueueErrorCode(InvalidXmlNodeValueValue);
         /// <summary> Md5Mismatch. </summary>
-        public static StorageErrorCode Md5Mismatch { get; } = new StorageErrorCode(Md5MismatchValue);
+        public static QueueErrorCode Md5Mismatch { get; } = new QueueErrorCode(Md5MismatchValue);
         /// <summary> MetadataTooLarge. </summary>
-        public static StorageErrorCode MetadataTooLarge { get; } = new StorageErrorCode(MetadataTooLargeValue);
+        public static QueueErrorCode MetadataTooLarge { get; } = new QueueErrorCode(MetadataTooLargeValue);
         /// <summary> MissingContentLengthHeader. </summary>
-        public static StorageErrorCode MissingContentLengthHeader { get; } = new StorageErrorCode(MissingContentLengthHeaderValue);
+        public static QueueErrorCode MissingContentLengthHeader { get; } = new QueueErrorCode(MissingContentLengthHeaderValue);
         /// <summary> MissingRequiredQueryParameter. </summary>
-        public static StorageErrorCode MissingRequiredQueryParameter { get; } = new StorageErrorCode(MissingRequiredQueryParameterValue);
+        public static QueueErrorCode MissingRequiredQueryParameter { get; } = new QueueErrorCode(MissingRequiredQueryParameterValue);
         /// <summary> MissingRequiredHeader. </summary>
-        public static StorageErrorCode MissingRequiredHeader { get; } = new StorageErrorCode(MissingRequiredHeaderValue);
+        public static QueueErrorCode MissingRequiredHeader { get; } = new QueueErrorCode(MissingRequiredHeaderValue);
         /// <summary> MissingRequiredXmlNode. </summary>
-        public static StorageErrorCode MissingRequiredXmlNode { get; } = new StorageErrorCode(MissingRequiredXmlNodeValue);
+        public static QueueErrorCode MissingRequiredXmlNode { get; } = new QueueErrorCode(MissingRequiredXmlNodeValue);
         /// <summary> MultipleConditionHeadersNotSupported. </summary>
-        public static StorageErrorCode MultipleConditionHeadersNotSupported { get; } = new StorageErrorCode(MultipleConditionHeadersNotSupportedValue);
+        public static QueueErrorCode MultipleConditionHeadersNotSupported { get; } = new QueueErrorCode(MultipleConditionHeadersNotSupportedValue);
         /// <summary> OperationTimedOut. </summary>
-        public static StorageErrorCode OperationTimedOut { get; } = new StorageErrorCode(OperationTimedOutValue);
+        public static QueueErrorCode OperationTimedOut { get; } = new QueueErrorCode(OperationTimedOutValue);
         /// <summary> OutOfRangeInput. </summary>
-        public static StorageErrorCode OutOfRangeInput { get; } = new StorageErrorCode(OutOfRangeInputValue);
+        public static QueueErrorCode OutOfRangeInput { get; } = new QueueErrorCode(OutOfRangeInputValue);
         /// <summary> OutOfRangeQueryParameterValue. </summary>
-        public static StorageErrorCode OutOfRangeQueryParameterValue { get; } = new StorageErrorCode(OutOfRangeQueryParameterValueValue);
+        public static QueueErrorCode OutOfRangeQueryParameterValue { get; } = new QueueErrorCode(OutOfRangeQueryParameterValueValue);
         /// <summary> RequestBodyTooLarge. </summary>
-        public static StorageErrorCode RequestBodyTooLarge { get; } = new StorageErrorCode(RequestBodyTooLargeValue);
+        public static QueueErrorCode RequestBodyTooLarge { get; } = new QueueErrorCode(RequestBodyTooLargeValue);
         /// <summary> ResourceTypeMismatch. </summary>
-        public static StorageErrorCode ResourceTypeMismatch { get; } = new StorageErrorCode(ResourceTypeMismatchValue);
+        public static QueueErrorCode ResourceTypeMismatch { get; } = new QueueErrorCode(ResourceTypeMismatchValue);
         /// <summary> RequestUrlFailedToParse. </summary>
-        public static StorageErrorCode RequestUrlFailedToParse { get; } = new StorageErrorCode(RequestUrlFailedToParseValue);
+        public static QueueErrorCode RequestUrlFailedToParse { get; } = new QueueErrorCode(RequestUrlFailedToParseValue);
         /// <summary> ResourceAlreadyExists. </summary>
-        public static StorageErrorCode ResourceAlreadyExists { get; } = new StorageErrorCode(ResourceAlreadyExistsValue);
+        public static QueueErrorCode ResourceAlreadyExists { get; } = new QueueErrorCode(ResourceAlreadyExistsValue);
         /// <summary> ResourceNotFound. </summary>
-        public static StorageErrorCode ResourceNotFound { get; } = new StorageErrorCode(ResourceNotFoundValue);
+        public static QueueErrorCode ResourceNotFound { get; } = new QueueErrorCode(ResourceNotFoundValue);
         /// <summary> ServerBusy. </summary>
-        public static StorageErrorCode ServerBusy { get; } = new StorageErrorCode(ServerBusyValue);
+        public static QueueErrorCode ServerBusy { get; } = new QueueErrorCode(ServerBusyValue);
         /// <summary> UnsupportedHeader. </summary>
-        public static StorageErrorCode UnsupportedHeader { get; } = new StorageErrorCode(UnsupportedHeaderValue);
+        public static QueueErrorCode UnsupportedHeader { get; } = new QueueErrorCode(UnsupportedHeaderValue);
         /// <summary> UnsupportedXmlNode. </summary>
-        public static StorageErrorCode UnsupportedXmlNode { get; } = new StorageErrorCode(UnsupportedXmlNodeValue);
+        public static QueueErrorCode UnsupportedXmlNode { get; } = new QueueErrorCode(UnsupportedXmlNodeValue);
         /// <summary> UnsupportedQueryParameter. </summary>
-        public static StorageErrorCode UnsupportedQueryParameter { get; } = new StorageErrorCode(UnsupportedQueryParameterValue);
+        public static QueueErrorCode UnsupportedQueryParameter { get; } = new QueueErrorCode(UnsupportedQueryParameterValue);
         /// <summary> UnsupportedHttpVerb. </summary>
-        public static StorageErrorCode UnsupportedHttpVerb { get; } = new StorageErrorCode(UnsupportedHttpVerbValue);
+        public static QueueErrorCode UnsupportedHttpVerb { get; } = new QueueErrorCode(UnsupportedHttpVerbValue);
         /// <summary> InvalidMarker. </summary>
-        public static StorageErrorCode InvalidMarker { get; } = new StorageErrorCode(InvalidMarkerValue);
+        public static QueueErrorCode InvalidMarker { get; } = new QueueErrorCode(InvalidMarkerValue);
         /// <summary> MessageNotFound. </summary>
-        public static StorageErrorCode MessageNotFound { get; } = new StorageErrorCode(MessageNotFoundValue);
+        public static QueueErrorCode MessageNotFound { get; } = new QueueErrorCode(MessageNotFoundValue);
         /// <summary> MessageTooLarge. </summary>
-        public static StorageErrorCode MessageTooLarge { get; } = new StorageErrorCode(MessageTooLargeValue);
+        public static QueueErrorCode MessageTooLarge { get; } = new QueueErrorCode(MessageTooLargeValue);
         /// <summary> PopReceiptMismatch. </summary>
-        public static StorageErrorCode PopReceiptMismatch { get; } = new StorageErrorCode(PopReceiptMismatchValue);
+        public static QueueErrorCode PopReceiptMismatch { get; } = new QueueErrorCode(PopReceiptMismatchValue);
         /// <summary> QueueAlreadyExists. </summary>
-        public static StorageErrorCode QueueAlreadyExists { get; } = new StorageErrorCode(QueueAlreadyExistsValue);
+        public static QueueErrorCode QueueAlreadyExists { get; } = new QueueErrorCode(QueueAlreadyExistsValue);
         /// <summary> QueueBeingDeleted. </summary>
-        public static StorageErrorCode QueueBeingDeleted { get; } = new StorageErrorCode(QueueBeingDeletedValue);
+        public static QueueErrorCode QueueBeingDeleted { get; } = new QueueErrorCode(QueueBeingDeletedValue);
         /// <summary> QueueDisabled. </summary>
-        public static StorageErrorCode QueueDisabled { get; } = new StorageErrorCode(QueueDisabledValue);
+        public static QueueErrorCode QueueDisabled { get; } = new QueueErrorCode(QueueDisabledValue);
         /// <summary> QueueNotEmpty. </summary>
-        public static StorageErrorCode QueueNotEmpty { get; } = new StorageErrorCode(QueueNotEmptyValue);
+        public static QueueErrorCode QueueNotEmpty { get; } = new QueueErrorCode(QueueNotEmptyValue);
         /// <summary> QueueNotFound. </summary>
-        public static StorageErrorCode QueueNotFound { get; } = new StorageErrorCode(QueueNotFoundValue);
+        public static QueueErrorCode QueueNotFound { get; } = new QueueErrorCode(QueueNotFoundValue);
         /// <summary> AuthorizationSourceIPMismatch. </summary>
-        public static StorageErrorCode AuthorizationSourceIPMismatch { get; } = new StorageErrorCode(AuthorizationSourceIPMismatchValue);
+        public static QueueErrorCode AuthorizationSourceIPMismatch { get; } = new QueueErrorCode(AuthorizationSourceIPMismatchValue);
         /// <summary> AuthorizationProtocolMismatch. </summary>
-        public static StorageErrorCode AuthorizationProtocolMismatch { get; } = new StorageErrorCode(AuthorizationProtocolMismatchValue);
+        public static QueueErrorCode AuthorizationProtocolMismatch { get; } = new QueueErrorCode(AuthorizationProtocolMismatchValue);
         /// <summary> AuthorizationPermissionMismatch. </summary>
-        public static StorageErrorCode AuthorizationPermissionMismatch { get; } = new StorageErrorCode(AuthorizationPermissionMismatchValue);
+        public static QueueErrorCode AuthorizationPermissionMismatch { get; } = new QueueErrorCode(AuthorizationPermissionMismatchValue);
         /// <summary> AuthorizationServiceMismatch. </summary>
-        public static StorageErrorCode AuthorizationServiceMismatch { get; } = new StorageErrorCode(AuthorizationServiceMismatchValue);
+        public static QueueErrorCode AuthorizationServiceMismatch { get; } = new QueueErrorCode(AuthorizationServiceMismatchValue);
         /// <summary> AuthorizationResourceTypeMismatch. </summary>
-        public static StorageErrorCode AuthorizationResourceTypeMismatch { get; } = new StorageErrorCode(AuthorizationResourceTypeMismatchValue);
+        public static QueueErrorCode AuthorizationResourceTypeMismatch { get; } = new QueueErrorCode(AuthorizationResourceTypeMismatchValue);
         /// <summary> FeatureVersionMismatch. </summary>
-        public static StorageErrorCode FeatureVersionMismatch { get; } = new StorageErrorCode(FeatureVersionMismatchValue);
-        /// <summary> Determines if two <see cref="StorageErrorCode"/> values are the same. </summary>
-        public static bool operator ==(StorageErrorCode left, StorageErrorCode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="StorageErrorCode"/> values are not the same. </summary>
-        public static bool operator !=(StorageErrorCode left, StorageErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageErrorCode"/>. </summary>
-        public static implicit operator StorageErrorCode(string value) => new StorageErrorCode(value);
+        public static QueueErrorCode FeatureVersionMismatch { get; } = new QueueErrorCode(FeatureVersionMismatchValue);
+        /// <summary> Determines if two <see cref="QueueErrorCode"/> values are the same. </summary>
+        public static bool operator ==(QueueErrorCode left, QueueErrorCode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="QueueErrorCode"/> values are not the same. </summary>
+        public static bool operator !=(QueueErrorCode left, QueueErrorCode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="QueueErrorCode"/>. </summary>
+        public static implicit operator QueueErrorCode(string value) => new QueueErrorCode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageErrorCode other && Equals(other);
+        public override bool Equals(object obj) => obj is QueueErrorCode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(StorageErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(QueueErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

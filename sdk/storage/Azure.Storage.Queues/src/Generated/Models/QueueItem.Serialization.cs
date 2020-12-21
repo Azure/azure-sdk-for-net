@@ -16,7 +16,7 @@ namespace Azure.Storage.Queues.Models
         internal static QueueItem DeserializeQueueItem(XElement element)
         {
             string name = default;
-            IReadOnlyDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = default;
             if (element.Element("Name") is XElement nameElement)
             {
                 name = (string)nameElement;

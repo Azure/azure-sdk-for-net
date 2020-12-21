@@ -38,7 +38,5 @@ namespace Azure.Storage.Queues.Models
         public QueueMetrics HourMetrics { get; set; }
         /// <summary> a summary of request statistics grouped by API in minute aggregates for queues. </summary>
         public QueueMetrics MinuteMetrics { get; set; }
-        /// <summary> The set of CORS rules. </summary>
-        public IList<QueueCorsRule> Cors { get; }
     }
 }

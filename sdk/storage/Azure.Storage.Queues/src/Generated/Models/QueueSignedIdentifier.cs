@@ -16,7 +16,7 @@ namespace Azure.Storage.Queues.Models
         /// <param name="id"> a unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accessPolicy"/> is null. </exception>
-        public QueueSignedIdentifier(string id, AccessPolicy accessPolicy)
+        public QueueSignedIdentifier(string id, QueueAccessPolicy accessPolicy)
         {
             if (id == null)
             {
@@ -34,6 +34,6 @@ namespace Azure.Storage.Queues.Models
         /// <summary> a unique id. </summary>
         public string Id { get; set; }
         /// <summary> The access policy. </summary>
-        public AccessPolicy AccessPolicy { get; set; }
+        public QueueAccessPolicy AccessPolicy { get; set; }
     }
 }

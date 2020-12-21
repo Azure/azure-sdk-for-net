@@ -19,7 +19,7 @@ namespace Azure.Storage.Queues.Models
         /// <param name="write"> Indicates whether all write requests should be logged. </param>
         /// <param name="retentionPolicy"> the retention policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="retentionPolicy"/> is null. </exception>
-        public QueueAnalyticsLogging(string version, bool delete, bool read, bool write, RetentionPolicy retentionPolicy)
+        public QueueAnalyticsLogging(string version, bool delete, bool read, bool write, QueueRetentionPolicy retentionPolicy)
         {
             if (version == null)
             {
@@ -46,6 +46,6 @@ namespace Azure.Storage.Queues.Models
         /// <summary> Indicates whether all write requests should be logged. </summary>
         public bool Write { get; set; }
         /// <summary> the retention policy. </summary>
-        public RetentionPolicy RetentionPolicy { get; set; }
+        public QueueRetentionPolicy RetentionPolicy { get; set; }
     }
 }

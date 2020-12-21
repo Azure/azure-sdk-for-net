@@ -11,5 +11,15 @@ namespace Azure.Storage.Queues.Models
     [CodeGenModel("Metrics")]
     public partial class QueueMetrics
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public QueueMetrics() { }
+
+        /// <summary>
+        /// Indicates whether metrics should generate summary statistics for called API operations.
+        /// </summary>
+        [CodeGenMember("IncludeAPIs")]
+        public bool? IncludeApis { get; set; }
     }
 }

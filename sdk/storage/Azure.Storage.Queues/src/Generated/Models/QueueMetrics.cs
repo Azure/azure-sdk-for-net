@@ -20,13 +20,13 @@ namespace Azure.Storage.Queues.Models
         /// <summary> Initializes a new instance of QueueMetrics. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Queue service. </param>
-        /// <param name="includeAPIs"> Indicates whether metrics should generate summary statistics for called API operations. </param>
+        /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
         /// <param name="retentionPolicy"> the retention policy. </param>
-        internal QueueMetrics(string version, bool enabled, bool? includeAPIs, RetentionPolicy retentionPolicy)
+        internal QueueMetrics(string version, bool enabled, bool? includeApis, QueueRetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;
-            IncludeAPIs = includeAPIs;
+            IncludeApis = includeApis;
             RetentionPolicy = retentionPolicy;
         }
 
@@ -34,9 +34,7 @@ namespace Azure.Storage.Queues.Models
         public string Version { get; set; }
         /// <summary> Indicates whether metrics are enabled for the Queue service. </summary>
         public bool Enabled { get; set; }
-        /// <summary> Indicates whether metrics should generate summary statistics for called API operations. </summary>
-        public bool? IncludeAPIs { get; set; }
         /// <summary> the retention policy. </summary>
-        public RetentionPolicy RetentionPolicy { get; set; }
+        public QueueRetentionPolicy RetentionPolicy { get; set; }
     }
 }

@@ -6,14 +6,14 @@ using Azure.Core;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
-    /// QueueSignedIdentifier.
+    /// QueueRetentionPolicy.
     /// </summary>
-    [CodeGenModel("SignedIdentifier")]
-    public partial class QueueSignedIdentifier
+    [CodeGenModel("RetentionPolicy")]
+    public partial class QueueRetentionPolicy
     {
         /// <summary>
         /// Constructor.
         /// </summary>
-        public QueueSignedIdentifier() { }
+        public QueueRetentionPolicy() { }
     }
 }

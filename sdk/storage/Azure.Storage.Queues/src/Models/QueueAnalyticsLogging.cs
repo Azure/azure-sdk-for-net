@@ -11,5 +11,9 @@ namespace Azure.Storage.Queues.Models
     [CodeGenModel("Logging")]
     public partial class QueueAnalyticsLogging
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public QueueAnalyticsLogging() { }
     }
 }
