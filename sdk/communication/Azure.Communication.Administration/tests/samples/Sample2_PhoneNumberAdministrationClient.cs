@@ -22,8 +22,6 @@ namespace Azure.Communication.Administration.Samples
     {
         public Sample2_PhoneNumberAdministrationClient(bool isAsync) : base(isAsync)
         {
-            Matcher.LegacyExcludedHeaders.Add("Request-Id");
-            Matcher.LegacyExcludedHeaders.Add("traceparent");
         }
 
         [Test]

@@ -241,6 +241,8 @@ namespace Azure.Core.Tests
                 RequestMethod = RequestMethod.Put,
                 Request =
                 {
+                    // Request-Id and TraceParent are ignored until we can
+                    // re-record all old tests.
                     Headers =
                     {
                         { "Request-Id", new[] { "Some Random value"}},
@@ -274,9 +276,7 @@ namespace Azure.Core.Tests
                 "Unable to find a record for the request PUT http://localhost" + Environment.NewLine +
                 "Header differences:" + Environment.NewLine +
                 "    <Date> is absent in record, value <Fri, 06 Nov 2020 02:42:26 GMT>" + Environment.NewLine +
-                "    <Request-Id> is absent in record, value <Some Random value>" + Environment.NewLine +
                 "    <x-ms-date> is absent in record, value <Fri, 06 Nov 2020 02:42:26 GMT>" + Environment.NewLine +
-                "    <traceparent> is absent in request, value <some random traceparent>" + Environment.NewLine +
                 "    <User-Agent> is absent in request, value <some random sdk>" + Environment.NewLine +
                 "    <x-ms-client-request-id> is absent in request, value <some random requestid>" + Environment.NewLine +
                 "Body differences:" + Environment.NewLine,

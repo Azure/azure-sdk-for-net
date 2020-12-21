@@ -48,7 +48,11 @@ namespace Azure.Core.TestFramework
         /// This property is only included only for backwards compat.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HashSet<string> LegacyExcludedHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        public HashSet<string> LegacyExcludedHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "Request-Id",
+            "traceparent"
+        };
 
         // Headers that don't indicate meaningful changes between updated recordings
         public HashSet<string> VolatileHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)

@@ -29,7 +29,6 @@ namespace Azure.Communication.Administration.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public PhoneNumberAdministrationClientLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.LegacyExcludedHeaders.Add("traceparent");
         }
 
         [Test]
