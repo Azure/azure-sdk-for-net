@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class Logging : IXmlSerializable
+    public partial class QueueAnalyticsLogging : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -32,7 +32,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static Logging DeserializeLogging(XElement element)
+        internal static QueueAnalyticsLogging DeserializeQueueAnalyticsLogging(XElement element)
         {
             string version = default;
             bool delete = default;
@@ -59,7 +59,7 @@ namespace Azure.Storage.Queues.Models
             {
                 retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
             }
-            return new Logging(version, delete, read, write, retentionPolicy);
+            return new QueueAnalyticsLogging(version, delete, read, write, retentionPolicy);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class ListQueuesSegmentResponse
+    internal partial class ListQueuesSegmentResponse
     {
         internal static ListQueuesSegmentResponse DeserializeListQueuesSegmentResponse(XElement element)
         {

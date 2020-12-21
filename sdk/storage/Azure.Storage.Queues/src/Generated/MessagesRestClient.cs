@@ -260,7 +260,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queueMessage"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyList<EnqueuedMessage>, MessagesEnqueueHeaders>> EnqueueAsync(string queueName, QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders>> EnqueueAsync(string queueName, QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -278,14 +278,14 @@ namespace Azure.Storage.Queues
             {
                 case 201:
                     {
-                        IReadOnlyList<EnqueuedMessage> value = default;
+                        IReadOnlyList<SendReceipt> value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("QueueMessagesList") is XElement queueMessagesListElement)
                         {
-                            var array = new List<EnqueuedMessage>();
+                            var array = new List<SendReceipt>();
                             foreach (var e in queueMessagesListElement.Elements("QueueMessage"))
                             {
-                                array.Add(EnqueuedMessage.DeserializeEnqueuedMessage(e));
+                                array.Add(SendReceipt.DeserializeSendReceipt(e));
                             }
                             value = array;
                         }
@@ -304,7 +304,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queueMessage"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyList<EnqueuedMessage>, MessagesEnqueueHeaders> Enqueue(string queueName, QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders> Enqueue(string queueName, QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -322,14 +322,14 @@ namespace Azure.Storage.Queues
             {
                 case 201:
                     {
-                        IReadOnlyList<EnqueuedMessage> value = default;
+                        IReadOnlyList<SendReceipt> value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("QueueMessagesList") is XElement queueMessagesListElement)
                         {
-                            var array = new List<EnqueuedMessage>();
+                            var array = new List<SendReceipt>();
                             foreach (var e in queueMessagesListElement.Elements("QueueMessage"))
                             {
-                                array.Add(EnqueuedMessage.DeserializeEnqueuedMessage(e));
+                                array.Add(SendReceipt.DeserializeSendReceipt(e));
                             }
                             value = array;
                         }

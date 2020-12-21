@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class StorageServiceProperties : IXmlSerializable
+    public partial class QueueServiceProperties : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -41,34 +41,34 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static StorageServiceProperties DeserializeStorageServiceProperties(XElement element)
+        internal static QueueServiceProperties DeserializeQueueServiceProperties(XElement element)
         {
-            Logging logging = default;
-            Metrics hourMetrics = default;
-            Metrics minuteMetrics = default;
-            IList<CorsRule> cors = default;
+            QueueAnalyticsLogging logging = default;
+            QueueMetrics hourMetrics = default;
+            QueueMetrics minuteMetrics = default;
+            IList<QueueCorsRule> cors = default;
             if (element.Element("Logging") is XElement loggingElement)
             {
-                logging = Logging.DeserializeLogging(loggingElement);
+                logging = QueueAnalyticsLogging.DeserializeQueueAnalyticsLogging(loggingElement);
             }
             if (element.Element("HourMetrics") is XElement hourMetricsElement)
             {
-                hourMetrics = Metrics.DeserializeMetrics(hourMetricsElement);
+                hourMetrics = QueueMetrics.DeserializeQueueMetrics(hourMetricsElement);
             }
             if (element.Element("MinuteMetrics") is XElement minuteMetricsElement)
             {
-                minuteMetrics = Metrics.DeserializeMetrics(minuteMetricsElement);
+                minuteMetrics = QueueMetrics.DeserializeQueueMetrics(minuteMetricsElement);
             }
             if (element.Element("Cors") is XElement corsElement)
             {
-                var array = new List<CorsRule>();
+                var array = new List<QueueCorsRule>();
                 foreach (var e in corsElement.Elements("CorsRule"))
                 {
-                    array.Add(CorsRule.DeserializeCorsRule(e));
+                    array.Add(QueueCorsRule.DeserializeQueueCorsRule(e));
                 }
                 cors = array;
             }
-            return new StorageServiceProperties(logging, hourMetrics, minuteMetrics, cors);
+            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors);
         }
     }
 }

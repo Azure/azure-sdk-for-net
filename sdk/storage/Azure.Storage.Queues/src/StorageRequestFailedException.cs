@@ -27,7 +27,7 @@ namespace Azure.Storage.Queues.Models
         /// <param name="error">
         /// <see cref="StorageError"/>
         /// </param>
-        static partial void CustomizeFromXml(XElement root, StorageError error)
+        internal static void CustomizeFromXml(XElement root, StorageError error)
         {
             foreach (XElement element in root.Elements())
             {
@@ -56,7 +56,9 @@ namespace Azure.Storage.Queues.Models
                 response,
                 message: Message,
                 content: null,
-                response.GetErrorCode(Code),
+                //TODO fix this
+                errorCode: null,
+                //response.GetErrorCode(Code),
                 AdditionalInformation);
     }
 }

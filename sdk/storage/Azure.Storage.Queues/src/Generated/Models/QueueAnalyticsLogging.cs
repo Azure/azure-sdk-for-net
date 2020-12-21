@@ -10,16 +10,16 @@ using System;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Azure Analytics Logging settings. </summary>
-    public partial class Logging
+    public partial class QueueAnalyticsLogging
     {
-        /// <summary> Initializes a new instance of Logging. </summary>
+        /// <summary> Initializes a new instance of QueueAnalyticsLogging. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="delete"> Indicates whether all delete requests should be logged. </param>
         /// <param name="read"> Indicates whether all read requests should be logged. </param>
         /// <param name="write"> Indicates whether all write requests should be logged. </param>
         /// <param name="retentionPolicy"> the retention policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="retentionPolicy"/> is null. </exception>
-        public Logging(string version, bool delete, bool read, bool write, RetentionPolicy retentionPolicy)
+        public QueueAnalyticsLogging(string version, bool delete, bool read, bool write, RetentionPolicy retentionPolicy)
         {
             if (version == null)
             {

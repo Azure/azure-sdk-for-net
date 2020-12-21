@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class Metrics : IXmlSerializable
+    public partial class QueueMetrics : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -38,7 +38,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static Metrics DeserializeMetrics(XElement element)
+        internal static QueueMetrics DeserializeQueueMetrics(XElement element)
         {
             string version = default;
             bool enabled = default;
@@ -60,7 +60,7 @@ namespace Azure.Storage.Queues.Models
             {
                 retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
             }
-            return new Metrics(version, enabled, includeAPIs, retentionPolicy);
+            return new QueueMetrics(version, enabled, includeAPIs, retentionPolicy);
         }
     }
 }

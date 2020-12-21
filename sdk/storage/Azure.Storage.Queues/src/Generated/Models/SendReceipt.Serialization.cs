@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class EnqueuedMessage
+    public partial class SendReceipt
     {
-        internal static EnqueuedMessage DeserializeEnqueuedMessage(XElement element)
+        internal static SendReceipt DeserializeSendReceipt(XElement element)
         {
             string messageId = default;
             DateTimeOffset insertionTime = default;
@@ -40,7 +40,7 @@ namespace Azure.Storage.Queues.Models
             {
                 timeNextVisible = timeNextVisibleElement.GetDateTimeOffsetValue("R");
             }
-            return new EnqueuedMessage(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible);
+            return new SendReceipt(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible);
         }
     }
 }

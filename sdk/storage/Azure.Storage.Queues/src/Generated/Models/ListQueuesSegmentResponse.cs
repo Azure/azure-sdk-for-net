@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The object returned when calling List Queues on a Queue Service. </summary>
-    public partial class ListQueuesSegmentResponse
+    internal partial class ListQueuesSegmentResponse
     {
         /// <summary> Initializes a new instance of ListQueuesSegmentResponse. </summary>
         /// <param name="serviceEndpoint"> . </param>

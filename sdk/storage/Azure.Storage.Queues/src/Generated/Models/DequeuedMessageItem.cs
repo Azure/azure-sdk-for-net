@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The object returned in the QueueMessageList array when calling Get Messages on a Queue. </summary>
-    public partial class DequeuedMessageItem
+    internal partial class DequeuedMessageItem
     {
         /// <summary> Initializes a new instance of DequeuedMessageItem. </summary>
         /// <param name="messageId"> The Id of the Message. </param>

@@ -30,6 +30,8 @@ namespace Azure.Storage.Queues
         /// </summary>
         public virtual Uri Uri => _uri;
 
+        private readonly ServiceRestClient _serviceRestClient;
+
         /// <summary>
         /// The HttpPipeline used to send REST requests.
         /// </summary>
@@ -168,6 +170,11 @@ namespace Azure.Storage.Queues
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             _messageEncoding = options.MessageEncoding;
+            _serviceRestClient = new ServiceRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                _uri.ToString(),
+                _version.ToVersionString());
         }
 
         /// <summary>
@@ -264,6 +271,11 @@ namespace Azure.Storage.Queues
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _messageEncoding = options.MessageEncoding;
+            _serviceRestClient = new ServiceRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                _uri.ToString(),
+                _version.ToVersionString());
         }
         #endregion ctors
 
@@ -378,7 +390,7 @@ namespace Azure.Storage.Queues
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
         /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment.
         /// </remarks>
-        internal async Task<Response<QueuesSegment>> GetQueuesInternal(
+        internal async Task<Response<ListQueuesSegmentResponse>> GetQueuesInternal(
             string marker,
             QueueTraits traits,
             string prefix,
@@ -397,25 +409,41 @@ namespace Azure.Storage.Queues
                     $"{nameof(prefix)}: {prefix}");
                 try
                 {
-                    IEnumerable<ListQueuesIncludeType> includeTypes = traits.AsIncludeTypes();
-                    Response<QueuesSegment> response = await QueueRestClient.Service.ListQueuesSegmentAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        marker: marker,
-                        prefix: prefix,
-                        maxresults: pageSizeHint,
-                        include: includeTypes.Any() ? includeTypes : null,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    //IEnumerable<ListQueuesIncludeType> includeTypes = traits.AsIncludeTypes();
+
+                    ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _serviceRestClient.ListQueuesSegmentAsync(
+                            prefix,
+                            marker,
+                            pageSizeHint,
+                            //TODO fix this.
+                            include: null,
+                            timeout: null,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _serviceRestClient.ListQueuesSegment(
+                            prefix,
+                            marker,
+                            pageSizeHint,
+                            //TODO fix this.
+                            include: null,
+                            timeout: null,
+                            cancellationToken);
+                    }
+
                     if ((traits & QueueTraits.Metadata) != QueueTraits.Metadata)
                     {
                         IEnumerable<QueueItem> queueItems = response.Value.QueueItems;
                         foreach (QueueItem queueItem in queueItems)
                         {
-                            queueItem.Metadata = null;
+                            // TODO fix this.
+                            //queueItem.Metadata = null;
                         }
                     }
                     return response;
@@ -501,15 +529,25 @@ namespace Azure.Storage.Queues
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await QueueRestClient.Service.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(QueueServiceClient)}.{nameof(GetProperties)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<QueueServiceProperties, ServiceGetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _serviceRestClient.GetPropertiesAsync(
+                            timeout: null,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _serviceRestClient.GetProperties(
+                            timeout: null,
+                            cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -607,16 +645,25 @@ namespace Azure.Storage.Queues
                     $"{nameof(properties)}: {properties}");
                 try
                 {
-                    return await QueueRestClient.Service.SetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        properties: properties,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(QueueServiceClient)}.{nameof(SetProperties)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ServiceSetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _serviceRestClient.SetPropertiesAsync(
+                            properties,
+                            timeout: null,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _serviceRestClient.SetProperties(
+                            properties,
+                            timeout: null,
+                            cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
@@ -705,14 +752,25 @@ namespace Azure.Storage.Queues
                     message: $"{nameof(Uri)}: {Uri}\n");
                 try
                 {
-                    return await QueueRestClient.Service.GetStatisticsAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<QueueServiceStatistics, ServiceGetStatisticsHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _serviceRestClient.GetStatisticsAsync(
+                            timeout: null,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _serviceRestClient.GetStatistics(
+                            timeout: null,
+                            cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

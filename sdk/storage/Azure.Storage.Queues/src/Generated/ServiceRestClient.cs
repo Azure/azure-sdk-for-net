@@ -46,7 +46,7 @@ namespace Azure.Storage.Queues
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(StorageServiceProperties storageServiceProperties, int? timeout)
+        internal HttpMessage CreateSetPropertiesRequest(QueueServiceProperties storageServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,7 +75,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(StorageServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(QueueServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (storageServiceProperties == null)
             {
@@ -99,7 +99,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(StorageServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(QueueServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (storageServiceProperties == null)
             {
@@ -141,7 +141,7 @@ namespace Azure.Storage.Queues
         /// <summary> gets the properties of a storage account&apos;s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<StorageServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -150,11 +150,11 @@ namespace Azure.Storage.Queues
             {
                 case 200:
                     {
-                        StorageServiceProperties value = default;
+                        QueueServiceProperties value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
                         {
-                            value = StorageServiceProperties.DeserializeStorageServiceProperties(storageServicePropertiesElement);
+                            value = QueueServiceProperties.DeserializeQueueServiceProperties(storageServicePropertiesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -166,7 +166,7 @@ namespace Azure.Storage.Queues
         /// <summary> gets the properties of a storage account&apos;s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<StorageServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -175,11 +175,11 @@ namespace Azure.Storage.Queues
             {
                 case 200:
                     {
-                        StorageServiceProperties value = default;
+                        QueueServiceProperties value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
                         {
-                            value = StorageServiceProperties.DeserializeStorageServiceProperties(storageServicePropertiesElement);
+                            value = QueueServiceProperties.DeserializeQueueServiceProperties(storageServicePropertiesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -211,7 +211,7 @@ namespace Azure.Storage.Queues
         /// <summary> Retrieves statistics related to replication for the Queue service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<StorageServiceStats, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -220,11 +220,11 @@ namespace Azure.Storage.Queues
             {
                 case 200:
                     {
-                        StorageServiceStats value = default;
+                        QueueServiceStatistics value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
                         {
-                            value = StorageServiceStats.DeserializeStorageServiceStats(storageServiceStatsElement);
+                            value = QueueServiceStatistics.DeserializeQueueServiceStatistics(storageServiceStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -236,7 +236,7 @@ namespace Azure.Storage.Queues
         /// <summary> Retrieves statistics related to replication for the Queue service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<StorageServiceStats, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -245,11 +245,11 @@ namespace Azure.Storage.Queues
             {
                 case 200:
                     {
-                        StorageServiceStats value = default;
+                        QueueServiceStatistics value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
                         {
-                            value = StorageServiceStats.DeserializeStorageServiceStats(storageServiceStatsElement);
+                            value = QueueServiceStatistics.DeserializeQueueServiceStatistics(storageServiceStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

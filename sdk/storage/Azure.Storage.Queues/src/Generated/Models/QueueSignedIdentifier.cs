@@ -10,13 +10,13 @@ using System;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> signed identifier. </summary>
-    public partial class SignedIdentifier
+    public partial class QueueSignedIdentifier
     {
-        /// <summary> Initializes a new instance of SignedIdentifier. </summary>
+        /// <summary> Initializes a new instance of QueueSignedIdentifier. </summary>
         /// <param name="id"> a unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accessPolicy"/> is null. </exception>
-        public SignedIdentifier(string id, AccessPolicy accessPolicy)
+        public QueueSignedIdentifier(string id, AccessPolicy accessPolicy)
         {
             if (id == null)
             {

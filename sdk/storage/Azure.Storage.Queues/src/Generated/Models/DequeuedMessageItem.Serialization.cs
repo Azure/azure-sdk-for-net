@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class DequeuedMessageItem
+    internal partial class DequeuedMessageItem
     {
         internal static DequeuedMessageItem DeserializeDequeuedMessageItem(XElement element)
         {

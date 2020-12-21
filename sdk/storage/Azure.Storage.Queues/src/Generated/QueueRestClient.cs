@@ -213,7 +213,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<QueueProperties>> GetPropertiesAsync(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueGetPropertiesHeaders>> GetPropertiesAsync(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -222,7 +222,7 @@ namespace Azure.Storage.Queues
 
             using var message = CreateGetPropertiesRequest(queueName, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new QueueProperties(message.Response);
+            var headers = new QueueGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -237,7 +237,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public ResponseWithHeaders<QueueProperties> GetProperties(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueGetPropertiesHeaders> GetProperties(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -246,7 +246,7 @@ namespace Azure.Storage.Queues
 
             using var message = CreateGetPropertiesRequest(queueName, timeout);
             _pipeline.Send(message, cancellationToken);
-            var headers = new QueueProperties(message.Response);
+            var headers = new QueueGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -355,7 +355,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyList<SignedIdentifier>, QueueGetAccessPolicyHeaders>> GetAccessPolicyAsync(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders>> GetAccessPolicyAsync(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -369,14 +369,14 @@ namespace Azure.Storage.Queues
             {
                 case 200:
                     {
-                        IReadOnlyList<SignedIdentifier> value = default;
+                        IReadOnlyList<QueueSignedIdentifier> value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("SignedIdentifiers") is XElement signedIdentifiersElement)
                         {
-                            var array = new List<SignedIdentifier>();
+                            var array = new List<QueueSignedIdentifier>();
                             foreach (var e in signedIdentifiersElement.Elements("SignedIdentifier"))
                             {
-                                array.Add(SignedIdentifier.DeserializeSignedIdentifier(e));
+                                array.Add(QueueSignedIdentifier.DeserializeQueueSignedIdentifier(e));
                             }
                             value = array;
                         }
@@ -392,7 +392,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyList<SignedIdentifier>, QueueGetAccessPolicyHeaders> GetAccessPolicy(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders> GetAccessPolicy(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -406,14 +406,14 @@ namespace Azure.Storage.Queues
             {
                 case 200:
                     {
-                        IReadOnlyList<SignedIdentifier> value = default;
+                        IReadOnlyList<QueueSignedIdentifier> value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("SignedIdentifiers") is XElement signedIdentifiersElement)
                         {
-                            var array = new List<SignedIdentifier>();
+                            var array = new List<QueueSignedIdentifier>();
                             foreach (var e in signedIdentifiersElement.Elements("SignedIdentifier"))
                             {
-                                array.Add(SignedIdentifier.DeserializeSignedIdentifier(e));
+                                array.Add(QueueSignedIdentifier.DeserializeQueueSignedIdentifier(e));
                             }
                             value = array;
                         }
@@ -424,7 +424,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateSetAccessPolicyRequest(string queueName, int? timeout, IEnumerable<SignedIdentifier> queueAcl)
+        internal HttpMessage CreateSetAccessPolicyRequest(string queueName, int? timeout, IEnumerable<QueueSignedIdentifier> queueAcl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -462,7 +462,7 @@ namespace Azure.Storage.Queues
         /// <param name="queueAcl"> the acls for the queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<QueueSetAccessPolicyHeaders>> SetAccessPolicyAsync(string queueName, int? timeout = null, IEnumerable<SignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueSetAccessPolicyHeaders>> SetAccessPolicyAsync(string queueName, int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -487,7 +487,7 @@ namespace Azure.Storage.Queues
         /// <param name="queueAcl"> the acls for the queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public ResponseWithHeaders<QueueSetAccessPolicyHeaders> SetAccessPolicy(string queueName, int? timeout = null, IEnumerable<SignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueSetAccessPolicyHeaders> SetAccessPolicy(string queueName, int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {

@@ -8,21 +8,21 @@
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The Metrics. </summary>
-    public partial class Metrics
+    public partial class QueueMetrics
     {
-        /// <summary> Initializes a new instance of Metrics. </summary>
+        /// <summary> Initializes a new instance of QueueMetrics. </summary>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Queue service. </param>
-        public Metrics(bool enabled)
+        public QueueMetrics(bool enabled)
         {
             Enabled = enabled;
         }
 
-        /// <summary> Initializes a new instance of Metrics. </summary>
+        /// <summary> Initializes a new instance of QueueMetrics. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Queue service. </param>
         /// <param name="includeAPIs"> Indicates whether metrics should generate summary statistics for called API operations. </param>
         /// <param name="retentionPolicy"> the retention policy. </param>
-        internal Metrics(string version, bool enabled, bool? includeAPIs, RetentionPolicy retentionPolicy)
+        internal QueueMetrics(string version, bool enabled, bool? includeAPIs, RetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;

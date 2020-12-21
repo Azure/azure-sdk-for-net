@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class CorsRule : IXmlSerializable
+    public partial class QueueCorsRule : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -34,7 +34,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static CorsRule DeserializeCorsRule(XElement element)
+        internal static QueueCorsRule DeserializeQueueCorsRule(XElement element)
         {
             string allowedOrigins = default;
             string allowedMethods = default;
@@ -61,7 +61,7 @@ namespace Azure.Storage.Queues.Models
             {
                 maxAgeInSeconds = (int)maxAgeInSecondsElement;
             }
-            return new CorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
+            return new QueueCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
         }
     }
 }

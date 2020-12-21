@@ -8,21 +8,21 @@
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Stats for the storage service. </summary>
-    public partial class StorageServiceStats
+    public partial class QueueServiceStatistics
     {
-        /// <summary> Initializes a new instance of StorageServiceStats. </summary>
-        internal StorageServiceStats()
+        /// <summary> Initializes a new instance of QueueServiceStatistics. </summary>
+        internal QueueServiceStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageServiceStats. </summary>
+        /// <summary> Initializes a new instance of QueueServiceStatistics. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
-        internal StorageServiceStats(GeoReplication geoReplication)
+        internal QueueServiceStatistics(QueueGeoReplication geoReplication)
         {
             GeoReplication = geoReplication;
         }
 
         /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
-        public GeoReplication GeoReplication { get; }
+        public QueueGeoReplication GeoReplication { get; }
     }
 }

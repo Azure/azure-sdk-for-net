@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class SignedIdentifier : IXmlSerializable
+    public partial class QueueSignedIdentifier : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -23,7 +23,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static SignedIdentifier DeserializeSignedIdentifier(XElement element)
+        internal static QueueSignedIdentifier DeserializeQueueSignedIdentifier(XElement element)
         {
             string id = default;
             AccessPolicy accessPolicy = default;
@@ -35,7 +35,7 @@ namespace Azure.Storage.Queues.Models
             {
                 accessPolicy = AccessPolicy.DeserializeAccessPolicy(accessPolicyElement);
             }
-            return new SignedIdentifier(id, accessPolicy);
+            return new QueueSignedIdentifier(id, accessPolicy);
         }
     }
 }

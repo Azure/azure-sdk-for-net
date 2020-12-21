@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class GeoReplication
+    public partial class QueueGeoReplication
     {
-        internal static GeoReplication DeserializeGeoReplication(XElement element)
+        internal static QueueGeoReplication DeserializeQueueGeoReplication(XElement element)
         {
             GeoReplicationStatusType status = default;
             DateTimeOffset lastSyncTime = default;
@@ -25,7 +25,7 @@ namespace Azure.Storage.Queues.Models
             {
                 lastSyncTime = lastSyncTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new GeoReplication(status, lastSyncTime);
+            return new QueueGeoReplication(status, lastSyncTime);
         }
     }
 }
