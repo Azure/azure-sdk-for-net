@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Samples
     /// </summary>
     public partial class Sample1_PipelineMonitoring : SampleFixture
     {
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
         public void MonitorPipelineRuns()
         {

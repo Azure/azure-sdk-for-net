@@ -102,7 +102,7 @@ namespace Azure.Communication.Administration.Samples
 
             #region Snippet:ReleasePhoneNumbersAsync
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
-            var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
+            var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumberIdentifier(acquiredPhoneNumber));
             await releaseOperation.WaitForCompletionAsync();
             #endregion Snippet:ReleasePhoneNumbersAsync
 
@@ -215,7 +215,7 @@ namespace Azure.Communication.Administration.Samples
 
             #region Snippet:ReleasePhoneNumbers
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
-            var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
+            var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumberIdentifier(acquiredPhoneNumber));
 
             while (!releaseOperation.HasCompleted)
             {

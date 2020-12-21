@@ -6,9 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.Communication.Identity
+namespace Azure.Communication
 {
-    internal sealed class AutoRefreshTokenCredential : ITokenCredential
+    internal sealed class AutoRefreshTokenCredential : ICommunicationTokenCredential
     {
         private readonly ThreadSafeRefreshableAccessTokenCache _accessTokenCache;
 

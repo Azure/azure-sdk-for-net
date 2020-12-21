@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.Communication.Identity
+namespace Azure.Communication
 {
-    internal sealed class StaticTokenCredential : ITokenCredential
+    internal sealed class StaticTokenCredential : ICommunicationTokenCredential
     {
         private readonly AccessToken _accessToken;
 
