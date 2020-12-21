@@ -256,7 +256,7 @@ When tests are run in replay mode, HTTP method, Uri and headers are used to matc
     {
         public ConfigurationRecordMatcher(RecordedTestSanitizer sanitizer) : base(sanitizer)
         {
-            ExcludeHeaders.Add("Sync-Token");
+            IgnoredHeaders.Add("Sync-Token");
         }
     }
 
