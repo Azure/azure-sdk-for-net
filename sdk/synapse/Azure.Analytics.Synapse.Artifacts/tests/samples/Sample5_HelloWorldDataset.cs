@@ -10,25 +10,34 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class DatasetSnippets : SampleFixture
+    public partial class Sample5_HelloWorldDataset : SampleFixture
     {
         [Test]
         public async Task DatasetSample()
         {
-            #region Snippet:CreateDatasetClient
+            #region Snippet:CreateDatasetClientPrep
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
             /*@@*/endpoint = TestEnvironment.EndpointUrl;
+
+            string storageName = "<my-storage-name>";
+            /*@@*/storageName = TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage";
+
+            string dataSetName = "Test-Dataset";
+            #endregion
+
+            #region Snippet:CreateDatasetClient
             DatasetClient client = new DatasetClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateDataset
-            DatasetCreateOrUpdateDatasetOperation operation = client.StartCreateOrUpdateDataset("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
+            Dataset data = new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, storageName));
+            DatasetCreateOrUpdateDatasetOperation operation = client.StartCreateOrUpdateDataset(dataSetName, new DatasetResource(data));
             Response<DatasetResource> createdDataset = await operation.WaitForCompletionAsync();
             #endregion
 
             #region Snippet:RetrieveDataset
-            DatasetResource retrievedDataset = client.GetDataset("MyDataset");
+            DatasetResource retrievedDataset = client.GetDataset(dataSetName);
             #endregion
 
             #region Snippet:ListDatasets
@@ -40,7 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:DeleteDataset
-            client.StartDeleteDataset("MyDataset");
+            DatasetDeleteDatasetOperation deleteDatasetOperation = client.StartDeleteDataset(dataSetName);
+            await deleteDatasetOperation.WaitForCompletionAsync();
             #endregion
         }
     }

@@ -65,6 +65,17 @@ The Azure.Analytics.Synapse.Monitoring package supports synchronous and asynchro
 
 ```C# Snippet:GetSparkJobList
 SparkJobListViewResponse sparkJobList = client.GetSparkJobList();
+foreach (var sparkJob in sparkJobList.SparkJobs)
+{
+    if (sparkJob.State == "Running")
+    {
+        Console.WriteLine ($"{sparkJob.Name} has been running for {sparkJob.RunningDuration}");
+    }
+    else
+    {
+        Console.WriteLine ($"{sparkJob.Name} has been in {sparkJob.State} for {sparkJob.QueuedDuration}");
+    }
+}
 ```
 
 ### Get SQl query

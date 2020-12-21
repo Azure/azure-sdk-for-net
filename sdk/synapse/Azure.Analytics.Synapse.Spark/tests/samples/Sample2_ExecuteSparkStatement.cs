@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Samples
     /// <summary>
     /// This sample demonstrates how to submit Spark job in Azure Synapse Analytics using synchronous methods of <see cref="SparkSessionClient"/>.
     /// </summary>
-    public partial class ExecuteSparkStatement
+    public partial class Sample2_ExecuteSparkStatement : SampleFixture
     {
         [Test]
         public void ExecuteSparkStatementSync()
@@ -26,8 +26,11 @@ namespace Azure.Analytics.Synapse.Samples
             // Environment variable with the Synapse Spark pool name.
             string sparkPoolName = TestEnvironment.SparkPoolName;
 
+            #region Snippet:CreateSparkSessionClient
             SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
+            #endregion
 
+            #region Snippet:CreateSparkSession
             SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewGuid()}")
             {
                 DriverMemory = "28g",
@@ -41,10 +44,14 @@ namespace Azure.Analytics.Synapse.Samples
 
             // Waiting session creation completion
             sessionCreated = PollSparkSession(client, sessionCreated);
+            #endregion
 
+            #region Snippet:GetSparkSession
             SparkSession session = client.GetSparkSession(sessionCreated.Id);
             Debug.WriteLine($"Session is returned with name {session.Name} and state {session.State}");
+            #endregion
 
+            #region Snippet:CreateSparkStatement
             SparkStatementOptions sparkStatementRequest = new SparkStatementOptions
             {
                 Kind = SparkStatementLanguageType.Spark,
@@ -54,20 +61,28 @@ namespace Azure.Analytics.Synapse.Samples
 
             // Wait operation completion
             statementCreated = PollSparkStatement(client, sessionCreated.Id, statementCreated);
+            #endregion
 
+            #region Snippet:GetSparkStatement
             SparkStatement statement = client.GetSparkStatement(sessionCreated.Id, statementCreated.Id);
             Debug.WriteLine($"Statement is returned with id {statement.Id} and state {statement.State}");
+            #endregion
 
+            #region Snippet:CancelSparkStatement
             SparkStatementCancellationResult cancellationResult = client.CancelSparkStatement(sessionCreated.Id, statementCreated.Id);
             Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Msg}");
+            #endregion
 
+            #region Snippet:CancelSparkSession
             Response operation = client.CancelSparkSession(sessionCreated.Id);
+            #endregion
         }
 
         // https://github.com/Azure/azure-sdk-for-net/issues/17587
         // This code is copied from SparkTestUtilities.cs and modified, as there is no current way to monitor/poll for spark completion
         // It belongs in a helper class, likely a LRO
         // It is being left here only temporarily.
+        #region Snippet:TemporarySparkSupportCode
         private const string Error = "error";
         private const string Dead = "dead";
         private const string Success = "success";
@@ -175,5 +190,6 @@ namespace Azure.Analytics.Synapse.Samples
 
             return isFinalState ? !livyStates.Contains(livyState) : livyStates.Contains(livyState);
         }
+        #endregion
     }
 }

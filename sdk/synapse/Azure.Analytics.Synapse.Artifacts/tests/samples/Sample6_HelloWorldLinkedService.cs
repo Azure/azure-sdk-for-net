@@ -10,26 +10,35 @@ using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class LinkedServiceSnippets : SampleFixture
+    public partial class Sample6_HelloWorldLinkedService : SampleFixture
     {
         [Test]
         public async Task LinkedServiceSample()
         {
-            #region Snippet:CreateLinkedServiceClient
+            #region Snippet:CreateLinkedServiceClientPrep
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
             /*@@*/endpoint = TestEnvironment.EndpointUrl;
+
+            // Replace the string below with your actual datalake endpoint url.
+            string dataLakeEndpoint = "<my-datalake-url>";
+            /*@@*/endpoint = "adl://test.azuredatalakestore.net/";
+
+            string serviceName = "Test-LinkedService";
+            #endregion
+
+            #region Snippet:CreateLinkedServiceClient
             LinkedServiceClient client = new LinkedServiceClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateLinkedService
-            LinkedServiceResource serviceResource = new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/"));
-            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = client.StartCreateOrUpdateLinkedService("MyLinkedService", serviceResource);
+            LinkedServiceResource serviceResource = new LinkedServiceResource(new AzureDataLakeStoreLinkedService(dataLakeEndpoint));
+            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = client.StartCreateOrUpdateLinkedService(serviceName, serviceResource);
             Response<LinkedServiceResource> createdService = await operation.WaitForCompletionAsync();
             #endregion
 
             #region Snippet:RetrieveLinkedService
-            LinkedServiceResource retrievedService = client.GetLinkedService("MyLinkedService");
+            LinkedServiceResource retrievedService = client.GetLinkedService(serviceName);
             #endregion
 
             #region Snippet:ListLinkedServices
@@ -41,7 +50,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:DeleteLinkedService
-            client.StartDeleteLinkedService("MyLinkedService");
+            LinkedServiceDeleteLinkedServiceOperation deleteLinkedServiceOperation = client.StartDeleteLinkedService(serviceName);
+            await deleteLinkedServiceOperation.WaitForCompletionAsync();
             #endregion
         }
     }
