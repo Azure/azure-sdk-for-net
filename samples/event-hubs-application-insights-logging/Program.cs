@@ -1,17 +1,19 @@
-﻿using Azure.Core.Diagnostics;
-using System;
-using System.Diagnostics.Tracing;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Producer;
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs;
-using Microsoft.ApplicationInsights.Extensibility;
+using Azure.Messaging.EventHubs.Producer;
 using Microsoft.ApplicationInsights;
-using System.Linq;
+using Microsoft.ApplicationInsights.Extensibility;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Tracing;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AzureEventSourceListenerEventHubsLogging
 {
@@ -20,24 +22,23 @@ namespace AzureEventSourceListenerEventHubsLogging
         /// <summary>
         ///   The method invoked as the main entry point for execution.
         /// </summary>
-        ///
         /// <param name="args">The arguments passed to the application on the command line.</param>
-        ///
         /// <returns>Zero for a successful run, non-zero when an exception is encountered.</returns>
-        ///
         /// <remarks>
-        ///   If arguments are passed, the first argument is assumed to be the Event Hub connection string; the second is the EventHubName 
-        ///   and the third argument is Application Insight instrumentation Keyn
-        ///   the rest of arguments are ignored.  If no arguments were present, an interactive prompt will collect the needed parameters.
+        ///   If arguments are passed, the first argument is assumed to be the Event Hub connection string,
+        ///   the second is the EventHubName and the third argument is Application Insight instrumentation Key.
+        ///   the rest of the arguments are ignored. If no arguments were present, an interactive prompt will collect the needed parameters.
         /// </remarks>
         ///
-        public static async Task Main(string[] args)    
+
+        public static async Task<int> Main(string[] args)
         {
             var connectionString = default(string);
             var eventHubName = default(string);
             var instrumentationKey = default(string);
-            // if we have more than two argument passed we asusme that the first is the connection string , 
-            // the second is the event hub name and the third is intrumentation key for application insights.
+
+            // If we have more than two-argument passed we assume that the first is the connection string, 
+            // the second is the event hub name and the third is the instrumentatio key for application insights.
             if (args.Count() > 2)
             {
                 connectionString = args[0];
@@ -69,23 +70,22 @@ namespace AzureEventSourceListenerEventHubsLogging
                 Console.WriteLine();
             }
 
-            //Create ApplicationInsights Client.
+            // Create ApplicationInsights Client.
             var telemetryClient = new TelemetryClient(new TelemetryConfiguration(instrumentationKey));
-            
-            //Create EventHub Producer Client.
+
+            // Create EventHub Producer Client.
             var producerClient = new EventHubProducerClient(connectionString, eventHubName);
 
             try
             {
                 // Setup a listener to monitor logged events.
-                var listener = new AzureEventSourceListener((args, message) =>
-                {
+                var listener = new AzureEventSourceListener((args, message) => {
                     // Add condition to manipulate only events related to EventHubs.
                     if (args.EventSource.Name.StartsWith("Azure-Messaging-EventHubs"))
                     {
-                        var properties = GetPropertiesDictionnary(args.PayloadNames, args.Payload);
+                        var properties = GetPropertiesDictionary(args.PayloadNames, args.Payload);
                         var level = args.Level.GetSeverityLevel();
-                        var traceMessage = string.Format(args.Message, args.Payload.ToArray());
+                        var traceMessage = $"Event Hubs: { string.Format(CultureInfo.InvariantCulture, args.Message, args.Payload.ToArray()) }";
                         telemetryClient.TrackTrace($"Sample_AzureEventSourceListener | {traceMessage}", level, properties);
                         telemetryClient.Flush();
                     }
@@ -97,15 +97,31 @@ namespace AzureEventSourceListenerEventHubsLogging
                 Console.WriteLine("Preparing event batch...");
                 using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
                 // Add events to the batch. An event is a represented by a collection of bytes and metadata.
-                eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")));
-                eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("The middle event is this one")));
-                eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Goodbye, Event Hubs!")));
+                if (!eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!"))))
+                {
+                    throw new Exception($"The event could not be added.");
+                    return -1;
+                }
+
+                if (!eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("The middle event is this one"))))
+                {
+                    throw new Exception($"The event could not be added.");
+                    return -1;
+                }
+
+                if (!eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Goodbye, Event Hubs!"))))
+                {
+                    throw new Exception($"The event could not be added.");
+                    return -1;
+                }
+
                 await producerClient.SendAsync(eventBatch);
                 Console.WriteLine("The event batch has been published.");
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine($"An exception of type { ex.GetType().Name } occurred.  Message:{ Environment.NewLine }\t{ ex.Message }");
+                return -1;
             }
             finally
             {
@@ -114,6 +130,8 @@ namespace AzureEventSourceListenerEventHubsLogging
                 Console.WriteLine();
                 Console.WriteLine("Exiting...");
             }
+
+            return 0;
         }
 
         /// <summary>
@@ -122,7 +140,7 @@ namespace AzureEventSourceListenerEventHubsLogging
         /// <param name="payloadNames">List of strings that represent the property names of the event.</param>
         /// <param name="payload">List of objects that represent the property values of the event.</param>
         /// <returns>Dictionary generated from the two list in parameter, empty dictionary if two lists are not the same length.</returns>
-        private static Dictionary<string, string> GetPropertiesDictionnary(ReadOnlyCollection<string> payloadNames, ReadOnlyCollection<object> payload)
+        static Dictionary<string, string> GetPropertiesDictionary(ReadOnlyCollection<string> payloadNames, ReadOnlyCollection<object> payload)
         {
             var response = new Dictionary<string, string>();
             if (payloadNames.Count != payload.Count)
