@@ -26,7 +26,6 @@ namespace Azure.Identity.Tests
             Matcher.LegacyExcludedHeaders.Add("x-client-SKU");
             Matcher.LegacyExcludedHeaders.Add("x-client-CPU");
             Matcher.LegacyExcludedHeaders.Add("x-client-Ver");
-            Matcher.LegacyExcludedHeaders.Add("traceparent");
             Sanitizer = new IdentityRecordedTestSanitizer();
         }
     }

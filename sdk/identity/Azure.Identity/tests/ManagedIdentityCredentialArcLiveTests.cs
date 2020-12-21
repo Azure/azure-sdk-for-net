@@ -18,7 +18,6 @@ namespace Azure.Identity.Tests
         public ManagedIdentityCredentialArcLiveTests(bool isAsync) : base(isAsync)
         {
             Matcher = new ArcMiRecordedTestMatcher();
-            Matcher.LegacyExcludedHeaders.Add("traceparent");
         }
 
         [NonParallelizable]
