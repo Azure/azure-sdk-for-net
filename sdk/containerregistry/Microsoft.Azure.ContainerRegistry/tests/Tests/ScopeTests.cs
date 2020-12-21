@@ -89,7 +89,7 @@
             Assert.Equal(baseManifest.GetType(), actualManifest.GetType());
             Assert.Equal(baseManifest.SchemaVersion, actualManifest.SchemaVersion);
 
-            if (baseManifest.GetType() == typeof(V2Manifest))
+            if (baseManifest is V2Manifest)
             {
                 var baseManifestV2 = (V2Manifest)baseManifest;
                 var actualManifestV2 = (V2Manifest)baseManifest;
@@ -103,42 +103,6 @@
                 Assert.Equal(baseManifestV2.Config.Digest, actualManifestV2.Config.Digest);
                 Assert.Equal(baseManifestV2.Config.MediaType, actualManifestV2.Config.MediaType);
                 Assert.Equal(baseManifestV2.Config.Size, actualManifestV2.Config.Size);
-            }
-            if (baseManifest.GetType() == typeof(V1Manifest))
-            {
-                var baseManifestV1 = (V1Manifest)baseManifest;
-                var actualManifestV1 = (V1Manifest)baseManifest;
-                Assert.Equal(baseManifestV1.Architecture, actualManifestV1.Architecture);
-                Assert.Equal(baseManifestV1.Name, actualManifestV1.Name);
-                Assert.Equal(baseManifestV1.Tag, actualManifestV1.Tag);
-                Assert.Equal(baseManifestV1.FsLayers.Count, actualManifestV1.FsLayers.Count);
-
-                for (int i = 0; i < baseManifestV1.FsLayers.Count; i++)
-                {
-                    Assert.Equal(baseManifestV1.FsLayers[i].BlobSum, actualManifestV1.FsLayers[i].BlobSum);
-                }
-
-                Assert.Equal(baseManifestV1.History.Count, actualManifestV1.History.Count);
-                for (int i = 0; i < baseManifestV1.History.Count; i++)
-                {
-                    Assert.Equal(baseManifestV1.History[i].V1Compatibility, actualManifestV1.History[i].V1Compatibility);
-                }
-            }
-            if (baseManifest.GetType() == typeof(OCIManifest))
-            {
-                var baseManifestOCI = (OCIManifest)baseManifest;
-                var actualManifestOCI = (OCIManifest)baseManifest;
-                Assert.Equal(baseManifestOCI.Layers.Count, actualManifestOCI.Layers.Count);
-                for (int i = 0; i < baseManifestOCI.Layers.Count; i++)
-                {
-                    Assert.Equal(baseManifestOCI.Layers[i].Digest, actualManifestOCI.Layers[i].Digest);
-                    Assert.Equal(baseManifestOCI.Layers[i].MediaType, actualManifestOCI.Layers[i].MediaType);
-                    Assert.Equal(baseManifestOCI.Layers[i].Size, actualManifestOCI.Layers[i].Size);
-                    Assert.Equal(baseManifestOCI.Layers[i].Annotations, actualManifestOCI.Layers[i].Annotations);
-                }
-                Assert.Equal(baseManifestOCI.Config.Digest, actualManifestOCI.Config.Digest);
-                Assert.Equal(baseManifestOCI.Config.MediaType, actualManifestOCI.Config.MediaType);
-                Assert.Equal(baseManifestOCI.Config.Size, actualManifestOCI.Config.Size);
             }
         }
 

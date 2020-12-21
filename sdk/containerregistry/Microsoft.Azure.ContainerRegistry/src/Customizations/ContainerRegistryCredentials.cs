@@ -54,6 +54,8 @@ namespace Microsoft.Azure.ContainerRegistry
         // Internal simplified client for Token Acquisition
         private ContainerRegistryRefreshToken _acrRefresh;
         private AuthToken _aadAccess;
+        private const string pattern = "\".+:.+:.+\"";  //Pattern to get the scope from headers
+        private static readonly Regex regex = new Regex(pattern);
 
         #endregion
 
@@ -273,9 +275,13 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </summary>
         public string GetScopeFromHeaders(HttpHeaders headers)
         {
+            if (headers == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "headers");
+            }
+
             string challengeHeader = "Www-Authenticate".ToLower();
             string headerValue = "";
-
             foreach (var headerKVP in headers)
             {
                 if (headerKVP.Key.ToLower() == challengeHeader)
@@ -290,7 +296,6 @@ namespace Microsoft.Azure.ContainerRegistry
             string scope = headerValue.Substring(position);
             string[] keyValues = scope.Split('=');
             int length = keyValues.Length;
-            var scopeContainedIn = keyValues[1];
 
             if (length < 2)
             {
@@ -298,13 +303,12 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             else if(length > 2)
             {
-                var pattern = "\".+:.+:.+\"";
-                var regex = new Regex(pattern);
+                string scopeContainedIn = keyValues[1];
                 return TrimDoubleQuotes(regex.Match(scopeContainedIn).Value);
             }
             else
             {
-                return TrimDoubleQuotes(scopeContainedIn);
+                return TrimDoubleQuotes(keyValues[1]);
             }
         }
 
