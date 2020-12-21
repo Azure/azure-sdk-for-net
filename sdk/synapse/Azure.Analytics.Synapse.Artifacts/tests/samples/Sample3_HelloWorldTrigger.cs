@@ -10,26 +10,31 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class TriggerSnippets : SampleFixture
+    public partial class Sample3_HelloWorldTrigger : SampleFixture
     {
         [Test]
         public async Task TriggerSample()
         {
-            #region Snippet:CreateTriggerClient
+            #region Snippet:CreateTriggerClientPrep
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
             /*@@*/endpoint = TestEnvironment.EndpointUrl;
+
+            string triggerName = "Test-Trigger";
+            #endregion
+
+            #region Snippet:CreateTriggerClient
             TriggerClient client = new TriggerClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateTrigger
             TriggerResource triggerResource = new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence()));
-            TriggerCreateOrUpdateTriggerOperation operation = client.StartCreateOrUpdateTrigger("MyTrigger", triggerResource);
+            TriggerCreateOrUpdateTriggerOperation operation = client.StartCreateOrUpdateTrigger(triggerName, triggerResource);
             Response<TriggerResource> createdTrigger = await operation.WaitForCompletionAsync();
             #endregion
 
             #region Snippet:RetrieveTrigger
-            TriggerResource retrievedTrigger = client.GetTrigger("MyTrigger");
+            TriggerResource retrievedTrigger = client.GetTrigger(triggerName);
             #endregion
 
             #region Snippet:ListTriggers
@@ -41,7 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:DeleteTrigger
-            client.StartDeleteTrigger("MyTrigger");
+            TriggerDeleteTriggerOperation deleteOperation = client.StartDeleteTrigger(triggerName);
+            await deleteOperation.WaitForCompletionAsync();
             #endregion
         }
     }
