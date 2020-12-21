@@ -1,7 +1,9 @@
 # Release History
 
 ## 1.0.0-beta.4 (Unreleased)
-
+- Support for CreateChatThreadResult and AddChatParticipantsResult to handle partial errors in batch calls.
+- Added idempotency identifier parameter for chat creation calls.
+- Added support for readreceipts and getparticipants pagination.
 
 ## 1.0.0-beta.3 (2020-11-16)
 
