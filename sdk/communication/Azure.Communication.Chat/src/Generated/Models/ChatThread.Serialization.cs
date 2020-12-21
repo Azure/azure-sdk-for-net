@@ -6,22 +6,20 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatThreadInternal
+    public partial class ChatThread
     {
-        internal static ChatThreadInternal DeserializeChatThreadInternal(JsonElement element)
+        internal static ChatThread DeserializeChatThread(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> topic = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<string> createdBy = default;
             Optional<DateTimeOffset> deletedOn = default;
-            Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -59,23 +57,8 @@ namespace Azure.Communication.Chat
                     deletedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("participants"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ChatParticipantInternal> array = new List<ChatParticipantInternal>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ChatParticipantInternal.DeserializeChatParticipantInternal(item));
-                    }
-                    participants = array;
-                    continue;
-                }
             }
-            return new ChatThreadInternal(id.Value, topic.Value, Optional.ToNullable(createdOn), createdBy.Value, Optional.ToNullable(deletedOn), Optional.ToList(participants));
+            return new ChatThread(id.Value, topic.Value, Optional.ToNullable(createdOn), createdBy.Value, Optional.ToNullable(deletedOn));
         }
     }
 }

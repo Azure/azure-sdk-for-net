@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> The ChatThreadInfo. </summary>
+    /// <summary> Summary information of a chat thread. </summary>
     public partial class ChatThreadInfo
     {
         /// <summary> Initializes a new instance of ChatThreadInfo. </summary>
@@ -20,8 +20,8 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of ChatThreadInfo. </summary>
         /// <param name="id"> Chat thread id. </param>
         /// <param name="topic"> Chat thread topic. </param>
-        /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         internal ChatThreadInfo(string id, string topic, DateTimeOffset? deletedOn, DateTimeOffset? lastMessageReceivedOn)
         {
             Id = id;
@@ -34,9 +34,9 @@ namespace Azure.Communication.Chat
         public string Id { get; }
         /// <summary> Chat thread topic. </summary>
         public string Topic { get; }
-        /// <summary> The timestamp when the chat thread was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
+        /// <summary> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
-        /// <summary> The timestamp when the last message arrived at the server. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
+        /// <summary> The timestamp when the last message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? LastMessageReceivedOn { get; }
     }
 }

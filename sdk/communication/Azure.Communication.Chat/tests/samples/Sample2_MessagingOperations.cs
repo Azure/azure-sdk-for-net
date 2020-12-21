@@ -33,8 +33,8 @@ namespace Azure.Communication.Chat.Tests.samples
                 DisplayName = "UserDisplayName",
                 ShareHistoryTime = DateTime.MinValue
             };
-            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
-            string threadId = chatThreadClient.Id;
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
             var content = "hello world";
@@ -80,7 +80,7 @@ namespace Azure.Communication.Chat.Tests.samples
             await chatThreadClient.SendTypingNotificationAsync();
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_SendTypingNotification
 
-            await chatClient.DeleteChatThreadAsync(threadId);
+            await chatClient.DeleteChatThreadAsync(chatThreadClient.Id);
         }
     }
 }

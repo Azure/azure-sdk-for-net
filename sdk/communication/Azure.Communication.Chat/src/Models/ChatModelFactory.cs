@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Communication.Chat.Models
+namespace Azure.Communication.Chat
 {
     /// <summary>
     /// Model factory that enables mocking for the Chat library.
@@ -47,13 +47,5 @@ namespace Azure.Communication.Chat.Models
         /// <returns>A new <see cref="ChatMessageReadReceipt"/> instance for mocking.</returns>
         public static ChatMessageReadReceipt ChatMessageReadReceipt(string senderId, string chatMessageId, DateTimeOffset? readOn)
             => new ChatMessageReadReceipt(senderId, chatMessageId, readOn);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SendChatMessageResult"/> class.
-        /// </summary>
-        /// <param name="id"> A server-generated message id. </param>
-        /// <returns>A new <see cref="SendChatMessageResult"/> instance for mocking.</returns>
-        public static SendChatMessageResult SendChatMessageResult(string id)
-            => new SendChatMessageResult(id);
     }
 }

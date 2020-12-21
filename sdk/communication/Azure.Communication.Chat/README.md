@@ -59,9 +59,7 @@ The ChatThreadClient will allow you to perform operations specific to a chat thr
 You can instantiate a new ChatThreadClient instance using the ChatClient:
 
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_InitializeChatThreadClient
-ChatThreadClient chatThreadClient1 = chatClient.CreateChatThread("Thread topic", participants);
-// Alternatively, if you have created a chat thread before and you have its threadId, you can create a ChatThreadClient instance using:
-ChatThreadClient chatThreadClient2 = chatClient.GetChatThreadClient("threadId");
+ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient("threadId");
 ```
 
 ## Key concepts
@@ -172,8 +170,9 @@ var chatParticipant = new ChatParticipant(threadCreator)
 {
     DisplayName = "UserDisplayName"
 };
-ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
-string threadId = chatThreadClient.Id;
+CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+string threadId = createChatThreadResult.ChatThread.Id;
+ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
 ```
 ### Get a thread
 
@@ -348,7 +347,7 @@ A `RequestFailedException` is thrown as a service response for any unsuccessful 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_Troubleshooting
 try
 {
-    ChatThreadClient chatThreadClient_ = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { josh });
+    CreateChatThreadResult createChatThreadErrorResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { josh });
 }
 catch (RequestFailedException ex)
 {

@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class Error
+    public partial class ChatError
     {
-        internal static Error DeserializeError(JsonElement element)
+        internal static ChatError DeserializeChatError(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<Error>> innerErrors = default;
+            Optional<IReadOnlyList<ChatError>> innerErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -43,16 +43,16 @@ namespace Azure.Communication.Chat
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Error> array = new List<Error>();
+                    List<ChatError> array = new List<ChatError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeError(item));
+                        array.Add(DeserializeChatError(item));
                     }
                     innerErrors = array;
                     continue;
                 }
             }
-            return new Error(code.Value, message.Value, target.Value, Optional.ToList(innerErrors));
+            return new ChatError(code.Value, message.Value, target.Value, Optional.ToList(innerErrors));
         }
     }
 }

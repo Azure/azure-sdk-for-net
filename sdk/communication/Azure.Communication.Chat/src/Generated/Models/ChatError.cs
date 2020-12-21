@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> The Error. </summary>
-    internal partial class Error
+    /// <summary> Error encountered while performing an operation. </summary>
+    public partial class ChatError
     {
-        /// <summary> Initializes a new instance of Error. </summary>
-        internal Error()
+        /// <summary> Initializes a new instance of ChatError. </summary>
+        internal ChatError()
         {
-            InnerErrors = new ChangeTrackingList<Error>();
+            InnerErrors = new ChangeTrackingList<ChatError>();
         }
 
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Initializes a new instance of ChatError. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Description of the error. </param>
         /// <param name="target"> If applicable, would be used to indicate the property causing the error. </param>
         /// <param name="innerErrors"> If applicable, inner errors would be returned for more details on the error. </param>
-        internal Error(string code, string message, string target, IReadOnlyList<Error> innerErrors)
+        internal ChatError(string code, string message, string target, IReadOnlyList<ChatError> innerErrors)
         {
             Code = code;
             Message = message;
@@ -39,6 +39,6 @@ namespace Azure.Communication.Chat
         /// <summary> If applicable, would be used to indicate the property causing the error. </summary>
         public string Target { get; }
         /// <summary> If applicable, inner errors would be returned for more details on the error. </summary>
-        public IReadOnlyList<Error> InnerErrors { get; }
+        public IReadOnlyList<ChatError> InnerErrors { get; }
     }
 }

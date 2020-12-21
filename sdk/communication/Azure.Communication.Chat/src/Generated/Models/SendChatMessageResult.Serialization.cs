@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class SendChatMessageResult
+    internal partial class SendChatMessageResult
     {
         internal static SendChatMessageResult DeserializeSendChatMessageResult(JsonElement element)
         {

@@ -36,8 +36,8 @@ namespace Azure.Communication.Chat.Tests.samples
                 DisplayName = "Josh",
                 ShareHistoryTime = DateTime.MinValue
             };
-            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
-            string threadId = chatThreadClient.Id;
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetParticipants
             AsyncPageable<ChatParticipant> allParticipants = chatThreadClient.GetParticipantsAsync();
@@ -62,7 +62,7 @@ namespace Azure.Communication.Chat.Tests.samples
             await chatThreadClient.RemoveParticipantAsync(gloria);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant
 
-            await chatClient.DeleteChatThreadAsync(threadId);
+            await chatClient.DeleteChatThreadAsync(chatThreadClient.Id);
         }
     }
 }

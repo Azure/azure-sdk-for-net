@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> The ChatMessageReadReceiptsCollection. </summary>
+    /// <summary> A paged collection of chat message read receipts. </summary>
     internal partial class ChatMessageReadReceiptsCollection
     {
         /// <summary> Initializes a new instance of ChatMessageReadReceiptsCollection. </summary>
