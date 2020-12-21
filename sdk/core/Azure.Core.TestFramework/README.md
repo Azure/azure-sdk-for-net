@@ -412,6 +412,8 @@ Some bindings require code on the customized side to access fields that are gene
     public partial class SparkSessionClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
+        ...
+    }
 ```
 
 ```csharp
@@ -419,6 +421,8 @@ Some bindings require code on the customized side to access fields that are gene
     internal virtual Response<SparkSession> GetSparkSession(int sessionId, bool? detailed = null, CancellationToken cancellationToken = default)
     {
         using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkSession");
+        ...
+    }
 ```
 
 The direct approach of using `_clientDiagnostics` here will fail on tests that use the test framework. The proxy generated at runtime uses the constructor with no parameters and _clientDiagnostics will be `null`.
