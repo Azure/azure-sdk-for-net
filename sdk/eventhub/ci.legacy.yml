@@ -42,6 +42,8 @@ extends:
     ExcludeProjects:
       - Azure.ResourceManager.EventHubs
       - Azure.Messaging.EventHubs
+      - Azure.Messaging.EventHubs.Processor
+      - Azure.Messaging.EventHubs.Shared
       - Azure.Messaging.EventHubs.*
     ArtifactName: packages
     Artifacts:

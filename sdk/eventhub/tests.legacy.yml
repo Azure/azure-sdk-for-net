@@ -8,8 +8,8 @@ extends:
     TimeoutInMinutes: 190
     ExcludeProjects:
     - Azure.ResourceManager.EventHubs
-    - Microsoft.Azure.EventHubs
-    - Microsoft.Azure.EventHubs.Processor
-    - Microsoft.Azure.EventHubs.ServiceFabricProcessor
-    - Microsoft.Azure.EventHubs.*
+    - Azure.Messaging.EventHubs
+    - Azure.Messaging.EventHubs.Processor
+    - Azure.Messaging.EventHubs.Shared
+    - Azure.Messaging.EventHubs.*
     Clouds: 'Public,Canary'
