@@ -183,6 +183,8 @@ namespace Azure.Media.Analytics.Edge.Models
         public MediaGraphInstanceCollection() { }
         public string ContinuationToken { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Media.Analytics.Edge.Models.MediaGraphInstance> Value { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphInstanceCollection Deserialize(string json) { throw null; }
+        public string Serialize() { throw null; }
     }
     public partial class MediaGraphInstanceDeActivateRequest : Azure.Media.Analytics.Edge.Models.ItemNonSetRequestBase
     {
