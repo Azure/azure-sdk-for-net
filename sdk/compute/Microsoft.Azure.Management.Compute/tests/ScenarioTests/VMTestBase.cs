@@ -224,7 +224,7 @@ namespace Compute.Tests
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
             bool hasDiffDisks = false,
-            string vmSize = VirtualMachineSizeTypes.StandardA0,
+            string vmSize = VirtualMachineSizeTypes.StandardD1V2,
             string osDiskStorageAccountType = "Standard_LRS",
             string dataDiskStorageAccountType = "Standard_LRS",
             bool? writeAcceleratorEnabled = null,
@@ -300,7 +300,7 @@ namespace Compute.Tests
                     // If no vmSize is provided and we are using the default value, change the default value for VMs with Zones.
                     if(vmSize == VirtualMachineSizeTypes.StandardA0)
                     {
-                        vmSize = VirtualMachineSizeTypes.StandardA1V2;
+                        vmSize = VirtualMachineSizeTypes.StandardD1V2;
                     }
                     inputVM.HardwareProfile.VmSize = vmSize;
                     inputVM.Zones = zones;
@@ -843,7 +843,7 @@ namespace Compute.Tests
         }
 
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
-            string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
+            string vmSize = "Standard_DS1_v2", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             string diskEncryptionSetId = null)
         {
             // Generate Container name to hold disk VHds
