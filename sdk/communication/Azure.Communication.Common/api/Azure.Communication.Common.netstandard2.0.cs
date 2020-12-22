@@ -26,6 +26,12 @@ namespace Azure.Communication
         public CommunicationUserIdentifier(string id) { }
         public string Id { get { throw null; } }
     }
+    public partial class MicrosoftTeamsUserIdentifier : Azure.Communication.CommunicationIdentifier
+    {
+        public MicrosoftTeamsUserIdentifier(string userId, bool isAnonymous = false) { }
+        public string Id { get { throw null; } }
+        public bool IsAnonymous { get { throw null; } }
+    }
     [System.Diagnostics.DebuggerDisplayAttribute("{Value}")]
     public partial class PhoneNumberIdentifier : Azure.Communication.CommunicationIdentifier
     {
