@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class CreateChatThreadResult
+    internal partial class CreateChatThreadResultInternal
     {
-        internal static CreateChatThreadResult DeserializeCreateChatThreadResult(JsonElement element)
+        internal static CreateChatThreadResultInternal DeserializeCreateChatThreadResultInternal(JsonElement element)
         {
-            Optional<ChatThread> chatThread = default;
+            Optional<ChatThreadInternal> chatThread = default;
             Optional<CreateChatThreadErrors> errors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    chatThread = ChatThread.DeserializeChatThread(property.Value);
+                    chatThread = ChatThreadInternal.DeserializeChatThreadInternal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errors"))
@@ -39,7 +39,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new CreateChatThreadResult(chatThread.Value, errors.Value);
+            return new CreateChatThreadResultInternal(chatThread.Value, errors.Value);
         }
     }
 }

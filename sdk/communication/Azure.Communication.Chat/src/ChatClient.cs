@@ -63,7 +63,8 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatRestClient.CreateChatThreadAsync(topic, participants.Select(x => x.ToChatParticipantInternal()), repeatabilityRequestId, cancellationToken).ConfigureAwait(false);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(topic, participants.Select(x => x.ToChatParticipantInternal()), repeatabilityRequestId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -84,7 +85,8 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatRestClient.CreateChatThread(topic, participants.Select(x => x.ToChatParticipantInternal()), repeatabilityRequestId, cancellationToken);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(topic, participants.Select(x => x.ToChatParticipantInternal()), repeatabilityRequestId, cancellationToken);
+                return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -120,7 +122,8 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatRestClient.GetChatThreadAsync(threadId, cancellationToken).ConfigureAwait(false);
+                Response<ChatThreadInternal> chatThreadInternal = await _chatRestClient.GetChatThreadAsync(threadId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ChatThread(chatThreadInternal.Value), chatThreadInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -139,7 +142,8 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatRestClient.GetChatThread(threadId, cancellationToken);
+                Response<ChatThreadInternal> chatThreadInternal = _chatRestClient.GetChatThread(threadId, cancellationToken);
+                return Response.FromValue(new ChatThread(chatThreadInternal.Value), chatThreadInternal.GetRawResponse());
             }
             catch (Exception ex)
             {

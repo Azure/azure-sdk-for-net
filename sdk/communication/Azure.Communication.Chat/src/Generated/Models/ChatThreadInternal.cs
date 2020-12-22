@@ -10,20 +10,20 @@ using System;
 namespace Azure.Communication.Chat
 {
     /// <summary> Chat thread. </summary>
-    public partial class ChatThread
+    internal partial class ChatThreadInternal
     {
-        /// <summary> Initializes a new instance of ChatThread. </summary>
-        internal ChatThread()
+        /// <summary> Initializes a new instance of ChatThreadInternal. </summary>
+        internal ChatThreadInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of ChatThread. </summary>
+        /// <summary> Initializes a new instance of ChatThreadInternal. </summary>
         /// <param name="id"> Chat thread id. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="createdOn"> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="createdBy"> Id of the chat thread owner. </param>
         /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatThread(string id, string topic, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? deletedOn)
+        internal ChatThreadInternal(string id, string topic, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? deletedOn)
         {
             Id = id;
             Topic = topic;

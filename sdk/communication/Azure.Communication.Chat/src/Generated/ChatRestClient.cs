@@ -75,7 +75,7 @@ namespace Azure.Communication.Chat
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> or <paramref name="participants"/> is null. </exception>
-        public async Task<Response<CreateChatThreadResult>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipantInternal> participants, string repeatabilityRequestID = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipantInternal> participants, string repeatabilityRequestID = null, CancellationToken cancellationToken = default)
         {
             if (topic == null)
             {
@@ -92,9 +92,9 @@ namespace Azure.Communication.Chat
             {
                 case 201:
                     {
-                        CreateChatThreadResult value = default;
+                        CreateChatThreadResultInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateChatThreadResult.DeserializeCreateChatThreadResult(document.RootElement);
+                        value = CreateChatThreadResultInternal.DeserializeCreateChatThreadResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.Communication.Chat
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> or <paramref name="participants"/> is null. </exception>
-        public Response<CreateChatThreadResult> CreateChatThread(string topic, IEnumerable<ChatParticipantInternal> participants, string repeatabilityRequestID = null, CancellationToken cancellationToken = default)
+        public Response<CreateChatThreadResultInternal> CreateChatThread(string topic, IEnumerable<ChatParticipantInternal> participants, string repeatabilityRequestID = null, CancellationToken cancellationToken = default)
         {
             if (topic == null)
             {
@@ -125,9 +125,9 @@ namespace Azure.Communication.Chat
             {
                 case 201:
                     {
-                        CreateChatThreadResult value = default;
+                        CreateChatThreadResultInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateChatThreadResult.DeserializeCreateChatThreadResult(document.RootElement);
+                        value = CreateChatThreadResultInternal.DeserializeCreateChatThreadResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -220,7 +220,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatThreadId"> Id of the thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response<ChatThread>> GetChatThreadAsync(string chatThreadId, CancellationToken cancellationToken = default)
+        public async Task<Response<ChatThreadInternal>> GetChatThreadAsync(string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -233,9 +233,9 @@ namespace Azure.Communication.Chat
             {
                 case 200:
                     {
-                        ChatThread value = default;
+                        ChatThreadInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ChatThread.DeserializeChatThread(document.RootElement);
+                        value = ChatThreadInternal.DeserializeChatThreadInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -247,7 +247,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatThreadId"> Id of the thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response<ChatThread> GetChatThread(string chatThreadId, CancellationToken cancellationToken = default)
+        public Response<ChatThreadInternal> GetChatThread(string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -260,9 +260,9 @@ namespace Azure.Communication.Chat
             {
                 case 200:
                     {
-                        ChatThread value = default;
+                        ChatThreadInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ChatThread.DeserializeChatThread(document.RootElement);
+                        value = ChatThreadInternal.DeserializeChatThreadInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -96,7 +96,7 @@ namespace Azure.Communication.Chat
     public partial class ChatThread
     {
         internal ChatThread() { }
-        public string CreatedBy { get { throw null; } }
+        public Azure.Communication.CommunicationUser CreatedBy { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public string Id { get { throw null; } }

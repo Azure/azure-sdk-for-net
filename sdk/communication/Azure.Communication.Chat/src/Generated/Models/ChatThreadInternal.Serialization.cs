@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class ChatThread
+    internal partial class ChatThreadInternal
     {
-        internal static ChatThread DeserializeChatThread(JsonElement element)
+        internal static ChatThreadInternal DeserializeChatThreadInternal(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> topic = default;
@@ -58,7 +58,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatThread(id.Value, topic.Value, Optional.ToNullable(createdOn), createdBy.Value, Optional.ToNullable(deletedOn));
+            return new ChatThreadInternal(id.Value, topic.Value, Optional.ToNullable(createdOn), createdBy.Value, Optional.ToNullable(deletedOn));
         }
     }
 }
