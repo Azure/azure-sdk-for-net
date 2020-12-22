@@ -5,9 +5,11 @@ using System;
 
 namespace Azure.Communication.Chat
 {
-    /// <summary>The ChatThread.</summary>
+    /// <summary> Result of the create chat thread operation. </summary>
     public class CreateChatThreadResult
     {
+        /// <summary> Initializes a new instance of CreateChatThreadResult. </summary>
+        /// <param name="createChatThreadResultInternal"> Chat thread. </param>
         internal CreateChatThreadResult(CreateChatThreadResultInternal createChatThreadResultInternal)
         {
             ChatThread = new ChatThread(createChatThreadResultInternal.ChatThread);
