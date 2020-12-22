@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SoftwareUpdateRebootBehavior.
+    /// Defines values for GallerySharingPermissionTypes.
     /// </summary>
-    public static class SoftwareUpdateRebootBehavior
+    public static class GallerySharingPermissionTypes
     {
-        public const string NeverReboots = "NeverReboots";
-        public const string AlwaysRequiresReboot = "AlwaysRequiresReboot";
-        public const string CanRequestReboot = "CanRequestReboot";
+        public const string Private = "Private";
+        public const string Groups = "Groups";
     }
 }

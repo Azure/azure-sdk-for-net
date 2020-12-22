@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="osProfile">Specifies the operating system settings for
         /// the virtual machines in the scale set.</param>
+        /// <param name="applicationProfile">Specifies the gallery applications
+        /// that should be made available to the VM/VMSS</param>
         /// <param name="storageProfile">Specifies the storage settings for the
         /// virtual machine disks.</param>
         /// <param name="networkProfile">Specifies properties of the network
@@ -46,15 +48,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// for extensions installed on virtual machines in the scale
         /// set.</param>
         /// <param name="licenseType">Specifies that the image or disk that is
-        /// being used was licensed on-premises. This element is only used for
-        /// images that contain the Windows Server operating system.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server
-        /// &lt;br&gt;&lt;br&gt; If this element is included in a request for
-        /// an update, the value must match the initial value. This value
-        /// cannot be updated. &lt;br&gt;&lt;br&gt; For more information, see
-        /// [Azure Hybrid Use Benefit for Windows
-        /// Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible
+        /// values for Windows Server operating system are:
+        /// &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt;
+        /// Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux
+        /// Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for
+        /// RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE)
+        /// &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use
+        /// Benefit for Windows
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
+        /// &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
         /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15</param>
         /// <param name="priority">Specifies the priority for the virtual
         /// machines in the scale set. &lt;br&gt;&lt;br&gt;Minimum api-version:
@@ -73,9 +77,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2019-03-01.</param>
         /// <param name="scheduledEventsProfile">Specifies Scheduled Event
         /// related configurations.</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile))
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile))
         {
             OsProfile = osProfile;
+            ApplicationProfile = applicationProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
             SecurityProfile = securityProfile;
@@ -100,6 +105,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "osProfile")]
         public VirtualMachineScaleSetOSProfile OsProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the gallery applications that should be made
+        /// available to the VM/VMSS
+        /// </summary>
+        [JsonProperty(PropertyName = "applicationProfile")]
+        public ApplicationProfile ApplicationProfile { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the storage settings for the virtual machine
@@ -139,16 +151,19 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies that the image or disk that is being used
-        /// was licensed on-premises. This element is only used for images that
-        /// contain the Windows Server operating system.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
+        /// was licensed on-premises. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// Possible values for Windows Server operating system are:
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Windows_Client
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Windows_Server
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; If this element is included in
-        /// a request for an update, the value must match the initial value.
-        /// This value cannot be updated. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-        /// For more information, see [Azure Hybrid Use Benefit for Windows
-        /// Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values for Linux
+        /// Server operating system are: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// RHEL_BYOS (for RHEL) &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; SLES_BYOS
+        /// (for SUSE) &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more
+        /// information, see [Azure Hybrid Use Benefit for Windows
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [Azure Hybrid Use Benefit for
+        /// Linux
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Minimum api-version:
         /// 2015-06-15
         /// </summary>
