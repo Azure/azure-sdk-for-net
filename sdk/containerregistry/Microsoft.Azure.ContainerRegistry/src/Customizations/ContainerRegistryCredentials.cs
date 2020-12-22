@@ -55,7 +55,7 @@ namespace Microsoft.Azure.ContainerRegistry
         private ContainerRegistryRefreshToken _acrRefresh;
         private AuthToken _aadAccess;
         private const string pattern = "\".+:.+:.+\"";  //Pattern to get the scope from headers
-        private static readonly Regex regex = new Regex(pattern);
+        private static readonly Regex scopeFromHeaderRegex = new Regex(pattern);
 
         #endregion
 
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.ContainerRegistry
         {
             if (headers == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "headers");
+                throw new ValidationException(ValidationRules.CannotBeNull, nameof(headers));
             }
 
             string challengeHeader = "Www-Authenticate".ToLower();
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.ContainerRegistry
             else if(length > 2)
             {
                 string scopeContainedIn = keyValues[1];
-                return TrimDoubleQuotes(regex.Match(scopeContainedIn).Value);
+                return TrimDoubleQuotes(scopeFromHeaderRegex.Match(scopeContainedIn).Value);
             }
             else
             {
