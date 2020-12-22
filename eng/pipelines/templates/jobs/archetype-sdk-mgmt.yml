@@ -5,9 +5,11 @@ jobs:
     steps:
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      - script: |
-          pwsh eng/scripts/Track1CodeCheck.ps1
+      - pwsh: |
+          eng/scripts/Track1CodeCheck.ps1
+          if ($LASTEXITCODE -eq 1) { Write-Host "##vso[task.setvariable variable=checkFlag;]false" }
         displayName: "Code-gen Force Check"
+        continueOnError: true
         env:
           REPOSITORY_NAME: $(Build.Repository.Name)
           PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
@@ -35,6 +37,9 @@ jobs:
           echo "##vso[build.addbuildtag]$releaseTag"
         displayName: "Tagging the build"
         condition: ne(variables['System.TeamProject'], 'public')
+      - pwsh: |
+          if ("$(checkFlag)" -eq "false") { exit 1 }
+        displayName: "Failure Check"
 
   - job: Test
 

@@ -42,19 +42,6 @@ function Find-Mapping([string]$path) {
     return $name
 }
 
-# helper to turn PSCustomObject into a list of key/value pairs
-function Get-ObjectMembers {
-    [CmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $True, ValueFromPipeline = $True)]
-        [PSCustomObject]$obj
-    )
-    $obj | Get-Member -MemberType NoteProperty | ForEach-Object {
-        $key = $_.Name
-        [PSCustomObject]@{Key = $key; Value = $obj."$key" }
-    }
-}
-
 try {
     # Get RP Mapping
     $RPMapping = [ordered]@{ }
@@ -81,7 +68,7 @@ try {
     # Get Metadata file path
     $Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
     $changeList = $Response.Content | ConvertFrom-Json
-    if ($Response.RelationLink) {
+    if ($Response.RelationLink.Count -ne 0) {
         $lastLink = $Response.RelationLink.Get_Item('last')
         $lastPage = $lastLink.Substring($lastLink.indexof("=") + 1)
         for ($i = 2; $i -le $lastPage; $i++) {
@@ -115,7 +102,8 @@ try {
             }
         }
         else {
-            LogError "Can't get proper RP name with folder $item"
+            LogError "Can't get proper RP name with folder $item `n 
+            Please edit the readme.md or readme.csharp.md file under https://github.com/Azure/azure-rest-api-specs/tree/master/specification/<RP_Name>/resource-manager"
         } 
     }
     $rpIndex | ForEach-Object {
@@ -137,7 +125,7 @@ try {
             $metaDataContent = Get-Content $metaData
         }
         catch {
-            LogError "Can't find path $metaData"
+            LogError "Can't find path $metaData, you may need to re-run sdk\<RP_Name>\generate.ps1"
         }
 
         if ( $metaDataContent -ne '') {
@@ -157,7 +145,7 @@ try {
             $path = ($path -replace "\\", "/") + "/sdk"
 
             if ($readme -eq '') {
-                LogError "MetaData $metaData content not correct"
+                LogError "MetaData $metaData content not correct, you may need to re-run sdk\<RP_Name>\generate.ps1"
             }
             else {
                 Write-Output "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90"
@@ -211,12 +199,11 @@ try {
     }
     
     if ($exitCode -ne 0) {
-        & git -c core.safecrlf=false diff HEAD --ignore-space-at-eol
         Write-Output "Git Diff file is:" 
         $diffResult | ForEach-Object {
             Write-Output $_
         }
-        LogError "Generated code is manually altered, you may need to re-run sdk\<RP Name>\generate.ps1"
+        LogError "Generated code is manually altered, you may need to re-run sdk\<RP_Name>\generate.ps1"
     }
 }
 finally {
