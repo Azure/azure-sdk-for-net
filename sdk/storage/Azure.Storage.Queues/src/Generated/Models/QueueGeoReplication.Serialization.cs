@@ -15,11 +15,11 @@ namespace Azure.Storage.Queues.Models
     {
         internal static QueueGeoReplication DeserializeQueueGeoReplication(XElement element)
         {
-            GeoReplicationStatusType status = default;
+            QueueGeoReplicationStatus status = default;
             DateTimeOffset? lastSyncedOn = default;
             if (element.Element("Status") is XElement statusElement)
             {
-                status = statusElement.Value.ToGeoReplicationStatusType();
+                status = statusElement.Value.ToQueueGeoReplicationStatus();
             }
             if (element.Element("LastSyncTime") is XElement lastSyncTimeElement)
             {

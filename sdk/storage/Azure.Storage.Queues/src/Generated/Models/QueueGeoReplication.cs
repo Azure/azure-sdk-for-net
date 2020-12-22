@@ -15,13 +15,10 @@ namespace Azure.Storage.Queues.Models
         /// <summary> Initializes a new instance of QueueGeoReplication. </summary>
         /// <param name="status"> The status of the secondary location. </param>
         /// <param name="lastSyncedOn"> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
-        internal QueueGeoReplication(GeoReplicationStatusType status, DateTimeOffset? lastSyncedOn)
+        internal QueueGeoReplication(QueueGeoReplicationStatus status, DateTimeOffset? lastSyncedOn)
         {
             Status = status;
             LastSyncedOn = lastSyncedOn;
         }
-
-        /// <summary> The status of the secondary location. </summary>
-        public GeoReplicationStatusType Status { get; }
     }
 }

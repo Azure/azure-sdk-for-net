@@ -8,7 +8,7 @@
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The status of the secondary location. </summary>
-    public enum GeoReplicationStatusType
+    public enum QueueGeoReplicationStatus
     {
         /// <summary> live. </summary>
         Live,

@@ -23,5 +23,9 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         [CodeGenMember("LastSyncTime")]
         public DateTimeOffset? LastSyncedOn { get; set; }
+
+        /// <summary> The status of the secondary location. </summary>
+        [CodeGenMember("Status")]
+        public QueueGeoReplicationStatus Status { get; set; }
     }
 }
