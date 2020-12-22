@@ -15,15 +15,15 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
 ### Install the package
-Install the Spark client library for Azure Synapse Analytics for .NET with [NuGet][nuget]:
+Install the Spark client library for Azure Synapse Analytics for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Spark/):
 
 ```PowerShell
 dotnet add package Azure.Analytics.Synapse.Spark --version 0.1.0-preview.1
 ```
 
 ### Prerequisites
-* An [Azure subscription][azure_sub].
-* An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the Azure Portal or [Azure CLI][azure_cli].
+- **Azure Subscription:**  To use Azure services, including Azure Synapse, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the [Azure Portal](https://portal.azure.com/) or [Azure CLI](https://docs.microsoft.com/cli/azure).
 
 If you use the Azure CLI, the command looks like below:
 
@@ -39,10 +39,10 @@ az synapse workspace create \
 ```
 
 ### Authenticate the client
-In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [SparkBatchClient][spark_batch_client_class] or [SparkSessionClient][spark_session_client_class] class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
+In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [SparkBatchClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Spark/src/Customization/SparkBatchClient.cs) or [SparkSessionClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Spark/src/Customization/SparkSessionClient.cs) class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
-Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
+Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity). To use the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential) provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
@@ -55,7 +55,7 @@ The Microsoft.Azure.Synapse supports the CRUD of spark batch job.
 ### Spark Batch Job examples
 * [List spark batch job](#list-spark-batch-job)
 * [Create spark batch job](#create-spark-batch-job)
-* [Delete spark batch job](#delete-spark-batch-job)
+* [Cancel spark batch job](#cancel-spark-batch-job)
 
 ### List spark batch job
 List the spark batch job under the specific spark pool of a specific synapse workspace
