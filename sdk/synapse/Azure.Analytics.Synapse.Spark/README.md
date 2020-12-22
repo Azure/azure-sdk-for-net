@@ -15,7 +15,7 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
 ### Install the package
-Install the Spark client library for Azure Synapse Analytics for .NET with [NuGet](https://www.nuget.org/):
+Install the Spark client library for Azure Synapse Analytics for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Spark/):
 
 ```PowerShell
 dotnet add package Azure.Analytics.Synapse.Spark --version 0.1.0-preview.1

@@ -15,7 +15,7 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
 ### Install the package
-Install the Azure Synapse Analytics managed private endpoints client library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Synapse Analytics managed private endpoints client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.ManagedPrivateEndpoints/):
 
 ```PowerShell
 dotnet add package Azure.Analytics.Synapse.ManagedPrivateEndpoints --version 1.0.0-preview.1

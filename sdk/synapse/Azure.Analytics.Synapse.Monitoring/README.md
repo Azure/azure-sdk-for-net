@@ -13,7 +13,7 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
 ### Install the package
-Install the Azure Synapse Analytics monitoring client library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Synapse Analytics monitoring client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Monitoring/):
 
 ```PowerShell
 dotnet add package Azure.Analytics.Synapse.Monitoring --version 1.0.0-preview.1
