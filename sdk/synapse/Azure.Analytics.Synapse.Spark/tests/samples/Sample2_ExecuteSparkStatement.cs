@@ -40,13 +40,13 @@ namespace Azure.Analytics.Synapse.Samples
                 ExecutorCount = 2
             };
 
-            SparkSessionOperation createOperation = client.StartCreateSparkSession(request);
-            while (!createOperation.HasCompleted)
+            SparkSessionOperation createSessionOperation = client.StartCreateSparkSession(request);
+            while (!createSessionOperation.HasCompleted)
             {
                 System.Threading.Thread.Sleep(2000);
-                createOperation.UpdateStatus();
+                createSessionOperation.UpdateStatus();
             }
-            SparkSession sessionCreated = createOperation.Value;
+            SparkSession sessionCreated = createSessionOperation.Value;
             #endregion
 
             #region Snippet:GetSparkSession
@@ -67,17 +67,23 @@ namespace Azure.Analytics.Synapse.Samples
                 Code = @"print(""Hello world\n"")"
             };
 
-            SparkStatementOperation statementOperation = client.StartCreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
-            while (!statementOperation.HasCompleted)
+            SparkStatementOperation createStatementOperation = client.StartCreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
+            while (!createStatementOperation.HasCompleted)
             {
                 System.Threading.Thread.Sleep(2000);
-                statementOperation.UpdateStatus();
+                createStatementOperation.UpdateStatus();
             }
-            SparkStatement statementCreated = statementOperation.Value;
+            SparkStatement statementCreated = createStatementOperation.Value;
             #endregion
 
             #region Snippet:GetSparkStatement
-            SparkStatement statement = client.GetSparkStatement(sessionCreated.Id, statementCreated.Id);
+            SparkStatementOperation getStatementOperation = client.StartGetSparkStatement(sessionCreated.Id, statementCreated.Id);
+            while (!getStatementOperation.HasCompleted)
+            {
+                System.Threading.Thread.Sleep(2000);
+                getStatementOperation.UpdateStatus();
+            }
+            SparkStatement statement = getStatementOperation.Value;
             Debug.WriteLine($"Statement is returned with id {statement.Id} and state {statement.State}");
             #endregion
 

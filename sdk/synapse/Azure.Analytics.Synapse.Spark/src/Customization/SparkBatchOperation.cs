@@ -93,11 +93,11 @@ namespace Azure.Analytics.Synapse.Spark
                 {
                     if (async)
                     {
-                        _response = await _client.GetSparkBatchJobAsync(_value.Id, true, cancellationToken).ConfigureAwait(false);
+                        _response = await _client.RestClient.GetSparkBatchJobAsync(_value.Id, true, cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        _response = _client.GetSparkBatchJob(_value.Id, true, cancellationToken);
+                        _response = _client.RestClient.GetSparkBatchJob(_value.Id, true, cancellationToken);
                     }
                     _completed = !IsJobRunning(_response.Value.Result.ToString(), _response.Value.State);
                 }

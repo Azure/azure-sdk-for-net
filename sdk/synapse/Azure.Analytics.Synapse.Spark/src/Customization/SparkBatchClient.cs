@@ -32,44 +32,6 @@ namespace Azure.Analytics.Synapse.Spark
         {
         }
 
-        /// <summary> Create new spark batch job. </summary>
-        /// <param name="sparkBatchJobOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<SparkBatchJob>> CreateSparkBatchJobAsync(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.CreateSparkBatchJob");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateSparkBatchJobAsync(sparkBatchJobOptions, detailed, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create new spark batch job. </summary>
-        /// <param name="sparkBatchJobOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<SparkBatchJob> CreateSparkBatchJob(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.CreateSparkBatchJob");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateSparkBatchJob(sparkBatchJobOptions, detailed, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         public virtual async Task<SparkBatchOperation> StartCreateSparkBatchJobAsync(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
             => await StartCreateSparkBatchJobInternal (true, sparkBatchJobOptions, detailed, cancellationToken).ConfigureAwait(false);
 
@@ -92,44 +54,6 @@ namespace Azure.Analytics.Synapse.Spark
                     batchSession = RestClient.CreateSparkBatchJob(sparkBatchJobOptions, detailed, cancellationToken);
                 }
                 return new SparkBatchOperation(this, _clientDiagnostics, batchSession);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a single spark batch job. </summary>
-        /// <param name="batchId"> Identifier for the batch job. </param>
-        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<SparkBatchJob>> GetSparkBatchJobAsync(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.GetSparkBatchJob");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetSparkBatchJobAsync(batchId, detailed, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a single spark batch job. </summary>
-        /// <param name="batchId"> Identifier for the batch job. </param>
-        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<SparkBatchJob> GetSparkBatchJob(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.GetSparkBatchJob");
-            scope.Start();
-            try
-            {
-                return RestClient.GetSparkBatchJob(batchId, detailed, cancellationToken);
             }
             catch (Exception e)
             {

@@ -63,7 +63,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchJobCollection sparkJobs = (await SparkBatchClient.GetSparkBatchJobsAsync()).Value;
             foreach (SparkBatchJob expectedSparkJob in sparkJobs.Sessions)
             {
-                SparkBatchJob actualSparkJob = await SparkBatchClient.GetSparkBatchJobAsync(expectedSparkJob.Id);
+                SparkBatchOperation getOperation = await SparkBatchClient.StartGetSparkBatchJobAsync(expectedSparkJob.Id);
+                SparkBatchJob actualSparkJob = await getOperation.WaitForCompletionAsync();
                 ValidateSparkBatchJob(expectedSparkJob, actualSparkJob);
             }
         }

@@ -95,11 +95,11 @@ namespace Azure.Analytics.Synapse.Spark
                 {
                     if (async)
                     {
-                        _response = await _client.GetSparkStatementAsync(_sessionId, _value.Id, cancellationToken).ConfigureAwait(false);
+                        _response = await _client.RestClient.GetSparkStatementAsync(_sessionId, _value.Id, cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        _response = _client.GetSparkStatement(_sessionId, _value.Id, cancellationToken);
+                        _response = _client.RestClient.GetSparkStatement(_sessionId, _value.Id, cancellationToken);
                     }
                     _completed = !IsJobRunning(_response.Value.State);
                 }

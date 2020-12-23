@@ -94,7 +94,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkSessionCollection sparkSessions = (await SparkSessionClient.GetSparkSessionsAsync()).Value;
             foreach (SparkSession expectedSparkSession in sparkSessions.Sessions)
             {
-                SparkSession actualSparkSession = await SparkSessionClient.GetSparkSessionAsync(expectedSparkSession.Id);
+                SparkSessionOperation getOperation = await SparkSessionClient.StartGetSparkSessionAsync(expectedSparkSession.Id);
+                SparkSession actualSparkSession = await getOperation.WaitForCompletionAsync();
                 ValidateSparkSession(expectedSparkSession, actualSparkSession);
             }
         }
