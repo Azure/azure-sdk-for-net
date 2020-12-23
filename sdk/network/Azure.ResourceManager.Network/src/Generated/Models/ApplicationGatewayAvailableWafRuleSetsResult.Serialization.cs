@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationGatewayFirewallRuleSet> array = new List<ApplicationGatewayFirewallRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

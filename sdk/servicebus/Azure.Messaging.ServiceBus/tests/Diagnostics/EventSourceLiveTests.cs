@@ -51,12 +51,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationStartEvent, e => e.Payload.Contains(sender.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationCompleteEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkCompleteEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.SendMessageStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.SendMessageCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
                 Assert.That(
-                    async () => await client.CreateSessionReceiverAsync(scope.QueueName),
+                    async () => await client.AcceptNextSessionAsync(scope.QueueName),
                     Throws.InstanceOf<InvalidOperationException>());
                 _listener.SingleEventById(ServiceBusEventSource.ClientCreateStartEvent, e => e.Payload.Contains(nameof(ServiceBusSessionReceiver)) && e.Payload.Contains(client.FullyQualifiedNamespace) && e.Payload.Contains(scope.QueueName));
                 _listener.SingleEventById(ServiceBusEventSource.ClientCreateExceptionEvent, e => e.Payload.Contains(nameof(ServiceBusSessionReceiver)) && e.Payload.Contains(client.FullyQualifiedNamespace) && e.Payload.Contains(scope.QueueName));
@@ -77,6 +79,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     }
                 }
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkStartEvent, e => e.Payload.Contains(receiver.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationStartEvent, e => e.Payload.Contains(receiver.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationCompleteEvent, e => e.Payload.Contains(receiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkCompleteEvent, e => e.Payload.Contains(receiver.Identifier));
                 Assert.IsTrue(_listener.EventsById(ServiceBusEventSource.ReceiveMessageStartEvent).Any());
                 Assert.IsTrue(_listener.EventsById(ServiceBusEventSource.ReceiveMessageCompleteEvent).Any());
@@ -144,6 +148,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationStartEvent, e => e.Payload.Contains(sender.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationCompleteEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkCompleteEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.SendMessageStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.SendMessageCompleteEvent, e => e.Payload.Contains(sender.Identifier));
@@ -161,7 +167,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageStartEvent, e => e.Payload.Contains(receiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageExceptionEvent, e => e.Payload.Contains(receiver.Identifier));
 
-                var sessionReceiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                var sessionReceiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 _listener.EventsById(ServiceBusEventSource.ClientCreateStartEvent).Where(e => e.Payload.Contains(nameof(ServiceBusSessionReceiver)) && e.Payload.Contains(client.FullyQualifiedNamespace)).Any();
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkStartEvent, e => e.Payload.Contains(sessionReceiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkCompleteEvent, e => e.Payload.Contains(sessionReceiver.Identifier));
@@ -203,7 +209,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-
 
                 ServiceBusMessage message = GetMessage();
 
@@ -336,7 +341,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerStartEvent);
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerExceptionEvent);
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorErrorHandlerThrewExceptionEvent);
-
             }
         }
     }

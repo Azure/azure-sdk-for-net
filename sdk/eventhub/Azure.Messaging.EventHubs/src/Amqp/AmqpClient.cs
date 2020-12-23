@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static TimeSpan CredentialRefreshBuffer { get; } = TimeSpan.FromMinutes(5);
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>The currently active token to use for authorization with the Event Hubs service.</summary>
         private AccessToken _accessToken;
@@ -152,7 +152,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     Scheme = clientOptions.TransportType.GetUriScheme(),
                     Host = host
-
                 }.Uri;
 
                 EventHubName = eventHubName;

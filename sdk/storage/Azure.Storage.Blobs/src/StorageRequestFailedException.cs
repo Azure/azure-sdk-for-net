@@ -47,8 +47,13 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="clientDiagnostics">The <see cref="ClientDiagnostics"/> instance to use.</param>
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
-        public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
-            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: Message, content: null,  response.GetErrorCode(Code));
+        public Exception CreateException(ClientDiagnostics clientDiagnostics, Response response)
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(
+                response,
+                message: Message,
+                content: null,
+                response.GetErrorCode(Code),
+                AdditionalInformation);
     }
 
     /// <summary>

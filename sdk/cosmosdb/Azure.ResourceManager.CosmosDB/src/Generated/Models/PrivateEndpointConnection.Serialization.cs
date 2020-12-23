@@ -57,15 +57,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("privateEndpoint"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             privateEndpoint = PrivateEndpointProperty.DeserializePrivateEndpointProperty(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             privateLinkServiceConnectionState = PrivateLinkServiceConnectionStateProperty.DeserializePrivateLinkServiceConnectionStateProperty(property0.Value);
                             continue;
                         }

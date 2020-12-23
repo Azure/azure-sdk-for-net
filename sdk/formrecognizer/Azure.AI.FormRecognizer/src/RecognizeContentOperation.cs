@@ -70,13 +70,14 @@ namespace Azure.AI.FormRecognizer.Models
         public override bool HasValue => _value != null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class.
+        /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class which
+        /// tracks the status of a long-running operation for recognizing layout elements from forms.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         public RecognizeContentOperation(string operationId, FormRecognizerClient client)
         {
-            // TODO: Add argument validation here.
+            Argument.AssertNotNull(client, nameof(client));
 
             Id = operationId;
             _serviceClient = client.ServiceClient;
@@ -181,7 +182,7 @@ namespace Azure.AI.FormRecognizer.Models
 
                     if (update.Value.Status == OperationStatus.Succeeded)
                     {
-                        // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
+                        // we need to first assign a value and then mark the operation as completed to avoid race conditions
                         _value = ConvertValue(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
                         _hasCompleted = true;
                     }

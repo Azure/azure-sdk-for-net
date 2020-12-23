@@ -21,7 +21,6 @@ namespace Azure.AI.FormRecognizer.Samples
             string resourceId = TestEnvironment.TargetResourceId;
             string resourceRegion = TestEnvironment.TargetResourceRegion;
 
-
             #region Snippet:FormRecognizerSampleCreateCopySourceClient
             //@@ string endpoint = "<source_endpoint>";
             //@@ string apiKey = "<source_apiKey>";
@@ -30,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
 
             // For the purpose of this sample, we are going to create a trained model to copy. Please note that
-            // if you already have a model, this is not neccesary.
+            // if you already have a model, this is not necessary.
             CustomFormModel model = await sourceClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
             string modelId = model.ModelId;
 

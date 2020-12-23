@@ -29,8 +29,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Attachments))
             {
-                writer.WritePropertyName("attachments");
-                writer.WriteObjectValue(Attachments);
+                if (Attachments != null)
+                {
+                    writer.WritePropertyName("attachments");
+                    writer.WriteObjectValue(Attachments);
+                }
+                else
+                {
+                    writer.WriteNull("attachments");
+                }
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -83,11 +90,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("attachments"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        attachments = null;
+                        continue;
+                    }
                     attachments = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<NotebookCellOutputItem> array = new List<NotebookCellOutputItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

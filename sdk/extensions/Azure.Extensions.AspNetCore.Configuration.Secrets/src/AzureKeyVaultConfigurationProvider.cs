@@ -144,6 +144,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         public void Dispose()
         {
             _cancellationToken.Cancel();
+            _cancellationToken.Dispose();
         }
 
         private readonly struct LoadedSecret

@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (property.NameEquals("subnet"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     subnet = Subnet.DeserializeSubnet(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ignoreMissingVnetServiceEndpoint"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ignoreMissingVnetServiceEndpoint = property.Value.GetBoolean();
                     continue;
                 }

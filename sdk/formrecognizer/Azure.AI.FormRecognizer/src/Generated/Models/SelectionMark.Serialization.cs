@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("state"))
                 {
-                    state = new SelectionMarkState(property.Value.GetString());
+                    state = property.Value.GetString().ToSelectionMarkState();
                     continue;
                 }
             }

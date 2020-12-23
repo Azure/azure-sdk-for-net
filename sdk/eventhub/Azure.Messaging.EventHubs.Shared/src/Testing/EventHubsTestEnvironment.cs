@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private readonly Lazy<TimeSpan> ActivePerTestExecutionLimit;
 
         /// <summary>The connection string for the active Event Hubs namespace for this test run, lazily created.</summary>
-        private readonly Lazy<ConnectionStringProperties> ParsedConnectionString;
+        private readonly Lazy<EventHubsConnectionStringProperties> ParsedConnectionString;
 
         /// <summary>
         ///   The shared instance of the <see cref="EventHubsTestEnvironment"/> to be used during test runs.
@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The fully qualified namespace, as contained within the associated connection string.</value>
         ///
-        public string FullyQualifiedNamespace => ParsedConnectionString.Value.Endpoint.Host;
+        public string FullyQualifiedNamespace => ParsedConnectionString.Value.FullyQualifiedNamespace;
 
         /// <summary>
         ///   The name of the Event Hub to use during Live tests.
@@ -137,9 +137,9 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Initializes a new instance of <see cref="EventHubsTestEnvironment"/>.
         /// </summary>
         ///
-        private EventHubsTestEnvironment() : base("eventhub")
+        public EventHubsTestEnvironment()
         {
-            ParsedConnectionString = new Lazy<ConnectionStringProperties>(() => ConnectionStringParser.Parse(EventHubsConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
+            ParsedConnectionString = new Lazy<EventHubsConnectionStringProperties>(() => EventHubsConnectionStringProperties.Parse(EventHubsConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
             ActiveEventHubsNamespace = new Lazy<NamespaceProperties>(EnsureEventHubsNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
 
             ActivePerTestExecutionLimit = new Lazy<TimeSpan>(() =>
@@ -152,7 +152,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 return TimeSpan.FromMinutes(interval);
-
             }, LazyThreadSafetyMode.PublicationOnly);
         }
 
@@ -168,25 +167,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public string BuildConnectionStringForEventHub(string eventHubName) => $"{ EventHubsConnectionString };EntityPath={ eventHubName }";
 
         /// <summary>
-        ///   Builds a connection string for the Event Hubs namespace used for Live tests, creating a shared access signature
-        ///   in place of the shared key.
-        /// </summary>
-        ///
-        /// <param name="eventHubName">The name of the Event Hub to base the connection string on.</param>
-        /// <param name="signatureAudience">The audience to use for the shared access signature.</param>
-        /// <param name="validDurationMinutes">The duration, in minutes, that the signature should be considered valid for.</param>
-        ///
-        /// <returns>The namespace connection string with a shared access signature based on the shared key of the current scope.</value>
-        ///
-        public string BuildConnectionStringWithSharedAccessSignature(string eventHubName,
-                                                                     string signatureAudience,
-                                                                     int validDurationMinutes = 30)
-        {
-            var signature = new SharedAccessSignature(signatureAudience, SharedAccessKeyName, SharedAccessKey, TimeSpan.FromMinutes(validDurationMinutes));
-            return $"Endpoint={ ParsedConnectionString.Value.Endpoint };EntityPath={ eventHubName };SharedAccessSignature={ signature.Value }";
-        }
-
-        /// <summary>
         ///   Ensures that an Event Hubs namespace is available for the test run, using one if provided by the
         ///   <see cref="EventHubsNamespaceConnectionStringEnvironmentVariable" /> or creating a new Azure resource specific
         ///   to the current run.
@@ -200,11 +180,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if (!string.IsNullOrEmpty(environmentConnectionString))
             {
-                var parsed = ConnectionStringParser.Parse(environmentConnectionString);
+                var parsed = EventHubsConnectionStringProperties.Parse(environmentConnectionString);
 
                 return new NamespaceProperties
                 (
-                    parsed.Endpoint.Host.Substring(0, parsed.Endpoint.Host.IndexOf('.')),
+                    parsed.FullyQualifiedNamespace.Substring(0, parsed.FullyQualifiedNamespace.IndexOf('.')),
                     environmentConnectionString.Replace($";EntityPath={ parsed.EventHubName }", string.Empty),
                     shouldRemoveAtCompletion: false
                 );

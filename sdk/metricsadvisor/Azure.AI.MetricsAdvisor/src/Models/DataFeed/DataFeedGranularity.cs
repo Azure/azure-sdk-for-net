@@ -4,13 +4,14 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
+    /// The frequency with which ingestion from the data source will occur.
     /// </summary>
     public class DataFeedGranularity
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedGranularity"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedGranularity"/> class.
         /// </summary>
-        /// <param name="granularityType"></param>
+        /// <param name="granularityType">The type of <see cref="DataFeedGranularity"/>.</param>
         public DataFeedGranularity(DataFeedGranularityType granularityType)
         {
             GranularityType = granularityType;
@@ -23,13 +24,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// The type of <see cref="DataFeedGranularity"/>.
         /// </summary>
         public DataFeedGranularityType GranularityType { get; }
 
         /// <summary>
-        /// The custom granularity value. This property must be set if <see cref="DataFeedGranularity.GranularityType"/> is <see cref="DataFeedGranularityType.Custom"/>.
+        /// The custom granularity value, in seconds. This property must be set if <see cref="GranularityType"/>
+        /// is <see cref="DataFeedGranularityType.Custom"/>.
         /// </summary>
-        /// <value></value>
         public int? CustomGranularityValue { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 # Azure KeyVault Administration client library for .NET
 
-Azure Key Vault is a cloud service for securely storing and accessing secrets. A secret is anything to which you want to tightly control 
-access, such as API keys, passwords, or certificates. A vault is a logical group of secrets.
+Azure Key Vault Managed HSM is a fully-managed, highly-available, single-tenant, standards-compliant cloud service that enables you to safeguard
+cryptographic keys for your cloud applications using FIPS 140-2 Level 3 validated HSMs.
 
 The Azure Key Vault administration library clients support administrative tasks such as full backup / restore and key-level role-based access control (RBAC).
 
@@ -13,7 +13,7 @@ The Azure Key Vault administration library clients support administrative tasks 
 Install the Azure Key Vault administration client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet install Azure.Security.KeyVault.Administration --version 4.0.0-beta.1
+dotnet add package Azure.Security.KeyVault.Administration --version 4.0.0-beta.1
 ```
 
 ### Prerequisites
@@ -32,7 +32,7 @@ Client secret credential authentication is being used in this getting started se
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
-dotnet install Azure.Identity
+dotnet add package Azure.Identity
 ```
 
 #### Create/Get credentials
@@ -68,9 +68,9 @@ environment variables. The following example shows a way to do this in Powershel
     $Env:AZURE_TENANT_ID="tenant-ID"
     ```
 
-* Create the Key Vault and grant the above mentioned application authorization to perform administrative operations on the Azure Key Vault 
+* Create the Managed HSM and grant the above mentioned application authorization to perform administrative operations on the Managed HSM 
 (replace `<your-resource-group-name>` and `<your-key-vault-name>` with your own, unique names and `<your-service-principal-object-id>` with the value from above):
-    ```
+    ```PowerShell
     az keyvault create --hsm-name <your-key-vault-name> --resource-group <your-resource-group-name> --administrators <your-service-principal-object-id> --location <your-azure-location>
     ```
 
@@ -78,6 +78,33 @@ environment variables. The following example shows a way to do this in Powershel
     ```PowerShell
     az keyvault show --hsm-name <your-key-vault-name>
     ```
+
+#### Activate your managed HSM
+All data plane commands are disabled until the HSM is activated. You will not be able to create keys or assign roles. 
+Only the designated administrators that were assigned during the create command can activate the HSM. To activate the HSM you must download the security domain.
+
+To activate your HSM you need:
+- Minimum 3 RSA key-pairs (maximum 10)
+- Specify minimum number of keys required to decrypt the security domain (quorum)
+
+To activate the HSM you send at least 3 (maximum 10) RSA public keys to the HSM. The HSM encrypts the security domain with these keys and sends it back. 
+Once this security domain is successfully downloaded, your HSM is ready to use. 
+You also need to specify quorum, which is the minimum number of private keys required to decrypt the security domain.
+
+The example below shows how to use openssl to generate 3 self signed certificate.
+
+```PowerShell
+openssl req -newkey rsa:2048 -nodes -keyout cert_0.key -x509 -days 365 -out cert_0.cer
+openssl req -newkey rsa:2048 -nodes -keyout cert_1.key -x509 -days 365 -out cert_1.cer
+openssl req -newkey rsa:2048 -nodes -keyout cert_2.key -x509 -days 365 -out cert_2.cer
+```
+
+Use the `az keyvault security-domain download` command to download the security domain and activate your managed HSM. 
+The example below, uses 3 RSA key pairs (only public keys are needed for this command) and sets the quorum to 2.
+
+```PowerShell
+az keyvault security-domain download --hsm-name <your-key-vault-name> --sd-wrapping-keys ./certs/cert_0.cer ./certs/cert_1.cer ./certs/cert_2.cer --sd-quorum 2 --security-domain-file ContosoMHSM-SD.json
+```
 
 #### Create KeyVaultAccessControlClient
 Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** 
@@ -124,11 +151,11 @@ A `RestoreOperation` represents a long running operation for both a full key and
 ## Examples
 The Azure.Security.KeyVault.Administration package supports synchronous and asynchronous APIs.
 
-The following section provides several code snippets using the `client` created above for either [access control](#create-keyvaultaccesscontrolclient) or [backup](#create-KeyVaultBackupClient) clients, covering some of the most common Azure Key Vault access control related tasks:
+The following section provides several code snippets using the `client` created above for either [access control](#create-keyvaultaccesscontrolclient) or [backup](#create-keyvaultbackupclient) clients, covering some of the most common Azure Key Vault access control related tasks:
 
 ### Sync examples
 - Access control
-    - [Listing All Role Definitions](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#listing-all-role-definitions-sync)
+    - [Listing All Role Definitions](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#listing-all-role-definitions)
     - [Listing All Role Assignments](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#listing-all-role-assignments)
     - [Creating a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#creating-a-role-assignment)
     - [Getting a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#getting-a-role-assignment)
@@ -139,7 +166,7 @@ The following section provides several code snippets using the `client` created 
 
 ### Async examples
 - Access control
-    - [Listing All Role Definitions](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#listing-all-role-definitions-sync)
+    - [Listing All Role Definitions](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#listing-all-role-definitions)
     - [Listing All Role Assignments](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#listing-all-role-assignments)
     - [Creating a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#creating-a-role-assignment)
     - [Getting a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#getting-a-role-assignment)
@@ -199,11 +226,11 @@ Get started with our [samples][admin_client_samples].
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
 the right to, and actually do, grant us the rights to use your contribution. For
-details, visit [cla.microsoft.com][cla].
+details, visit https://cla.microsoft.com.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][coc].
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct].
 For more information see the [Code of Conduct FAQ][coc_faq]
-or contact [opencode@microsoft.com][coc_contact] with any
+or contact opencode@microsoft.com with any
 additional questions or comments.
 
 <!-- LINKS -->
@@ -223,6 +250,6 @@ additional questions or comments.
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Microsoft.Azure.KeyVault/CONTRIBUTING.md
-
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftables%2FAzure.Data.Tables%2FREADME.png)

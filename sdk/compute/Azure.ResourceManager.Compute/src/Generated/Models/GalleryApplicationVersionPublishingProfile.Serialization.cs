@@ -87,11 +87,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("enableHealthCheck"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enableHealthCheck = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("targetRegions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TargetRegion> array = new List<TargetRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -102,26 +112,51 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("replicaCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     replicaCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("excludeFromLatest"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     excludeFromLatest = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("publishedDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     publishedDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endOfLifeDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     endOfLifeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("storageAccountType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }

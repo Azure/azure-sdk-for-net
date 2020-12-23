@@ -15,7 +15,7 @@ namespace Azure.Communication.Chat
             Id = chatThreadInternal.Id;
             Topic = chatThreadInternal.Topic;
             CreatedOn = chatThreadInternal.CreatedOn;
-            CreatedBy = new CommunicationUser(chatThreadInternal.CreatedBy);
+            CreatedBy = new CommunicationUserIdentifier(chatThreadInternal.CreatedBy);
             Members = chatThreadInternal.Members.Select(x => x.ToChatThreadMember()).ToList();
         }
 
@@ -26,7 +26,7 @@ namespace Azure.Communication.Chat
         /// <summary> The timestamp when the chat thread was created. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Id of the chat thread owner. </summary>
-        public CommunicationUser CreatedBy { get; }
+        public CommunicationUserIdentifier CreatedBy { get; }
         /// <summary> Chat thread members. </summary>
         public IReadOnlyList<ChatThreadMember> Members { get; }
     }

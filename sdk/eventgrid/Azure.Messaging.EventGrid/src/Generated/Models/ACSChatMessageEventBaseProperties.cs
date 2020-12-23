@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
-        internal ACSChatMessageEventBaseProperties(string recipientId, string transactionId, string threadId, string messageId, string senderId, string senderDisplayName, DateTimeOffset? composeTime, string type, int? version) : base(recipientId, transactionId, threadId)
+        internal ACSChatMessageEventBaseProperties(string recipientId, string transactionId, string threadId, string messageId, string senderId, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version) : base(recipientId, transactionId, threadId)
         {
             MessageId = messageId;
             SenderId = senderId;
@@ -48,6 +48,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The type of the message. </summary>
         public string Type { get; }
         /// <summary> The version of the message. </summary>
-        public int? Version { get; }
+        public long? Version { get; }
     }
 }

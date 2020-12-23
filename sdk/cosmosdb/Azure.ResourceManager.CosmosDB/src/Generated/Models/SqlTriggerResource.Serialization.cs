@@ -55,11 +55,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("triggerType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     triggerType = new TriggerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("triggerOperation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     triggerOperation = new TriggerOperation(property.Value.GetString());
                     continue;
                 }

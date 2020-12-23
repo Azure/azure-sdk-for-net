@@ -35,21 +35,41 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("data"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     data = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("ename"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        ename = null;
+                        continue;
+                    }
                     ename = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("evalue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        evalue = null;
+                        continue;
+                    }
                     evalue = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("traceback"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        traceback = null;
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -1,0 +1,30 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+trigger:
+  branches:
+    include:
+    - master
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/mixedreality/
+
+pr:
+  branches:
+    include:
+    - master
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/mixedreality/
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: mixedreality
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.MixedReality.Authentication
+      safeName: AzureMixedRealityAuthentication

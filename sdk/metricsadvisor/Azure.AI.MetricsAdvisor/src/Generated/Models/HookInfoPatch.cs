@@ -27,7 +27,5 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Description { get; set; }
         /// <summary> hook external link. </summary>
         public string ExternalLink { get; set; }
-        /// <summary> hook administrators. </summary>
-        public IReadOnlyList<string> Admins { get; }
     }
 }

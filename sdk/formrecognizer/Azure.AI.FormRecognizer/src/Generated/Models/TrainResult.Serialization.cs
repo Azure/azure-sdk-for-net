@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Training;
@@ -20,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments = default;
             Optional<IReadOnlyList<CustomFormModelField>> fields = default;
             Optional<float> averageModelAccuracy = default;
-            Optional<Guid> modelId = default;
+            Optional<string> modelId = default;
             Optional<IReadOnlyList<FormRecognizerError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,6 +35,11 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("fields"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<CustomFormModelField> array = new List<CustomFormModelField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -46,16 +50,26 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("averageModelAccuracy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     averageModelAccuracy = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("modelId"))
                 {
-                    modelId = property.Value.GetGuid();
+                    modelId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("errors"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -65,7 +79,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TrainResult(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), Optional.ToNullable(modelId), Optional.ToList(errors));
+            return new TrainResult(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), modelId.Value, Optional.ToList(errors));
         }
     }
 }

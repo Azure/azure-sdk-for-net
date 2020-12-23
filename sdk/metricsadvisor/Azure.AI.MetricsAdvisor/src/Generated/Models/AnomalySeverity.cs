@@ -25,13 +25,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string LowValue = "Low";
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
-
-        /// <summary> Low. </summary>
-        public static AnomalySeverity Low { get; } = new AnomalySeverity(LowValue);
-        /// <summary> Medium. </summary>
-        public static AnomalySeverity Medium { get; } = new AnomalySeverity(MediumValue);
-        /// <summary> High. </summary>
-        public static AnomalySeverity High { get; } = new AnomalySeverity(HighValue);
         /// <summary> Determines if two <see cref="AnomalySeverity"/> values are the same. </summary>
         public static bool operator ==(AnomalySeverity left, AnomalySeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnomalySeverity"/> values are not the same. </summary>

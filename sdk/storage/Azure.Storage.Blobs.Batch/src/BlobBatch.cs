@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Storage requires each batch request to contain the same type of
         /// operation.
         /// </summary>
-        private BlobBatchOperationType? _operationType = null;
+        private BlobBatchOperationType? _operationType;
 
         /// <summary>
         /// The list of messages that will be sent as part of this batch.
@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// A value indicating whether the batch has already been submitted.
         /// </summary>
-        internal bool Submitted { get; private set; } = false;
+        internal bool Submitted { get; private set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobBatch"/> for mocking.

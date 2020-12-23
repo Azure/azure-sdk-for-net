@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> senderDisplayName = default;
             Optional<DateTimeOffset> composeTime = default;
             Optional<string> type = default;
-            Optional<int> version = default;
+            Optional<long> version = default;
             Optional<string> recipientId = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
@@ -43,6 +43,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("composeTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     composeTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -53,7 +58,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("version"))
                 {
-                    version = property.Value.GetInt32();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    version = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("recipientId"))

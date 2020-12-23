@@ -2,13 +2,13 @@ namespace Azure.Messaging.EventGrid
 {
     public static partial class BinaryDataExtensions
     {
-        public static Azure.Messaging.EventGrid.CloudEvent ToCloudEvent(this Azure.BinaryData binaryData) { throw null; }
-        public static Azure.Messaging.EventGrid.EventGridEvent ToEventGridEvent(this Azure.BinaryData binaryData) { throw null; }
+        public static Azure.Messaging.EventGrid.CloudEvent ToCloudEvent(this System.BinaryData binaryData) { throw null; }
+        public static Azure.Messaging.EventGrid.EventGridEvent ToEventGridEvent(this System.BinaryData binaryData) { throw null; }
     }
     public partial class CloudEvent
     {
         public CloudEvent(string source, string type) { }
-        public CloudEvent(string source, string type, Azure.BinaryData data, string dataContentType = null) { }
+        public CloudEvent(string source, string type, System.BinaryData data, string dataContentType = null) { }
         public CloudEvent(string source, string type, object data, string dataContentType = null) { }
         public string DataContentType { get { throw null; } set { } }
         public string DataSchema { get { throw null; } set { } }
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid
         public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Messaging.EventGrid.CloudEvent[] Parse(Azure.BinaryData requestContent) { throw null; }
+        public static Azure.Messaging.EventGrid.CloudEvent[] Parse(System.BinaryData requestContent) { throw null; }
         public static Azure.Messaging.EventGrid.CloudEvent[] Parse(string requestContent) { throw null; }
     }
     public partial class EventGridEvent
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid
         public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(Azure.BinaryData requestContent) { throw null; }
+        public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(System.BinaryData requestContent) { throw null; }
         public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(string requestContent) { throw null; }
     }
     public partial class EventGridPublisherClient
@@ -49,6 +49,10 @@ namespace Azure.Messaging.EventGrid
         public EventGridPublisherClient(System.Uri endpoint, Azure.Messaging.EventGrid.EventGridSharedAccessSignatureCredential credential) { }
         public EventGridPublisherClient(System.Uri endpoint, Azure.Messaging.EventGrid.EventGridSharedAccessSignatureCredential credential, Azure.Messaging.EventGrid.EventGridPublisherClientOptions options) { }
         public static string BuildSharedAccessSignature(System.Uri endpoint, System.DateTimeOffset expirationUtc, Azure.AzureKeyCredential key, Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion apiVersion = Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion.V2018_01_01) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response SendEncodedCloudEvents(System.ReadOnlyMemory<byte> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendEncodedCloudEventsAsync(System.ReadOnlyMemory<byte> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.EventGridEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendEvents(System.Collections.Generic.IEnumerable<object> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -114,7 +118,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SenderDisplayName { get { throw null; } }
         public string SenderId { get { throw null; } }
         public string Type { get { throw null; } }
-        public int? Version { get { throw null; } }
+        public long? Version { get { throw null; } }
     }
     public partial class ACSChatMessageReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.ACSChatMessageEventBaseProperties
     {
@@ -132,7 +136,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal ACSChatThreadEventBaseProperties() { }
         public System.DateTimeOffset? CreateTime { get { throw null; } }
-        public int? Version { get { throw null; } }
+        public long? Version { get { throw null; } }
     }
     public partial class ACSChatThreadMemberProperties
     {
@@ -153,31 +157,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string DeletedBy { get { throw null; } }
         public System.DateTimeOffset? DeleteTime { get { throw null; } }
     }
-    public partial class AcssmsDeliveryAttemptProperties
+    public partial class AcsSmsDeliveryAttemptProperties
     {
-        internal AcssmsDeliveryAttemptProperties() { }
+        internal AcsSmsDeliveryAttemptProperties() { }
         public int? SegmentsFailed { get { throw null; } }
         public int? SegmentsSucceeded { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
-    public partial class AcssmsDeliveryReportReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcssmsEventBaseProperties
+    public partial class AcsSmsDeliveryReportReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsSmsEventBaseProperties
     {
-        internal AcssmsDeliveryReportReceivedEventData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcssmsDeliveryAttemptProperties> DeliveryAttempts { get { throw null; } }
+        internal AcsSmsDeliveryReportReceivedEventData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties> DeliveryAttempts { get { throw null; } }
         public string DeliveryStatus { get { throw null; } }
         public string DeliveryStatusDetails { get { throw null; } }
         public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
     }
-    public partial class AcssmsEventBaseProperties
+    public partial class AcsSmsEventBaseProperties
     {
-        internal AcssmsEventBaseProperties() { }
+        internal AcsSmsEventBaseProperties() { }
         public string From { get { throw null; } }
         public string MessageId { get { throw null; } }
         public string To { get { throw null; } }
     }
-    public partial class AcssmsReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcssmsEventBaseProperties
+    public partial class AcsSmsReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsSmsEventBaseProperties
     {
-        internal AcssmsReceivedEventData() { }
+        internal AcsSmsReceivedEventData() { }
         public string Message { get { throw null; } }
         public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
     }
@@ -439,6 +443,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class IotHubDeviceTelemetryEventData : Azure.Messaging.EventGrid.SystemEvents.DeviceTelemetryEventProperties
     {
         internal IotHubDeviceTelemetryEventData() { }
+    }
+    public partial class KeyVaultAccessPolicyChangedEventData
+    {
+        internal KeyVaultAccessPolicyChangedEventData() { }
+        public float? Exp { get { throw null; } }
+        public string Id { get { throw null; } }
+        public float? Nbf { get { throw null; } }
+        public string ObjectName { get { throw null; } }
+        public string ObjectType { get { throw null; } }
+        public string VaultName { get { throw null; } }
+        public string Version { get { throw null; } }
     }
     public partial class KeyVaultCertificateExpiredEventData
     {
@@ -1328,5 +1343,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Name { get { throw null; } }
         public string RequestId { get { throw null; } }
         public string Verb { get { throw null; } }
+    }
+}
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class EventGridPublisherClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.EventGridPublisherClient, Azure.Messaging.EventGrid.EventGridPublisherClientOptions> AddEventGridPublisherClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.EventGridPublisherClient, Azure.Messaging.EventGrid.EventGridPublisherClientOptions> AddEventGridPublisherClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.Messaging.EventGrid.EventGridSharedAccessSignatureCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.EventGridPublisherClient, Azure.Messaging.EventGrid.EventGridPublisherClientOptions> AddEventGridPublisherClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

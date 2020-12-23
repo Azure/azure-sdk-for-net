@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,7 +32,6 @@ namespace Azure.Identity
         public InteractiveBrowserCredential()
             : this(null, Constants.DeveloperSignOnClientId, null, null)
         {
-
         }
 
         /// <summary>
@@ -49,10 +49,10 @@ namespace Azure.Identity
         /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string clientId)
             : this(null, clientId, null, null)
         {
-
         }
 
         /// <summary>
@@ -62,8 +62,9 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         /// <param name="options">The client options for the newly created <see cref="InteractiveBrowserCredential"/>.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
-            : this(tenantId, clientId, options, null, null)
+            : this(Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull:true), clientId, options, null, null)
         {
         }
 
@@ -132,7 +133,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -143,7 +144,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -181,7 +182,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)Record, async, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, Record, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }

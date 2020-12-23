@@ -167,8 +167,6 @@ namespace Azure.Storage.Blobs.Samples
             container.Delete();
         }
 
-
-
         /// <summary>
         /// Trigger a recoverable error.
         /// </summary>
@@ -195,7 +193,6 @@ namespace Azure.Storage.Blobs.Samples
             catch (RequestFailedException ex)
                 when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted ||
                       ex.ErrorCode == BlobErrorCode.ContainerNotFound)
-
             {
                 // Ignore any errors if the container being deleted or if it has already been deleted
             }

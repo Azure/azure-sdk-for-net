@@ -11,54 +11,61 @@ using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
 {
-    [Ignore("Only verifying that the sample builds")]
     public class Sample01_ReadmeSnippets : SamplesBase<SchemaRegistryClientTestEnvironment>
     {
-        [Ignore("Only verifying that the sample builds")]
-        [Test]
+#pragma warning disable IDE1006 // Naming Styles
+        private SchemaRegistryClient schemaRegistryClient;
+#pragma warning restore IDE1006 // Naming Styles
+        private byte[] _memoryStreamBytes;
+
+        [OneTimeSetUp]
         public void CreateSchemaRegistryClient()
         {
+            string endpoint = TestEnvironment.SchemaRegistryEndpoint;
+
             #region Snippet:SchemaRegistryAvroCreateSchemaRegistryClient
-            string endpoint = "<event_hubs_namespace_hostname>";
-            var credentials = new ClientSecretCredential(
-                "<tenant_id>",
-                "<client_id>",
-                "<client_secret>"
-            );
-            var client = new SchemaRegistryClient(endpoint, credentials);
+            // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
+            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+            // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+            var schemaRegistryClient = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
             #endregion
+
+            this.schemaRegistryClient = schemaRegistryClient;
         }
 
-        [Ignore("Only verifying that the sample builds")]
         [Test]
+        [Order(1)]
         public void Serialize()
         {
-            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
+            string groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryAvroSerialize
             var employee = new Employee { Age = 42, Name = "John Doe" };
-            string groupName = "<schema_group_name>";
 
             using var memoryStream = new MemoryStream();
-            var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            var serializer = new SchemaRegistryAvroObjectSerializer(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken.None);
             #endregion
+
+            Assert.IsTrue(memoryStream.Length > 0);
+            _memoryStreamBytes = memoryStream.ToArray();
         }
 
-        [Ignore("Only verifying that the sample builds")]
         [Test]
+        [Order(2)]
         public void Deserialize()
         {
-            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
-            using var memoryStream = new MemoryStream();
+            using var memoryStream = new MemoryStream(_memoryStreamBytes);
+            string groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryAvroDeserialize
-            string groupName = "<schema_group_name>";
-
-            var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            var serializer = new SchemaRegistryAvroObjectSerializer(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             memoryStream.Position = 0;
             Employee employee = (Employee)serializer.Deserialize(memoryStream, typeof(Employee), CancellationToken.None);
             #endregion
+
+            Assert.AreEqual(42, employee.Age);
+            Assert.AreEqual("John Doe", employee.Name);
         }
     }
 }

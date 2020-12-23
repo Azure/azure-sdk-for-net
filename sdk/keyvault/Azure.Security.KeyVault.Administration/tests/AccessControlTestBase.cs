@@ -5,20 +5,16 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Administration.Models;
-using Azure.Security.KeyVault.Keys;
-using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    public class AccessControlTestBase : RecordedTestBase<KeyVaultTestEnvironment>
+    public abstract class AccessControlTestBase : AdministrationTestBase
     {
-        public KeyVaultAccessControlClient Client { get; set; }
-        public KeyClient KeyClient { get; set; }
+        private readonly ConcurrentQueue<(string Name, string Scope)> _roleAssignmentsToDelete = new ConcurrentQueue<(string Name, string Scope)>();
 
-        public Uri VaultUri { get; set; }
+        public KeyVaultAccessControlClient Client { get; private set; }
 
 #pragma warning disable IDE1006 // Naming Styles
         internal KeyVaultAccessControlClient client;
@@ -29,58 +25,36 @@ namespace Azure.Security.KeyVault.Administration.Tests
         internal string _roleDefinitionId;
         internal string _objectId;
 
-        private readonly ConcurrentQueue<(string Name, string Scope)> _roleAssignmentsToDelete = new ConcurrentQueue<(string Name, string Scope)>();
-
-        public AccessControlTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        { }
-
-        public AccessControlTestBase(bool isAsync) : base(isAsync)
+        public AccessControlTestBase(bool isAsync, RecordedTestMode? mode)
+            : base(isAsync, mode)
         { }
 
         internal KeyVaultAccessControlClient GetClient(TestRecording recording = null)
         {
-            recording ??= Recording;
-
             return InstrumentClient
                 (new KeyVaultAccessControlClient(
-                    new Uri(TestEnvironment.KeyVaultUrl),
+                    Uri,
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyVaultAccessControlClientOptions())));
+                    InstrumentClientOptions(new KeyVaultAdministrationClientOptions())));
         }
 
-        internal KeyClient GetKeyClient(TestRecording recording = null)
-        {
-            recording ??= Recording;
-
-            return InstrumentClient
-                (new KeyClient(
-                    new Uri(TestEnvironment.KeyVaultUrl),
-                    TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyClientOptions())));
-        }
-
-        [SetUp]
-        public void ClearChallengeCacheforRecord()
+        protected override void Start()
         {
             Client = GetClient();
-            KeyClient = GetKeyClient();
 
-            // in record mode we reset the challenge cache before each test so that the challenge call
-            // is always made.  This allows tests to be replayed independently and in any order
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
-            }
+            base.Start();
         }
 
         [TearDown]
-        public async Task Cleanup()
+        public override async Task Cleanup()
         {
             // Start deleting resources as soon as possible.
             while (_roleAssignmentsToDelete.TryDequeue(out var assignment))
             {
                 await DeleteRoleAssignment(assignment);
             }
+
+            await base.Cleanup();
         }
 
         protected async Task DeleteRoleAssignment((string Name, string Scope) assignment)

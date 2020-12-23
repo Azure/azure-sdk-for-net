@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "55ba2ceb-4089-2af8-da93-497a15d94e72",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "55ba2ceb-4089-2af8-da93-497a15d94e72",
         "x-ms-request-id": "c9ef6e43-f01a-0012-0137-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "9e2c911c-88e1-27f8-6987-52096b2c4cec",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": {
         "permission": "invalidPermission"
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "9e2c911c-88e1-27f8-6987-52096b2c4cec",
         "x-ms-error-code": "FileInvalidPermission",
         "x-ms-request-id": "c9ef6e45-f01a-0012-0237-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EFileInvalidPermission\u003C/Code\u003E\u003CMessage\u003EThe specified file permission is not valid.\n",
@@ -86,7 +86,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:48:46 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -99,7 +99,7 @@
         ],
         "x-ms-client-request-id": "835de06a-afac-0890-fe25-e3f3cb531cd3",
         "x-ms-request-id": "c9ef6e46-f01a-0012-0337-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

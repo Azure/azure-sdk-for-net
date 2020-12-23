@@ -27,6 +27,7 @@ namespace Microsoft.Azure.ServiceBus
         const string TransportTypeConfigName = "TransportType";
 
         const string OperationTimeoutConfigName = "OperationTimeout";
+        const string ConnectionIdleTimeoutConfigName = "ConnectionIdleTimeout";
 
         string entityPath, sasKeyName, sasKey, sasToken, endpoint;
         AuthenticationType authType = AuthenticationType.Other;
@@ -244,6 +245,13 @@ namespace Microsoft.Azure.ServiceBus
         public TimeSpan OperationTimeout { get; set; } = Constants.DefaultOperationTimeout;
 
         /// <summary>
+        /// Maximum duration after which an idle connection is closed.A connection is considered
+        /// idle if it receives no traffic.
+        /// </summary>
+        /// <remarks>Defaults to null.</remarks>
+        public TimeSpan? ConnectionIdleTimeout { get; set; }
+
+        /// <summary>
         /// Enables Azure Active Directory Managed Identity authentication when set to ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity
         /// </summary>
         public AuthenticationType Authentication
@@ -308,6 +316,11 @@ namespace Microsoft.Azure.ServiceBus
             if (this.Authentication == AuthenticationType.ManagedIdentity)
             {
                 connectionStringBuilder.Append(AuthenticationConfigName).Append(KeyValueSeparator).Append("Managed Identity").Append(KeyValuePairDelimiter);
+            }
+
+            if (this.ConnectionIdleTimeout.HasValue)
+            {
+                connectionStringBuilder.Append(ConnectionIdleTimeoutConfigName).Append(KeyValueSeparator).Append(this.ConnectionIdleTimeout.Value).Append(KeyValuePairDelimiter);
             }
 
             return connectionStringBuilder.ToString().Trim(';');
@@ -414,6 +427,26 @@ namespace Microsoft.Azure.ServiceBus
                     if (!Enum.TryParse(value, true, out this.authType))
                     {
                         this.authType = AuthenticationType.Other;
+                    }
+                }
+                else if (key.Equals(ConnectionIdleTimeoutConfigName, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (int.TryParse(value, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out var timeoutInSeconds))
+                    {
+                        this.ConnectionIdleTimeout = TimeSpan.FromSeconds(timeoutInSeconds);
+                    }
+                    else if (TimeSpan.TryParse(value, NumberFormatInfo.InvariantInfo, out var connectionIdleTimeout))
+                    {
+                        this.ConnectionIdleTimeout = connectionIdleTimeout;
+                    }
+                    else
+                    {
+                        throw Fx.Exception.Argument(nameof(connectionString), $"The {ConnectionIdleTimeoutConfigName} ({value}) format is invalid. It must be an integer representing a number of seconds or a timespan.");
+                    }
+
+                    if (this.ConnectionIdleTimeout.Value.TotalMilliseconds <= 0)
+                    {
+                        throw Fx.Exception.Argument(nameof(connectionString), $"The {ConnectionIdleTimeoutConfigName} ({value}) must be greater than zero.");
                     }
                 }
                 else

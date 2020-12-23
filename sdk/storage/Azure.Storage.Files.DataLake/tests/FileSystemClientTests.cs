@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -102,6 +103,66 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task Ctor_ConnectionString_RoundTrip()
+        {
+            // Arrage
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            DataLakeFileSystemClient fileSystem = InstrumentClient(new DataLakeFileSystemClient(connectionString, GetNewFileSystemName(), GetOptions()));
+
+            // Act
+            try
+            {
+                await fileSystem.CreateAsync();
+                DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(GetNewDirectoryName()));
+                await directory.CreateAsync();
+
+                IList<PathItem> paths = await fileSystem.GetPathsAsync().ToListAsync();
+
+                // Assert
+                Assert.AreEqual(1, paths.Count);
+            }
+
+            // Cleanup
+            finally
+            {
+                await fileSystem.DeleteAsync();
+            }
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_GenerateSas()
+        {
+            // Arrage
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            DataLakeFileSystemClient fileSystem = InstrumentClient(new DataLakeFileSystemClient(connectionString, GetNewFileSystemName(), GetOptions()));
+
+            // Act
+            try
+            {
+                await fileSystem.CreateAsync();
+                Uri sasUri = fileSystem.GenerateSasUri(
+                    DataLakeFileSystemSasPermissions.All,
+                    Recording.UtcNow.AddDays(1));
+
+                DataLakeFileSystemClient sasFileSystem = InstrumentClient(new DataLakeFileSystemClient(sasUri, GetOptions()));
+
+                DataLakeDirectoryClient directory = InstrumentClient(sasFileSystem.GetDirectoryClient(GetNewDirectoryName()));
+                await directory.CreateAsync();
+
+                IList<PathItem> paths = await sasFileSystem.GetPathsAsync().ToListAsync();
+
+                // Assert
+                Assert.AreEqual(1, paths.Count);
+            }
+
+            // Cleanup
+            finally
+            {
+                await fileSystem.DeleteAsync();
+            }
+        }
+
+        [Test]
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
@@ -172,7 +233,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
             finally
             {
-                await fileSystem.DeleteAsync();
+                await fileSystem.DeleteIfExistsAsync();
             }
         }
 
@@ -194,7 +255,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
             finally
             {
-                await fileSystem.DeleteAsync();
+                await fileSystem.DeleteIfExistsAsync();
             }
         }
 
@@ -222,7 +283,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 if (!pass)
                 {
-                    await fileSystem.DeleteAsync();
+                    await fileSystem.DeleteIfExistsAsync();
                 }
             }
         }
@@ -249,7 +310,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
             finally
             {
-                await fileSystem.DeleteAsync();
+                await fileSystem.DeleteIfExistsAsync();
             }
         }
 
@@ -269,7 +330,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertDictionaryEquality(metadata, response.Value.Metadata);
 
             // Cleanup
-            await fileSystem.DeleteAsync();
+            await fileSystem.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -287,7 +348,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(Models.PublicAccessType.Path, response.Value.PublicAccess);
 
             // Cleanup
-            await fileSystem.DeleteAsync();
+            await fileSystem.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -305,7 +366,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("ContainerAlreadyExists", e.ErrorCode));
 
             // Cleanup
-            await fileSystemClient.DeleteAsync();
+            await fileSystemClient.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -326,7 +387,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             finally
             {
                 // Cleanup
-                await fileSystemClient.DeleteAsync();
+                await fileSystemClient.DeleteIfExistsAsync();
             }
         }
 
@@ -338,7 +399,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             try
             {
-                await fileSystemClient.CreateAsync();
+                await fileSystemClient.CreateIfNotExistsAsync();
 
                 // Act
                 Response<FileSystemInfo> response = await fileSystemClient.CreateIfNotExistsAsync();
@@ -349,7 +410,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             finally
             {
                 // Cleanup
-                await fileSystemClient.DeleteAsync();
+                await fileSystemClient.DeleteIfExistsAsync();
             }
         }
 
@@ -413,7 +474,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-            await fileSystem.CreateAsync();
+            await fileSystem.CreateIfNotExistsAsync();
 
             // Act
             Response response = await fileSystem.DeleteAsync();
@@ -444,7 +505,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
                 parameters.LeaseId = await SetupFileSystemLeaseCondition(fileSystem, parameters.LeaseId, garbageLeaseId);
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
                     parameters: parameters,
@@ -487,7 +548,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-            await fileSystemClient.CreateAsync();
+            await fileSystemClient.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await fileSystemClient.DeleteIfExistsAsync();
@@ -541,6 +602,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(3, paths.Count);
+            Assert.AreEqual("bar", paths[0].Name);
+            Assert.AreEqual("baz", paths[1].Name);
+            Assert.AreEqual("foo", paths[2].Name);
         }
 
         [Test]
@@ -552,11 +616,21 @@ namespace Azure.Storage.Files.DataLake.Tests
             await SetUpFileSystemForListing(test.FileSystem);
 
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(recursive: true);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
+                recursive: true);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(PathNames.Length, paths.Count);
+            Assert.AreEqual("bar", paths[0].Name);
+            Assert.AreEqual("baz", paths[1].Name);
+            Assert.AreEqual("baz/bar", paths[2].Name);
+            Assert.AreEqual("baz/bar/foo", paths[3].Name);
+            Assert.AreEqual("baz/foo", paths[4].Name);
+            Assert.AreEqual("baz/foo/bar", paths[5].Name);
+            Assert.AreEqual("foo", paths[6].Name);
+            Assert.AreEqual("foo/bar", paths[7].Name);
+            Assert.AreEqual("foo/foo", paths[8].Name);
         }
 
         [Test]
@@ -568,11 +642,19 @@ namespace Azure.Storage.Files.DataLake.Tests
             await SetUpFileSystemForListing(test.FileSystem);
 
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(userPrincipalName: true);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
+                userPrincipalName: true);
+            ;
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(3, paths.Count);
+            Assert.IsNotNull(paths[0].Group);
+            Assert.IsNotNull(paths[0].Owner);
+
+            Assert.AreEqual("bar", paths[0].Name);
+            Assert.AreEqual("baz", paths[1].Name);
+            Assert.AreEqual("foo", paths[2].Name);
         }
 
         [Test]
@@ -584,11 +666,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             await SetUpFileSystemForListing(test.FileSystem);
 
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(path: "foo");
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
+                path: "foo");
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(2, paths.Count);
+            Assert.AreEqual("foo/bar", paths[0].Name);
+            Assert.AreEqual("foo/foo", paths[1].Name);
         }
 
         [Test]
@@ -605,6 +690,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(2, page.Values.Count);
+            Assert.AreEqual("bar", page.Values[0].Name);
+            Assert.AreEqual("baz", page.Values[1].Name);
         }
 
         [Test]
@@ -684,7 +771,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
                 parameters.LeaseId = await SetupFileSystemLeaseCondition(fileSystem, parameters.LeaseId, garbageLeaseId);
                 IDictionary<string, string> metadata = BuildMetadata();
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
@@ -701,7 +788,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // Cleanup
-                await fileSystem.DeleteAsync(new DataLakeRequestConditions
+                await fileSystem.DeleteIfExistsAsync(new DataLakeRequestConditions
                 {
                     LeaseId = parameters.LeaseId
                 });
@@ -973,7 +1060,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-            await fileSystem.CreateAsync();
+            await fileSystem.CreateIfNotExistsAsync();
             var id = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
 
@@ -984,7 +1071,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(id, response.Value.LeaseId);
 
             // Cleanup
-            await fileSystem.DeleteAsync(conditions: new DataLakeRequestConditions
+            await fileSystem.DeleteIfExistsAsync(conditions: new DataLakeRequestConditions
             {
                 LeaseId = response.Value.LeaseId
             });
@@ -1013,7 +1100,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
@@ -1031,7 +1118,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // cleanup
-                await fileSystem.DeleteAsync(conditions: new DataLakeRequestConditions
+                await fileSystem.DeleteIfExistsAsync(conditions: new DataLakeRequestConditions
                 {
                     LeaseId = response.Value.LeaseId
                 });
@@ -1069,7 +1156,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-            await fileSystem.CreateAsync();
+            await fileSystem.CreateIfNotExistsAsync();
 
             var id = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
@@ -1084,7 +1171,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(renewResponse.GetRawResponse().Headers.RequestId);
 
             // Cleanup
-            await fileSystem.DeleteAsync(conditions: new DataLakeRequestConditions
+            await fileSystem.DeleteIfExistsAsync(conditions: new DataLakeRequestConditions
             {
                 LeaseId = renewResponse.Value.LeaseId
             });
@@ -1112,7 +1199,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
@@ -1130,7 +1217,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // cleanup
-                await fileSystem.DeleteAsync(conditions: new DataLakeRequestConditions
+                await fileSystem.DeleteIfExistsAsync(conditions: new DataLakeRequestConditions
                 {
                     LeaseId = response.Value.LeaseId
                 });
@@ -1145,7 +1232,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
@@ -1163,7 +1250,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => { });
 
                 // cleanup
-                await fileSystem.DeleteAsync(conditions: new DataLakeRequestConditions
+                await fileSystem.DeleteIfExistsAsync(conditions: new DataLakeRequestConditions
                 {
                     LeaseId = aquireLeaseResponse.Value.LeaseId
                 });
@@ -1239,7 +1326,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
@@ -1257,7 +1344,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => { });
 
                 // cleanup
-                await fileSystem.DeleteAsync(conditions: new DataLakeRequestConditions
+                await fileSystem.DeleteIfExistsAsync(conditions: new DataLakeRequestConditions
                 {
                     LeaseId = aquireLeaseResponse.Value.LeaseId
                 });
@@ -1307,7 +1394,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
 
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
                     parameters: parameters,
@@ -1329,7 +1416,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // Cleanup
-                await fileSystem.DeleteAsync(conditions: new DataLakeRequestConditions
+                await fileSystem.DeleteIfExistsAsync(conditions: new DataLakeRequestConditions
                 {
                     LeaseId = response.Value.LeaseId
                 });
@@ -1344,7 +1431,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
@@ -1364,7 +1451,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => { });
 
                 // cleanup
-                await fileSystem.DeleteAsync(conditions: new DataLakeRequestConditions
+                await fileSystem.DeleteIfExistsAsync(conditions: new DataLakeRequestConditions
                 {
                     LeaseId = aquireLeaseResponse.Value.LeaseId
                 });
@@ -1413,7 +1500,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
 
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
                     parameters: parameters,
@@ -1433,7 +1520,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 // Cleanup
-                await fileSystem.DeleteAsync(conditions: new DataLakeRequestConditions
+                await fileSystem.DeleteIfExistsAsync(conditions: new DataLakeRequestConditions
                 {
                     LeaseId = aquireLeaseResponse.Value.LeaseId
                 });
@@ -1448,7 +1535,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Arrange
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
                     parameters: parameters,
                     ifUnmodifiedSince: true,
@@ -1466,7 +1553,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => { });
 
                 // cleanup
-                await fileSystem.DeleteAsync(conditions: new DataLakeRequestConditions
+                await fileSystem.DeleteIfExistsAsync(conditions: new DataLakeRequestConditions
                 {
                     LeaseId = aquireLeaseResponse.Value.LeaseId
                 });
@@ -1504,7 +1591,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-            await fileSystem.CreateAsync();
+            await fileSystem.CreateIfNotExistsAsync();
             string garbageLeaseId = GetGarbageLeaseId();
             string leaseId = await SetupFileSystemLeaseCondition(fileSystem, ReceivedLeaseId, garbageLeaseId);
             DataLakeRequestConditions leaseAccessConditions = new DataLakeRequestConditions
@@ -1520,7 +1607,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(0, response.Value.SignedIdentifiers.Count());
 
             // Cleanup
-            await fileSystem.DeleteAsync(conditions: leaseAccessConditions);
+            await fileSystem.DeleteIfExistsAsync(conditions: leaseAccessConditions);
         }
 
         [Test]
@@ -1762,7 +1849,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 DataLakeServiceClient service = GetServiceClient_SharedKey();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-                await fileSystem.CreateAsync();
+                await fileSystem.CreateIfNotExistsAsync();
 
                 DataLakeRequestConditions conditions = BuildFileSystemConditions(
                     parameters: parameters,
@@ -1805,6 +1892,47 @@ namespace Azure.Storage.Files.DataLake.Tests
                         conditions: conditions),
                     e => { });
             }
+        }
+
+        [Test]
+        public async Task SetAccessPolicyAsync_InvalidPermissionOrder()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            PublicAccessType publicAccessType = PublicAccessType.FileSystem;
+            DataLakeSignedIdentifier[] signedIdentifiers = new[]
+            {
+                new DataLakeSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    AccessPolicy = new DataLakeAccessPolicy()
+                    {
+                        PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                        PolicyExpiresOn = Recording.UtcNow.AddHours(1),
+                        Permissions = "wrld"
+                    }
+                }
+            };
+
+            // Act
+            await test.FileSystem.SetAccessPolicyAsync(
+                accessType: publicAccessType,
+                permissions: signedIdentifiers
+            );
+
+            // Assert
+            Response<FileSystemProperties> propertiesResponse = await test.FileSystem.GetPropertiesAsync();
+            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
+
+            Response<FileSystemAccessPolicy> response = await test.FileSystem.GetAccessPolicyAsync();
+            Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
+
+            DataLakeSignedIdentifier acl = response.Value.SignedIdentifiers.First();
+            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
+            Assert.AreEqual("rwdl", acl.AccessPolicy.Permissions);
         }
 
         [Test]
@@ -1895,6 +2023,212 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
+        #region GenerateSasTests
+        [Test]
+        public void CanGenerateSas_ClientConstructors()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, BlobClientOptions options = default)
+            DataLakeFileSystemClient filesystem = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                GetOptions()));
+            Assert.IsFalse(filesystem.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            DataLakeFileSystemClient filesystem2 = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            Assert.IsTrue(filesystem2.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakeFileSystemClient filesystem3 = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions()));
+            Assert.IsFalse(filesystem3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetFileClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, BlobClientOptions options = default)
+            DataLakeFileSystemClient filesystem = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                GetOptions()));
+            DataLakeFileClient file = filesystem.GetFileClient(GetNewFileName());
+            Assert.IsFalse(file.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            DataLakeFileSystemClient filesystem2 = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            DataLakeFileClient file2 = filesystem2.GetFileClient(GetNewFileName());
+            Assert.IsTrue(file2.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakeFileSystemClient filesystem3 = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions()));
+            DataLakeFileClient file3 = filesystem3.GetFileClient(GetNewFileName());
+            Assert.IsFalse(file3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetDirectoryClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, BlobClientOptions options = default)
+            DataLakeFileSystemClient filesystem = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                GetOptions()));
+            DataLakeDirectoryClient directory = filesystem.GetDirectoryClient(GetNewDirectoryName());
+            Assert.IsFalse(directory.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            DataLakeFileSystemClient filesystem2 = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            DataLakeDirectoryClient directory2 = filesystem2.GetDirectoryClient(GetNewDirectoryName());
+            Assert.IsTrue(directory2.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakeFileSystemClient filesystem3 = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions()));
+            DataLakeDirectoryClient directory3 = filesystem3.GetDirectoryClient(GetNewDirectoryName());
+            Assert.IsFalse(directory3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void GenerateSas_RequiredParameters()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemSasPermissions permissions = DataLakeFileSystemSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            // Act
+            Uri sasUri = fileSystemClient.GenerateSasUri(permissions, expiresOn);
+
+            // Assert
+            DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName
+            };
+            DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(blobEndpoint)
+            {
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_Builder()
+        {
+            var constants = new TestConstants(this);
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemSasPermissions permissions = DataLakeFileSystemSasPermissions.Read;
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemClient.Name,
+                StartsOn = startsOn
+            };
+
+            // Act
+            Uri sasUri = fileSystemClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(blobEndpoint);
+            DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                StartsOn = startsOn
+            };
+            expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_BuilderWrongName()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewFileSystemName();
+            DataLakeFileSystemSasPermissions permissions = DataLakeFileSystemSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = GetNewFileSystemName(), // different filesytem name
+            };
+
+            // Act
+            try
+            {
+                fileSystemClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("DataLakeFileSystemClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+        #endregion
+
         private IEnumerable<AccessConditionParameters> Conditions_Data
             => new[]
             {
@@ -1932,7 +2266,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             bool ifUnmodifiedSince,
             bool lease)
         {
-
             DataLakeRequestConditions conditions = new DataLakeRequestConditions()
             {
                 IfModifiedSince = parameters.IfModifiedSince
@@ -1960,30 +2293,16 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         private async Task SetUpFileSystemForListing(DataLakeFileSystemClient fileSystem)
         {
-            var pathNames = PathNames;
-            var directories = new DataLakeDirectoryClient[pathNames.Length];
+            string[] pathNames = PathNames;
+            DataLakeDirectoryClient[] directories = new DataLakeDirectoryClient[pathNames.Length];
 
-            // Upload Blobs
+            // Upload directories
             for (var i = 0; i < pathNames.Length; i++)
             {
                 DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(pathNames[i]));
                 directories[i] = directory;
-                await directory.CreateAsync();
+                await directory.CreateIfNotExistsAsync();
             }
         }
-
-        private string[] PathNames
-            => new[]
-                {
-                    "foo",
-                    "bar",
-                    "baz",
-                    "baz/bar",
-                    "foo/foo",
-                    "foo/bar",
-                    "baz/foo",
-                    "baz/foo/bar",
-                    "baz/bar/foo"
-                };
-            }
+    }
 }

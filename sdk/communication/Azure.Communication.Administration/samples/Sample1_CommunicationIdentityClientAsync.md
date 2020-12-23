@@ -6,7 +6,7 @@ To get started you'll need an Azure Communication Services resource. See the REA
 
 ## Create a `CommunicationIdentityClient`
 
-To create a new `CommunicationIdentityClient` you need a connection string to the Azure Communication Services resource that you can get from the Azure Portal once you create a relevant resource. 
+To create a new `CommunicationIdentityClient` you need a connection string to the Azure Communication Services resource that you can get from the Azure Portal once you have created the resource. 
 
 You can set `connectionString` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -20,8 +20,8 @@ var client = new CommunicationIdentityClient(connectionString);
 The `CommunicationIdentityClient` can be used to create users and issue tokens.
 
 ```C# Snippet:CreateCommunicationUserAsync
-Response<CommunicationUser> userResponse = await client.CreateUserAsync();
-CommunicationUser user = userResponse.Value;
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+CommunicationUserIdentifier user = userResponse.Value;
 Console.WriteLine($"User id: {user.Id}");
 ```
 
