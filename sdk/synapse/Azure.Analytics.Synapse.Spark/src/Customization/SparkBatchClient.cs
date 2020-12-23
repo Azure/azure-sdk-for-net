@@ -72,12 +72,12 @@ namespace Azure.Analytics.Synapse.Spark
 
         public virtual async Task<SparkBatchOperation> StartCreateSparkBatchJobAsync(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.StartCreateSparkBatchJobAsync");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkBatchClient)}.StartCreateSparkBatchJobAsync");
             scope.Start();
             try
             {
                 Response<SparkBatchJob> batchSession = await RestClient.CreateSparkBatchJobAsync(sparkBatchJobOptions, detailed, cancellationToken).ConfigureAwait(false);
-                return new SparkBatchOperation(this, this._clientDiagnostics, batchSession);
+                return new SparkBatchOperation(this, _clientDiagnostics, batchSession);
             }
             catch (Exception e)
             {
@@ -88,12 +88,12 @@ namespace Azure.Analytics.Synapse.Spark
 
         public virtual SparkBatchOperation StartCreateSparkBatchJob(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.StartCreateSparkBatchJob");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkBatchClient)}.StartCreateSparkBatchJob");
             scope.Start();
             try
             {
                 Response<SparkBatchJob> batchSession = RestClient.CreateSparkBatchJob(sparkBatchJobOptions, detailed, cancellationToken);
-                return new SparkBatchOperation(this, this._clientDiagnostics, batchSession);
+                return new SparkBatchOperation(this, _clientDiagnostics, batchSession);
             }
             catch (Exception e)
             {
@@ -142,12 +142,12 @@ namespace Azure.Analytics.Synapse.Spark
 
         public virtual async Task<SparkBatchOperation> StartGetSparkBatchJobAsync(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.StartGetSparkBatchJobAsync");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkBatchClient)}.StartGetSparkBatchJobAsync");
             scope.Start();
             try
             {
                 Response<SparkBatchJob> batchSession = await RestClient.GetSparkBatchJobAsync(batchId, detailed, cancellationToken).ConfigureAwait(false);
-                return new SparkBatchOperation(this, this._clientDiagnostics, batchSession);
+                return new SparkBatchOperation(this, _clientDiagnostics, batchSession);
             }
             catch (Exception e)
             {
@@ -158,12 +158,12 @@ namespace Azure.Analytics.Synapse.Spark
 
         public virtual SparkBatchOperation StartGetSparkBatchJob(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.StartGetSparkBatchJob");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkBatchClient)}.StartGetSparkBatchJob");
             scope.Start();
             try
             {
                 Response<SparkBatchJob> batchSession = RestClient.GetSparkBatchJob(batchId, detailed, cancellationToken);
-                return new SparkBatchOperation(this, this._clientDiagnostics, batchSession);
+                return new SparkBatchOperation(this, _clientDiagnostics, batchSession);
             }
             catch (Exception e)
             {

@@ -31,6 +31,14 @@ namespace Azure.Analytics.Synapse.Spark
         private Response<SparkStatement> _response;
         private bool _completed;
 
+        private static List<string> ExecutingStates = new List<string>
+        {
+            "starting",
+            "waiting",
+            "running",
+            "cancelling"
+        };
+
         internal SparkStatementOperation(SparkSessionClient client, ClientDiagnostics diagnostics, Response<SparkStatement> response, int sessionId)
         {
             _client = client;
@@ -104,14 +112,6 @@ namespace Azure.Analytics.Synapse.Spark
 
             return GetRawResponse();
         }
-
-        private static List<string> ExecutingStates = new List<string>
-        {
-            "starting",
-            "waiting",
-            "running",
-            "cancelling"
-        };
 
         private static bool IsJobRunning(string livyState)
         {

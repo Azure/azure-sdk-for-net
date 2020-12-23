@@ -30,6 +30,14 @@ namespace Azure.Analytics.Synapse.Spark
         private Response<SparkBatchJob> _response;
         private bool _completed;
 
+        private static List<string> SessionSubmissionFinalStates = new List<string>
+        {
+            "error",
+            "dead",
+            "success",
+            "killed"
+        };
+
         internal SparkBatchOperation(SparkBatchClient client, ClientDiagnostics diagnostics, Response<SparkBatchJob> response)
         {
             _client = client;
@@ -102,14 +110,6 @@ namespace Azure.Analytics.Synapse.Spark
 
             return GetRawResponse();
         }
-
-        private static List<string> SessionSubmissionFinalStates = new List<string>
-        {
-            "error",
-            "dead",
-            "success",
-            "killed"
-        };
 
         private static bool IsJobRunning(string jobState, string livyState)
         {

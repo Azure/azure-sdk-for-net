@@ -30,6 +30,15 @@ namespace Azure.Analytics.Synapse.Spark
         private Response<SparkSession> _response;
         private bool _completed;
 
+        private static List<string> SessionSubmissionFinalStates = new List<string>
+        {
+            "idle",
+            "error",
+            "dead",
+            "success",
+            "killed"
+        };
+
         internal SparkSessionOperation(SparkSessionClient client, ClientDiagnostics diagnostics, Response<SparkSession> response)
         {
             _client = client;
@@ -102,15 +111,6 @@ namespace Azure.Analytics.Synapse.Spark
 
             return GetRawResponse();
         }
-
-        private static List<string> SessionSubmissionFinalStates = new List<string>
-        {
-            "idle",
-            "error",
-            "dead",
-            "success",
-            "killed"
-        };
 
         private static bool IsJobRunning(string jobState, string livyState)
         {
