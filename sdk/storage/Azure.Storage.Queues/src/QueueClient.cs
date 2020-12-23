@@ -1058,8 +1058,12 @@ namespace Azure.Storage.Queues
                 Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(Delete)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<QueueDeleteHeaders> response;
                     if (async)
                     {
@@ -1080,11 +1084,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1156,17 +1162,19 @@ namespace Azure.Storage.Queues
         private async Task<Response<QueueProperties>> GetPropertiesInternal(
             bool async,
             CancellationToken cancellationToken,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
-#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
                 Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(GetProperties)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<QueueGetPropertiesHeaders> response;
                     if (async)
                     {
@@ -1196,11 +1204,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2153,7 +2163,7 @@ namespace Azure.Storage.Queues
             ReceiveMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
-                //$"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
+                $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2185,7 +2195,7 @@ namespace Azure.Storage.Queues
             await ReceiveMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
-                //$"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
+                $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2204,11 +2214,14 @@ namespace Azure.Storage.Queues
         /// <param name="visibilityTimeout">
         /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
         /// </param>s
+        /// <param name="operationName">
+        /// The name of the calling operation.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>
+        /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
@@ -2216,7 +2229,7 @@ namespace Azure.Storage.Queues
         private async Task<Response<QueueMessage[]>> ReceiveMessagesInternal(
             int? maxMessages,
             TimeSpan? visibilityTimeout,
-            //string operationName,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2228,8 +2241,12 @@ namespace Azure.Storage.Queues
                     $"Uri: {MessagesUri}\n" +
                     $"{nameof(maxMessages)}: {maxMessages}\n" +
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders> response;
 
                     if (async)
@@ -2270,11 +2287,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
