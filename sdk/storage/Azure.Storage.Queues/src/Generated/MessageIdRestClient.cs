@@ -17,6 +17,7 @@ namespace Azure.Storage.Queues
     internal partial class MessageIdRestClient
     {
         private string url;
+        private string queueName;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -25,13 +26,18 @@ namespace Azure.Storage.Queues
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, queue or message that is the targe of the desired operation. </param>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public MessageIdRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-03-28")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="queueName"/>, or <paramref name="version"/> is null. </exception>
+        public MessageIdRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string queueName, string version = "2018-03-28")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
+            }
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
             }
             if (version == null)
             {
@@ -39,12 +45,13 @@ namespace Azure.Storage.Queues
             }
 
             this.url = url;
+            this.queueName = queueName;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateUpdateRequest(string queueName, string messageid, string popReceipt, int visibilitytimeout, int? timeout, QueueMessage queueMessage)
+        internal HttpMessage CreateUpdateRequest(string messageid, string popReceipt, int visibilitytimeout, int? timeout, QueueMessage queueMessage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,20 +82,15 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Update operation was introduced with version 2011-08-18 of the Queue service API. The Update Message operation updates the visibility timeout of a message. You can also use this operation to update the contents of a message. A message must be in a format that can be included in an XML request with UTF-8 encoding, and the encoded message can be up to 64KB in size. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="messageid"> The container name. </param>
         /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
         /// <param name="visibilitytimeout"> Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="queueMessage"> A Message object which can be stored in a Queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/>, <paramref name="messageid"/>, or <paramref name="popReceipt"/> is null. </exception>
-        public async Task<ResponseWithHeaders<MessageIdUpdateHeaders>> UpdateAsync(string queueName, string messageid, string popReceipt, int visibilitytimeout, int? timeout = null, QueueMessage queueMessage = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="messageid"/> or <paramref name="popReceipt"/> is null. </exception>
+        public async Task<ResponseWithHeaders<MessageIdUpdateHeaders>> UpdateAsync(string messageid, string popReceipt, int visibilitytimeout, int? timeout = null, QueueMessage queueMessage = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
             if (messageid == null)
             {
                 throw new ArgumentNullException(nameof(messageid));
@@ -98,7 +100,7 @@ namespace Azure.Storage.Queues
                 throw new ArgumentNullException(nameof(popReceipt));
             }
 
-            using var message = CreateUpdateRequest(queueName, messageid, popReceipt, visibilitytimeout, timeout, queueMessage);
+            using var message = CreateUpdateRequest(messageid, popReceipt, visibilitytimeout, timeout, queueMessage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new MessageIdUpdateHeaders(message.Response);
             switch (message.Response.Status)
@@ -111,20 +113,15 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Update operation was introduced with version 2011-08-18 of the Queue service API. The Update Message operation updates the visibility timeout of a message. You can also use this operation to update the contents of a message. A message must be in a format that can be included in an XML request with UTF-8 encoding, and the encoded message can be up to 64KB in size. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="messageid"> The container name. </param>
         /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
         /// <param name="visibilitytimeout"> Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="queueMessage"> A Message object which can be stored in a Queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/>, <paramref name="messageid"/>, or <paramref name="popReceipt"/> is null. </exception>
-        public ResponseWithHeaders<MessageIdUpdateHeaders> Update(string queueName, string messageid, string popReceipt, int visibilitytimeout, int? timeout = null, QueueMessage queueMessage = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="messageid"/> or <paramref name="popReceipt"/> is null. </exception>
+        public ResponseWithHeaders<MessageIdUpdateHeaders> Update(string messageid, string popReceipt, int visibilitytimeout, int? timeout = null, QueueMessage queueMessage = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
             if (messageid == null)
             {
                 throw new ArgumentNullException(nameof(messageid));
@@ -134,7 +131,7 @@ namespace Azure.Storage.Queues
                 throw new ArgumentNullException(nameof(popReceipt));
             }
 
-            using var message = CreateUpdateRequest(queueName, messageid, popReceipt, visibilitytimeout, timeout, queueMessage);
+            using var message = CreateUpdateRequest(messageid, popReceipt, visibilitytimeout, timeout, queueMessage);
             _pipeline.Send(message, cancellationToken);
             var headers = new MessageIdUpdateHeaders(message.Response);
             switch (message.Response.Status)
@@ -146,7 +143,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string queueName, string messageid, string popReceipt, int? timeout)
+        internal HttpMessage CreateDeleteRequest(string messageid, string popReceipt, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -169,18 +166,13 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Delete operation deletes the specified message. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="messageid"> The container name. </param>
         /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/>, <paramref name="messageid"/>, or <paramref name="popReceipt"/> is null. </exception>
-        public async Task<ResponseWithHeaders<MessageIdDeleteHeaders>> DeleteAsync(string queueName, string messageid, string popReceipt, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="messageid"/> or <paramref name="popReceipt"/> is null. </exception>
+        public async Task<ResponseWithHeaders<MessageIdDeleteHeaders>> DeleteAsync(string messageid, string popReceipt, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
             if (messageid == null)
             {
                 throw new ArgumentNullException(nameof(messageid));
@@ -190,7 +182,7 @@ namespace Azure.Storage.Queues
                 throw new ArgumentNullException(nameof(popReceipt));
             }
 
-            using var message = CreateDeleteRequest(queueName, messageid, popReceipt, timeout);
+            using var message = CreateDeleteRequest(messageid, popReceipt, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new MessageIdDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -203,18 +195,13 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Delete operation deletes the specified message. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="messageid"> The container name. </param>
         /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/>, <paramref name="messageid"/>, or <paramref name="popReceipt"/> is null. </exception>
-        public ResponseWithHeaders<MessageIdDeleteHeaders> Delete(string queueName, string messageid, string popReceipt, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="messageid"/> or <paramref name="popReceipt"/> is null. </exception>
+        public ResponseWithHeaders<MessageIdDeleteHeaders> Delete(string messageid, string popReceipt, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
             if (messageid == null)
             {
                 throw new ArgumentNullException(nameof(messageid));
@@ -224,7 +211,7 @@ namespace Azure.Storage.Queues
                 throw new ArgumentNullException(nameof(popReceipt));
             }
 
-            using var message = CreateDeleteRequest(queueName, messageid, popReceipt, timeout);
+            using var message = CreateDeleteRequest(messageid, popReceipt, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new MessageIdDeleteHeaders(message.Response);
             switch (message.Response.Status)
