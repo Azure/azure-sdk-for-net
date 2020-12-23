@@ -12,7 +12,7 @@ SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolN
 
 ## Create Spark session
 
-All `SparkStatement` are created within the context of a `SparkSession`, so first create a spark session passing in details on the requested host by calling `StartCreateSparkSession` and then synchronously wait for the session to be ready. 
+All `SparkStatement` are created within the context of a `SparkSession`, so first create a spark session passing in details on the requested host by calling `StartCreateSparkSession` and then synchronously wait for the operation to be complete. 
 
 ```C# Snippet:CreateSparkSession
 SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewGuid()}")
@@ -35,7 +35,7 @@ SparkSession sessionCreated = createSessionOperation.Value;
 
 ## Retrieve a Spark Session
 
-To retrieve an existing session call `GetSparkSession`, passing in the session ID.
+To retrieve an existing session call `StartGetSparkSession`, passing in the session ID and then synchronously wait for the operation to be complete.
 
 ```C# Snippet:GetSparkSession
 SparkSessionOperation getOperation = client.StartGetSparkSession(sessionCreated.Id);
@@ -70,7 +70,7 @@ SparkStatement statementCreated = createStatementOperation.Value;
 
 ## Retrieve a statement
 
-To retrieve an existing statement call `GetSparkStatement`, passing in both the session ID and the ID of the statement.
+To retrieve an existing statement call `StartGetSparkStatement`, passing in both the session ID and the ID of the statement and then synchronously wait for the statement to be ready.
 
 ```C# Snippet:GetSparkStatement
 SparkStatementOperation getStatementOperation = client.StartGetSparkStatement(sessionCreated.Id, statementCreated.Id);

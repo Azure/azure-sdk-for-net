@@ -3,8 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Azure.Analytics.Synapse.Spark;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Identity;

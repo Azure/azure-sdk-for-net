@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Spark;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Identity;
@@ -11,12 +12,12 @@ using NUnit.Framework;
 namespace Azure.Analytics.Synapse.Samples
 {
     /// <summary>
-    /// This sample demonstrates how to submit Spark job in Azure Synapse Analytics using synchronous methods of <see cref="SparkBatchClient"/>.
+    /// This sample demonstrates how to submit Spark job in Azure Synapse Analytics using asynchronous methods of <see cref="SparkBatchClient"/>.
     /// </summary>
-    public partial class Sample1_SubmitSparkJob : SampleFixture
+    public partial class Sample1_SubmitSparkJobAsync : SampleFixture
     {
         [Test]
-        public void SubmitSparkJobSync()
+        public async Task SubmitSparkJobAsync()
         {
             // Environment variable with the Synapse workspace endpoint.
             string endpoint = TestEnvironment.EndpointUrl;
@@ -30,11 +31,11 @@ namespace Azure.Analytics.Synapse.Samples
             // Environment variable with the file system of ADLS Gen2 storage account associated with the Synapse workspace.
             string fileSystem = TestEnvironment.StorageFileSystemName;
 
-            #region Snippet:CreateSparkBatchClient
+            #region Snippet:CreateSparkBatchClientAsync
             SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
             #endregion
 
-            #region Snippet:SubmitSparkBatchJob
+            #region Snippet:SubmitSparkBatchJobAsync
             string name = $"batch-{Guid.NewGuid()}";
             string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/net/wordcount/wordcount.zip", fileSystem, storageAccount);
             SparkBatchJobOptions request = new SparkBatchJobOptions(name, file)
@@ -52,16 +53,11 @@ namespace Azure.Analytics.Synapse.Samples
                 ExecutorCount = 2
             };
 
-            SparkBatchOperation createOperation = client.StartCreateSparkBatchJob(request);
-            while (!createOperation.HasCompleted)
-            {
-                System.Threading.Thread.Sleep(2000);
-                createOperation.UpdateStatus();
-            }
-            SparkBatchJob jobCreated = createOperation.Value;
+            SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(request);
+            SparkBatchJob jobCreated = await createOperation.WaitForCompletionAsync();
             #endregion
 
-            #region Snippet:ListSparkBatchJobs
+            #region Snippet:ListSparkBatchJobsAsync
             Response<SparkBatchJobCollection> jobs = client.GetSparkBatchJobs();
             foreach (SparkBatchJob job in jobs.Value.Sessions)
             {
@@ -69,19 +65,14 @@ namespace Azure.Analytics.Synapse.Samples
             }
             #endregion
 
-            #region Snippet:GetSparkBatchJob
-            SparkBatchOperation getOperation = client.StartGetSparkBatchJob (jobCreated.Id);
-            while (!getOperation.HasCompleted)
-            {
-                System.Threading.Thread.Sleep(2000);
-                getOperation.UpdateStatus();
-            }
-            SparkBatchJob retrievedJob = getOperation.Value;
+            #region Snippet:GetSparkBatchJobAsync
+            SparkBatchOperation getOperation = await client.StartGetSparkBatchJobAsync (jobCreated.Id);
+            SparkBatchJob retrievedJob = await getOperation.WaitForCompletionAsync();
 
             Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
             #endregion
 
-            #region Snippet:DeleteSparkBatchJob
+            #region Snippet:DeleteSparkBatchJobAsync
             Response operation = client.CancelSparkBatchJob(jobCreated.Id);
             #endregion
         }
