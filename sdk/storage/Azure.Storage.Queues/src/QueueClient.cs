@@ -1296,9 +1296,14 @@ namespace Azure.Storage.Queues
                 Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(SetMetadata)}");
+
                 try
                 {
                     ResponseWithHeaders<QueueSetMetadataHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -1323,11 +1328,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1519,8 +1526,12 @@ namespace Azure.Storage.Queues
                 Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(SetAccessPolicy)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<QueueSetAccessPolicyHeaders> response;
 
                     if (async)
@@ -1544,11 +1555,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }

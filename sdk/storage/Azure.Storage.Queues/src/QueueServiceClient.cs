@@ -407,11 +407,16 @@ namespace Azure.Storage.Queues
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(traits)}: {traits}\n" +
                     $"{nameof(prefix)}: {prefix}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueServiceClient)}.{nameof(GetQueues)}");
+
                 try
                 {
                     //IEnumerable<ListQueuesIncludeType> includeTypes = traits.AsIncludeTypes();
 
                     ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -451,11 +456,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -527,9 +534,14 @@ namespace Azure.Storage.Queues
                 Pipeline.LogMethodEnter(
                     nameof(QueueServiceClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueServiceClient)}.{nameof(GetProperties)}");
+
                 try
                 {
                     ResponseWithHeaders<QueueServiceProperties, ServiceGetPropertiesHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -552,11 +564,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -643,9 +657,14 @@ namespace Azure.Storage.Queues
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(properties)}: {properties}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueServiceClient)}.{nameof(SetProperties)}");
+
                 try
                 {
                     ResponseWithHeaders<ServiceSetPropertiesHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -668,11 +687,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    scope.Dispose();
                 }
             }
         }

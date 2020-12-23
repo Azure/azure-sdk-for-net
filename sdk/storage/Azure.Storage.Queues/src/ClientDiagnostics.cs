@@ -35,6 +35,7 @@ namespace Azure.Core.Pipeline
             XDocument xml = XDocument.Parse(content);
             errorCode = xml.Root.Element("Code").Value;
             message = xml.Root.Element("Message").Value;
+            //TODO what about additionalInfo??
         }
     }
 }
