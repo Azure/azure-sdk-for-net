@@ -109,28 +109,26 @@ namespace Azure.Analytics.Synapse.Spark
         }
 
         public virtual async Task<SparkSessionOperation> StartGetSparkSessionAsync(int sessionId, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.StartGetSparkSessionAsync");
-            scope.Start();
-            try
-            {
-                Response<SparkSession> session = await RestClient.GetSparkSessionAsync(sessionId, detailed, cancellationToken).ConfigureAwait(false);
-                return new SparkSessionOperation(this, _clientDiagnostics, session);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => await StartGetSparkSessionInternal (true, sessionId, detailed, cancellationToken).ConfigureAwait(false);
 
         public virtual SparkSessionOperation StartGetSparkSession(int sessionId, bool? detailed = null, CancellationToken cancellationToken = default)
+            => StartGetSparkSessionInternal (false, sessionId, detailed, cancellationToken).EnsureCompleted();
+
+        private async Task<SparkSessionOperation> StartGetSparkSessionInternal (bool async, int sessionId, bool? detailed = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.StartGetSparkSession");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.{nameof(StartGetSparkSession)}");
             scope.Start();
             try
             {
-                Response<SparkSession> session = RestClient.GetSparkSession(sessionId, detailed, cancellationToken);
+                Response<SparkSession> session;
+                if (async)
+                {
+                    session = await RestClient.GetSparkSessionAsync(sessionId, detailed, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    session = RestClient.GetSparkSession(sessionId, detailed, cancellationToken);
+                }
                 return new SparkSessionOperation(this, _clientDiagnostics, session);
             }
             catch (Exception e)
@@ -141,28 +139,26 @@ namespace Azure.Analytics.Synapse.Spark
         }
 
        public virtual async Task<SparkSessionOperation> StartCreateSparkSessionAsync(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
-       {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.StartCreateSparkSessionAsync");
-            scope.Start();
-            try
-            {
-                Response<SparkSession> session = await RestClient.CreateSparkSessionAsync(sparkSessionOptions, detailed, cancellationToken).ConfigureAwait(false);
-                return new SparkSessionOperation(this, _clientDiagnostics, session);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => await StartCreateSparkSessionInternal(true, sparkSessionOptions, detailed, cancellationToken).ConfigureAwait(false);
 
         public virtual SparkSessionOperation StartCreateSparkSession(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
+            => StartCreateSparkSessionInternal(false, sparkSessionOptions, detailed, cancellationToken).EnsureCompleted();
+
+        private async Task<SparkSessionOperation> StartCreateSparkSessionInternal (bool async, SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.StartCreateSparkSession");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.{nameof(StartCreateSparkSession)}");
             scope.Start();
             try
             {
-                Response<SparkSession> session = RestClient.CreateSparkSession(sparkSessionOptions, detailed, cancellationToken);
+                Response<SparkSession> session;
+                if (async)
+                {
+                    session = await RestClient.CreateSparkSessionAsync(sparkSessionOptions, detailed, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    session = RestClient.CreateSparkSession(sparkSessionOptions, detailed, cancellationToken);
+                }
                 return new SparkSessionOperation(this, _clientDiagnostics, session);
             }
             catch (Exception e)
@@ -249,28 +245,26 @@ namespace Azure.Analytics.Synapse.Spark
         }
 
         internal virtual async Task<SparkStatementOperation> StartCreateSparkStatementAsync(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.StartCreateSparkStatementAsync");
-            scope.Start();
-            try
-            {
-                Response<SparkStatement> statementSession = await RestClient.CreateSparkStatementAsync(sessionId, sparkStatementOptions, cancellationToken).ConfigureAwait(false);
-                return new SparkStatementOperation(this, _clientDiagnostics, statementSession, sessionId);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => await StartCreateSparkStatementInternal (true, sessionId, sparkStatementOptions, cancellationToken).ConfigureAwait(false);
 
         internal virtual SparkStatementOperation StartCreateSparkStatement(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
+            => StartCreateSparkStatementInternal (false, sessionId, sparkStatementOptions, cancellationToken).EnsureCompleted();
+
+        private async Task<SparkStatementOperation> StartCreateSparkStatementInternal (bool async, int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.StartCreateSparkStatement");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.{nameof(StartCreateSparkStatement)}");
             scope.Start();
             try
             {
-                Response<SparkStatement> statementSession = RestClient.CreateSparkStatement(sessionId, sparkStatementOptions, cancellationToken);
+                Response<SparkStatement> statementSession;
+                if (async)
+                {
+                    statementSession = await RestClient.CreateSparkStatementAsync(sessionId, sparkStatementOptions, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    statementSession = RestClient.CreateSparkStatement(sessionId, sparkStatementOptions, cancellationToken);
+                }
                 return new SparkStatementOperation(this, _clientDiagnostics, statementSession, sessionId);
             }
             catch (Exception e)
@@ -281,28 +275,26 @@ namespace Azure.Analytics.Synapse.Spark
         }
 
         internal virtual async Task<SparkStatementOperation> StartGetSparkStatementAsync(int sessionId, int statementId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.StartGetSparkStatementAsync");
-            scope.Start();
-            try
-            {
-                Response<SparkStatement> statementSession = await RestClient.GetSparkStatementAsync(sessionId, statementId, cancellationToken).ConfigureAwait(false);
-                return new SparkStatementOperation(this, _clientDiagnostics, statementSession, sessionId);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => await StartGetSparkStatementInternal (true, sessionId, statementId, cancellationToken).ConfigureAwait(false);
 
         internal virtual SparkStatementOperation StartGetSparkStatement(int sessionId, int statementId, CancellationToken cancellationToken = default)
+            => StartGetSparkStatementInternal (false, sessionId, statementId, cancellationToken).EnsureCompleted();
+
+        private async Task<SparkStatementOperation> StartGetSparkStatementInternal (bool async, int sessionId, int statementId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.StartGetSparkStatement");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.{nameof(StartGetSparkStatement)}");
             scope.Start();
             try
             {
-                Response<SparkStatement> statementSession = RestClient.GetSparkStatement(sessionId, statementId, cancellationToken);
+                Response<SparkStatement> statementSession;
+                if (async)
+                {
+                    statementSession = await RestClient.GetSparkStatementAsync(sessionId, statementId, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    statementSession = RestClient.GetSparkStatement(sessionId, statementId, cancellationToken);
+                }
                 return new SparkStatementOperation(this, _clientDiagnostics, statementSession, sessionId);
             }
             catch (Exception e)
