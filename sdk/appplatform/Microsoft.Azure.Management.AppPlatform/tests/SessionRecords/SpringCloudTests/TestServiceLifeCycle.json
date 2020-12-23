@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourcegroups/appplatform-sdk-test-rg3332?api-version=2017-05-10",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourcegroups/appplatform-sdk-test-rg3332?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlZ3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMj9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
@@ -63,11 +63,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332\",\r\n  \"name\": \"appplatform-sdk-test-rg3332\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332\",\r\n  \"name\": \"appplatform-sdk-test-rg3332\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M2ODk/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
@@ -102,7 +102,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/7e3651a5-0efa-4e43-b5b0-30ae492e6227/Spring/appplatform-sdk-test-asc689?api-version=2020-07-01"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/7e3651a5-0efa-4e43-b5b0-30ae492e6227/Spring/appplatform-sdk-test-asc689?api-version=2020-11-01-preview"
         ],
         "Server": [
           "nginx/1.17.7"
@@ -123,7 +123,7 @@
           "d8cff8a2-0549-4ee1-8c3d-fa9d1b5306d8"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-07-01"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-11-01-preview"
         ],
         "x-ms-request-id": [
           "30e71b4b-7544-475a-a794-a81797e31715"
@@ -144,11 +144,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"version\": 2,\r\n    \"serviceId\": \"0a9f162d9303429e859826874ab7938c\"\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring\",\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689\",\r\n  \"name\": \"appplatform-sdk-test-asc689\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"version\": 2,\r\n    \"serviceId\": \"0a9f162d9303429e859826874ab7938c\"\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring\",\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689\",\r\n  \"name\": \"appplatform-sdk-test-asc689\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC83ZTM2NTFhNS0wZWZhLTRlNDMtYjViMC0zMGFlNDkyZTYyMjc/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -210,11 +210,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC83ZTM2NTFhNS0wZWZhLTRlNDMtYjViMC0zMGFlNDkyZTYyMjc/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -276,11 +276,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC83ZTM2NTFhNS0wZWZhLTRlNDMtYjViMC0zMGFlNDkyZTYyMjc/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -342,11 +342,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC83ZTM2NTFhNS0wZWZhLTRlNDMtYjViMC0zMGFlNDkyZTYyMjc/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -408,11 +408,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC83ZTM2NTFhNS0wZWZhLTRlNDMtYjViMC0zMGFlNDkyZTYyMjc/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -474,11 +474,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC83ZTM2NTFhNS0wZWZhLTRlNDMtYjViMC0zMGFlNDkyZTYyMjc/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -540,11 +540,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\",\r\n  \"endTime\": \"2020-08-17T08:56:26.9830573Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"name\": \"7e3651a5-0efa-4e43-b5b0-30ae492e6227\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-08-17T08:53:34.4120269Z\",\r\n  \"endTime\": \"2020-08-17T08:56:26.9830573Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M2ODk/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -606,11 +606,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"version\": 2,\r\n    \"serviceId\": \"0a9f162d9303429e859826874ab7938c\"\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring\",\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689\",\r\n  \"name\": \"appplatform-sdk-test-asc689\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"version\": 2,\r\n    \"serviceId\": \"0a9f162d9303429e859826874ab7938c\"\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring\",\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689\",\r\n  \"name\": \"appplatform-sdk-test-asc689\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M2ODkvYXBwcy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hcHA0MDA0P2FwaS12ZXJzaW9uPTIwMjAtMDctMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{}",
@@ -645,7 +645,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/9dffa461-23b6-438a-afa1-128721cf717e/Spring/appplatform-sdk-test-app4004?api-version=2020-07-01"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/9dffa461-23b6-438a-afa1-128721cf717e/Spring/appplatform-sdk-test-app4004?api-version=2020-11-01-preview"
         ],
         "Server": [
           "nginx/1.17.7"
@@ -666,7 +666,7 @@
           "d8cff8a2-0549-4ee1-8c3d-fa9d1b5306d8"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/9dffa461-23b6-438a-afa1-128721cf717e?api-version=2020-07-01"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/9dffa461-23b6-438a-afa1-128721cf717e?api-version=2020-11-01-preview"
         ],
         "x-ms-request-id": [
           "8ba799ed-0145-46a5-a6ef-807bd3652a63"
@@ -687,11 +687,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"public\": false,\r\n    \"provisioningState\": \"Creating\",\r\n    \"httpsOnly\": false\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps\",\r\n  \"identity\": null,\r\n  \"location\": \"eastus\",\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004\",\r\n  \"name\": \"appplatform-sdk-test-app4004\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"public\": false,\r\n    \"provisioningState\": \"Creating\",\r\n    \"httpsOnly\": false\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps\",\r\n  \"identity\": null,\r\n  \"location\": \"eastus\",\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004\",\r\n  \"name\": \"appplatform-sdk-test-app4004\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/9dffa461-23b6-438a-afa1-128721cf717e?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/9dffa461-23b6-438a-afa1-128721cf717e?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFwcDQwMDQvb3BlcmF0aW9uSWQvOWRmZmE0NjEtMjNiNi00MzhhLWFmYTEtMTI4NzIxY2Y3MTdlP2FwaS12ZXJzaW9uPTIwMjAtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -753,11 +753,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/9dffa461-23b6-438a-afa1-128721cf717e\",\r\n  \"name\": \"9dffa461-23b6-438a-afa1-128721cf717e\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-08-17T08:56:39.2241696Z\",\r\n  \"endTime\": \"2020-08-17T08:56:45.6727902Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/9dffa461-23b6-438a-afa1-128721cf717e\",\r\n  \"name\": \"9dffa461-23b6-438a-afa1-128721cf717e\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-08-17T08:56:39.2241696Z\",\r\n  \"endTime\": \"2020-08-17T08:56:45.6727902Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M2ODkvYXBwcy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hcHA0MDA0P2FwaS12ZXJzaW9uPTIwMjAtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -819,11 +819,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"public\": false,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"fqdn\": \"appplatform-sdk-test-asc689.azuremicroservices.io\",\r\n    \"httpsOnly\": false,\r\n    \"createdTime\": \"2020-08-17T08:56:45.632Z\",\r\n    \"temporaryDisk\": {\r\n      \"sizeInGB\": 5,\r\n      \"mountPath\": \"/tmp\"\r\n    },\r\n    \"persistentDisk\": {\r\n      \"sizeInGB\": 0,\r\n      \"mountPath\": \"/persistent\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps\",\r\n  \"identity\": null,\r\n  \"location\": \"eastus\",\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004\",\r\n  \"name\": \"appplatform-sdk-test-app4004\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"public\": false,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"fqdn\": \"appplatform-sdk-test-asc689.azuremicroservices.io\",\r\n    \"httpsOnly\": false,\r\n    \"createdTime\": \"2020-08-17T08:56:45.632Z\",\r\n    \"temporaryDisk\": {\r\n      \"sizeInGB\": 5,\r\n      \"mountPath\": \"/tmp\"\r\n    },\r\n    \"persistentDisk\": {\r\n      \"sizeInGB\": 0,\r\n      \"mountPath\": \"/persistent\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps\",\r\n  \"identity\": null,\r\n  \"location\": \"eastus\",\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004\",\r\n  \"name\": \"appplatform-sdk-test-app4004\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M2ODkvYXBwcy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hcHA0MDA0P2FwaS12ZXJzaW9uPTIwMjAtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -885,11 +885,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"public\": false,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"activeDeploymentName\": \"default8545\",\r\n    \"fqdn\": \"appplatform-sdk-test-asc689.azuremicroservices.io\",\r\n    \"httpsOnly\": false,\r\n    \"createdTime\": \"2020-08-17T08:56:45.632Z\",\r\n    \"temporaryDisk\": {\r\n      \"sizeInGB\": 5,\r\n      \"mountPath\": \"/tmp\"\r\n    },\r\n    \"persistentDisk\": {\r\n      \"sizeInGB\": 0,\r\n      \"mountPath\": \"/persistent\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps\",\r\n  \"identity\": null,\r\n  \"location\": \"eastus\",\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004\",\r\n  \"name\": \"appplatform-sdk-test-app4004\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"public\": false,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"activeDeploymentName\": \"default8545\",\r\n    \"fqdn\": \"appplatform-sdk-test-asc689.azuremicroservices.io\",\r\n    \"httpsOnly\": false,\r\n    \"createdTime\": \"2020-08-17T08:56:45.632Z\",\r\n    \"temporaryDisk\": {\r\n      \"sizeInGB\": 5,\r\n      \"mountPath\": \"/tmp\"\r\n    },\r\n    \"persistentDisk\": {\r\n      \"sizeInGB\": 0,\r\n      \"mountPath\": \"/persistent\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps\",\r\n  \"identity\": null,\r\n  \"location\": \"eastus\",\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004\",\r\n  \"name\": \"appplatform-sdk-test-app4004\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004/deployments/default8545?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004/deployments/default8545?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M2ODkvYXBwcy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hcHA0MDA0L2RlcGxveW1lbnRzL2RlZmF1bHQ4NTQ1P2FwaS12ZXJzaW9uPTIwMjAtMDctMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"source\": {\r\n      \"type\": \"Jar\",\r\n      \"relativePath\": \"<default>\"\r\n    }\r\n  }\r\n}",
@@ -924,7 +924,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/5518ca5f-3871-4f07-944f-8dd059d457b0/Spring/default8545?api-version=2020-07-01"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/5518ca5f-3871-4f07-944f-8dd059d457b0/Spring/default8545?api-version=2020-11-01-preview"
         ],
         "Server": [
           "nginx/1.17.7"
@@ -945,7 +945,7 @@
           "d8cff8a2-0549-4ee1-8c3d-fa9d1b5306d8"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default8545/operationId/5518ca5f-3871-4f07-944f-8dd059d457b0?api-version=2020-07-01"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default8545/operationId/5518ca5f-3871-4f07-944f-8dd059d457b0?api-version=2020-11-01-preview"
         ],
         "x-ms-request-id": [
           "a6d02c7d-6948-4c42-b8c0-3575b990e487"
@@ -966,11 +966,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"source\": {\r\n      \"type\": \"Jar\",\r\n      \"relativePath\": \"<default>\"\r\n    },\r\n    \"appName\": \"appplatform-sdk-test-app4004\",\r\n    \"deploymentSettings\": {\r\n      \"cpu\": 1,\r\n      \"memoryInGB\": 1,\r\n      \"environmentVariables\": null,\r\n      \"runtimeVersion\": \"Java_8\"\r\n    },\r\n    \"provisioningState\": \"Creating\",\r\n    \"status\": \"Running\",\r\n    \"active\": false,\r\n    \"instances\": null\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps/deployments\",\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004/deployments/default8545\",\r\n  \"name\": \"default8545\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"source\": {\r\n      \"type\": \"Jar\",\r\n      \"relativePath\": \"<default>\"\r\n    },\r\n    \"appName\": \"appplatform-sdk-test-app4004\",\r\n    \"deploymentSettings\": {\r\n      \"cpu\": 1,\r\n      \"memoryInGB\": 1,\r\n      \"environmentVariables\": null,\r\n      \"runtimeVersion\": \"Java_8\"\r\n    },\r\n    \"provisioningState\": \"Creating\",\r\n    \"status\": \"Running\",\r\n    \"active\": false,\r\n    \"instances\": null\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps/deployments\",\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004/deployments/default8545\",\r\n  \"name\": \"default8545\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default8545/operationId/5518ca5f-3871-4f07-944f-8dd059d457b0?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default8545/operationId/5518ca5f-3871-4f07-944f-8dd059d457b0?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2RlZmF1bHQ4NTQ1L29wZXJhdGlvbklkLzU1MThjYTVmLTM4NzEtNGYwNy05NDRmLThkZDA1OWQ0NTdiMD9hcGktdmVyc2lvbj0yMDIwLTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1032,11 +1032,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default8545/operationId/5518ca5f-3871-4f07-944f-8dd059d457b0\",\r\n  \"name\": \"5518ca5f-3871-4f07-944f-8dd059d457b0\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:57:17.6612143Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default8545/operationId/5518ca5f-3871-4f07-944f-8dd059d457b0\",\r\n  \"name\": \"5518ca5f-3871-4f07-944f-8dd059d457b0\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:57:17.6612143Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default8545/operationId/5518ca5f-3871-4f07-944f-8dd059d457b0?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default8545/operationId/5518ca5f-3871-4f07-944f-8dd059d457b0?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2RlZmF1bHQ4NTQ1L29wZXJhdGlvbklkLzU1MThjYTVmLTM4NzEtNGYwNy05NDRmLThkZDA1OWQ0NTdiMD9hcGktdmVyc2lvbj0yMDIwLTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1098,11 +1098,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default8545/operationId/5518ca5f-3871-4f07-944f-8dd059d457b0\",\r\n  \"name\": \"5518ca5f-3871-4f07-944f-8dd059d457b0\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-08-17T08:57:17.6612143Z\",\r\n  \"endTime\": \"2020-08-17T08:58:11.7003923Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default8545/operationId/5518ca5f-3871-4f07-944f-8dd059d457b0\",\r\n  \"name\": \"5518ca5f-3871-4f07-944f-8dd059d457b0\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-08-17T08:57:17.6612143Z\",\r\n  \"endTime\": \"2020-08-17T08:58:11.7003923Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004/deployments/default8545?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004/deployments/default8545?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M2ODkvYXBwcy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hcHA0MDA0L2RlcGxveW1lbnRzL2RlZmF1bHQ4NTQ1P2FwaS12ZXJzaW9uPTIwMjAtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1164,11 +1164,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"source\": {\r\n      \"type\": \"Jar\",\r\n      \"relativePath\": \"<default>\"\r\n    },\r\n    \"appName\": \"appplatform-sdk-test-app4004\",\r\n    \"deploymentSettings\": {\r\n      \"cpu\": 1,\r\n      \"memoryInGB\": 1,\r\n      \"environmentVariables\": null,\r\n      \"runtimeVersion\": \"Java_8\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"status\": \"Running\",\r\n    \"active\": false,\r\n    \"instances\": [\r\n      {\r\n        \"name\": \"appplatform-sdk-test-app4004-default8545-28-86c775d4df-7bpn4\",\r\n        \"status\": \"Running\",\r\n        \"discoveryStatus\": \"DOWN\",\r\n        \"startTime\": \"2020-08-17T08:57:15Z\"\r\n      }\r\n    ]\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps/deployments\",\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004/deployments/default8545\",\r\n  \"name\": \"default8545\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"source\": {\r\n      \"type\": \"Jar\",\r\n      \"relativePath\": \"<default>\"\r\n    },\r\n    \"appName\": \"appplatform-sdk-test-app4004\",\r\n    \"deploymentSettings\": {\r\n      \"cpu\": 1,\r\n      \"memoryInGB\": 1,\r\n      \"environmentVariables\": null,\r\n      \"runtimeVersion\": \"Java_8\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"status\": \"Running\",\r\n    \"active\": false,\r\n    \"instances\": [\r\n      {\r\n        \"name\": \"appplatform-sdk-test-app4004-default8545-28-86c775d4df-7bpn4\",\r\n        \"status\": \"Running\",\r\n        \"discoveryStatus\": \"DOWN\",\r\n        \"startTime\": \"2020-08-17T08:57:15Z\"\r\n      }\r\n    ]\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps/deployments\",\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004/deployments/default8545\",\r\n  \"name\": \"default8545\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M2ODkvYXBwcy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hcHA0MDA0P2FwaS12ZXJzaW9uPTIwMjAtMDctMDE=",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"activeDeploymentName\": \"default8545\"\r\n  }\r\n}",
@@ -1203,7 +1203,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/44035cbb-a261-41c2-8d38-b2f6a634aec2/Spring/appplatform-sdk-test-app4004?api-version=2020-07-01"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/44035cbb-a261-41c2-8d38-b2f6a634aec2/Spring/appplatform-sdk-test-app4004?api-version=2020-11-01-preview"
         ],
         "Server": [
           "nginx/1.17.7"
@@ -1224,7 +1224,7 @@
           "d8cff8a2-0549-4ee1-8c3d-fa9d1b5306d8"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/44035cbb-a261-41c2-8d38-b2f6a634aec2?api-version=2020-07-01"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/44035cbb-a261-41c2-8d38-b2f6a634aec2?api-version=2020-11-01-preview"
         ],
         "x-ms-request-id": [
           "294468aa-cdf3-436c-9965-359b19203dcc"
@@ -1245,11 +1245,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"public\": false,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"activeDeploymentName\": \"default8545\",\r\n    \"fqdn\": \"appplatform-sdk-test-asc689.azuremicroservices.io\",\r\n    \"httpsOnly\": false,\r\n    \"createdTime\": \"2020-08-17T08:56:45.632Z\",\r\n    \"temporaryDisk\": {\r\n      \"sizeInGB\": 5,\r\n      \"mountPath\": \"/tmp\"\r\n    },\r\n    \"persistentDisk\": {\r\n      \"sizeInGB\": 0,\r\n      \"mountPath\": \"/persistent\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps\",\r\n  \"identity\": null,\r\n  \"location\": \"eastus\",\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004\",\r\n  \"name\": \"appplatform-sdk-test-app4004\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"public\": false,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"activeDeploymentName\": \"default8545\",\r\n    \"fqdn\": \"appplatform-sdk-test-asc689.azuremicroservices.io\",\r\n    \"httpsOnly\": false,\r\n    \"createdTime\": \"2020-08-17T08:56:45.632Z\",\r\n    \"temporaryDisk\": {\r\n      \"sizeInGB\": 5,\r\n      \"mountPath\": \"/tmp\"\r\n    },\r\n    \"persistentDisk\": {\r\n      \"sizeInGB\": 0,\r\n      \"mountPath\": \"/persistent\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring/apps\",\r\n  \"identity\": null,\r\n  \"location\": \"eastus\",\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689/apps/appplatform-sdk-test-app4004\",\r\n  \"name\": \"appplatform-sdk-test-app4004\"\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/44035cbb-a261-41c2-8d38-b2f6a634aec2?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/44035cbb-a261-41c2-8d38-b2f6a634aec2?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFwcDQwMDQvb3BlcmF0aW9uSWQvNDQwMzVjYmItYTI2MS00MWMyLThkMzgtYjJmNmE2MzRhZWMyP2FwaS12ZXJzaW9uPTIwMjAtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1311,11 +1311,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/44035cbb-a261-41c2-8d38-b2f6a634aec2\",\r\n  \"name\": \"44035cbb-a261-41c2-8d38-b2f6a634aec2\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-08-17T08:58:21.5102207Z\",\r\n  \"endTime\": \"2020-08-17T08:58:30.8556164Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-app4004/operationId/44035cbb-a261-41c2-8d38-b2f6a634aec2\",\r\n  \"name\": \"44035cbb-a261-41c2-8d38-b2f6a634aec2\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-08-17T08:58:21.5102207Z\",\r\n  \"endTime\": \"2020-08-17T08:58:30.8556164Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc689?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M2ODk/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -1344,7 +1344,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308/Spring/appplatform-sdk-test-asc689?api-version=2020-07-01"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308/Spring/appplatform-sdk-test-asc689?api-version=2020-11-01-preview"
         ],
         "Server": [
           "nginx/1.17.7"
@@ -1365,7 +1365,7 @@
           "d8cff8a2-0549-4ee1-8c3d-fa9d1b5306d8"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview"
         ],
         "x-ms-request-id": [
           "2239c9d2-d512-4d54-bf70-fb9e69719ad8"
@@ -1387,7 +1387,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1449,11 +1449,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1515,11 +1515,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1581,11 +1581,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1647,11 +1647,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1713,11 +1713,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1779,11 +1779,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1845,11 +1845,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1911,11 +1911,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1977,11 +1977,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2043,11 +2043,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2109,11 +2109,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2175,11 +2175,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2241,11 +2241,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2307,11 +2307,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2373,11 +2373,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2439,11 +2439,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2505,11 +2505,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2571,11 +2571,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2637,11 +2637,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2703,11 +2703,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2769,11 +2769,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2835,11 +2835,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2901,11 +2901,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OS9vcGVyYXRpb25JZC82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDg/YXBpLXZlcnNpb249MjAyMC0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2967,11 +2967,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\",\r\n  \"endTime\": \"2020-08-17T09:10:38.1624291Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc689/operationId/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"name\": \"6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-08-17T08:58:54.4056216Z\",\r\n  \"endTime\": \"2020-08-17T09:10:38.1624291Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308/Spring/appplatform-sdk-test-asc689?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/locations/eastus/operationResults/6d6f510f-2c1f-40a3-9ee0-3fe6b56fe308/Spring/appplatform-sdk-test-asc689?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uUmVzdWx0cy82ZDZmNTEwZi0yYzFmLTQwYTMtOWVlMC0zZmU2YjU2ZmUzMDgvU3ByaW5nL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzY4OT9hcGktdmVyc2lvbj0yMDIwLTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -3028,7 +3028,7 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring?api-version=2020-07-01",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourceGroups/appplatform-sdk-test-rg3332/providers/Microsoft.AppPlatform/Spring?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMi9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZz9hcGktdmVyc2lvbj0yMDIwLTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -3088,7 +3088,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourcegroups/appplatform-sdk-test-rg3332?api-version=2017-05-10",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/resourcegroups/appplatform-sdk-test-rg3332?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlZ3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMzMzMj9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -3117,7 +3117,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
@@ -3151,7 +3151,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpNek16SXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -3174,7 +3174,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
@@ -3208,7 +3208,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpNek16SXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -3231,7 +3231,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
@@ -3265,7 +3265,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpNek16SXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -3316,7 +3316,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "RequestUri": "/subscriptions/799c12ba-353c-44a1-883d-84808ebb2216/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzMzMzItRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpNek16SXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -3376,6 +3376,6 @@
     ]
   },
   "Variables": {
-    "SubscriptionId": "685ba005-af8d-4b04-8f16-a7bf38b2eb5a"
+    "SubscriptionId": "799c12ba-353c-44a1-883d-84808ebb2216"
   }
 }
