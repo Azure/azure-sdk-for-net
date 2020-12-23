@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the VM scale set.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete a VM scale set.
+            /// Optional parameter to force delete a VM scale set. (Feature in Preview)
             /// </param>
             public static void Delete(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, bool? forceDeletion = default(bool?))
             {
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the VM scale set.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete a VM scale set.
+            /// Optional parameter to force delete a VM scale set. (Feature in Preview)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -266,6 +266,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='forceDeletion'>
             /// Optional parameter to force delete virtual machines from the VM scale set.
+            /// (Feature in Preview)
             /// </param>
             public static void DeleteInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, bool? forceDeletion = default(bool?))
             {
@@ -289,6 +290,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='forceDeletion'>
             /// Optional parameter to force delete virtual machines from the VM scale set.
+            /// (Feature in Preview)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1133,7 +1135,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the VM scale set.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete a VM scale set.
+            /// Optional parameter to force delete a VM scale set. (Feature in Preview)
             /// </param>
             public static void BeginDelete(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, bool? forceDeletion = default(bool?))
             {
@@ -1153,7 +1155,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the VM scale set.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete a VM scale set.
+            /// Optional parameter to force delete a VM scale set. (Feature in Preview)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1231,6 +1233,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='forceDeletion'>
             /// Optional parameter to force delete virtual machines from the VM scale set.
+            /// (Feature in Preview)
             /// </param>
             public static void BeginDeleteInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, bool? forceDeletion = default(bool?))
             {
@@ -1254,6 +1257,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='forceDeletion'>
             /// Optional parameter to force delete virtual machines from the VM scale set.
+            /// (Feature in Preview)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

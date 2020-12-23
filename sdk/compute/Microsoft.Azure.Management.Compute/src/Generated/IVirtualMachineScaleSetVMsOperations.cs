@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='forceDeletion'>
         /// Optional parameter to force delete a virtual machine from a VM
-        /// scale set.
+        /// scale set. (Feature in Preview)
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -623,7 +623,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='forceDeletion'>
         /// Optional parameter to force delete a virtual machine from a VM
-        /// scale set.
+        /// scale set. (Feature in Preview)
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
