@@ -123,6 +123,28 @@ namespace Azure.AI.FormRecognizer.Samples
         }
 
         [Test]
+        public async Task RecognizeBusinessCardsFromFile()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+
+            var credential = new AzureKeyCredential(apiKey);
+            var client = new FormRecognizerClient(new Uri(endpoint), credential);
+
+            string businessCardsPath = FormRecognizerTestEnvironment.CreatePath("businessCard.jpg");
+
+            #region Snippet:FormRecognizerRecognizeBusinessCardsFromFile
+            using (FileStream stream = new FileStream(businessCardsPath, FileMode.Open))
+            {
+                RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsAsync(stream).WaitForCompletionAsync();
+                /*
+                 *
+                 */
+            }
+            #endregion
+        }
+
+        [Test]
         public async Task RecognizeCustomFormsFromFile()
         {
             string endpoint = TestEnvironment.Endpoint;

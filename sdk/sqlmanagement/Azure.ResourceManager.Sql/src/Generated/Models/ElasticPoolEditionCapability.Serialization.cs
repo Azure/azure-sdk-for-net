@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("supportedElasticPoolPerformanceLevels"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ElasticPoolPerformanceLevelCapability> array = new List<ElasticPoolPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -39,11 +44,21 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("zoneRedundant"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     zoneRedundant = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = property.Value.GetString().ToCapabilityStatus();
                     continue;
                 }

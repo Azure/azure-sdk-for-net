@@ -110,13 +110,25 @@ namespace Azure
         }
 
         /// <summary>
+        /// Creates an instance of <see cref="Pageable{T}"/> using the provided pages.
+        /// </summary>
+        /// <param name="pages">The pages of values to list as part of net new pageable instance.</param>
+        /// <returns>A new instance of <see cref="Pageable{T}"/></returns>
+#pragma warning disable CA1000 // Do not declare static members on generic types
+        public static AsyncPageable<T> FromPages(IEnumerable<Page<T>> pages)
+#pragma warning restore CA1000 // Do not declare static members on generic types
+        {
+            return new StaticPageable(pages);
+        }
+
+        /// <summary>
         /// Creates a string representation of an <see cref="AsyncPageable{T}"/>.
         /// </summary>
         /// <returns>
         /// A string representation of an <see cref="AsyncPageable{T}"/>.
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string? ToString() => base.ToString();
 
         /// <summary>
         /// Check if two <see cref="AsyncPageable{T}"/> instances are equal.
@@ -132,5 +144,25 @@ namespace Azure
         /// <returns>Hash code for the <see cref="Page{T}"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        private class StaticPageable: AsyncPageable<T>
+        {
+            private readonly IEnumerable<Page<T>> _pages;
+
+            public StaticPageable(IEnumerable<Page<T>> pages)
+            {
+                _pages = pages;
+            }
+
+#pragma warning disable 1998 // async function without await
+            public override async IAsyncEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
+#pragma warning restore 1998
+            {
+                foreach (var page in _pages)
+                {
+                    yield return page;
+                }
+            }
+        }
     }
 }

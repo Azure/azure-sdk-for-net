@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("networkWatcherFlowAnalyticsConfiguration"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     networkWatcherFlowAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(property.Value);
                     continue;
                 }

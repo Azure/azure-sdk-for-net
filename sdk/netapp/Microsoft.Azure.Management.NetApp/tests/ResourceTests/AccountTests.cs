@@ -111,9 +111,8 @@ namespace NetApp.Tests.ResourceTests
 
                 // get the account list and check
                 var accounts = netAppMgmtClient.Accounts.List(ResourceUtils.resourceGroup);
-                Assert.Equal(accounts.ElementAt(0).Name, ResourceUtils.accountName1);
-                Assert.Equal(accounts.ElementAt(1).Name, ResourceUtils.accountName2);
-                Assert.Equal(count+2, accounts.Count());
+                Assert.Contains(accounts, item => item.Name == ResourceUtils.accountName1);
+                Assert.Contains(accounts, item => item.Name == ResourceUtils.accountName2);
 
                 // clean up - delete the two accounts
                 ResourceUtils.DeleteAccount(netAppMgmtClient);

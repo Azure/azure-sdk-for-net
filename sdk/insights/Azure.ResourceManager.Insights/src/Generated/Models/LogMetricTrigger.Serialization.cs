@@ -48,16 +48,31 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("thresholdOperator"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     thresholdOperator = new ConditionalOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("threshold"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     threshold = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("metricTriggerType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     metricTriggerType = new MetricTriggerType(property.Value.GetString());
                     continue;
                 }

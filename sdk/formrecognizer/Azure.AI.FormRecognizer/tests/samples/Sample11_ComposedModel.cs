@@ -41,10 +41,10 @@ namespace Azure.AI.FormRecognizer.Samples
             //@@ string purchaseOrderFurnitureUrl = "<purchaseOrderFurniture>";
             //@@ string purchaseOrderCleaningSuppliesUrl = "<purchaseOrderCleaningSupplies>";
 
-            Response<CustomFormModel> purchaseOrderOfficeSuppliesModel = await client.StartTrainingAsync(new Uri(purchaseOrderOfficeSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Office supplies" }).WaitForCompletionAsync();
-            Response<CustomFormModel> purchaseOrderOfficeEquipmentModel = await client.StartTrainingAsync(new Uri(purchaseOrderOfficeEquipmentUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Office Equipment" }).WaitForCompletionAsync();
-            Response<CustomFormModel> purchaseOrderFurnitureModel = await client.StartTrainingAsync(new Uri(purchaseOrderFurnitureUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Furniture" }).WaitForCompletionAsync();
-            Response<CustomFormModel> purchaseOrderCleaningSuppliesModel = await client.StartTrainingAsync(new Uri(purchaseOrderCleaningSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Cleaning Supplies" }).WaitForCompletionAsync();
+            CustomFormModel purchaseOrderOfficeSuppliesModel = (await client.StartTrainingAsync(new Uri(purchaseOrderOfficeSuppliesUrl), useTrainingLabels: true, "Purchase order - Office supplies").WaitForCompletionAsync()).Value;
+            CustomFormModel purchaseOrderOfficeEquipmentModel = (await client.StartTrainingAsync(new Uri(purchaseOrderOfficeEquipmentUrl), useTrainingLabels: true, "Purchase order - Office Equipment").WaitForCompletionAsync()).Value;
+            CustomFormModel purchaseOrderFurnitureModel = (await client.StartTrainingAsync(new Uri(purchaseOrderFurnitureUrl), useTrainingLabels: true, "Purchase order - Furniture").WaitForCompletionAsync()).Value;
+            CustomFormModel purchaseOrderCleaningSuppliesModel = (await client.StartTrainingAsync(new Uri(purchaseOrderCleaningSuppliesUrl), useTrainingLabels: true, "Purchase order - Cleaning Supplies").WaitForCompletionAsync()).Value;
 
             #endregion
 
@@ -52,18 +52,18 @@ namespace Azure.AI.FormRecognizer.Samples
 
             List<string> modelIds = new List<string>()
             {
-                purchaseOrderOfficeSuppliesModel.Value.ModelId,
-                purchaseOrderOfficeEquipmentModel.Value.ModelId,
-                purchaseOrderFurnitureModel.Value.ModelId,
-                purchaseOrderCleaningSuppliesModel.Value.ModelId
+                purchaseOrderOfficeSuppliesModel.ModelId,
+                purchaseOrderOfficeEquipmentModel.ModelId,
+                purchaseOrderFurnitureModel.ModelId,
+                purchaseOrderCleaningSuppliesModel.ModelId
             };
 
-            Response<CustomFormModel> purchaseOrderModelResponse = await client.StartCreateComposedModelAsync(modelIds).WaitForCompletionAsync();
-            CustomFormModel purchaseOrderModel = purchaseOrderModelResponse.Value;
+            CustomFormModel purchaseOrderModel = (await client.StartCreateComposedModelAsync(modelIds, "Composed Purchase order").WaitForCompletionAsync()).Value;
 
             Console.WriteLine($"Purchase Order Model Info:");
             Console.WriteLine($"    Is composed model: {purchaseOrderModel.Properties.IsComposedModel}");
             Console.WriteLine($"    Model Id: {purchaseOrderModel.ModelId}");
+            Console.WriteLine($"    Model name: {purchaseOrderModel.ModelName}");
             Console.WriteLine($"    Model Status: {purchaseOrderModel.Status}");
             Console.WriteLine($"    Create model started on: {purchaseOrderModel.TrainingStartedOn}");
             Console.WriteLine($"    Create model completed on: {purchaseOrderModel.TrainingCompletedOn}");
@@ -120,10 +120,10 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
 
             // Delete the models on completion to clean environment.
-            await client.DeleteModelAsync(purchaseOrderOfficeSuppliesModel.Value.ModelId).ConfigureAwait(false);
-            await client.DeleteModelAsync(purchaseOrderOfficeEquipmentModel.Value.ModelId).ConfigureAwait(false);
-            await client.DeleteModelAsync(purchaseOrderFurnitureModel.Value.ModelId).ConfigureAwait(false);
-            await client.DeleteModelAsync(purchaseOrderCleaningSuppliesModel.Value.ModelId).ConfigureAwait(false);
+            await client.DeleteModelAsync(purchaseOrderOfficeSuppliesModel.ModelId).ConfigureAwait(false);
+            await client.DeleteModelAsync(purchaseOrderOfficeEquipmentModel.ModelId).ConfigureAwait(false);
+            await client.DeleteModelAsync(purchaseOrderFurnitureModel.ModelId).ConfigureAwait(false);
+            await client.DeleteModelAsync(purchaseOrderCleaningSuppliesModel.ModelId).ConfigureAwait(false);
             await client.DeleteModelAsync(purchaseOrderModel.ModelId).ConfigureAwait(false);
         }
     }

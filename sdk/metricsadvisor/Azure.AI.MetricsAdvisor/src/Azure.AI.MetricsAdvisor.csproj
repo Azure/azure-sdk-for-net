@@ -1,8 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.AI.MetricsAdvisor client library</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.3</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>
+      $(NoWarn);
+      AZC0007; <!-- https://github.com/Azure/azure-sdk-for-net/issues/16435 -->
+    </NoWarn>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->

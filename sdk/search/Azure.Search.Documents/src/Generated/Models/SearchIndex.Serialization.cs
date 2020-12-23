@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("fields");
             writer.WriteStartArray();
-            foreach (var item in Fields)
+            foreach (var item in _fields)
             {
                 writer.WriteObjectValue(item);
             }
@@ -161,6 +161,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("scoringProfiles"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ScoringProfile> array = new List<ScoringProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -186,6 +191,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("suggesters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SearchSuggester> array = new List<SearchSuggester>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -196,6 +206,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("analyzers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LexicalAnalyzer> array = new List<LexicalAnalyzer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -206,6 +221,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("tokenizers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LexicalTokenizer> array = new List<LexicalTokenizer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -216,6 +236,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("tokenFilters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TokenFilter> array = new List<TokenFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -226,6 +251,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("charFilters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<CharFilter> array = new List<CharFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -246,6 +276,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("similarity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     similarity = SimilarityAlgorithm.DeserializeSimilarityAlgorithm(property.Value);
                     continue;
                 }

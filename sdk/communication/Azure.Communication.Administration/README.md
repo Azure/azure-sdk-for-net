@@ -7,7 +7,7 @@ Identity client: 2020-07-20-preview2
 
 Azure Communication Administration is managing tokens and phone numbers for Azure Communication Services.
 
-[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs] | [Samples][source_samples]
 
 ## Getting started
 
@@ -15,7 +15,7 @@ Azure Communication Administration is managing tokens and phone numbers for Azur
 Install the Azure Communication Administration client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Communication.Administration --version 1.0.0-beta.1
+dotnet add package Azure.Communication.Administration --version 1.0.0-beta.3
 ```
 
 ### Prerequisites
@@ -48,8 +48,8 @@ var client = new CommunicationIdentityClient(connectionString);
 
 ### Create a new identity
 ```C# Snippet:CreateCommunicationUserAsync
-Response<CommunicationUser> userResponse = await client.CreateUserAsync();
-CommunicationUser user = userResponse.Value;
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+CommunicationUserIdentifier user = userResponse.Value;
 Console.WriteLine($"User id: {user.Id}");
 ```
 
@@ -85,7 +85,7 @@ var client = new CommunicationIdentityClient(connectionString);
 
 try
 {
-    Response<CommunicationUser> response = await client.CreateUserAsync();
+    Response<CommunicationUserIdentifier> response = await client.CreateUserAsync();
 }
 catch (RequestFailedException ex)
 {
@@ -101,9 +101,9 @@ Phone plans come in two types; Geographic and Toll-Free. Geographic phone plans 
 
 All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
 
-### Searching and acquiring numbers
+### Reserving and acquiring numbers
 
-Phone numbers search can be performed through the search creation API by providing a phone plan id, an area code and quantity of phone numbers. The provided quantity of phone numbers will be reserved for ten minutes. This search of phone numbers can either be cancelled or purchased. If the search is cancelled, then the phone numbers will become available to others. If the search is purchased, then the phone numbers are acquired for the Azure resources.
+Phone numbers reservation can be performed through the reservation creation API by providing a phone plan id, an area code and quantity of phone numbers. The provided quantity of phone numbers will be reserved for ten minutes. This reservation of phone numbers can either be cancelled or purchased. If the reservation is cancelled, then the phone numbers will become available to others. If the reservation is purchased, then the phone numbers are acquired for the Azure resources.
 
 ### Configuring / Assigning numbers
 
@@ -190,19 +190,21 @@ foreach (var secondaryAreaCode in areaCodes.SecondaryAreaCodes)
 }
 ```
 
-### Create search
+### Create reservation
 
 ```C#
-var searchOptions = new CreateSearchOptions(displayName, description, plans, areaCode) { Quantity = 1 };
-var createSearchResponse = client.CreateSearch(searchOptions);
+var reservationOptions = new CreateReservationOptions(displayName, description, plans, areaCode) { Quantity = 1 };
+var reservationOperation = await client.StartReservationAsync(reservationOptions).ConfigureAwait(false);
+var reservationResponse = await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-Console.WriteLine($"Search result: SearchId: {createSearchResponse.Value.SearchId}");
+Console.WriteLine($"ReservationId: {reservationResponse.Value.ReservationId}, Status {reservationResponse.Value.Status}");
 ```
 
-### Purchase search
+### Purchase reservation
 
 ```C#
-client.PurchaseSearch(searchId);
+var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId).ConfigureAwait(false);
+await reservationPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
 ```
 
 ### Configure phone number
@@ -211,6 +213,15 @@ client.PurchaseSearch(searchId);
 var pstnConfiguration = new PstnConfiguration("<url>");
 var phoneNumber = new PhoneNumber("<phone_number>");
 client.ConfigureNumber(pstnConfiguration, phoneNumber);
+```
+
+### Release phone numbers
+
+```C#
+var releasePhoneNumberOperation = await client.StartReleasePhoneNumbersAsync(numbers).ConfigureAwait(false);
+await releasePhoneNumberOperation.WaitForCompletionAsync().ConfigureAwait(false);
+
+Console.WriteLine($"ReleaseId: {releasePhoneNumberOperation.Value.ReleaseId}, Status: {releasePhoneNumberOperation.Value.Status}");
 ```
 
 ## Next steps
@@ -225,6 +236,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [azure_sub]: https://azure.microsoft.com/free/
 [azure_portal]: https://portal.azure.com
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Administration/src
+[source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Administration/samples
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

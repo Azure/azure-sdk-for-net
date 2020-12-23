@@ -9,48 +9,48 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     public partial class KeyVaultPermission : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Actions))
+            if (Optional.IsCollectionDefined(AllowActions))
             {
                 writer.WritePropertyName("actions");
                 writer.WriteStartArray();
-                foreach (var item in Actions)
+                foreach (var item in AllowActions)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotActions))
+            if (Optional.IsCollectionDefined(DenyActions))
             {
                 writer.WritePropertyName("notActions");
                 writer.WriteStartArray();
-                foreach (var item in NotActions)
+                foreach (var item in DenyActions)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataActions))
+            if (Optional.IsCollectionDefined(AllowDataActions))
             {
                 writer.WritePropertyName("dataActions");
                 writer.WriteStartArray();
-                foreach (var item in DataActions)
+                foreach (var item in AllowDataActions)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotDataActions))
+            if (Optional.IsCollectionDefined(DenyDataActions))
             {
                 writer.WritePropertyName("notDataActions");
                 writer.WriteStartArray();
-                foreach (var item in NotDataActions)
+                foreach (var item in DenyDataActions)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -69,6 +69,11 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 if (property.NameEquals("actions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -79,6 +84,11 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (property.NameEquals("notActions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -89,6 +99,11 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (property.NameEquals("dataActions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -99,6 +114,11 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (property.NameEquals("notDataActions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

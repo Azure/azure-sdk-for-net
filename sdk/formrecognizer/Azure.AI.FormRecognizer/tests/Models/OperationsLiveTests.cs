@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
@@ -64,6 +65,24 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task RecognizeInvoicesOperationCanPollFromNewObject()
+        {
+            // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
+            // making the test fail.
+
+            var client = CreateFormRecognizerClient(skipInstrumenting: true);
+
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Blank);
+            var operation = await client.StartRecognizeInvoicesFromUriAsync(uri);
+
+            var sameOperation = new RecognizeInvoicesOperation(operation.Id, client);
+            await sameOperation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(sameOperation.HasValue);
+            Assert.AreEqual(1, sameOperation.Value.Count);
+        }
+
+        [Test]
         public async Task RecognizeCustomFormsOperationCanPollFromNewObject()
         {
             // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
@@ -99,6 +118,26 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
 
             var sameOperation = new TrainingOperation(operation.Id, client);
+            await sameOperation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(sameOperation.HasValue);
+            Assert.AreEqual(CustomFormModelStatus.Ready, sameOperation.Value.Status);
+        }
+
+        [Test]
+        public async Task CreateComposedModelOperationCanPollFromNewObject()
+        {
+            // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
+            // making the test fail.
+
+            var client = CreateFormTrainingClient(skipInstrumenting: true);
+
+            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            var operation = await client.StartCreateComposedModelAsync(new List<string> { trainedModelA.ModelId, trainedModelB.ModelId });
+
+            var sameOperation = new CreateComposedModelOperation(operation.Id, client);
             await sameOperation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(sameOperation.HasValue);

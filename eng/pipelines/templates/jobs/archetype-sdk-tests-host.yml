@@ -1,0 +1,40 @@
+parameters:
+- name: AdditionalParameters
+  type: object
+- name: CloudConfig
+  type: object
+  default: {}
+- name: Platforms
+  type: object
+  default: {}
+- name: UsePlatformContainer
+  type: boolean
+  default: false
+
+jobs:
+  # There is no way to specify the container and/or target fields with a runtime value
+  # in a way that supports both containers and VMs as hosts, so this compile time
+  # switch is a workaround to support specifying host type.
+  - template: ./archetype-sdk-tests-jobs.yml
+    parameters:
+      UsePlatformContainer: false
+      Platforms:
+        ${{ each platform in parameters.Platforms }}:
+          ${{ if not(platform.value.Container) }}:
+            ${{ platform.key }}: ${{ platform.value }}
+      CloudConfig: ${{ parameters.CloudConfig }}
+      ${{ each param in parameters.AdditionalParameters }}:
+        ${{ param.key }}: ${{ param.value }}
+  # Only include the template if we know there is a platform with a container,
+  # otherwise azure pipelines will populate a blank job with an empty matrix
+  - ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
+    - template: ./archetype-sdk-tests-jobs.yml
+      parameters:
+        UsePlatformContainer: true
+        Platforms:
+          ${{ each platform in parameters.Platforms }}:
+            ${{ if platform.value.Container }}:
+              ${{ platform.key }}: ${{ platform.value }}
+        CloudConfig: ${{ parameters.CloudConfig }}
+        ${{ each param in parameters.AdditionalParameters }}:
+          ${{ param.key }}: ${{ param.value }}

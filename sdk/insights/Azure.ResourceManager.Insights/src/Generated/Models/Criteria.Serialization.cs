@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("dimensions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Dimension> array = new List<Dimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

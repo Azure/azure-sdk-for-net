@@ -57,6 +57,16 @@ namespace Azure.Storage.Sas
         DeleteBlobVersion = 128,
 
         /// <summary>
+        /// Indicates that Move is permitted.
+        /// </summary>
+        Move = 256,
+
+        /// <summary>
+        /// Indicates that Execute is permitted.
+        /// </summary>
+        Execute = 512,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -70,7 +80,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal static partial class BlobExtensions
     {
-
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="BlobSasBuilder.Permissions"/>.

@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -106,6 +111,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("operatingSystem"))
@@ -125,11 +135,21 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("vmScaleSetEnabled"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             vmScaleSetEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("supportsMultipleExtensions"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             supportsMultipleExtensions = property0.Value.GetBoolean();
                             continue;
                         }

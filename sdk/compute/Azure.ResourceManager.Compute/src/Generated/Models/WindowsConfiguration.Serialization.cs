@@ -60,11 +60,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("provisionVMAgent"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     provisionVMAgent = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableAutomaticUpdates"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enableAutomaticUpdates = property.Value.GetBoolean();
                     continue;
                 }
@@ -75,6 +85,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("additionalUnattendContent"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AdditionalUnattendContent> array = new List<AdditionalUnattendContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -85,6 +100,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("winRM"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     winRM = WinRMConfiguration.DeserializeWinRMConfiguration(property.Value);
                     continue;
                 }
