@@ -1610,8 +1610,12 @@ namespace Azure.Storage.Queues
                 Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"Uri: {MessagesUri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(ClearMessages)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<MessagesClearHeaders> response;
 
                     if (async)
@@ -1633,11 +1637,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1972,6 +1978,9 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response{SendMessageResult}"/>
         /// </returns>
@@ -1985,7 +1994,8 @@ namespace Azure.Storage.Queues
             TimeSpan? visibilityTimeout,
             TimeSpan? timeToLive,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -1995,8 +2005,14 @@ namespace Azure.Storage.Queues
                     $"Uri: {MessagesUri}\n" +
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}\n" +
                     $"{nameof(timeToLive)}: {timeToLive}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(SendMessage)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
+
                     if (UsingClientSideEncryption)
                     {
                         message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
@@ -2034,11 +2050,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2517,14 +2535,17 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
         /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
         /// </returns>
         private async Task<Response<PeekedMessage[]>> PeekMessagesInternal(
             int? maxMessages,
-            //string operationName,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -2533,8 +2554,12 @@ namespace Azure.Storage.Queues
                     message:
                     $"Uri: {MessagesUri}\n" +
                     $"{nameof(maxMessages)}: {maxMessages}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(PeekMessages)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders> response;
 
                     if (async)
@@ -2573,11 +2598,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2940,6 +2967,9 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operatation.
+        /// </param>
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
@@ -2954,7 +2984,8 @@ namespace Azure.Storage.Queues
             string popReceipt,
             TimeSpan visibilityTimeout,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = null)
         {
             Uri uri = GetMessageUri(messageId);
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
@@ -2965,8 +2996,13 @@ namespace Azure.Storage.Queues
                     $"Uri: {uri}\n" +
                     $"{nameof(popReceipt)}: {popReceipt}" +
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(UpdateMessage)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     if (UsingClientSideEncryption)
                     {
                         message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
@@ -3015,11 +3051,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
