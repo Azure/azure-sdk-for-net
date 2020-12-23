@@ -29,7 +29,7 @@ namespace Azure.Storage.Queues.Tests
         public QueueTestBase(bool async) : this(async, null) { }
 
         public QueueTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Live)
         {
         }
 
