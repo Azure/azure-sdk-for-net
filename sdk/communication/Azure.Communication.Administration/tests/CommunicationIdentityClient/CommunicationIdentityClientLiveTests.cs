@@ -10,6 +10,7 @@ using Azure.Identity;
 using NUnit.Framework;
 using Azure.Core;
 using Azure.Communication.Identity;
+using static Azure.Communication.Administration.CommunicationIdentityClientOptions;
 
 namespace Azure.Communication.Administration.Tests
 {
@@ -29,7 +30,11 @@ namespace Azure.Communication.Administration.Tests
         public CommunicationIdentityClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
-
+        [Test]
+        public void createClientOptiosWithNoRetryOptions()
+        {
+            Assert.IsNotNull(new CommunicationIdentityClientOptions(ServiceVersion.V1, null,null));
+        }
         [Test]
         [TestCase("chat", TestName = "IssuingTokenWithSingleScope")]
         [TestCase("chat", "pstn", TestName = "IssuingTokenWithMultipleScopes")]
