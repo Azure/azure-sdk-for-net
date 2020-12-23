@@ -10,6 +10,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.Spark
 {
+    [CodeGenSuppress("CreateSparkBatchJob", typeof(SparkBatchJobOptions), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateSparkBatchJobAsync", typeof(SparkBatchJobOptions), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSparkBatchJob", typeof(int), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSparkBatchJobAsync", typeof(int), typeof(bool?), typeof(CancellationToken))]
     public partial class SparkBatchClient
     {
         /// <summary>

@@ -10,6 +10,14 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.Spark
 {
+    [CodeGenSuppress("CreateSparkSessionAsync", typeof(SparkSessionOptions), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateSparkSession", typeof(SparkSessionOptions), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSparkSessionAsync", typeof(int), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSparkSession", typeof(int), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateSparkStatementAsync", typeof(int), typeof(SparkStatementOptions), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateSparkStatement", typeof(int), typeof(SparkStatementOptions), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSparkStatementAsync", typeof(int), typeof(int), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSparkStatement", typeof(int), typeof(int), typeof(CancellationToken))]
     public partial class SparkSessionClient
     {
         /// <summary>
