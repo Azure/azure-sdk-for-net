@@ -24,13 +24,13 @@ SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewG
     ExecutorCount = 2
 };
 
-SparkSessionOperation createOperation = client.StartCreateSparkSession(request);
-while (!createOperation.HasCompleted)
+SparkSessionOperation createSessionOperation = client.StartCreateSparkSession(request);
+while (!createSessionOperation.HasCompleted)
 {
     System.Threading.Thread.Sleep(2000);
-    createOperation.UpdateStatus();
+    createSessionOperation.UpdateStatus();
 }
-SparkSession sessionCreated = createOperation.Value;
+SparkSession sessionCreated = createSessionOperation.Value;
 ```
 
 ## Retrieve a Spark Session
@@ -59,13 +59,13 @@ SparkStatementOptions sparkStatementRequest = new SparkStatementOptions
     Code = @"print(""Hello world\n"")"
 };
 
-SparkStatementOperation statementOperation = client.StartCreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
-while (!statementOperation.HasCompleted)
+SparkStatementOperation createStatementOperation = client.StartCreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
+while (!createStatementOperation.HasCompleted)
 {
     System.Threading.Thread.Sleep(2000);
-    statementOperation.UpdateStatus();
+    createStatementOperation.UpdateStatus();
 }
-SparkStatement statementCreated = statementOperation.Value;
+SparkStatement statementCreated = createStatementOperation.Value;
 ```
 
 ## Retrieve a statement
@@ -73,7 +73,13 @@ SparkStatement statementCreated = statementOperation.Value;
 To retrieve an existing statement call `GetSparkStatement`, passing in both the session ID and the ID of the statement.
 
 ```C# Snippet:GetSparkStatement
-SparkStatement statement = client.GetSparkStatement(sessionCreated.Id, statementCreated.Id);
+SparkStatementOperation getStatementOperation = client.StartGetSparkStatement(sessionCreated.Id, statementCreated.Id);
+while (!getStatementOperation.HasCompleted)
+{
+    System.Threading.Thread.Sleep(2000);
+    getStatementOperation.UpdateStatus();
+}
+SparkStatement statement = getStatementOperation.Value;
 Debug.WriteLine($"Statement is returned with id {statement.Id} and state {statement.State}");
 ```
 
