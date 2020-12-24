@@ -121,35 +121,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task MetricAnomalyDetectionConfigurationOperations()
-        {
-            var adminClient = GetMetricsAdvisorAdministrationClient();
-            string createdConfigurationId = await CreateDetectionConfiguration(adminClient).ConfigureAwait(false);
-
-            Assert.That(createdConfigurationId, Is.Not.Null);
-
-            AnomalyDetectionConfiguration getConfig = await adminClient.GetDetectionConfigurationAsync(createdConfigurationId).ConfigureAwait(false);
-
-            Assert.That(getConfig.Id, Is.EqualTo(createdConfigurationId));
-
-            getConfig.Description = "updated";
-
-            await adminClient.UpdateDetectionConfigurationAsync(getConfig.Id, getConfig).ConfigureAwait(false);
-
-            // try an update with a user instantiated model.
-            AnomalyDetectionConfiguration userCreatedModel = PopulateMetricAnomalyDetectionConfiguration(MetricId);
-            userCreatedModel.Description = "updated again!";
-
-            await adminClient.UpdateDetectionConfigurationAsync(getConfig.Id, userCreatedModel).ConfigureAwait(false);
-
-            getConfig = await adminClient.GetDetectionConfigurationAsync(getConfig.Id).ConfigureAwait(false);
-
-            Assert.That(getConfig.Description, Is.EqualTo(userCreatedModel.Description));
-
-            await adminClient.DeleteDetectionConfigurationAsync(createdConfigurationId).ConfigureAwait(false);
-        }
-
-        [RecordedTest]
         public async Task GetDataFeedIngestionStatuses()
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
@@ -254,22 +225,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var adminClient = GetMetricsAdvisorAdministrationClient();
 
             await adminClient.RefreshDataFeedIngestionAsync(DataFeedId, new DateTimeOffset(2020, 9, 1, 0, 0, 0, TimeSpan.Zero), new DateTimeOffset(2020, 9, 2, 0, 0, 0, TimeSpan.Zero)).ConfigureAwait(false);
-        }
-
-        [RecordedTest]
-        public async Task GetMetricAnomalyDetectionConfigurations()
-        {
-            var adminClient = GetMetricsAdvisorAdministrationClient();
-
-            bool isResponseEmpty = true;
-
-            await foreach (AnomalyDetectionConfiguration config in adminClient.GetDetectionConfigurationsAsync(MetricId))
-            {
-                isResponseEmpty = false;
-                break;
-            }
-
-            Assert.That(isResponseEmpty, Is.False);
         }
     }
 }
