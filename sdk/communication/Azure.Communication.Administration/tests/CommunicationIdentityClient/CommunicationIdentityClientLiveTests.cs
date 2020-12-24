@@ -10,12 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
-<<<<<<< HEAD
-using Azure.Core;
-using Azure.Communication.Identity;
 using static Azure.Communication.Administration.CommunicationIdentityClientOptions;
-=======
->>>>>>> upstream/master
 
 namespace Azure.Communication.Administration.Tests
 {
