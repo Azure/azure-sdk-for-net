@@ -7,6 +7,10 @@ namespace Azure.Data.Tables.Tests
 {
     public class TablesTestEnvironment : TestEnvironment
     {
+        public TablesTestEnvironment() : base("tables")
+        {
+        }
+
         // Storage Tables
         public const string DefaultStorageSuffix = "core.windows.net";
         public string PrimaryStorageAccountKey => GetRecordedVariable("TABLES_PRIMARY_STORAGE_ACCOUNT_KEY", options => options.IsSecret(SanitizedValue.Base64));

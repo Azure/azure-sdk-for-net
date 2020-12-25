@@ -46,5 +46,6 @@ namespace Azure.Core.TestFramework
 
             return false;
         }
+
     }
 }

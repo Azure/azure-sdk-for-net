@@ -22,6 +22,7 @@ namespace Azure.Iot.Hub.Service
         /// </summary>
         protected ConfigurationsClient()
         {
+
         }
 
         /// <summary>
@@ -161,4 +162,5 @@ namespace Azure.Iot.Hub.Service
             return _configurationRestClient.TestQueries(configuration, cancellationToken);
         }
     }
+
 }

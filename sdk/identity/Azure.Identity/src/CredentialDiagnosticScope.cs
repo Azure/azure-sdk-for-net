@@ -74,6 +74,7 @@ namespace Azure.Identity
 
             exception = new AuthenticationFailedException($"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: {exception.Message}", exception);
             return true;
+
         }
 
         public void Dispose() => _scopeHandler.Dispose(_name, _scope);

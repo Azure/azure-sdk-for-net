@@ -267,6 +267,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private static AmqpSymbol DetermineErrorCondition(AmqpMessage response)
         {
+
             // If there was an error condition present, use that.
 
             if (response.ApplicationProperties.Map.TryGetValue(AmqpResponse.ErrorCondition, out AmqpSymbol condition))

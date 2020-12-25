@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   incur costs for the associated Azure subscription.
     /// </remarks>
     ///
-    [TestFixture]
+    [TestFixture(Ignore="Idempotent Publishing is not yet available in the public cloud.")]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class IdempotentPublishingLiveTests

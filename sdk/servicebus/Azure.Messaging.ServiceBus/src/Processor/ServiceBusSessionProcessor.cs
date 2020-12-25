@@ -117,6 +117,7 @@ namespace Azure.Messaging.ServiceBus
             add
             {
                 _innerProcessor.ProcessSessionMessageAsync += value;
+
             }
 
             remove
@@ -154,6 +155,7 @@ namespace Azure.Messaging.ServiceBus
             add
             {
                 _innerProcessor.SessionInitializingAsync += value;
+
             }
 
             remove

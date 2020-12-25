@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// </summary>
     public class VisualStudioCredentialOptions : TokenCredentialOptions
     {
-        private string _tenantId;
+        private string _tenantId = null;
 
         /// <summary>
         /// The tenant ID the user will be authenticated to. If not specified the user will be authenticated to their home tenant.

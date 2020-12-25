@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The Response <see cref="ReasonPhrase"/>.
         /// </summary>
-        private string _reasonPhrase;
+        private string _reasonPhrase = null;
 
         /// <summary>
         /// The <see cref="Response.Headers"/>.

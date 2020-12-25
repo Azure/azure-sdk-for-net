@@ -94,6 +94,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 expectedVMSizePropertiesList.Add(new VirtualMachineSize(VirtualMachineSizeTypes.StandardA1.ToString(),1,130048,71680, 1792, 2));
             }
 
+
             return expectedVMSizePropertiesList;
         }
 

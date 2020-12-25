@@ -23,6 +23,31 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample02_EventHubsClientsLiveTests
     {
+        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
+        private EventHubScope _scope;
+
+        /// <summary>
+        ///   Performs the tasks needed to initialize the test fixture.  This
+        ///   method runs once for the entire fixture, prior to running any tests.
+        /// </summary>
+        ///
+        [OneTimeSetUp]
+        public async Task FixtureSetUp()
+        {
+            _scope = await EventHubScope.CreateAsync(2);
+        }
+
+        /// <summary>
+        ///   Performs the tasks needed to cleanup the test fixture after all
+        ///   tests have run.  This method runs once for the entire fixture.
+        /// </summary>
+        ///
+        [OneTimeTearDown]
+        public async Task FixtureTearDown()
+        {
+            await _scope.DisposeAsync();
+        }
+
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -30,15 +55,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ConfigureProducerTransportWithFullOptions()
         {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
             #region Snippet:EventHubs_Sample02_ProducerTransportFullConnectionOptions
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/ eventHubName = _scope.EventHubName;
 
             var producerOptions = new EventHubProducerClientOptions
             {
@@ -68,15 +91,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ConfigureProducerTransportByProperty()
         {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
             #region Snippet:EventHubs_Sample02_ProducerTransportProperty
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/ eventHubName = _scope.EventHubName;
 
             var producerOptions = new EventHubProducerClientOptions();
             producerOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
@@ -101,15 +122,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ConfigureProducerProxyWithFullOptions()
         {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
             #region Snippet:EventHubs_Sample02_ProducerProxyFullConnectionOptions
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/ eventHubName = _scope.EventHubName;
 
             var producerOptions = new EventHubProducerClientOptions
             {
@@ -140,15 +159,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ConfigureProducerProxyByProperty()
         {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
             #region Snippet:EventHubs_Sample02_ProducerProxyProperty
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/ eventHubName = _scope.EventHubName;
 
             var producerOptions = new EventHubProducerClientOptions();
             producerOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
@@ -174,8 +191,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ConfigureConsumerRetryWithFullOptions()
         {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
             #region Snippet:EventHubs_Sample02_ConsumerRetryWithFullOptions
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -183,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/ eventHubName = _scope.EventHubName;
 
             var consumerOptions = new EventHubConsumerClientOptions
             {
@@ -217,8 +232,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ConfigureConsumerRetryByProperty()
         {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
             #region Snippet:EventHubs_Sample02_ConsumerRetryByProperty
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -226,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/ eventHubName = _scope.EventHubName;
 
             var consumerOptions = new EventHubConsumerClientOptions();
             consumerOptions.RetryOptions.Mode = EventHubsRetryMode.Fixed;

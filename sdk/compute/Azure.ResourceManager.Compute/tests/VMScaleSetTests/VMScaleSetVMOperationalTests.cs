@@ -297,6 +297,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             var disk = await CreateDataDisk(diskName);
 
+
             var dd = new DataDisk(lun, DiskCreateOptionTypes.Attach)
             {
                 Name = diskName,

@@ -2,11 +2,6 @@
 
 ## 1.0.0-beta.4 (Unreleased)
 
-### Added
-- Added support to create CommunicationIdentityClient with TokenCredential
-### Fixed
-- Issue with paging results not pulling next pages
-
 
 ## 1.0.0-beta.3 (2020-11-16)
 
@@ -44,7 +39,6 @@
 - Replaced `PurchaseSearch` with `StartPurchaseReservation` which is a long-running operation.
 - Replaced `ReleasePhoneNumbersAsync` with `StartReleasePhoneNumbersAsync` which returns a poller for the long-running operation.
 - Replaced `ReleasePhoneNumbers` with `StartReleasePhoneNumbers` which is a long-running operation.
-
 
 ## 1.0.0-beta.2 (2020-10-06)
 Added phone number administration. For more information, please see the [README][read_me] and [documentation][documentation].

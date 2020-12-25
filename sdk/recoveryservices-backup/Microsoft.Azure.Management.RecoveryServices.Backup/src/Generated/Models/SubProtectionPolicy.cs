@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         /// <param name="policyType">Type of backup policy type. Possible
         /// values include: 'Invalid', 'Full', 'Differential', 'Log',
-        /// 'CopyOnlyFull', 'Incremental'</param>
+        /// 'CopyOnlyFull'</param>
         /// <param name="schedulePolicy">Backup schedule specified as part of
         /// backup policy.</param>
         /// <param name="retentionPolicy">Retention policy with the details on
@@ -51,8 +51,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets type of backup policy type. Possible values include:
-        /// 'Invalid', 'Full', 'Differential', 'Log', 'CopyOnlyFull',
-        /// 'Incremental'
+        /// 'Invalid', 'Full', 'Differential', 'Log', 'CopyOnlyFull'
         /// </summary>
         [JsonProperty(PropertyName = "policyType")]
         public string PolicyType { get; set; }

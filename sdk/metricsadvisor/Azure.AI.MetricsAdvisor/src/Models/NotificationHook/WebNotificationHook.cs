@@ -62,13 +62,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The certificate password for authenticating to the API address. Leave this blank if authentication isn't needed.
         /// </summary>
-        public string CertificatePassword { get => HookParameter.CertificatePassword; set => HookParameter.CertificatePassword = value; }
+        public string CertificatePassword { get => HookParameter.Username; set => HookParameter.Username = value; }
 
         /// <summary>
         /// Custom headers to send in the API call.
         /// </summary>
         /// <exception cref="ArgumentNullException">The value assigned to <see cref="Headers"/> is null.</exception>
-#pragma warning disable CA2227 // Collection properties should be readonly
         public IDictionary<string, string> Headers
         {
             get => HookParameter.Headers;
@@ -78,7 +77,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 HookParameter.Headers = value;
             }
         }
-#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Used by CodeGen during serialization.

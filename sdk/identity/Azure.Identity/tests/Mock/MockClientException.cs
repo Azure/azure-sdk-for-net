@@ -9,6 +9,7 @@ namespace Azure.Identity.Tests.Mock
     {
         public MockClientException(string message) : base(message)
         {
+
         }
     }
 }

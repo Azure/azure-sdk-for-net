@@ -58,7 +58,6 @@ parameters:
     Windows_NetCore:
       OSVmImage: "windows-2019"
       TestTargetFramework: netcoreapp2.1
-      SupportsRecording: true
     Windows_NetCore_ProjectRefAzureClients:
       OSVmImage: "windows-2019"
       TestTargetFramework: netcoreapp2.1
@@ -74,6 +73,11 @@ parameters:
       OSVmImage: "macOS-10.15"
       TestTargetFramework: netcoreapp2.1
       SupportedClouds: 'Public'
+    Windows_NetCore_Record:
+      OSVmImage: "windows-2019"
+      TestMode: Record
+      TestTargetFramework: netcoreapp2.1
+      SupportedClouds: 'Public'
 - name: PlatformPreSteps
   type: object
   default:
@@ -82,7 +86,7 @@ parameters:
   type: object
   default:
     - task: CopyFiles@2
-      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
+      condition: and(succeededOrFailed(), eq(variables['Agent.JobName'], 'Windows_NetCore_Record'))
       displayName: "Copy Test Recordings"
       inputs:
         sourceFolder: '$(Build.SourcesDirectory)'
@@ -91,7 +95,7 @@ parameters:
         contents: 'sdk/$(ServiceDirectory)/**/SessionRecords/**/*.json'
         targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
     - task: PublishBuildArtifacts@1
-      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
+      condition: and(succeededOrFailed(), eq(variables['Agent.JobName'], 'Windows_NetCore_Record'))
       displayName: "Publish Test Recordings"
       inputs:
         pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
@@ -100,10 +104,8 @@ parameters:
 
 stages:
 - ${{ each cloud in parameters.CloudConfig }}:
-  # TODO: re-enable tests-weekly allow filter once sovereign cloud live tests are stable: https://github.com/Azure/azure-sdk/issues/2074
   # Run all clouds by default for weekly test pipeline, except for clouds specifically unsupported by the calling pipeline
-  # - ${{ if or(contains(parameters.Clouds, cloud.key), contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
-  - ${{ if or(contains(parameters.Clouds, cloud.key), and(contains(variables['Build.DefinitionName'], 'tests-weekly'), eq(cloud.key, 'Canary'))) }}:
+  - ${{ if or(contains(parameters.Clouds, cloud.key), contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
     - ${{ if not(contains(parameters.UnsupportedClouds, cloud.key)) }}:
       - stage: ${{ cloud.key }}
         dependsOn: []
@@ -112,8 +114,8 @@ stages:
           parameters:
             # Flag to include the job template with a container field
             ${{ each platform in parameters.AdditionalPlatforms }}:
-              ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
-                ${{ if platform.value.Container }}:
+              ${{ if contains(coalesce(platform.value.SupportedClouds, parameters.Clouds), cloud.key) }}:
+                ${{ if ne(platform.value.Container, '') }}:
                   UsePlatformContainer: true
             AdditionalParameters:
               PreSteps:
@@ -132,10 +134,10 @@ stages:
             Platforms:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
               ${{ each platform in parameters.Platforms }}:
-                ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
+                ${{ if contains(coalesce(platform.value.SupportedClouds, parameters.Clouds), cloud.key) }}:
                   ${{ platform.key }}: ${{ platform.value }}
               ${{ each platform in parameters.AdditionalPlatforms }}:
-                ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
+                ${{ if contains(coalesce(platform.value.SupportedClouds, parameters.Clouds), cloud.key) }}:
                   ${{ platform.key }}: ${{ platform.value }}
             CloudConfig:
               SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}

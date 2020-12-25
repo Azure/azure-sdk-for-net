@@ -33,23 +33,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// uri or id property, but not both.</param>
         /// <param name="id">The resource id of a Template Spec. Use either the
         /// id or uri property, but not both.</param>
-        /// <param name="relativePath">The relativePath property can be used to
-        /// deploy a linked template at a location relative to the parent. If
-        /// the parent template was linked with a TemplateSpec, this will
-        /// reference an artifact in the TemplateSpec.  If the parent was
-        /// linked with a URI, the child deployment will be a combination of
-        /// the parent and relativePath URIs</param>
+        /// <param name="relativePath">Applicable only if this template link
+        /// references a Template Spec. This relativePath property can
+        /// optionally be used to reference a Template Spec artifact by
+        /// path.</param>
         /// <param name="contentVersion">If included, must match the
         /// ContentVersion in the template.</param>
-        /// <param name="queryString">The query string (for example, a SAS
-        /// token) to be used with the templateLink URI.</param>
-        public TemplateLink(string uri = default(string), string id = default(string), string relativePath = default(string), string contentVersion = default(string), string queryString = default(string))
+        public TemplateLink(string uri = default(string), string id = default(string), string relativePath = default(string), string contentVersion = default(string))
         {
             Uri = uri;
             Id = id;
             RelativePath = relativePath;
             ContentVersion = contentVersion;
-            QueryString = queryString;
             CustomInit();
         }
 
@@ -73,12 +68,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the relativePath property can be used to deploy a
-        /// linked template at a location relative to the parent. If the parent
-        /// template was linked with a TemplateSpec, this will reference an
-        /// artifact in the TemplateSpec.  If the parent was linked with a URI,
-        /// the child deployment will be a combination of the parent and
-        /// relativePath URIs
+        /// Gets or sets applicable only if this template link references a
+        /// Template Spec. This relativePath property can optionally be used to
+        /// reference a Template Spec artifact by path.
         /// </summary>
         [JsonProperty(PropertyName = "relativePath")]
         public string RelativePath { get; set; }
@@ -89,13 +81,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "contentVersion")]
         public string ContentVersion { get; set; }
-
-        /// <summary>
-        /// Gets or sets the query string (for example, a SAS token) to be used
-        /// with the templateLink URI.
-        /// </summary>
-        [JsonProperty(PropertyName = "queryString")]
-        public string QueryString { get; set; }
 
     }
 }

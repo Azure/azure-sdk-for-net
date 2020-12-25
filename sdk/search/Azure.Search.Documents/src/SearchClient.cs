@@ -35,7 +35,7 @@ namespace Azure.Search.Documents
         /// The name of the Search Service, lazily obtained from the
         /// <see cref="Endpoint"/>.
         /// </summary>
-        private string _serviceName;
+        private string _serviceName = null;
 
         /// <summary>
         /// Gets the name of the Search Service.

@@ -51,9 +51,10 @@ namespace ContentModeratorTests
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+
+                throw e;
             }
         }
 
@@ -77,9 +78,10 @@ namespace ContentModeratorTests
                     Assert.Equal("", deleteTermLists.Body);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+
+                throw e;
             }
         }
 
@@ -121,9 +123,10 @@ namespace ContentModeratorTests
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+
+                throw e;
             }
         }
 
@@ -152,9 +155,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -185,9 +188,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -219,9 +222,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -260,9 +263,9 @@ namespace ContentModeratorTests
                     Assert.Equal(HttpStatusCode.OK,getAllTermsFromListId.Response.StatusCode);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -293,9 +296,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -322,7 +325,7 @@ namespace ContentModeratorTests
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
                     //results = Constants.GetResponse(client, api, TermListId, MIMETypes.JSON.GetDescription(), "eng", "test");
                     results = Constants.GetResponse(client, api, "67", MIMETypes.JSON.GetDescription(), "eng", "test");
-
+                    
 
                     var deleteTermFromListId = results.DeleteTerm;
                     Assert.NotNull(deleteTermFromListId);
@@ -330,9 +333,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -362,13 +365,13 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
-
+        
         #endregion
 
 

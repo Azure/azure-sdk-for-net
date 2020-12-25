@@ -51,6 +51,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             }
         }
 
+
         /// <summary>
         /// Use a shared key to access a Storage Account.
         ///

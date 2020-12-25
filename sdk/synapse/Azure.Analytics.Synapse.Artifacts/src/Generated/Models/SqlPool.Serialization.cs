@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInTime);
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> recoverableDatabaseId = default;
             Optional<string> provisioningState = default;
             Optional<string> status = default;
-            Optional<string> restorePointInTime = default;
+            Optional<DateTimeOffset> restorePointInTime = default;
             Optional<string> createMode = default;
             Optional<DateTimeOffset> creationDate = default;
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("restorePointInTime"))
                         {
-                            restorePointInTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            restorePointInTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("createMode"))
@@ -218,7 +223,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlPool(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, restorePointInTime.Value, createMode.Value, Optional.ToNullable(creationDate));
+            return new SqlPool(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, Optional.ToNullable(restorePointInTime), createMode.Value, Optional.ToNullable(creationDate));
         }
     }
 }

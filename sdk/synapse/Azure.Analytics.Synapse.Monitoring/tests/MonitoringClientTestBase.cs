@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Tests.Monitoring
         {
             recording ??= Recording;
             return InstrumentClient(new MonitoringClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MonitoringClientOptions())));
         }

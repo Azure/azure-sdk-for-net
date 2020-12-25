@@ -38,6 +38,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                         {
                             await (receiver?.DisposeAsync() ?? new ValueTask());
                         }
+
                     }, Throws.Nothing);
                 }
             }
@@ -73,6 +74,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                         {
                             await (receiver?.DisposeAsync() ?? new ValueTask());
                         }
+
                     }, Throws.Nothing);
                 }
             }
@@ -106,6 +108,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                         {
                             await (receiver?.DisposeAsync() ?? new ValueTask());
                         }
+
                     }, Throws.Nothing);
                 }
             }

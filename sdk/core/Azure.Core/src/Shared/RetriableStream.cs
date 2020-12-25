@@ -142,6 +142,7 @@ namespace Azure.Core.Pipeline
                         var result = _currentStream.Read(buffer, offset, count);
                         _position += result;
                         return result;
+
                     }
                     catch (Exception e)
                     {
@@ -151,7 +152,7 @@ namespace Azure.Core.Pipeline
             }
 
             public override bool CanRead => _currentStream.CanRead;
-            public override bool CanSeek { get; }
+            public override bool CanSeek { get; } = false;
             public override long Length
             {
                 get

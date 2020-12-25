@@ -12,6 +12,7 @@ using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
+
     /// <summary>
     /// Sample demonstrates how to encrypt and decrypt a single block of plain text with an RSA key using the asynchronous methods of the CryptographyClient.
     /// </summary>

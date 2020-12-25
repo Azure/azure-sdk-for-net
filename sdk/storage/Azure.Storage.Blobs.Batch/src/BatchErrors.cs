@@ -49,5 +49,6 @@ namespace Azure.Storage.Blobs.Specialized
 
         public static RequestFailedException InvalidResponse(ClientDiagnostics clientDiagnostics, Response response, Exception innerException) =>
             clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: "Invalid response", innerException: innerException);
+
     }
 }

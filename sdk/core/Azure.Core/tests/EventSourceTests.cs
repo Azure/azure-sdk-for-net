@@ -303,6 +303,7 @@ namespace Azure.Core.Tests
             AssertNoContentLogged();
         }
 
+
         [Test]
         public async Task RequestContentIsNotLoggedWhenDisabled()
         {

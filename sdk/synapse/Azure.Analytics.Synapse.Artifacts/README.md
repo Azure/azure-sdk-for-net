@@ -13,15 +13,15 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
 ### Install the package
-Install the Azure Synapse Analytics development client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Artifacts/):
+Install the Azure Synapse Analytics development client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
 dotnet add package Azure.Analytics.Synapse.Artifacts --version 0.1.0-preview.2
 ```
 
 ### Prerequisites
-- **Azure Subscription:**  To use Azure services, including Azure Synapse, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
-- An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the [Azure Portal](https://portal.azure.com/) or [Azure CLI](https://docs.microsoft.com/cli/azure).
+* An [Azure subscription][azure_sub].
+* An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the Azure Portal or [Azure CLI][azure_cli].
 
 If you use the Azure CLI, the command looks like below:
 
@@ -37,28 +37,10 @@ az synapse workspace create \
 ```
 
 ### Authenticate the client
-In order to interact with part of the Azure Synapse Analytics service, you'll need to create an instance of the respective client class:
+In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [ArtifactsClient][development_client_class] class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
+ and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
-- [BigDataPoolsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/BigDataPoolsClient.cs)
-- [DataFlowClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/DataFlowClient.cs)
-- [DataFlowDebugSessionClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/DataFlowDebugSessionClient.cs)
-- [DatasetClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/DatasetClient.cs)
-- [IntegrationRuntimesClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/IntegrationRuntimesClient.cs)
-- [LinkedServiceClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/LinkedServiceClient.cs)
-- [NotebookClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/NotebookClient.cs)
-- [PipelineClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/PipelineClient.cs)
-- [PipelineRunClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/PipelineRunClient.cs)
-- [SparkJobDefinitionClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/SparkJobDefinitionClient.cs)
-- [SqlPoolsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/SqlPoolsClient.cs)
-- [SqlScriptClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/SqlScriptClient.cs)
-- [TriggerClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/TriggerClient.cs)
-- [TriggerRunClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/TriggerRunClient.cs)
-- [WorkspaceClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/WorkspaceClient.cs)
-- [WorkspaceGitRepoManagementClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/WorkspaceGitRepoManagementClient.cs)
-
-You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
-
-Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity). To use the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential) provider shown below,
+Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
@@ -79,9 +61,18 @@ The Azure.Analytics.Synapse.Artifacts package supports synchronous and asynchron
 `CreateOrUpdateNotebook` creates a notebook.
 
 ```C# Snippet:CreateNotebook
-NotebookCreateOrUpdateNotebookOperation operation = await client.StartCreateOrUpdateNotebookAsync(notebookName, notebookResource);
-await operation.WaitForCompletionAsync();
-Console.WriteLine("The notebook is created");
+Notebook notebook = new Notebook(
+    new NotebookMetadata
+    {
+        LanguageInfo = new NotebookLanguageInfo(name: "Python")
+    },
+    nbformat: 4,
+    nbformatMinor: 2,
+    new List<NotebookCell>()
+);
+string notebookName = "MyNotebook";
+NotebookCreateOrUpdateNotebookOperation operation = notebookClient.StartCreateOrUpdateNotebook(notebookName, new NotebookResource(notebookName, notebook));
+NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
 ```
 
 ### Retrieve a notebook
@@ -89,17 +80,17 @@ Console.WriteLine("The notebook is created");
 `GetNoteBook` retrieves a notebook.
 
 ```C# Snippet:RetrieveNotebook
-NotebookResource retrievedNotebook = client.GetNotebook(notebookName);
+NotebookResource notebook = notebookClient.GetNotebook("MyNotebook");
 ```
 
 ### List notebooks
 `GetNotebooksByWorkspace` enumerates the notebooks in the Synapse workspace.
 
 ```C# Snippet:ListNotebooks
-Pageable<NotebookResource> notebooks = client.GetNotebooksByWorkspace();
+Pageable<NotebookResource> notebooks = notebookClient.GetNotebooksByWorkspace();
 foreach (NotebookResource notebook in notebooks)
 {
-    Console.WriteLine(notebook.Name);
+    System.Console.WriteLine(notebook.Name);
 }
 ```
 
@@ -108,8 +99,7 @@ foreach (NotebookResource notebook in notebooks)
 `DeleteNotebook` deletes a notebook.
 
 ```C# Snippet:DeleteNotebook
-NotebookDeleteNotebookOperation deleteNotebookOperation = client.StartDeleteNotebook(notebookName);
-await deleteNotebookOperation.WaitForCompletionAsync();
+notebookClient.StartDeleteNotebook("MyNotebook");
 ```
 
 ## To build

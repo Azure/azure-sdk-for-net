@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         private int _prefetchCount = 300;
 
         /// <summary>The prefetch size limit to use for the partition receiver.</summary>
-        private long? _prefetchSizeInBytes;
+        private long? _prefetchSizeInBytes = default;
 
         /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.

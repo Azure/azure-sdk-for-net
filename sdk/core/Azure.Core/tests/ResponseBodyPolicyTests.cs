@@ -244,6 +244,7 @@ namespace Azure.Core.Tests
                 return left;
             }
 
+
             public override void Close()
             {
                 IsClosed = true;
@@ -251,6 +252,7 @@ namespace Azure.Core.Tests
             }
 
             public bool IsClosed { get; set; }
+
         }
 
         private abstract class TestReadStream: Stream

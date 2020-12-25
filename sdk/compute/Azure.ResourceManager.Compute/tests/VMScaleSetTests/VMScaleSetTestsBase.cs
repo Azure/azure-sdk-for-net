@@ -437,6 +437,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return (createOrUpdateResponse, inputVMScaleSet);
         }
 
+
         protected void ValidateVMScaleSetInstanceView(VirtualMachineScaleSet vmScaleSet,
             VirtualMachineScaleSetInstanceView vmScaleSetInstanceView)
         {
@@ -669,6 +670,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             if (ppgId != null)
             {
+
                 Assert.AreEqual(ppgId.ToLower(), vmScaleSetOut.ProximityPlacementGroup.Id.ToLower());
             }
         }

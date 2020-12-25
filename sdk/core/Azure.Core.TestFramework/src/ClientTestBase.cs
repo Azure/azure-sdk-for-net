@@ -59,6 +59,7 @@ namespace Azure.Core.TestFramework
                             break;
                         }
 
+
                         if (methodInfo.Name.EndsWith("Client") &&
                             methodInfo.Name.StartsWith("Get") &&
                             !methodInfo.IsVirtual)

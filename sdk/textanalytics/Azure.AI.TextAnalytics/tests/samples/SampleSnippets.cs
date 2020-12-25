@@ -23,7 +23,8 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:CreateTextAnalyticsClient
             //@@ string endpoint = "<endpoint>";
             //@@ string apiKey = "<apiKey>";
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var credential = new AzureKeyCredential(apiKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), credential);
             #endregion
         }
 

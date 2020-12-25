@@ -62,6 +62,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                         FirstName ="fName",
                         LastName = "lName",
                         Phone = "1234"
+
                     },
                 },
             };

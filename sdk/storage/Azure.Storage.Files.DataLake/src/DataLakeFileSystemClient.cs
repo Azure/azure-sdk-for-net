@@ -129,15 +129,10 @@ namespace Azure.Storage.Files.DataLake
         private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
-        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
-        /// </summary>
-        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
-
-        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => SharedKeyCredential != null;
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -177,68 +172,6 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeFileSystemClient(Uri fileSystemUri, DataLakeClientOptions options)
             : this(fileSystemUri, (HttpPipelinePolicy)null, options, null)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="connectionString">
-        /// A connection string includes the authentication information
-        /// required for your application to access data in an Azure Storage
-        /// account at runtime.
-        ///
-        /// For more information,
-        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
-        /// Configure Azure Storage connection strings</see>.
-        /// </param>
-        /// <param name="fileSystemName">
-        /// The name of the blob container in the storage account to reference.
-        /// </param>
-        public DataLakeFileSystemClient(string connectionString, string fileSystemName)
-            : this(connectionString, fileSystemName, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="connectionString">
-        /// A connection string includes the authentication information
-        /// required for your application to access data in an Azure Storage
-        /// account at runtime.
-        ///
-        /// For more information,
-        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
-        /// Configure Azure Storage connection strings</see>.
-        /// </param>
-        /// <param name="fileSystemName">
-        /// The name of the blob container in the storage account to reference.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        public DataLakeFileSystemClient(string connectionString, string fileSystemName, DataLakeClientOptions options)
-        {
-            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
-            StorageSharedKeyCredential sharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
-            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(conn.BlobEndpoint)
-            {
-                FileSystemName = fileSystemName
-            };
-            options ??= new DataLakeClientOptions();
-
-            _uri = uriBuilder.ToUri();
-            _blobUri = uriBuilder.ToBlobUri();
-            _dfsUri = uriBuilder.ToDfsUri();
-            _pipeline = options.Build(conn.Credentials);
-            _storageSharedKeyCredential = sharedKeyCredential;
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
         }
 
         /// <summary>
@@ -365,9 +298,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -375,19 +305,13 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal DataLakeFileSystemClient(
-            Uri fileSystemUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            DataLakeClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics)
+        internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
             _uri = fileSystemUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
-            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _containerClient = BlobContainerClientInternals.Create(_blobUri, pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
@@ -436,11 +360,11 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 directoryName,
                 Pipeline,
-                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
             }
         }
+
 
         /// <summary>
         /// Creates a new <see cref="DataLakeDirectoryClient"/> for the
@@ -465,7 +389,6 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 fileName,
                 Pipeline,
-                _storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
 
@@ -831,6 +754,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified
         /// file system for deletion. The file system and any paths contained
@@ -931,6 +855,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
 
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified
@@ -1354,7 +1279,7 @@ namespace Azure.Storage.Files.DataLake
                 path,
                 recursive,
                 userPrincipalName,
-                $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
+                $"{nameof(DataLakeFileClient)}.{nameof(GetPaths)}")
                 .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -1402,7 +1327,7 @@ namespace Azure.Storage.Files.DataLake
                 path,
                 recursive,
                 userPrincipalName,
-                $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
+                $"{nameof(DataLakeFileClient)}.{nameof(GetPaths)}")
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -2448,7 +2373,7 @@ namespace Azure.Storage.Files.DataLake
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

@@ -185,9 +185,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -197,7 +194,6 @@ namespace Azure.Storage.Blobs.Specialized
         internal PageBlobClient(
             Uri blobUri,
             HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
@@ -205,7 +201,6 @@ namespace Azure.Storage.Blobs.Specialized
             : base(
                   blobUri,
                   pipeline,
-                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics,
                   customerProvidedKey,
@@ -257,7 +252,6 @@ namespace Azure.Storage.Blobs.Specialized
             return new PageBlobClient(
                 builder.ToUri(),
                 Pipeline,
-                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -278,9 +272,7 @@ namespace Azure.Storage.Blobs.Specialized
             };
 
             return new PageBlobClient(
-                builder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
+                builder.ToUri(), Pipeline,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -2586,7 +2578,6 @@ namespace Azure.Storage.Blobs.Specialized
                     PageBlobClient pageBlobUri = new PageBlobClient(
                         sourceUri,
                         Pipeline,
-                        SharedKeyCredential,
                         Version,
                         ClientDiagnostics,
                         CustomerProvidedKey,

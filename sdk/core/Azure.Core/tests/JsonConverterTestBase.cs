@@ -29,6 +29,7 @@ namespace Azure.Core.Tests
             NewtonsoftJson
         }
 
+
         protected string Serialize<T>(T o)
         {
             return Serializer switch

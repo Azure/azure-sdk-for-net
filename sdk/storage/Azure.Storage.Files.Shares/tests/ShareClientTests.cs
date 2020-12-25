@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -16,7 +17,7 @@ using NUnit.Framework;
 using System.Threading;
 using Azure.Identity;
 
-namespace Azure.Storage.Files.Shares.Tests
+namespace Azure.Storage.Files.Shares.Test
 {
     public class ShareClientTests : FileTestBase
     {
@@ -314,37 +315,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/17262")]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task CreateAsync_EnabledProtocolsAndRootSquash()
-        {
-            // Arrange
-            var shareName = GetNewShareName();
-            ShareServiceClient service = GetServiceClient_PremiumFile();
-            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            ShareCreateOptions options = new ShareCreateOptions
-            {
-                Protocols = ShareProtocols.Nfs,
-                RootSquash = ShareRootSquash.AllSquash
-            };
-
-            try
-            {
-                // Act
-                await share.CreateAsync(options);
-
-                // Assert
-                Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
-                Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
-            }
-            finally
-            {
-                await share.DeleteAsync(false);
-            }
-        }
-
-        [Test]
         public async Task GetPermissionAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -603,31 +573,6 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 snapshotShareClient.GetPropertiesAsync(),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
-        }
-
-        [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/17262")]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task GetPropertiesAsync_EnabledProtocolsAndRootSquash()
-        {
-            // Arrange
-            var shareName = GetNewShareName();
-            ShareServiceClient service = GetServiceClient_PremiumFile();
-            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            ShareCreateOptions options = new ShareCreateOptions
-            {
-                Protocols = ShareProtocols.Nfs,
-                RootSquash = ShareRootSquash.AllSquash,
-            };
-
-            await share.CreateAsync(options);
-
-            // Act
-            Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
-
-            // Assert
-            Assert.AreEqual(ShareProtocols.Nfs, propertiesResponse.Value.Protocols);
-            Assert.AreEqual(ShareRootSquash.AllSquash, propertiesResponse.Value.RootSquash);
         }
 
         [Test]
@@ -1261,34 +1206,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/17262")]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task SetPropertiesAsync_RootSquash()
-        {
-            // Arrange
-            var shareName = GetNewShareName();
-            ShareServiceClient service = GetServiceClient_PremiumFile();
-            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            ShareCreateOptions createOptions = new ShareCreateOptions
-            {
-                Protocols = ShareProtocols.Nfs
-            };
-            await share.CreateAsync(createOptions);
-
-            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
-            {
-                RootSquash = ShareRootSquash.AllSquash
-            };
-
-            // Act
-            await share.SetPropertiesAsync(setPropertiesOptions);
-
-            // Assert
-            Response<ShareProperties> response = await share.GetPropertiesAsync();
-            Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
-        }
-
-        [Test]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
@@ -1591,6 +1508,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient directoryFromShareClient = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
             Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.file.core.windows.net/{test.Share.Name}/{Uri.EscapeDataString(directoryName)}");
 
+
             // Act
             Response<ShareDirectoryInfo> createResponse = await directoryFromShareClient.CreateAsync();
 
@@ -1690,6 +1608,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             Response<ShareSnapshotInfo> snapshotResponse = await test.Share.CreateSnapshotAsync();
             ShareClient snapshotShare = test.Share.WithSnapshot(snapshotResponse.Value.Snapshot);
+
 
             string id = Recording.Random.NewGuid().ToString();
             TimeSpan duration = TimeSpan.FromSeconds(15);
@@ -2069,157 +1988,30 @@ namespace Azure.Storage.Files.Shares.Tests
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - ShareClient(string connectionString, string blobContainerName)
-            ShareClient container = InstrumentClient(new ShareClient(
+            ShareClient container = new ShareClient(
                 connectionString,
-                GetNewShareName()));
+                GetNewShareName());
             Assert.IsTrue(container.CanGenerateSasUri);
 
             // Act - ShareClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            ShareClient container2 = InstrumentClient(new ShareClient(
+            ShareClient container2 = new ShareClient(
                 connectionString,
                 GetNewShareName(),
-                GetOptions()));
+                GetOptions());
             Assert.IsTrue(container2.CanGenerateSasUri);
 
             // Act - ShareClient(Uri blobContainerUri, BlobClientOptions options = default)
-            ShareClient container3 = InstrumentClient(new ShareClient(
+            ShareClient container3 = new ShareClient(
                 blobEndpoint,
-                GetOptions()));
+                GetOptions());
             Assert.IsFalse(container3.CanGenerateSasUri);
 
             // Act - ShareClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            ShareClient container4 = InstrumentClient(new ShareClient(
+            ShareClient container4 = new ShareClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions()));
+                GetOptions());
             Assert.IsTrue(container4.CanGenerateSasUri);
-        }
-
-        [Test]
-        public void CanGenerateSas_GetRootDirectoryClient()
-        {
-            // Arrange
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
-            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
-
-            // Act - ShareClient(string connectionString, string blobContainerName)
-            ShareClient share = InstrumentClient(new ShareClient(
-                connectionString,
-                GetNewShareName()));
-            ShareDirectoryClient directory = share.GetRootDirectoryClient();
-            Assert.IsTrue(directory.CanGenerateSasUri);
-
-            // Act - ShareClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            ShareClient share2 = InstrumentClient(new ShareClient(
-                connectionString,
-                GetNewShareName(),
-                GetOptions()));
-            ShareDirectoryClient directory2 = share.GetRootDirectoryClient();
-            Assert.IsTrue(directory2.CanGenerateSasUri);
-
-            // Act - ShareClient(Uri blobContainerUri, BlobClientOptions options = default)
-            ShareClient share3 = InstrumentClient(new ShareClient(
-                blobEndpoint,
-                GetOptions()));
-            ShareDirectoryClient directory3 = share3.GetRootDirectoryClient();
-            Assert.IsFalse(directory3.CanGenerateSasUri);
-
-            // Act - ShareClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            ShareClient share4 = InstrumentClient(new ShareClient(
-                blobEndpoint,
-                constants.Sas.SharedKeyCredential,
-                GetOptions()));
-            ShareDirectoryClient directory4 = share4.GetRootDirectoryClient();
-            Assert.IsTrue(directory4.CanGenerateSasUri);
-        }
-
-        [Test]
-        public void CanGenerateSas_GetDirectoryClient()
-        {
-            // Arrange
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
-            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
-
-            // Act - ShareClient(string connectionString, string blobContainerName)
-            ShareClient share = InstrumentClient(new ShareClient(
-                connectionString,
-                GetNewShareName()));
-            ShareDirectoryClient directory = share.GetDirectoryClient(GetNewDirectoryName());
-            Assert.IsTrue(directory.CanGenerateSasUri);
-
-            // Act - ShareClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            ShareClient share2 = InstrumentClient(new ShareClient(
-                connectionString,
-                GetNewShareName(),
-                GetOptions()));
-            ShareDirectoryClient directory2 = share.GetDirectoryClient(GetNewDirectoryName());
-            Assert.IsTrue(directory2.CanGenerateSasUri);
-
-            // Act - ShareClient(Uri blobContainerUri, BlobClientOptions options = default)
-            ShareClient share3 = InstrumentClient(new ShareClient(
-                blobEndpoint,
-                GetOptions()));
-            ShareDirectoryClient directory3 = share3.GetDirectoryClient(GetNewDirectoryName());
-            Assert.IsFalse(directory3.CanGenerateSasUri);
-
-            // Act - ShareClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            ShareClient share4 = InstrumentClient(new ShareClient(
-                blobEndpoint,
-                constants.Sas.SharedKeyCredential,
-                GetOptions()));
-            ShareDirectoryClient directory4 = share4.GetDirectoryClient(GetNewDirectoryName());
-            Assert.IsTrue(directory4.CanGenerateSasUri);
-        }
-
-        [Test]
-        public void CanGenerateSas_WithSnapshot_False()
-        {
-            // Arrange
-            var constants = new TestConstants(this);
-            var shareEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
-
-            // Create blob
-            ShareClient share = InstrumentClient(new ShareClient(
-                shareEndpoint,
-                GetOptions()));
-            Assert.IsFalse(share.CanGenerateSasUri);
-
-            // Act
-            string snapshot = "2020-04-17T20:37:16.5129130Z";
-            ShareClient snapshotShare = share.WithSnapshot(snapshot);
-
-            // Assert
-            Assert.IsFalse(snapshotShare.CanGenerateSasUri);
-        }
-
-        [Test]
-        public void CanGenerateSas_WithSnapshot_True()
-        {
-            // Arrange
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
-            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
-
-            // Create blob
-            ShareClient share = InstrumentClient(new ShareClient(
-                connectionString,
-                GetNewShareName()));
-            Assert.IsTrue(share.CanGenerateSasUri);
-
-            // Act
-            string snapshot = "2020-04-17T20:37:16.5129130Z";
-            ShareClient snapshotShare = share.WithSnapshot(snapshot);
-
-            // Assert
-            Assert.IsTrue(snapshotShare.CanGenerateSasUri);
         }
 
         [Test]
@@ -2234,7 +2026,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareSasPermissions permissions = ShareSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            ShareClient shareClient = InstrumentClient(new ShareClient(connectionString, shareName, GetOptions()));
+            ShareClient shareClient = new ShareClient(connectionString, shareName, GetOptions());
 
             // Act
             Uri sasUri = shareClient.GenerateSasUri(permissions, expiresOn);
@@ -2264,7 +2056,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareSasPermissions permissions = ShareSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
-            ShareClient shareClient = InstrumentClient(new ShareClient(connectionString, shareName, GetOptions()));
+            ShareClient shareClient = new ShareClient(connectionString, shareName, GetOptions());
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
             {
@@ -2299,10 +2091,10 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareSasPermissions permissions = ShareSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewShareName();
-            ShareClient shareCLient = InstrumentClient(new ShareClient(
+            ShareClient shareCLient = new ShareClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions()));
+                GetOptions());
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
             {

@@ -28,10 +28,10 @@ namespace Azure.Messaging.EventHubs.Amqp
     internal class AmqpProducer : TransportProducer
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed;
+        private volatile bool _closed = false;
 
         /// <summary>The count of send operations performed by this instance; this is used to tag deliveries for the AMQP link.</summary>
-        private int _deliveryCount;
+        private int _deliveryCount = 0;
 
         /// <summary>
         ///   Indicates whether or not this producer has been closed.
@@ -575,6 +575,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     InitializedPartitionProperties = new PartitionPublishingProperties(false, producerGroup, ownerLevel, sequence);
                     partitionOptions.StartingSequenceNumber = null;
                 }
+
             }
             catch (Exception ex)
             {

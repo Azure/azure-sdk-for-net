@@ -14,6 +14,7 @@ namespace Azure.Identity.Tests
     {
         public class MockException : Exception
         {
+
         }
 
         public class SimpleMockTokenCredential : TokenCredential

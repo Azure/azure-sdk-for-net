@@ -57,6 +57,8 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public static KeyCurveName P521 { get; } = new KeyCurveName(P521Value);
 
+        internal static readonly KeyCurveName s_default = default;
+
         /// <summary>
         /// Determines if two <see cref="KeyCurveName"/> values are the same.
         /// </summary>
@@ -142,7 +144,7 @@ namespace Azure.Security.KeyVault.Keys
                 }
             }
 
-            return default;
+            return s_default;
         }
 
         internal bool IsSupported
@@ -188,5 +190,6 @@ namespace Azure.Security.KeyVault.Keys
             P521Value => new Oid(P521OidValue),
             _ => null,
         };
+
     }
 }

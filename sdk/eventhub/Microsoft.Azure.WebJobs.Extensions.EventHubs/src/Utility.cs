@@ -42,19 +42,43 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 throw new ArgumentNullException(nameof(ex));
             }
 
+
+            if (IsConflictLeaseIdMismatchWithLeaseOperation(ex))
+            {
+                // For EventProcessorHost these exceptions can happen as part
+                // of normal partition balancing across instances, so we want to
+                // trace them, but not treat them as errors.
+                return LogLevel.Information;
+            }
+
             var ehex = ex as EventHubsException;
-            if (ex is OperationCanceledException ||
-                ehex?.IsTransient == true ||
-                ehex?.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
+            if (!(ex is OperationCanceledException) && (ehex == null || !ehex.IsTransient))
+            {
+                // any non-transient exceptions or unknown exception types
+                // we want to log as errors
+                return LogLevel.Error;
+            }
+            else
             {
                 // transient messaging errors we log as info so we have a record
                 // of them, but we don't treat them as actual errors
                 return LogLevel.Information;
             }
+        }
 
-            // any non-transient exceptions or unknown exception types
-            // we want to log as errors
-            return LogLevel.Error;
+        public static bool IsConflictLeaseIdMismatchWithLeaseOperation(Exception ex)
+        {
+            RequestFailedException exception = ex as RequestFailedException;
+            if (exception == null)
+            {
+                return false;
+            }
+            if (exception.Status != 409)
+            {
+                return false;
+            }
+
+            return exception.ErrorCode == "LeaseIdMismatchWithLeaseOperation";
         }
     }
 }

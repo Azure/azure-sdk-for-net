@@ -30,6 +30,7 @@ namespace Azure.Identity.Tests.Mock
                 _tokenBuilder.Append($"{name}={value};");
             }
 
+
             return this;
         }
 
@@ -37,6 +38,7 @@ namespace Azure.Identity.Tests.Mock
         {
             return Token.Contains($"{name}={value};");
         }
+
 
         public override string ToString()
         {

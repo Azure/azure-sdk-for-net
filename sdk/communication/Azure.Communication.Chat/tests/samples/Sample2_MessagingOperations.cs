@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Administration;
 using Azure.Communication.Administration.Models;
-using Azure.Communication;
+using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -18,7 +18,7 @@ namespace Azure.Communication.Chat.Tests.samples
         public async Task SendGetUpdateDeleteMessagesSendNotificationReadReceiptsAsync()
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
-            Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationUser> threadMember = await communicationIdentityClient.CreateUserAsync();
             CommunicationUserToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
             string endpoint = TestEnvironment.ChatApiUrl();
@@ -26,24 +26,23 @@ namespace Azure.Communication.Chat.Tests.samples
 
             ChatClient chatClient = new ChatClient(
                 new Uri(endpoint),
-                new CommunicationTokenCredential(userToken));
+                new CommunicationUserCredential(userToken));
 
-            var chatThreadMember = new ChatThreadMember(new CommunicationUserIdentifier(theadCreatorMemberId))
+            var chatParticipant = new ChatParticipant(new CommunicationUser(theadCreatorMemberId))
             {
                 DisplayName = "UserDisplayName",
                 ShareHistoryTime = DateTime.MinValue
             };
-            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", members: new[] { chatThreadMember });
+            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
             string threadId = chatThreadClient.Id;
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
             var content = "hello world";
             var priority = ChatMessagePriority.Normal;
             var senderDisplayName = "sender name";
-            SendChatMessageResult sendMessageResult = await chatThreadClient.SendMessageAsync(content, priority, senderDisplayName);
+            var messageId = await chatThreadClient.SendMessageAsync(content, priority, senderDisplayName);
             #endregion Snippet:Azure_Communication_Chat_Tests_SendMessage
 
-            var messageId = sendMessageResult.Id;
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage
             ChatMessage chatMessage = await chatThreadClient.GetMessageAsync(messageId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage
@@ -66,8 +65,8 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts
-            AsyncPageable<ReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
-            await foreach (ReadReceipt readReceipt in allReadReceipts)
+            AsyncPageable<ChatMessageReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
+            await foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
             {
                 Console.WriteLine($"{readReceipt.ChatMessageId}:{readReceipt.Sender.Id}:{readReceipt.ReadOn}");
             }

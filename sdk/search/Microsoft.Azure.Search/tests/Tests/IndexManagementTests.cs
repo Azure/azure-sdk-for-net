@@ -13,7 +13,6 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
-    using Index = Microsoft.Azure.Search.Models.Index;
 
     public sealed class IndexManagementTests : SearchTestBase<SearchServiceFixture>
     {
@@ -317,7 +316,7 @@ namespace Microsoft.Azure.Search.Tests
                 index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new[] { synonymMapName };
                 searchClient.Indexes.Create(index);
 
-                // update an index
+                // update an index                
                 index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new string[] { };
                 Index updateIndex = searchClient.Indexes.CreateOrUpdate(index);
 

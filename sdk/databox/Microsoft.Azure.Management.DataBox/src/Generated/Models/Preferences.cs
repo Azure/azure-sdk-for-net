@@ -35,13 +35,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// region.</param>
         /// <param name="transportPreferences">Preferences related to the
         /// shipment logistics of the sku.</param>
-        /// <param name="encryptionPreferences">Preferences related to the
-        /// Encryption.</param>
-        public Preferences(IList<string> preferredDataCenterRegion = default(IList<string>), TransportPreferences transportPreferences = default(TransportPreferences), EncryptionPreferences encryptionPreferences = default(EncryptionPreferences))
+        public Preferences(IList<string> preferredDataCenterRegion = default(IList<string>), TransportPreferences transportPreferences = default(TransportPreferences))
         {
             PreferredDataCenterRegion = preferredDataCenterRegion;
             TransportPreferences = transportPreferences;
-            EncryptionPreferences = encryptionPreferences;
             CustomInit();
         }
 
@@ -62,12 +59,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "transportPreferences")]
         public TransportPreferences TransportPreferences { get; set; }
-
-        /// <summary>
-        /// Gets or sets preferences related to the Encryption.
-        /// </summary>
-        [JsonProperty(PropertyName = "encryptionPreferences")]
-        public EncryptionPreferences EncryptionPreferences { get; set; }
 
         /// <summary>
         /// Validate the object.

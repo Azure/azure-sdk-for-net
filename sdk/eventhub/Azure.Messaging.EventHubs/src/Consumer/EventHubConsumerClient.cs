@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed;
+        private volatile bool _closed = false;
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the consumer is associated with.  This is likely
@@ -336,6 +336,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
         {
+
             Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
             return await Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
@@ -737,7 +738,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             {
                 if (OwnsConnection)
                 {
-                    await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                    await Connection.CloseAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -768,11 +769,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync()
-        {
-            await CloseAsync().ConfigureAwait(false);
-            GC.SuppressFinalize(this);
-        }
+        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -1052,6 +1049,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                     channel.Writer.TryComplete(activeException);
                     notifyException(activeException);
                 }
+
             }, cancellationToken);
 
         /// <summary>
@@ -1062,7 +1060,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns>A bounded channel, configured for 1:many read/write usage.</returns>
         ///
-        private static Channel<PartitionEvent> CreateEventChannel(int capacity) =>
+        private Channel<PartitionEvent> CreateEventChannel(int capacity) =>
             Channel.CreateBounded<PartitionEvent>(new BoundedChannelOptions(capacity)
             {
                 FullMode = BoundedChannelFullMode.Wait,

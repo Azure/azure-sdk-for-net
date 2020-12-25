@@ -314,6 +314,7 @@ namespace Azure.Storage.Blobs.Test
                     File.SetAttributes(path, FileAttributes.ReadOnly);
 
                     await blob.UploadAsync(path);
+
                 }
                 finally
                 {
@@ -363,6 +364,7 @@ namespace Azure.Storage.Blobs.Test
 
                     // Act
                     await blob.UploadAsync(path, options);
+
                 }
                 finally
                 {
@@ -476,6 +478,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 Position = position
             };
+
 
             BlobUploadOptions options = new BlobUploadOptions
             {

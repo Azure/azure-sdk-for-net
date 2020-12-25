@@ -50,6 +50,7 @@ namespace Azure.Security.KeyVault
 
             identifier = new KeyVaultIdentifier
             {
+
                 Id = id,
                 VaultUri = new Uri($"{id.Scheme}://{id.Authority}"),
                 Collection = segments[1].Trim('/'),

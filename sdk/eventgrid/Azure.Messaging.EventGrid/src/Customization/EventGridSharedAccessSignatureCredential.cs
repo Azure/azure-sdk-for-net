@@ -15,8 +15,7 @@ namespace Azure.Messaging.EventGrid
         /// <summary>
         /// Initializes a new instance of the <see cref="EventGridSharedAccessSignatureCredential"/> class.
         /// </summary>
-        /// <param name="signature">SAS token used for authentication. This token can be constructed using
-        /// <see cref="EventGridPublisherClient.BuildSharedAccessSignature"/>.</param>
+        /// <param name="signature">SAS token used for authentication</param>
         public EventGridSharedAccessSignatureCredential(string signature)
         {
             Signature = signature;

@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed;
+        private bool _closed = false;
 
         /// <summary>
         /// Indicates whether or not this receiver has been closed.
@@ -142,8 +142,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
-                        isSessionReceiver: isSessionReceiver,
-                        identifier: identifier),
+                        isSessionReceiver: isSessionReceiver),
                 link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
@@ -167,15 +166,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             uint prefetchCount,
             ServiceBusReceiveMode receiveMode,
-            bool isSessionReceiver,
-            string identifier)
+            bool isSessionReceiver)
         {
             ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
 
             try
             {
                 ReceivingAmqpLink link = await _connectionScope.OpenReceiverLinkAsync(
-                    identifier: identifier,
                     entityPath: _entityPath,
                     timeout: timeout,
                     prefetchCount: prefetchCount,
@@ -419,6 +416,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var i = 0;
                 foreach (ArraySegment<byte> deliveryTag in deliveryTags)
                 {
+
                     disposeMessageTasks[i++] = receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
                 }
 
@@ -651,7 +649,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 timeout);
         }
 
-        private static Rejected GetRejectedOutcome(
+        private Rejected GetRejectedOutcome(
             IDictionary<string, object> propertiesToModify,
             string deadLetterReason,
             string deadLetterErrorDescription)
@@ -828,6 +826,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             int messageCount = 1,
             CancellationToken cancellationToken = default)
         {
+
             long seqNumber = sequenceNumber ?? LastPeekedSequenceNumber + 1;
             IReadOnlyList<ServiceBusReceivedMessage> messages = null;
 
@@ -1258,6 +1257,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _receiveLink?.Dispose();
             _managementLink?.Dispose();
+
         }
 
         private void OnReceiverLinkClosed(object receiver, EventArgs e)

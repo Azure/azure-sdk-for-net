@@ -47,17 +47,17 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             // Get the Uri for the location of you backup blob.
-            Uri folderUri = backupResult.Value.FolderUri;
+            Uri backupFolderUri = backupResult.Value.BackupFolderUri;
             #endregion
 
-            Assert.That(folderUri, Is.Not.Null);
+            Assert.That(backupFolderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
 
             await WaitForOperationAsync();
 
             #region Snippet:HelloFullRestoreAsync
             // Start the restore using the backupBlobUri returned from a previous BackupOperation.
-            RestoreOperation restoreOperation = await Client.StartRestoreAsync(folderUri, sasToken);
+            RestoreOperation restoreOperation = await Client.StartRestoreAsync(backupFolderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
             Response<RestoreResult> restoreResult = await restoreOperation.WaitForCompletionAsync();
@@ -97,17 +97,17 @@ namespace Azure.Security.KeyVault.Administration.Tests
             }
 
             // Get the Uri for the location of you backup blob.
-            Uri folderUri = backupOperation.Value.FolderUri;
+            Uri backupFolderUri = backupOperation.Value.BackupFolderUri;
             #endregion
 
-            Assert.That(folderUri, Is.Not.Null);
+            Assert.That(backupFolderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
 
             await WaitForOperationAsync();
 
             #region Snippet:HelloFullRestoreSync
             // Start the restore using the backupBlobUri returned from a previous BackupOperation.
-            RestoreOperation restoreOperation = Client.StartRestore(folderUri, sasToken);
+            RestoreOperation restoreOperation = Client.StartRestore(backupFolderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
             while (!restoreOperation.HasCompleted)
@@ -116,7 +116,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 /*@@*/ await DelayAsync(TimeSpan.FromSeconds(3));
                 //@@Thread.Sleep(3000);
             }
-            Uri restoreResult = backupOperation.Value.FolderUri;
+            Uri restoreResult = backupOperation.Value.BackupFolderUri;
             #endregion
 
             Assert.That(restoreResult, Is.Not.Null);

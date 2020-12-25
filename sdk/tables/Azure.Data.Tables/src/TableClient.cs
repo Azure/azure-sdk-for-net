@@ -797,39 +797,29 @@ namespace Azure.Data.Tables
         {
             string selectArg = select == null ? null : string.Join(",", select);
 
-            return PageableHelpers.CreateAsyncEnumerable(
-                async pageSizeHint =>
-                {
-                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-                    scope.Start();
-                    try
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return PageableHelpers.CreateAsyncEnumerable(
+                    async pageSizeHint =>
                     {
                         var response = await _tableOperations.QueryEntitiesAsync(
                             _table,
-                            queryOptions: new QueryOptions() {Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg},
+                            queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
                             cancellationToken: cancellationToken).ConfigureAwait(false);
 
                         return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
-                    }
-                    catch (Exception ex)
-                    {
-                        scope.Failed(ex);
-                        throw;
-                    }
-                },
-                async (continuationToken, pageSizeHint) =>
-                {
-                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-                    scope.Start();
-                    try
+                    },
+                    async (continuationToken, pageSizeHint) =>
                     {
                         var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
                         var response = await _tableOperations.QueryEntitiesAsync(
                             _table,
-                            queryOptions: new QueryOptions() {Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg},
+                            queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
                             nextPartitionKey: NextPartitionKey,
                             nextRowKey: NextRowKey,
                             cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -837,15 +827,16 @@ namespace Azure.Data.Tables
                         return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
-                    }
-                    catch (Exception ex)
-                    {
-                        scope.Failed(ex);
-                        throw;
-                    }
-                },
-                maxPerPage);
+                    },
+                    maxPerPage);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
+
 
         /// <summary>
         /// Queries entities in the table.

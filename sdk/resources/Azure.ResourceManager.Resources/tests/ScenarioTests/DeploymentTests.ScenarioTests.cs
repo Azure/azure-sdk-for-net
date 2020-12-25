@@ -178,6 +178,7 @@ namespace ResourceGroups.Tests
             {
                 Assert.IsTrue(ex.Message.Contains("InvalidTemplate"));
             }
+
         }
 
         [Test]

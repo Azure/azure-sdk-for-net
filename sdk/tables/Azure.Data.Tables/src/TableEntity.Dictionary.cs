@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
+
     public partial class TableEntity : IDictionary<string, object>
     {
         /// <summary>
@@ -25,13 +26,13 @@ namespace Azure.Data.Tables
         /// <inheritdoc />
         public ICollection<string> Keys => _properties.Keys;
 
-        /// <inheritdoc cref="IDictionary{TKey, TValue}.Values" />
+        /// <inheritdoc />
         ICollection<object> IDictionary<string, object>.Values => _properties.Values;
 
         /// <inheritdoc />
         public int Count => _properties.Count;
 
-        /// <inheritdoc cref="ICollection{T}.IsReadOnly" />
+        /// <inheritdoc />
         bool ICollection<KeyValuePair<string, object>>.IsReadOnly => _properties.IsReadOnly;
 
         /// <inheritdoc />
@@ -46,19 +47,19 @@ namespace Azure.Data.Tables
         /// <inheritdoc />
         public bool TryGetValue(string key, out object value) => _properties.TryGetValue(key, out value);
 
-        /// <inheritdoc cref="ICollection{T}.Add(T)" />
+        /// <inheritdoc />
         void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> item) => SetValue(item.Key, item.Value);
 
         /// <inheritdoc />
-        public void Clear() => _properties.Clear();
+        public void Clear()=> _properties.Clear();
 
-        /// <inheritdoc cref="ICollection{T}.Contains(T)"/>
+        /// <inheritdoc />
         bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> item) => _properties.Contains(item);
 
-        /// <inheritdoc cref="ICollection{T}.CopyTo(T[], int)" />
+        /// <inheritdoc />
         void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] array, int arrayIndex) => _properties.CopyTo(array, arrayIndex);
 
-        /// <inheritdoc cref="ICollection{T}.Remove(T)" />
+        /// <inheritdoc />
         bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> item) => _properties.Remove(item);
 
         /// <inheritdoc />

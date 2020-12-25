@@ -26,6 +26,7 @@ namespace Azure.Messaging.ServiceBus
     ///
     public abstract class ServiceBusRetryPolicy
     {
+
         private static readonly TimeSpan ServerBusyBaseSleepTime = TimeSpan.FromSeconds(10);
 
         private readonly object serverBusyLock = new object();
@@ -115,6 +116,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             var failedAttemptCount = 0;
+
 
             TimeSpan tryTimeout = CalculateTryTimeout(0);
             if (IsServerBusy && tryTimeout < ServerBusyBaseSleepTime)

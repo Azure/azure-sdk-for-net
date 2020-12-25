@@ -71,7 +71,7 @@ namespace Azure.AI.FormRecognizer.Training
         public string ModelName { get; }
 
         /// <summary>
-        /// Properties of a model, such as whether the model is a composed model or not.
+        /// Model properties, like for example, if a model is composed.
         /// </summary>
         [CodeGenMember("Attributes")]
         public CustomFormModelProperties Properties { get; }

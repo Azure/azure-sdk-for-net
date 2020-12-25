@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,8 @@ namespace Azure
         /// when deserializing the data.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
         ///<returns>The data converted to the specified type.</returns>
-        public static T? ToObject<T>(this BinaryData data, ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
-            (T?)serializer.Deserialize(data.ToStream(), typeof(T), cancellationToken);
+        public static T ToObject<T>(this BinaryData data, ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
+            (T)serializer.Deserialize(data.ToStream(), typeof(T), cancellationToken);
 
         /// <summary>
         /// Converts the <see cref="BinaryData"/> to the specified type using
@@ -42,8 +41,8 @@ namespace Azure
         /// when deserializing the data.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
         ///<returns>The data converted to the specified type.</returns>
-        public static async ValueTask<T?> ToObjectAsync<T>(this BinaryData data, ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
-            (T?)await serializer.DeserializeAsync(data.ToStream(), typeof(T), cancellationToken).ConfigureAwait(false);
+        public static async ValueTask<T> ToObjectAsync<T>(this BinaryData data, ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
+            (T)await serializer.DeserializeAsync(data.ToStream(), typeof(T), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Convert the provided value to it's binary representation and return it as a <see cref="BinaryData"/> instance.

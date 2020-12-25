@@ -212,6 +212,7 @@ namespace Azure.Storage.Cryptography
                     cancellationToken);
         }
 
+
         /// <summary>
         /// Wraps a stream of ciphertext to stream plaintext.
         /// </summary>

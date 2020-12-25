@@ -258,5 +258,6 @@ namespace Azure.Data.Tables.Queryable
                 get { return PatternKind.Compare; }
             }
         }
+
     }
 }

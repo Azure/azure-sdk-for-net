@@ -33,13 +33,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="computeType">Compute type of the cluster which will
         /// execute data flow job. Possible values include: 'General',
-        /// 'MemoryOptimized', 'ComputeOptimized'. Type: string (or Expression
-        /// with resultType string)</param>
+        /// 'MemoryOptimized', 'ComputeOptimized'</param>
         /// <param name="coreCount">Core count of the cluster which will
         /// execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144
-        /// and 272. Type: integer (or Expression with resultType
-        /// integer)</param>
-        public ExecuteDataFlowActivityTypePropertiesCompute(object computeType = default(object), object coreCount = default(object))
+        /// and 272.</param>
+        public ExecuteDataFlowActivityTypePropertiesCompute(string computeType = default(string), int? coreCount = default(int?))
         {
             ComputeType = computeType;
             CoreCount = coreCount;
@@ -54,19 +52,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Gets or sets compute type of the cluster which will execute data
         /// flow job. Possible values include: 'General', 'MemoryOptimized',
-        /// 'ComputeOptimized'. Type: string (or Expression with resultType
-        /// string)
+        /// 'ComputeOptimized'
         /// </summary>
         [JsonProperty(PropertyName = "computeType")]
-        public object ComputeType { get; set; }
+        public string ComputeType { get; set; }
 
         /// <summary>
         /// Gets or sets core count of the cluster which will execute data flow
-        /// job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type:
-        /// integer (or Expression with resultType integer)
+        /// job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
         /// </summary>
         [JsonProperty(PropertyName = "coreCount")]
-        public object CoreCount { get; set; }
+        public int? CoreCount { get; set; }
 
     }
 }

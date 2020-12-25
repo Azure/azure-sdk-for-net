@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers
         public async Task<TaskSeriesCommandResult> ExecuteAsync(CancellationToken cancellationToken)
         {
             bool succeeded = await _innerCommand.TryExecuteAsync(cancellationToken).ConfigureAwait(false);
-            Task wait = Task.Delay(_delayStrategy.GetNextDelay(succeeded), cancellationToken);
+            Task wait = Task.Delay(_delayStrategy.GetNextDelay(succeeded));
             return new TaskSeriesCommandResult(wait);
         }
     }

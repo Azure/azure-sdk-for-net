@@ -69,14 +69,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
 
         /// <summary>
-        /// Gets the IBackupResourceVaultConfigsOperations.
+        /// Gets the IBMSPrepareDataMoveOperationResultOperations.
         /// </summary>
-        IBackupResourceVaultConfigsOperations BackupResourceVaultConfigs { get; }
-
-        /// <summary>
-        /// Gets the IBackupResourceEncryptionConfigsOperations.
-        /// </summary>
-        IBackupResourceEncryptionConfigsOperations BackupResourceEncryptionConfigs { get; }
+        IBMSPrepareDataMoveOperationResultOperations BMSPrepareDataMoveOperationResult { get; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionOperations.
@@ -84,14 +79,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; }
 
         /// <summary>
-        /// Gets the IPrivateEndpointOperations.
+        /// Gets the IBackupResourceVaultConfigsOperations.
         /// </summary>
-        IPrivateEndpointOperations PrivateEndpoint { get; }
-
-        /// <summary>
-        /// Gets the IBMSPrepareDataMoveOperationResultOperations.
-        /// </summary>
-        IBMSPrepareDataMoveOperationResultOperations BMSPrepareDataMoveOperationResult { get; }
+        IBackupResourceVaultConfigsOperations BackupResourceVaultConfigs { get; }
 
         /// <summary>
         /// Gets the IProtectedItemsOperations.
@@ -164,9 +154,74 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         IBackupProtectedItemsOperations BackupProtectedItems { get; }
 
         /// <summary>
+        /// Gets the IAadPropertiesOperations.
+        /// </summary>
+        IAadPropertiesOperations AadProperties { get; }
+
+        /// <summary>
+        /// Gets the ICrossRegionRestoreOperations.
+        /// </summary>
+        ICrossRegionRestoreOperations CrossRegionRestore { get; }
+
+        /// <summary>
+        /// Gets the IBackupCrrJobDetailsOperations.
+        /// </summary>
+        IBackupCrrJobDetailsOperations BackupCrrJobDetails { get; }
+
+        /// <summary>
+        /// Gets the IBackupCrrJobsOperations.
+        /// </summary>
+        IBackupCrrJobsOperations BackupCrrJobs { get; }
+
+        /// <summary>
+        /// Gets the ICrrOperationResultsOperations.
+        /// </summary>
+        ICrrOperationResultsOperations CrrOperationResults { get; }
+
+        /// <summary>
+        /// Gets the ICrrOperationStatusOperations.
+        /// </summary>
+        ICrrOperationStatusOperations CrrOperationStatus { get; }
+
+        /// <summary>
+        /// Gets the IRecoveryPointsCrrOperations.
+        /// </summary>
+        IRecoveryPointsCrrOperations RecoveryPointsCrr { get; }
+
+        /// <summary>
+        /// Gets the IBackupProtectedItemsCrrOperations.
+        /// </summary>
+        IBackupProtectedItemsCrrOperations BackupProtectedItemsCrr { get; }
+
+        /// <summary>
         /// Gets the IOperationOperations.
         /// </summary>
         IOperationOperations Operation { get; }
+
+        /// <summary>
+        /// Gets the IProtectionIntentOperations.
+        /// </summary>
+        IProtectionIntentOperations ProtectionIntent { get; }
+
+        /// <summary>
+        /// Gets the IBackupStatusOperations.
+        /// </summary>
+        IBackupStatusOperations BackupStatus { get; }
+
+        /// <summary>
+        /// Gets the IFeatureSupportOperations.
+        /// </summary>
+        IFeatureSupportOperations FeatureSupport { get; }
+
+        /// <summary>
+        /// Gets the IBackupProtectionIntentOperations.
+        /// </summary>
+        IBackupProtectionIntentOperations BackupProtectionIntent { get; }
+
+        /// <summary>
+        /// Gets the IBackupUsageSummariesOperations.
+        /// </summary>
+        IBackupUsageSummariesOperations BackupUsageSummaries { get; }
 
         /// <summary>
         /// Gets the IBackupEnginesOperations.
@@ -244,74 +299,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         ISecurityPINsOperations SecurityPINs { get; }
 
         /// <summary>
-        /// Gets the IAadPropertiesOperations.
-        /// </summary>
-        IAadPropertiesOperations AadProperties { get; }
-
-        /// <summary>
-        /// Gets the ICrossRegionRestoreOperations.
-        /// </summary>
-        ICrossRegionRestoreOperations CrossRegionRestore { get; }
-
-        /// <summary>
-        /// Gets the IBackupCrrJobDetailsOperations.
-        /// </summary>
-        IBackupCrrJobDetailsOperations BackupCrrJobDetails { get; }
-
-        /// <summary>
-        /// Gets the IBackupCrrJobsOperations.
-        /// </summary>
-        IBackupCrrJobsOperations BackupCrrJobs { get; }
-
-        /// <summary>
-        /// Gets the ICrrOperationResultsOperations.
-        /// </summary>
-        ICrrOperationResultsOperations CrrOperationResults { get; }
-
-        /// <summary>
-        /// Gets the ICrrOperationStatusOperations.
-        /// </summary>
-        ICrrOperationStatusOperations CrrOperationStatus { get; }
-
-        /// <summary>
         /// Gets the IBackupResourceStorageConfigsOperations.
         /// </summary>
         IBackupResourceStorageConfigsOperations BackupResourceStorageConfigs { get; }
-
-        /// <summary>
-        /// Gets the IRecoveryPointsCrrOperations.
-        /// </summary>
-        IRecoveryPointsCrrOperations RecoveryPointsCrr { get; }
-
-        /// <summary>
-        /// Gets the IBackupProtectedItemsCrrOperations.
-        /// </summary>
-        IBackupProtectedItemsCrrOperations BackupProtectedItemsCrr { get; }
-
-        /// <summary>
-        /// Gets the IProtectionIntentOperations.
-        /// </summary>
-        IProtectionIntentOperations ProtectionIntent { get; }
-
-        /// <summary>
-        /// Gets the IBackupStatusOperations.
-        /// </summary>
-        IBackupStatusOperations BackupStatus { get; }
-
-        /// <summary>
-        /// Gets the IFeatureSupportOperations.
-        /// </summary>
-        IFeatureSupportOperations FeatureSupport { get; }
-
-        /// <summary>
-        /// Gets the IBackupProtectionIntentOperations.
-        /// </summary>
-        IBackupProtectionIntentOperations BackupProtectionIntent { get; }
-
-        /// <summary>
-        /// Gets the IBackupUsageSummariesOperations.
-        /// </summary>
-        IBackupUsageSummariesOperations BackupUsageSummaries { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -379,6 +369,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse> BMSTriggerDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, TriggerDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the operation status for a private endpoint connection.
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection.
+        /// </param>
+        /// <param name='operationId'>
+        /// Operation id
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<OperationStatus>> GetOperationStatus1WithHttpMessagesAsync(string vaultName, string resourceGroupName, string privateEndpointConnectionName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Prepares source vault for Data Move operation

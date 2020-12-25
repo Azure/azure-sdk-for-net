@@ -18,11 +18,28 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetAnomaliesWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetAnomalies(bool populateOptionalMembers)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
             var options = new GetAnomaliesForDetectionConfigurationOptions(SamplingStartTime, SamplingEndTime);
+
+            if (populateOptionalMembers)
+            {
+                options.Filter = new GetAnomaliesForDetectionConfigurationFilter(AnomalySeverity.Medium, AnomalySeverity.Medium);
+
+                var groupKey1 = new DimensionKey();
+                groupKey1.AddDimensionColumn("city", "Delhi");
+                groupKey1.AddDimensionColumn("category", "Handmade");
+
+                var groupKey2 = new DimensionKey();
+                groupKey2.AddDimensionColumn("city", "Kolkata");
+
+                options.Filter.SeriesGroupKeys.Add(groupKey1);
+                options.Filter.SeriesGroupKeys.Add(groupKey2);
+            }
 
             var anomalyCount = 0;
 
@@ -38,7 +55,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
                 Assert.That(anomaly.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateSeriesKey(anomaly.SeriesKey);
+                ValidateDimensionKey(anomaly.SeriesKey);
+
+                if (populateOptionalMembers)
+                {
+                    Assert.That(anomaly.Severity, Is.EqualTo(AnomalySeverity.Medium));
+
+                    Dictionary<string, string> dimensionColumns = anomaly.SeriesKey.AsDictionary();
+
+                    string city = dimensionColumns["city"];
+                    string category = dimensionColumns["category"];
+
+                    Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
+                }
 
                 if (++anomalyCount >= MaximumSamplesCount)
                 {
@@ -50,63 +79,26 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetAnomaliesWithOptionalFilter()
-        {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
-
-            var options = new GetAnomaliesForDetectionConfigurationOptions(SamplingStartTime, SamplingEndTime)
-            {
-                Filter = new GetAnomaliesForDetectionConfigurationFilter(AnomalySeverity.Medium, AnomalySeverity.Medium)
-            };
-
-            var groupKey1 = new DimensionKey();
-            groupKey1.AddDimensionColumn("city", "Delhi");
-            groupKey1.AddDimensionColumn("category", "Handmade");
-
-            var groupKey2 = new DimensionKey();
-            groupKey2.AddDimensionColumn("city", "Kolkata");
-
-            options.Filter.SeriesGroupKeys.Add(groupKey1);
-            options.Filter.SeriesGroupKeys.Add(groupKey2);
-
-            var anomalyCount = 0;
-
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(DetectionConfigurationId, options))
-            {
-                Assert.That(anomaly, Is.Not.Null);
-                Assert.That(anomaly.MetricId, Is.Null);
-                Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Null);
-                Assert.That(anomaly.CreatedTime, Is.Null);
-                Assert.That(anomaly.ModifiedTime, Is.Null);
-                Assert.That(anomaly.Status, Is.Null);
-
-                Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
-                Assert.That(anomaly.Severity, Is.EqualTo(AnomalySeverity.Medium));
-
-                ValidateSeriesKey(anomaly.SeriesKey);
-
-                Dictionary<string, string> dimensionColumns = anomaly.SeriesKey.AsDictionary();
-
-                string city = dimensionColumns["city"];
-                string category = dimensionColumns["category"];
-
-                Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
-
-                if (++anomalyCount >= MaximumSamplesCount)
-                {
-                    break;
-                }
-            }
-
-            Assert.That(anomalyCount, Is.GreaterThan(0));
-        }
-
-        [RecordedTest]
-        public async Task GetIncidentsWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetIncidents(bool populateOptionalMembers)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
             var options = new GetIncidentsForDetectionConfigurationOptions(SamplingStartTime, SamplingEndTime);
+
+            if (populateOptionalMembers)
+            {
+                var groupKey1 = new DimensionKey();
+                groupKey1.AddDimensionColumn("city", "Delhi");
+                groupKey1.AddDimensionColumn("category", "Handmade");
+
+                var groupKey2 = new DimensionKey();
+                groupKey2.AddDimensionColumn("city", "Kolkata");
+
+                options.DimensionsToFilter.Add(groupKey1);
+                options.DimensionsToFilter.Add(groupKey2);
+            }
 
             var incidentCount = 0;
 
@@ -122,56 +114,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateSeriesKey(incident.DimensionKey);
+                ValidateDimensionKey(incident.DimensionKey);
 
-                if (++incidentCount >= MaximumSamplesCount)
+                if (populateOptionalMembers)
                 {
-                    break;
+                    Dictionary<string, string> dimensionColumns = incident.DimensionKey.AsDictionary();
+
+                    string city = dimensionColumns["city"];
+                    string category = dimensionColumns["category"];
+
+                    Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
                 }
-            }
-
-            Assert.That(incidentCount, Is.GreaterThan(0));
-        }
-
-        [RecordedTest]
-        public async Task GetIncidentsWithOptionalDimensionFilter()
-        {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
-
-            var options = new GetIncidentsForDetectionConfigurationOptions(SamplingStartTime, SamplingEndTime);
-
-            var groupKey1 = new DimensionKey();
-            groupKey1.AddDimensionColumn("city", "Delhi");
-            groupKey1.AddDimensionColumn("category", "Handmade");
-
-            var groupKey2 = new DimensionKey();
-            groupKey2.AddDimensionColumn("city", "Kolkata");
-
-            options.DimensionsToFilter.Add(groupKey1);
-            options.DimensionsToFilter.Add(groupKey2);
-
-            var incidentCount = 0;
-
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(DetectionConfigurationId, options))
-            {
-                Assert.That(incident, Is.Not.Null);
-                Assert.That(incident.MetricId, Is.Null);
-
-                Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
-                Assert.That(incident.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
-                Assert.That(incident.StartTime, Is.GreaterThanOrEqualTo(SamplingStartTime));
-                Assert.That(incident.LastTime, Is.LessThanOrEqualTo(SamplingEndTime));
-                Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
-                Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
-
-                ValidateSeriesKey(incident.DimensionKey);
-
-                Dictionary<string, string> dimensionColumns = incident.DimensionKey.AsDictionary();
-
-                string city = dimensionColumns["city"];
-                string category = dimensionColumns["category"];
-
-                Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
 
                 if (++incidentCount >= MaximumSamplesCount)
                 {
@@ -280,13 +233,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(rootCauseCount, Is.GreaterThan(0));
         }
 
-        /// <param name="populateOptionalMembers">
-        /// When <c>true</c>, all optional properties are populated to make sure values are being passed and returned
-        /// correctly. When <c>false</c>, the test makes sure it's still possible to make a request with the minimum
-        /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
-        /// </param>
         [RecordedTest]
-        public async Task GetValuesOfDimensionWithAnomaliesWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetValuesOfDimensionWithAnomalies(bool populateOptionalMembers)
         {
             const string dimensionName = "city";
 
@@ -294,34 +244,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetValuesOfDimensionWithAnomaliesOptions(SamplingStartTime, SamplingEndTime);
 
-            var valueCount = 0;
-
-            await foreach (string value in client.GetValuesOfDimensionWithAnomaliesAsync(DetectionConfigurationId, dimensionName, options))
+            if (populateOptionalMembers)
             {
-                Assert.That(value, Is.Not.Null.And.Not.Empty);
-
-                if (++valueCount >= MaximumSamplesCount)
-                {
-                    break;
-                }
+                options.DimensionToFilter = new DimensionKey();
+                options.DimensionToFilter.AddDimensionColumn("category", "Handmade");
             }
-
-            Assert.That(valueCount, Is.GreaterThan(0));
-        }
-
-        [RecordedTest]
-        public async Task GetValuesOfDimensionWithAnomaliesWithOptionalDimensionFilter()
-        {
-            const string dimensionName = "city";
-
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
-
-            var options = new GetValuesOfDimensionWithAnomaliesOptions(SamplingStartTime, SamplingEndTime)
-            {
-                DimensionToFilter = new DimensionKey()
-            };
-
-            options.DimensionToFilter.AddDimensionColumn("category", "Handmade");
 
             var valueCount = 0;
 
@@ -339,7 +266,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetMetricEnrichedSeriesData()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricEnrichedSeriesData(bool populateOptionalMembers)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -400,7 +329,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(path, Is.Not.Null.And.Not.Empty);
             }
 
-            ValidateSeriesKey(rootCause.DimensionKey);
+            ValidateDimensionKey(rootCause.DimensionKey);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    internal partial class PhonePlanGroups
+    public partial class PhonePlanGroups
     {
         internal static PhonePlanGroups DeserializePhonePlanGroups(JsonElement element)
         {

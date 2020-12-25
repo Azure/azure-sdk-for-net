@@ -339,6 +339,7 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
         }
 
+
         private static void CopyTo(
             BlobDownloadInfo result,
             Stream destination,

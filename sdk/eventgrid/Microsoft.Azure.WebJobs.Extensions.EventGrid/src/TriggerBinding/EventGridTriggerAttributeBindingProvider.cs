@@ -101,6 +101,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     {
                         throw new FormatException($"Unable to parse {stringValue} to {typeof(JObject)}");
                     }
+
                 }
                 else
                 {

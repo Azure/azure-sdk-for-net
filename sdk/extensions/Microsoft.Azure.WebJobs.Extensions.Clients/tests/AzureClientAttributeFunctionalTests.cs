@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
         {
             Matcher = new RecordMatcher()
             {
-                IgnoredQueryParameters =
+                VolatileQueryParameters =
                 {
                     // Ignore KeyVault client API Version when matching
                     "api-version"

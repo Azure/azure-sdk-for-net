@@ -8,30 +8,22 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 1);
-
         public TextAnalyticsClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
         }
 
-        public TextAnalyticsClient GetClient(
-            AzureKeyCredential credential = default,
-            TextAnalyticsClientOptions options = default,
-            bool useTokenCredential = default)
+        public TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default)
         {
-            var endpoint = new Uri(TestEnvironment.Endpoint);
+            string apiKey = TestEnvironment.ApiKey;
+            credential ??= new AzureKeyCredential(apiKey);
             options ??= new TextAnalyticsClientOptions();
-
-            if (useTokenCredential)
-            {
-                return new TextAnalyticsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options));
-            }
-            else
-            {
-                credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
-                return new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options));
-            }
+            return InstrumentClient(
+                new TextAnalyticsClient(
+                    new Uri(TestEnvironment.Endpoint),
+                    credential,
+                    InstrumentClientOptions(options))
+            );
         }
     }
 }

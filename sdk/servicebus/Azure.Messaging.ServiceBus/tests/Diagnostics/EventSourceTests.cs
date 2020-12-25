@@ -342,6 +342,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Logger = mockLogger.Object
             };
 
+
             await receiver.ReceiveMessageAsync();
 
             mockLogger

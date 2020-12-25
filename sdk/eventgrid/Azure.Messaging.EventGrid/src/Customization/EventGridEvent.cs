@@ -51,30 +51,28 @@ namespace Azure.Messaging.EventGrid
             Id = id;
         }
 
-        /// <summary> Gets or sets a unique identifier for the event. </summary>
+        /// <summary> An unique identifier for the event. </summary>
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        /// <summary>Gets or sets the resource path of the event source.
-        /// This must be set when publishing the event to a domain, and must not be set when publishing the event to a topic.
-        /// </summary>
+        /// <summary> The resource path of the event source. </summary>
         public string Topic { get; set; }
 
-        /// <summary>Gets or sets a resource path relative to the topic path.</summary>
+        /// <summary> A resource path relative to the topic path. </summary>
         public string Subject { get; set; }
 
-        /// <summary>Gets or sets the type of the event that occurred.</summary>
+        /// <summary> The type of the event that occurred. </summary>
         public string EventType { get; set; }
 
-        /// <summary>Gets or sets the time (in UTC) the event was generated.</summary>
+        /// <summary> The time (in UTC) the event was generated. </summary>
         public DateTimeOffset EventTime { get; set; } = DateTimeOffset.UtcNow;
 
-        /// <summary>Gets or sets the schema version of the data object.</summary>
+        /// <summary> The schema version of the data object. </summary>
         public string DataVersion { get; set; }
 
-        /// <summary>Gets or sets the event data specific to the event type.</summary>
+        /// <summary> Event data specific to the event type. </summary>
         internal object Data { get; set; }
 
-        /// <summary>Gets or sets the serialized event data specific to the event type.</summary>
+        /// <summary> Serialized event data specific to the event type. </summary>
         internal JsonElement SerializedData { get; set; }
 
         private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();

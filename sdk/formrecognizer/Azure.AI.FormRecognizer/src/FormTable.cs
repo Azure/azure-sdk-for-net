@@ -19,9 +19,6 @@ namespace Azure.AI.FormRecognizer.Models
             ColumnCount = table.Columns;
             RowCount = table.Rows;
             Cells = ConvertCells(table.Cells, readResults, readResult.Page);
-            // Need to verify why Bounding Box is not returned from the service
-            // https://github.com/Azure/azure-sdk-for-net/issues/16827
-            BoundingBox = table.BoundingBox == null ? new FieldBoundingBox(new List<float>()) : new FieldBoundingBox(table.BoundingBox);
         }
 
         /// <summary>
@@ -59,8 +56,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public int RowCount { get; }
 
-        /// <summary> Bounding box of the table. </summary>
-        public FieldBoundingBox BoundingBox { get; }
+        // TODO: implement table indexer
+        // TODO: Handling column-span?
+        // https://github.com/Azure/azure-sdk-for-net/issues/9975
 
         /// <summary>
         /// </summary>

@@ -14,6 +14,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class ChangeFeedTestBase : StorageTestBase
     {
+
         public ChangeFeedTestBase(bool async) : this(async, null) { }
 
         public ChangeFeedTestBase(bool async, RecordedTestMode? mode = null)
@@ -62,6 +63,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
+
             containerName ??= GetNewContainerName();
             service ??= GetServiceClient_SharedKey();
 

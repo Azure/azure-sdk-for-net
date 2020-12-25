@@ -138,7 +138,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             do
             {
                 int copiedBytes = async
-                    ? await _stream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false)
+                    ? await _stream.ReadAsync(buffer, offset, count).ConfigureAwait(false)
                     : _stream.Read(buffer, offset, count);
                 offset += copiedBytes;
                 count -= copiedBytes;
@@ -245,10 +245,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             throw new NotSupportedException();
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            _stream.Dispose();
-        }
+        protected override void Dispose(bool disposing) => _stream.Dispose();
     }
 }

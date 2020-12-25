@@ -85,64 +85,6 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>.
-        /// </summary>
-        /// <param name="connectionString">
-        /// A connection string includes the authentication information
-        /// required for your application to access data in an Azure Storage
-        /// account at runtime.
-        ///
-        /// For more information,
-        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
-        /// Configure Azure Storage connection strings</see>
-        /// </param>
-        /// <param name="fileSystemName">
-        /// The name of the file system containing this path.
-        /// </param>
-        /// <param name="filePath">
-        /// The path to the file.
-        /// </param>
-        public DataLakeFileClient(
-            string connectionString,
-            string fileSystemName,
-            string filePath)
-            : this(connectionString, fileSystemName, filePath, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>.
-        /// </summary>
-        /// <param name="connectionString">
-        /// A connection string includes the authentication information
-        /// required for your application to access data in an Azure Storage
-        /// account at runtime.
-        ///
-        /// For more information,
-        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
-        /// Configure Azure Storage connection strings</see>
-        /// </param>
-        /// <param name="fileSystemName">
-        /// The name of the file system containing this path.
-        /// </param>
-        /// <param name="filePath">
-        /// The path to the file.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        public DataLakeFileClient(
-            string connectionString,
-            string fileSystemName,
-            string filePath,
-            DataLakeClientOptions options)
-            : base(connectionString, fileSystemName, filePath, options)
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeFileClient"/> class.
         /// </summary>
         /// <param name="fileUri">
@@ -281,14 +223,12 @@ namespace Azure.Storage.Files.DataLake
             Uri fileSystemUri,
             string filePath,
             HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
             DataLakeClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics)
             : base(
                   fileSystemUri,
                   filePath,
                   pipeline,
-                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics)
         {
@@ -1261,6 +1201,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
+
         }
 
         /// <summary>
@@ -1382,6 +1323,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -3604,6 +3546,7 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}");
                 try
                 {
+
                     PathExpiryOptions blobExpiryOptions;
                     string expiresOn = null;
 

@@ -10,15 +10,13 @@ namespace Azure.Core.Pipeline
 {
     internal partial class ClientDiagnostics
     {
-#pragma warning disable CA1822 // Member can be static
         partial void ExtractFailureContent(
             string? content,
             ref string? message,
             ref string? errorCode,
-#pragma warning disable CA1801 // Remove unused parameter
+#pragma warning disable CA1801 // additionalInfo is not used at this time
             ref IDictionary<string, string>? additionalInfo)
-#pragma warning restore CA1801 // Remove unused parameter
-#pragma warning restore CA1822 // Member can be static
+#pragma warning restore CA1801
         {
             if (!string.IsNullOrEmpty(content))
             {

@@ -7,5 +7,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class EventHubsManagementTestEnvironment : TestEnvironment
     {
+        public EventHubsManagementTestEnvironment() : base("eventhub")
+        {
+        }
     }
 }

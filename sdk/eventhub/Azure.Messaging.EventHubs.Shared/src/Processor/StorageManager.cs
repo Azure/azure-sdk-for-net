@@ -42,6 +42,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public abstract Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> partitionOwnership,
                                                                                                 CancellationToken cancellationToken);
 
+
         /// <summary>
         ///   Retrieves a complete checkpoints list from the chosen storage service.
         /// </summary>

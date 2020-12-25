@@ -29,6 +29,7 @@ namespace Azure.Identity.Tests
             entry.Request.Body = Encoding.UTF8.GetBytes("Sanitized");
 
             UpdateSanitizedContentLength(entry.Request.Headers, entry.Request.Body.Length);
+
         }
 
         private void SanitizeTokenResponse(RecordEntry entry)
@@ -47,6 +48,7 @@ namespace Azure.Identity.Tests
 
             foreach (JsonProperty prop in originalJson.EnumerateObject())
             {
+
                 sanitizedJson.WritePropertyName(prop.Name);
 
                 switch (prop.Name)

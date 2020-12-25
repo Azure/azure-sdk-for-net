@@ -333,7 +333,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for subscription
-                this.DeleteTagsTest(context: context).Properties.TagsProperty.Should().BeEmpty();
+                this.DeleteTagsTest(context: context).Properties.TagsProperty.Should().BeNull();
             }            
         }
 

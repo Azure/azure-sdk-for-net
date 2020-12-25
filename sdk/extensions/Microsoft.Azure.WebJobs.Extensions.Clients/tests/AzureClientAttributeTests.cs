@@ -125,5 +125,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
                 Assert.AreEqual(testClient.ConnectionString, "Key=Value;Key2=Value2");
             }
         }
+
     }
 }

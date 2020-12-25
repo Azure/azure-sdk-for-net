@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Compute.Tests
     [AsyncOnly]
     public class VMCertificateTests : VMTestBase
     {
+
         public VMCertificateTests(bool isAsync)
            : base(isAsync)
         {

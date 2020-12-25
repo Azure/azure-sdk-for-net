@@ -14,13 +14,13 @@ namespace Azure.Analytics.Synapse.Samples
     /// <summary>
     /// This sample demonstrates how to submit Spark job in Azure Synapse Analytics using synchronous methods of <see cref="SparkBatchClient"/>.
     /// </summary>
-    public partial class Sample1_SubmitSparkJob : SampleFixture
+    public partial class SubmitSparkJob
     {
         [Test]
         public void SubmitSparkJobSync()
         {
             // Environment variable with the Synapse workspace endpoint.
-            string endpoint = TestEnvironment.EndpointUrl;
+            string workspaceUrl = TestEnvironment.WorkspaceUrl;
 
             // Environment variable with the Synapse Spark pool name.
             string sparkPoolName = TestEnvironment.SparkPoolName;
@@ -31,20 +31,20 @@ namespace Azure.Analytics.Synapse.Samples
             // Environment variable with the file system of ADLS Gen2 storage account associated with the Synapse workspace.
             string fileSystem = TestEnvironment.StorageFileSystemName;
 
-            #region Snippet:CreateSparkBatchClient
-            SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
+            #region Snippet:SparkBatchSample1SparkBatchClient
+            SparkBatchClient client = new SparkBatchClient(new Uri(workspaceUrl), sparkPoolName, new DefaultAzureCredential());
             #endregion
 
-            #region Snippet:SubmitSparkBatchJob
+            #region Snippet:SparkBatchSample1SubmitSparkJob
             string name = $"batch-{Guid.NewGuid()}";
-            string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/net/wordcount/wordcount.zip", fileSystem, storageAccount);
+            string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/wordcount.jar", fileSystem, storageAccount);
             SparkBatchJobOptions request = new SparkBatchJobOptions(name, file)
             {
                 ClassName = "WordCount",
                 Arguments =
                 {
-                    string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/net/wordcount/shakespeare.txt", fileSystem, storageAccount),
-                    string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/net/wordcount/result/", fileSystem, storageAccount),
+                    string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt", fileSystem, storageAccount),
+                    string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/result/", fileSystem, storageAccount),
                 },
                 DriverMemory = "28g",
                 DriverCores = 4,
@@ -56,20 +56,12 @@ namespace Azure.Analytics.Synapse.Samples
             SparkBatchJob jobCreated = client.CreateSparkBatchJob(request);
             #endregion
 
-            #region Snippet:ListSparkBatchJobs
-            Response<SparkBatchJobCollection> jobs = client.GetSparkBatchJobs();
-            foreach (SparkBatchJob job in jobs.Value.Sessions)
-            {
-                Console.WriteLine(job.Name);
-            }
+            #region Snippet:SparkBatchSample1GetSparkJob
+            SparkBatchJob job = client.GetSparkBatchJob(jobCreated.Id);
+            Debug.WriteLine($"Job is returned with name {job.Name} and state {job.State}");
             #endregion
 
-            #region Snippet:GetSparkBatchJob
-            SparkBatchJob retrievedJob = client.GetSparkBatchJob(jobCreated.Id);
-            Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
-            #endregion
-
-            #region Snippet:DeleteSparkBatchJob
+            #region Snippet:SparkBatchSample1CancelSparkJob
             Response operation = client.CancelSparkBatchJob(jobCreated.Id);
             #endregion
         }

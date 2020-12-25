@@ -15,6 +15,7 @@ namespace Azure.Iot.Hub.Service
         public CloudToDeviceMessagesClient()
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
+
         }
     }
 }

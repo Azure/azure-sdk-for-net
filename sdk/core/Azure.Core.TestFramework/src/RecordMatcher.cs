@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -27,29 +26,12 @@ namespace Azure.Core.TestFramework
             _compareBodies = compareBodies;
         }
 
-        /// <summary>
-        /// Request headers whose values can change between recording and playback without causing request matching
-        /// to fail. The presence or absence of the header itself is still respected in matching.
-        /// </summary>
-        public HashSet<string> IgnoredHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        public HashSet<string> ExcludeHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "Date",
             "x-ms-date",
             "x-ms-client-request-id",
             "User-Agent",
-            "Request-Id",
-            "traceparent"
-        };
-
-        /// <summary>
-        /// Legacy header exclusion set that will disregard any headers listed here when matching. Headers listed here are not matched for value,
-        /// or for presence or absence of the header key. For that reason, IgnoredHeaders should be used instead as this will ensure that the header's
-        /// presence or absence from the request is considered when matching.
-        /// This property is only included only for backwards compat.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public HashSet<string> LegacyExcludedHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
             "Request-Id",
             "traceparent"
         };
@@ -82,11 +64,11 @@ namespace Azure.Core.TestFramework
         /// Query parameters whose values can change between recording and playback without causing URI matching
         /// to fail. The presence or absence of the query parameter itself is still respected in matching.
         /// </summary>
-        public HashSet<string> IgnoredQueryParameters = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        public HashSet<string> VolatileQueryParameters = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
         };
 
-        private const string IgnoredValue = "Ignored";
+        private const string VolatileValue = "Volatile";
 
         public virtual RecordEntry FindMatch(RecordEntry request, IList<RecordEntry> entries)
         {
@@ -123,7 +105,7 @@ namespace Azure.Core.TestFramework
                 //we only check Uri + RequestMethod for track1 record
                 if (!entry.IsTrack1Recording)
                 {
-                    score += CompareHeaderDictionaries(request.Request.Headers, entry.Request.Headers, IgnoredHeaders);
+                    score += CompareHeaderDictionaries(request.Request.Headers, entry.Request.Headers, ExcludeHeaders);
                     score += CompareBodies(request.Request.Body, entry.Request.Body);
                 }
 
@@ -215,7 +197,7 @@ namespace Azure.Core.TestFramework
             {
                 req.AppendQuery(
                     param,
-                    IgnoredQueryParameters.Contains(param) ? IgnoredValue : queryParams[param]);
+                    VolatileQueryParameters.Contains(param) ? VolatileValue : queryParams[param]);
             }
             return req.ToUri().ToString();
         }
@@ -265,7 +247,7 @@ namespace Azure.Core.TestFramework
 
             builder.AppendLine("Header differences:");
 
-            CompareHeaderDictionaries(request.Request.Headers, bestScoreEntry.Request.Headers, IgnoredHeaders, builder);
+            CompareHeaderDictionaries(request.Request.Headers, bestScoreEntry.Request.Headers, ExcludeHeaders, builder);
 
             builder.AppendLine("Body differences:");
 
@@ -295,19 +277,13 @@ namespace Azure.Core.TestFramework
                 var requestHeaderValues = header.Value;
                 var headerName = header.Key;
 
-                if (LegacyExcludedHeaders.Contains(headerName))
+                if (ignoredHeaders.Contains(headerName))
                 {
                     continue;
                 }
 
                 if (remaining.TryGetValue(headerName, out string[] entryHeaderValues))
                 {
-                    if (ignoredHeaders.Contains(headerName))
-                    {
-                        remaining.Remove(headerName);
-                        continue;
-                    }
-
                     // Content-Type, Accept headers are normalized by HttpClient, re-normalize them before comparing
                     if (_normalizedHeaders.Contains(headerName))
                     {
@@ -331,7 +307,7 @@ namespace Azure.Core.TestFramework
 
             foreach (KeyValuePair<string, string[]> header in remaining)
             {
-                if (!LegacyExcludedHeaders.Contains(header.Key))
+                if (!ignoredHeaders.Contains(header.Key))
                 {
                     difference++;
                     descriptionBuilder?.AppendLine($"    <{header.Key}> is absent in request, value <{JoinHeaderValues(header.Value)}>");

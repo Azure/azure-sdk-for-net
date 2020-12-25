@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus.Administration
 {
@@ -38,35 +36,31 @@ namespace Azure.Messaging.ServiceBus.Administration
             return forwardToUri.AbsoluteUri;
         }
 
-        public static async Task<SubscriptionProperties> ParseResponseAsync(string topicName, Response response, ClientDiagnostics diagnostics)
+        public static SubscriptionProperties ParseFromContent(string topicName, string xml)
         {
             try
             {
-                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return await ParseFromEntryElementAsync(topicName, xDoc, response, diagnostics).ConfigureAwait(false);
+                        return ParseFromEntryElement(topicName, xDoc);
                     }
                 }
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                throw new ServiceBusException(false, ex.Message, innerException: ex);
+                throw new ServiceBusException(false, ex.Message);
             }
-            throw new ServiceBusException(
-                "Subscription was not found",
-                ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+
+            throw new ServiceBusException("Subscription was not found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
 
-        public static async Task<List<SubscriptionProperties>> ParsePagedResponseAsync(string topicName, Response response, ClientDiagnostics diagnostics)
+        public static List<SubscriptionProperties> ParseCollectionFromContent(string topicName, string xml)
         {
             try
             {
-                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
@@ -77,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         var entryList = xDoc.Elements(XName.Get("entry", AdministrationClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            subscriptionList.Add(await ParseFromEntryElementAsync(topicName, entry, response, diagnostics).ConfigureAwait(false));
+                            subscriptionList.Add(ParseFromEntryElement(topicName, entry));
                         }
 
                         return subscriptionList;
@@ -86,76 +80,70 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                throw new ServiceBusException(false, ex.Message, innerException: ex);
+                throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException(
-                "No subscriptions were found",
-                ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+            throw new ServiceBusException("No subscriptions were found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
 
-        private static async Task<SubscriptionProperties> ParseFromEntryElementAsync(string topicName, XElement xEntry, Response response, ClientDiagnostics diagnostics)
+        private static SubscriptionProperties ParseFromEntryElement(string topicName, XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
-            var subscriptionProperties = new SubscriptionProperties(topicName, name);
+            var subscriptionDesc = new SubscriptionProperties(topicName, name);
 
-            var subscriptionXml = xEntry.Element(XName.Get("content", AdministrationClientConstants.AtomNamespace))?
+            var qdXml = xEntry.Element(XName.Get("content", AdministrationClientConstants.AtomNamespace))?
                 .Element(XName.Get("SubscriptionDescription", AdministrationClientConstants.ServiceBusNamespace));
 
-            if (subscriptionXml == null)
+            if (qdXml == null)
             {
-                throw new ServiceBusException(
-                    "Subscription was not found",
-                    ServiceBusFailureReason.MessagingEntityNotFound,
-                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                throw new ServiceBusException("Subscription was not found", ServiceBusFailureReason.MessagingEntityNotFound);
             }
 
-            foreach (var element in subscriptionXml.Elements())
+            foreach (var element in qdXml.Elements())
             {
                 switch (element.Name.LocalName)
                 {
-                    case "LockDuration":
-                        subscriptionProperties.LockDuration = XmlConvert.ToTimeSpan(element.Value);
-                        break;
                     case "RequiresSession":
-                        subscriptionProperties.RequiresSession = bool.Parse(element.Value);
-                        break;
-                    case "DefaultMessageTimeToLive":
-                        subscriptionProperties.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
+                        subscriptionDesc.RequiresSession = bool.Parse(element.Value);
                         break;
                     case "DeadLetteringOnMessageExpiration":
-                        subscriptionProperties.DeadLetteringOnMessageExpiration = bool.Parse(element.Value);
+                        subscriptionDesc.DeadLetteringOnMessageExpiration = bool.Parse(element.Value);
                         break;
                     case "DeadLetteringOnFilterEvaluationExceptions":
-                        subscriptionProperties.EnableDeadLetteringOnFilterEvaluationExceptions = bool.Parse(element.Value);
+                        subscriptionDesc.EnableDeadLetteringOnFilterEvaluationExceptions = bool.Parse(element.Value);
+                        break;
+                    case "LockDuration":
+                        subscriptionDesc.LockDuration = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "DefaultMessageTimeToLive":
+                        subscriptionDesc.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
                         break;
                     case "MaxDeliveryCount":
-                        subscriptionProperties.MaxDeliveryCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
-                        break;
-                    case "EnableBatchedOperations":
-                        subscriptionProperties.EnableBatchedOperations = bool.Parse(element.Value);
+                        subscriptionDesc.MaxDeliveryCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "Status":
-                        subscriptionProperties.Status = element.Value;
+                        subscriptionDesc.Status = element.Value;
+                        break;
+                    case "EnableBatchedOperations":
+                        subscriptionDesc.EnableBatchedOperations = bool.Parse(element.Value);
+                        break;
+                    case "UserMetadata":
+                        subscriptionDesc.UserMetadata = element.Value;
+                        break;
+                    case "AutoDeleteOnIdle":
+                        subscriptionDesc.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
                         break;
                     case "ForwardTo":
                         if (!string.IsNullOrWhiteSpace(element.Value))
                         {
-                            subscriptionProperties.ForwardTo = element.Value;
+                            subscriptionDesc.ForwardTo = element.Value;
                         }
-                        break;
-                    case "UserMetadata":
-                        subscriptionProperties.UserMetadata = element.Value;
                         break;
                     case "ForwardDeadLetteredMessagesTo":
                         if (!string.IsNullOrWhiteSpace(element.Value))
                         {
-                            subscriptionProperties.ForwardDeadLetteredMessagesTo = element.Value;
+                            subscriptionDesc.ForwardDeadLetteredMessagesTo = element.Value;
                         }
-                        break;
-                    case "AutoDeleteOnIdle":
-                        subscriptionProperties.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
                         break;
                     case "AccessedAt":
                     case "CreatedAt":
@@ -163,25 +151,22 @@ namespace Azure.Messaging.ServiceBus.Administration
                     case "SizeInBytes":
                     case "UpdatedAt":
                     case "CountDetails":
-                    case "DefaultRuleDescription":
-                    case "EntityAvailabilityStatus":
-                    case "SkippedUpdate":
                         // Ignore known properties
                         // Do nothing
                         break;
                     default:
                         // For unknown properties, keep them as-is for forward proof.
-                        if (subscriptionProperties.UnknownProperties == null)
+                        if (subscriptionDesc.UnknownProperties == null)
                         {
-                            subscriptionProperties.UnknownProperties = new List<XElement>();
+                            subscriptionDesc.UnknownProperties = new List<object>();
                         }
 
-                        subscriptionProperties.UnknownProperties.Add(element);
+                        subscriptionDesc.UnknownProperties.Add(element);
                         break;
                 }
             }
 
-            return subscriptionProperties;
+            return subscriptionDesc;
         }
 
         public static XDocument Serialize(this SubscriptionProperties description)

@@ -15,15 +15,15 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkSessionState DeserializeSparkSessionState(JsonElement element)
         {
-            Optional<DateTimeOffset?> notStartedAt = default;
-            Optional<DateTimeOffset?> startingAt = default;
-            Optional<DateTimeOffset?> idleAt = default;
-            Optional<DateTimeOffset?> deadAt = default;
-            Optional<DateTimeOffset?> shuttingDownAt = default;
-            Optional<DateTimeOffset?> killedAt = default;
-            Optional<DateTimeOffset?> recoveringAt = default;
-            Optional<DateTimeOffset?> busyAt = default;
-            Optional<DateTimeOffset?> errorAt = default;
+            Optional<DateTimeOffset> notStartedAt = default;
+            Optional<DateTimeOffset> startingAt = default;
+            Optional<DateTimeOffset> idleAt = default;
+            Optional<DateTimeOffset> deadAt = default;
+            Optional<DateTimeOffset> shuttingDownAt = default;
+            Optional<DateTimeOffset> killedAt = default;
+            Optional<DateTimeOffset> recoveringAt = default;
+            Optional<DateTimeOffset> busyAt = default;
+            Optional<DateTimeOffset> errorAt = default;
             Optional<string> currentState = default;
             Optional<SparkRequest> jobCreationRequest = default;
             foreach (var property in element.EnumerateObject())
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        notStartedAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     notStartedAt = property.Value.GetDateTimeOffset("O");
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startingAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startingAt = property.Value.GetDateTimeOffset("O");
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        idleAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     idleAt = property.Value.GetDateTimeOffset("O");
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        deadAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deadAt = property.Value.GetDateTimeOffset("O");
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        shuttingDownAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shuttingDownAt = property.Value.GetDateTimeOffset("O");
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        killedAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     killedAt = property.Value.GetDateTimeOffset("O");
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        recoveringAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveringAt = property.Value.GetDateTimeOffset("O");
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        busyAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     busyAt = property.Value.GetDateTimeOffset("O");
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        errorAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorAt = property.Value.GetDateTimeOffset("O");

@@ -119,6 +119,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 Assert.NotNull(ex);
                 //Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+
             }
             Assert.True(createOrUpdateResponse == null);
 
@@ -134,6 +135,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 Assert.NotNull(ex);
                 //Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+
             }
             Assert.True(createOrUpdateResponse == null);
 
@@ -149,6 +151,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 Assert.NotNull(ex);
                 //Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+
             }
             Assert.True(createOrUpdateResponse == null);
         }

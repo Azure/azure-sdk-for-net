@@ -14,7 +14,7 @@ namespace Azure.Storage.Test
     /// <summary>
     /// Base class for Common tests
     /// </summary>
-    public abstract class CommonTestBase : StorageTestBase
+    public class CommonTestBase : StorageTestBase
     {
         public CommonTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode /* RecordedTestMode.Record to re-record */)

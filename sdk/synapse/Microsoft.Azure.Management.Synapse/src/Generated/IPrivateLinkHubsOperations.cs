@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateLinkHubName'>
-        /// Name of the privateLinkHub
+        /// The name of the privateLinkHub
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -73,15 +73,15 @@ namespace Microsoft.Azure.Management.Synapse
         /// <summary>
         /// Updates a privateLinkHub
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='privateLinkHubName'>
+        /// The name of the privateLinkHub
+        /// </param>
         /// <param name='privateLinkHubPatchInfo'>
         /// PrivateLinkHub patch request properties
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='privateLinkHubName'>
-        /// Name of the privateLinkHub
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -97,18 +97,18 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateLinkHub>> UpdateWithHttpMessagesAsync(PrivateLinkHubPatchInfo privateLinkHubPatchInfo, string resourceGroupName, string privateLinkHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateLinkHub>> UpdateWithHttpMessagesAsync(string resourceGroupName, string privateLinkHubName, PrivateLinkHubPatchInfo privateLinkHubPatchInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a privateLinkHub
         /// </summary>
-        /// <param name='privateLinkHubInfo'>
-        /// PrivateLinkHub create or update request properties
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateLinkHubName'>
-        /// Name of the privateLinkHub
+        /// The name of the privateLinkHub
+        /// </param>
+        /// <param name='privateLinkHubInfo'>
+        /// PrivateLinkHub create or update request properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateLinkHub>> CreateOrUpdateWithHttpMessagesAsync(PrivateLinkHub privateLinkHubInfo, string resourceGroupName, string privateLinkHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateLinkHub>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateLinkHubName, PrivateLinkHub privateLinkHubInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a privateLinkHub
         /// </summary>
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='privateLinkHubName'>
-        /// Name of the privateLinkHub
+        /// The name of the privateLinkHub
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -167,28 +167,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<PrivateLinkHub>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes a privateLinkHub
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='privateLinkHubName'>
-        /// Name of the privateLinkHub
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorContractException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string privateLinkHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns a list of privateLinkHubs in a resource group
         /// </summary>
@@ -201,7 +179,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -223,7 +201,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

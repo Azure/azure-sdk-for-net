@@ -12,6 +12,7 @@ namespace Azure.Messaging.EventGrid
     /// </summary>
     public class EventGridPublisherClientOptions : ClientOptions
     {
+
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>

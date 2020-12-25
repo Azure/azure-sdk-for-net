@@ -30,6 +30,7 @@ namespace Azure.Identity
         /// </summary>
         protected ManagedIdentityCredential()
         {
+
         }
 
         /// <summary>
@@ -52,6 +53,7 @@ namespace Azure.Identity
 
         internal ManagedIdentityCredential(ManagedIdentityClient client)
         {
+
             _pipeline = client.Pipeline;
 
             _client = client;

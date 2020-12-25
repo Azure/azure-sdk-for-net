@@ -38,7 +38,7 @@ namespace Azure.Communication.Administration
         { }
 
         internal PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
-            : this(new ClientDiagnostics(options), options.BuildHttpPipeline(connectionString), connectionString.GetRequired("endpoint"))
+            : this(new ClientDiagnostics(options), options.BuildHttpPipline(connectionString), connectionString.GetRequired("endpoint"))
         { }
 
         internal PhoneNumberAdministrationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
@@ -60,24 +60,22 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{AcquiredPhoneNumber}"/>. </returns>
         public virtual AsyncPageable<AcquiredPhoneNumber> GetAllPhoneNumbersAsync(string? locale = null, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
-            {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllPhoneNumbers)}");
-                scope.Start();
-                try
-                {
-                    Response<AcquiredPhoneNumbers> response = nextLink is null
-                        ? await RestClient.GetAllPhoneNumbersAsync(locale, skip: null, take: null, cancellationToken).ConfigureAwait(false)
-                        : await RestClient.GetAllPhoneNumbersNextPageAsync(nextLink, locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllPhoneNumbers)}");
+            scope.Start();
 
-                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
+            try
+            {
+                return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                    Response<AcquiredPhoneNumbers> response = await RestClient.GetAllPhoneNumbersAsync(locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.PhoneNumbers, continuationToken: null!, response.GetRawResponse());
+                });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Gets the list of the acquired phone numbers. </summary>
@@ -86,24 +84,19 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Pageable{AcquiredPhoneNumber}"/>. </returns>
         public virtual Pageable<AcquiredPhoneNumber> GetAllPhoneNumbers(string? locale = null, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(nextLink =>
-            {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllPhoneNumbers)}");
-                scope.Start();
-                try
-                {
-                    Response<AcquiredPhoneNumbers> response = nextLink is null
-                        ? RestClient.GetAllPhoneNumbers(locale, skip: null, take: null, cancellationToken)
-                        : RestClient.GetAllPhoneNumbersNextPage(nextLink, locale, skip: null, take: null, cancellationToken);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllPhoneNumbers)}");
+            scope.Start();
 
-                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+            try
+            {
+                Response<AcquiredPhoneNumbers> response = RestClient.GetAllPhoneNumbers(locale, skip: null, take: null, cancellationToken);
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.PhoneNumbers, continuationToken: null!, response.GetRawResponse()));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Gets a list of the supported area codes. </summary>
@@ -232,24 +225,21 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhoneNumberCountry}"/>. </returns>
         public virtual AsyncPageable<PhoneNumberCountry> GetAllSupportedCountriesAsync(string? locale = null, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSupportedCountries)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSupportedCountries)}");
-                scope.Start();
-                try
+                return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
-                    Response<PhoneNumberCountries> response = nextLink is null
-                        ? await RestClient.GetAllSupportedCountriesAsync(locale, skip: null, take: null, cancellationToken).ConfigureAwait(false)
-                        : await RestClient.GetAllSupportedCountriesNextPageAsync(nextLink, locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
-
-                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                    Response<PhoneNumberCountries> response = await RestClient.GetAllSupportedCountriesAsync(locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Countries, continuationToken: null!, response.GetRawResponse());
+                });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Gets a list of supported countries. </summary>
@@ -258,31 +248,25 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhoneNumberCountry}"/>. </returns>
         public virtual Pageable<PhoneNumberCountry> GetAllSupportedCountries(string? locale = null, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(nextLink =>
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSupportedCountries)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSupportedCountries)}");
-                scope.Start();
-                try
-                {
-                    Response<PhoneNumberCountries> response = nextLink is null
-                        ? RestClient.GetAllSupportedCountries(locale, skip: null, take: null, cancellationToken)
-                        : RestClient.GetAllSupportedCountriesNextPage(nextLink, locale, skip: null, take: null, cancellationToken);
-
-                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                Response<PhoneNumberCountries> response = RestClient.GetAllSupportedCountries(locale, skip: null, take: null, cancellationToken);
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.Countries, continuationToken: null!, response.GetRawResponse()));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Endpoint for getting number configurations. </summary>
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response{NumberConfigurationResponse}"/>. </returns>
-        public virtual async Task<Response<NumberConfigurationResponse>> GetNumberConfigurationAsync(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NumberConfigurationResponse>> GetNumberConfigurationAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetNumberConfiguration)}");
             scope.Start();
@@ -301,7 +285,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response{NumberConfigurationResponse}"/>. </returns>
-        public virtual Response<NumberConfigurationResponse> GetNumberConfiguration(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
+        public virtual Response<NumberConfigurationResponse> GetNumberConfiguration(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetNumberConfiguration)}");
             scope.Start();
@@ -321,7 +305,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number to configure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response"/>. </returns>
-        public virtual async Task<Response> ConfigureNumberAsync(PstnConfiguration pstnConfiguration, PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ConfigureNumberAsync(PstnConfiguration pstnConfiguration, PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ConfigureNumber)}");
             scope.Start();
@@ -341,7 +325,7 @@ namespace Azure.Communication.Administration
         /// <param name="pstnConfiguration"> Definition for pstn number configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response"/>. </returns>
-        public virtual Response ConfigureNumber(PstnConfiguration pstnConfiguration, PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
+        public virtual Response ConfigureNumber(PstnConfiguration pstnConfiguration, PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ConfigureNumber)}");
             scope.Start();
@@ -360,7 +344,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response"/>. </returns>
-        public virtual async Task<Response> UnconfigureNumberAsync(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UnconfigureNumberAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UnconfigureNumber)}");
             scope.Start();
@@ -379,7 +363,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="Response"/>. </returns>
-        public virtual Response UnconfigureNumber(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
+        public virtual Response UnconfigureNumber(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UnconfigureNumber)}");
             scope.Start();
@@ -402,24 +386,21 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhonePlanGroup}"/>. </returns>
         public virtual AsyncPageable<PhonePlanGroup> GetPhonePlanGroupsAsync(string countryCode, string? locale = null, bool? includeRateInformation = null, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanGroups)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanGroups)}");
-                scope.Start();
-                try
+                return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
-                    Response<PhonePlanGroups> response = nextLink is null
-                        ? await RestClient.GetPhonePlanGroupsAsync(countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken).ConfigureAwait(false)
-                        : await RestClient.GetPhonePlanGroupsNextPageAsync(nextLink, countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken).ConfigureAwait(false);
-
-                    return Page.FromValues(response.Value.PhonePlanGroupsValue, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                    Response<PhonePlanGroups> response = await RestClient.GetPhonePlanGroupsAsync(countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.PhonePlanGroupsValue, continuationToken: null!, response.GetRawResponse());
+                });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Gets a list of phone plan groups for the given country. </summary>
@@ -430,24 +411,18 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Pageable{PhonePlanGroup}"/>. </returns>
         public virtual Pageable<PhonePlanGroup> GetPhonePlanGroups(string countryCode, string? locale = null, bool? includeRateInformation = null, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(nextLink =>
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanGroups)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanGroups)}");
-                scope.Start();
-                try
-                {
-                    Response<PhonePlanGroups> response = nextLink is null
-                        ? RestClient.GetPhonePlanGroups(countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken)
-                        : RestClient.GetPhonePlanGroupsNextPage(nextLink, countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken);
-
-                    return Page.FromValues(response.Value.PhonePlanGroupsValue, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                Response<PhonePlanGroups> response = RestClient.GetPhonePlanGroups(countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken);
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.PhonePlanGroupsValue, continuationToken: null!, response.GetRawResponse()));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Gets a list of phone plans for a phone plan group. </summary>
@@ -458,24 +433,21 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhonePlan}"/>. </returns>
         public virtual AsyncPageable<PhonePlan> GetPhonePlansAsync(string countryCode, string phonePlanGroupId, string? locale = null, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlans)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlans)}");
-                scope.Start();
-                try
+                return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
-                    Response<PhonePlansResponse> response = nextLink is null
-                        ? await RestClient.GetPhonePlansAsync(countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken).ConfigureAwait(false)
-                        : await RestClient.GetPhonePlansNextPageAsync(nextLink, countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
-
-                    return Page.FromValues(response.Value.PhonePlans, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                    Response<PhonePlansResponse> response = await RestClient.GetPhonePlansAsync(countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.PhonePlans, continuationToken: null!, response.GetRawResponse());
+                });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Gets a list of phone plans for a phone plan group. </summary>
@@ -486,24 +458,18 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Pageable{PhonePlan}"/>. </returns>
         public virtual Pageable<PhonePlan> GetPhonePlans(string countryCode, string phonePlanGroupId, string? locale = null, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(nextLink =>
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlans)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlans)}");
-                scope.Start();
-                try
-                {
-                    Response<PhonePlansResponse> response = nextLink is null
-                            ? RestClient.GetPhonePlans(countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken)
-                            : RestClient.GetPhonePlansNextPage(nextLink, countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken);
-
-                    return Page.FromValues(response.Value.PhonePlans, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                Response<PhonePlansResponse> response = RestClient.GetPhonePlans(countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken);
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.PhonePlans, continuationToken: null!, response.GetRawResponse()));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Gets a list of location options for a phone plan. </summary>
@@ -589,29 +555,10 @@ namespace Azure.Communication.Administration
         }
 
         /// <summary> Starts a release for the given phone numbers. </summary>
-        /// <param name="phoneNumber"> The phone number in the release request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
-        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumber)}");
-            scope.Start();
-            try
-            {
-                return await StartReleasePhoneNumbersAsync(new[] { phoneNumber }, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Starts a release for the given phone numbers. </summary>
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
-        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumbersAsync(IEnumerable<PhoneNumberIdentifier> phoneNumbers, CancellationToken cancellationToken = default)
+        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumbersAsync(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
             scope.Start();
@@ -631,30 +578,11 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Starts a release for the given phone number. </summary>
-        /// <param name="phoneNumber"> The phone number in the release request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
-        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(PhoneNumberIdentifier phoneNumber, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumber)}");
-            scope.Start();
-            try
-            {
-                return StartReleasePhoneNumbers(new[] { phoneNumber }, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
         /// <summary> Starts a release for the given phone numbers. </summary>
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
-        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumbers(IEnumerable<PhoneNumberIdentifier> phoneNumbers, CancellationToken cancellationToken = default)
+        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumbers(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
             scope.Start();
@@ -683,12 +611,10 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
+                return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
-                    Response<PhoneNumberEntities> response = nextLink is null
-                        ? await RestClient.GetAllReleasesAsync(skip: null, take: null, cancellationToken).ConfigureAwait(false)
-                        : await RestClient.GetAllReleasesNextPageAsync(nextLink, skip: null, take: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse());
+                    Response<PhoneNumberEntities> response = await RestClient.GetAllReleasesAsync(skip: null, take: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Entities, continuationToken: null!, response.GetRawResponse());
                 });
             }
             catch (Exception ex)
@@ -707,14 +633,8 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return PageResponseEnumerator.CreateEnumerable(nextLink =>
-                {
-                    Response<PhoneNumberEntities> response = nextLink is null
-                        ? RestClient.GetAllReleases(skip: null, take: null, cancellationToken)
-                        : RestClient.GetAllReleasesNextPage(nextLink, skip: null, take: null, cancellationToken);
-
-                    return Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse());
-                });
+                Response<PhoneNumberEntities> response = RestClient.GetAllReleases(skip: null, take: null, cancellationToken);
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.Entities, continuationToken: null!, response.GetRawResponse()));
             }
             catch (Exception ex)
             {
@@ -814,24 +734,21 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhoneNumberEntity}"/>. </returns>
         public virtual AsyncPageable<PhoneNumberEntity> GetAllReservationsAsync(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
-                scope.Start();
-                try
+                return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
-                    Response<PhoneNumberEntities> response = nextLink is null
-                        ? await RestClient.GetAllSearchesAsync(skip: null, take: null, cancellationToken).ConfigureAwait(false)
-                        : await RestClient.GetAllSearchesNextPageAsync(nextLink, skip: null, take: null, cancellationToken).ConfigureAwait(false);
-
-                    return Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                    Response<PhoneNumberEntities> response = await RestClient.GetAllSearchesAsync(skip: null, take: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Entities, continuationToken: null!, response.GetRawResponse());
+                });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Gets a list of all reservations. </summary>
@@ -839,24 +756,18 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Pageable{PhoneNumberEntity}"/>. </returns>
         public virtual Pageable<PhoneNumberEntity> GetAllReservations(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(nextLink =>
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
-                scope.Start();
-                try
-                {
-                    Response<PhoneNumberEntities> response = nextLink is null
-                        ? RestClient.GetAllSearches(skip: null, take: null, cancellationToken)
-                        : RestClient.GetAllSearchesNextPage(nextLink, skip: null, take: null, cancellationToken);
-
-                    return Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                Response<PhoneNumberEntities> response = RestClient.GetAllSearches(skip: null, take: null, cancellationToken);
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.Entities, continuationToken: null!, response.GetRawResponse()));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Cancels the reservation. This means existing numbers in the reservation will be made available. </summary>

@@ -26,6 +26,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         protected SecretClient()
         {
+
         }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace Azure.Security.KeyVault.Secrets
         public SecretClient(Uri vaultUri, TokenCredential credential)
             : this(vaultUri, credential, null)
         {
+
         }
 
         /// <summary>

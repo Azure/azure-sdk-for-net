@@ -15,11 +15,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkServicePlugin DeserializeSparkServicePlugin(JsonElement element)
         {
-            Optional<DateTimeOffset?> preparationStartedAt = default;
-            Optional<DateTimeOffset?> resourceAcquisitionStartedAt = default;
-            Optional<DateTimeOffset?> submissionStartedAt = default;
-            Optional<DateTimeOffset?> monitoringStartedAt = default;
-            Optional<DateTimeOffset?> cleanupStartedAt = default;
+            Optional<DateTimeOffset> preparationStartedAt = default;
+            Optional<DateTimeOffset> resourceAcquisitionStartedAt = default;
+            Optional<DateTimeOffset> submissionStartedAt = default;
+            Optional<DateTimeOffset> monitoringStartedAt = default;
+            Optional<DateTimeOffset> cleanupStartedAt = default;
             Optional<PluginCurrentState> currentState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        preparationStartedAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preparationStartedAt = property.Value.GetDateTimeOffset("O");
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resourceAcquisitionStartedAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceAcquisitionStartedAt = property.Value.GetDateTimeOffset("O");
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        submissionStartedAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     submissionStartedAt = property.Value.GetDateTimeOffset("O");
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        monitoringStartedAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monitoringStartedAt = property.Value.GetDateTimeOffset("O");
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cleanupStartedAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cleanupStartedAt = property.Value.GetDateTimeOffset("O");

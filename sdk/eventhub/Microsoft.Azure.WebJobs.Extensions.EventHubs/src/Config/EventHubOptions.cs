@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -10,6 +11,7 @@ using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Hosting;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -17,11 +19,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 {
     public class EventHubOptions : IOptionsFormatter
     {
+        // Event Hub Names are case-insensitive.
+        // The same path can have multiple connection strings with different permissions (sending and receiving),
+        // so we track senders and receivers separately and infer which one to use based on the EventHub (sender) vs. EventHubTrigger (receiver) attribute.
+        // Connection strings may also encapsulate different endpoints.
+
+        // The client cache must be thread safe because clients are accessed/added on the function
+        private readonly ConcurrentDictionary<string, EventHubProducerClient> _clients = new ConcurrentDictionary<string, EventHubProducerClient>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, ReceiverCreds> _receiverCreds = new Dictionary<string, ReceiverCreds>(StringComparer.OrdinalIgnoreCase);
+
         /// <summary>
         /// Name of the blob container that the EventHostProcessor instances uses to coordinate load balancing listening on an event hub.
         /// Each event hub gets its own blob prefix within the container.
         /// </summary>
         public const string LeaseContainerName = "azure-webjobs-eventhub";
+        private int _batchCheckpointFrequency = 1;
 
         public EventHubOptions()
         {
@@ -29,23 +41,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             InvokeProcessorAfterReceiveTimeout = false;
             EventProcessorOptions = new EventProcessorOptions()
             {
-                TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(1),
                 PrefetchCount = 300,
                 DefaultStartingPosition = EventPosition.Earliest,
             };
         }
 
-        public EventProcessorOptions EventProcessorOptions { get; }
-
-        private int _batchCheckpointFrequency = 1;
-
         /// <summary>
         /// Gets or sets the number of batches to process before creating an EventHub cursor checkpoint. Default 1.
         /// </summary>
         public int BatchCheckpointFrequency
         {
-            get => _batchCheckpointFrequency;
+            get
+            {
+                return _batchCheckpointFrequency;
+            }
 
             set
             {
@@ -64,43 +74,57 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// </summary>
         public int MaxBatchSize
         {
-            get => _maxBatchSize;
+            get
+            {
+                return _maxBatchSize;
+            }
 
             set
             {
                 if (value < 1)
                 {
-                    throw new ArgumentException("Batch size must be larger than 0.");
+                    throw new ArgumentException("Batch checkpoint frequency must be larger than 0.");
                 }
                 _maxBatchSize = value;
             }
         }
 
-        /// <summary>
-        /// Returns whether the function would be triggered when a receive timeout occurs.
-        /// </summary>
         public bool InvokeProcessorAfterReceiveTimeout { get; set; }
 
+        public EventProcessorOptions EventProcessorOptions { get; }
+
+        private Action<ExceptionReceivedEventArgs> _exceptionHandler;
+
+        internal void SetExceptionHandler(Action<ExceptionReceivedEventArgs> exceptionHandler)
+        {
+            if (exceptionHandler == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionHandler));
+            }
+
+            _exceptionHandler = exceptionHandler;
+        }
+
         /// <summary>
-        /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.
+        /// Add an existing client for sending messages to an event hub.  Infer the eventHub name from client.path
         /// </summary>
-        internal string CheckpointContainer { get; set; } = LeaseContainerName;
-
-        internal Action<ExceptionReceivedEventArgs> ExceptionHandler { get; set; }
-
-        // Event Hub Names are case-insensitive.
-        // The same path can have multiple connection strings with different permissions (sending and receiving),
-        // so we track senders and receivers separately and infer which one to use based on the EventHub (sender) vs. EventHubTrigger (receiver) attribute.
-        // Connection strings may also encapsulate different endpoints.
-        internal Dictionary<string, EventHubProducerClient> RegisteredProducers { get; } = new ();
-        internal Dictionary<string, ReceiverCredentials> RegisteredConsumerCredentials { get; } = new ();
+        /// <param name="client"></param>
+        public void AddEventHubProducerClient(EventHubProducerClient client)
+        {
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+            string eventHubName = client.EventHubName;
+            AddEventHubProducerClient(eventHubName, client);
+        }
 
         /// <summary>
-        /// Add an existing client for sending messages to an event hub.
+        /// Add an existing client for sending messages to an event hub.  Infer the eventHub name from client.path
         /// </summary>
         /// <param name="eventHubName">name of the event hub</param>
         /// <param name="client"></param>
-        internal void AddEventHubProducerClient(string eventHubName, EventHubProducerClient client)
+        public void AddEventHubProducerClient(string eventHubName, EventHubProducerClient client)
         {
             if (eventHubName == null)
             {
@@ -111,7 +135,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 throw new ArgumentNullException(nameof(client));
             }
 
-            RegisteredProducers[eventHubName] = client;
+            _clients[eventHubName] = client;
         }
 
         /// <summary>
@@ -130,7 +154,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 throw new ArgumentNullException(nameof(sendConnectionString));
             }
 
-            var client = new EventHubProducerClient(EventHubClientFactory.NormalizeConnectionString(sendConnectionString, eventHubName));
+            EventHubsConnectionStringBuilder sb = new EventHubsConnectionStringBuilder(sendConnectionString);
+            if (string.IsNullOrWhiteSpace(sb.EntityPath))
+            {
+                sb.EntityPath = eventHubName;
+            }
+
+            var client = new EventHubProducerClient(sb.ToString());
             AddEventHubProducerClient(eventHubName, client);
         }
 
@@ -150,7 +180,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 throw new ArgumentNullException(nameof(receiverConnectionString));
             }
 
-            RegisteredConsumerCredentials[eventHubName] = new ReceiverCredentials
+            this._receiverCreds[eventHubName] = new ReceiverCreds
             {
                 EventHubConnectionString = receiverConnectionString
             };
@@ -177,11 +207,82 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 throw new ArgumentNullException(nameof(storageConnectionString));
             }
 
-            RegisteredConsumerCredentials[eventHubName] = new ReceiverCredentials
+            this._receiverCreds[eventHubName] = new ReceiverCreds
             {
                 EventHubConnectionString = receiverConnectionString,
                 StorageConnectionString = storageConnectionString
             };
+        }
+
+        internal EventHubProducerClient GetEventHubProducerClient(string eventHubName, string connection)
+        {
+            EventHubProducerClient client;
+
+            if (string.IsNullOrEmpty(eventHubName))
+            {
+                EventHubsConnectionStringBuilder builder = new EventHubsConnectionStringBuilder(connection);
+                eventHubName = builder.EntityPath;
+            }
+
+            if (_clients.TryGetValue(eventHubName, out client))
+            {
+                return client;
+            }
+            else if (!string.IsNullOrWhiteSpace(connection))
+            {
+                return _clients.GetOrAdd(eventHubName, key =>
+                {
+                    AddSender(key, connection);
+                    return _clients[key];
+                });
+            }
+            throw new InvalidOperationException("No event hub sender named " + eventHubName);
+        }
+
+        // Lookup a listener for receiving events given the name provided in the [EventHubTrigger] attribute.
+        internal EventProcessorHost GetEventProcessorHost(IConfiguration config, string eventHubName, string consumerGroup)
+        {
+            ReceiverCreds creds;
+            if (this._receiverCreds.TryGetValue(eventHubName, out creds))
+            {
+                if (consumerGroup == null)
+                {
+                    consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+                }
+                var storageConnectionString = creds.StorageConnectionString;
+                if (storageConnectionString == null)
+                {
+                    string defaultStorageString = config.GetWebJobsConnectionString(ConnectionStringNames.Storage);
+                    storageConnectionString = defaultStorageString;
+                }
+
+                // If the connection string provides a hub name, that takes precedence.
+                // Note that connection strings *can't* specify a consumerGroup, so must always be passed in.
+                string actualPath = eventHubName;
+                EventHubsConnectionStringBuilder sb = new EventHubsConnectionStringBuilder(creds.EventHubConnectionString);
+                if (sb.EntityPath != null)
+                {
+                    actualPath = sb.EntityPath;
+                    sb.EntityPath = null; // need to remove to use with EventProcessorHost
+                }
+
+                var @namespace = GetEventHubNamespace(sb);
+                var blobPrefix = GetBlobPrefix(actualPath, @namespace);
+
+                // Use blob prefix support available in EPH starting in 2.2.6
+                EventProcessorHost host = new EventProcessorHost(
+                    eventHubPath: actualPath,
+                    consumerGroupName: consumerGroup,
+                    eventHubConnectionString: sb.ToString(),
+                    storageConnectionString: storageConnectionString,
+                    leaseContainerName: LeaseContainerName,
+                    legacyCheckpointStorageBlobPrefix: blobPrefix,
+                    exceptionHandler: _exceptionHandler);
+
+                return host;
+            }
+
+            throw new InvalidOperationException("No event hub receiver named " + eventHubName);
         }
 
         private static string EscapeStorageCharacter(char character)
@@ -233,6 +334,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return sb.ToString();
         }
 
+        internal static string GetEventHubNamespace(EventHubsConnectionStringBuilder connectionString)
+        {
+            // EventHubs only have 1 endpoint.
+            var url = connectionString.Endpoint;
+            var @namespace = url.Host;
+            return @namespace;
+        }
+
         /// <summary>
         /// Get the blob prefix used with EventProcessorHost for a given event hub.
         /// </summary>
@@ -269,9 +378,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 {
                     { nameof(EventProcessorOptions.TrackLastEnqueuedEventProperties), EventProcessorOptions.TrackLastEnqueuedEventProperties },
                     { nameof(EventProcessorOptions.PrefetchCount), EventProcessorOptions.PrefetchCount },
-                    { nameof(EventProcessorOptions.MaximumWaitTime), EventProcessorOptions.MaximumWaitTime },
-                    { nameof(EventProcessorOptions.PartitionOwnershipExpirationInterval), EventProcessorOptions.PartitionOwnershipExpirationInterval },
-                    { nameof(EventProcessorOptions.LoadBalancingUpdateInterval), EventProcessorOptions.LoadBalancingUpdateInterval },
+                    { nameof(EventProcessorOptions.MaximumWaitTime), EventProcessorOptions.MaximumWaitTime }
                 };
             }
 
@@ -288,7 +395,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         // Hold credentials for a given eventHub name.
         // Multiple consumer groups (and multiple listeners) on the same hub can share the same credentials.
-        internal class ReceiverCredentials
+        private class ReceiverCreds
         {
             // Required.
             public string EventHubConnectionString { get; set; }

@@ -177,4 +177,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Common
   'metadataVersion': '1'
 }";
     }
+
 }

@@ -12,7 +12,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
     [MemoryDiagnoser]
     public class TagObjectsBenchmarks
     {
-        private TagEnumerationState monitorTags;
+        private AzureMonitorConverter.TagEnumerationState monitorTags;
         private IEnumerable<KeyValuePair<string, object>> tagObjects;
         private IEnumerable<KeyValuePair<string, object>> PartB_tagObjects;
         private IEnumerable<KeyValuePair<string, object>> PartC_tagObjects;
@@ -39,7 +39,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         [GlobalSetup]
         public void Setup()
         {
-            monitorTags = new TagEnumerationState
+            monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -83,6 +83,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         [GlobalCleanup]
         public void Cleanup()
         {
+
         }
 
         [Benchmark]

@@ -7,6 +7,10 @@ namespace Azure.Data.SchemaRegistry.Tests
 {
     public class SchemaRegistryClientTestEnvironment : TestEnvironment
     {
+        public SchemaRegistryClientTestEnvironment() : base("schemaregistry")
+        {
+        }
+
         public string SchemaRegistryEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT");
 
         public string SchemaRegistryGroup => GetRecordedVariable("SCHEMAREGISTRY_GROUP");

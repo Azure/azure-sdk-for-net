@@ -74,6 +74,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys
 
                 return new EncryptedXmlInfo(element, typeof(AzureKeyVaultXmlDecryptor));
             }
+
         }
     }
 }

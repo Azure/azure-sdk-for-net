@@ -11,7 +11,6 @@ using System.Reflection;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search.Tests.Utilities;
 using Xunit;
-using Index = Microsoft.Azure.Search.Models.Index;
 
 namespace Microsoft.Azure.Search.Tests
 {
@@ -91,14 +90,14 @@ namespace Microsoft.Azure.Search.Tests
 
                 // Only non-language analyzer names can be set on the searchAnalyzer and indexAnalyzer properties.
                 // ASSUMPTION: Only language analyzers end in .lucene or .microsoft.
-                var allNonLanguageAnalyzers =
+                var allNonLanguageAnalyzers = 
                     allAnalyzers.Where(a => !a.ToString().EndsWith(".lucene") && !a.ToString().EndsWith(".microsoft")).ToArray();
 
                 for (int i = 0; i < allNonLanguageAnalyzers.Length; i++)
                 {
                     DataType fieldType = (i % 2 == 0) ? DataType.String : DataType.Collection(DataType.String);
 
-                    var field =
+                    var field = 
                         new Field($"field{fieldNumber++}", fieldType)
                         {
                             IsSearchable = true,
@@ -163,7 +162,7 @@ namespace Microsoft.Azure.Search.Tests
                 client.Indexes.Create(index);
 
                 AnalyzerName[] allAnalyzerNames = GetAllExtensibleEnumValues<AnalyzerName>();
-
+                    
                 var requests = allAnalyzerNames.Select(an => new AnalyzeRequest() { Text = "One two", Analyzer = an });
 
                 foreach (var req in requests)
@@ -182,11 +181,11 @@ namespace Microsoft.Azure.Search.Tests
                 TokenFilterName[] allTokenFilterNames = GetAllExtensibleEnumValues<TokenFilterName>();
                 CharFilterName[] allCharFilterNames = GetAllExtensibleEnumValues<CharFilterName>();
 
-                var request =
+                var request = 
                     new AnalyzeRequest(
-                        "One two",
-                        tokenizer: TokenizerName.Whitespace,
-                        tokenFilters: allTokenFilterNames,
+                        "One two", 
+                        tokenizer: TokenizerName.Whitespace, 
+                        tokenFilters: allTokenFilterNames, 
                         charFilters: allCharFilterNames);
 
                 client.Indexes.Analyze(index.Name, request);
@@ -245,18 +244,18 @@ namespace Microsoft.Azure.Search.Tests
                 index.Analyzers = new Analyzer[]
                 {
                     new CustomAnalyzer(
-                        SearchTestUtilities.GenerateName(),
-                        CustomTokenizerName,
-                        new TokenFilterName[] { CustomTokenFilterName },
+                        SearchTestUtilities.GenerateName(), 
+                        CustomTokenizerName, 
+                        new TokenFilterName[] { CustomTokenFilterName }, 
                         new CharFilterName[] { CustomCharFilterName }),
                     new CustomAnalyzer(
                         SearchTestUtilities.GenerateName(),
                         TokenizerName.EdgeNGram),
                     new PatternAnalyzer(
                         SearchTestUtilities.GenerateName(),
-                        lowerCaseTerms: false,
-                        pattern: "abc",
-                        flags: RegexFlags.DotAll,
+                        lowerCaseTerms: false, 
+                        pattern: "abc", 
+                        flags: RegexFlags.DotAll, 
                         stopwords: new[] { "the" }),
                     new StandardAnalyzer(SearchTestUtilities.GenerateName(), maxTokenLength: 100, stopwords: new[] { "the" }),
                     new StopAnalyzer(SearchTestUtilities.GenerateName(), stopwords: new[] { "the" }),
@@ -267,34 +266,34 @@ namespace Microsoft.Azure.Search.Tests
                 {
                     new EdgeNGramTokenizer(CustomTokenizerName, minGram: 1, maxGram: 2),    // One custom tokenizer for CustomAnalyzer above.
                     new EdgeNGramTokenizer(
-                        SearchTestUtilities.GenerateName(),
-                        minGram: 2,
-                        maxGram: 4,
+                        SearchTestUtilities.GenerateName(), 
+                        minGram: 2, 
+                        maxGram: 4, 
                         tokenChars: new[] { TokenCharacterKind.Letter }),
                     new NGramTokenizer(SearchTestUtilities.GenerateName(), minGram: 2, maxGram: 4, tokenChars: new[] { TokenCharacterKind.Letter }),
                     new ClassicTokenizer(SearchTestUtilities.GenerateName(), maxTokenLength: 100),
                     new KeywordTokenizerV2(SearchTestUtilities.GenerateName(), maxTokenLength: 100),
                     new MicrosoftLanguageStemmingTokenizer(
-                        SearchTestUtilities.GenerateName(),
-                        maxTokenLength: 100,
-                        isSearchTokenizer: true,
+                        SearchTestUtilities.GenerateName(), 
+                        maxTokenLength: 100, 
+                        isSearchTokenizer: true, 
                         language: MicrosoftStemmingTokenizerLanguage.Croatian),
                     new MicrosoftLanguageTokenizer(
-                        SearchTestUtilities.GenerateName(),
-                        maxTokenLength: 100,
-                        isSearchTokenizer: true,
+                        SearchTestUtilities.GenerateName(), 
+                        maxTokenLength: 100, 
+                        isSearchTokenizer: true, 
                         language: MicrosoftTokenizerLanguage.Thai),
                     new PathHierarchyTokenizerV2(
-                        SearchTestUtilities.GenerateName(),
-                        delimiter: ':',
-                        replacement: '_',
-                        maxTokenLength: 300,
-                        reverseTokenOrder: true,
+                        SearchTestUtilities.GenerateName(), 
+                        delimiter: ':', 
+                        replacement: '_', 
+                        maxTokenLength: 300, 
+                        reverseTokenOrder: true, 
                         numberOfTokensToSkip: 2),
                     new PatternTokenizer(
-                        SearchTestUtilities.GenerateName(),
-                        pattern: ".*",
-                        flags: RegexFlags.Multiline | RegexFlags.Literal,
+                        SearchTestUtilities.GenerateName(), 
+                        pattern: ".*", 
+                        flags: RegexFlags.Multiline | RegexFlags.Literal, 
                         group: 0),
                     new StandardTokenizerV2(SearchTestUtilities.GenerateName(), maxTokenLength: 100),
                     new UaxUrlEmailTokenizer(SearchTestUtilities.GenerateName(), maxTokenLength: 100)
@@ -304,24 +303,24 @@ namespace Microsoft.Azure.Search.Tests
                 {
                     new CjkBigramTokenFilter(CustomTokenFilterName),    // One custom token filter for CustomAnalyzer above.
                     new CjkBigramTokenFilter(
-                        SearchTestUtilities.GenerateName(),
-                        ignoreScripts: new[] { CjkBigramTokenFilterScripts.Han },
+                        SearchTestUtilities.GenerateName(), 
+                        ignoreScripts: new[] { CjkBigramTokenFilterScripts.Han }, 
                         outputUnigrams: true),
                     new CjkBigramTokenFilter(SearchTestUtilities.GenerateName()),
                     new AsciiFoldingTokenFilter(SearchTestUtilities.GenerateName(), preserveOriginal: true),
                     new AsciiFoldingTokenFilter(SearchTestUtilities.GenerateName()),
                     new CommonGramTokenFilter(
-                        SearchTestUtilities.GenerateName(),
-                        commonWords: new[] { "hello", "goodbye" },
-                        ignoreCase: true,
+                        SearchTestUtilities.GenerateName(), 
+                        commonWords: new[] { "hello", "goodbye" }, 
+                        ignoreCase: true, 
                         useQueryMode: true),
                     new CommonGramTokenFilter(SearchTestUtilities.GenerateName(), commonWords: new[] { "at" }),
                     new DictionaryDecompounderTokenFilter(
-                        SearchTestUtilities.GenerateName(),
+                        SearchTestUtilities.GenerateName(), 
                         wordList: new[] { "Schadenfreude" },
-                        minWordSize: 10,
-                        minSubwordSize: 5,
-                        maxSubwordSize: 13,
+                        minWordSize: 10, 
+                        minSubwordSize: 5, 
+                        maxSubwordSize: 13, 
                         onlyLongestMatch: true),
                     new EdgeNGramTokenFilterV2(SearchTestUtilities.GenerateName(), minGram: 2, maxGram: 10, side: EdgeNGramTokenFilterSide.Back),
                     new ElisionTokenFilter(SearchTestUtilities.GenerateName(), articles: new[] { "a" }),
@@ -337,41 +336,41 @@ namespace Microsoft.Azure.Search.Tests
                     new PatternReplaceTokenFilter(SearchTestUtilities.GenerateName(), pattern: "abc", replacement: "123"),
                     new PhoneticTokenFilter(SearchTestUtilities.GenerateName(), encoder: PhoneticEncoder.Soundex, replaceOriginalTokens: false),
                     new ShingleTokenFilter(
-                        SearchTestUtilities.GenerateName(),
-                        maxShingleSize: 10,
-                        minShingleSize: 5,
-                        outputUnigrams: false,
-                        outputUnigramsIfNoShingles: true,
-                        tokenSeparator: " ",
+                        SearchTestUtilities.GenerateName(), 
+                        maxShingleSize: 10, 
+                        minShingleSize: 5, 
+                        outputUnigrams: false, 
+                        outputUnigramsIfNoShingles: true, 
+                        tokenSeparator: " ", 
                         filterToken: "|"),
                     new SnowballTokenFilter(SearchTestUtilities.GenerateName(), SnowballTokenFilterLanguage.English),
                     new StemmerOverrideTokenFilter(SearchTestUtilities.GenerateName(), rules: new[] { "ran => run" }),
                     new StemmerTokenFilter(SearchTestUtilities.GenerateName(), StemmerTokenFilterLanguage.French),
                     new StopwordsTokenFilter(
-                        SearchTestUtilities.GenerateName(),
-                        stopwords: new[] { "a", "the" },
-                        ignoreCase: true,
+                        SearchTestUtilities.GenerateName(), 
+                        stopwords: new[] { "a", "the" }, 
+                        ignoreCase: true, 
                         removeTrailingStopWords: false),
                     new StopwordsTokenFilter(
-                        SearchTestUtilities.GenerateName(),
+                        SearchTestUtilities.GenerateName(), 
                         stopwordsList: StopwordsList.Italian,
-                        ignoreCase: true,
+                        ignoreCase: true, 
                         removeTrailingStopWords: false),
                     new SynonymTokenFilter(SearchTestUtilities.GenerateName(), synonyms: new[] { "great, good" }, ignoreCase: true, expand: false),
                     new TruncateTokenFilter(SearchTestUtilities.GenerateName(), length: 10),
                     new UniqueTokenFilter(SearchTestUtilities.GenerateName(), onlyOnSamePosition: true),
                     new UniqueTokenFilter(SearchTestUtilities.GenerateName()),
                     new WordDelimiterTokenFilter(
-                        SearchTestUtilities.GenerateName(),
-                        generateWordParts: false,
-                        generateNumberParts: false,
-                        catenateWords: true,
-                        catenateNumbers: true,
-                        catenateAll: true,
-                        splitOnCaseChange: false,
-                        preserveOriginal: true,
-                        splitOnNumerics: false,
-                        stemEnglishPossessive: false,
+                        SearchTestUtilities.GenerateName(), 
+                        generateWordParts: false, 
+                        generateNumberParts: false, 
+                        catenateWords: true, 
+                        catenateNumbers: true, 
+                        catenateAll: true, 
+                        splitOnCaseChange: false, 
+                        preserveOriginal: true, 
+                        splitOnNumerics: false, 
+                        stemEnglishPossessive: false, 
                         protectedWords: new[] { "protected" })
                 };
 
@@ -445,12 +444,12 @@ namespace Microsoft.Azure.Search.Tests
                     new ClassicTokenizer(GenerateSimpleName(i++), maxTokenLength: 255),
                     new KeywordTokenizerV2(GenerateSimpleName(i++), maxTokenLength: 256),
                     new MicrosoftLanguageStemmingTokenizer(
-                        GenerateSimpleName(i++),
-                        maxTokenLength: 255,
-                        isSearchTokenizer: false,
+                        GenerateSimpleName(i++), 
+                        maxTokenLength: 255, 
+                        isSearchTokenizer: false, 
                         language: MicrosoftStemmingTokenizerLanguage.English),
                     new MicrosoftLanguageTokenizer(
-                        GenerateSimpleName(i++),
+                        GenerateSimpleName(i++), 
                         maxTokenLength: 255,
                         isSearchTokenizer: false,
                         language: MicrosoftTokenizerLanguage.English),
@@ -475,21 +474,21 @@ namespace Microsoft.Azure.Search.Tests
                     new PatternCaptureTokenFilter(GenerateSimpleName(i++), patterns: new[] { "[a-z]*" }, preserveOriginal: true),
                     new PhoneticTokenFilter(GenerateSimpleName(i++), encoder: PhoneticEncoder.Metaphone, replaceOriginalTokens: true),
                     new ShingleTokenFilter(
-                        GenerateSimpleName(i++),
-                        maxShingleSize: 2,
-                        minShingleSize: 2,
-                        outputUnigrams: true,
-                        tokenSeparator: " ",
+                        GenerateSimpleName(i++), 
+                        maxShingleSize: 2, 
+                        minShingleSize: 2, 
+                        outputUnigrams: true, 
+                        tokenSeparator: " ", 
                         filterToken: "_"),
                     new StopwordsTokenFilter(GenerateSimpleName(i++), stopwordsList: StopwordsList.English, removeTrailingStopWords: true),
                     new SynonymTokenFilter(GenerateSimpleName(i++), synonyms: new[] { "mutt, canine => dog" }, expand: true),
                     new TruncateTokenFilter(GenerateSimpleName(i++), length: 300),
                     new WordDelimiterTokenFilter(
-                        GenerateSimpleName(i++),
-                        generateWordParts: true,
-                        generateNumberParts: true,
-                        splitOnCaseChange: true,
-                        splitOnNumerics: true,
+                        GenerateSimpleName(i++), 
+                        generateWordParts: true, 
+                        generateNumberParts: true, 
+                        splitOnCaseChange: true, 
+                        splitOnNumerics: true, 
                         stemEnglishPossessive: true)
                 };
 
@@ -504,7 +503,7 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void CanUseAllAnalysisComponentNames()
         {
-            Run(() =>
+            Run(() => 
             {
                 TokenizerName[] allTokenizerNames = GetAllExtensibleEnumValues<TokenizerName>();
                 TokenFilterName[] allTokenFilterNames = GetAllExtensibleEnumValues<TokenFilterName>();
@@ -513,7 +512,7 @@ namespace Microsoft.Azure.Search.Tests
                 var analyzerWithAllTokenFiltersAndCharFilters =
                     new CustomAnalyzer(SearchTestUtilities.GenerateName(), TokenizerName.Lowercase, allTokenFilterNames, allCharFilterNames);
 
-                IEnumerable<Analyzer> analyzersWithAllTokenizers =
+                IEnumerable<Analyzer> analyzersWithAllTokenizers = 
                     allTokenizerNames.Select(tn => new CustomAnalyzer(SearchTestUtilities.GenerateName(), tn));
 
                 Index index = CreateTestIndex();
@@ -547,9 +546,9 @@ namespace Microsoft.Azure.Search.Tests
             {
                 var tokenizerWithAllTokenCharacterKinds =
                     new EdgeNGramTokenizer(
-                        SearchTestUtilities.GenerateName(),
-                        minGram: 1,
-                        maxGram: 2,
+                        SearchTestUtilities.GenerateName(), 
+                        minGram: 1, 
+                        maxGram: 2, 
                         tokenChars: GetAllEnumValues<TokenCharacterKind>());
 
                 Tokenizer CreateMicrosoftLanguageTokenizer(MicrosoftTokenizerLanguage mtl) =>
@@ -559,7 +558,7 @@ namespace Microsoft.Azure.Search.Tests
                         isSearchTokenizer: false,
                         language: mtl);
 
-                IEnumerable<Tokenizer> tokenizersWithAllMicrosoftLanguages =
+                IEnumerable<Tokenizer> tokenizersWithAllMicrosoftLanguages = 
                     GetAllEnumValues<MicrosoftTokenizerLanguage>().Select(CreateMicrosoftLanguageTokenizer);
 
                 Tokenizer CreateMicrosoftStemmingLanguageTokenizer(MicrosoftStemmingTokenizerLanguage mtl) =>
@@ -574,8 +573,8 @@ namespace Microsoft.Azure.Search.Tests
 
                 var tokenFilterWithAllCjkScripts =
                     new CjkBigramTokenFilter(
-                        SearchTestUtilities.GenerateName(),
-                        ignoreScripts: GetAllEnumValues<CjkBigramTokenFilterScripts>(),
+                        SearchTestUtilities.GenerateName(), 
+                        ignoreScripts: GetAllEnumValues<CjkBigramTokenFilterScripts>(), 
                         outputUnigrams: true);
 
                 TokenFilter CreateEdgeNGramTokenFilter(EdgeNGramTokenFilterSide s) =>
@@ -672,14 +671,14 @@ namespace Microsoft.Azure.Search.Tests
         private static bool IsAnalysisComponentType(Type candidateType)
         {
             Type baseType = candidateType.GetTypeInfo().BaseType;
-            return
-                baseType == typeof(Analyzer) || baseType == typeof(Tokenizer) ||
+            return 
+                baseType == typeof(Analyzer) || baseType == typeof(Tokenizer) || 
                 baseType == typeof(TokenFilter) || baseType == typeof(CharFilter);
         }
 
         private static bool IsDeprecatedType(Type candidateType)
         {
-            return candidateType.GetTypeInfo().GetCustomAttribute<ObsoleteAttribute>() != null;
+            return candidateType.GetTypeInfo().GetCustomAttribute<ObsoleteAttribute>() != null;            
         }
 
         private static bool IsTypePresentAtLeastOnce(Dictionary<Type, int> instanceCountMap, Type analysisType)
@@ -695,10 +694,10 @@ namespace Microsoft.Azure.Search.Tests
         private static Index CreateTestIndex() => IndexManagementTests.CreateTestIndex();
 
         private static void AssertTokenInfoEqual(
-            string expectedToken,
-            int expectedStartOffset,
-            int expectedEndOffset,
-            int expectedPosition,
+            string expectedToken, 
+            int expectedStartOffset, 
+            int expectedEndOffset, 
+            int expectedPosition, 
             TokenInfo actual)
         {
             Assert.NotNull(actual);
@@ -753,7 +752,7 @@ namespace Microsoft.Azure.Search.Tests
             IEnumerable<IEnumerable<TokenFilter>> tokenFilterGroups = SplitAnalysisComponents(index.TokenFilters);
             IEnumerable<IEnumerable<CharFilter>> charFilterGroups = SplitAnalysisComponents(index.CharFilters);
 
-            int biggestGroupSize =
+            int biggestGroupSize = 
                 new[] { analyzerGroups.Count(), tokenizerGroups.Count(), tokenFilterGroups.Count(), charFilterGroups.Count() }.Max();
 
             if (biggestGroupSize == 1)

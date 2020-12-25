@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             return clientOptions;
         }
 
-        private static HttpPipelineTransport CreateTransportForDynamicSku()
+        private HttpPipelineTransport CreateTransportForDynamicSku()
         {
             return new HttpClientTransport(new HttpClient(new HttpClientHandler()
             {

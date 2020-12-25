@@ -60,9 +60,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="minSupportedTlsVersion">The minimal supported tls
         /// version.</param>
         /// <param name="networkProperties">The network properties.</param>
-        /// <param name="computeIsolationProperties">The compute isolation
-        /// properties.</param>
-        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), string clusterId = default(string), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string), NetworkProperties networkProperties = default(NetworkProperties), ComputeIsolationProperties computeIsolationProperties = default(ComputeIsolationProperties))
+        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), string clusterId = default(string), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string), NetworkProperties networkProperties = default(NetworkProperties))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
@@ -82,7 +80,6 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             EncryptionInTransitProperties = encryptionInTransitProperties;
             MinSupportedTlsVersion = minSupportedTlsVersion;
             NetworkProperties = networkProperties;
-            ComputeIsolationProperties = computeIsolationProperties;
             CustomInit();
         }
 
@@ -202,12 +199,6 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkProperties")]
         public NetworkProperties NetworkProperties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the compute isolation properties.
-        /// </summary>
-        [JsonProperty(PropertyName = "computeIsolationProperties")]
-        public ComputeIsolationProperties ComputeIsolationProperties { get; set; }
 
         /// <summary>
         /// Validate the object.

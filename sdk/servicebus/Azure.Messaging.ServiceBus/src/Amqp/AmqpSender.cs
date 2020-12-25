@@ -31,10 +31,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed;
+        private bool _closed = false;
 
         /// <summary>The count of send operations performed by this instance; this is used to tag deliveries for the AMQP link.</summary>
-        private int _deliveryCount;
+        private int _deliveryCount = 0;
 
         /// <summary>
         ///   Indicates whether or not this sender has been closed.
@@ -241,6 +241,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 using (AmqpMessage batchMessage = messageFactory())
                 {
+
                     string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
                     ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
@@ -405,6 +406,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var sendLink = default(SendingAmqpLink);
             try
             {
+
                 var request = AmqpRequestMessage.CreateRequest(
                         ManagementConstants.Operations.ScheduleMessageOperation,
                         timeout,
@@ -463,6 +465,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
 
                     return sequenceNumbers;
+
                 }
                 else
                 {
@@ -583,10 +586,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             try
             {
                 SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
-                    entityPath: _entityPath,
-                    identifier: _identifier,
-                    timeout: timeout,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                    _entityPath,
+                    timeout,
+                    cancellationToken).ConfigureAwait(false);
 
                 if (!MaxMessageSize.HasValue)
                 {

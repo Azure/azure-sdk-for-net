@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestDiskEncryption")]
         public async Task TestVMDiskEncryption()
         {
+
             EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);

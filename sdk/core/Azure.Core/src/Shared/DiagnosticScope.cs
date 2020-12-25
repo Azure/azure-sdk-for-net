@@ -104,15 +104,14 @@ namespace Azure.Core.Pipeline
             }
 
             _source?.Write(_activity.OperationName + ".Exception", e);
+
         }
 
         private class DiagnosticActivity : Activity
         {
             private List<Activity>? _links;
 
-#pragma warning disable 109 // extra new modifier
-            public new IEnumerable<Activity> Links => (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>();
-#pragma warning restore 109
+            public IEnumerable<Activity> Links => (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>();
 
             public DiagnosticActivity(string operationName) : base(operationName)
             {

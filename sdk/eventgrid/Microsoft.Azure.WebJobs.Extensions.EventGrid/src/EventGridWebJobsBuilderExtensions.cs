@@ -10,6 +10,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
     /// </summary>
     public static class EventGridWebJobsBuilderExtensions
     {
+
         /// <summary>
         /// Adds the EventGrid extension to the provided <see cref="IWebJobsBuilder"/>.
         /// </summary>

@@ -30,6 +30,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// <summary>The active Event Hub resource scope for the test fixture.</summary>
         private EventHubScope _eventHubScope;
 
+        /// <summary>The active Blob storage resource scope for the test fixture.</summary>
+        private StorageScope _storageScope;
+
         /// <summary>
         ///   Performs the tasks needed to initialize the test fixture.  This
         ///   method runs once for the entire fixture, prior to running any tests.
@@ -39,6 +42,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         public async Task FixtureSetUp()
         {
             _eventHubScope = await EventHubScope.CreateAsync(2);
+            _storageScope = await StorageScope.CreateAsync();
         }
 
         /// <summary>
@@ -49,7 +53,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [OneTimeTearDown]
         public async Task FixtureTearDown()
         {
-            await _eventHubScope.DisposeAsync();
+            await Task.WhenAll
+            (
+                _eventHubScope.DisposeAsync().AsTask(),
+                _storageScope.DisposeAsync().AsTask()
+            );
         }
 
         /// <summary>
@@ -86,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         // decision would have to be made as to whether the event should
                         // be dropped or published on its own.
 
-                        break;
+                        return;
                     }
                 }
 
@@ -120,15 +128,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ProcessEvents()
         {
-            await using var storageScope = await StorageScope.CreateAsync();
-
             #region Snippet:EventHubs_Processor_Sample01_ProcessEvents
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
+            /*@@*/ blobContainerName = _storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";

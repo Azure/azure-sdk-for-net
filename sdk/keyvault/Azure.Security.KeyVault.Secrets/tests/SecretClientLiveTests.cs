@@ -427,6 +427,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             }
         }
 
+
         [Test]
         public async Task GetDeletedSecrets()
         {

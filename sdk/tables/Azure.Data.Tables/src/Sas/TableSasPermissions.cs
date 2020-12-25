@@ -50,6 +50,7 @@ namespace Azure.Data.Tables
     /// </summary>
     internal static partial class TableExtensions
     {
+
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="TableSasBuilder.Permissions"/>.

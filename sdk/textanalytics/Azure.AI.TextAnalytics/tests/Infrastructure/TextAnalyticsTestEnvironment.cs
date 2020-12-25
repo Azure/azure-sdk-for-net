@@ -7,6 +7,10 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsTestEnvironment: TestEnvironment
     {
+        public TextAnalyticsTestEnvironment() : base("textanalytics")
+        {
+        }
+
         public string Endpoint => GetRecordedVariable("TEXT_ANALYTICS_ENDPOINT");
         public string ApiKey => GetRecordedVariable("TEXT_ANALYTICS_API_KEY", options => options.IsSecret());
     }

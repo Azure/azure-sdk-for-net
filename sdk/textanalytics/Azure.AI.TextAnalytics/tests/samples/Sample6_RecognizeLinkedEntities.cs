@@ -16,41 +16,24 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
+            #region Snippet:TextAnalyticsSample6CreateClient
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            #endregion
 
             #region Snippet:RecognizeLinkedEntities
-            string document = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
-                                Steve Ballmer, eventually became CEO after Bill Gates as well. Steve Ballmer eventually stepped
-                                down as CEO of Microsoft, and was succeeded by Satya Nadella.
-                                Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
-                                headquartered in Redmond";
+            string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            try
+            LinkedEntityCollection linkedEntities = client.RecognizeLinkedEntities(document);
+
+            Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
+            foreach (LinkedEntity linkedEntity in linkedEntities)
             {
-                Response<LinkedEntityCollection> response = client.RecognizeLinkedEntities(document);
-                LinkedEntityCollection linkedEntities = response.Value;
-
-                Console.WriteLine($"Recognized {linkedEntities.Count} entities:");
-                foreach (LinkedEntity linkedEntity in linkedEntities)
+                Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
+                foreach (LinkedEntityMatch match in linkedEntity.Matches)
                 {
-                    Console.WriteLine($"  Name: {linkedEntity.Name}");
-                    Console.WriteLine($"  Language: {linkedEntity.Language}");
-                    Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
-                    Console.WriteLine($"  URL: {linkedEntity.Url}");
-                    Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
-                    foreach (LinkedEntityMatch match in linkedEntity.Matches)
-                    {
-                        Console.WriteLine($"    Match Text: {match.Text}");
-                        Console.WriteLine($"    Offset: {match.Offset}");
-                        Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
-                    }
-                    Console.WriteLine("");
+                    Console.WriteLine($"    Match Text: {match.Text}, Offset (in UTF-16 code units): {match.Offset}");
+                    Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
                 }
-            }
-            catch (RequestFailedException exception)
-            {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion
         }

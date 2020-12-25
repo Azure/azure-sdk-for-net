@@ -15,7 +15,6 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
     using Xunit;
-    using Index = Microsoft.Azure.Search.Models.Index;
 
     public sealed class LookupTests : SearchTestBase<IndexFixture>
     {

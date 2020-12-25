@@ -30,7 +30,7 @@ namespace ContentModeratorTests
             TestSetUpConfiguration();
         }
 
-
+        
         internal void TestSetUp()
         {
             TestSetUpConfiguration();
@@ -65,9 +65,10 @@ namespace ContentModeratorTests
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+
+                throw e;
             }
         }
 
@@ -79,7 +80,7 @@ namespace ContentModeratorTests
             {
                 using (MockContext context = MockContext.Start("ImageListManagement"))
                 {
-
+                    
                     //GetImageLists();
                     //wait(2);
                     api = ContentModeratorAPI.DELETE_IMAGE_LIST;
@@ -94,9 +95,10 @@ namespace ContentModeratorTests
                     Assert.Equal("",deleteImageLists.Body);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+
+                throw e;
             }
         }
 
@@ -137,9 +139,10 @@ namespace ContentModeratorTests
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+
+                throw e;
             }
         }
 
@@ -151,7 +154,7 @@ namespace ContentModeratorTests
             {
                 using (MockContext context = MockContext.Start("ImageListManagement"))
                 {
-
+                    
                     //GetImageLists();
                     //wait(2);
                     api = ContentModeratorAPI.UPDATE_IMAGE_LIST;
@@ -167,11 +170,11 @@ namespace ContentModeratorTests
                     //Assert.Equal(imageListIdToUpdate, updateImageLists.Body.Id.ToString());
 
 
-                }
+                }  
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -201,9 +204,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -233,9 +236,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -244,7 +247,7 @@ namespace ContentModeratorTests
         #region ListManagementImages
 
 
-
+        
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6215")]
         public void GetAllImages()
         {
@@ -252,7 +255,7 @@ namespace ContentModeratorTests
             {
                 using (MockContext context = MockContext.Start("ImageListManagement"))
                 {
-
+                    
                     //GetImageLists();
                     // wait(2);
                     api = ContentModeratorAPI.GET_ALL_IMAGES;
@@ -270,9 +273,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -310,9 +313,9 @@ namespace ContentModeratorTests
                     Assert.True(Helpers.Utilities.VerifyAddImageResponse(addImgeToListId.Body), "Add Image Response verification failed." + TestBase.ErrorMessage);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -345,9 +348,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -375,16 +378,16 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
         #endregion
 
 
-
+      
 
     }
 }

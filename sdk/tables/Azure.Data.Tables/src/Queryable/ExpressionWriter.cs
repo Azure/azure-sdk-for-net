@@ -178,6 +178,7 @@ namespace Azure.Data.Tables.Queryable
                     Visit(e);
                     _builder.Append(UriHelper.RIGHTPAREN);
                 }
+
             }
             else
             {

@@ -187,7 +187,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     return KeyCurveName.P521;
 
                 default:
-                    return default;
+                    return KeyCurveName.s_default;
             }
         }
 

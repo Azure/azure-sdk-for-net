@@ -28,7 +28,6 @@ namespace Azure.Storage
             new AppendBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
-                blob.SharedKeyCredential,
                 blob.Version,
                 blob.ClientDiagnostics,
                 customerProvidedKey,
@@ -41,7 +40,6 @@ namespace Azure.Storage
             new AppendBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
-                blob.SharedKeyCredential,
                 blob.Version,
                 blob.ClientDiagnostics,
                 null,
@@ -53,7 +51,6 @@ namespace Azure.Storage
             new BlockBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
-                blob.SharedKeyCredential,
                 blob.Version,
                 blob.ClientDiagnostics,
                 customerProvidedKey,
@@ -66,7 +63,6 @@ namespace Azure.Storage
             new BlockBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
-                blob.SharedKeyCredential,
                 blob.Version,
                 blob.ClientDiagnostics,
                 null,
@@ -78,7 +74,6 @@ namespace Azure.Storage
             new PageBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
-                blob.SharedKeyCredential,
                 blob.Version,
                 blob.ClientDiagnostics,
                 customerProvidedKey,
@@ -91,7 +86,6 @@ namespace Azure.Storage
             new PageBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
-                blob.SharedKeyCredential,
                 blob.Version,
                 blob.ClientDiagnostics,
                 null,

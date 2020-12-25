@@ -63,6 +63,7 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> =>
             builder.RegisterClientFactory<SearchClient, SearchClientOptions>(configuration);
 
+
         /// <summary>
         /// Registers a <see cref="SearchIndexClient"/> instance with the
         /// provided <paramref name="endpoint"/> and <paramref name="credential"/>.

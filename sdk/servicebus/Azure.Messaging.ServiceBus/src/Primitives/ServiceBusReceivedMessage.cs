@@ -16,6 +16,7 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusReceivedMessage
     {
+
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
@@ -55,7 +56,7 @@ namespace Azure.Messaging.ServiceBus
         /// data that is not exposed as top level properties in the <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
         /// <returns>The raw Amqp message.</returns>
-        public AmqpAnnotatedMessage GetRawAmqpMessage() => AmqpMessage;
+        public AmqpAnnotatedMessage GetRawMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the body of the message.

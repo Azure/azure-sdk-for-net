@@ -118,6 +118,7 @@ namespace Azure.Storage
                 {
                     throw Errors.AccountMismatch(sharedKeyCredentials.AccountName, accountName);
                 }
+
             }
 
             if (accountName == default)
@@ -249,6 +250,7 @@ namespace Azure.Storage
             PropertyInfo prop = type.GetProperty("AccountKeyValue", BindingFlags.NonPublic | BindingFlags.Instance);
             var val = prop.GetValue(credential);
             return val as byte[];
+
         }
     }
 }

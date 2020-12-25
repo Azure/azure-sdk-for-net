@@ -230,6 +230,7 @@ namespace DeploymentScripts.Tests
                 if (Mode == RecordedTestMode.Record) Thread.Sleep(10*1000);
 
                 pollCount++;
+
             } while (getDeploymentScript.ProvisioningState != ScriptProvisioningState.Failed);
 
             // Validate result

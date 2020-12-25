@@ -3,7 +3,9 @@
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
+
     internal partial class RoleDefinitionListResult
     {
+
     }
 }

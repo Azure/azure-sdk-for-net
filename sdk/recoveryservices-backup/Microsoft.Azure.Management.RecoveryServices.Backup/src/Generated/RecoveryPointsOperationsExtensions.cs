@@ -186,12 +186,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='recoveryPointId'>
             /// Recovery Point Id
             /// </param>
-            /// <param name='parameters'>
-            /// Get Access Token request
-            /// </param>
-            public static CrrAccessTokenResource GetAccessToken(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, AADPropertiesResource parameters)
+            public static CrrAccessTokenResource GetAccessToken(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId)
             {
-                return operations.GetAccessTokenAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointId, parameters).GetAwaiter().GetResult();
+              return operations.GetAccessTokenAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -220,18 +217,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='recoveryPointId'>
             /// Recovery Point Id
             /// </param>
-            /// <param name='parameters'>
-            /// Get Access Token request
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CrrAccessTokenResource> GetAccessTokenAsync(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, AADPropertiesResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CrrAccessTokenResource> GetAccessTokenAsync(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAccessTokenWithHttpMessagesAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointId, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+            using (var _result = await operations.GetAccessTokenWithHttpMessagesAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointId, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
             }
 
             /// <summary>

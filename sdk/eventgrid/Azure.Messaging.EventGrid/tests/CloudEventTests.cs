@@ -18,6 +18,7 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class CloudEventTests
     {
+
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
 

@@ -137,6 +137,7 @@ namespace Azure.Data.Tables
             {
                 public const string Table = "t";
             }
+
         }
         /// <summary>
         /// Table Connection String constant values.

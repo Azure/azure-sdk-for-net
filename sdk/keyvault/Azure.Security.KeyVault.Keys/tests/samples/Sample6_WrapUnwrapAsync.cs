@@ -62,6 +62,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
             await keyClient.PurgeDeletedKeyAsync(rsaKeyName);
+
         }
     }
 }

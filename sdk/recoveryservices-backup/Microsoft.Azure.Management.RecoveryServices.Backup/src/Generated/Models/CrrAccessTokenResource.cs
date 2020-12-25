@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Container level access token for CRR
+    /// </summary>
     public partial class CrrAccessTokenResource : Resource
     {
         /// <summary>

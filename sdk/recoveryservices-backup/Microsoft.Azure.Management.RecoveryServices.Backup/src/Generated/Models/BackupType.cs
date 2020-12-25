@@ -21,6 +21,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public const string Differential = "Differential";
         public const string Log = "Log";
         public const string CopyOnlyFull = "CopyOnlyFull";
-        public const string Incremental = "Incremental";
     }
 }

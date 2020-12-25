@@ -665,6 +665,7 @@ namespace ResourceGroups.Tests
             }
             catch (Exception ex)
             {
+
                 Assert.NotNull(ex);
             }
             try
@@ -673,6 +674,7 @@ namespace ResourceGroups.Tests
             }
             catch (Exception ex)
             {
+
                 Assert.NotNull(ex);
             }
         }

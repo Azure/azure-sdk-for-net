@@ -69,7 +69,6 @@ namespace Azure.Core.Tests
             byte[] buffer = { 0 };
 
             HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
-            TaskCompletionSource<object> blockRequestTsc = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             using TestServer testServer = new TestServer(
                 async context =>
@@ -91,17 +90,18 @@ namespace Azure.Core.Tests
 
                     await ExecuteRequest(message, httpPipeline);
 
-                    Assert.False(message.Response.ContentStream.CanSeek);
+                    Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
 
                     extractedStream = message.ExtractResponseContent();
                 }
 
                 var memoryStream = new MemoryStream();
                 await extractedStream.CopyToAsync(memoryStream);
-                Assert.AreEqual(1000, memoryStream.Length);
+                Assert.AreEqual(memoryStream.Length, 1000);
                 extractedStream.Dispose();
             }
         }
+
 
         [Test]
         public async Task NonBufferedFailedResponsesAreDisposedOf()
@@ -227,6 +227,7 @@ namespace Azure.Core.Tests
             List<Task> requests = new List<Task>();
             for (int i = 0; i < requestCount; i++)
             {
+
                 requests.Add(Task.Run(() => Connect()));
             }
 

@@ -9,6 +9,8 @@ namespace Azure.Identity
 {
     internal interface ITokenCacheOptions
     {
-        TokenCache TokenCache { get; }
+        bool EnablePersistentCache { get; }
+
+        bool AllowUnencryptedCache { get; }
     }
 }

@@ -7,5 +7,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
 {
     public class KeyVaultManagementTestEnvironment : TestEnvironment
     {
+        public KeyVaultManagementTestEnvironment() : base("keyvault")
+        {
+        }
     }
 }

@@ -27,5 +27,6 @@ namespace Azure.Storage.Blobs.Models
         /// progress updates about data transfers.
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
+
     }
 }

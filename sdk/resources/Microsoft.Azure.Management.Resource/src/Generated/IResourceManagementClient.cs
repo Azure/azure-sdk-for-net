@@ -85,11 +85,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         IProvidersOperations Providers { get; }
 
         /// <summary>
-        /// Gets the IProviderResourceTypesOperations.
-        /// </summary>
-        IProviderResourceTypesOperations ProviderResourceTypes { get; }
-
-        /// <summary>
         /// Gets the IResourcesOperations.
         /// </summary>
         IResourcesOperations Resources { get; }

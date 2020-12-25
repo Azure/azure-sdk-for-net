@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Tests
     [AsyncOnly]
     public class DedicatedHostTests : VMTestBase
     {
+
         public DedicatedHostTests(bool isAsync)
            : base(isAsync)
         {
@@ -109,6 +110,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Assert.AreEqual(expectedDHG.Location, actualDHG.Location);
                 Assert.AreEqual(expectedDHG.Name, actualDHG.Name);
             }
+
         }
 
         private void ValidateDedicatedHost(DedicatedHost expectedDH, DedicatedHost actualDH)

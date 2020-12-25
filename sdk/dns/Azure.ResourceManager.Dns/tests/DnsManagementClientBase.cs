@@ -9,6 +9,7 @@ using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Dns.Tests
 {
+
     [RunFrequency(RunTestFrequency.Manually)]
     public abstract class DnsManagementClientBase : ManagementRecordedTestBase<DnsManagementTestEnvironment>
     {
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Dns.Tests
         public ZonesOperations ZonesOperations { get; set; }
         protected DnsManagementClientBase(bool isAsync) : base(isAsync)
         {
+
         }
         protected void InitializeClients()
         {

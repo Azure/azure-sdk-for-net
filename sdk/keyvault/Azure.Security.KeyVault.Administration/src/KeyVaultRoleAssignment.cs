@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Role Assignments. </summary>
+    /// <inheritdoc/>>
     [CodeGenModel("RoleAssignment")]
     public partial class KeyVaultRoleAssignment
     {

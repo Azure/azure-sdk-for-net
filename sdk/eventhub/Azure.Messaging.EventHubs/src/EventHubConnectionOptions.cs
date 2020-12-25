@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs
         ///   use, specifying a proxy is an invalid option.
         /// </remarks>
         ///
-        public IWebProxy Proxy { get; set; }
+        public IWebProxy Proxy { get; set; } = null;
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

@@ -41,6 +41,7 @@ namespace Azure.Data.Tables.Sas
         /// </summary>
         public string EndRowKey { get; set; }
 
+
         public static TableSasQueryParameters Empty => new TableSasQueryParameters();
 
         internal TableSasQueryParameters()

@@ -22,5 +22,6 @@ namespace Azure.Core.TestFramework
 
             return mode;
         }
+
     }
 }

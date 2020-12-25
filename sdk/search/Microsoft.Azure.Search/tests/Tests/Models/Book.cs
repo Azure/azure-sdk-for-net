@@ -7,7 +7,6 @@ namespace Microsoft.Azure.Search.Tests
     using System;
     using Models;
     using Utilities;
-    using Index = Microsoft.Azure.Search.Models.Index;
 
     internal class Author
     {
@@ -50,7 +49,7 @@ namespace Microsoft.Azure.Search.Tests
                     }),
                     Field.New(useCamelCase ? "publishDate" : "PublishDate", DataType.DateTimeOffset)
                 },
-                Suggesters = new[]
+                Suggesters = new[] 
                 {
                     new Suggester("sg", useCamelCase ? "title" : "Title")
                 }

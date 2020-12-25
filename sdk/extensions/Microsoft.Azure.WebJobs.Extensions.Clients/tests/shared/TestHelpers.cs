@@ -120,6 +120,8 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             return (T)constructor.Invoke(null);
         }
 
+
+
         // Test that we get an indexing error (FunctionIndexingException)
         // functionName - the function name that has the indexing error.
         // expectedErrorMessage - inner exception's message with details.
@@ -204,6 +206,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
                  logging.AddProvider(new TestLoggerProvider());
              });
         }
+
 
         public static IHostBuilder ConfigureTypeLocator(this IHostBuilder builder, params Type[] types)
         {
@@ -317,4 +320,5 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         {
         }
     }
+
 }

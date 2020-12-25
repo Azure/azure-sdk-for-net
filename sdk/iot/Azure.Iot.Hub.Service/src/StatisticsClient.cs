@@ -13,7 +13,7 @@ namespace Azure.Iot.Hub.Service
     /// </summary>
     public class StatisticsClient
     {
-        private readonly StatisticsRestClient _statisticsRestClient;
+        private readonly StatisticsRestClient _statisticsRestClient = null;
 
         /// <summary>
         /// Initializes a new instance of StatisticsClient.

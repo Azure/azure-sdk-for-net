@@ -336,5 +336,6 @@ namespace Azure.Search.Documents.Tests.Samples
                 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Troubleshooting
             }
         }
+
     }
 }

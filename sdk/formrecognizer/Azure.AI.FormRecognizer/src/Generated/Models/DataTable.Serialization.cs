@@ -18,7 +18,6 @@ namespace Azure.AI.FormRecognizer.Models
             int rows = default;
             int columns = default;
             IReadOnlyList<DataTableCell> cells = default;
-            IReadOnlyList<float> boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rows"))
@@ -41,18 +40,8 @@ namespace Azure.AI.FormRecognizer.Models
                     cells = array;
                     continue;
                 }
-                if (property.NameEquals("boundingBox"))
-                {
-                    List<float> array = new List<float>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetSingle());
-                    }
-                    boundingBox = array;
-                    continue;
-                }
             }
-            return new DataTable(rows, columns, cells, boundingBox);
+            return new DataTable(rows, columns, cells);
         }
     }
 }

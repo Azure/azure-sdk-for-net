@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
         ///   use, specifying a proxy is an invalid option.
         /// </remarks>
         ///
-        public IWebProxy WebProxy { get; set; }
+        public IWebProxy WebProxy { get; set; } = null;
 
         /// <summary>
         /// The set of options to use for determining whether a failed operation should be retried and,

@@ -89,6 +89,7 @@ namespace Azure.Core.TestFramework
                 Entries.Remove(entry);
                 return entry;
             }
+
         }
 
         public void Sanitize(RecordedTestSanitizer sanitizer)

@@ -19,26 +19,14 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string document = @"I had the best day of my life. I decided to go sky-diving and it
-                                made me appreciate my whole life so much more.
-                                I developed a deep-connection with my instructor as well, and I
-                                feel as if I've made a life-long friend in her.";
+            string document = "That was the best day of my life!";
 
-            try
-            {
-                Response<DocumentSentiment> response = await client.AnalyzeSentimentAsync(document);
-                DocumentSentiment docSentiment = response.Value;
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document);
 
-                Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
-                Console.WriteLine($"  Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");
-                Console.WriteLine($"  Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
-                Console.WriteLine($"  Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
-            }
-            catch (RequestFailedException exception)
-            {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
-            }
+            Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
+            Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");
+            Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
+            Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
         }
     }
 }

@@ -877,21 +877,6 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static TaggedBlobItem TaggedBlobItem(
             string blobName = default,
-            string blobContainerName = default,
-            Tags tags = default)
-            => new TaggedBlobItem
-            {
-                BlobName = blobName,
-                BlobContainerName = blobContainerName,
-                Tags = tags
-            };
-
-        /// <summary>
-        /// Creates a new BlobTagItem instance for mocking.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TaggedBlobItem TaggedBlobItem(
-            string blobName = default,
             string blobContainerName = default)
             => new TaggedBlobItem
             {
@@ -1017,20 +1002,5 @@ namespace Azure.Storage.Blobs.Models
                 Metadata = metadata,
                 HasImmutabilityPolicy = hasImmutabilityPolicy,
             };
-
-        /// <summary>
-        /// Creates a new AccountInfo instance for mocking.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AccountInfo AccountInfo(
-            Azure.Storage.Blobs.Models.SkuName skuName,
-            Azure.Storage.Blobs.Models.AccountKind accountKind)
-        {
-            return new AccountInfo()
-            {
-                SkuName = skuName,
-                AccountKind = accountKind,
-            };
-        }
     }
 }

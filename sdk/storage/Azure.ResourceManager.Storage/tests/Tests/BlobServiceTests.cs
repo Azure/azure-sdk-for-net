@@ -129,6 +129,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             StorageAccount account = await CreateStorageAccountAsync(rgName, accountName);
             VerifyAccountProperties(account, true);
 
+
             // implement case
             //Create EcryptionScope
             string scopeName1 = "testscope1";
@@ -260,6 +261,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(3, immutabilityPolicy.Value.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Value.State);
 
+
             immutabilityPolicy = await BlobContainersClient.LockImmutabilityPolicyAsync(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Value.Etag);
             Assert.NotNull(immutabilityPolicy.Value.Id);
             Assert.NotNull(immutabilityPolicy.Value.Type);
@@ -359,6 +361,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         //            //LeaseContainerResponse leaseResponse = storageMgmtClient.BlobContainers.Lease(rgName, accountName, containerName, new LeaseContainerRequest("Acquire", null, 40, 9));
         //            LeaseContainerResponse leaseResponse = storageMgmtClient.BlobContainers.Lease(rgName, accountName, containerName);
         //            Assert.NotNull(leaseResponse.LeaseId);
+
 
         //            blobContainer = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
         //            Assert.Equal("Leased", blobContainer.LeaseState);
@@ -497,6 +500,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Value.State);
             Assert.False(immutabilityPolicy.Value.AllowProtectedAppendWrites.Value);
         }
+
 
         // lock immutability policies.
         [Test]

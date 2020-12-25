@@ -69,6 +69,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReader.Verify(r => r.HasNext());
         }
 
+
         /// <summary>
         /// Tests Chunk.HasNext() when the underlying AvroReader.HasNext() returns false.
         /// </summary>

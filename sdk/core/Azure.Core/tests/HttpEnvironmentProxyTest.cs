@@ -124,11 +124,13 @@ namespace System.Net.Http.Tests
                 Assert.AreEqual(user, nc.UserName);
                 Assert.AreEqual(password, nc.Password);
             }
+
         }
 
         [Test]
         public void HttpProxy_CredentialParsing_Basic()
         {
+
             Environment.SetEnvironmentVariable("all_proxy", "http://foo:bar@1.1.1.1:3000");
             Assert.True(HttpEnvironmentProxy.TryCreate(out IWebProxy p));
             Assert.NotNull(p);
@@ -156,6 +158,7 @@ namespace System.Net.Http.Tests
         [Test]
         public void HttpProxy_Exceptions_Match()
         {
+
             Environment.SetEnvironmentVariable("no_proxy", ".test.com,, foo.com");
             Environment.SetEnvironmentVariable("all_proxy", "http://foo:bar@1.1.1.1:3000");
             Assert.True(HttpEnvironmentProxy.TryCreate(out IWebProxy p));

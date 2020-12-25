@@ -74,11 +74,6 @@ namespace Microsoft.Azure.Management.Peering
 
 
         /// <summary>
-        /// Gets the ICdnPeeringPrefixesOperations.
-        /// </summary>
-        ICdnPeeringPrefixesOperations CdnPeeringPrefixes { get; }
-
-        /// <summary>
         /// Gets the ILegacyPeeringsOperations.
         /// </summary>
         ILegacyPeeringsOperations LegacyPeerings { get; }

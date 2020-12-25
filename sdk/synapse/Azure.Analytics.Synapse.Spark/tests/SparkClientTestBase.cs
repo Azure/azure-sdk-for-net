@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         internal SparkBatchClient CreateSparkBatchClient()
         {
             return InstrumentClient(new SparkBatchClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.SparkPoolName,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new SparkClientOptions())));
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         internal SparkSessionClient CreateSparkSessionClient()
         {
             return InstrumentClient(new SparkSessionClient(
-                new Uri(TestEnvironment.EndpointUrl),
+                new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.SparkPoolName,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new SparkClientOptions())));

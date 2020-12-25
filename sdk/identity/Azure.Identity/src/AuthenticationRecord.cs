@@ -15,7 +15,7 @@ namespace Azure.Identity
     /// <summary>
     /// Account information relating to an authentication request.
     /// </summary>
-    public class AuthenticationRecord
+    internal class AuthenticationRecord
     {
         private const string UsernamePropertyName = "username";
         private const string AuthorityPropertyName = "authority";
@@ -31,6 +31,7 @@ namespace Azure.Identity
 
         internal AuthenticationRecord()
         {
+
         }
 
         internal AuthenticationRecord(AuthenticationResult authResult, string clientId)
@@ -102,6 +103,7 @@ namespace Azure.Identity
             await SerializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
 
+
         /// <summary>
         /// Deserializes the <see cref="AuthenticationRecord"/> from the specified <see cref="Stream"/>.
         /// </summary>
@@ -130,6 +132,7 @@ namespace Azure.Identity
         {
             using (var json = new Utf8JsonWriter(stream))
             {
+
                 json.WriteStartObject();
 
                 json.WriteString(s_usernamePropertyNameBytes, Username);

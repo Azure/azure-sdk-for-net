@@ -27,5 +27,6 @@ namespace Azure.AI.TextAnalytics
         /// KeyPhraseExtractionTasks
         /// </summary>
         public IList<KeyPhrasesTask> KeyPhraseExtractionTasks { get; internal set; }
+
     }
 }

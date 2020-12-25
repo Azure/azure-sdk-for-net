@@ -248,6 +248,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
                 await host.StopAsync();
 
+
                 // Can't restart
                 Assert.Throws<InvalidOperationException>(() => host.Start());
             }
@@ -283,6 +284,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 .UploadTextAsync("10");
 
             var prog = new BlobGetsProcessedOnlyOnce_SingleHost_Program();
+
 
             string hostId = Guid.NewGuid().ToString("N");
             var host1 = NewBuilder(prog, builder=>builder.UseHostId(hostId))

@@ -12,7 +12,6 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
     public class GetDocumentTests : SearchTestBase
     {
         public GetDocumentTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -115,6 +114,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("3", hotel.hotelId);
         }
+
 
         [Test]
         public async Task GetDocumentStatic()

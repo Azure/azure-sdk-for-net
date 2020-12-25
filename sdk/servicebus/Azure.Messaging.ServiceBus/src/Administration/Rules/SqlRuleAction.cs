@@ -97,7 +97,8 @@ namespace Azure.Messaging.ServiceBus.Administration
             return false;
         }
 
-        /// <summary>Compares two <see cref="SqlRuleAction"/> values for equality.</summary>
+        /// <inheritdoc/>
+
         public static bool operator ==(SqlRuleAction left, SqlRuleAction right)
         {
             if (ReferenceEquals(left, right))
@@ -113,7 +114,8 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <summary>Compares two <see cref="SqlRuleAction"/> values for inequality.</summary>
+        /// <inheritdoc/>
+
         public static bool operator !=(SqlRuleAction left, SqlRuleAction right)
         {
             return !(left == right);

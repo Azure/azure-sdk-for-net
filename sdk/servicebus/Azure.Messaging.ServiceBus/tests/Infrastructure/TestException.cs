@@ -7,5 +7,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Infrastructure
 {
     public class TestException : Exception
     {
+
     }
 }

@@ -599,10 +599,7 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         type: ""AzureSqlSource"",
                         sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
-                        partitionOption: {
-                            ""value"": ""pipeline().parameters.parallelOption"",
-                            ""type"": ""Expression""
-                        },
+                        parallelOption: ""DynamicRange"",
                         partitionSettings: 
                         {
                             partitionColumnName: ""partitionColumnName"",
@@ -5613,11 +5610,13 @@ namespace DataFactory.Tests.JsonSamples
         ""typeProperties"": {
           ""source"": {
             ""type"": ""TeradataSource"",
-            ""partitionOption"": {
-                            ""value"": ""pipeline().parameters.parallelOption"",
-                            ""type"": ""Expression""
-               }
-           },
+            ""partitionOption"": ""DynamicRange"",
+                        ""partitionSettings"": {
+                            ""partitionColumnName"": ""EmployeeKey"",
+                            ""partitionUpperBound"": ""1"",
+                            ""partitionLowerBound"": ""500""
+                        }
+          },
           ""sink"": {
             ""type"": ""BinarySink"",
             ""storeSettings"": {
@@ -5874,10 +5873,7 @@ namespace DataFactory.Tests.JsonSamples
                         type: ""SapTableSource"",
                         rowCount: 3,
                         sapDataColumnDelimiter: ""|"",
-                        partitionOption: {
-                            ""value"": ""pipeline().parameters.parallelOption"",
-                            ""type"": ""Expression""
-                        },
+                        partitionOption: ""PartitionOnCalendarDate"",
                         partitionSettings: 
                         {
                              ""partitionColumnName"": ""fakeColumn"",
@@ -6046,10 +6042,7 @@ namespace DataFactory.Tests.JsonSamples
                     source:
                     {                               
                         type: ""NetezzaSource"",
-                        partitionOption: {
-                            ""value"": ""pipeline().parameters.parallelOption"",
-                            ""type"": ""Expression""
-                        },
+                        partitionOption: ""DataSlice""
                     },
                     sink:
                     {
@@ -6451,51 +6444,6 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
-        public const string ExecuteDataFlowActivityPipelineWithExpression = @"
-{
-    name: ""My Execute Data Flow Activity pipeline"",
-    properties: 
-    {
-        activities:
-        [
-            {
-                name: ""TestActivity"",
-                description: ""Test activity description"", 
-                type: ""ExecuteDataFlow"",
-                typeProperties: {
-                    dataFlow: {
-                        referenceName: ""referenced1"",
-                        type: ""DataFlowReference""
-                    },
-                    staging: {
-                        linkedService: {
-                            referenceName: ""referenced2"",
-                            type: ""LinkedServiceReference""
-                        },
-                        folderPath: ""adfjobs/staging""
-                    },
-                    integrationRuntime: {
-                        referenceName: ""dataflowIR10minTTL"",
-                        type: ""IntegrationRuntimeReference""
-                    },
-                    compute: {
-                        computeType:  {
-                            value: ""@parameters('MemoryOptimized')"",
-                            type: ""Expression""
-                        },
-                        coreCount: {
-                           value: ""@parameters('8')"",
-                           type: ""Expression""
-                        },                       
-                    }
-                }
-            }
-        ]
-    }
-}
-";
-
-        [JsonSample]
         public const string CopyActivity_DelimitedText_GoogleCloudStorage = @"{
   ""properties"": {
     ""activities"": [
@@ -6792,10 +6740,7 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         ""type"": ""SapHanaSource"",
                         ""query"": ""$select=Column0"",
-                        ""partitionOption"": {
-                            ""value"": ""pipeline().parameters.parallelOption"",
-                            ""type"": ""Expression""
-                        },
+                        ""partitionOption"": ""SapHanaDynamicRange"",
                         ""partitionSettings"": {
                             ""partitionColumnName"": ""INTEGERTYPE""
                         }                        

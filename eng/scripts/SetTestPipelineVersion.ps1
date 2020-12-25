@@ -3,7 +3,7 @@
 
 param (
   [Parameter(mandatory = $true)]
-  $BuildID
+  $BuildNumber
 )
 
 . "${PSScriptRoot}\..\common\scripts\common.ps1"
@@ -22,7 +22,7 @@ LogDebug "Last Published Version $($semVarsSorted[0])"
 
 $newVersion = [AzureEngSemanticVersion]::ParseVersionString($semVarsSorted[0])
 $newVersion.PrereleaseLabel = "beta"
-$newVersion.PrereleaseNumber = $BuildID
+$newVersion.PrereleaseNumber = $BuildNumber
 
 LogDebug "Version to publish [ $($newVersion.ToString()) ]"
 

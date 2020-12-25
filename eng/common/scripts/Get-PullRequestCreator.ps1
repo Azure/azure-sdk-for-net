@@ -12,7 +12,7 @@ param (
     [string]$AuthToken
 )
 
-. (Join-Path $PSScriptRoot common.ps1)
+. "${PSScriptRoot}\common.ps1"
 
 try
 {

@@ -87,6 +87,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Status: 200, Service returned no content", response.ToString());
         }
 
+
         internal class TestPayload
         {
             public string Name { get; }
@@ -102,4 +103,5 @@ namespace Azure.Core.Tests
             }
         }
     }
+
 }

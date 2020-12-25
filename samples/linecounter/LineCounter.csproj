@@ -13,7 +13,4 @@
   <ItemGroup>
     <Folder Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\sdk\eventgrid\Azure.Messaging.EventGrid\src\Azure.Messaging.EventGrid.csproj" />
-  </ItemGroup>
 </Project>

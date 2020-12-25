@@ -16,6 +16,7 @@ namespace Azure.Identity.Tests
         {
         }
 
+
         [Test]
         public async Task VerifyMsalClientExceptionAsync()
         {
@@ -40,5 +41,6 @@ namespace Azure.Identity.Tests
 
             await Task.CompletedTask;
         }
+
     }
 }

@@ -111,6 +111,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ((DateTimeOffset?)null).RoundDownToNearestYear());
         }
 
+
         [Test]
         public async Task GetSegmentsInYearTest()
         {

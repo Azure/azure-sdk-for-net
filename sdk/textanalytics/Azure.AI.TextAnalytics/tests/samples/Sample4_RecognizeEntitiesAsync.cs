@@ -21,34 +21,15 @@ namespace Azure.AI.TextAnalytics.Samples
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:RecognizeEntitiesAsync
-            string document = @"We love this trail and make the trip every year. The views are breathtaking and well
-                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                                We tried again today and it was amazing. Everyone in my family liked the trail although
-                                it was too challenging for the less athletic among us.
-                                Not necessarily recommended for small children.
-                                A hotel close to the trail offers services for childcare in case you want that.";
+            string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            try
-            {
-                Response<CategorizedEntityCollection> response = await client.RecognizeEntitiesAsync(document);
-                CategorizedEntityCollection entitiesInDocument = response.Value;
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
 
-                Console.WriteLine($"Recognized {entitiesInDocument.Count} entities:");
-                foreach (CategorizedEntity entity in entitiesInDocument)
-                {
-                    Console.WriteLine($"    Text: {entity.Text}");
-                    Console.WriteLine($"    Offset: {entity.Offset}");
-                    Console.WriteLine($"    Category: {entity.Category}");
-                    if (!string.IsNullOrEmpty(entity.SubCategory))
-                        Console.WriteLine($"    SubCategory: {entity.SubCategory}");
-                    Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
-                    Console.WriteLine("");
-                }
-            }
-            catch (RequestFailedException exception)
+            Console.WriteLine($"Recognized {entities.Count} entities:");
+            foreach (CategorizedEntity entity in entities)
             {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
+                Console.WriteLine($"Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}");
+                Console.WriteLine($"Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
             }
             #endregion
         }

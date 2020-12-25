@@ -6,22 +6,25 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "da0979776cc29760b9492fc55a257069",
+        "x-ms-client-request-id": "fd23567edfb02453b8bb93a24f867af6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "abe0112b-07d6-4bfc-af74-9ef8713951c1",
-        "Content-Length": "5816",
+        "apim-request-id": "bb753800-4b10-48d3-a19e-d66395d8a7e1",
+        "Content-Length": "5870",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Dec 2020 01:34:24 GMT",
+        "Date": "Wed, 04 Nov 2020 21:39:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "5511",
-        "x-request-id": "abe0112b-07d6-4bfc-af74-9ef8713951c1"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "446",
+        "X-Request-ID": "bb753800-4b10-48d3-a19e-d66395d8a7e1"
       },
       "ResponseBody": {
         "value": [
@@ -139,7 +142,8 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved"
+              "maxSeverity": "Low",
+              "incidentStatus": "Active"
             }
           },
           {
@@ -188,7 +192,8 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved"
+              "maxSeverity": "Low",
+              "incidentStatus": "Active"
             }
           },
           {
@@ -254,7 +259,8 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved"
+              "maxSeverity": "Low",
+              "incidentStatus": "Active"
             }
           },
           {
@@ -284,6 +290,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "907399181"
+    "RandomSeed": "1481472777"
   }
 }

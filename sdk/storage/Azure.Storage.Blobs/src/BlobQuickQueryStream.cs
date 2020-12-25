@@ -73,6 +73,7 @@ namespace Azure.Storage.Blobs
         public new async Task<int> ReadAsync(byte[] buffer, int offset, int count)
             => await ReadInternal(async: true, buffer, offset, count).ConfigureAwait(false);
 
+
         // Note - offset is with respect to buffer.
         private async Task<int> ReadInternal(bool async, byte[] buffer, int offset, int count)
         {
@@ -210,6 +211,7 @@ namespace Azure.Storage.Blobs
             return length;
         }
 
+
         internal static void ValidateReadParameters(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
@@ -307,8 +309,6 @@ namespace Azure.Storage.Blobs
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(true);
-
             // Return the buffer to the pool if we're called from Dispose or a finalizer
             if (_buffer != null)
             {
@@ -322,8 +322,6 @@ namespace Azure.Storage.Blobs
                 ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
                 _buffer = null;
             }
-
-            _avroReader.Dispose();
         }
     }
 }

@@ -67,6 +67,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             object statusCodeValue = responseMessage?.ApplicationProperties.Map[ManagementConstants.Response.StatusCode];
             if (statusCodeValue is int && Enum.IsDefined(typeof(AmqpResponseStatusCode), statusCodeValue))
             {
+
                 amqpResponseStatusCode = (AmqpResponseStatusCode)statusCodeValue;
             }
 

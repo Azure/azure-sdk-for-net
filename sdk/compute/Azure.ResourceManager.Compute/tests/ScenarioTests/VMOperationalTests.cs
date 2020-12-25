@@ -310,6 +310,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 inputVM1Name = returnTwovm.Item3;
                 await WaitForCompletionAsync(await VirtualMachinesOperations.StartPerformMaintenanceAsync(rg1Name, vm1.Name));
                 passed = true;
+
             }
             catch (Exception cex)
             {
@@ -359,6 +360,7 @@ namespace Azure.ResourceManager.Compute.Tests
                                            vmSize: VirtualMachineSizeTypes.StandardA1.ToString());
             VirtualMachine vm1 = returnTwoVM.Item1;
             inputVM1 = returnTwoVM.Item2;
+
 
             await VirtualMachinesOperations.SimulateEvictionAsync(rg1Name, vm1.Name);
             passed = true;

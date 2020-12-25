@@ -21,6 +21,7 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
     {
+
         private readonly ServiceBusClientOptions _options;
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed { get; private set; }
+        public bool IsClosed { get; private set; } = false;
 
         /// <summary>
         /// The transport type used for this <see cref="ServiceBusClient"/>.
@@ -378,7 +379,6 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 plugins: Plugins,
                 options: options,
-                sessionId: default,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -412,7 +412,6 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 plugins: Plugins,
                 options: options,
-                sessionId: default,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -442,13 +441,13 @@ namespace Azure.Messaging.ServiceBus
         {
             ValidateEntityName(queueName);
             options ??= new ServiceBusSessionReceiverOptions();
+            options.SessionId = sessionId;
 
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
                 connection: Connection,
                 plugins: Plugins,
                 options: options,
-                sessionId: sessionId,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -480,13 +479,13 @@ namespace Azure.Messaging.ServiceBus
         {
             ValidateEntityName(topicName);
             options ??= new ServiceBusSessionReceiverOptions();
+            options.SessionId = sessionId;
 
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 plugins: Plugins,
                 options: options,
-                sessionId: sessionId,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 

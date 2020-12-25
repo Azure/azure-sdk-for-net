@@ -126,7 +126,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///   Initializes a new instance of the <see cref="ServiceBusTestEnvironment"/> class.
         /// </summary>
         ///
-        public ServiceBusTestEnvironment()
+        public ServiceBusTestEnvironment() : base("servicebus")
         {
             ActiveServiceBusNamespace = new Lazy<NamespaceProperties>(EnsureServiceBusNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
             ParsedConnectionString = new Lazy<ServiceBusConnectionStringProperties>(() => ServiceBusConnectionStringProperties.Parse(ServiceBusConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);

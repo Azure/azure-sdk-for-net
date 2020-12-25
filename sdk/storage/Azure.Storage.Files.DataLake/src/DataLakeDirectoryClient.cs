@@ -62,64 +62,6 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>.
-        /// </summary>
-        /// <param name="connectionString">
-        /// A connection string includes the authentication information
-        /// required for your application to access data in an Azure Storage
-        /// account at runtime.
-        ///
-        /// For more information,
-        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
-        /// Configure Azure Storage connection strings</see>
-        /// </param>
-        /// <param name="fileSystemName">
-        /// The name of the file system containing this path.
-        /// </param>
-        /// <param name="directoryPath">
-        /// The path to the directory.
-        /// </param>
-        public DataLakeDirectoryClient(
-            string connectionString,
-            string fileSystemName,
-            string directoryPath)
-            : this(connectionString, fileSystemName, directoryPath, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>.
-        /// </summary>
-        /// <param name="connectionString">
-        /// A connection string includes the authentication information
-        /// required for your application to access data in an Azure Storage
-        /// account at runtime.
-        ///
-        /// For more information,
-        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
-        /// Configure Azure Storage connection strings</see>
-        /// </param>
-        /// <param name="fileSystemName">
-        /// The name of the file system containing this path.
-        /// </param>
-        /// <param name="directoryPath">
-        /// The path to the directory.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        public DataLakeDirectoryClient(
-            string connectionString,
-            string fileSystemName,
-            string directoryPath,
-            DataLakeClientOptions options)
-            : base(connectionString, fileSystemName, directoryPath, options)
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
         /// class.
         /// </summary>
@@ -264,14 +206,12 @@ namespace Azure.Storage.Files.DataLake
             Uri fileSystemUri,
             string directoryPath,
             HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
             DataLakeClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics)
             : base(
                   fileSystemUri,
                   directoryPath,
                   pipeline,
-                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics)
         {
@@ -291,7 +231,6 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 $"{Path}/{fileName}",
                 Pipeline,
-                SharedKeyCredential,
                 Version,
                 ClientDiagnostics);
 
@@ -308,7 +247,6 @@ namespace Azure.Storage.Files.DataLake
                 Uri,
                 $"{Path}/{subdirectoryName}",
                 Pipeline,
-                SharedKeyCredential,
                 Version,
                 ClientDiagnostics);
 
@@ -1246,7 +1184,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public override Response<PathInfo> SetPermissions(
-            PathPermissions permissions = default,
+            PathPermissions permissions,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
@@ -1274,6 +1212,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
+
         }
 
         /// <summary>
@@ -1310,7 +1249,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public override async Task<Response<PathInfo>> SetPermissionsAsync(
-            PathPermissions permissions = default,
+            PathPermissions permissions,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
@@ -1395,6 +1334,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -2434,7 +2374,7 @@ namespace Azure.Storage.Files.DataLake
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

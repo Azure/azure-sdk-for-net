@@ -137,17 +137,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeCustomFormsOperation"/> class which
-        /// tracks the status of a long-running operation for recognizing fields and other content from forms by using custom
-        /// trained models.
+        /// Initializes a new instance of the <see cref="RecognizeCustomFormsOperation"/> class.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         public RecognizeCustomFormsOperation(string operationId, FormRecognizerClient client)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNull(client, nameof(client));
-
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
 
@@ -210,6 +205,8 @@ namespace Azure.AI.FormRecognizer.Models
                     Response<AnalyzeOperationResult> update = async
                         ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
                         : _serviceClient.GetAnalyzeFormResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
+
+                    // TODO: Add reasonable null checks.
 
                     _response = update.GetRawResponse();
 

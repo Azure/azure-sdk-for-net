@@ -35,6 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                     b.UseQueueService(queueServiceClient);
                 });
 
+
             var host = builder.Build().GetJobHost<TestFunctions>();
 
             MethodInfo method = typeof(TestFunctions).GetMethod("BindStringableParameter");

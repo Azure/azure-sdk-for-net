@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Batch
     internal class SkipTokenHandler
     {
         private string _skipToken;
-        private bool _hasBeenCalled;
+        private bool _hasBeenCalled = false;
 
         public bool AtLeastOneCallMade { get { return _hasBeenCalled; } set { _hasBeenCalled = value; } }
 

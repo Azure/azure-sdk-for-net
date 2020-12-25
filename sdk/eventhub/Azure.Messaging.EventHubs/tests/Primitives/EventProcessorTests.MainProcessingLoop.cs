@@ -1805,5 +1805,6 @@ namespace Azure.Messaging.EventHubs.Tests
             mockLoadBalancer
                 .Verify(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()), Times.Once(), "The load balancer did not run a single cycle.");
         }
+
     }
 }

@@ -86,13 +86,23 @@ namespace Azure.Core.Amqp
         public bool Equals(string other) =>
             _address == other;
 
-        /// <summary>Compares two <see cref="AmqpAddress"/> values for equality.</summary>
+        /// <inheritdoc/>
         public static bool operator ==(AmqpAddress left, AmqpAddress right)
         {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
             return left.Equals(right);
         }
 
-        /// <summary>Compares two <see cref="AmqpAddress"/> values for inequality.</summary>
+        /// <inheritdoc/>
         public static bool operator !=(AmqpAddress left, AmqpAddress right)
         {
             return !(left == right);

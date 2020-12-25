@@ -113,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual("Exception binding parameter 'message'", exception.Message);
             Exception innerException = exception.InnerException;
             Assert.IsInstanceOf<DecoderFallbackException>(innerException);
-            StringAssert.IsMatch("Unable to translate bytes \\[FF\\] at index .*? from specified code page to Unicode.",
+            Assert.AreEqual("Unable to translate bytes [FF] at index -1 from specified code page to Unicode.",
                 innerException.Message);
         }
 
@@ -151,6 +151,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Assert
             Assert.AreEqual(expectedContent, result);
         }
+
+
 
         [Test]
         public async Task QueueTrigger_IfBoundToBinaryData_Binds()

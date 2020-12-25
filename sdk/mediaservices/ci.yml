@@ -29,5 +29,3 @@ extends:
     Artifacts:
       - name: Microsoft.Azure.Media.LiveVideoAnalytics.Edge
         safeName: MicrosoftAzureMediaLiveVideoAnalyticsEdge
-      - name: Azure.Media.Analytics.Edge
-        safeName: AzureMediaAnalyticsEdge

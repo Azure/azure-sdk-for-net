@@ -23,15 +23,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(LanguageInfo))
             {
-                if (LanguageInfo != null)
-                {
-                    writer.WritePropertyName("language_info");
-                    writer.WriteObjectValue(LanguageInfo);
-                }
-                else
-                {
-                    writer.WriteNull("language_info");
-                }
+                writer.WritePropertyName("language_info");
+                writer.WriteObjectValue(LanguageInfo);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -63,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        languageInfo = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     languageInfo = NotebookLanguageInfo.DeserializeNotebookLanguageInfo(property.Value);

@@ -121,6 +121,7 @@ namespace Azure.AI.TextAnalytics
             Id = operationLocation.Split('/').Last();
         }
 
+
         /// <summary>
         /// The last HTTP response received from the server.
         /// </summary>

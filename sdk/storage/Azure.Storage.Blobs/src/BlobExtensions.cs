@@ -278,8 +278,7 @@ namespace Azure.Storage.Blobs
             return new TaggedBlobItem
             {
                 BlobName = filterBlobItem.BlobName,
-                BlobContainerName = filterBlobItem.BlobContainerName,
-                Tags = filterBlobItem.Tags.ToTagDictionary()
+                BlobContainerName = filterBlobItem.BlobContainerName
             };
         }
 

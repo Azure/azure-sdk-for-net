@@ -211,6 +211,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 new[] { AccessPolicy },
                 Tags);
 
+
             // Delete
             await VaultsClient.DeleteAsync(
                 resourceGroupName: ResGroupName,
@@ -469,5 +470,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(networkRuleSet.IpRules[0].Value, vault.Properties.NetworkAcls.IpRules[0].Value);
             Assert.AreEqual(networkRuleSet.IpRules[1].Value, vault.Properties.NetworkAcls.IpRules[1].Value);
         }
+
     }
 }

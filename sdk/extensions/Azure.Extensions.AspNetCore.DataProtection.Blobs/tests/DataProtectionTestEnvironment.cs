@@ -7,6 +7,10 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 {
     public class DataProtectionTestEnvironment: TestEnvironment
     {
+        public DataProtectionTestEnvironment() : base("extensions")
+        {
+        }
+
         public string StorageAccountName => GetVariable("BLOB_STORAGE_ACCOUNT_NAME");
         public string StorageAccountKey => GetVariable("BLOB_STORAGE_ACCOUNT_KEY");
     }

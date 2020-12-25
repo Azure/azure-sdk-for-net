@@ -3,12 +3,13 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
-namespace Azure.Storage.Files.Shares.Tests
+namespace Azure.Storage.Files.Shares.Test
 {
     public class FileSasBuilderTests : FileTestBase
     {

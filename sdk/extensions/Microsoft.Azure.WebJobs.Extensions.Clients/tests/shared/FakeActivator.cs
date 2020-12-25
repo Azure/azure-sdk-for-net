@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
+
     public class FakeActivator : IJobActivator
     {
         public Dictionary<Type, object> _instances = new Dictionary<Type, object>();

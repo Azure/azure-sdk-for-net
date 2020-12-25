@@ -91,6 +91,7 @@ namespace ResourceGroups.Tests
             Assert.AreEqual(HttpMethod.Get.Method, request.Method.Method);
             Assert.IsTrue(request.Headers.Contains("Authorization"));
 
+
             // Validate result
             Assert.AreEqual("Microsoft.Websites", result.Namespace);
             Assert.AreEqual("Registered", result.RegistrationState);

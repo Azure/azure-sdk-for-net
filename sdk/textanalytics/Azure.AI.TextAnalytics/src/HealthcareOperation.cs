@@ -122,6 +122,7 @@ namespace Azure.AI.TextAnalytics
             Id = operationLocation.Split('/').Last();
         }
 
+
         /// <summary>
         /// The last HTTP response received from the server.
         /// </summary>
@@ -204,6 +205,7 @@ namespace Azure.AI.TextAnalytics
 
                     if (update.Value.Status == JobStatus.Succeeded)
                     {
+
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
                         _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results, _idToIndexMap);
 

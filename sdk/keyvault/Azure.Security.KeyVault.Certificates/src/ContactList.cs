@@ -17,6 +17,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         public ContactList()
         {
+
         }
 
         public ContactList(IEnumerable<CertificateContact> contacts)

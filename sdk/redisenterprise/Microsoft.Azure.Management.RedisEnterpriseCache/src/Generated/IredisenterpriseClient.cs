@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         IDatabasesOperations Databases { get; }
 
         /// <summary>
+        /// Gets the IRedisEnterpriseDatabaseOperations.
+        /// </summary>
+        IRedisEnterpriseDatabaseOperations RedisEnterpriseDatabase { get; }
+
+        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }

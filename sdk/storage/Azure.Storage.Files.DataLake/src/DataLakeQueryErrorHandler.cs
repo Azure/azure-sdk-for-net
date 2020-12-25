@@ -19,5 +19,6 @@ namespace Azure.Storage.Files.DataLake
 
         public void Handle(BlobQueryError blobQueryError)
             => _errorHandler(blobQueryError.ToDataLakeQueryError());
+
     }
 }

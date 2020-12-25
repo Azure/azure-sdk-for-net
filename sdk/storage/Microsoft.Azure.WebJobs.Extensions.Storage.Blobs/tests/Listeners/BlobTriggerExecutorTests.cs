@@ -373,6 +373,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             string expectedETag = context.Blob.BlobClient.GetProperties().Value.ETag.ToString();
             IBlobPathSource input = CreateBlobPath(context.Blob);
 
+
             Mock<IBlobReceiptManager> managerMock = CreateReceiptManagerReferenceMock();
             managerMock
                 .Setup(m => m.TryReadAsync(It.IsAny<BlockBlobClient>(), It.IsAny<CancellationToken>()))

@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> blobPathBeginsWith = default;
             Optional<string> blobPathEndsWith = default;
             Optional<bool> ignoreEmptyBlobs = default;
-            IList<BlobEventType> events = default;
+            IList<BlobEventTypes> events = default;
             string scope = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -175,10 +175,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("events"))
                         {
-                            List<BlobEventType> array = new List<BlobEventType>();
+                            List<BlobEventTypes> array = new List<BlobEventTypes>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new BlobEventType(item.GetString()));
+                                array.Add(new BlobEventTypes(item.GetString()));
                             }
                             events = array;
                             continue;

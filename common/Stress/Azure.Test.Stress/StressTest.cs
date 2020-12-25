@@ -79,6 +79,7 @@ namespace Azure.Test.Stress
                 throw new InvalidOperationException($"Undefined environment variable {name}");
             }
             return value;
+
         }
     }
 }

@@ -22,6 +22,31 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample03_EventHubMetadataLiveTests
     {
+        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
+        private EventHubScope _scope;
+
+        /// <summary>
+        ///   Performs the tasks needed to initialize the test fixture.  This
+        ///   method runs once for the entire fixture, prior to running any tests.
+        /// </summary>
+        ///
+        [OneTimeSetUp]
+        public async Task FixtureSetUp()
+        {
+            _scope = await EventHubScope.CreateAsync(2);
+        }
+
+        /// <summary>
+        ///   Performs the tasks needed to cleanup the test fixture after all
+        ///   tests have run.  This method runs once for the entire fixture.
+        /// </summary>
+        ///
+        [OneTimeTearDown]
+        public async Task FixtureTearDown()
+        {
+            await _scope.DisposeAsync();
+        }
+
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -29,15 +54,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task InspectHub()
         {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
             #region Snippet:EventHubs_Sample03_InspectHub
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/ eventHubName = _scope.EventHubName;
 
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
@@ -65,15 +88,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task QueryPartitions()
         {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
             #region Snippet:EventHubs_Sample03_QueryPartitions
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/ eventHubName = _scope.EventHubName;
 
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
@@ -97,8 +118,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task InspectPartition()
         {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
             #region Snippet:EventHubs_Sample03_InspectPartition
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -106,7 +125,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/ eventHubName = _scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName);
 

@@ -35,6 +35,8 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         public virtual Uri ServiceEndpoint { get; }
 
+
+
         /// <summary>
         ///   Creates a sender strongly aligned with the active protocol and transport,
         ///   responsible for sending <see cref="ServiceBusMessage" /> to the entity.

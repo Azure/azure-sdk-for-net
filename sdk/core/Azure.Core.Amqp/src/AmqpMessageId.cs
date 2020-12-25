@@ -87,13 +87,23 @@ namespace Azure.Core.Amqp
         public bool Equals(string other) =>
             _messageIdString == other;
 
-        /// <summary>Compares two <see cref="AmqpMessageId"/> values for equality.</summary>
+        /// <inheritdoc/>
         public static bool operator ==(AmqpMessageId left, AmqpMessageId right)
         {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
             return left.Equals(right);
         }
 
-        /// <summary>Compares two <see cref="AmqpMessageId"/> values for inequality.</summary>
+        /// <inheritdoc/>
         public static bool operator !=(AmqpMessageId left, AmqpMessageId right)
         {
             return !(left == right);

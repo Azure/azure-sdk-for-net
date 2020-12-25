@@ -65,6 +65,7 @@ namespace Azure.Storage.Queues
     /// </summary>
     internal static partial class QueueExtensions
     {
+
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="QueueSasBuilder.Permissions"/>.

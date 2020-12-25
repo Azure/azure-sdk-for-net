@@ -7,6 +7,10 @@ namespace Azure.Data.AppConfiguration
 {
     public class AppConfigurationTestEnvironment : TestEnvironment
     {
+        public AppConfigurationTestEnvironment() : base("appconfiguration")
+        {
+        }
+
         public string ConnectionString => GetRecordedVariable("APPCONFIGURATION_CONNECTION_STRING", options => options.HasSecretConnectionStringParameter("secret"));
         public string Endpoint => GetRecordedVariable("APPCONFIGURATION_ENDPOINT_STRING");
     }

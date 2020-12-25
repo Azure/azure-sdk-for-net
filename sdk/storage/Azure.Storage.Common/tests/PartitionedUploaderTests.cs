@@ -29,6 +29,7 @@ namespace Azure.Storage.Tests
             IsAsync = async;
         }
 
+
         private Mock<PartitionedUploader<object, object>.CreateScope> GetMockCreateScope()
         {
             var mock = new Mock<PartitionedUploader<object, object>.CreateScope>(MockBehavior.Strict);

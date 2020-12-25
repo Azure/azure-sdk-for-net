@@ -44,6 +44,7 @@ namespace Azure.Core.Tests
 
         private string SerializedName(string name) => _resolver.GetResolvedPropertyName(name);
 
+
         [Test]
         public void ConstructorRequiresArgument()
         {

@@ -121,6 +121,35 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        public async Task MetricAnomalyDetectionConfigurationOperations()
+        {
+            var adminClient = GetMetricsAdvisorAdministrationClient();
+            string createdConfigurationId = await CreateDetectionConfiguration(adminClient).ConfigureAwait(false);
+
+            Assert.That(createdConfigurationId, Is.Not.Null);
+
+            AnomalyDetectionConfiguration getConfig = await adminClient.GetDetectionConfigurationAsync(createdConfigurationId).ConfigureAwait(false);
+
+            Assert.That(getConfig.Id, Is.EqualTo(createdConfigurationId));
+
+            getConfig.Description = "updated";
+
+            await adminClient.UpdateDetectionConfigurationAsync(getConfig.Id, getConfig).ConfigureAwait(false);
+
+            // try an update with a user instantiated model.
+            AnomalyDetectionConfiguration userCreatedModel = PopulateMetricAnomalyDetectionConfiguration(MetricId);
+            userCreatedModel.Description = "updated again!";
+
+            await adminClient.UpdateDetectionConfigurationAsync(getConfig.Id, userCreatedModel).ConfigureAwait(false);
+
+            getConfig = await adminClient.GetDetectionConfigurationAsync(getConfig.Id).ConfigureAwait(false);
+
+            Assert.That(getConfig.Description, Is.EqualTo(userCreatedModel.Description));
+
+            await adminClient.DeleteDetectionConfigurationAsync(createdConfigurationId).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
         public async Task GetDataFeedIngestionStatuses()
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
@@ -220,11 +249,65 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        public async Task HookOperations()
+        {
+            var adminClient = GetMetricsAdvisorAdministrationClient();
+            var emailHook = new EmailNotificationHook(Recording.GenerateAlphaNumericId("test"), new List<string> { "foo@contoso.com" }) { Description = $"{nameof(EmailNotificationHook)} description" };
+
+            string createdEmailHookId = await adminClient.CreateHookAsync(emailHook).ConfigureAwait(false);
+
+            EmailNotificationHook getEmailHook = (await adminClient.GetHookAsync(createdEmailHookId).ConfigureAwait(false)).Value as EmailNotificationHook;
+
+            getEmailHook.Description = "updated description";
+            getEmailHook.EmailsToAlert.Add($"{Recording.GenerateAlphaNumericId("user")}@contoso.com");
+
+            await adminClient.UpdateHookAsync(getEmailHook.Id, getEmailHook).ConfigureAwait(false);
+
+            var webHook = new WebNotificationHook(Recording.GenerateAlphaNumericId("test"), "http://contoso.com") { Description = $"{nameof(WebNotificationHook)} description" };
+
+            string createdWebHookId = await adminClient.CreateHookAsync(webHook).ConfigureAwait(false);
+
+            webHook.Description = "updated description";
+
+            await adminClient.UpdateHookAsync(createdEmailHookId, emailHook).ConfigureAwait(false);
+
+            WebNotificationHook getWebHook = (await adminClient.GetHookAsync(createdWebHookId).ConfigureAwait(false)).Value as WebNotificationHook;
+
+            getWebHook.Description = "updated description";
+            getWebHook.CertificateKey = Recording.GenerateAlphaNumericId("key");
+
+            List<NotificationHook> hooks = await adminClient.GetHooksAsync(new GetHooksOptions { HookNameFilter = getWebHook.Name }).ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(getEmailHook.Id, Is.EqualTo(createdEmailHookId));
+            Assert.That(getEmailHook.Name, Is.EqualTo(emailHook.Name));
+            Assert.That(hooks, Is.Not.Empty);
+            Assert.That(hooks.Any(h => h.Name == getWebHook.Name), $"hooks should contain name {emailHook.Name}, but contained names: {string.Join(",", hooks.Select(h => h.Name))}");
+
+            await adminClient.DeleteHookAsync(createdEmailHookId).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
         public async Task ResetDataFeedIngestionStatus()
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
 
             await adminClient.RefreshDataFeedIngestionAsync(DataFeedId, new DateTimeOffset(2020, 9, 1, 0, 0, 0, TimeSpan.Zero), new DateTimeOffset(2020, 9, 2, 0, 0, 0, TimeSpan.Zero)).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
+        public async Task GetMetricAnomalyDetectionConfigurations()
+        {
+            var adminClient = GetMetricsAdvisorAdministrationClient();
+
+            bool isResponseEmpty = true;
+
+            await foreach (AnomalyDetectionConfiguration config in adminClient.GetDetectionConfigurationsAsync(MetricId))
+            {
+                isResponseEmpty = false;
+                break;
+            }
+
+            Assert.That(isResponseEmpty, Is.False);
         }
     }
 }

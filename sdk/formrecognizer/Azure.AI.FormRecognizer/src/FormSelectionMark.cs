@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
         public float Confidence { get; }
 
         /// <summary>
-        /// Selection mark state value, like Selected or Unselected.
+        /// Selection mark state value.
         /// </summary>
         public SelectionMarkState State { get; }
     }

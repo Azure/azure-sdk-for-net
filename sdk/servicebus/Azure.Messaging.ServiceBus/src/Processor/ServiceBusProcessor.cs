@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus
 
         private Func<ProcessSessionMessageEventArgs, Task> _processSessionMessageAsync;
 
-        private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
+        private Func<ProcessErrorEventArgs, Task> _processErrorAsync = default;
 
         private Func<ProcessSessionEventArgs, Task> _sessionInitializingAsync;
 
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed;
+        private volatile bool _closed = false;
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
@@ -280,6 +280,7 @@ namespace Azure.Messaging.ServiceBus
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 EnsureNotRunningAndInvoke(() => _processMessageAsync = value);
+
             }
 
             remove
@@ -314,6 +315,7 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _processSessionMessageAsync = value);
+
             }
 
             remove
@@ -383,6 +385,7 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _sessionInitializingAsync = value);
+
             }
 
             remove
@@ -414,6 +417,7 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _sessionClosingAsync = value);
+
             }
 
             remove

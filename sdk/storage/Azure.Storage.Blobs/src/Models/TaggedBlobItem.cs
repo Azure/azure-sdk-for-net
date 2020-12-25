@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Tags = System.Collections.Generic.IDictionary<string, string>;
+using System;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -19,11 +19,6 @@ namespace Azure.Storage.Blobs.Models
         /// Container Name.
         /// </summary>
         public string BlobContainerName { get; internal set; }
-
-        /// <summary>
-        /// Blob Tags.
-        /// </summary>
-        public Tags Tags { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of FilterBlobItem instances.

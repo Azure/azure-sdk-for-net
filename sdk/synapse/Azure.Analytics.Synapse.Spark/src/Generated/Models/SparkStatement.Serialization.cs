@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        output = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     output = SparkStatementOutput.DeserializeSparkStatementOutput(property.Value);

@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public string VaultName { get; internal set; }
         public VaultProperties VaultProperties { get; internal set; }
 
+
         public VaultsOperations VaultsClient { get; set; }
         public ResourcesOperations ResourcesClient { get; set; }
         public ResourceGroupsOperations ResourceGroupsClient { get; set; }

@@ -148,6 +148,7 @@ namespace Azure.Data.Tables.Sas
             _resource = resource;
             _permissions = permissions;
             _signature = signature;
+
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a wrapper of list of plan groups. </summary>
-    internal partial class PhonePlanGroups
+    public partial class PhonePlanGroups
     {
         /// <summary> Initializes a new instance of PhonePlanGroups. </summary>
         internal PhonePlanGroups()

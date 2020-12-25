@@ -136,7 +136,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
 
             // Run subsequent iterations at 2 second intervals.
-            return new TaskSeriesCommandResult(wait: Task.Delay(TwoSeconds, CancellationToken.None));
+            return new TaskSeriesCommandResult(wait: Task.Delay(TwoSeconds));
         }
 
         public void Start()

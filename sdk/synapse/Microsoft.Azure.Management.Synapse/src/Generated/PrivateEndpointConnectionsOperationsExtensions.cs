@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -73,21 +73,18 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='request'>
-            /// Request body of private endpoint connection to create.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
             /// </param>
-            public static PrivateEndpointConnection Create(this IPrivateEndpointConnectionsOperations operations, PrivateEndpointConnection request, string resourceGroupName, string workspaceName, string privateEndpointConnectionName)
+            public static PrivateEndpointConnection Create(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string workspaceName, string privateEndpointConnectionName)
             {
-                return operations.CreateAsync(request, resourceGroupName, workspaceName, privateEndpointConnectionName).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, workspaceName, privateEndpointConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -96,14 +93,11 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='request'>
-            /// Request body of private endpoint connection to create.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -111,9 +105,9 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnection> CreateAsync(this IPrivateEndpointConnectionsOperations operations, PrivateEndpointConnection request, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnection> CreateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(request, resourceGroupName, workspaceName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, workspaceName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -129,7 +123,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -149,7 +143,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -175,7 +169,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             public static IPage<PrivateEndpointConnection> List(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string workspaceName)
             {
@@ -192,7 +186,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -211,21 +205,18 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='request'>
-            /// Request body of private endpoint connection to create.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
             /// </param>
-            public static PrivateEndpointConnection BeginCreate(this IPrivateEndpointConnectionsOperations operations, PrivateEndpointConnection request, string resourceGroupName, string workspaceName, string privateEndpointConnectionName)
+            public static PrivateEndpointConnection BeginCreate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string workspaceName, string privateEndpointConnectionName)
             {
-                return operations.BeginCreateAsync(request, resourceGroupName, workspaceName, privateEndpointConnectionName).GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(resourceGroupName, workspaceName, privateEndpointConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -234,14 +225,11 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='request'>
-            /// Request body of private endpoint connection to create.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -249,9 +237,9 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnection> BeginCreateAsync(this IPrivateEndpointConnectionsOperations operations, PrivateEndpointConnection request, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnection> BeginCreateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(request, resourceGroupName, workspaceName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, workspaceName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -267,7 +255,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -287,7 +275,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace.
+            /// The name of the workspace
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.

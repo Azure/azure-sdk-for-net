@@ -8,5 +8,6 @@ namespace Azure.Data.Tables
     /// </summary>
     internal partial class ServiceClient
     {
+
     }
 }

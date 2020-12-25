@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// The client to use to connect with the Form Recognizer Azure Cognitive Service to train models from
-    /// custom forms. It also supports listing, copying, and deleting trained models, creating composed models, and accessing account
+    /// custom forms.  It also supports listing and deleting trained models, as well as accessing account
     /// properties.
     /// </summary>
     public class FormTrainingClient
@@ -110,10 +110,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
         /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
-        /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="modelName">An optional, user-defined name to associate with the model.</param>
-        /// <param name="trainingOptions">A set of options available for configuring the training request. For example, set a filter to apply
-        /// to the documents in the source path for training.</param>
+        /// <param name="trainingOptions">A set of options available for configuring the training request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its Value upon successful
@@ -138,7 +137,7 @@ namespace Azure.AI.FormRecognizer.Training
                     ModelName = modelName
                 };
 
-                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest, cancellationToken);
+                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -153,10 +152,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
         /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
-        /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="modelName">An optional, user-defined name to associate with the model.</param>
-        /// <param name="trainingOptions">A set of options available for configuring the training request. For example, set a filter to apply
-        /// to the documents in the source path for training.</param>
+        /// <param name="trainingOptions">A set of options available for configuring the training request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its Value upon successful
@@ -181,7 +179,7 @@ namespace Azure.AI.FormRecognizer.Training
                     ModelName = modelName
                 };
 
-                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -191,14 +189,14 @@ namespace Azure.AI.FormRecognizer.Training
             }
         }
 
+
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
         /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
-        /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
-        /// <param name="trainingOptions">A set of options available for configuring the training request. For example, set a filter to apply
-        /// to the documents in the source path for training.</param>
+        /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="trainingOptions">A set of options available for configuring the training request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its Value upon successful
@@ -222,7 +220,7 @@ namespace Azure.AI.FormRecognizer.Training
                     UseLabelFile = useTrainingLabels
                 };
 
-                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest, cancellationToken);
+                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -237,9 +235,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
         /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
-        /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
-        /// <param name="trainingOptions">A set of options available for configuring the training request. For example, set a filter to apply
-        /// to the documents in the source path for training.</param>
+        /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="trainingOptions">A set of options available for configuring the training request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its Value upon successful
@@ -263,7 +260,7 @@ namespace Azure.AI.FormRecognizer.Training
                     UseLabelFile = useTrainingLabels
                 };
 
-                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -278,7 +275,7 @@ namespace Azure.AI.FormRecognizer.Training
         #region Composed model
 
         /// <summary>
-        /// Creates a composed model from a collection of existing models trained with labels.
+        /// Creates a composed model from a collection of existing trained models with labels.
         /// </summary>
         /// <param name="modelIds">List of model ids to use in the composed model.</param>
         /// <param name="modelName">An optional, user-defined name to associate with the model.</param>
@@ -305,7 +302,7 @@ namespace Azure.AI.FormRecognizer.Training
                 var composeRequest = new ComposeRequest(modelIdsGuid);
                 composeRequest.ModelName = modelName;
 
-                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest, cancellationToken);
+                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest);
                 return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -343,7 +340,7 @@ namespace Azure.AI.FormRecognizer.Training
                 var composeRequest = new ComposeRequest(modelIdsGuid);
                 composeRequest.ModelName = modelName;
 
-                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest).ConfigureAwait(false);
                 return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)

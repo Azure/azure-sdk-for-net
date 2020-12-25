@@ -1023,6 +1023,7 @@ namespace Azure.Storage.Blobs.Test
             using (var stream = new MemoryStream(data))
             {
                 await blob.UploadPagesAsync(stream, 0);
+
             }
             using (var stream = new MemoryStream(data))
             {
@@ -1055,6 +1056,7 @@ namespace Azure.Storage.Blobs.Test
             using (var stream = new MemoryStream(data))
             {
                 await blob.UploadPagesAsync(stream, 0);
+
             }
             using (var stream = new MemoryStream(data))
             {
@@ -1072,6 +1074,7 @@ namespace Azure.Storage.Blobs.Test
             Response<PageRangesInfo> result = await blob.GetPageRangesAsync(range: new HttpRange(0, 6 * Constants.KB));
 
             Response<PageRangesInfo> diff = await blob.GetPageRangesDiffAsync(range: new HttpRange(0, 6 * Constants.KB), previousSnapshot: snapshot.Value.Snapshot);
+
 
             // Assert
             Assert.AreEqual(2, result.Value.PageRanges.Count());
@@ -1176,6 +1179,7 @@ namespace Azure.Storage.Blobs.Test
             using (var stream = new MemoryStream(data))
             {
                 await blob.UploadPagesAsync(stream, 0);
+
             }
             using (var stream = new MemoryStream(data))
             {
@@ -1718,6 +1722,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(newSize, response.Value.ContentLength);
+
         }
 
         [Test]
@@ -1776,6 +1781,7 @@ namespace Azure.Storage.Blobs.Test
                     Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
                         e.Message.Split('\n')[0]);
                 });
+
         }
 
         [Test]
@@ -1804,6 +1810,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
             }
         }
 
@@ -1832,6 +1839,7 @@ namespace Azure.Storage.Blobs.Test
                         size: newSize,
                         conditions: accessConditions),
                     e => Assert.IsTrue(true));
+
             }
         }
 
@@ -1902,6 +1910,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(sequenceAccessNumber, response.Value.BlobSequenceNumber);
+
         }
 
         [Test]
@@ -1960,6 +1969,7 @@ namespace Azure.Storage.Blobs.Test
                         sequenceNumber: sequenceAccessNumber,
                         conditions: accessConditions),
                     e => Assert.IsTrue(true));
+
             }
         }
 
@@ -2162,6 +2172,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
             }
         }
 
@@ -2221,6 +2232,7 @@ namespace Azure.Storage.Blobs.Test
                         snapshot: snapshot,
                         conditions: accessConditions),
                     e => Assert.IsTrue(true));
+
             }
         }
 

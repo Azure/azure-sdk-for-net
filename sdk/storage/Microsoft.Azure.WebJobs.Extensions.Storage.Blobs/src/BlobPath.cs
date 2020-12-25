@@ -122,6 +122,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 return true;
             }
 
+
             if (!TryParse(value, isContainerBinding, out possiblePath))
             {
                 errorMessage = $"Invalid blob path specified : '{value}'. Blob identifiers must be in the format 'container/blob'.";

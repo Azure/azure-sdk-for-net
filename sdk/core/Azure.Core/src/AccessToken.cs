@@ -45,7 +45,7 @@ namespace Azure.Core
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return HashCodeBuilder.Combine(Token, ExpiresOn);
+            return Token.GetHashCode() ^ ExpiresOn.GetHashCode();
         }
     }
 }

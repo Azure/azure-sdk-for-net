@@ -6,6 +6,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
+
     /// <summary>
     ///   The set of options that can be specified to influence the way in which an service bus message batch
     ///   behaves and is sent to the Queue/Topic.
@@ -14,7 +15,7 @@ namespace Azure.Messaging.ServiceBus
     public class CreateMessageBatchOptions
     {
         /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
-        private long? _maxSizeInBytes;
+        private long? _maxSizeInBytes = null;
 
         /// <summary>
         ///   The maximum size to allow for a single batch of messages, in bytes.

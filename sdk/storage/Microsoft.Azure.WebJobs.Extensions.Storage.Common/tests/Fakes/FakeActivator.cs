@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Host;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
+
     public class FakeActivator : IJobActivator
     {
         private Dictionary<Type, object> _instances = new Dictionary<Type, object>();

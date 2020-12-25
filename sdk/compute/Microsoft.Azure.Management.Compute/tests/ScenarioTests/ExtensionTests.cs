@@ -26,8 +26,7 @@ namespace Compute.Tests
                 AutoUpgradeMinorVersion = false,
                 ForceUpdateTag = "RerunExtension",
                 Settings = "{}",
-                ProtectedSettings = "{}",
-                EnableAutomaticUpgrade = false,
+                ProtectedSettings = "{}"
             };
             typeof(Resource).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
             typeof(Resource).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
@@ -132,7 +131,6 @@ namespace Compute.Tests
             Assert.True(vmExtExpected.Settings.ToString() == vmExtReturned.Settings.ToString());
             Assert.True(vmExtExpected.ForceUpdateTag == vmExtReturned.ForceUpdateTag);
             Assert.True(vmExtExpected.Tags.SequenceEqual(vmExtReturned.Tags));
-            Assert.True(vmExtExpected.EnableAutomaticUpgrade == vmExtReturned.EnableAutomaticUpgrade);
         }
 
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)

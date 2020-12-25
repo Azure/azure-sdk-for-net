@@ -13,16 +13,19 @@ namespace Azure.Identity.Tests.Mock
         public MockManagedIdentityClient()
             : this(null)
         {
+
         }
 
         public MockManagedIdentityClient(CredentialPipeline pipeline)
             : this(pipeline, null)
         {
+
         }
 
         public MockManagedIdentityClient(CredentialPipeline pipeline, string clientId)
             : base(pipeline, clientId)
         {
+
         }
         public Func<ManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
 

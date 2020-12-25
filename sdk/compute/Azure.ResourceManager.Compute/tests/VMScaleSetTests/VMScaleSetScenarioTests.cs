@@ -285,6 +285,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual("Running", getInstanceViewResponse.OrchestrationServices[0].ServiceState.ToString());
             Assert.AreEqual("AutomaticRepairs", getInstanceViewResponse.OrchestrationServices[0].ServiceName.ToString());
 
+
             ////TODO
             OrchestrationServiceStateInput orchestrationServiceStateInput = new OrchestrationServiceStateInput(OrchestrationServiceNames.AutomaticRepairs, OrchestrationServiceStateAction.Suspend);
             //OrchestrationServiceStateAction orchestrationServiceStateAction = new OrchestrationServiceStateAction();
@@ -300,6 +301,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, vmssName));
         }
+
 
         private async Task TestScaleSetOperationsInternal(string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true,
             bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false,

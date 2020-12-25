@@ -322,5 +322,6 @@ namespace Azure.Core.Tests
                 return false;
             }
         }
+
     }
 }

@@ -128,7 +128,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// };
         /// </code>
         /// </example>
-#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<SearchField> Fields
         {
             get => _fields;
@@ -137,7 +136,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 _fields = value ?? throw new ArgumentNullException(nameof(value), $"{nameof(Fields)} cannot be null. To clear values, call {nameof(Fields.Clear)}.");
             }
         }
-#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Gets the scoring profiles for the index.

@@ -7,6 +7,7 @@ using System.IO;
 
 namespace Azure.Storage
 {
+
     /// <summary>
     /// Create exceptions for common error cases.
     /// </summary>

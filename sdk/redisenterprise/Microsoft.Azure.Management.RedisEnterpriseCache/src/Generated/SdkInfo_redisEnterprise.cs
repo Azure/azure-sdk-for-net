@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
                 new Tuple<string, string, string>("Cache", "PrivateEndpointConnections", "2020-10-01-preview"),
                 new Tuple<string, string, string>("Cache", "PrivateLinkResources", "2020-10-01-preview"),
                 new Tuple<string, string, string>("Cache", "RedisEnterprise", "2020-10-01-preview"),
+                new Tuple<string, string, string>("Cache", "RedisEnterpriseDatabase", "2020-10-01-preview"),
               }.AsEnumerable();
           }
       }

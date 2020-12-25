@@ -1,14 +1,7 @@
 # Release History
 
-## 12.6.0-beta.2 (Unreleased)
-- Fixed bug where the Stream returned by DataLakeFileClient.OpenRead() would return a different Length after calls to Seek().
-- Added constructors taking connection string to DataLakeServiceClient, DataLakeFileSystemClient, DataLakeDirectoryClient, and DataLakeFileClient.
-- Fixed bug where DataLakePathClient.SetPermissions(), DataLakeFileClient.SetPermissions(), and DataLakeDirectoryClient.SetPermissions() could not just set Owner or Group.
+## 12.6.0-beta.1 (Unreleased)
 
-## 12.6.0-beta.1 (2020-12-07)
-- Added support for service version 2020-04-08.
-- Fixed bug where DataLakeServiceClient.GetFileSystemClient(), DataLakeFileSystemClient.GetFileClient(), DataLakeFileSystemClient.GetDirectoryClient(),
-DataLakeDirectoryClient.GetSubDirectoryClient() and DataLakeFileClient.GetFileClient() created clients that could not generate a SAS from clients that could generate a SAS.
 
 ## 12.5.0 (2020-11-10)
 - Includes all features from 12.5.0-preview.1

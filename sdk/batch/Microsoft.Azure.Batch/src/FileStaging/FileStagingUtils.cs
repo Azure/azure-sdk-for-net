@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Batch.FileStaging
                     throw new ArgumentNullException(nameof(allFileStagingArtifacts));
                 }
 
-                if (!allFileStagingArtifacts.IsEmpty)
+                if (allFileStagingArtifacts.Count > 0)
                 {
                     throw new ArgumentOutOfRangeException(nameof(allFileStagingArtifacts));
                 }

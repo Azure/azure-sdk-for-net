@@ -15,10 +15,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkScheduler DeserializeSparkScheduler(JsonElement element)
         {
-            Optional<DateTimeOffset?> submittedAt = default;
-            Optional<DateTimeOffset?> scheduledAt = default;
-            Optional<DateTimeOffset?> endedAt = default;
-            Optional<DateTimeOffset?> cancellationRequestedAt = default;
+            Optional<DateTimeOffset> submittedAt = default;
+            Optional<DateTimeOffset> scheduledAt = default;
+            Optional<DateTimeOffset> endedAt = default;
+            Optional<DateTimeOffset> cancellationRequestedAt = default;
             Optional<SchedulerCurrentState> currentState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        submittedAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     submittedAt = property.Value.GetDateTimeOffset("O");
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        scheduledAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledAt = property.Value.GetDateTimeOffset("O");
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endedAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endedAt = property.Value.GetDateTimeOffset("O");
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cancellationRequestedAt = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cancellationRequestedAt = property.Value.GetDateTimeOffset("O");

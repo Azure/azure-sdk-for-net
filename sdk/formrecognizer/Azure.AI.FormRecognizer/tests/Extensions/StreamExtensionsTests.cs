@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Text;
+using Azure.AI.FormRecognizer.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -47,18 +48,6 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.True(stream.TryGetContentType(out var contentType));
             Assert.AreEqual(FormContentType.Jpeg, contentType);
-        }
-
-        /// <summary>
-        /// Verifies functionality of the <see cref="StreamExtensions.TryGetContentType"/> method.
-        /// </summary>
-        [Test]
-        public void TryGetContentTypeDetectsBmp()
-        {
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardtBmp);
-
-            Assert.True(stream.TryGetContentType(out var contentType));
-            Assert.AreEqual(FormContentType.Bmp, contentType);
         }
 
         /// <summary>

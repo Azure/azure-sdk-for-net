@@ -259,6 +259,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
                 return new AccessToken(accessToken, expiresOn);
             }
+
         }
     }
 }
