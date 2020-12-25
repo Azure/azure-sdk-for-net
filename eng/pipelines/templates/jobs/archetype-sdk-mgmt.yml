@@ -42,6 +42,7 @@ jobs:
         displayName: "Tagging the build"
         condition: ne(variables['System.TeamProject'], 'public')
       - pwsh: |
+          echo "check flag is: $(checkFlag)"
           if ("$(checkFlag)" -eq "false") { exit 1 }
         displayName: "Failure Check"
 
