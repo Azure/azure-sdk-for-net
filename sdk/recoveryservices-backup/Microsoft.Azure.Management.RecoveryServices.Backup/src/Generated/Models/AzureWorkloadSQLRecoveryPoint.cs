@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recoveryPointTimeInUTC">UTC time at which recovery
         /// point was created</param>
         /// <param name="type">Type of restore point. Possible values include:
-        /// 'Invalid', 'Full', 'Log', 'Differential'</param>
+        /// 'Invalid', 'Full', 'Log', 'Differential', 'Incremental'</param>
         /// <param name="extendedInfo">Extended Info that provides data
         /// directory details. Will be populated in two cases:
         /// When a specific recovery point is accessed using GetRecoveryPoint

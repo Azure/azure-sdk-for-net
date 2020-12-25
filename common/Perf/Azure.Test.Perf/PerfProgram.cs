@@ -66,7 +66,7 @@ namespace Azure.Test.Perf
             Console.WriteLine("=== Versions ===");
             Console.WriteLine($"Runtime: {Environment.Version}");
             var azureAssemblies = testType.Assembly.GetReferencedAssemblies()
-                .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase))
+                .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) || a.Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
                 .Where(a => !a.Name.Equals("Azure.Test.Perf", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(a => a.Name);
             foreach (var a in azureAssemblies)
@@ -96,7 +96,6 @@ namespace Azure.Test.Perf
 
             try
             {
-
                 try
                 {
                     await tests[0].GlobalSetupAsync();
@@ -109,8 +108,7 @@ namespace Azure.Test.Perf
 
                         if (options.Warmup > 0)
                         {
-                            await RunTestsAsync(tests, options.Sync, options.Parallel, options.Rate, options.Warmup, options.StatusInterval,
-                                "Warmup");
+                            await RunTestsAsync(tests, options, "Warmup", warmup: true);
                         }
 
                         for (var i = 0; i < options.Iterations; i++)
@@ -120,9 +118,21 @@ namespace Azure.Test.Perf
                             {
                                 title += " " + (i + 1);
                             }
-                            await RunTestsAsync(tests, options.Sync, options.Parallel, options.Rate, options.Duration, options.StatusInterval,
-                                title, options.JobStatistics, options.Latency);
+                            await RunTestsAsync(tests, options, title);
                         }
+                    }
+                    catch (AggregateException ae)
+                    {
+                        foreach (Exception e in ae.InnerExceptions)
+                        {
+                            Console.WriteLine($"Exception: {e}");
+                        }
+                        throw;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Exception: {e}");
+                        throw;
                     }
                     finally
                     {
@@ -136,6 +146,11 @@ namespace Azure.Test.Perf
                             await Task.WhenAll(tests.Select(t => t.CleanupAsync()));
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Exception: {e}");
+                    throw;
                 }
                 finally
                 {
@@ -162,24 +177,29 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static async Task RunTestsAsync(IPerfTest[] tests, bool sync, int parallel, int? rate,
-            int durationSeconds, int statusIntervalSeconds, string title, bool jobStatistics = false, bool latency = false)
+        private static async Task RunTestsAsync(IPerfTest[] tests, PerfOptions options, string title, bool warmup = false)
         {
-            _completedOperations = new int[parallel];
-            _lastCompletionTimes = new TimeSpan[parallel];
+            var durationSeconds = warmup ? options.Warmup : options.Duration;
+
+            // Always disable jobStatistics and latency during warmup
+            var jobStatistics = warmup ? false : options.JobStatistics;
+            var latency = warmup ? false : options.Latency;
+
+            _completedOperations = new int[options.Parallel];
+            _lastCompletionTimes = new TimeSpan[options.Parallel];
 
             if (latency)
             {
-                _latencies = new List<TimeSpan>[parallel];
-                for (var i = 0; i < parallel; i++)
+                _latencies = new List<TimeSpan>[options.Parallel];
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     _latencies[i] = new List<TimeSpan>();
                 }
 
-                if (rate.HasValue)
+                if (options.Rate.HasValue)
                 {
-                    _correctedLatencies = new List<TimeSpan>[parallel];
-                    for (var i = 0; i < parallel; i++)
+                    _correctedLatencies = new List<TimeSpan>[options.Parallel];
+                    for (var i = 0; i < options.Parallel; i++)
                     {
                         _correctedLatencies[i] = new List<TimeSpan>();
                     }
@@ -205,35 +225,35 @@ namespace Azure.Test.Perf
                 },
                 newLine: true,
                 progressStatusCts.Token,
-                statusIntervalSeconds
+                options.StatusInterval
                 );
 
             Thread pendingOperationsThread = null;
-            if (rate.HasValue)
+            if (options.Rate.HasValue)
             {
                 _pendingOperations = Channel.CreateUnbounded<ValueTuple<TimeSpan, Stopwatch>>();
-                pendingOperationsThread = WritePendingOperations(rate.Value, cancellationToken);
+                pendingOperationsThread = WritePendingOperations(options.Rate.Value, cancellationToken);
             }
 
-            if (sync)
+            if (options.Sync)
             {
-                var threads = new Thread[parallel];
+                var threads = new Thread[options.Parallel];
 
-                for (var i = 0; i < parallel; i++)
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     var j = i;
                     threads[i] = new Thread(() => RunLoop(tests[j], j, latency, cancellationToken));
                     threads[i].Start();
                 }
-                for (var i = 0; i < parallel; i++)
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     threads[i].Join();
                 }
             }
             else
             {
-                var tasks = new Task[parallel];
-                for (var i = 0; i < parallel; i++)
+                var tasks = new Task[options.Parallel];
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     var j = i;
                     // Call Task.Run() instead of directly calling RunLoopAsync(), to ensure the requested

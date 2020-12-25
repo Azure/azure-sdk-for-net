@@ -438,7 +438,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
-
             }
         }
 

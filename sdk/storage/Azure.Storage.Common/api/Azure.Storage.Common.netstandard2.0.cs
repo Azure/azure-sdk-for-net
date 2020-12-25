@@ -125,7 +125,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2020-02-10";
+        public const string DefaultSasVersion = "2020-04-08";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         protected SasQueryParameters(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null) { }

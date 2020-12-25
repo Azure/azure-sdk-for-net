@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -71,6 +72,20 @@ namespace SecurityCenter.Tests
             }
         }
 
+
+        [Fact]
+        public void SubAssessments_List_ResourceDetails()
+        {
+            string scope = $"subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{ContainerRegistryName}";
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var securityCenterClient = GetSecurityCenterClient(context);
+                var ret = securityCenterClient.SubAssessments.List(scope, AssessmentName);
+                ValidateResourceDetails(ret);
+            }
+        }
+
         [Fact]
         public void SubAssessments_Get()
         {
@@ -94,6 +109,56 @@ namespace SecurityCenter.Tests
                 Assert.NotNull(item);
             }
         }
+
+        /// <summary>
+        /// For each of the supported 'ResourceDetails' types, validates that the 'ResourceDetails' is at least one of them:
+        /// assignable means not null: serialization \ deserialization was successful
+        /// </summary>
+        /// <param name="ret"></param>
+        private static void ValidateResourceDetails(IPage<SecuritySubAssessment> ret)
+        {
+            foreach (var item in ret)
+            {
+                Assert.NotNull(item);
+                ValidateResourceDetails(item.ResourceDetails);
+            }
+        }
+
+        /// <summary>
+        /// Helper method that validates any type of resource details passed
+        /// </summary>
+        /// <param name="resourceDetails"></param>
+        private static void ValidateResourceDetails(ResourceDetails resourceDetails)
+        {
+            Assert.NotNull(resourceDetails);
+
+            switch (resourceDetails)
+            {
+                case AzureResourceDetails azureResourceDetails:
+                    Assert.NotNull(azureResourceDetails);
+                    Assert.NotNull(azureResourceDetails.Id);
+                    break;
+                case OnPremiseSqlResourceDetails onPremiseSqlResourceDetails:
+                    Assert.NotNull(onPremiseSqlResourceDetails);
+                    Assert.NotNull(onPremiseSqlResourceDetails.MachineName);
+                    Assert.NotNull(onPremiseSqlResourceDetails.SourceComputerId);
+                    Assert.NotNull(onPremiseSqlResourceDetails.Vmuuid);
+                    Assert.NotNull(onPremiseSqlResourceDetails.WorkspaceId);
+                    Assert.NotNull(onPremiseSqlResourceDetails.DatabaseName);
+                    Assert.NotNull(onPremiseSqlResourceDetails.ServerName);
+                    break;
+                case OnPremiseResourceDetails onPremiseResourceDetails:
+                    Assert.NotNull(onPremiseResourceDetails);
+                    Assert.NotNull(onPremiseResourceDetails.MachineName);
+                    Assert.NotNull(onPremiseResourceDetails.SourceComputerId);
+                    Assert.NotNull(onPremiseResourceDetails.Vmuuid);
+                    Assert.NotNull(onPremiseResourceDetails.WorkspaceId);
+                    break;
+                default:
+                    throw new Exception("Unsupported resource details");
+            }
+        }
+
         #endregion
-    }
+        }
 }

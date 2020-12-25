@@ -213,10 +213,6 @@ namespace Azure.Core.Tests
 
         private class MockTestEnvironment : TestEnvironment
         {
-            public MockTestEnvironment() : base("core")
-            {
-            }
-
             public static MockTestEnvironment Instance { get; } = new MockTestEnvironment();
             public string RecordedValue => GetRecordedVariable("RECORDED");
             public string NotRecordedValue => GetVariable("NOTRECORDED");
@@ -226,7 +222,6 @@ namespace Azure.Core.Tests
             public string CustomSecret => GetRecordedVariable("CustomSecret", option => option.IsSecret("Custom"));
             public string MissingOptionalSecret => GetRecordedOptionalVariable("MissingOptionalSecret", option => option.IsSecret("INVALID"));
             public string ConnectionStringWithSecret => GetRecordedVariable("ConnectionStringWithSecret", option => option.HasSecretConnectionStringParameter("key"));
-
         }
     }
 }

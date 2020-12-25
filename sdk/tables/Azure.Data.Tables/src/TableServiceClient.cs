@@ -21,7 +21,7 @@ namespace Azure.Data.Tables
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
         private readonly string _version;
         internal readonly bool _isPremiumEndpoint;
-        private readonly QueryOptions _defaultQueryOptions= new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata};
+        private readonly QueryOptions _defaultQueryOptions = new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified <see cref="Uri" /> containing a shared access signature (SAS)
@@ -124,8 +124,8 @@ namespace Azure.Data.Tables
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
 
             options ??= new TableClientOptions();
-            var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
-            var secondaryEndpoint = connString.TableStorageUri.PrimaryUri?.ToString() ?? endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
+            var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
+            var secondaryEndpoint = connString.TableStorageUri.SecondaryUri?.AbsoluteUri;
 
             TableSharedKeyPipelinePolicy policy = connString.Credentials switch
             {
@@ -147,8 +147,8 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new TableClientOptions();
-            var endpointString = endpoint.ToString();
-            var secondaryEndpoint = endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
+            var endpointString = endpoint.AbsoluteUri;
+            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
 
             _version = options.VersionString;
@@ -218,34 +218,44 @@ namespace Azure.Data.Tables
         /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of <see cref="TableItem"/>s.</returns>
         public virtual AsyncPageable<TableItem> GetTablesAsync(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-            scope.Start();
-            try
-            {
                 return PageableHelpers.CreateAsyncEnumerable(
                     async pageSizeHint =>
                     {
-                        var response = await _tableOperations.QueryAsync(
-                            null,
-                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
-                            cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                        scope.Start();
+                        try
+                        {
+                            var response = await _tableOperations.QueryAsync(
+                                null,
+                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                                cancellationToken).ConfigureAwait(false);
+                            return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        }
+                        catch (Exception ex)
+                        {
+                            scope.Failed(ex);
+                            throw;
+                        }
                     },
                     async (nextLink, pageSizeHint) =>
                     {
-                        var response = await _tableOperations.QueryAsync(
-                            nextTableName: nextLink,
-                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
-                            cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                        scope.Start();
+                        try
+                        {
+                            var response = await _tableOperations.QueryAsync(
+                                nextTableName: nextLink,
+                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                                cancellationToken).ConfigureAwait(false);
+                            return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        }
+                        catch (Exception ex)
+                        {
+                            scope.Failed(ex);
+                            throw;
+                        }
                     },
                     maxPerPage);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
         }
 
         /// <summary>
@@ -260,7 +270,6 @@ namespace Azure.Data.Tables
         /// <returns>An <see cref="Pageable{T}"/> containing a collection of <see cref="TableItem"/>.</returns>
         public virtual Pageable<TableItem> GetTables(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-
             return PageableHelpers.CreateEnumerable(
                 pageSizeHint =>
                 {
@@ -314,7 +323,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null,  queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -337,7 +346,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null,  queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -360,7 +369,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null,  queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -387,7 +396,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null,  queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)

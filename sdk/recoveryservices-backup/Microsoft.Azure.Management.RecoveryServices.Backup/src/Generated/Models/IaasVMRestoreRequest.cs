@@ -75,7 +75,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// encrypted at the time of backup.</param>
         /// <param name="restoreDiskLunList">List of Disk LUNs for partial
         /// restore</param>
-        public IaasVMRestoreRequest(string recoveryPointId = default(string), string recoveryType = default(string), string sourceResourceId = default(string), string targetVirtualMachineId = default(string), string targetResourceGroupId = default(string), string storageAccountId = default(string), string virtualNetworkId = default(string), string subnetId = default(string), string targetDomainNameId = default(string), string region = default(string), string affinityGroup = default(string), bool? createNewCloudService = default(bool?), bool? originalStorageAccountOption = default(bool?), EncryptionDetails encryptionDetails = default(EncryptionDetails), IList<int?> restoreDiskLunList = default(IList<int?>))
+        /// <param name="restoreWithManagedDisks">Flag to denote of an
+        /// Unmanaged disk VM should be restored with Managed disks.</param>
+        /// <param name="diskEncryptionSetId">DiskEncryptionSet's ID - needed
+        /// if the VM needs to be encrypted at rest during restore with
+        /// customer managed key.</param>
+        public IaasVMRestoreRequest(string recoveryPointId = default(string), string recoveryType = default(string), string sourceResourceId = default(string), string targetVirtualMachineId = default(string), string targetResourceGroupId = default(string), string storageAccountId = default(string), string virtualNetworkId = default(string), string subnetId = default(string), string targetDomainNameId = default(string), string region = default(string), string affinityGroup = default(string), bool? createNewCloudService = default(bool?), bool? originalStorageAccountOption = default(bool?), EncryptionDetails encryptionDetails = default(EncryptionDetails), IList<int?> restoreDiskLunList = default(IList<int?>), bool? restoreWithManagedDisks = default(bool?), string diskEncryptionSetId = default(string))
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -92,6 +97,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             OriginalStorageAccountOption = originalStorageAccountOption;
             EncryptionDetails = encryptionDetails;
             RestoreDiskLunList = restoreDiskLunList;
+            RestoreWithManagedDisks = restoreWithManagedDisks;
+            DiskEncryptionSetId = diskEncryptionSetId;
             CustomInit();
         }
 
@@ -211,6 +218,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "restoreDiskLunList")]
         public IList<int?> RestoreDiskLunList { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to denote of an Unmanaged disk VM should be
+        /// restored with Managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "restoreWithManagedDisks")]
+        public bool? RestoreWithManagedDisks { get; set; }
+
+        /// <summary>
+        /// Gets or sets diskEncryptionSet's ID - needed if the VM needs to be
+        /// encrypted at rest during restore with customer managed key.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskEncryptionSetId")]
+        public string DiskEncryptionSetId { get; set; }
 
     }
 }

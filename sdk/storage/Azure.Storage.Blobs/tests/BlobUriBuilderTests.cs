@@ -212,7 +212,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-
         [Test]
         public void BlobUriBuilder_RegularUrl_CNAME()
         {
@@ -486,7 +485,7 @@ namespace Azure.Storage.Blobs.Test
         public void BlobUriBuilder_SasStartExpiryTimeFormats(string startTime, string expiryTime)
         {
             // Arrange
-            Uri initialUri = new Uri($"https://account.blob.core.windows.net/container/blob?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            Uri initialUri = new Uri($"https://account.blob.core.windows.net/container/blob?sv=2020-04-08&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(initialUri);
 
             // Act
@@ -504,7 +503,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             string startTime = "2020-10-27T12Z";
             string expiryTime = "2020-10-28T13Z";
-            Uri initialUri = new Uri($"https://account.blob.core.windows.net/container/blob?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            Uri initialUri = new Uri($"https://account.blob.core.windows.net/container/blob?sv=2020-04-08&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
 
             // Act
             try

@@ -13,7 +13,7 @@
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "4092bd1f-fda1-bf58-a14b-c2f77c7191e8",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "4092bd1f-fda1-bf58-a14b-c2f77c7191e8",
         "x-ms-request-id": "47f59500-001e-00af-21a5-8004ec000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -44,7 +44,7 @@
         ],
         "x-ms-client-request-id": "38d2fdc3-d79d-fc00-ff96-5368d6194cbf",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -59,7 +59,7 @@
         ],
         "x-ms-client-request-id": "38d2fdc3-d79d-fc00-ff96-5368d6194cbf",
         "x-ms-request-id": "31b9c519-001f-00bf-5ba5-80c184000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -74,7 +74,7 @@
         ],
         "x-ms-client-request-id": "cf1c6a5d-959e-2f5e-1a9c-c3ebf20828e5",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -89,7 +89,7 @@
         ],
         "x-ms-client-request-id": "cf1c6a5d-959e-2f5e-1a9c-c3ebf20828e5",
         "x-ms-request-id": "31b9c51b-001f-00bf-5da5-80c184000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -107,7 +107,7 @@
         ],
         "x-ms-client-request-id": "699aa1a8-b1fd-fbe3-4804-6402965f7af3",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "\u003CKeyInfo\u003E\u003CExpiry\u003E2020-09-01T22:19:40Z\u003C/Expiry\u003E\u003C/KeyInfo\u003E",
       "StatusCode": 200,
@@ -121,12 +121,12 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "699aa1a8-b1fd-fbe3-4804-6402965f7af3",
         "x-ms-request-id": "47f5954b-001e-00af-58a5-8004ec000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CUserDelegationKey\u003E\u003CSignedOid\u003Ec4f48289-bb84-4086-b250-6f94a8f64cee\u003C/SignedOid\u003E\u003CSignedTid\u003E72f988bf-86f1-41af-91ab-2d7cd011db47\u003C/SignedTid\u003E\u003CSignedStart\u003E2020-09-01T21:19:40Z\u003C/SignedStart\u003E\u003CSignedExpiry\u003E2020-09-01T22:19:40Z\u003C/SignedExpiry\u003E\u003CSignedService\u003Eb\u003C/SignedService\u003E\u003CSignedVersion\u003E2020-02-10\u003C/SignedVersion\u003E\u003CValue\u003Ei9uK6NbfYM\u002BNf9N4xkiHsAUG83I8mkw4HMzJERJZfaM=\u003C/Value\u003E\u003C/UserDelegationKey\u003E"
     },
     {
-      "RequestUri": "https://amandaadlscanary2.dfs.core.windows.net/test-filesystem-08268555-21d3-8764-195c-9e68db1adefb?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2020-09-01T21%3A19%3A40Z\u0026ske=2020-09-01T22%3A19%3A40Z\u0026sks=b\u0026skv=2020-02-10\u0026sv=2020-02-10\u0026st=2020-09-01T20%3A19%3A40Z\u0026se=2020-09-01T22%3A19%3A40Z\u0026sr=d\u0026sp=racwdlmeop\u0026sdd=1\u0026sig=Sanitized\u0026resource=filesystem\u0026recursive=false\u0026directory=test-directory-5b726c78-96f3-dbe3-46db-a5f2f53018a1\u0026upn=false",
+      "RequestUri": "https://amandaadlscanary2.dfs.core.windows.net/test-filesystem-08268555-21d3-8764-195c-9e68db1adefb?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2020-09-01T21%3A19%3A40Z\u0026ske=2020-09-01T22%3A19%3A40Z\u0026sks=b\u0026skv=2020-02-10\u0026sv=2020-04-08\u0026st=2020-09-01T20%3A19%3A40Z\u0026se=2020-09-01T22%3A19%3A40Z\u0026sr=d\u0026sp=racwdlmeop\u0026sdd=1\u0026sig=Sanitized\u0026resource=filesystem\u0026recursive=false\u0026directory=test-directory-5b726c78-96f3-dbe3-46db-a5f2f53018a1\u0026upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
@@ -135,7 +135,7 @@
         ],
         "x-ms-client-request-id": "51422efa-be6e-64e8-eddb-e6e1691d32c4",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -149,7 +149,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "51422efa-be6e-64e8-eddb-e6e1691d32c4",
         "x-ms-request-id": "119d9ac4-001f-0006-2da5-80c59e000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "{\u0022paths\u0022:[{\u0022contentLength\u0022:\u00220\u0022,\u0022creationTime\u0022:\u0022132434687804195527\u0022,\u0022etag\u0022:\u00220x8D84EBCBCF942C7\u0022,\u0022group\u0022:\u0022c4f48289-bb84-4086-b250-6f94a8f64cee\u0022,\u0022lastModified\u0022:\u0022Tue, 01 Sep 2020 21:19:40 GMT\u0022,\u0022name\u0022:\u0022test-directory-5b726c78-96f3-dbe3-46db-a5f2f53018a1/test-file-24806f22-94bc-36e2-75b2-e4f7d4198082\u0022,\u0022owner\u0022:\u0022c4f48289-bb84-4086-b250-6f94a8f64cee\u0022,\u0022permissions\u0022:\u0022rw-r-----\u0022}]}\n"
@@ -167,7 +167,7 @@
         ],
         "x-ms-client-request-id": "6808fde6-291c-8c85-b4b4-d62df37c252c",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -180,7 +180,7 @@
         ],
         "x-ms-client-request-id": "6808fde6-291c-8c85-b4b4-d62df37c252c",
         "x-ms-request-id": "47f5959e-001e-00af-17a5-8004ec000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

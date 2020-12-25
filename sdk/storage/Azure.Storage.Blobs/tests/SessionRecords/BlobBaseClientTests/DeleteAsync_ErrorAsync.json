@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "053f0ab2-dd7a-4899-7b57-11352f946610",
         "x-ms-date": "Thu, 02 Apr 2020 23:44:38 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "053f0ab2-dd7a-4899-7b57-11352f946610",
         "x-ms-request-id": "e6483890-401e-0075-3348-09268c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-client-request-id": "60835da6-938c-0b51-05c2-7a57c0aae732",
         "x-ms-date": "Thu, 02 Apr 2020 23:44:38 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -61,7 +61,7 @@
         "x-ms-client-request-id": "60835da6-938c-0b51-05c2-7a57c0aae732",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "e6483899-401e-0075-3848-09268c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -82,7 +82,7 @@
         "x-ms-client-request-id": "0349ac45-80c6-ae17-4005-4ef97326e021",
         "x-ms-date": "Thu, 02 Apr 2020 23:44:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -95,7 +95,7 @@
         ],
         "x-ms-client-request-id": "0349ac45-80c6-ae17-4005-4ef97326e021",
         "x-ms-request-id": "e64838a4-401e-0075-4348-09268c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

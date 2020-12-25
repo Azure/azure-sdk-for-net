@@ -121,8 +121,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return false;
         }
 
-        /// <inheritdoc/>
-
+        /// <summary>Compares two <see cref="RuleProperties"/> values for equality.</summary>
         public static bool operator ==(RuleProperties left, RuleProperties right)
         {
             if (ReferenceEquals(left, right))
@@ -138,8 +137,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <inheritdoc/>
-
+        /// <summary>Compares two <see cref="RuleProperties"/> values for inequality.</summary>
         public static bool operator !=(RuleProperties left, RuleProperties right)
         {
             return !(left == right);
