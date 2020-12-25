@@ -1,9 +1,6 @@
 jobs:
   - job: Build
     timeoutInMinutes: 80
-    variables:
-    - name: checkFlag
-      value: true
     pool:
       vmImage: windows-2019
     steps:
@@ -42,8 +39,7 @@ jobs:
         displayName: "Tagging the build"
         condition: ne(variables['System.TeamProject'], 'public')
       - pwsh: |
-          echo "check flag is: $(checkFlag)"
-          if ("$(checkFlag)" -eq "false") { exit 1 }
+          if ($(checkFlag)) { exit 1 }
         displayName: "Failure Check"
 
   - job: Test
