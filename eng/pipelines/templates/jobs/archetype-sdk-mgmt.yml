@@ -1,6 +1,9 @@
 jobs:
   - job: Build
     timeoutInMinutes: 80
+    variables:
+    - name: checkFlag
+      value: true
     pool:
       vmImage: windows-2019
     steps:
