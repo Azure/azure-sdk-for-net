@@ -24,7 +24,6 @@ namespace Azure.Core
         /// <inheritdoc/>
         public override void OnSendingRequest(HttpMessage message)
         {
-            base.OnSendingRequest(message);
             string query = message.Request.Uri.Query;
             string signature = _credential.Signature;
             if (signature.StartsWith("?", StringComparison.InvariantCulture))
@@ -38,6 +37,8 @@ namespace Azure.Core
                 newQuery.Append(signature);
                 message.Request.Uri.Query = newQuery.ToString();
             }
+
+            base.OnSendingRequest(message);
         }
     }
 }
