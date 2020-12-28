@@ -445,6 +445,46 @@ namespace Microsoft.Azure.Management.PowerBIDedicated
             }
 
             /// <summary>
+            /// Check the name availability in the target location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region name which the operation will lookup into.
+            /// </param>
+            /// <param name='capacityParameters'>
+            /// The name of the capacity.
+            /// </param>
+            public static CheckCapacityNameAvailabilityResult CheckNameAvailability(this ICapacitiesOperations operations, string location, CheckCapacityNameAvailabilityParameters capacityParameters)
+            {
+                return operations.CheckNameAvailabilityAsync(location, capacityParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the name availability in the target location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region name which the operation will lookup into.
+            /// </param>
+            /// <param name='capacityParameters'>
+            /// The name of the capacity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityAsync(this ICapacitiesOperations operations, string location, CheckCapacityNameAvailabilityParameters capacityParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(location, capacityParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Provisions the specified Dedicated capacity based on the configuration
             /// specified in the request.
             /// </summary>

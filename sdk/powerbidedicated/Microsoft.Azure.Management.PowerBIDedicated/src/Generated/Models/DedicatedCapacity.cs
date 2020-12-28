@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
         /// 'Failed', 'Paused', 'Suspended', 'Provisioning', 'Updating',
         /// 'Suspending', 'Pausing', 'Resuming', 'Preparing', 'Scaling'</param>
         /// <param name="provisioningState">The current deployment state of
-        /// PowerBI Dedicatedresource. The provisioningState is to indicate
+        /// PowerBI Dedicated resource. The provisioningState is to indicate
         /// states for resource provisioning. Possible values include:
         /// 'Deleting', 'Succeeded', 'Failed', 'Paused', 'Suspended',
         /// 'Provisioning', 'Updating', 'Suspending', 'Pausing', 'Resuming',
@@ -90,11 +90,11 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
         public string State { get; private set; }
 
         /// <summary>
-        /// Gets the current deployment state of PowerBI Dedicatedresource. The
-        /// provisioningState is to indicate states for resource provisioning.
-        /// Possible values include: 'Deleting', 'Succeeded', 'Failed',
-        /// 'Paused', 'Suspended', 'Provisioning', 'Updating', 'Suspending',
-        /// 'Pausing', 'Resuming', 'Preparing', 'Scaling'
+        /// Gets the current deployment state of PowerBI Dedicated resource.
+        /// The provisioningState is to indicate states for resource
+        /// provisioning. Possible values include: 'Deleting', 'Succeeded',
+        /// 'Failed', 'Paused', 'Suspended', 'Provisioning', 'Updating',
+        /// 'Suspending', 'Pausing', 'Resuming', 'Preparing', 'Scaling'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

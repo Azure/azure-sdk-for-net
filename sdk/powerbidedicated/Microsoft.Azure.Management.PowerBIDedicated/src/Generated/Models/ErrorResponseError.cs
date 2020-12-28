@@ -14,25 +14,28 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the format of Error response.
+    /// The error object
     /// </summary>
-    public partial class ErrorResponse
+    public partial class ErrorResponseError
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ErrorResponseError class.
         /// </summary>
-        public ErrorResponse()
+        public ErrorResponseError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ErrorResponseError class.
         /// </summary>
-        /// <param name="error">The error object</param>
-        public ErrorResponse(ErrorResponseError error = default(ErrorResponseError))
+        /// <param name="code">Error code</param>
+        /// <param name="message">Error message indicating why the operation
+        /// failed.</param>
+        public ErrorResponseError(string code = default(string), string message = default(string))
         {
-            Error = error;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -42,10 +45,16 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error object
+        /// Gets or sets error code
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorResponseError Error { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// Gets or sets error message indicating why the operation failed.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }
