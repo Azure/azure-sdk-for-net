@@ -48,8 +48,10 @@ namespace Azure.Storage
             => new InvalidOperationException("Use of token credentials requires HTTPS");
 
         public static ArgumentException SasCredentialRequiresUriWithoutSas(Uri uri)
-            => new ArgumentException($"The resource URI {uri} must not contain SAS if AzureSasCredential is used." +
-                $" You can use BlobUriBuilder to strip SAS from the resource URI before instantiating clients.");
+            => new ArgumentException(
+                $"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature: {uri}\n" +
+                $"You can remove the shared access signature by creating a BlobUriBuilder, setting BlobUriBuilder.Sas) to null," +
+                $" and calling BlobUriBuilder.ToUri.");
 
         public static InvalidOperationException SasMissingData(string paramName)
             => new InvalidOperationException($"SAS is missing required parameter: {paramName}");

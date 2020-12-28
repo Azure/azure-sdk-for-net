@@ -100,7 +100,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new ShareDirectoryClient(uri, new AzureSasCredential(sas)),
-                e => e.Message.Contains("must not contain SAS if AzureSasCredential is used"));
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
         [Test]
