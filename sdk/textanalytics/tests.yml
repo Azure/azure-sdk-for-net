@@ -4,5 +4,5 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: textanalytics
-    Clouds: 'Preview'
+    Clouds: 'Public,Preview,UsGov'
     UnsupportedClouds: 'China'
