@@ -177,6 +177,8 @@ namespace Azure.Identity.Tests
         [Test]
         public void ChainedTokenCredential_AllCredentialsHaveFailed_CredentialUnavailableException()
         {
+            string a = TestEnvironment.aa;
+            Assert.AreEqual("aaaa", a);
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
 
             var fileSystem = new TestFileSystemService();
