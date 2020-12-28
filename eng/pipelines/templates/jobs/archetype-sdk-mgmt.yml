@@ -8,7 +8,7 @@ jobs:
           eng/scripts/Track1CodeCheck.ps1
           Write-Host "ExitCode is $LASTEXITCODE"
           if ($LASTEXITCODE -eq 0) { Write-Host "##vso[task.setvariable variable=checkFlag]true" } 
-          else if ($LASTEXITCODE -eq 1) { Write-Host "##vso[task.setvariable variable=checkFlag]false" }
+          elseif ($LASTEXITCODE -eq 1) { Write-Host "##vso[task.setvariable variable=checkFlag]false" }
         displayName: "Code-gen Force Check"
         continueOnError: true
         env:
