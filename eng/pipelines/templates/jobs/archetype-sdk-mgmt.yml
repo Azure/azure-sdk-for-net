@@ -6,6 +6,7 @@ jobs:
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
       - pwsh: |
           eng/scripts/Track1CodeCheck.ps1
+          Write-Host "ExitCode is $LASTEXITCODE"
           if ($LASTEXITCODE -eq 1) { Write-Host "##vso[task.setvariable variable=checkFlag]false" }
         displayName: "Code-gen Force Check"
         continueOnError: true
@@ -13,7 +14,7 @@ jobs:
           REPOSITORY_NAME: $(Build.Repository.Name)
           PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
       - pwsh: |
-          if ($(checkFlag) -eq "false") { exit 1 }
+          if ("$(checkFlag)" -eq "false") { exit 1 }
         displayName: "Failure Check"
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
