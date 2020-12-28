@@ -2,15 +2,12 @@ jobs:
   - job: Build
     pool:
       vmImage: windows-2019
-    variables:
-    - name: checkFlag
-      value: true 
     steps:
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - pwsh: |
           eng/scripts/Track1CodeCheck.ps1
-          if ($LASTEXITCODE -eq 1) { Write-Host "##vso[task.setvariable variable=checkFlag;]false" }
+          if ($LASTEXITCODE -eq 0) { Write-Host "##vso[task.setvariable variable=checkFlag]true" } 
+          elseif ($LASTEXITCODE -eq 1) { Write-Host "##vso[task.setvariable variable=checkFlag]false" }
         displayName: "Code-gen Force Check"
         continueOnError: true
         env:
@@ -23,6 +20,7 @@ jobs:
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
       - task: PublishBuildArtifacts@1
         condition: succeededOrFailed()
         inputs:
@@ -60,12 +58,12 @@ jobs:
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"
         displayName: "Build & Run Tests"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
