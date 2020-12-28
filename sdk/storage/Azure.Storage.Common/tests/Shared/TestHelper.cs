@@ -59,7 +59,7 @@ namespace Azure.Storage.Test
             where T : Exception
             => AssertExpectedException(action, expectedException, GetDefaultExceptionAssertion(predicate));
 
-        public static void AssertExpectedException<T>(Action action, Func<T, bool> predicate = null)
+        public static void AssertExpectedException<T>(Action action, Func<T, bool> predicate)
             where T : Exception
         {
             Assert.IsNotNull(action);
