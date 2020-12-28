@@ -123,7 +123,7 @@ namespace Compute.Tests
             var vmssName = TestUtilities.GenerateName("vmss");
             bool createOSDisk = !hasManagedDisks || osDiskSizeInGB != null;
 
-            string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA0 : VirtualMachineSizeTypes.StandardA1V2;
+            string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA1V2 : VirtualMachineSizeTypes.StandardA1V2;
 
             var vmScaleSet = new VirtualMachineScaleSet()
             {
