@@ -14,7 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Insights" Version="0.16.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.Storage" Version="4.2.0-preview" />    
-    <PackageReference Include="Microsoft.Azure.Management.Network" Version="19.17.1-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="20.2.1" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
     <PackageReference Include="WindowsAzure.Storage" Version="8.7.0" />
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Compute.csproj" />
@@ -28,11 +28,5 @@
   
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Update="ScenarioTests\EdgeZone_Template.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

@@ -268,66 +268,27 @@ namespace Compute.Tests
                         Location = m_location,
                         Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                     });
+                
+                PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName, extendedLocation: extendedLocation);
 
-                string nicId = null;
-                // For extended location scenario, we need to pass Extended Location for creating networking components as well
-                // Since Networking SDK is not yet updated, creating networking components through ARM Template Deployment
-                // Will replace the code once Networking SDK allows passing in Extended Location
-                if (extendedLocation == null)
-                {
-                    PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
+                // Do not add Dns server for managed disks, as they cannot resolve managed disk url ( https://md-xyz ) without
+                // explicitly setting up the rules for resolution. The VMs upon booting would need to contact the
+                // DNS server to access the VMStatus agent blob. Without proper Dns resolution, The VMs cannot access the
+                // VMStatus agent blob and there by fail to boot.
+                bool addDnsServer = !hasManagedDisks;
+                Subnet subnetResponse = CreateVNET(rgName, addDnsServer, extendedLocation: extendedLocation);
 
-                    // Do not add Dns server for managed disks, as they cannot resolve managed disk url ( https://md-xyz ) without
-                    // explicitly setting up the rules for resolution. The VMs upon booting would need to contact the
-                    // DNS server to access the VMStatus agent blob. Without proper Dns resolution, The VMs cannot access the
-                    // VMStatus agent blob and there by fail to boot.
-                    bool addDnsServer = !hasManagedDisks;
-                    Subnet subnetResponse = CreateVNET(rgName, addDnsServer);
-
-                    NetworkInterface nicResponse = CreateNIC(
-                        rgName,
-                        subnetResponse,
-                        getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
-                    nicId = nicResponse.Id;
-                }
-                else
-                {
-                    JObject deploymentParams = new JObject
-                    {
-                        { "extendedLocation", new JObject
-                            {
-                                { "value", extendedLocation }
-                            }
-                        }
-                    };
-
-                    Deployment deployment = new Deployment
-                    {
-                        Properties = new DeploymentProperties()
-                        {
-                            Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "EdgeZone_Template.json"))),
-                            Parameters = deploymentParams,
-                            Mode = DeploymentMode.Incremental
-                        }
-                    };
-                    string deploymentName = ComputeManagementTestUtilities.GenerateName("deployment");
-                    DeploymentExtended deploymentCreateResult = m_ResourcesClient.Deployments.CreateOrUpdate(rgName, deploymentName, deployment);
-
-                    Assert.Equal("Succeeded", deploymentCreateResult.Properties.ProvisioningState);
-                    Assert.NotNull(deploymentCreateResult.Id);
-                    Assert.Equal(deploymentName, deploymentCreateResult.Name);
-
-                    JObject deploymentOutputs = (JObject)deploymentCreateResult.Properties.Outputs;
-                    nicId = deploymentOutputs.GetValue("nicId")?.Value<string>("value");
-
-                    Assert.NotNull(nicId);
-                }
+                NetworkInterface nicResponse = CreateNIC(
+                    rgName,
+                    subnetResponse,
+                    getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null,
+                    extendedLocation: extendedLocation);
 
                 string ppgId = ((ppgName != null) ? CreateProximityPlacementGroup(rgName, ppgName): null);
 
                 string asetId = CreateAvailabilitySet(rgName, asName, hasManagedDisks, ppgId: ppgId);
 
-                inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicId, hasManagedDisks, vmSize, osDiskStorageAccountType,
+                inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType,
                     dataDiskStorageAccountType, writeAcceleratorEnabled, diskEncryptionSetId);
 
                 if (hasDiffDisks)
@@ -371,7 +332,7 @@ namespace Compute.Tests
                 if (extendedLocation != null)
                 {
                     inputVM.AvailabilitySet = null;
-                    inputVM.ExtendedLocation = new ExtendedLocation(extendedLocation);
+                    inputVM.ExtendedLocation = new CM.ExtendedLocation(extendedLocation);
                 }
 
                 if (vmCustomizer != null)
@@ -442,7 +403,7 @@ namespace Compute.Tests
             return getPublicIpPrefixResponse;
         }
 
-        protected PublicIPAddress CreatePublicIP(string rgName)
+        protected PublicIPAddress CreatePublicIP(string rgName, string extendedLocation = null)
         {
             // Create publicIP
             string publicIpName = ComputeManagementTestUtilities.GenerateName("pip");
@@ -462,12 +423,17 @@ namespace Compute.Tests
                 }
             };
 
+            if (extendedLocation != null)
+            {
+                publicIp.ExtendedLocation = new NM.ExtendedLocation(extendedLocation);
+            }
+
             var putPublicIpAddressResponse = m_NrpClient.PublicIPAddresses.CreateOrUpdate(rgName, publicIpName, publicIp);
             var getPublicIpAddressResponse = m_NrpClient.PublicIPAddresses.Get(rgName, publicIpName);
             return getPublicIpAddressResponse;
         }
 
-        protected Subnet CreateVNET(string rgName, bool addDnsServer = true, bool disablePEPolicies = false)
+        protected Subnet CreateVNET(string rgName, bool addDnsServer = true, bool disablePEPolicies = false, string extendedLocation = null)
         {
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -502,6 +468,12 @@ namespace Compute.Tests
                             }
                         }
             };
+
+            if (extendedLocation != null)
+            {
+                vnet.ExtendedLocation = new NM.ExtendedLocation(extendedLocation);
+            }
+
             var putVnetResponse = m_NrpClient.VirtualNetworks.CreateOrUpdate(rgName, vnetName, vnet);
             var getSubnetResponse = m_NrpClient.Subnets.Get(rgName, vnetName, subnetName);
             return getSubnetResponse;
@@ -562,7 +534,8 @@ namespace Compute.Tests
             return getNsgResponse;
         }
 
-        protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null, NetworkSecurityGroup nsg = null)
+        protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null, NetworkSecurityGroup nsg = null,
+            string extendedLocation = null)
         {
             // Create Nic
             nicname = nicname ?? ComputeManagementTestUtilities.GenerateName("nic");
@@ -590,6 +563,11 @@ namespace Compute.Tests
             if (publicIPaddress != null)
             {
                 nicParameters.IpConfigurations[0].PublicIPAddress = new Microsoft.Azure.Management.Network.Models.PublicIPAddress() { Id = publicIPaddress };
+            }
+
+            if (extendedLocation != null)
+            {
+                nicParameters.ExtendedLocation = new NM.ExtendedLocation(extendedLocation);
             }
 
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);

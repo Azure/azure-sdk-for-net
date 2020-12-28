@@ -414,61 +414,22 @@ namespace Compute.Tests
                     Location = m_location
                 });
 
-            string subnetId = null;
             LoadBalancer loadBalancer = null;
-            // For extended location scenario, we need to pass Extended Location for creating networking components as well
-            // Since Networking SDK is not yet updated, creating networking components through ARM Template Deployment
-            // Will replace the code once Networking SDK allows passing in Extended Location
-            if (extendedLocation == null)
-            {
-                var getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
+            var getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName, extendedLocation: extendedLocation);
 
-                var subnetResponse = subnet ?? CreateVNET(rgName);
-                subnetId = subnetResponse.Id;
+            var subnetResponse = subnet ?? CreateVNET(rgName, extendedLocation: extendedLocation);
 
-                var nicResponse = CreateNIC(
-                    rgName,
-                    subnetResponse,
-                    getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
+            var nicResponse = CreateNIC(
+                rgName,
+                subnetResponse,
+                getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null,
+                extendedLocation: extendedLocation);
 
-                loadBalancer = (getPublicIpAddressResponse != null && createWithHealthProbe) ?
-                    CreatePublicLoadBalancerWithProbe(rgName, getPublicIpAddressResponse) : null;
-            }
-            else
-            {
-                JObject deploymentParams = new JObject
-                    {
-                        { "extendedLocation", new JObject
-                            {
-                                { "value", extendedLocation }
-                            }
-                        }
-                    };
-
-                Deployment deployment = new Deployment
-                {
-                    Properties = new DeploymentProperties()
-                    {
-                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "EdgeZone_Template.json"))),
-                        Parameters = deploymentParams,
-                        Mode = DeploymentMode.Incremental
-                    }
-                };
-                string deploymentName = ComputeManagementTestUtilities.GenerateName("deployment");
-                DeploymentExtended deploymentCreateResult = m_ResourcesClient.Deployments.CreateOrUpdate(rgName, deploymentName, deployment);
-
-                Assert.Equal("Succeeded", deploymentCreateResult.Properties.ProvisioningState);
-                Assert.NotNull(deploymentCreateResult.Id);
-                Assert.Equal(deploymentName, deploymentCreateResult.Name);
-
-                JObject deploymentOutputs = (JObject)deploymentCreateResult.Properties.Outputs;
-                subnetId = deploymentOutputs.GetValue("subnetId")?.Value<string>("value");
-
-                Assert.NotNull(subnetId);
-            }
+            loadBalancer = (getPublicIpAddressResponse != null && createWithHealthProbe) ?
+                CreatePublicLoadBalancerWithProbe(rgName, getPublicIpAddressResponse) : null;
 
             Assert.True(createWithManagedDisks || storageAccount != null);
-            inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount?.Name, imageRef, subnetId, hasManagedDisks:createWithManagedDisks,
+            inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount?.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks,
                 healthProbeId: loadBalancer?.Probes?.FirstOrDefault()?.Id,
                 loadBalancerBackendPoolId: loadBalancer?.BackendAddressPools?.FirstOrDefault()?.Id, zones: zones, osDiskSizeInGB: osDiskSizeInGB,
                 machineSizeType: machineSizeType, enableUltraSSD: enableUltraSSD, diskEncryptionSetId: diskEncryptionSetId, automaticRepairsPolicy: automaticRepairsPolicy,
@@ -514,7 +475,7 @@ namespace Compute.Tests
 
             if (extendedLocation != null)
             {
-                inputVMScaleSet.ExtendedLocation = new ExtendedLocation(extendedLocation);
+                inputVMScaleSet.ExtendedLocation = new CM.ExtendedLocation(extendedLocation);
             }
 
             inputVMScaleSet.SinglePlacementGroup = singlePlacementGroup ? (bool?) null : false;
