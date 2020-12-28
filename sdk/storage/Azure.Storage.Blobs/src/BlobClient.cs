@@ -149,6 +149,9 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
         public BlobClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {

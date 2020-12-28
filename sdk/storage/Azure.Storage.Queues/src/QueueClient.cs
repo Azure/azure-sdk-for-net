@@ -283,6 +283,9 @@ namespace Azure.Storage.Queues
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
         public QueueClient(Uri queueUri, AzureSasCredential credential, QueueClientOptions options = default)
             : this(queueUri, credential.AsPolicy(queueUri), options, null)
         {

@@ -295,6 +295,9 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
         public DataLakeFileSystemClient(Uri fileSystemUri, AzureSasCredential credential, DataLakeClientOptions options = default)
             : this(fileSystemUri, credential.AsPolicy(fileSystemUri), options, null)
         {

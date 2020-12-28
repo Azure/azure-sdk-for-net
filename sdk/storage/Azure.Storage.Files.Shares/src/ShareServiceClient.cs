@@ -210,6 +210,9 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
         public ShareServiceClient(Uri serviceUri, AzureSasCredential credential, ShareClientOptions options = default)
             : this(serviceUri, credential.AsPolicy(serviceUri), options, null)
         {
