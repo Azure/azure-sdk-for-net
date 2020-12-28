@@ -13,7 +13,7 @@ jobs:
           REPOSITORY_NAME: $(Build.Repository.Name)
           PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
       - pwsh: |
-          if ("$(checkFlag)" -eq "false") { exit 1 }
+          if ($(checkFlag) -eq "false") { exit 1 }
         displayName: "Failure Check"
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
