@@ -1,0 +1,543 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c/alert/anomaly/configurations",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201221.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "5efbea41febe85db1dbb648ffa46e7fe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8108e112-2a76-4466-80c7-87e1fc4b52c8",
+        "Content-Length": "12404",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 22 Dec 2020 02:28:05 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "120",
+        "X-Request-ID": "8108e112-2a76-4466-80c7-87e1fc4b52c8"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "anomalyAlertingConfigurationId": "b3dc6db3-617f-4229-b338-ac31baee2445",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "65e1606b-0254-4c18-8f66-877490e74b6a",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "3636f929-f7c5-494e-9eb3-8915d1552317",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "aaeb0a37-7402-4e2e-927a-8698e0ba41c4",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "e2c7ca76-56f6-4c2c-b435-b4bdf9825d2c",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "ccf99404-9296-4007-8611-1c626d9f01d8",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "e016612d-a658-436a-86e4-415b44e1d3aa",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "25ceef54-60cf-4d80-9886-3984f8cec8a2",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "81a9b3db-a888-4455-b1d4-ebf0b0c44b5e",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "0478e1a7-a5c1-4b46-bee9-7f76b09352b2",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "aed0331c-0784-4cd1-b182-7f5f47d02356",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "27cd885d-29e1-42c8-815b-ad2dbc8aa2e1",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "d53fe955-592b-4361-8250-69890aa2db0d",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "e48633d8-a7c2-4273-83c3-d13256fd2c65",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "bc872469-3e01-43ef-9acd-c89020c59537",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "84add77a-24d8-4392-9310-a0ef277cfa30",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "923534ae-5fd8-44d5-8b64-d34fce188f4b",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "f183f2ef-f03c-4f51-9b88-e3091a60f1db",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "18048d3f-693d-423b-82db-a3143377d48e",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "da927a66-4973-41c3-8727-36623e22e4e8",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "ef670bea-6d6a-4977-9d25-ec5eb27bcb04",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "12a22817-8c13-4d59-88a9-12235d3c2bb9",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "26e157f0-7b52-4f0d-a6a8-78e9be343a82",
+            "name": "test_alert_configuration",
+            "description": "testing_alert_configuration_description",
+            "crossMetricsOperator": "XOR",
+            "hookIds": [
+              "793adcdb-5293-4e4a-a60c-7c32cd5829fc"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              },
+              {
+                "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+                "anomalyScopeType": "All",
+                "negationOperation": false
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "902c97ca-d21e-4baa-bb76-188cf90d9ba1",
+            "name": "test_alert_config_1605052664635",
+            "description": "Alerting config description",
+            "hookIds": [
+              "dc6acf85-fa8f-4f72-a6fa-1ef6af8071f9"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false,
+                "severityFilter": {
+                  "minAlertSeverity": "Medium",
+                  "maxAlertSeverity": "High"
+                },
+                "snoozeFilter": {
+                  "autoSnooze": 0,
+                  "snoozeScope": "Metric",
+                  "onlyForSuccessive": true
+                }
+              }
+            ]
+          },
+          {
+            "anomalyAlertingConfigurationId": "204a211a-c5f4-45f3-a30e-512fb25d1d2c",
+            "name": "alert-test-setting",
+            "description": "",
+            "hookIds": [
+              "65fa0aa4-9b71-451c-a04c-cc74cb413ad7"
+            ],
+            "metricAlertingConfigurations": [
+              {
+                "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+                "anomalyScopeType": "All",
+                "negationOperation": false,
+                "severityFilter": {
+                  "minAlertSeverity": "Low",
+                  "maxAlertSeverity": "High"
+                },
+                "snoozeFilter": {
+                  "autoSnooze": 0,
+                  "snoozeScope": "Series",
+                  "onlyForSuccessive": true
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "2011634348"
+  }
+}
