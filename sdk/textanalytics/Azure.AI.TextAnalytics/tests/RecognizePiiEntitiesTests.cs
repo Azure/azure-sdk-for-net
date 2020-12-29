@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         public RecognizePiiEntitiesTests(bool isAsync) : base(isAsync) { }
 
-        private const string singleEnglish = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.";
+        private const string SingleEnglish = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.";
 
         private static List<string> batchConvenienceDocuments = new List<string>
         {
@@ -37,42 +37,33 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizePiiEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
-            string document = singleEnglish;
+            string document = SingleEnglish;
 
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document);
 
-            Assert.AreEqual(2, entities.Count);
-            Assert.IsNotNull(entities.RedactedText);
+            ValidateInDocumenResult(entities, 2);
         }
 
         [Test]
         public async Task RecognizePiiEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = singleEnglish;
+            string document = SingleEnglish;
 
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document);
 
-            Assert.AreEqual(2, entities.Count);
-            Assert.IsNotNull(entities.RedactedText);
-
-            var entitiesList = new List<string> { "859-98-0987", "800-102-1100" };
-            foreach (PiiEntity entity in entities)
-            {
-                Assert.IsTrue(entitiesList.Contains(entity.Text));
-            }
+            ValidateInDocumenResult(entities, 2);
         }
 
         [Test]
         public async Task RecognizePiiEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = singleEnglish;
+            string document = SingleEnglish;
 
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en");
 
-            Assert.AreEqual(2, entities.Count);
-            Assert.IsNotNull(entities.RedactedText);
+            ValidateInDocumenResult(entities, 2);
         }
 
         [Test]
@@ -83,10 +74,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } );
 
-            Assert.AreEqual(1, entities.Count);
+            ValidateInDocumenResult(entities, 1);
             Assert.AreEqual("atest@microsoft.com", entities.FirstOrDefault().Text);
             Assert.AreEqual(EntityCategory.Email, entities.FirstOrDefault().Category);
-            Assert.IsNotNull(entities.RedactedText);
         }
 
         [Test]
@@ -119,10 +109,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
 
-            foreach (RecognizePiiEntitiesResult result in results)
-            {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
+            ValidateBatchDocumentsResult(results);
         }
 
         [Test]
@@ -133,15 +120,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents, "en", new RecognizePiiEntitiesOptions { IncludeStatistics = true });
 
-            foreach (RecognizePiiEntitiesResult result in results)
-            {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
-
-            Assert.Greater(results.Statistics.DocumentCount, 0);
-            Assert.AreEqual(0, results.Statistics.InvalidDocumentCount);
-            Assert.Greater(results.Statistics.TransactionCount, 0);
-            Assert.Greater(results.Statistics.ValidDocumentCount, 0);
+            ValidateBatchDocumentsResult(results, includeStatistics: true);
         }
 
         [Test]
@@ -152,10 +131,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
 
-            foreach (RecognizePiiEntitiesResult result in results)
-            {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
+            ValidateBatchDocumentsResult(results);
         }
 
         [Test]
@@ -166,15 +142,65 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents, new RecognizePiiEntitiesOptions { IncludeStatistics = true });
 
-            foreach (RecognizePiiEntitiesResult result in results)
-            {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
+            ValidateBatchDocumentsResult(results, includeStatistics: true);
+        }
 
-            Assert.Greater(results.Statistics.DocumentCount, 0);
-            Assert.AreEqual(0, results.Statistics.InvalidDocumentCount);
-            Assert.Greater(results.Statistics.TransactionCount, 0);
-            Assert.Greater(results.Statistics.ValidDocumentCount, 0);
+        private void ValidateInDocumenResult(PiiEntityCollection entities, int minCount = 1)
+        {
+            Assert.IsNotNull(entities.Warnings);
+            Assert.That(entities.RedactedText, Is.Not.Null.And.Not.Empty);
+            Assert.GreaterOrEqual(entities.Count, minCount);
+            foreach (PiiEntity entity in entities)
+            {
+                Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
+                Assert.That(entity.Category, Is.Not.Null);
+                Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
+                Assert.GreaterOrEqual(entity.Offset, 0);
+
+                if (entity.SubCategory != null)
+                {
+                    Assert.IsNotEmpty(entity.SubCategory);
+                }
+            }
+        }
+
+        private void ValidateBatchDocumentsResult(RecognizePiiEntitiesResultCollection results, bool includeStatistics = default)
+        {
+            Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
+
+            if (includeStatistics)
+            {
+                Assert.IsNotNull(results.Statistics);
+                Assert.Greater(results.Statistics.DocumentCount, 0);
+                Assert.Greater(results.Statistics.TransactionCount, 0);
+                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+            }
+            else
+                Assert.IsNull(results.Statistics);
+
+            foreach (RecognizePiiEntitiesResult entitiesInDocument in results)
+            {
+                Assert.That(entitiesInDocument.Id, Is.Not.Null.And.Not.Empty);
+
+                Assert.False(entitiesInDocument.HasError);
+
+                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                Assert.IsNotNull(entitiesInDocument.Statistics);
+
+                if (includeStatistics)
+                {
+                    Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
+                    Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
+                }
+                else
+                {
+                    Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
+                    Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                }
+
+                ValidateInDocumenResult(entitiesInDocument.Entities);
+            }
         }
     }
 }
