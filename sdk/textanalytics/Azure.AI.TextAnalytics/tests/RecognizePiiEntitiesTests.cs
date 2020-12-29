@@ -15,13 +15,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private const string SingleEnglish = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.";
 
-        private static List<string> batchConvenienceDocuments = new List<string>
+        private static readonly List<string> s_batchConvenienceDocuments = new List<string>
         {
             "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.",
             "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check."
         };
 
-        private static List<TextDocumentInput> batchDocuments = new List<TextDocumentInput>
+        private static readonly List<TextDocumentInput> s_batchDocuments = new List<TextDocumentInput>
         {
             new TextDocumentInput("1", "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.")
             {
@@ -37,9 +37,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizePiiEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
-            string document = SingleEnglish;
-
-            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document);
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(SingleEnglish);
 
             ValidateInDocumenResult(entities, 2);
         }
@@ -48,9 +46,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizePiiEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = SingleEnglish;
-
-            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document);
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(SingleEnglish);
 
             ValidateInDocumenResult(entities, 2);
         }
@@ -59,9 +55,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizePiiEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = SingleEnglish;
-
-            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en");
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(SingleEnglish, "en");
 
             ValidateInDocumenResult(entities, 2);
         }
@@ -105,9 +99,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizePiiEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
-
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchConvenienceDocuments);
 
             ValidateBatchDocumentsResult(results);
         }
@@ -116,9 +108,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizePiiEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
-
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents, "en", new RecognizePiiEntitiesOptions { IncludeStatistics = true });
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new RecognizePiiEntitiesOptions { IncludeStatistics = true });
 
             ValidateBatchDocumentsResult(results, includeStatistics: true);
         }
@@ -127,9 +117,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizePiiEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = batchDocuments;
-
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchDocuments);
 
             ValidateBatchDocumentsResult(results);
         }
@@ -138,9 +126,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizePiiEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = batchDocuments;
-
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents, new RecognizePiiEntitiesOptions { IncludeStatistics = true });
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchDocuments, new RecognizePiiEntitiesOptions { IncludeStatistics = true });
 
             ValidateBatchDocumentsResult(results, includeStatistics: true);
         }
@@ -153,7 +139,7 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (PiiEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.That(entity.Category, Is.Not.Null);
+                Assert.IsNotNull(entity.Category);
                 Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
                 Assert.GreaterOrEqual(entity.Offset, 0);
 

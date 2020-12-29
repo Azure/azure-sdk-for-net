@@ -16,13 +16,13 @@ namespace Azure.AI.TextAnalytics.Tests
         private const string SingleEnglish = "Microsoft was founded by Bill Gates and Paul Allen.";
         private const string SingleSpanish = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
-        private static List<string> batchConvenienceDocuments = new List<string>
+        private static readonly List<string> s_batchConvenienceDocuments = new List<string>
         {
             "Microsoft was founded by Bill Gates and Paul Allen.",
             "Pike place market is my favorite Seattle attraction.",
         };
 
-        private static List<TextDocumentInput> batchDocuments = new List<TextDocumentInput>
+        private static readonly List<TextDocumentInput> s_batchDocuments = new List<TextDocumentInput>
         {
             new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
             {
@@ -38,9 +38,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeLinkedEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
-            string document = SingleEnglish;
-
-            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(document);
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(SingleEnglish);
 
             ValidateInDocumenResult(linkedEntities, 3);
         }
@@ -49,9 +47,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeLinkedEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = SingleEnglish;
-
-            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(document);
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(SingleEnglish);
 
             ValidateInDocumenResult(linkedEntities, 3);
         }
@@ -60,9 +56,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeLinkedEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = SingleSpanish;
-
-            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(document, "es");
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(SingleSpanish, "es");
 
             ValidateInDocumenResult(linkedEntities, 3);
         }
@@ -113,9 +107,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeLinkedEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
-
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents);
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments);
 
             ValidateBatchDocumentsResult(results);
         }
@@ -124,9 +116,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeLinkedEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
-
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             ValidateBatchDocumentsResult(results, includeStatistics: true);
         }
@@ -135,9 +125,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeLinkedEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = batchDocuments;
-
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents);
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments);
 
             ValidateBatchDocumentsResult(results);
         }
@@ -146,9 +134,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeLinkedEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = batchDocuments;
-
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             ValidateBatchDocumentsResult(results, includeStatistics: true);
         }
@@ -185,7 +171,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.That(entity.Name, Is.Not.Null.And.Not.Empty);
                 Assert.That(entity.Language, Is.Not.Null.And.Not.Empty);
                 Assert.That(entity.DataSource, Is.Not.Null.And.Not.Empty);
-                Assert.That(entity.Url, Is.Not.Null);
+                Assert.IsNotNull(entity.Url);
 
                 if (entity.DataSourceEntityId != null)
                 {

@@ -38,9 +38,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
-            string document = SingleEnglish;
-
-            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(SingleEnglish);
 
             ValidateInDocumenResult(entities, 3);
         }
@@ -49,9 +47,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = SingleEnglish;
-
-            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(SingleEnglish);
 
             ValidateInDocumenResult(entities, 3);
         }
@@ -60,9 +56,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = SingleSpanish;
-
-            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document, "es");
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(SingleSpanish, "es");
 
             ValidateInDocumenResult(entities, 3);
         }
@@ -130,9 +124,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = s_batchConvenienceDocuments;
-
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents);
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments);
 
             ValidateBatchDocumentsResult(results);
         }
@@ -141,9 +133,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = s_batchConvenienceDocuments;
-
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             ValidateBatchDocumentsResult(results, includeStatistics: true);
         }
@@ -152,9 +142,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = s_batchDocuments;
-
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents);
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchDocuments);
 
             ValidateBatchDocumentsResult(results);
         }
@@ -163,9 +151,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = s_batchDocuments;
-
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchDocuments, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             ValidateBatchDocumentsResult(results, includeStatistics: true);
         }
@@ -200,7 +186,7 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (CategorizedEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.That(entity.Category, Is.Not.Null);
+                Assert.IsNotNull(entity.Category);
                 Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
                 Assert.GreaterOrEqual(entity.Offset, 0);
 
