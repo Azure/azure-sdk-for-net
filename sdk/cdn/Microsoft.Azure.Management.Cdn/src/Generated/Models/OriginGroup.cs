@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Possible values include: 'Creating', 'Active', 'Deleting'</param>
         /// <param name="provisioningState">Provisioning status of the origin
         /// group.</param>
-        public OriginGroup(string id = default(string), string name = default(string), string type = default(string), HealthProbeParameters healthProbeSettings = default(HealthProbeParameters), IList<ResourceReference> origins = default(IList<ResourceReference>), int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default(int?), ResponseBasedOriginErrorDetectionParameters responseBasedOriginErrorDetectionSettings = default(ResponseBasedOriginErrorDetectionParameters), string resourceState = default(string), string provisioningState = default(string))
-            : base(id, name, type)
+        public OriginGroup(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), HealthProbeParameters healthProbeSettings = default(HealthProbeParameters), IList<ResourceReference> origins = default(IList<ResourceReference>), int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default(int?), ResponseBasedOriginErrorDetectionParameters responseBasedOriginErrorDetectionSettings = default(ResponseBasedOriginErrorDetectionParameters), string resourceState = default(string), string provisioningState = default(string))
+            : base(id, name, type, systemData)
         {
             HealthProbeSettings = healthProbeSettings;
             Origins = origins;

@@ -33,7 +33,11 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="name">Name of the pricing tier. Possible values
         /// include: 'Standard_Verizon', 'Premium_Verizon', 'Custom_Verizon',
         /// 'Standard_Akamai', 'Standard_ChinaCdn', 'Standard_Microsoft',
-        /// 'Premium_ChinaCdn'</param>
+        /// 'Premium_ChinaCdn', 'Standard_AzureFrontDoor',
+        /// 'Premium_AzureFrontDoor', 'Standard_955BandWidth_ChinaCdn',
+        /// 'Standard_AvgBandWidth_ChinaCdn', 'StandardPlus_ChinaCdn',
+        /// 'StandardPlus_955BandWidth_ChinaCdn',
+        /// 'StandardPlus_AvgBandWidth_ChinaCdn'</param>
         public Sku(string name = default(string))
         {
             Name = name;
@@ -49,7 +53,11 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Gets or sets name of the pricing tier. Possible values include:
         /// 'Standard_Verizon', 'Premium_Verizon', 'Custom_Verizon',
         /// 'Standard_Akamai', 'Standard_ChinaCdn', 'Standard_Microsoft',
-        /// 'Premium_ChinaCdn'
+        /// 'Premium_ChinaCdn', 'Standard_AzureFrontDoor',
+        /// 'Premium_AzureFrontDoor', 'Standard_955BandWidth_ChinaCdn',
+        /// 'Standard_AvgBandWidth_ChinaCdn', 'StandardPlus_ChinaCdn',
+        /// 'StandardPlus_955BandWidth_ChinaCdn',
+        /// 'StandardPlus_AvgBandWidth_ChinaCdn'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
