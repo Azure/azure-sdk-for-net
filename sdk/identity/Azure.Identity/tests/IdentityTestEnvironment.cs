@@ -10,6 +10,13 @@ namespace Azure.Identity.Tests
 {
     public class IdentityTestEnvironment : TestEnvironment
     {
+<<<<<<< HEAD
+=======
+        public IdentityTestEnvironment() : base("identity")
+        {
+        }
+
+>>>>>>> a352747f5c8c26ebe9534c86cde60f3cb513a47e
         public string aa => GetOptionalVariable("AZURE_IDENTITY_TEST_TENANTID");
         public string IdentityTenantId => GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
         public string Username => GetRecordedVariable("AZURE_IDENTITY_TEST_USERNAME");
