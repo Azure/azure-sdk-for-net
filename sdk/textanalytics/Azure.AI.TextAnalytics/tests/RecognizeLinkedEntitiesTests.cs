@@ -13,52 +13,67 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         public RecognizeLinkedEntitiesTests(bool isAsync) : base(isAsync) { }
 
-        private const string SingleEnglish = "Microsoft was founded by Bill Gates and Paul Allen.";
-        private const string SingleSpanish = "Microsoft fue fundado por Bill Gates y Paul Allen.";
+        private const string EnglishDocument1 = "Microsoft was founded by Bill Gates and Paul Allen.";
+        private const string EnglishDocument2 = "Pike place market is my favorite Seattle attraction.";
+
+        private const string SpanishDocument1 = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
         private static readonly List<string> s_batchConvenienceDocuments = new List<string>
         {
-            "Microsoft was founded by Bill Gates and Paul Allen.",
-            "Pike place market is my favorite Seattle attraction.",
+            EnglishDocument1,
+            EnglishDocument2,
         };
 
         private static readonly List<TextDocumentInput> s_batchDocuments = new List<TextDocumentInput>
         {
-            new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+            new TextDocumentInput("1", EnglishDocument1)
             {
                  Language = "en",
             },
-            new TextDocumentInput("3", "Pike place market is my favorite Seattle attraction.")
+            new TextDocumentInput("3", SpanishDocument1)
             {
-                 Language = "en",
+                 Language = "es",
             }
+        };
+
+        private static readonly List<string> s_document1ExpectedOutput = new List<string>
+        {
+            "Microsoft",
+            "Bill Gates",
+            "Paul Allen"
+        };
+
+        private static readonly List<string> s_document2ExpectedOutput = new List<string>
+        {
+            "Pike Place Market",
+            "Seattle"
         };
 
         [Test]
         public async Task RecognizeLinkedEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
-            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(SingleEnglish);
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(EnglishDocument1);
 
-            ValidateInDocumenResult(linkedEntities, 3);
+            ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
         [Test]
         public async Task RecognizeLinkedEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(SingleEnglish);
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(EnglishDocument1);
 
-            ValidateInDocumenResult(linkedEntities, 3);
+            ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
         [Test]
         public async Task RecognizeLinkedEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(SingleSpanish, "es");
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(SpanishDocument1, "es");
 
-            ValidateInDocumenResult(linkedEntities, 3);
+            ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
         [Test]
@@ -109,7 +124,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments);
 
-            ValidateBatchDocumentsResult(results);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
         [Test]
@@ -118,7 +139,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
-            ValidateBatchDocumentsResult(results, includeStatistics: true);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
         [Test]
@@ -127,7 +154,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments);
 
-            ValidateBatchDocumentsResult(results);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedOutput },
+                { "3", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
         [Test]
@@ -136,7 +169,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
-            ValidateBatchDocumentsResult(results, includeStatistics: true);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedOutput },
+                { "3", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
         [Test]
@@ -162,10 +201,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        private void ValidateInDocumenResult(LinkedEntityCollection entities, int minCount = 1)
+        private void ValidateInDocumenResult(LinkedEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);
-            Assert.GreaterOrEqual(entities.Count, minCount);
+            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
             foreach (LinkedEntity entity in entities)
             {
                 Assert.That(entity.Name, Is.Not.Null.And.Not.Empty);
@@ -187,13 +226,14 @@ namespace Azure.AI.TextAnalytics.Tests
                 foreach (LinkedEntityMatch match in entity.Matches)
                 {
                     Assert.That(match.Text, Is.Not.Null.And.Not.Empty);
+                    Assert.IsTrue(minimumExpectedOutput.Contains(match.Text, StringComparer.OrdinalIgnoreCase));
                     Assert.GreaterOrEqual(match.ConfidenceScore, 0.0);
                     Assert.GreaterOrEqual(match.Offset, 0);
                 }
             }
         }
 
-        private void ValidateBatchDocumentsResult(RecognizeLinkedEntitiesResultCollection results, bool includeStatistics = default)
+        private void ValidateBatchDocumentsResult(RecognizeLinkedEntitiesResultCollection results, Dictionary<string, List<string>> minimumExpectedOutput, bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -228,7 +268,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
                 }
 
-                ValidateInDocumenResult(entitiesInDocument.Entities);
+                ValidateInDocumenResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
             }
         }
     }

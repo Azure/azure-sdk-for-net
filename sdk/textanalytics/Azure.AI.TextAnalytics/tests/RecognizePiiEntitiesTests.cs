@@ -13,51 +13,63 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         public RecognizePiiEntitiesTests(bool isAsync) : base(isAsync) { }
 
-        private const string SingleEnglish = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.";
+        private const string EnglishDocument1 = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.";
+        private const string EnglishDocument2 = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check";
 
         private static readonly List<string> s_batchConvenienceDocuments = new List<string>
         {
-            "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.",
-            "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check."
+            EnglishDocument1,
+            EnglishDocument2
         };
 
         private static readonly List<TextDocumentInput> s_batchDocuments = new List<TextDocumentInput>
         {
-            new TextDocumentInput("1", "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.")
+            new TextDocumentInput("1", EnglishDocument1)
             {
                  Language = "en",
             },
-            new TextDocumentInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+            new TextDocumentInput("2", EnglishDocument2)
             {
                  Language = "en",
             }
+        };
+
+        private static readonly List<string> s_document1ExpectedOutput = new List<string>
+        {
+            "859-98-0987",
+            "800-102-1100"
+        };
+
+        private static readonly List<string> s_document2ExpectedOutput = new List<string>
+        {
+            "111000025"
         };
 
         [Test]
         public async Task RecognizePiiEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
-            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(SingleEnglish);
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1);
 
-            ValidateInDocumenResult(entities, 2);
+            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
         [Test]
         public async Task RecognizePiiEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(SingleEnglish);
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1);
 
-            ValidateInDocumenResult(entities, 2);
+            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
         [Test]
         public async Task RecognizePiiEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(SingleEnglish, "en");
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en");
 
-            ValidateInDocumenResult(entities, 2);
+            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
         [Test]
@@ -68,9 +80,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } );
 
-            ValidateInDocumenResult(entities, 1);
-            Assert.AreEqual("atest@microsoft.com", entities.FirstOrDefault().Text);
-            Assert.AreEqual(EntityCategory.Email, entities.FirstOrDefault().Category);
+            ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com" });
         }
 
         [Test]
@@ -101,7 +111,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchConvenienceDocuments);
 
-            ValidateBatchDocumentsResult(results);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
         [Test]
@@ -110,7 +126,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new RecognizePiiEntitiesOptions { IncludeStatistics = true });
 
-            ValidateBatchDocumentsResult(results, includeStatistics: true);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
         [Test]
@@ -119,7 +141,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchDocuments);
 
-            ValidateBatchDocumentsResult(results);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedOutput },
+                { "2", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
         [Test]
@@ -128,17 +156,24 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchDocuments, new RecognizePiiEntitiesOptions { IncludeStatistics = true });
 
-            ValidateBatchDocumentsResult(results, includeStatistics: true);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedOutput },
+                { "2", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
-        private void ValidateInDocumenResult(PiiEntityCollection entities, int minCount = 1)
+        private void ValidateInDocumenResult(PiiEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);
             Assert.That(entities.RedactedText, Is.Not.Null.And.Not.Empty);
-            Assert.GreaterOrEqual(entities.Count, minCount);
+            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
             foreach (PiiEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
+                Assert.IsTrue(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase));
                 Assert.IsNotNull(entity.Category);
                 Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
                 Assert.GreaterOrEqual(entity.Offset, 0);
@@ -150,7 +185,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateBatchDocumentsResult(RecognizePiiEntitiesResultCollection results, bool includeStatistics = default)
+        private void ValidateBatchDocumentsResult(RecognizePiiEntitiesResultCollection results, Dictionary<string, List<string>> minimumExpectedOutput, bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -185,7 +220,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
                 }
 
-                ValidateInDocumenResult(entitiesInDocument.Entities);
+                ValidateInDocumenResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
             }
         }
     }

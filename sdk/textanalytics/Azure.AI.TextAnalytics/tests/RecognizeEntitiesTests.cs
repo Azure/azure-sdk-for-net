@@ -13,52 +13,66 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         public RecognizeEntitiesTests(bool isAsync) : base(isAsync) { }
 
-        private const string SingleEnglish = "Microsoft was founded by Bill Gates and Paul Allen.";
-        private const string SingleSpanish = "Microsoft fue fundado por Bill Gates y Paul Allen.";
+        private const string EnglishDocument1 = "Microsoft was founded by Bill Gates and Paul Allen.";
+        private const string EnglishDocument2 = "My cat and my dog might need to see a veterinarian.";
+
+        private const string SpanishDocument1 = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
         private static readonly List<string> s_batchConvenienceDocuments = new List<string>
         {
-            "Microsoft was founded by Bill Gates and Paul Allen.",
-            "My cat and my dog might need to see a veterinarian."
+            EnglishDocument1,
+            EnglishDocument2
         };
 
         private static readonly List<TextDocumentInput> s_batchDocuments = new List<TextDocumentInput>
         {
-            new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+            new TextDocumentInput("1", EnglishDocument1)
             {
                  Language = "en",
             },
-            new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
+            new TextDocumentInput("2", SpanishDocument1)
             {
                  Language = "es",
             }
+        };
+
+        private static readonly List<string> s_document1ExpectedOutput = new List<string>
+        {
+            "Microsoft",
+            "Bill Gates",
+            "Paul Allen"
+        };
+
+        private static readonly List<string> s_document2ExpectedOutput = new List<string>
+        {
+            "veterinarian"
         };
 
         [Test]
         public async Task RecognizeEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
-            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(SingleEnglish);
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(EnglishDocument1);
 
-            ValidateInDocumenResult(entities, 3);
+            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
         [Test]
         public async Task RecognizeEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(SingleEnglish);
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(EnglishDocument1);
 
-            ValidateInDocumenResult(entities, 3);
+            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
         [Test]
         public async Task RecognizeEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(SingleSpanish, "es");
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(SpanishDocument1, "es");
 
-            ValidateInDocumenResult(entities, 3);
+            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
         [Test]
@@ -126,7 +140,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments);
 
-            ValidateBatchDocumentsResult(results);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
         [Test]
@@ -135,7 +155,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
-            ValidateBatchDocumentsResult(results, includeStatistics: true);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
         [Test]
@@ -144,7 +170,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchDocuments);
 
-            ValidateBatchDocumentsResult(results);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
         [Test]
@@ -153,7 +185,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchDocuments, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
-            ValidateBatchDocumentsResult(results, includeStatistics: true);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
         [Test]
@@ -179,13 +217,14 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        private void ValidateInDocumenResult(CategorizedEntityCollection entities, int minCount = 1)
+        private void ValidateInDocumenResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);
-            Assert.GreaterOrEqual(entities.Count, minCount);
+            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
             foreach (CategorizedEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
+                Assert.IsTrue(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase));
                 Assert.IsNotNull(entity.Category);
                 Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
                 Assert.GreaterOrEqual(entity.Offset, 0);
@@ -197,7 +236,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateBatchDocumentsResult(RecognizeEntitiesResultCollection results, bool includeStatistics = default)
+        private void ValidateBatchDocumentsResult(RecognizeEntitiesResultCollection results, Dictionary<string, List<string>> minimumExpectedOutput, bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -232,7 +271,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
                 }
 
-                ValidateInDocumenResult(entitiesInDocument.Entities);
+                ValidateInDocumenResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
             }
         }
     }
