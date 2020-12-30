@@ -730,6 +730,935 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdDataSource.Query, Is.EqualTo("query"));
         }
 
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
+        public async Task UpdateAzureApplicationInsightsDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureApplicationInsightsDataFeedSource("appId", "key", "cloud", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureApplicationInsights));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureApplicationInsightsDataFeedSource;
+
+            var expectedKey = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "key";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ApplicationId, Is.EqualTo("appId"));
+            Assert.That(updatedDataSource.ApiKey, Is.EqualTo(expectedKey));
+            Assert.That(updatedDataSource.AzureCloud, Is.EqualTo("cloud"));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
+        public async Task UpdateAzureApplicationInsightsDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureApplicationInsightsDataFeedSource("appId", "key", "cloud", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureApplicationInsights));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureApplicationInsightsDataFeedSource;
+
+            var expectedKey = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "key";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ApplicationId, Is.EqualTo("appId"));
+            Assert.That(updatedDataSource.ApiKey, Is.EqualTo(expectedKey));
+            Assert.That(updatedDataSource.AzureCloud, Is.EqualTo("cloud"));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureBlobDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureBlobDataFeedSource("connectionStr", "container", "template");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureBlob));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureBlobDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Container, Is.EqualTo("container"));
+            Assert.That(updatedDataSource.BlobTemplate, Is.EqualTo("template"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureBlobDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureBlobDataFeedSource("connectionStr", "container", "template");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureBlob));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureBlobDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Container, Is.EqualTo("container"));
+            Assert.That(updatedDataSource.BlobTemplate, Is.EqualTo("template"));
+        }
+
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
+        public async Task UpdateAzureCosmosDbDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureCosmosDbDataFeedSource("connectionStr", "query", "database", "collectId");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureCosmosDb));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureCosmosDbDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.SqlQuery, Is.EqualTo("query"));
+            Assert.That(updatedDataSource.Database, Is.EqualTo("database"));
+            Assert.That(updatedDataSource.CollectionId, Is.EqualTo("collectId"));
+        }
+
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
+        public async Task UpdateAzureCosmosDbDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureCosmosDbDataFeedSource("connectionStr", "query", "database", "collectId");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureCosmosDb));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureCosmosDbDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.SqlQuery, Is.EqualTo("query"));
+            Assert.That(updatedDataSource.Database, Is.EqualTo("database"));
+            Assert.That(updatedDataSource.CollectionId, Is.EqualTo("collectId"));
+        }
+
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
+        public async Task UpdateAzureDataExplorerDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataExplorerDataFeedSource("connectionStr", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataExplorer));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
+        public async Task UpdateAzureDataExplorerDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataExplorerDataFeedSource("connectionStr", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataExplorer));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataLakeStorageGen2DataFeedSource("account", "key", "fileSystem", "dir", "file");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+
+            var expectedKey = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "key";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.AccountName, Is.EqualTo("account"));
+            Assert.That(updatedDataSource.AccountKey, Is.EqualTo(expectedKey));
+            Assert.That(updatedDataSource.FileSystemName, Is.EqualTo("fileSystem"));
+            Assert.That(updatedDataSource.DirectoryTemplate, Is.EqualTo("dir"));
+            Assert.That(updatedDataSource.FileTemplate, Is.EqualTo("file"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataLakeStorageGen2DataFeedSource("account", "key", "fileSystem", "dir", "file");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+
+            var expectedKey = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "key";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.AccountName, Is.EqualTo("account"));
+            Assert.That(updatedDataSource.AccountKey, Is.EqualTo(expectedKey));
+            Assert.That(updatedDataSource.FileSystemName, Is.EqualTo("fileSystem"));
+            Assert.That(updatedDataSource.DirectoryTemplate, Is.EqualTo("dir"));
+            Assert.That(updatedDataSource.FileTemplate, Is.EqualTo("file"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureTableDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureTableDataFeedSource("connectionStr", "table", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureTable));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureTableDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Table, Is.EqualTo("table"));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureTableDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureTableDataFeedSource("connectionStr", "table", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureTable));
+
+            var updatedDataSource = updatedDataFeed.DataSource as AzureTableDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Table, Is.EqualTo("table"));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateElasticsearchDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new ElasticsearchDataFeedSource("host", "port", "auth", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.Elasticsearch));
+
+            var updatedDataSource = updatedDataFeed.DataSource as ElasticsearchDataFeedSource;
+
+            var expectedAuth = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "auth";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.Host, Is.EqualTo("host"));
+            Assert.That(updatedDataSource.Port, Is.EqualTo("port"));
+            Assert.That(updatedDataSource.AuthorizationHeader, Is.EqualTo(expectedAuth));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateElasticsearchDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new ElasticsearchDataFeedSource("host", "port", "auth", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.Elasticsearch));
+
+            var updatedDataSource = updatedDataFeed.DataSource as ElasticsearchDataFeedSource;
+
+            var expectedAuth = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "auth";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.Host, Is.EqualTo("host"));
+            Assert.That(updatedDataSource.Port, Is.EqualTo("port"));
+            Assert.That(updatedDataSource.AuthorizationHeader, Is.EqualTo(expectedAuth));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateHttpRequestDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSourceHost = new Uri("https://fakehost.com/");
+            var dataSource = new HttpRequestDataFeedSource(dataSourceHost, "header", "method", "payload");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.HttpRequest));
+
+            var updatedDataSource = updatedDataFeed.DataSource as HttpRequestDataFeedSource;
+
+            var expectedHeader = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "header";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.Url.AbsoluteUri, Is.EqualTo(dataSourceHost.AbsoluteUri));
+            Assert.That(updatedDataSource.HttpHeader, Is.EqualTo(expectedHeader));
+            Assert.That(updatedDataSource.HttpMethod, Is.EqualTo("method"));
+            Assert.That(updatedDataSource.Payload, Is.EqualTo("payload"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateHttpRequestDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSourceHost = new Uri("https://fakehost.com/");
+            var dataSource = new HttpRequestDataFeedSource(dataSourceHost, "header", "method", "payload");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.HttpRequest));
+
+            var updatedDataSource = updatedDataFeed.DataSource as HttpRequestDataFeedSource;
+
+            var expectedHeader = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "header";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.Url.AbsoluteUri, Is.EqualTo(dataSourceHost.AbsoluteUri));
+            Assert.That(updatedDataSource.HttpHeader, Is.EqualTo(expectedHeader));
+            Assert.That(updatedDataSource.HttpMethod, Is.EqualTo("method"));
+            Assert.That(updatedDataSource.Payload, Is.EqualTo("payload"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateInfluxDbDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new InfluxDbDataFeedSource("connectionStr", "database", "username", "pass", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
+
+            var updatedDataSource = updatedDataFeed.DataSource as InfluxDbDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Database, Is.EqualTo("database"));
+            Assert.That(updatedDataSource.Username, Is.EqualTo("username"));
+            Assert.That(updatedDataSource.Password, Is.EqualTo("pass"));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateInfluxDbDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new InfluxDbDataFeedSource("connectionStr", "database", "username", "pass", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
+
+            var updatedDataSource = updatedDataFeed.DataSource as InfluxDbDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Database, Is.EqualTo("database"));
+            Assert.That(updatedDataSource.Username, Is.EqualTo("username"));
+            Assert.That(updatedDataSource.Password, Is.EqualTo("pass"));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateMongoDbDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new MongoDbDataFeedSource("connectionStr", "database", "command");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MongoDb));
+
+            var updatedDataSource = updatedDataFeed.DataSource as MongoDbDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Database, Is.EqualTo("database"));
+            Assert.That(updatedDataSource.Command, Is.EqualTo("command"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateMongoDbDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new MongoDbDataFeedSource("connectionStr", "database", "command");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MongoDb));
+
+            var updatedDataSource = updatedDataFeed.DataSource as MongoDbDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Database, Is.EqualTo("database"));
+            Assert.That(updatedDataSource.Command, Is.EqualTo("command"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateMySqlDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new MySqlDataFeedSource("connectionStr", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MySql));
+
+            var updatedDataSource = updatedDataFeed.DataSource as MySqlDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateMySqlDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new MySqlDataFeedSource("connectionStr", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MySql));
+
+            var updatedDataSource = updatedDataFeed.DataSource as MySqlDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdatePostgreSqlDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new PostgreSqlDataFeedSource("connectionStr", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.PostgreSql));
+
+            var updatedDataSource = updatedDataFeed.DataSource as PostgreSqlDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdatePostgreSqlDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new PostgreSqlDataFeedSource("connectionStr", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.PostgreSql));
+
+            var updatedDataSource = updatedDataFeed.DataSource as PostgreSqlDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateSqlServerDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new SqlServerDataFeedSource("connectionStr", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
+
+            var updatedDataSource = updatedDataFeed.DataSource as SqlServerDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task UpdateSqlServerDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new SqlServerDataFeedSource("connectionStr", "query");
+            var description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
+
+            var updatedDataSource = updatedDataFeed.DataSource as SqlServerDataFeedSource;
+
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : "connectionStr";
+
+            Assert.That(updatedDataSource, Is.Not.Null);
+            Assert.That(updatedDataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(updatedDataSource.Query, Is.EqualTo("query"));
+        }
+
+        [RecordedTest]
+        public async Task DeleteDataFeed()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new SqlServerDataFeedSource("connectionStr", "query");
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            string dataFeedId = null;
+
+            try
+            {
+                dataFeedId = await adminClient.CreateDataFeedAsync(dataFeedToCreate);
+
+                Assert.That(dataFeedId, Is.Not.Null.And.Not.Empty);
+            }
+            finally
+            {
+                if (dataFeedId != null)
+                {
+                    await adminClient.DeleteDataFeedAsync(dataFeedId);
+
+                    var errorCause = "datafeedId is invalid";
+                    Assert.That(async () => await adminClient.GetDataFeedAsync(dataFeedId), Throws.InstanceOf<RequestFailedException>().With.Message.Contains(errorCause));
+                }
+            }
+        }
+
         private DataFeed GetDataFeedWithMinimumSetup(string name, DataFeedSource dataSource)
         {
             var metrics = new List<DataFeedMetric>() { new ("cost") };
@@ -777,13 +1706,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             };
         }
 
-        private void ValidateDataFeedWithMinimumSetup(DataFeed dataFeed, string expectedId, string expectedName)
+        private void ValidateDataFeedWithMinimumSetup(DataFeed dataFeed, string expectedId, string expectedName, string expectedDescription = "")
         {
             var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
 
             Assert.That(dataFeed.Id, Is.EqualTo(expectedId));
             Assert.That(dataFeed.Name, Is.EqualTo(expectedName));
-            Assert.That(dataFeed.Description, Is.Not.Null.And.Empty);
+            Assert.That(dataFeed.Description, Is.EqualTo(expectedDescription));
             Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
             Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Private));
             Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null.And.Empty);

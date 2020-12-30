@@ -26,27 +26,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAndUpdateBlobDataFeed()
-        {
-            var adminClient = GetMetricsAdvisorAdministrationClient();
-            InitDataFeedSources();
-
-            DataFeed dataFeed = new DataFeed(_blobFeedName, _blobSource, _dailyGranularity, _dataFeedSchema, _dataFeedIngestionSettings)
-            {
-                Description = _dataFeedDescription
-            };
-
-            string dataFeedId = await adminClient.CreateDataFeedAsync(dataFeed).ConfigureAwait(false);
-
-            Assert.That(dataFeedId, Is.Not.Null);
-
-            dataFeed.Description = Recording.GenerateAlphaNumericId("desc");
-            await adminClient.UpdateDataFeedAsync(dataFeedId, dataFeed).ConfigureAwait(false);
-
-            await adminClient.DeleteDataFeedAsync(dataFeedId);
-        }
-
-        [RecordedTest]
         public async Task CreateAndUpdateBlobDataFeedFromGet()
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
@@ -70,25 +49,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await adminClient.UpdateDataFeedAsync(getDataFeed.Id, getDataFeed).ConfigureAwait(false);
 
             await adminClient.DeleteDataFeedAsync(dataFeedId);
-        }
-
-        [RecordedTest]
-        public async Task CreateAndUpdateBlobDataFeedNullOptions()
-        {
-            var adminClient = GetMetricsAdvisorAdministrationClient();
-            InitDataFeedSources();
-
-            DataFeed dataFeed = new DataFeed(_blobFeedName, _blobSource, _dailyGranularity, _dataFeedSchema, _dataFeedIngestionSettings);
-
-            string dataFeedId = await adminClient.CreateDataFeedAsync(dataFeed).ConfigureAwait(false);
-
-            Assert.That(dataFeedId, Is.Not.Null);
-
-            dataFeed.Description = Recording.GenerateAlphaNumericId("desc");
-
-            await adminClient.UpdateDataFeedAsync(dataFeedId, dataFeed).ConfigureAwait(false);
-
-            await adminClient.DeleteDataFeedAsync(dataFeedId).ConfigureAwait(false);
         }
 
         [RecordedTest]
