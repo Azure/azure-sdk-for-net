@@ -40,7 +40,7 @@ Debug.WriteLine($"Session is returned with name {session.Name} and state {sessio
 
 ## Creating Spark statements
 
-To create statements within a session call `StartCreateSparkStatement`, passing in both the statements details in a `SparkStatementOptions` along with the ID of the session and then wait for the operation to be complete.
+To create statements within a session call `StartCreateSparkStatementAsync`, passing in both the statements details in a `SparkStatementOptions` along with the ID of the session and then wait for the operation to be complete.
 
 ```C# Snippet:CreateSparkStatementAsync
 SparkStatementOptions sparkStatementRequest = new SparkStatementOptions
