@@ -4,8 +4,5 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: formrecognizer
-<<<<<<< HEAD
     TimeoutInMinutes: 90
-=======
->>>>>>> a352747f5c8c26ebe9534c86cde60f3cb513a47e
     Clouds: 'Public,Preview,UsGov'
