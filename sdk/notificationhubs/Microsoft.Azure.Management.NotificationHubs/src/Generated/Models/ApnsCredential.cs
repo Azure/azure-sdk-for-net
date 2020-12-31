@@ -32,18 +32,32 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <summary>
         /// Initializes a new instance of the ApnsCredential class.
         /// </summary>
-        /// <param name="apnsCertificate">The APNS certificate.</param>
-        /// <param name="certificateKey">The certificate key.</param>
-        /// <param name="endpoint">The endpoint of this credential.</param>
-        /// <param name="thumbprint">The Apns certificate Thumbprint</param>
+        /// <param name="apnsCertificate">The APNS certificate. Specify if
+        /// using Certificate Authentication Mode.</param>
+        /// <param name="certificateKey">The APNS certificate password if it
+        /// exists.</param>
+        /// <param name="endpoint">The APNS endpoint of this credential. If
+        /// using Certificate Authentication Mode and Sandbox specify
+        /// 'gateway.sandbox.push.apple.com'. If using Certificate
+        /// Authentication Mode and Production specify
+        /// 'gateway.push.apple.com'. If using Token Authentication Mode and
+        /// Sandbox specify
+        /// 'https://api.development.push.apple.com:443/3/device'. If using
+        /// Token Authentication Mode and Production specify
+        /// 'https://api.push.apple.com:443/3/device'.</param>
+        /// <param name="thumbprint">The APNS certificate thumbprint. Specify
+        /// if using Certificate Authentication Mode.</param>
         /// <param name="keyId">A 10-character key identifier (kid) key,
-        /// obtained from your developer account</param>
-        /// <param name="appName">The name of the application</param>
-        /// <param name="appId">The issuer (iss) registered claim key, whose
-        /// value is your 10-character Team ID, obtained from your developer
-        /// account</param>
+        /// obtained from your developer account. Specify if using Token
+        /// Authentication Mode.</param>
+        /// <param name="appName">The name of the application or BundleId.
+        /// Specify if using Token Authentication Mode.</param>
+        /// <param name="appId">The issuer (iss) registered claim key. The
+        /// value is a 10-character TeamId, obtained from your developer
+        /// account. Specify if using Token Authentication Mode.</param>
         /// <param name="token">Provider Authentication Token, obtained through
-        /// your developer account</param>
+        /// your developer account. Specify if using Token Authentication
+        /// Mode.</param>
         public ApnsCredential(string apnsCertificate = default(string), string certificateKey = default(string), string endpoint = default(string), string thumbprint = default(string), string keyId = default(string), string appName = default(string), string appId = default(string), string token = default(string))
         {
             ApnsCertificate = apnsCertificate;
@@ -63,52 +77,64 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the APNS certificate.
+        /// Gets or sets the APNS certificate. Specify if using Certificate
+        /// Authentication Mode.
         /// </summary>
         [JsonProperty(PropertyName = "properties.apnsCertificate")]
         public string ApnsCertificate { get; set; }
 
         /// <summary>
-        /// Gets or sets the certificate key.
+        /// Gets or sets the APNS certificate password if it exists.
         /// </summary>
         [JsonProperty(PropertyName = "properties.certificateKey")]
         public string CertificateKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the endpoint of this credential.
+        /// Gets or sets the APNS endpoint of this credential. If using
+        /// Certificate Authentication Mode and Sandbox specify
+        /// 'gateway.sandbox.push.apple.com'. If using Certificate
+        /// Authentication Mode and Production specify
+        /// 'gateway.push.apple.com'. If using Token Authentication Mode and
+        /// Sandbox specify
+        /// 'https://api.development.push.apple.com:443/3/device'. If using
+        /// Token Authentication Mode and Production specify
+        /// 'https://api.push.apple.com:443/3/device'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpoint")]
         public string Endpoint { get; set; }
 
         /// <summary>
-        /// Gets or sets the Apns certificate Thumbprint
+        /// Gets or sets the APNS certificate thumbprint. Specify if using
+        /// Certificate Authentication Mode.
         /// </summary>
         [JsonProperty(PropertyName = "properties.thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary>
         /// Gets or sets a 10-character key identifier (kid) key, obtained from
-        /// your developer account
+        /// your developer account. Specify if using Token Authentication Mode.
         /// </summary>
         [JsonProperty(PropertyName = "properties.keyId")]
         public string KeyId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the application
+        /// Gets or sets the name of the application or BundleId. Specify if
+        /// using Token Authentication Mode.
         /// </summary>
         [JsonProperty(PropertyName = "properties.appName")]
         public string AppName { get; set; }
 
         /// <summary>
-        /// Gets or sets the issuer (iss) registered claim key, whose value is
-        /// your 10-character Team ID, obtained from your developer account
+        /// Gets or sets the issuer (iss) registered claim key. The value is a
+        /// 10-character TeamId, obtained from your developer account. Specify
+        /// if using Token Authentication Mode.
         /// </summary>
         [JsonProperty(PropertyName = "properties.appId")]
         public string AppId { get; set; }
 
         /// <summary>
         /// Gets or sets provider Authentication Token, obtained through your
-        /// developer account
+        /// developer account. Specify if using Token Authentication Mode.
         /// </summary>
         [JsonProperty(PropertyName = "properties.token")]
         public string Token { get; set; }

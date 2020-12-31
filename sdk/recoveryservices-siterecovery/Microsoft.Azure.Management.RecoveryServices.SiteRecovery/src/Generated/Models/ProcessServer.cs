@@ -70,7 +70,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="agentExpiryDate">Agent expiry date.</param>
         /// <param name="agentVersionDetails">The agent version
         /// details.</param>
-        public ProcessServer(string friendlyName = default(string), string id = default(string), string ipAddress = default(string), string osType = default(string), string agentVersion = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string versionStatus = default(string), IList<MobilityServiceUpdate> mobilityServiceUpdates = default(IList<MobilityServiceUpdate>), string hostId = default(string), string machineCount = default(string), string replicationPairCount = default(string), string systemLoad = default(string), string systemLoadStatus = default(string), string cpuLoad = default(string), string cpuLoadStatus = default(string), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), string memoryUsageStatus = default(string), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), string spaceUsageStatus = default(string), string psServiceStatus = default(string), System.DateTime? sslCertExpiryDate = default(System.DateTime?), int? sslCertExpiryRemainingDays = default(int?), string osVersion = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), System.DateTime? agentExpiryDate = default(System.DateTime?), VersionDetails agentVersionDetails = default(VersionDetails))
+        /// <param name="health">The health of Process Server. Possible values
+        /// include: 'None', 'Normal', 'Warning', 'Critical'</param>
+        /// <param name="psStatsRefreshTime">The process server stats refresh
+        /// time.</param>
+        /// <param name="throughputUploadPendingDataInBytes">The uploading
+        /// pending data in bytes.</param>
+        /// <param name="throughputInMBps">The throughput in MBps.</param>
+        /// <param name="throughputInBytes">The throughput in bytes.</param>
+        /// <param name="throughputStatus">The throughput status.</param>
+        /// <param name="marsCommunicationStatus">The MARS communication
+        /// status.</param>
+        /// <param name="marsRegistrationStatus">The MARS registration
+        /// status.</param>
+        public ProcessServer(string friendlyName = default(string), string id = default(string), string ipAddress = default(string), string osType = default(string), string agentVersion = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string versionStatus = default(string), IList<MobilityServiceUpdate> mobilityServiceUpdates = default(IList<MobilityServiceUpdate>), string hostId = default(string), string machineCount = default(string), string replicationPairCount = default(string), string systemLoad = default(string), string systemLoadStatus = default(string), string cpuLoad = default(string), string cpuLoadStatus = default(string), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), string memoryUsageStatus = default(string), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), string spaceUsageStatus = default(string), string psServiceStatus = default(string), System.DateTime? sslCertExpiryDate = default(System.DateTime?), int? sslCertExpiryRemainingDays = default(int?), string osVersion = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), System.DateTime? agentExpiryDate = default(System.DateTime?), VersionDetails agentVersionDetails = default(VersionDetails), string health = default(string), System.DateTime? psStatsRefreshTime = default(System.DateTime?), long? throughputUploadPendingDataInBytes = default(long?), long? throughputInMBps = default(long?), long? throughputInBytes = default(long?), string throughputStatus = default(string), string marsCommunicationStatus = default(string), string marsRegistrationStatus = default(string))
         {
             FriendlyName = friendlyName;
             Id = id;
@@ -100,6 +113,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             HealthErrors = healthErrors;
             AgentExpiryDate = agentExpiryDate;
             AgentVersionDetails = agentVersionDetails;
+            Health = health;
+            PsStatsRefreshTime = psStatsRefreshTime;
+            ThroughputUploadPendingDataInBytes = throughputUploadPendingDataInBytes;
+            ThroughputInMBps = throughputInMBps;
+            ThroughputInBytes = throughputInBytes;
+            ThroughputStatus = throughputStatus;
+            MarsCommunicationStatus = marsCommunicationStatus;
+            MarsRegistrationStatus = marsRegistrationStatus;
             CustomInit();
         }
 
@@ -277,6 +298,55 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "agentVersionDetails")]
         public VersionDetails AgentVersionDetails { get; set; }
+
+        /// <summary>
+        /// Gets the health of Process Server. Possible values include: 'None',
+        /// 'Normal', 'Warning', 'Critical'
+        /// </summary>
+        [JsonProperty(PropertyName = "health")]
+        public string Health { get; private set; }
+
+        /// <summary>
+        /// Gets the process server stats refresh time.
+        /// </summary>
+        [JsonProperty(PropertyName = "psStatsRefreshTime")]
+        public System.DateTime? PsStatsRefreshTime { get; private set; }
+
+        /// <summary>
+        /// Gets the uploading pending data in bytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "throughputUploadPendingDataInBytes")]
+        public long? ThroughputUploadPendingDataInBytes { get; private set; }
+
+        /// <summary>
+        /// Gets the throughput in MBps.
+        /// </summary>
+        [JsonProperty(PropertyName = "throughputInMBps")]
+        public long? ThroughputInMBps { get; private set; }
+
+        /// <summary>
+        /// Gets the throughput in bytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "throughputInBytes")]
+        public long? ThroughputInBytes { get; private set; }
+
+        /// <summary>
+        /// Gets the throughput status.
+        /// </summary>
+        [JsonProperty(PropertyName = "throughputStatus")]
+        public string ThroughputStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the MARS communication status.
+        /// </summary>
+        [JsonProperty(PropertyName = "marsCommunicationStatus")]
+        public string MarsCommunicationStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the MARS registration status.
+        /// </summary>
+        [JsonProperty(PropertyName = "marsRegistrationStatus")]
+        public string MarsRegistrationStatus { get; private set; }
 
     }
 }

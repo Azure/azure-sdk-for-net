@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.DataShare.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// A Trigger data transfer object.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("Trigger")]
     public partial class Trigger : ProxyDto
     {
         /// <summary>

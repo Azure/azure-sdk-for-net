@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests?api-version=2019-07-19-preview&$top=3",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9zZXJ2aWNlTGltaXRzUmVxdWVzdHM/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3JiR0b3A9Mw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "82fe76dd-5a8b-4fc6-972e-72c4073c0aa5"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:47:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "69392187-a199-4a46-8db1-8bbffcee04dc"
+        ],
+        "x-ms-correlation-request-id": [
+          "69392187-a199-4a46-8db1-8bbffcee04dc"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T084706Z:69392187-a199-4a46-8db1-8bbffcee04dc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "2878"
+        ],
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://capacityrpprodpreview.trafficmanager.net/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/$metadata#serviceLimitsRequests\",\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"requestSubmitTime\": \"2020-06-01T21:05:35.2227357Z\",\r\n        \"message\": \"Quota is currently unavailable in this location for this resource. Please contact Support.\",\r\n        \"code\": \"QuotaNotAvailableForResource\",\r\n        \"SerailizeCodeField\": false,\r\n        \"provisioningState\": \"Failed\",\r\n        \"value\": [\r\n          {\r\n            \"subRequestId\": \"94e809f9-e0ab-451b-961a-13f57acc62d9\",\r\n            \"message\": \"\",\r\n            \"provisioningState\": \"Failed\",\r\n            \"Limit\": 12,\r\n            \"Name\": {\r\n              \"Value\": \"standardHFamily\",\r\n              \"LocalizedValue\": null\r\n            },\r\n            \"ResourceType\": null\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/011e1463-c8d7-4a5e-ae35-f15c1f3226b4\",\r\n      \"name\": \"9f6cce51-6baf-4de5-a3c4-6f58b85315b9/011e1463-c8d7-4a5e-ae35-f15c1f3226b4\",\r\n      \"type\": \"Microsoft.Capacity/serviceLimitsRequests\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"requestSubmitTime\": \"2020-01-22T00:08:28.2982963Z\",\r\n        \"message\": \"\",\r\n        \"code\": \"\",\r\n        \"SerailizeCodeField\": false,\r\n        \"provisioningState\": \"Failed\",\r\n        \"value\": [\r\n          {\r\n            \"subRequestId\": \"9ef3b863-93b6-4536-a653-650cdb0d7135\",\r\n            \"message\": \"\",\r\n            \"provisioningState\": \"Failed\",\r\n            \"Limit\": 105,\r\n            \"Name\": {\r\n              \"Value\": \"standarddv2family\",\r\n              \"LocalizedValue\": \"Standard D Family vCPUs\"\r\n            },\r\n            \"ResourceType\": null\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/020f45ee-2090-4d05-8720-4622d64f285c\",\r\n      \"name\": \"9f6cce51-6baf-4de5-a3c4-6f58b85315b9/020f45ee-2090-4d05-8720-4622d64f285c\",\r\n      \"type\": \"Microsoft.Capacity/serviceLimitsRequests\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"requestSubmitTime\": \"2020-06-01T21:04:44.0318991Z\",\r\n        \"message\": \"Quota is currently unavailable in this location for this resource. Please contact Support.\",\r\n        \"code\": \"QuotaNotAvailableForResource\",\r\n        \"SerailizeCodeField\": false,\r\n        \"provisioningState\": \"Failed\",\r\n        \"value\": [\r\n          {\r\n            \"subRequestId\": \"d91db7f8-e1ce-4374-884c-d31f5db7a924\",\r\n            \"message\": \"\",\r\n            \"provisioningState\": \"Failed\",\r\n            \"Limit\": 12,\r\n            \"Name\": {\r\n              \"Value\": \"standardHFamily\",\r\n              \"LocalizedValue\": null\r\n            },\r\n            \"ResourceType\": null\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/0367ecdb-61d4-4670-b5f0-384a3c2db185\",\r\n      \"name\": \"9f6cce51-6baf-4de5-a3c4-6f58b85315b9/0367ecdb-61d4-4670-b5f0-384a3c2db185\",\r\n      \"type\": \"Microsoft.Capacity/serviceLimitsRequests\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

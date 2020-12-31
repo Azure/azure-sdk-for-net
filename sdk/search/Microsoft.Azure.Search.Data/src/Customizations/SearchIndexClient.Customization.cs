@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Search
         /// Gets the credentials used to authenticate to a search service. This can be either a query API key or an admin API key.
         /// </summary>
         /// <remarks>
-        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Cognitive Search.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see> for more information about API keys in Azure Cognitive Search.
         /// </remarks>
         public SearchCredentials SearchCredentials => (SearchCredentials)Credentials;
 

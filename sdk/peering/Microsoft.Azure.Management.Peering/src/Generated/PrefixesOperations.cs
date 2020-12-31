@@ -275,6 +275,9 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='prefix'>
         /// The prefix from which your traffic originates.
         /// </param>
+        /// <param name='peeringServicePrefixKey'>
+        /// The peering service prefix key
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -296,7 +299,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PeeringServicePrefix>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PeeringServicePrefix>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), string peeringServicePrefixKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -319,9 +322,10 @@ namespace Microsoft.Azure.Management.Peering
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             PeeringServicePrefix peeringServicePrefix = new PeeringServicePrefix();
-            if (prefix != null)
+            if (prefix != null || peeringServicePrefixKey != null)
             {
                 peeringServicePrefix.Prefix = prefix;
+                peeringServicePrefix.PeeringServicePrefixKey = peeringServicePrefixKey;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

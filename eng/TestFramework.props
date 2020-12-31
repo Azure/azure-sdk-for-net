@@ -1,0 +1,6 @@
+<Project>
+  <!-- Support for test recordings -->
+  <ItemGroup>
+    <None Include="SessionRecords\**\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

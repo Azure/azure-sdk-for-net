@@ -19,8 +19,10 @@ namespace Azure.Security.KeyVault.Keys
         private const string ManagedPropertyName = "managed";
         private const string AttributesPropertyName = "attributes";
         private const string TagsPropertyName = "tags";
+        private const string ReleasePolicyPropertyName = "release_policy";
 
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_releasePolicyPropertyNameBytes = JsonEncodedText.Encode(ReleasePolicyPropertyName);
 
         internal Dictionary<string, string> _tags;
 
@@ -110,12 +112,27 @@ namespace Azure.Security.KeyVault.Keys
         public DateTimeOffset? UpdatedOn { get => _attributes.UpdatedOn; internal set => _attributes.UpdatedOn = value; }
 
         /// <summary>
+        /// Gets the number of days a key is retained before being deleted for a soft delete-enabled Key Vault.
+        /// </summary>
+        public int? RecoverableDays { get => _attributes.RecoverableDays; internal set => _attributes.RecoverableDays = value; }
+
+        /// <summary>
         /// Gets the recovery level currently in effect for keys in the Key Vault.
         /// If <c>Purgeable</c>, the key can be permanently deleted by an authorized user;
         /// otherwise, only the service can purge the keys at the end of the retention interval.
         /// </summary>
         /// <value>Possible values include <c>Purgeable</c>, <c>Recoverable+Purgeable</c>, <c>Recoverable</c>, and <c>Recoverable+ProtectedSubscription</c>.</value>
         public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the private key can be exported.
+        /// </summary>
+        public bool? Exportable { get => _attributes.Exportable; set => _attributes.Exportable = value; }
+
+        /// <summary>
+        /// Gets or sets the policy rules under which the key can be exported.
+        /// </summary>
+        public KeyReleasePolicy ReleasePolicy { get; set; }
 
         /// <summary>
         /// Parses the key identifier into the <see cref="VaultUri"/>, <see cref="Name"/>, and <see cref="Version"/> of the key.
@@ -157,6 +174,10 @@ namespace Azure.Security.KeyVault.Keys
                         Tags[tagProp.Name] = tagProp.Value.GetString();
                     }
                     break;
+                case ReleasePolicyPropertyName:
+                    ReleasePolicy = new KeyReleasePolicy();
+                    ReleasePolicy.ReadProperties(prop.Value);
+                    break;
             }
         }
 
@@ -175,6 +196,15 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteStartObject(s_attributesPropertyNameBytes);
 
                 _attributes.WriteProperties(json);
+
+                json.WriteEndObject();
+            }
+
+            if (ReleasePolicy != null)
+            {
+                json.WriteStartObject(s_releasePolicyPropertyNameBytes);
+
+                ReleasePolicy.WriteProperties(json);
 
                 json.WriteEndObject();
             }

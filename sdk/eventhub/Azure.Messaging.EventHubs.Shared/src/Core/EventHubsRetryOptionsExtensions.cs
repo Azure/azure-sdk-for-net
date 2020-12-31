@@ -38,6 +38,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="instance">The instance that this method was invoked on.</param>
         ///
         /// <returns>The <see cref="EventHubsRetryPolicy" /> represented by the options.</returns>
+        ///
         public static EventHubsRetryPolicy ToRetryPolicy(this EventHubsRetryOptions instance) =>
             instance.CustomRetryPolicy ?? new BasicRetryPolicy(instance);
 

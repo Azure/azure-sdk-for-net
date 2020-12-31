@@ -52,7 +52,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// where app or App Service plan should be created.</param>
         /// <param name="isXenon">&lt;code&gt;true&lt;/code&gt; if App Service
         /// plan is running as a windows container</param>
-        public ValidateRequest(string name, string type, string location, string serverFarmId = default(string), string skuName = default(string), bool? needLinuxWorkers = default(bool?), bool? isSpot = default(bool?), int? capacity = default(int?), string hostingEnvironment = default(string), bool? isXenon = default(bool?))
+        /// <param name="containerRegistryBaseUrl">Base URL of the container
+        /// registry</param>
+        /// <param name="containerRegistryUsername">Username for to access the
+        /// container registry</param>
+        /// <param name="containerRegistryPassword">Password for to access the
+        /// container registry</param>
+        /// <param name="containerImageRepository">Repository name (image
+        /// name)</param>
+        /// <param name="containerImageTag">Image tag</param>
+        /// <param name="containerImagePlatform">Platform (windows or
+        /// linux)</param>
+        public ValidateRequest(string name, string type, string location, string serverFarmId = default(string), string skuName = default(string), bool? needLinuxWorkers = default(bool?), bool? isSpot = default(bool?), int? capacity = default(int?), string hostingEnvironment = default(string), bool? isXenon = default(bool?), string containerRegistryBaseUrl = default(string), string containerRegistryUsername = default(string), string containerRegistryPassword = default(string), string containerImageRepository = default(string), string containerImageTag = default(string), string containerImagePlatform = default(string))
         {
             Name = name;
             Type = type;
@@ -64,6 +75,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Capacity = capacity;
             HostingEnvironment = hostingEnvironment;
             IsXenon = isXenon;
+            ContainerRegistryBaseUrl = containerRegistryBaseUrl;
+            ContainerRegistryUsername = containerRegistryUsername;
+            ContainerRegistryPassword = containerRegistryPassword;
+            ContainerImageRepository = containerImageRepository;
+            ContainerImageTag = containerImageTag;
+            ContainerImagePlatform = containerImagePlatform;
             CustomInit();
         }
 
@@ -140,6 +157,42 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isXenon")]
         public bool? IsXenon { get; set; }
+
+        /// <summary>
+        /// Gets or sets base URL of the container registry
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.containerRegistryBaseUrl")]
+        public string ContainerRegistryBaseUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets username for to access the container registry
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.containerRegistryUsername")]
+        public string ContainerRegistryUsername { get; set; }
+
+        /// <summary>
+        /// Gets or sets password for to access the container registry
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.containerRegistryPassword")]
+        public string ContainerRegistryPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets repository name (image name)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.containerImageRepository")]
+        public string ContainerImageRepository { get; set; }
+
+        /// <summary>
+        /// Gets or sets image tag
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.containerImageTag")]
+        public string ContainerImageTag { get; set; }
+
+        /// <summary>
+        /// Gets or sets platform (windows or linux)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.containerImagePlatform")]
+        public string ContainerImagePlatform { get; set; }
 
         /// <summary>
         /// Validate the object.

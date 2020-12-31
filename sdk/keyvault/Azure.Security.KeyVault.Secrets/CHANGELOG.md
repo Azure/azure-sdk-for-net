@@ -1,6 +1,58 @@
 # Release History
 
-## 4.1.0-preview.1
+## 4.2.0-beta.4 (Unreleased)
+
+
+## 4.2.0-beta.3 (2020-11-12)
+
+- Bug fixes and performance improvements.
+
+## 4.2.0-beta.2 (2020-10-06)
+
+- Bug fixes and performance improvements.
+
+## 4.2.0-beta.1 (2020-09-08)
+
+### Added
+
+- Added `KeyVaultSecretIdentifier` to parse secret URIs.
+
+## 4.1.0 (2020-08-11)
+
+### Added
+
+- Added `RecoverableDays` property to `SecretProperties`.
+
+### Changed
+
+- Default service version is now 7.1.
+
+## 4.0.3 (2020-03-18)
+
+### Fixed
+
+- Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
+
+## 4.1.0-preview.1 (2020-03-09)
+
+### Added
+
+- Add `RecoverableDays` property to `SecretProperties`.
+
+## 4.0.2 (2020-03-03)
+
+### Fixed
+
+- `SecretClient.PurgeDeletedSecret` properly traces errors ([#9658](https://github.com/Azure/azure-sdk-for-net/issues/9658))
+- Shorten diagnostic scope names. ([#9651](https://github.com/Azure/azure-sdk-for-net/issues/9651))
+- Include resource namespace in diagnostics scope. ([#9655](https://github.com/Azure/azure-sdk-for-net/issues/9655))
+- Sanitize header values in exceptions. ([#9782](https://github.com/Azure/azure-sdk-for-net/issues/9782))
+
+## 4.0.1 (2020-01-08)
+
+### Minor changes
+
+- Challenge-based authentication requests are only sent over HTTPS.
 
 ## 4.0.0 (2019-11)
 
@@ -37,7 +89,7 @@ https://aka.ms/azure-sdk-preview1-net.
 This library is not a direct replacement for `Microsoft.Azure.KeyVault`. Applications
 using that library would require code changes to use `Azure.Security.KeyVault.Secrets`.
 This package's
-[documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/Readme.md)
+[documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md)
 and
 [samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples)
 demonstrate the new API.
@@ -51,7 +103,7 @@ only).
 - Asynchronous and synchronous APIs in the `Azure.Security.KeyVault.Secrets` package.
 - Authentication using `Azure.Identity` credentials
   - see this package's
-  [documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/Readme.md)
+  [documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md)
   , and the
   [Azure Identity documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity)
   for more information

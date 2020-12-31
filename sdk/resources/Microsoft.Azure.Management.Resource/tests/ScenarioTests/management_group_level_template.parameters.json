@@ -1,0 +1,13 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "managementGroupName": {
+      "value": "testMG"
+    },
+    "subscriptionId": {
+        "value": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
+    }
+  }
+}
+

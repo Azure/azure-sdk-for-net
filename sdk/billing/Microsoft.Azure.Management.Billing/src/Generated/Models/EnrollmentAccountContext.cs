@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// The rating context.
+    /// The enrollment account context
     /// </summary>
     public partial class EnrollmentAccountContext
     {
@@ -29,11 +29,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the EnrollmentAccountContext class.
         /// </summary>
-        /// <param name="costCenter">The cost center name.</param>
-        /// <param name="startDate">Account Start Date</param>
-        /// <param name="endDate">Account End Date</param>
-        /// <param name="enrollmentAccountName">The enrollment account
-        /// id.</param>
+        /// <param name="costCenter">The cost center associated with the
+        /// enrollment account.</param>
+        /// <param name="startDate">The start date of the enrollment
+        /// account.</param>
+        /// <param name="endDate">The end date of the enrollment
+        /// account.</param>
+        /// <param name="enrollmentAccountName">The ID of the enrollment
+        /// account.</param>
         public EnrollmentAccountContext(string costCenter = default(string), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string enrollmentAccountName = default(string))
         {
             CostCenter = costCenter;
@@ -49,25 +52,26 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the cost center name.
+        /// Gets or sets the cost center associated with the enrollment
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "costCenter")]
         public string CostCenter { get; set; }
 
         /// <summary>
-        /// Gets or sets account Start Date
+        /// Gets or sets the start date of the enrollment account.
         /// </summary>
         [JsonProperty(PropertyName = "startDate")]
         public System.DateTime? StartDate { get; set; }
 
         /// <summary>
-        /// Gets or sets account End Date
+        /// Gets or sets the end date of the enrollment account.
         /// </summary>
         [JsonProperty(PropertyName = "endDate")]
         public System.DateTime? EndDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the enrollment account id.
+        /// Gets or sets the ID of the enrollment account.
         /// </summary>
         [JsonProperty(PropertyName = "enrollmentAccountName")]
         public string EnrollmentAccountName { get; set; }

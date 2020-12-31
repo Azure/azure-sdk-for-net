@@ -87,7 +87,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             public static object Delete(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -104,7 +105,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -127,7 +129,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             public static Cache Get(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -144,7 +147,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -167,7 +171,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cache'>
             /// Object containing the user-selectable properties of the new Cache. If
@@ -189,7 +194,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cache'>
             /// Object containing the user-selectable properties of the new Cache. If
@@ -217,7 +223,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cache'>
             /// Object containing the user-selectable properties of the Cache. If read-only
@@ -239,7 +246,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cache'>
             /// Object containing the user-selectable properties of the Cache. If read-only
@@ -268,7 +276,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             public static object Flush(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -286,7 +295,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -309,7 +319,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             public static object Start(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -326,7 +337,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -349,7 +361,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             public static object Stop(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -366,7 +379,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -390,7 +404,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             public static object UpgradeFirmware(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -408,7 +423,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

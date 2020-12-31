@@ -199,7 +199,8 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply to the operation.
+            /// The expand expression to apply to the operation. Allowed values are
+            /// 'instanceView'.
             /// </param>
             public static IPage<AvailabilitySet> ListBySubscription(this IAvailabilitySetsOperations operations, string expand = default(string))
             {
@@ -213,7 +214,8 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply to the operation.
+            /// The expand expression to apply to the operation. Allowed values are
+            /// 'instanceView'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

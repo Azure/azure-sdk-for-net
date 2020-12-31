@@ -17,6 +17,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class TagTest : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CreateListUpdateDeleteApiTags()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -28,6 +29,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 var tagsResources = await testBase.client.Tag.ListByServiceAsync(
                     testBase.rgName,
                     testBase.serviceName);
+
                 Assert.Empty(tagsResources);
 
                 // list all the APIs
@@ -35,6 +37,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.rgName,
                     testBase.serviceName,
                     null);
+
                 Assert.NotNull(listResponse);
                 Assert.Single(listResponse);
                 Assert.Null(listResponse.NextPageLink);
@@ -160,6 +163,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CreateListUpdateDeleteProductTags()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -293,6 +297,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CreateListUpdateDeleteOperationTags()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

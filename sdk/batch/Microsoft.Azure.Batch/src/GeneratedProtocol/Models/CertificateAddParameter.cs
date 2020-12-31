@@ -91,8 +91,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the password to access the Certificate's private key.
         /// </summary>
         /// <remarks>
-        /// This is required if the Certificate format is pfx. It should be
-        /// omitted if the Certificate format is cer.
+        /// This must be omitted if the Certificate format is cer.
         /// </remarks>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }

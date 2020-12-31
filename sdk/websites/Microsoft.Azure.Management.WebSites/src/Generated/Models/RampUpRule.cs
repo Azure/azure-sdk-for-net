@@ -39,13 +39,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// &lt;code&gt;ActionHostName&lt;/code&gt;.</param>
         /// <param name="changeStep">In auto ramp up scenario this is the step
         /// to add/remove from &lt;code&gt;ReroutePercentage&lt;/code&gt; until
-        /// it reaches
-        /// &lt;code&gt;MinReroutePercentage&lt;/code&gt; or
+        /// it reaches \n&lt;code&gt;MinReroutePercentage&lt;/code&gt; or
         /// &lt;code&gt;MaxReroutePercentage&lt;/code&gt;. Site metrics are
         /// checked every N minutes specified in
-        /// &lt;code&gt;ChangeIntervalInMinutes&lt;/code&gt;.
-        /// Custom decision algorithm can be provided in TiPCallback site
-        /// extension which URL can be specified in
+        /// &lt;code&gt;ChangeIntervalInMinutes&lt;/code&gt;.\nCustom decision
+        /// algorithm
+        /// can be provided in TiPCallback site extension which URL can be
+        /// specified in
         /// &lt;code&gt;ChangeDecisionCallbackUrl&lt;/code&gt;.</param>
         /// <param name="changeIntervalInMinutes">Specifies interval in minutes
         /// to reevaluate ReroutePercentage.</param>
@@ -98,12 +98,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// add/remove from
         /// &amp;lt;code&amp;gt;ReroutePercentage&amp;lt;/code&amp;gt; until it
         /// reaches
-        /// &amp;lt;code&amp;gt;MinReroutePercentage&amp;lt;/code&amp;gt; or
+        /// \n&amp;lt;code&amp;gt;MinReroutePercentage&amp;lt;/code&amp;gt; or
         /// &amp;lt;code&amp;gt;MaxReroutePercentage&amp;lt;/code&amp;gt;. Site
         /// metrics are checked every N minutes specified in
-        /// &amp;lt;code&amp;gt;ChangeIntervalInMinutes&amp;lt;/code&amp;gt;.
-        /// Custom decision algorithm can be provided in TiPCallback site
-        /// extension which URL can be specified in
+        /// &amp;lt;code&amp;gt;ChangeIntervalInMinutes&amp;lt;/code&amp;gt;.\nCustom
+        /// decision algorithm
+        /// can be provided in TiPCallback site extension which URL can be
+        /// specified in
         /// &amp;lt;code&amp;gt;ChangeDecisionCallbackUrl&amp;lt;/code&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "changeStep")]

@@ -78,9 +78,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         /// <param name="appId"></param>
         /// <param name="thumbprint"></param>
         /// <param name="expiresOn"></param>
-        public static void ValidateToken(string token, Principal principalUsed, string type,
-            string tenantId, string appId = default(string), string thumbprint = default(string),
-            DateTimeOffset expiresOn = default(DateTimeOffset))
+        public static void ValidateToken(string token, Principal principalUsed, string type, string tenantId,
+            string appId = default, string thumbprint = default, DateTimeOffset expiresOn = default)
         {
             Assert.Equal("eyJ0eXAiOiJKV1Qi", token.Substring(0, "eyJ0eXAiOiJKV1Qi".Length));
             Assert.Contains(".", token);
@@ -113,7 +112,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
                 upnPart = $" UserPrincipalName:{principalUsed.UserPrincipalName}";
             }
 
-            if (expiresOn != default(DateTimeOffset))
+            if (expiresOn != default)
             {
                 DateTimeOffset tokenExpiration = GetTokenExpiration(token);
 

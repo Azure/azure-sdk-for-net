@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         D2,
         [EnumMember(Value = "D3")]
         D3,
+        [EnumMember(Value = "NestedSmall")]
+        NestedSmall,
         [EnumMember(Value = "Default")]
         Default
     }
@@ -59,6 +61,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return "D2";
                 case WorkerSizeOptions.D3:
                     return "D3";
+                case WorkerSizeOptions.NestedSmall:
+                    return "NestedSmall";
                 case WorkerSizeOptions.Default:
                     return "Default";
             }
@@ -81,6 +85,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return WorkerSizeOptions.D2;
                 case "D3":
                     return WorkerSizeOptions.D3;
+                case "NestedSmall":
+                    return WorkerSizeOptions.NestedSmall;
                 case "Default":
                     return WorkerSizeOptions.Default;
             }

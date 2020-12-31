@@ -33,9 +33,12 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         /// <param name="metricSpecifications">Specifications of the Metrics
         /// for Azure Monitoring.</param>
-        public ServiceSpecification(IList<MetricSpecification> metricSpecifications = default(IList<MetricSpecification>))
+        /// <param name="logSpecifications">Specifications of the Logs for
+        /// Azure Monitoring.</param>
+        public ServiceSpecification(IList<MetricSpecification> metricSpecifications = default(IList<MetricSpecification>), IList<LogSpecification> logSpecifications = default(IList<LogSpecification>))
         {
             MetricSpecifications = metricSpecifications;
+            LogSpecifications = logSpecifications;
             CustomInit();
         }
 
@@ -49,6 +52,12 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "metricSpecifications")]
         public IList<MetricSpecification> MetricSpecifications { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifications of the Logs for Azure Monitoring.
+        /// </summary>
+        [JsonProperty(PropertyName = "logSpecifications")]
+        public IList<LogSpecification> LogSpecifications { get; set; }
 
     }
 }

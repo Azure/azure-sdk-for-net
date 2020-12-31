@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="authority">Authority where resource is present.</param>
         /// <returns></returns>
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // If authority is not specified, start with common. Once known, after the first time token is acquired, use that. 
             if (string.IsNullOrWhiteSpace(authority))

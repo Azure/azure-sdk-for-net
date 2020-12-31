@@ -136,11 +136,6 @@ namespace Microsoft.Azure.Management.DataFactory
         ITriggerRunsOperations TriggerRuns { get; }
 
         /// <summary>
-        /// Gets the IRerunTriggersOperations.
-        /// </summary>
-        IRerunTriggersOperations RerunTriggers { get; }
-
-        /// <summary>
         /// Gets the IDataFlowsOperations.
         /// </summary>
         IDataFlowsOperations DataFlows { get; }
@@ -149,6 +144,16 @@ namespace Microsoft.Azure.Management.DataFactory
         /// Gets the IDataFlowDebugSessionOperations.
         /// </summary>
         IDataFlowDebugSessionOperations DataFlowDebugSession { get; }
+
+        /// <summary>
+        /// Gets the IManagedVirtualNetworksOperations.
+        /// </summary>
+        IManagedVirtualNetworksOperations ManagedVirtualNetworks { get; }
+
+        /// <summary>
+        /// Gets the IManagedPrivateEndpointsOperations.
+        /// </summary>
+        IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; }
 
     }
 }

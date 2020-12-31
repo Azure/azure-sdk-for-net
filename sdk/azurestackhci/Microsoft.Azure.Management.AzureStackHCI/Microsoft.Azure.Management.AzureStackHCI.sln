@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{AB5A95A7-5F19-434D-B4CC-60D7E592676F}") = "Microsoft.Azure.Management.AzureStackHCI", "src\Microsoft.Azure.Management.AzureStackHCI.csproj", "{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}"
+EndProject
+Project("{AB5A95A7-5F19-434D-B4CC-60D7E592676F}") = "Microsoft.Azure.Management.AzureStackHCI", "tests\Microsoft.Azure.Management.AzureStackHCI.Tests.csproj", "{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Debug|x64.Build.0 = Debug|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Debug|x86.Build.0 = Debug|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Release|x64.ActiveCfg = Release|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Release|x64.Build.0 = Release|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F3E17B2-4609-44CF-8EFC-5B803ECB7BF3}.Release|x86.Build.0 = Release|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Debug|x64.Build.0 = Debug|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Debug|x86.Build.0 = Debug|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Release|x64.ActiveCfg = Release|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Release|x64.Build.0 = Release|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Release|x86.ActiveCfg = Release|Any CPU
+		{B8A4AAF4-2DED-451A-A75D-AECDFCFFBC68}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

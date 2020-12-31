@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage
 {
@@ -12,7 +13,7 @@ namespace Azure.Storage
         public abstract ValueTask<Page<T>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
-            bool isAsync,
+            bool async,
             CancellationToken cancellationToken);
 
         public Pageable<T> ToSyncCollection(CancellationToken cancellationToken)
@@ -81,7 +82,7 @@ namespace Azure.Storage
                     Page<T> page = _enumerator.GetNextPageAsync(
                         continuationToken,
                         pageHintSize,
-                        isAsync: false,
+                        async: false,
                         cancellationToken: CancellationToken)
                         .EnsureCompleted();
                     continuationToken = page.ContinuationToken;
@@ -102,7 +103,7 @@ namespace Azure.Storage
                     Page<T> page = _enumerator.GetNextPageAsync(
                         continuationToken,
                         null,
-                        isAsync: false,
+                        async: false,
                         cancellationToken: CancellationToken)
                         .EnsureCompleted();
                     continuationToken = page.ContinuationToken;
@@ -170,7 +171,7 @@ namespace Azure.Storage
                     Page<T> page = await _enumerator.GetNextPageAsync(
                         continuationToken,
                         pageHintSize,
-                        isAsync: true,
+                        async: true,
                         cancellationToken: CancellationToken)
                         .ConfigureAwait(false);
                     continuationToken = page.ContinuationToken;
@@ -202,7 +203,7 @@ namespace Azure.Storage
                     Page<T> page = await _enumerator.GetNextPageAsync(
                         continuationToken,
                         null,
-                        isAsync: true,
+                        async: true,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     continuationToken = page.ContinuationToken;

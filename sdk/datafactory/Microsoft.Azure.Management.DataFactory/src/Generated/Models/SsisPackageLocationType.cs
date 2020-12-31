@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public const string SSISDB = "SSISDB";
         public const string File = "File";
         public const string InlinePackage = "InlinePackage";
+        public const string PackageStore = "PackageStore";
     }
 }

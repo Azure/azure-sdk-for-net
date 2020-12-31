@@ -44,13 +44,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="queryTimeout">Query timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
         /// <param name="azureTableSourceQuery">Azure Table source query. Type:
         /// string (or Expression with resultType string).</param>
         /// <param name="azureTableSourceIgnoreTableNotFound">Azure Table
         /// source ignore table not found. Type: boolean (or Expression with
         /// resultType boolean).</param>
-        public AzureTableSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object azureTableSourceQuery = default(object), object azureTableSourceIgnoreTableNotFound = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
+        public AzureTableSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object azureTableSourceQuery = default(object), object azureTableSourceIgnoreTableNotFound = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
         {
             AzureTableSourceQuery = azureTableSourceQuery;
             AzureTableSourceIgnoreTableNotFound = azureTableSourceIgnoreTableNotFound;

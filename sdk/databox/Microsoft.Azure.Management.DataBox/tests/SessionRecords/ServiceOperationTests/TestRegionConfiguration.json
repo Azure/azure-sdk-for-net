@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/regionConfiguration?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3JlZ2lvbkNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/regionConfiguration?api-version=2020-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3JlZ2lvbkNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAyMC0xMS0wMQ==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"scheduleAvailabilityRequest\": {\r\n    \"skuName\": \"DataBox\",\r\n    \"storageLocation\": \"westus\"\r\n  },\r\n  \"transportAvailabilityRequest\": {\r\n    \"skuName\": \"DataBox\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"transportAvailabilityRequest\": {\r\n    \"skuName\": \"DataBox\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "18e317fe-eab7-4cbd-8796-f1b8e26c7c52"
+          "bafa0c42-5837-4b0a-84a6-b3c29f4a5af4"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "174"
+          "72"
         ]
       },
       "ResponseHeaders": {
@@ -32,35 +32,35 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "65dac9e1-cc74-43de-aaf6-4737eccb212c"
-        ],
-        "x-ms-client-request-id": [
-          "18e317fe-eab7-4cbd-8796-f1b8e26c7c52"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "a611e11f-ccfe-45bd-9b1a-0346cdd114a2"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20191014T112939Z:a611e11f-ccfe-45bd-9b1a-0346cdd114a2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "56b0c448-be68-4fd4-9e76-087a0db10deb"
+        ],
+        "x-ms-client-request-id": [
+          "bafa0c42-5837-4b0a-84a6-b3c29f4a5af4"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-correlation-request-id": [
+          "56b0c448-be68-4fd4-9e76-087a0db10deb"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20201110T132503Z:56b0c448-be68-4fd4-9e76-087a0db10deb"
+        ],
         "Date": [
-          "Mon, 14 Oct 2019 11:29:38 GMT"
+          "Tue, 10 Nov 2020 13:25:02 GMT"
         ],
         "Content-Length": [
-          "1047"
+          "217"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,7 +69,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"scheduleAvailabilityResponse\": {\r\n    \"availableDates\": [\r\n      \"2019-10-24T05:30:00+05:30\",\r\n      \"2019-10-25T05:30:00+05:30\",\r\n      \"2019-10-26T05:30:00+05:30\",\r\n      \"2019-10-27T05:30:00+05:30\",\r\n      \"2019-10-28T05:30:00+05:30\",\r\n      \"2019-10-29T05:30:00+05:30\",\r\n      \"2019-10-30T05:30:00+05:30\",\r\n      \"2019-10-31T05:30:00+05:30\",\r\n      \"2019-11-01T05:30:00+05:30\",\r\n      \"2019-11-02T05:30:00+05:30\",\r\n      \"2019-11-03T05:30:00+05:30\",\r\n      \"2019-11-04T05:30:00+05:30\",\r\n      \"2019-11-05T05:30:00+05:30\",\r\n      \"2019-11-06T05:30:00+05:30\",\r\n      \"2019-11-07T05:30:00+05:30\",\r\n      \"2019-11-08T05:30:00+05:30\",\r\n      \"2019-11-09T05:30:00+05:30\",\r\n      \"2019-11-10T05:30:00+05:30\",\r\n      \"2019-11-11T05:30:00+05:30\",\r\n      \"2019-11-12T05:30:00+05:30\",\r\n      \"2019-11-13T05:30:00+05:30\"\r\n    ]\r\n  },\r\n  \"transportAvailabilityResponse\": {\r\n    \"transportAvailabilityDetails\": [\r\n      {\r\n        \"shipmentType\": \"MicrosoftManaged\"\r\n      },\r\n      {\r\n        \"shipmentType\": \"CustomerManaged\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"transportAvailabilityResponse\": {\r\n    \"transportAvailabilityDetails\": [\r\n      {\r\n        \"shipmentType\": \"MicrosoftManaged\"\r\n      },\r\n      {\r\n        \"shipmentType\": \"CustomerManaged\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

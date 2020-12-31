@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.CognitiveServices
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -32,17 +30,17 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
             /// </param>
-            /// <param name='parameters'>
+            /// <param name='account'>
             /// The parameters to provide for the created account.
             /// </param>
-            public static CognitiveServicesAccount Create(this IAccountsOperations operations, string resourceGroupName, string accountName, CognitiveServicesAccountCreateParameters parameters)
+            public static CognitiveServicesAccount Create(this IAccountsOperations operations, string resourceGroupName, string accountName, CognitiveServicesAccount account)
             {
-                return operations.CreateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, accountName, account).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,20 +52,20 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
             /// </param>
-            /// <param name='parameters'>
+            /// <param name='account'>
             /// The parameters to provide for the created account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccount> CreateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CognitiveServicesAccountCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CognitiveServicesAccount> CreateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CognitiveServicesAccount account, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, account, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -80,27 +78,17 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
             /// </param>
-            /// <param name='sku'>
-            /// Gets or sets the SKU of the resource.
+            /// <param name='account'>
+            /// The parameters to provide for the created account.
             /// </param>
-            /// <param name='tags'>
-            /// Gets or sets a list of key value pairs that describe the resource. These
-            /// tags can be used in viewing and grouping this resource (across resource
-            /// groups). A maximum of 15 tags can be provided for a resource. Each tag must
-            /// have a key no greater than 128 characters and value no greater than 256
-            /// characters.
-            /// </param>
-            /// <param name='properties'>
-            /// Additional properties for Account. Only provided fields will be updated.
-            /// </param>
-            public static CognitiveServicesAccount Update(this IAccountsOperations operations, string resourceGroupName, string accountName, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
+            public static CognitiveServicesAccount Update(this IAccountsOperations operations, string resourceGroupName, string accountName, CognitiveServicesAccount account)
             {
-                return operations.UpdateAsync(resourceGroupName, accountName, sku, tags, properties).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, account).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -110,30 +98,20 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
             /// </param>
-            /// <param name='sku'>
-            /// Gets or sets the SKU of the resource.
-            /// </param>
-            /// <param name='tags'>
-            /// Gets or sets a list of key value pairs that describe the resource. These
-            /// tags can be used in viewing and grouping this resource (across resource
-            /// groups). A maximum of 15 tags can be provided for a resource. Each tag must
-            /// have a key no greater than 128 characters and value no greater than 256
-            /// characters.
-            /// </param>
-            /// <param name='properties'>
-            /// Additional properties for Account. Only provided fields will be updated.
+            /// <param name='account'>
+            /// The parameters to provide for the created account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccount> UpdateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CognitiveServicesAccount> UpdateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CognitiveServicesAccount account, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, sku, tags, properties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, account, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -146,7 +124,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -163,7 +141,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -183,7 +161,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -200,7 +178,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -224,7 +202,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IPage<CognitiveServicesAccount> ListByResourceGroup(this IAccountsOperations operations, string resourceGroupName)
             {
@@ -239,7 +217,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -287,7 +265,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -304,7 +282,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -328,7 +306,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -349,7 +327,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -375,7 +353,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -392,7 +370,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -415,7 +393,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
@@ -437,7 +415,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// The name of Cognitive Services account.

@@ -60,7 +60,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         public void KillMapReduceStreamingJob()
         {
             using (var context = MockContext.Start(this.GetType()))
-            using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+            using (var client = this.CommonData.GetHDInsightJobClient(context))
             {
                 var parameters = GetMapReduceJobParameters();
 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
             if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
             {
                 using (var context = MockContext.Start(this.GetType()))
-                using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+                using (var client = this.CommonData.GetHDInsightJobClient(context))
                 {
                     var parameters = GetMapReduceJobParameters();
 
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         private void SubmitHiveJobAndValidateOutput(HiveJobSubmissionParameters parameters, string expectedOutputPart, bool runAyncAPI = false)
         {
             using (var context = MockContext.Start(this.GetType()))
-            using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+            using (var client = this.CommonData.GetHDInsightJobClient(context))
             {
                 var response = runAyncAPI ? client.Job.SubmitHiveJobAsync(parameters).Result
                                     : client.Job.SubmitHiveJob(parameters);
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         private void SubmitMapReduceJobAndValidateOutput(bool runAyncAPI = false)
         {
             using (var context = MockContext.Start(this.GetType()))
-            using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+            using (var client = this.CommonData.GetHDInsightJobClient(context))
             {
                 var parameters = GetMapReduceJobParameters();
 
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         private void SubmitMapReduceStreamingJobAndValidateOutput(MapReduceStreamingJobSubmissionParameters parameters, bool runAyncAPI = false)
         {
             using (var context = MockContext.Start(this.GetType()))
-            using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+            using (var client = this.CommonData.GetHDInsightJobClient(context))
             {
                 var response = runAyncAPI ? client.Job.SubmitMapReduceStreamingJobAsync(parameters).Result
                     : client.Job.SubmitMapReduceStreamingJob(parameters);
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         private void SubmitPigJobAndValidateOutput(PigJobSubmissionParameters parameters, bool runAyncAPI = false)
         {
             using (var context = MockContext.Start(this.GetType()))
-            using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+            using (var client = this.CommonData.GetHDInsightJobClient(context))
             {
                 var response = runAyncAPI ? client.Job.SubmitPigJobAsync(parameters).Result
                     : client.Job.SubmitPigJob(parameters);
@@ -434,7 +434,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         private void SubmitSqoopJobAndValidateOutput(SqoopJobSubmissionParameters parameters, bool runAyncAPI = false)
         {
             using (var context = MockContext.Start(this.GetType()))
-            using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+            using (var client = this.CommonData.GetHDInsightJobClient(context))
             {
                 var response = runAyncAPI ? client.Job.SubmitSqoopJobAsync(parameters).Result
                                 : client.Job.SubmitSqoopJob(parameters);
@@ -476,7 +476,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         public void SubmitHiveJobError()
         {
             using (var context = MockContext.Start(this.GetType()))
-            using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+            using (var client = this.CommonData.GetHDInsightJobClient(context))
             {
                 var parameters = new HiveJobSubmissionParameters
                 {
@@ -511,7 +511,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         public void ListJobs()
         {
             using (var context = MockContext.Start(this.GetType()))
-            using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+            using (var client = this.CommonData.GetHDInsightJobClient(context))
             {
                 var response = client.Job.List();
                 Assert.NotNull(response);
@@ -535,7 +535,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         public void GetJobsPagination()
         {
             using (var context = MockContext.Start(this.GetType()))
-            using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+            using (var client = this.CommonData.GetHDInsightJobClient(context))
             {
                 var parameters = new HiveJobSubmissionParameters
                 {
@@ -579,7 +579,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         public void GetJobWithInvalidId()
         {
             using (var context = MockContext.Start(this.GetType()))
-            using (var client = this.CommonData.GetHDInsightJobManagementClient(context))
+            using (var client = this.CommonData.GetHDInsightJobClient(context))
             {
                 string jobId = "invalid_job_id";
                 var ex = Assert.Throws<JobOperationsErrorResponseException>(() => client.Job.Get(jobId));

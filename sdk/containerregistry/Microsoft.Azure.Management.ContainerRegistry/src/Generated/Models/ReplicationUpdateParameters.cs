@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// <summary>
     /// The parameters for updating a replication.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class ReplicationUpdateParameters
     {
         /// <summary>
@@ -34,9 +37,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// class.
         /// </summary>
         /// <param name="tags">The tags for the replication.</param>
-        public ReplicationUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="regionEndpointEnabled">Specifies whether the
+        /// replication's regional endpoint is enabled. Requests will not be
+        /// routed to a replication whose regional endpoint is disabled,
+        /// however its data will continue to be synced with other
+        /// replications.</param>
+        public ReplicationUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), bool? regionEndpointEnabled = default(bool?))
         {
             Tags = tags;
+            RegionEndpointEnabled = regionEndpointEnabled;
             CustomInit();
         }
 
@@ -50,6 +59,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the replication's regional endpoint
+        /// is enabled. Requests will not be routed to a replication whose
+        /// regional endpoint is disabled, however its data will continue to be
+        /// synced with other replications.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.regionEndpointEnabled")]
+        public bool? RegionEndpointEnabled { get; set; }
 
     }
 }

@@ -2,17 +2,14 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services CustomVision Prediction SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services CustomVision Prediction APIs.</Description>
-    <Version>1.1.0-preview.1</Version>
+    <Version>2.0.0</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Custom Vision;Custom Vision Prediction API;Custom Vision Prediction SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
     This is a public release of the Cognitive Services Custom Vision Prediction SDK.
 
     Changes in this release:
-    1) PredictImage and PredictImageUrl have been replaced with project type specific calls.
-         ClassifyImage and ClassifyImageUrl for image classification projects.
-         DetectImage and DetectImageUrl for object detection projects .
-    2) Prediction methods now take a name to designate which published iteration to use. Iterations can be published using the Custom Vision Training SDK.
+    1) Updated CustomVisionPredictionClient to take in a credentials class for use with different types of authentication credentials. Client now use an ApiKeyServiceClientCredentials instead of passing in an ApiKey.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

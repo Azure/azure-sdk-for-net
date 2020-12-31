@@ -10,48 +10,28 @@ namespace Azure.Identity.Tests.Mock
 {
     internal class MockManagedIdentityClient : ManagedIdentityClient
     {
-        public Func<MsiType> MsiTypeFactory { get; set; }
+        public MockManagedIdentityClient()
+            : this(null)
+        {
+        }
+
+        public MockManagedIdentityClient(CredentialPipeline pipeline)
+            : this(pipeline, null)
+        {
+        }
+
+        public MockManagedIdentityClient(CredentialPipeline pipeline, string clientId)
+            : base(pipeline, clientId)
+        {
+        }
+        public Func<ManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
 
         public Func<AccessToken> TokenFactory { get; set; }
 
-        public override AccessToken Authenticate(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
-        {
-            if (TokenFactory != null)
-            {
-                return TokenFactory();
-            }
+        public override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
+              => TokenFactory != null ? new ValueTask<AccessToken>(TokenFactory()) : base.AuthenticateAsync(async, context, cancellationToken);
 
-            throw new NotImplementedException();
-        }
-
-        public override Task<AccessToken> AuthenticateAsync(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
-        {
-            if (TokenFactory != null)
-            {
-                return Task.FromResult(TokenFactory());
-            }
-
-            throw new NotImplementedException();
-        }
-
-        public override MsiType GetMsiType(CancellationToken cancellationToken)
-        {
-            if (MsiTypeFactory != null)
-            {
-                return MsiTypeFactory();
-            }
-
-            throw new NotImplementedException();
-        }
-
-        public override Task<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
-        {
-            if (MsiTypeFactory != null)
-            {
-                return Task.FromResult(MsiTypeFactory());
-            }
-
-            throw new NotImplementedException();
-        }
+        private protected override ValueTask<ManagedIdentitySource> GetManagedIdentitySourceAsync(bool async, CancellationToken cancellationToken)
+            => ManagedIdentitySourceFactory != null ? new ValueTask<ManagedIdentitySource>(ManagedIdentitySourceFactory()) : base.GetManagedIdentitySourceAsync(async, cancellationToken);
     }
 }

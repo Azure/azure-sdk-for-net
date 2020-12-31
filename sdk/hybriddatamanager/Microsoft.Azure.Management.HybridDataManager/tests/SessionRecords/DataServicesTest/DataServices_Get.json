@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXM/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXM/YXBpLXZlcnNpb249MjAxOS0wNi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0d704d8b-85f2-47ee-ba81-2aae8038f102"
+          "845c5613-c890-4d2a-8b15-350580039f55"
         ],
         "accept-language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:04 GMT"
+          "Wed, 05 Feb 2020 04:24:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,10 +33,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "cc7492a9-7e16-44e8-932e-fe586d462a3d"
+          "41fcdc77-1e2e-459f-a482-4ddaf3e9e404"
         ],
         "x-ms-client-request-id": [
-          "0d704d8b-85f2-47ee-ba81-2aae8038f102"
+          "845c5613-c890-4d2a-8b15-350580039f55"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -45,10 +45,10 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "64d16037-fcef-4ec6-aa94-302e5cbe52a1"
+          "a97642c1-5d90-4b76-bfe7-a81e72781257"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091304Z:64d16037-fcef-4ec6-aa94-302e5cbe52a1"
+          "SOUTHINDIA:20200205T042441Z:a97642c1-5d90-4b76-bfe7-a81e72781257"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -67,13 +67,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataTransformation?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvRGF0YVRyYW5zZm9ybWF0aW9uP2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataTransformation?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvRGF0YVRyYW5zZm9ybWF0aW9uP2FwaS12ZXJzaW9uPTIwMTktMDYtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5ed986da-1428-4cf2-87ee-c808408676ce"
+          "cf35b680-dc80-4815-ab83-9364acc3bce6"
         ],
         "accept-language": [
           "en-US"
@@ -81,8 +81,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -90,7 +90,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:04 GMT"
+          "Wed, 05 Feb 2020 04:24:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -99,10 +99,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "a12a91b2-ec18-4a5c-bf37-4495f51089fc"
+          "9142f528-9c80-4010-8615-5490289bc4c4"
         ],
         "x-ms-client-request-id": [
-          "5ed986da-1428-4cf2-87ee-c808408676ce"
+          "cf35b680-dc80-4815-ab83-9364acc3bce6"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -111,10 +111,10 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "e8a558f1-fc1d-4b3b-b2d8-5db806893812"
+          "785f1b65-cc44-49f6-8c71-c450dda6507f"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091304Z:e8a558f1-fc1d-4b3b-b2d8-5db806893812"
+          "SOUTHINDIA:20200205T042442Z:785f1b65-cc44-49f6-8c71-c450dda6507f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -133,13 +133,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/KeyRollover?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvS2V5Um9sbG92ZXI/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/KeyRollover?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvS2V5Um9sbG92ZXI/YXBpLXZlcnNpb249MjAxOS0wNi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "04a4c10d-b60f-475a-9f87-f62d20a61fc9"
+          "303da73b-2912-4ef9-8f9c-4a78bbf5b8a5"
         ],
         "accept-language": [
           "en-US"
@@ -147,8 +147,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -156,7 +156,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:04 GMT"
+          "Wed, 05 Feb 2020 04:24:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -165,10 +165,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "1d9c4d99-a7d5-4a0f-b7dc-cc8fd714f716"
+          "653f1c79-5812-4eba-8632-f23049d03893"
         ],
         "x-ms-client-request-id": [
-          "04a4c10d-b60f-475a-9f87-f62d20a61fc9"
+          "303da73b-2912-4ef9-8f9c-4a78bbf5b8a5"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -177,10 +177,10 @@
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "9e7d9303-c632-4ab0-92a1-0c1ce72eba06"
+          "677ecf2f-0209-4442-ad1d-1e790d540c07"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091305Z:9e7d9303-c632-4ab0-92a1-0c1ce72eba06"
+          "SOUTHINDIA:20200205T042443Z:677ecf2f-0209-4442-ad1d-1e790d540c07"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -199,13 +199,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataSecurity?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvRGF0YVNlY3VyaXR5P2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataSecurity?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvRGF0YVNlY3VyaXR5P2FwaS12ZXJzaW9uPTIwMTktMDYtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "44082813-fd3a-46dd-806c-4c443bf8a853"
+          "e6c61f7c-50d4-4308-9a24-2b97c5adf748"
         ],
         "accept-language": [
           "en-US"
@@ -213,8 +213,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -222,7 +222,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:05 GMT"
+          "Wed, 05 Feb 2020 04:24:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -231,10 +231,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "d18d181b-826e-4385-a56a-a76731bc54d3"
+          "84eae70a-8d2d-4b34-a3dc-b88340f0a43c"
         ],
         "x-ms-client-request-id": [
-          "44082813-fd3a-46dd-806c-4c443bf8a853"
+          "e6c61f7c-50d4-4308-9a24-2b97c5adf748"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -243,10 +243,10 @@
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "8e9cdfcd-109c-40a0-a496-d0b810f8f79c"
+          "dfffc8a0-82ad-4929-88cc-5a386bf4e8f2"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091305Z:8e9cdfcd-109c-40a0-a496-d0b810f8f79c"
+          "SOUTHINDIA:20200205T042443Z:dfffc8a0-82ad-4929-88cc-5a386bf4e8f2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -265,13 +265,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataInsights?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvRGF0YUluc2lnaHRzP2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataInsights?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvRGF0YUluc2lnaHRzP2FwaS12ZXJzaW9uPTIwMTktMDYtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b1994bde-15ae-453c-81cd-85f4cdffcb2a"
+          "01361965-f7b2-4fa8-a19d-f5765acfcebc"
         ],
         "accept-language": [
           "en-US"
@@ -279,8 +279,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -288,7 +288,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:05 GMT"
+          "Wed, 05 Feb 2020 04:24:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -297,10 +297,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "6c570579-5240-47c2-9638-ca488bad0db7"
+          "527bd0e8-0f5b-4506-ac52-16096aadb8d2"
         ],
         "x-ms-client-request-id": [
-          "b1994bde-15ae-453c-81cd-85f4cdffcb2a"
+          "01361965-f7b2-4fa8-a19d-f5765acfcebc"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -309,10 +309,10 @@
           "11995"
         ],
         "x-ms-correlation-request-id": [
-          "de4ccda4-7765-4124-9f17-b8ba757cdac7"
+          "c2604e5d-9f37-456e-b9fb-a218592f3067"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091305Z:de4ccda4-7765-4124-9f17-b8ba757cdac7"
+          "SOUTHINDIA:20200205T042444Z:c2604e5d-9f37-456e-b9fb-a218592f3067"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -331,13 +331,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataHealth?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvRGF0YUhlYWx0aD9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataHealth?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvRGF0YUhlYWx0aD9hcGktdmVyc2lvbj0yMDE5LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4f8eef17-ffce-4200-838a-ade9da00b586"
+          "2f7c4aaa-a632-4398-b7aa-fd55e714f1a4"
         ],
         "accept-language": [
           "en-US"
@@ -345,8 +345,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -354,7 +354,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:05 GMT"
+          "Wed, 05 Feb 2020 04:24:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -363,10 +363,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "135da0f0-f1a3-41b6-8510-5451e36fe3d4"
+          "57c87256-25ab-45a5-b138-cc2a88ead64b"
         ],
         "x-ms-client-request-id": [
-          "4f8eef17-ffce-4200-838a-ade9da00b586"
+          "2f7c4aaa-a632-4398-b7aa-fd55e714f1a4"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -375,10 +375,10 @@
           "11994"
         ],
         "x-ms-correlation-request-id": [
-          "76da1e5a-d73a-4d8b-a4c4-60307bd494eb"
+          "c5818c7d-aaeb-49cd-ba0e-570de0ba8f20"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091306Z:76da1e5a-d73a-4d8b-a4c4-60307bd494eb"
+          "SOUTHINDIA:20200205T042444Z:c5818c7d-aaeb-49cd-ba0e-570de0ba8f20"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -397,13 +397,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/RunnerService?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvUnVubmVyU2VydmljZT9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/RunnerService?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvUnVubmVyU2VydmljZT9hcGktdmVyc2lvbj0yMDE5LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "56d74804-a696-4c16-9d7b-1a128d44e5b8"
+          "5d261b52-1539-4520-99e8-a024b3b8a25b"
         ],
         "accept-language": [
           "en-US"
@@ -411,8 +411,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -420,7 +420,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:06 GMT"
+          "Wed, 05 Feb 2020 04:24:44 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -429,10 +429,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "d9635dbe-2607-4d42-be53-866aee8e81b2"
+          "0be1ad24-637c-4649-913f-cf166df35e11"
         ],
         "x-ms-client-request-id": [
-          "56d74804-a696-4c16-9d7b-1a128d44e5b8"
+          "5d261b52-1539-4520-99e8-a024b3b8a25b"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -441,10 +441,10 @@
           "11993"
         ],
         "x-ms-correlation-request-id": [
-          "4d0b32f0-dbb0-4efc-8f15-4141cf6cf59c"
+          "2e291d93-5692-4d53-a212-f267e0bad7ec"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091306Z:4d0b32f0-dbb0-4efc-8f15-4141cf6cf59c"
+          "SOUTHINDIA:20200205T042444Z:2e291d93-5692-4d53-a212-f267e0bad7ec"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -463,13 +463,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/IndexingAndSearch?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvSW5kZXhpbmdBbmRTZWFyY2g/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/IndexingAndSearch?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXMvSW5kZXhpbmdBbmRTZWFyY2g/YXBpLXZlcnNpb249MjAxOS0wNi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e994d837-88bf-46c9-a059-d945221f1f24"
+          "a2214ffa-a386-4b01-b9a3-167d418affa2"
         ],
         "accept-language": [
           "en-US"
@@ -477,8 +477,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -486,7 +486,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:06 GMT"
+          "Wed, 05 Feb 2020 04:24:44 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -495,10 +495,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "02377641-f716-464a-8e04-5ea314e38ff3"
+          "8a1f4571-08e9-47be-b885-5cbf2e4eaca1"
         ],
         "x-ms-client-request-id": [
-          "e994d837-88bf-46c9-a059-d945221f1f24"
+          "a2214ffa-a386-4b01-b9a3-167d418affa2"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -507,10 +507,10 @@
           "11992"
         ],
         "x-ms-correlation-request-id": [
-          "5493cf3e-4b31-41bf-8003-1a2e9727fcab"
+          "637ccd05-c8e1-48ea-9518-3db72aea08f0"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091306Z:5493cf3e-4b31-41bf-8003-1a2e9727fcab"
+          "SOUTHINDIA:20200205T042445Z:637ccd05-c8e1-48ea-9518-3db72aea08f0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

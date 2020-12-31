@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties of the payment.
+    /// The properties of a payment.
     /// </summary>
     public partial class PaymentProperties
     {
@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         /// <param name="paymentType">The type of payment.</param>
         /// <param name="amount">The paid amount.</param>
-        /// <param name="date">The date of the payment.</param>
-        /// <param name="paymentMethodFamily">The payment method family.
+        /// <param name="date">The date when the payment was made.</param>
+        /// <param name="paymentMethodFamily">The family of payment method.
         /// Possible values include: 'Credits', 'CheckWire', 'CreditCard',
         /// 'None'</param>
         /// <param name="paymentMethodType">The type of payment method.</param>
@@ -64,13 +64,13 @@ namespace Microsoft.Azure.Management.Billing.Models
         public Amount Amount { get; private set; }
 
         /// <summary>
-        /// Gets the date of the payment.
+        /// Gets the date when the payment was made.
         /// </summary>
         [JsonProperty(PropertyName = "date")]
         public System.DateTime? Date { get; private set; }
 
         /// <summary>
-        /// Gets or sets the payment method family. Possible values include:
+        /// Gets or sets the family of payment method. Possible values include:
         /// 'Credits', 'CheckWire', 'CreditCard', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "paymentMethodFamily")]

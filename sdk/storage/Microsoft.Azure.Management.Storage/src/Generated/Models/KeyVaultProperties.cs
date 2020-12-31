@@ -32,11 +32,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="keyName">The name of KeyVault key.</param>
         /// <param name="keyVersion">The version of KeyVault key.</param>
         /// <param name="keyVaultUri">The Uri of KeyVault.</param>
-        public KeyVaultProperties(string keyName = default(string), string keyVersion = default(string), string keyVaultUri = default(string))
+        /// <param name="currentVersionedKeyIdentifier">The object identifier
+        /// of the current versioned Key Vault Key in use.</param>
+        /// <param name="lastKeyRotationTimestamp">Timestamp of last rotation
+        /// of the Key Vault Key.</param>
+        public KeyVaultProperties(string keyName = default(string), string keyVersion = default(string), string keyVaultUri = default(string), string currentVersionedKeyIdentifier = default(string), System.DateTime? lastKeyRotationTimestamp = default(System.DateTime?))
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
             KeyVaultUri = keyVaultUri;
+            CurrentVersionedKeyIdentifier = currentVersionedKeyIdentifier;
+            LastKeyRotationTimestamp = lastKeyRotationTimestamp;
             CustomInit();
         }
 
@@ -62,6 +68,19 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "keyvaulturi")]
         public string KeyVaultUri { get; set; }
+
+        /// <summary>
+        /// Gets the object identifier of the current versioned Key Vault Key
+        /// in use.
+        /// </summary>
+        [JsonProperty(PropertyName = "currentVersionedKeyIdentifier")]
+        public string CurrentVersionedKeyIdentifier { get; private set; }
+
+        /// <summary>
+        /// Gets timestamp of last rotation of the Key Vault Key.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastKeyRotationTimestamp")]
+        public System.DateTime? LastKeyRotationTimestamp { get; private set; }
 
     }
 }

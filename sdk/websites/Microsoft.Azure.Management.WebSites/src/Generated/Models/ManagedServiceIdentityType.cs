@@ -10,15 +10,63 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ManagedServiceIdentityType.
     /// </summary>
-    public static class ManagedServiceIdentityType
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ManagedServiceIdentityType
     {
-        public const string SystemAssigned = "SystemAssigned";
-        public const string UserAssigned = "UserAssigned";
-        public const string SystemAssignedUserAssigned = "SystemAssigned, UserAssigned";
-        public const string None = "None";
+        [EnumMember(Value = "SystemAssigned")]
+        SystemAssigned,
+        [EnumMember(Value = "UserAssigned")]
+        UserAssigned,
+        [EnumMember(Value = "SystemAssigned, UserAssigned")]
+        SystemAssignedUserAssigned,
+        [EnumMember(Value = "None")]
+        None
+    }
+    internal static class ManagedServiceIdentityTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this ManagedServiceIdentityType? value)
+        {
+            return value == null ? null : ((ManagedServiceIdentityType)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this ManagedServiceIdentityType value)
+        {
+            switch( value )
+            {
+                case ManagedServiceIdentityType.SystemAssigned:
+                    return "SystemAssigned";
+                case ManagedServiceIdentityType.UserAssigned:
+                    return "UserAssigned";
+                case ManagedServiceIdentityType.SystemAssignedUserAssigned:
+                    return "SystemAssigned, UserAssigned";
+                case ManagedServiceIdentityType.None:
+                    return "None";
+            }
+            return null;
+        }
+
+        internal static ManagedServiceIdentityType? ParseManagedServiceIdentityType(this string value)
+        {
+            switch( value )
+            {
+                case "SystemAssigned":
+                    return ManagedServiceIdentityType.SystemAssigned;
+                case "UserAssigned":
+                    return ManagedServiceIdentityType.UserAssigned;
+                case "SystemAssigned, UserAssigned":
+                    return ManagedServiceIdentityType.SystemAssignedUserAssigned;
+                case "None":
+                    return ManagedServiceIdentityType.None;
+            }
+            return null;
+        }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -31,9 +32,9 @@ namespace Azure.Storage.Files.DataLake.Models
             string copyProgress,
             Uri copySource,
             CopyStatus copyStatus,
-            LeaseDurationType leaseDuration,
-            LeaseState leaseState,
-            LeaseStatus leaseStatus,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
             string acceptRanges,
             bool isServerEncrypted,
             string encryptionKeySha256,
@@ -116,9 +117,9 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public static FileSystemProperties FileSystemProperties(
             DateTimeOffset lastModified,
-            LeaseStatus? leaseStatus,
-            LeaseState? leaseState,
-            LeaseDurationType? leaseDuration,
+            DataLakeLeaseStatus? leaseStatus,
+            DataLakeLeaseState? leaseState,
+            DataLakeLeaseDuration? leaseDuration,
             PublicAccessType? publicAccess,
             bool? hasImmutabilityPolicy,
             bool? hasLegalHold,
@@ -262,7 +263,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathProperties
         /// <summary>
-        /// Creates a new <see cref="PathProperties"/> instance for mocking.
+        /// Creates a new PathProperties instance for mocking.
         /// </summary>
         public static PathProperties PathProperties(
             DateTimeOffset lastModified,
@@ -275,9 +276,74 @@ namespace Azure.Storage.Files.DataLake.Models
             Uri copySource,
             CopyStatus copyStatus,
             bool isIncrementalCopy,
-            LeaseDurationType leaseDuration,
-            LeaseState leaseState,
-            LeaseStatus leaseStatus,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string accessTier,
+            string archiveStatus,
+            DateTimeOffset accessTierChangeTime,
+            bool isDirectory)
+            => new PathProperties()
+            {
+                LastModified = lastModified,
+                CreatedOn = creationTime,
+                Metadata = metadata,
+                CopyCompletedOn = copyCompletionTime,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                AccessTier = accessTier,
+                ArchiveStatus = archiveStatus,
+                AccessTierChangedOn = accessTierChangeTime,
+                IsDirectory = isDirectory
+            };
+
+        /// <summary>
+        /// Creates a new PathProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PathProperties PathProperties(
+            DateTimeOffset lastModified,
+            DateTimeOffset creationTime,
+            IDictionary<string, string> metadata,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            bool isIncrementalCopy,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
             long contentLength,
             string contentType,
             ETag eTag,
@@ -347,5 +413,23 @@ namespace Azure.Storage.Files.DataLake.Models
                 Value = value
             };
         #endregion UserDelegationKey
+
+        #region DataLakeQueryError
+        /// <summary>
+        /// Creates a new BlobQueryError instance for mocking.
+        /// </summary>
+        public static DataLakeQueryError DataLakeQueryError(
+            string name = default,
+            string description = default,
+            bool isFatal = default,
+            long position = default)
+            => new DataLakeQueryError
+            {
+                Name = name,
+                Description = description,
+                IsFatal = isFatal,
+                Position = position
+            };
+        #endregion DataLakeQueryError
     }
 }

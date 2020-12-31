@@ -31,10 +31,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <summary>
         /// Initializes a new instance of the NetworkRuleSet class.
         /// </summary>
-        /// <param name="bypass">Tells what traffic can bypass network rules.
-        /// This can be 'AzureServices' or 'None'.  If not specified the
-        /// default is 'AzureServices'. Possible values include:
-        /// 'AzureServices', 'None'</param>
         /// <param name="defaultAction">The default action when no rule from
         /// ipRules and from virtualNetworkRules match. This is only used after
         /// the bypass property has been evaluated. Possible values include:
@@ -42,9 +38,8 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="ipRules">The list of IP address rules.</param>
         /// <param name="virtualNetworkRules">The list of virtual network
         /// rules.</param>
-        public NetworkRuleSet(string bypass = default(string), string defaultAction = default(string), IList<IpRule> ipRules = default(IList<IpRule>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>))
+        public NetworkRuleSet(string defaultAction = default(string), IList<IpRule> ipRules = default(IList<IpRule>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>))
         {
-            Bypass = bypass;
             DefaultAction = defaultAction;
             IpRules = ipRules;
             VirtualNetworkRules = virtualNetworkRules;
@@ -55,14 +50,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets tells what traffic can bypass network rules. This can
-        /// be 'AzureServices' or 'None'.  If not specified the default is
-        /// 'AzureServices'. Possible values include: 'AzureServices', 'None'
-        /// </summary>
-        [JsonProperty(PropertyName = "bypass")]
-        public string Bypass { get; set; }
 
         /// <summary>
         /// Gets or sets the default action when no rule from ipRules and from

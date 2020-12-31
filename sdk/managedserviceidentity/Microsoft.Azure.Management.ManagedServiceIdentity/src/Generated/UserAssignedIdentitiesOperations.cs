@@ -473,6 +473,10 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -679,7 +683,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Identity>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, Identity parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Identity>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IdentityUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {

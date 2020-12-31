@@ -49,10 +49,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="writeBehavior">The write behavior for the operation.
         /// Default is 'Insert'. Possible values include: 'Insert',
         /// 'Update'</param>
-        public SapCloudForCustomerSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), string writeBehavior = default(string))
+        /// <param name="httpRequestTimeout">The timeout (TimeSpan) to get an
+        /// HTTP response. It is the timeout to get a response, not the timeout
+        /// to read response data. Default value: 00:05:00. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        public SapCloudForCustomerSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), string writeBehavior = default(string), object httpRequestTimeout = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             WriteBehavior = writeBehavior;
+            HttpRequestTimeout = httpRequestTimeout;
             CustomInit();
         }
 
@@ -67,6 +73,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "writeBehavior")]
         public string WriteBehavior { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timeout (TimeSpan) to get an HTTP response. It is
+        /// the timeout to get a response, not the timeout to read response
+        /// data. Default value: 00:05:00. Type: string (or Expression with
+        /// resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// </summary>
+        [JsonProperty(PropertyName = "httpRequestTimeout")]
+        public object HttpRequestTimeout { get; set; }
 
     }
 }

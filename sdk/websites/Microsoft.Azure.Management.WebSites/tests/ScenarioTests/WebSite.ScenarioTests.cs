@@ -91,36 +91,6 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "Deptecated API")]
-        //[Fact(Skip="TODO: Fix datetime parsing in test to properly handle universal time and rerecord.")]
-        public void GetSiteMetrics()
-        {
-            RunWebsiteTestScenario(
-                (webSiteName, resourceGroupName, whpName, locationName, webSitesClient, resourcesClient) =>
-                {
-                    var endTime = DateTime.Parse("2018-01-28T00:23:02Z").ToUniversalTime();
-                    var metricNames = new List<string> {"Requests", "CPU", "MemoryWorkingSet"};
-                    metricNames.Sort();
-                    var result = webSitesClient.WebApps.ListMetrics(resourceGroupName: resourceGroupName,
-                        name: webSiteName, filter: WebSitesHelper.BuildMetricFilter(startTime: endTime.AddDays(-1), endTime: endTime, timeGrain: "PT1H", metricNames: metricNames), details: true);
-                    
-                    webSitesClient.WebApps.Delete(resourceGroupName, webSiteName);
-
-                    // Validate response
-                    Assert.NotNull(result);
-                    var actualmetricNames =
-                        result.Select(r => r.Name.Value).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
-                    actualmetricNames.Sort();
-                    Assert.Equal(metricNames, actualmetricNames, StringComparer.OrdinalIgnoreCase);
-
-                    // validate metrics only for replay since the metrics will not match
-                    if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-                    {
-                        // TODO: Add playback mode assertions. 
-                    }
-                });
-        }
-
         [Fact]
         public void GetAndSetNonSensitiveSiteConfigs()
         {
@@ -438,8 +408,8 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        //[Fact(Skip = "Test failing due to test issue. Needs further investigation")]
-        [Fact]
+        [Fact(Skip = "Test failing due to test issue. Needs further investigation")]
+        //[Fact]
         public void CloneSite()
         {
             RunWebsiteTestScenario(

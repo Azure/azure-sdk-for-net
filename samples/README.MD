@@ -36,10 +36,10 @@ This section lists **main** how-to guides for the most commonly used APIs and mo
 - How to configure, access, and analyze **logging** information (TODO)
 
 #### Azure.Security.KeyVault
-- [How to **create and delete keys**](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.cs)
-- [How to **encrypt and decrypt keys**](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample4_EncryptDecrypt.cs) 
-- [How to **backup and restore keys**](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample2_BackupAndRestore.cs)
-- [How to **backup and restore secrets**](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples/Sample2_BackupAndRestore.md) 
+- [How to **create and delete keys**](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md)
+- [How to **encrypt and decrypt keys**](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample4_EncryptDecrypt.md)
+- [How to **backup and restore keys**](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample2_BackupAndRestore.md)
+- [How to **backup and restore secrets**](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples/Sample2_BackupAndRestore.md)
 
 #### Azure.Storage.Blobs
 - [How to **upload and download** a blob](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/samples/Sample01a_HelloWorld.cs)

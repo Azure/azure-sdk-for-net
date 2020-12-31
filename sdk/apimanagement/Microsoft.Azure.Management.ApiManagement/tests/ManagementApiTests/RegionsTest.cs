@@ -15,6 +15,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class RegionTests : TestBase
     {
         [Fact]
+        [Trait("owner", "sasolank")]
         public async Task List()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

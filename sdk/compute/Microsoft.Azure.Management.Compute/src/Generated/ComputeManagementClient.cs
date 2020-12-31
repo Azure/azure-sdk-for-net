@@ -97,6 +97,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IDedicatedHostsOperations DedicatedHosts { get; private set; }
 
         /// <summary>
+        /// Gets the ISshPublicKeysOperations.
+        /// </summary>
+        public virtual ISshPublicKeysOperations SshPublicKeys { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
         /// </summary>
         public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
@@ -167,6 +172,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMRunCommandsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetVMRunCommandsOperations VirtualMachineScaleSetVMRunCommands { get; private set; }
+
+        /// <summary>
         /// Gets the IResourceSkusOperations.
         /// </summary>
         public virtual IResourceSkusOperations ResourceSkus { get; private set; }
@@ -185,6 +195,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IDiskEncryptionSetsOperations.
         /// </summary>
         public virtual IDiskEncryptionSetsOperations DiskEncryptionSets { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiskAccessesOperations.
+        /// </summary>
+        public virtual IDiskAccessesOperations DiskAccesses { get; private set; }
 
         /// <summary>
         /// Gets the IGalleriesOperations.
@@ -462,6 +477,7 @@ namespace Microsoft.Azure.Management.Compute
             ProximityPlacementGroups = new ProximityPlacementGroupsOperations(this);
             DedicatedHostGroups = new DedicatedHostGroupsOperations(this);
             DedicatedHosts = new DedicatedHostsOperations(this);
+            SshPublicKeys = new SshPublicKeysOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);
@@ -476,10 +492,12 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
+            VirtualMachineScaleSetVMRunCommands = new VirtualMachineScaleSetVMRunCommandsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);
             Disks = new DisksOperations(this);
             Snapshots = new SnapshotsOperations(this);
             DiskEncryptionSets = new DiskEncryptionSetsOperations(this);
+            DiskAccesses = new DiskAccessesOperations(this);
             Galleries = new GalleriesOperations(this);
             GalleryImages = new GalleryImagesOperations(this);
             GalleryImageVersions = new GalleryImageVersionsOperations(this);

@@ -56,7 +56,7 @@ namespace IotCentral.Tests.ScenarioTests
                 Location = location,
                 Sku = new AppSkuInfo()
                 {
-                    Name = "S1"
+                    Name = "ST1"
                 },
                 Subdomain = appSubdomain,
                 DisplayName = appResourceName

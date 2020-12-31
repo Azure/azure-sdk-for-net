@@ -41,15 +41,17 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="provisioningState">Provisioning state of the managed
         /// rule set.</param>
+        /// <param name="ruleSetId">Id of the managed rule set.</param>
         /// <param name="ruleSetType">Type of the managed rule set.</param>
         /// <param name="ruleSetVersion">Version of the managed rule set
         /// type.</param>
         /// <param name="ruleGroups">Rule groups of the managed rule
         /// set.</param>
-        public ManagedRuleSetDefinition(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string ruleSetType = default(string), string ruleSetVersion = default(string), IList<ManagedRuleGroupDefinition> ruleGroups = default(IList<ManagedRuleGroupDefinition>))
+        public ManagedRuleSetDefinition(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string ruleSetId = default(string), string ruleSetType = default(string), string ruleSetVersion = default(string), IList<ManagedRuleGroupDefinition> ruleGroups = default(IList<ManagedRuleGroupDefinition>))
             : base(id, name, type, location, tags)
         {
             ProvisioningState = provisioningState;
+            RuleSetId = ruleSetId;
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             RuleGroups = ruleGroups;
@@ -66,6 +68,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets id of the managed rule set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ruleSetId")]
+        public string RuleSetId { get; private set; }
 
         /// <summary>
         /// Gets type of the managed rule set.

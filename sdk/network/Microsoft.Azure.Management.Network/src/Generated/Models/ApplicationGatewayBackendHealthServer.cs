@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// ApplicationGatewayBackendHealthServer class.
         /// </summary>
         /// <param name="address">IP address or FQDN of backend server.</param>
-        /// <param name="ipConfiguration">Reference of IP configuration of
+        /// <param name="ipConfiguration">Reference to IP configuration of
         /// backend server.</param>
         /// <param name="health">Health of backend server. Possible values
         /// include: 'Unknown', 'Up', 'Down', 'Partial', 'Draining'</param>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Address { get; set; }
 
         /// <summary>
-        /// Gets or sets reference of IP configuration of backend server.
+        /// Gets or sets reference to IP configuration of backend server.
         /// </summary>
         [JsonProperty(PropertyName = "ipConfiguration")]
         public NetworkInterfaceIPConfiguration IpConfiguration { get; set; }
@@ -76,5 +76,18 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "healthProbeLog")]
         public string HealthProbeLog { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (IpConfiguration != null)
+            {
+                IpConfiguration.Validate();
+            }
+        }
     }
 }

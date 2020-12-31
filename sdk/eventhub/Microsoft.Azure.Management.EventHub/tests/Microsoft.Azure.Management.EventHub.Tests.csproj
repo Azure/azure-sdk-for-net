@@ -27,4 +27,7 @@
   <ItemGroup>
     <Folder Include="SessionRecords\EventHub.Tests.ScenarioTests.ScenarioTests\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.KeyVault" Version="3.0.0" />
+  </ItemGroup>
 </Project>

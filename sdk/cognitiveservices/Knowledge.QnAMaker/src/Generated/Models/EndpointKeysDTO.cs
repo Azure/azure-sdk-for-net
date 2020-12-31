@@ -33,12 +33,14 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// <param name="secondaryEndpointKey">Secondary Access Key.</param>
         /// <param name="installedVersion">Current version of runtime.</param>
         /// <param name="lastStableVersion">Latest version of runtime.</param>
-        public EndpointKeysDTO(string primaryEndpointKey = default(string), string secondaryEndpointKey = default(string), string installedVersion = default(string), string lastStableVersion = default(string))
+        /// <param name="language">Language setting of runtime.</param>
+        public EndpointKeysDTO(string primaryEndpointKey = default(string), string secondaryEndpointKey = default(string), string installedVersion = default(string), string lastStableVersion = default(string), string language = default(string))
         {
             PrimaryEndpointKey = primaryEndpointKey;
             SecondaryEndpointKey = secondaryEndpointKey;
             InstalledVersion = installedVersion;
             LastStableVersion = lastStableVersion;
+            Language = language;
             CustomInit();
         }
 
@@ -70,6 +72,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastStableVersion")]
         public string LastStableVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets language setting of runtime.
+        /// </summary>
+        [JsonProperty(PropertyName = "language")]
+        public string Language { get; set; }
 
     }
 }

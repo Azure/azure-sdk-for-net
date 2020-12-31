@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Processor;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -27,7 +28,13 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 Identifier = Guid.NewGuid().ToString(),
                 TrackLastEnqueuedEventProperties = false,
+                LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
                 MaximumWaitTime = TimeSpan.FromMinutes(65),
+                CacheEventCount = 1,
+                PrefetchCount = 0,
+                PrefetchSizeInBytes = 200,
+                LoadBalancingUpdateInterval = TimeSpan.FromDays(99),
+                PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(5),
                 RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
             };
@@ -38,7 +45,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier of the clone should match.");
             Assert.That(clone.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
+            Assert.That(clone.LoadBalancingStrategy, Is.EqualTo(options.LoadBalancingStrategy), "The load balancing strategy of the clone should match.");
             Assert.That(clone.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The maximum wait time of the clone should match.");
+            Assert.That(clone.CacheEventCount, Is.EqualTo(options.CacheEventCount), "The event cache size of the clone should match.");
+            Assert.That(clone.PrefetchCount, Is.EqualTo(options.PrefetchCount), "The prefetch count of the clone should match.");
+            Assert.That(clone.PrefetchSizeInBytes, Is.EqualTo(options.PrefetchSizeInBytes), "The prefetch byte size of the clone should match.");
+            Assert.That(clone.LoadBalancingUpdateInterval, Is.EqualTo(options.LoadBalancingUpdateInterval), "The load balancing interval of the clone should match.");
+            Assert.That(clone.PartitionOwnershipExpirationInterval, Is.EqualTo(options.PartitionOwnershipExpirationInterval), "The ownership interval of the clone should match.");
             Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
             Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
@@ -71,6 +84,100 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventProcessorClientOptions();
             Assert.That(() => options.MaximumWaitTime = null, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.CacheEventCount" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void CacheEventCountIsValidated()
+        {
+            Assert.That(() => new EventProcessorClientOptions { CacheEventCount = 0 }, Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.PrefetchCount" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchCountIsValidated()
+        {
+            Assert.That(() => new EventProcessorClientOptions { PrefetchCount = -1 }, Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.PrefetchCount" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchCountAllowsZero()
+        {
+            Assert.That(() => new EventProcessorClientOptions { PrefetchCount = 0 }, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.PrefetchSizeInBytes" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchSizeInBytesIsValidated()
+        {
+            Assert.That(() => new EventProcessorClientOptions { PrefetchSizeInBytes = -1 }, Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.PrefetchSizeInBytes" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchSizeInBytesAllowsZero()
+        {
+            Assert.That(() => new EventProcessorClientOptions { PrefetchSizeInBytes = 0 }, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.PrefetchSizeInBytes" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchSizeInBytesAllowsNull()
+        {
+            Assert.That(() => new EventProcessorClientOptions { PrefetchSizeInBytes = null }, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.LoadBalancingUpdateInterval" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(-1)]
+        [TestCase(-10)]
+        [TestCase(-100)]
+        public void LoadBalancingUpdateIntervalIsValidated(int intervalSeconds)
+        {
+            Assert.That(() => new EventProcessorClientOptions { LoadBalancingUpdateInterval = TimeSpan.FromSeconds(intervalSeconds) }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.PartitionOwnershipExpirationInterval " />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(-1)]
+        [TestCase(-10)]
+        [TestCase(-100)]
+        public void PartitionOwnershipExpirationInterval(int intervalSeconds)
+        {
+            Assert.That(() => new EventProcessorClientOptions { PartitionOwnershipExpirationInterval = TimeSpan.FromSeconds(intervalSeconds) }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         /// <summary>

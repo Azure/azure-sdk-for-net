@@ -11,11 +11,15 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Base64Url.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ChallengeBasedAuthenticationPolicy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClientDiagnostics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClientOptionsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IJsonSerializable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultIdentifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultPipeline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultPage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\HashCodeBuilder.cs" />
   </ItemGroup>
 </Project>

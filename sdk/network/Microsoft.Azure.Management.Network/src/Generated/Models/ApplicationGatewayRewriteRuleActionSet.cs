@@ -37,10 +37,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the Action Set.</param>
         /// <param name="responseHeaderConfigurations">Response Header Actions
         /// in the Action Set.</param>
-        public ApplicationGatewayRewriteRuleActionSet(IList<ApplicationGatewayHeaderConfiguration> requestHeaderConfigurations = default(IList<ApplicationGatewayHeaderConfiguration>), IList<ApplicationGatewayHeaderConfiguration> responseHeaderConfigurations = default(IList<ApplicationGatewayHeaderConfiguration>))
+        /// <param name="urlConfiguration">Url Configuration Action in the
+        /// Action Set.</param>
+        public ApplicationGatewayRewriteRuleActionSet(IList<ApplicationGatewayHeaderConfiguration> requestHeaderConfigurations = default(IList<ApplicationGatewayHeaderConfiguration>), IList<ApplicationGatewayHeaderConfiguration> responseHeaderConfigurations = default(IList<ApplicationGatewayHeaderConfiguration>), ApplicationGatewayUrlConfiguration urlConfiguration = default(ApplicationGatewayUrlConfiguration))
         {
             RequestHeaderConfigurations = requestHeaderConfigurations;
             ResponseHeaderConfigurations = responseHeaderConfigurations;
+            UrlConfiguration = urlConfiguration;
             CustomInit();
         }
 
@@ -60,6 +63,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "responseHeaderConfigurations")]
         public IList<ApplicationGatewayHeaderConfiguration> ResponseHeaderConfigurations { get; set; }
+
+        /// <summary>
+        /// Gets or sets url Configuration Action in the Action Set.
+        /// </summary>
+        [JsonProperty(PropertyName = "urlConfiguration")]
+        public ApplicationGatewayUrlConfiguration UrlConfiguration { get; set; }
 
     }
 }

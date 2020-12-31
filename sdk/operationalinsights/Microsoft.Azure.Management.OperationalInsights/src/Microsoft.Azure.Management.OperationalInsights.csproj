@@ -7,9 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.OperationalInsights</PackageId>
 		<Description>Provides Microsoft Azure Operational Insights management operations</Description>
 		<AssemblyName>Microsoft.Azure.Management.OperationalInsights</AssemblyName>
-		<Version>0.19.0-preview</Version>
+		<Version>0.21.0-preview</Version>
 		<PackageTags>Microsoft Azure OperationalInsights;OperationalInsights;</PackageTags>  
-		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+		<PackageReleaseNotes>updated API for workspace; added linked storage account; la cluster; linked service; Added parameters for saved searches; Add DeletedWorkspace </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -15,35 +16,65 @@ namespace Azure.Storage.Blobs
 {
     internal class PartitionedDownloader
     {
-        // The client used to download the blob
+        /// <summary>
+        /// The client used to download the blob.
+        /// </summary>
         private readonly BlobBaseClient _client;
 
-        // The maximum number of simultaneous workers
+        /// <summary>
+        /// The maximum number of simultaneous workers.
+        /// </summary>
         private readonly int _maxWorkerCount;
 
-        // The size of the first range requested (which can be larger than the
-        // other ranges)
+        /// <summary>
+        /// The size of the first range requested (which can be larger than the
+        /// other ranges).
+        /// </summary>
         private readonly long _initialRangeSize;
 
-        // The size of subsequent ranges
-        private readonly int _rangeSize;
+        /// <summary>
+        /// The size of subsequent ranges.
+        /// </summary>
+        private readonly long _rangeSize;
 
         public PartitionedDownloader(
             BlobBaseClient client,
-            StorageTransferOptions transferOptions = default,
-            long? initialTransferLength = null)
+            StorageTransferOptions transferOptions = default)
         {
             _client = client;
-            _maxWorkerCount =
-                transferOptions.MaximumConcurrency ??
-                Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            _initialRangeSize =
-                initialTransferLength ??
-                ((long?)transferOptions.MaximumTransferLength) ??
-                Constants.DefaultBufferSize;
-            _rangeSize = Math.Min(
-                Constants.Blob.Block.MaxDownloadBytes,
-                transferOptions.MaximumTransferLength ?? Constants.DefaultBufferSize);
+
+            // Set _maxWorkerCount
+            if (transferOptions.MaximumConcurrency.HasValue
+                && transferOptions.MaximumConcurrency > 0)
+            {
+                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
+            }
+            else
+            {
+                _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+            }
+
+            // Set _rangeSize
+            if (transferOptions.MaximumTransferSize.HasValue
+                && transferOptions.MaximumTransferSize.Value > 0)
+            {
+                _rangeSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
+            }
+            else
+            {
+                _rangeSize = Constants.DefaultBufferSize;
+            }
+
+            // Set _initialRangeSize
+            if (transferOptions.InitialTransferSize.HasValue
+                && transferOptions.InitialTransferSize.Value > 0)
+            {
+                _initialRangeSize = transferOptions.InitialTransferSize.Value;
+            }
+            else
+            {
+                _initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+            }
         }
 
         public async Task<Response> DownloadToAsync(
@@ -53,7 +84,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
             try
             {
                 scope.Start();
@@ -69,8 +100,21 @@ namespace Azure.Storage.Blobs
                         conditions,
                         rangeGetContentHash: false,
                         cancellationToken);
-                Response<BlobDownloadInfo> initialResponse =
-                    await initialResponseTask.ConfigureAwait(false);
+
+                Response<BlobDownloadInfo> initialResponse = null;
+                try
+                {
+                    initialResponse = await initialResponseTask.ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
+                {
+                    initialResponse = await _client.DownloadAsync(
+                        range: default,
+                        conditions,
+                        false,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
 
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
@@ -177,7 +221,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
             try
             {
                 scope.Start();
@@ -187,11 +231,24 @@ namespace Azure.Storage.Blobs
                 // a large blob, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
-                Response<BlobDownloadInfo> initialResponse = _client.Download(
-                    initialRange,
+                Response<BlobDownloadInfo> initialResponse;
+
+                try
+                {
+                    initialResponse = _client.Download(
+                        initialRange,
+                        conditions,
+                        rangeGetContentHash: false,
+                        cancellationToken);
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
+                {
+                    initialResponse = _client.Download(
+                    range: default,
                     conditions,
                     rangeGetContentHash: false,
                     cancellationToken);
+                }
 
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
@@ -246,6 +303,10 @@ namespace Azure.Storage.Blobs
 
         private static long ParseRangeTotalLength(string range)
         {
+            if (range == null)
+            {
+                return 0;
+            }
             int lengthSeparator = range.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
             if (lengthSeparator == -1)
             {
@@ -267,12 +328,16 @@ namespace Azure.Storage.Blobs
         private static async Task CopyToAsync(
             BlobDownloadInfo result,
             Stream destination,
-            CancellationToken cancellationToken) =>
-            await result.Content.CopyToAsync(
+            CancellationToken cancellationToken)
+        {
+            using Stream source = result.Content;
+
+            await source.CopyToAsync(
                 destination,
                 Constants.DefaultDownloadCopyBufferSize,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private static void CopyTo(
             BlobDownloadInfo result,
@@ -281,6 +346,7 @@ namespace Azure.Storage.Blobs
         {
             cancellationToken.ThrowIfCancellationRequested();
             result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
+            result.Content.Dispose();
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)

@@ -1,5 +1,26 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+
+## 1.0.2 (2020-09-10)
+
+- Provide AddConfigurationClient with support for TokenCredential
+
+## 1.0.1 (2020-07-07)
+
+- Update the tag list for the AzConfig package
+
+## 1.0.0
+
+### Breaking changes
+
+- `Keys` and `Labels` properties in `SettingSelector` are replaced with `KeyFilter` and `LabelFilter` to provide full filtering support.
+
+### Major changes
+
+- Fixed multiple issues with connection string parsing in `ConfigurationClient`.
+
 ## 1.0.0-preview.6
 
 - Bugfixes: [#8920](https://github.com/Azure/azure-sdk-for-net/issues/8920)

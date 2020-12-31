@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Security.Models
     /// A custom alert rule that checks if the number of activities (depends on
     /// the custom alert type) in a time window is within the given range.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("TimeWindowCustomAlertRule")]
     public partial class TimeWindowCustomAlertRule : ThresholdCustomAlertRule
     {
         /// <summary>
@@ -31,7 +32,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the TimeWindowCustomAlertRule class.
         /// </summary>
         /// <param name="isEnabled">Status of the custom alert.</param>
-        /// <param name="ruleType">The type of the custom alert rule.</param>
         /// <param name="minThreshold">The minimum threshold.</param>
         /// <param name="maxThreshold">The maximum threshold.</param>
         /// <param name="timeWindowSize">The time window size in iso8601
@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// alert.</param>
         /// <param name="description">The description of the custom
         /// alert.</param>
-        public TimeWindowCustomAlertRule(bool isEnabled, string ruleType, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize, string displayName = default(string), string description = default(string))
-            : base(isEnabled, ruleType, minThreshold, maxThreshold, displayName, description)
+        public TimeWindowCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize, string displayName = default(string), string description = default(string))
+            : base(isEnabled, minThreshold, maxThreshold, displayName, description)
         {
             TimeWindowSize = timeWindowSize;
             CustomInit();

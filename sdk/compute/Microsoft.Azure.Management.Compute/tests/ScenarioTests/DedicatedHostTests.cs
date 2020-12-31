@@ -60,7 +60,7 @@ namespace Compute.Tests
                     ValidateDedicatedHostGroup(createdDHG, returnedDHG);
 
                     //Create DedicatedHost within the DedicatedHostGroup and validate
-                    var createdDH = CreateDedicatedHost(rgName, dhgName, dhName);
+                    var createdDH = CreateDedicatedHost(rgName, dhgName, dhName, "ESv3-Type1");
                     var returnedDH = m_CrpClient.DedicatedHosts.Get(rgName, dhgName, dhName);
                     ValidateDedicatedHost(createdDH, returnedDH);
 
@@ -68,6 +68,49 @@ namespace Compute.Tests
                     var listDHsResponse = m_CrpClient.DedicatedHosts.ListByHostGroup(rgName, dhgName);
                     Assert.Single(listDHsResponse);
                     ValidateDedicatedHost(createdDH, listDHsResponse.First());
+
+                    //Delete DedicatedHosts and DedicatedHostGroups
+                    m_CrpClient.DedicatedHosts.Delete(rgName, dhgName, dhName);
+                    m_CrpClient.DedicatedHostGroups.Delete(rgName, dhgName);
+
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                }
+            }
+        }
+
+        [Fact]
+        public void TestNonZonalDedicatedHostGroupInstanceViewAndAutomaticPlacement()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus");
+                EnsureClientsInitialized(context);
+
+                string baseRGName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string rgName = baseRGName + "DH";
+                string dhgName = "DHG-1";
+                string dhName = "DH-1";
+
+                try
+                {
+                    // Create a dedicated host group, then get the dedicated host group and validate that they match
+                    DedicatedHostGroup createdDHG = CreateDedicatedHostGroup(rgName, dhgName, availabilityZone: null);
+                    DedicatedHostGroup returnedDHG = m_CrpClient.DedicatedHostGroups.Get(rgName, dhgName);
+                    ValidateDedicatedHostGroup(createdDHG, returnedDHG);
+
+                    //Create DedicatedHost within the DedicatedHostGroup and validate
+                    var createdDH = CreateDedicatedHost(rgName, dhgName, dhName, "ESv3-Type1");
+                    var returnedDH = m_CrpClient.DedicatedHosts.Get(rgName, dhgName, dhName);
+                    ValidateDedicatedHost(createdDH, returnedDH);
+
+                    // Validate dedicated host group instance view
+                    DedicatedHostGroup returnedDHGWithInstanceView = m_CrpClient.DedicatedHostGroups.Get(rgName, dhgName, InstanceViewTypes.InstanceView);
+                    ValidateDedicatedHostGroupInstanceView(returnedDHGWithInstanceView, createdDH);
 
                     //Delete DedicatedHosts and DedicatedHostGroups
                     m_CrpClient.DedicatedHosts.Delete(rgName, dhgName, dhName);
@@ -102,8 +145,18 @@ namespace Compute.Tests
                 }
                 Assert.Equal(expectedDHG.Location, actualDHG.Location);
                 Assert.Equal(expectedDHG.Name, actualDHG.Name);
+                Assert.Equal(expectedDHG.SupportAutomaticPlacement, actualDHG.SupportAutomaticPlacement);
             }
+        }
 
+        private void ValidateDedicatedHostGroupInstanceView(DedicatedHostGroup actualDHGWithInstanceView, params DedicatedHost[] expectedDedicatedHostsInInstanceView)
+        {
+            Assert.NotNull(actualDHGWithInstanceView);
+            Assert.Equal(expectedDedicatedHostsInInstanceView.Count(), actualDHGWithInstanceView.InstanceView.Hosts.Count);
+            foreach (DedicatedHost dedicatedHost in expectedDedicatedHostsInInstanceView)
+            {
+                Assert.True(actualDHGWithInstanceView.InstanceView.Hosts.FirstOrDefault(host => host.Name.Equals(dedicatedHost.Name)) != null);
+            }
         }
 
         private void ValidateDedicatedHost(DedicatedHost expectedDH, DedicatedHost actualDH)

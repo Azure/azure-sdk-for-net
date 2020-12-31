@@ -40,10 +40,10 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
                 Password = ""
             };
 
-            var client = new HDInsightJobManagementClient("TestCluster", credentials);
+            var client = new HDInsightJobClient("TestCluster", credentials);
             Assert.Equal(credentials.UserName.ToLower(CultureInfo.CurrentCulture), client.Username);
 
-            client = new HDInsightJobManagementClient("TestCluster", credentials, new HttpClient());
+            client = new HDInsightJobClient("TestCluster", credentials, new HttpClient());
             Assert.Equal(credentials.UserName.ToLower(CultureInfo.CurrentCulture), client.Username);
         }
 
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
             Assert.Equal("'jobId' is less than minimum length of '1'.", exceptionMessage);
         }
 
-        private static HDInsightJobManagementClient GetHDInsightUnitTestingJobClient()
+        private static HDInsightJobClient GetHDInsightUnitTestingJobClient()
         {
             var cred = new BasicAuthenticationCredentials()
             {
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
                 Password = "mockPassword"
             };
 
-            return new HDInsightJobManagementClient("TestCluster", cred);
+            return new HDInsightJobClient("TestCluster", cred);
         }
     }
 }

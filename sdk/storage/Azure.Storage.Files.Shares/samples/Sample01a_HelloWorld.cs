@@ -64,7 +64,6 @@ namespace Azure.Storage.Files.Shares.Samples
             {
                 file.Create(stream.Length);
                 file.UploadRange(
-                    ShareFileRangeWriteType.Update,
                     new HttpRange(0, stream.Length),
                     stream);
             }

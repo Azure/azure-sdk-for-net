@@ -40,6 +40,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
             {
                 Assert.NotNull(service.PortalUrl);
                 Assert.NotNull(service.ManagementApiUrl);
+                Assert.NotNull(service.DeveloperPortalUrl);
                 Assert.NotNull(service.ScmUrl);
                 Assert.NotNull(service.PublicIPAddresses);
             }

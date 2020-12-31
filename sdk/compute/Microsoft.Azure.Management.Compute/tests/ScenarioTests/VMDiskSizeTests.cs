@@ -22,6 +22,7 @@ namespace Compute.Tests
                 var image = m_CrpClient.VirtualMachineImages.Get(
                     this.m_location, imageRef.Publisher, imageRef.Offer, imageRef.Sku, imageRef.Version);
                 Assert.True(image != null);
+                Assert.NotNull(image.Disallowed.VmDiskType);
 
                 // Create resource group
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);

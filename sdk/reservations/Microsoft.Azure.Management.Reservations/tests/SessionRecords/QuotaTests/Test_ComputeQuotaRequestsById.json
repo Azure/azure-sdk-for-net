@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/011e1463-c8d7-4a5e-ae35-f15c1f3226b4?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9zZXJ2aWNlTGltaXRzUmVxdWVzdHMvMDExZTE0NjMtYzhkNy00YTVlLWFlMzUtZjE1YzFmMzIyNmI0P2FwaS12ZXJzaW9uPTIwMTktMDctMTktcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "64d8adb7-fd2b-4445-9140-673eb4b57c7d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:44:20 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "2441ba1f-5635-4c66-bf5a-fc46ca1909e7"
+        ],
+        "x-ms-correlation-request-id": [
+          "2441ba1f-5635-4c66-bf5a-fc46ca1909e7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T084421Z:2441ba1f-5635-4c66-bf5a-fc46ca1909e7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "818"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"requestSubmitTime\": \"2020-06-01T21:05:35.2227357Z\",\r\n    \"message\": \"Quota is currently unavailable in this location for this resource. Please contact Support.\",\r\n    \"provisioningState\": \"Failed\",\r\n    \"value\": [\r\n      {\r\n        \"subRequestId\": \"94e809f9-e0ab-451b-961a-13f57acc62d9\",\r\n        \"message\": \"Quota is currently unavailable in this location for this resource. Please contact Support.\",\r\n        \"provisioningState\": \"Failed\",\r\n        \"limit\": 12,\r\n        \"name\": {\r\n          \"value\": \"standardHFamily\",\r\n          \"localizedValue\": null\r\n        },\r\n        \"resourceType\": null\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/011e1463-c8d7-4a5e-ae35-f15c1f3226b4\",\r\n  \"name\": \"9f6cce51-6baf-4de5-a3c4-6f58b85315b9/011e1463-c8d7-4a5e-ae35-f15c1f3226b4\",\r\n  \"type\": \"Microsoft.Capacity/serviceLimitsRequests\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of get role definition for a role.
+    /// The properties of a role definition.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class BillingRoleDefinition : Resource

@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to export as a template.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='parameters'>
             /// Parameters for exporting the template.
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to export as a template.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='parameters'>
             /// Parameters for exporting the template.
@@ -338,6 +338,46 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task BeginDeleteAsync(this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Captures the specified resource group as a template.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for exporting the template.
+            /// </param>
+            public static ResourceGroupExportResult BeginExportTemplate(this IResourceGroupsOperations operations, string resourceGroupName, ExportTemplateRequest parameters)
+            {
+                return operations.BeginExportTemplateAsync(resourceGroupName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Captures the specified resource group as a template.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for exporting the template.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ResourceGroupExportResult> BeginExportTemplateAsync(this IResourceGroupsOperations operations, string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginExportTemplateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

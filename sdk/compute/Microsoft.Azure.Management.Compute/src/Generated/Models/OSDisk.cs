@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="caching">Specifies the caching requirements.
         /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
         /// **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt;
-        /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
+        /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None** for Standard
+        /// storage. **ReadOnly** for Premium storage. Possible values include:
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
@@ -140,8 +140,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **None**
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadOnly**
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadWrite**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **None** for Standard
+        /// storage. **ReadOnly** for Premium storage. Possible values include:
         /// 'None', 'ReadOnly', 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "caching")]

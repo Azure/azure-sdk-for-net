@@ -22,6 +22,34 @@ namespace Microsoft.Azure.Management.AlertsManagement
     public static partial class AlertsOperationsExtensions
     {
             /// <summary>
+            /// List alerts meta data information based on value of identifier parameter.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static AlertsMetaData MetaData(this IAlertsOperations operations)
+            {
+                return operations.MetaDataAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List alerts meta data information based on value of identifier parameter.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AlertsMetaData> MetaDataAsync(this IAlertsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MetaDataWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List all existing alerts, where the results can be filtered on the basis of
             /// multiple parameters (e.g. time range). The results can then be sorted on
             /// the basis specific fields, with the default being lastModifiedDateTime.

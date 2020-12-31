@@ -47,6 +47,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// network interfaces.</param>
         /// <param name="subnets">A collection of references to
         /// subnets.</param>
+        /// <param name="flowLogs">A collection of references to flow log
+        /// resources.</param>
         /// <param name="resourceGuid">The resource GUID property of the
         /// network security group resource.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -54,13 +56,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkSecurityGroup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SecurityRule> securityRules = default(IList<SecurityRule>), IList<SecurityRule> defaultSecurityRules = default(IList<SecurityRule>), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), IList<Subnet> subnets = default(IList<Subnet>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public NetworkSecurityGroup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SecurityRule> securityRules = default(IList<SecurityRule>), IList<SecurityRule> defaultSecurityRules = default(IList<SecurityRule>), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), IList<Subnet> subnets = default(IList<Subnet>), IList<FlowLog> flowLogs = default(IList<FlowLog>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             SecurityRules = securityRules;
             DefaultSecurityRules = defaultSecurityRules;
             NetworkInterfaces = networkInterfaces;
             Subnets = subnets;
+            FlowLogs = flowLogs;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             Etag = etag;
@@ -96,6 +99,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnets")]
         public IList<Subnet> Subnets { get; private set; }
+
+        /// <summary>
+        /// Gets a collection of references to flow log resources.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.flowLogs")]
+        public IList<FlowLog> FlowLogs { get; private set; }
 
         /// <summary>
         /// Gets the resource GUID property of the network security group

@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares.Samples
             // Create a client that can authenticate with a connection string
             ShareServiceClient service = new ShareServiceClient(connectionString);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Storage.Files.Shares.Samples
             // Create a client that can authenticate with a connection string
             ShareServiceClient service = new ShareServiceClient(serviceUri, credential);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Storage.Files.Shares.Samples
             // Create a client that can authenticate with the SAS URI
             ShareServiceClient service = new ShareServiceClient(sasUri.Uri);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
 
             // Try to create a new container (which is beyond our

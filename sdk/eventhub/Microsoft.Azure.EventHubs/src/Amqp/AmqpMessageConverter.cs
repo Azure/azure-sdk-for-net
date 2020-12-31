@@ -142,6 +142,11 @@ namespace Microsoft.Azure.EventHubs.Amqp
                     }
                 }
             }
+
+            if (eventData.ContentType != null)
+            {
+                message.Properties.ContentType = eventData.ContentType;
+            }
         }
 
         static void UpdateEventDataHeaderAndProperties(AmqpMessage amqpMessage, EventData data)
@@ -231,6 +236,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
                     AddFieldToSystemProperty(amqpMessage.Properties.GroupId != null, data.SystemProperties, Properties.GroupIdName, amqpMessage.Properties.GroupId);
                     AddFieldToSystemProperty(amqpMessage.Properties.GroupSequence != null, data.SystemProperties, Properties.GroupSequenceName, amqpMessage.Properties.GroupSequence);
                     AddFieldToSystemProperty(amqpMessage.Properties.ReplyToGroupId != null, data.SystemProperties, Properties.ReplyToGroupIdName, amqpMessage.Properties.ReplyToGroupId);
+                    data.ContentType = amqpMessage.Properties.ContentType.Value;
                 }
             }
         }

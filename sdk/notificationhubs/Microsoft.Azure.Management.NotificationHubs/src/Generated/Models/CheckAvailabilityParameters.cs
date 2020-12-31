@@ -36,15 +36,15 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// class.
         /// </summary>
         /// <param name="name">Resource name</param>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="type">Resource type</param>
+        /// <param name="location">Resource location</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="sku">The sku of the created namespace</param>
         /// <param name="isAvailiable">True if the name is available and can be
         /// used to create new Namespace/NotificationHub. Otherwise
         /// false.</param>
-        public CheckAvailabilityParameters(string name, string location, string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? isAvailiable = default(bool?))
+        public CheckAvailabilityParameters(string name, string id = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? isAvailiable = default(bool?))
         {
             Id = id;
             Name = name;
@@ -115,10 +115,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
             if (Sku != null)
             {

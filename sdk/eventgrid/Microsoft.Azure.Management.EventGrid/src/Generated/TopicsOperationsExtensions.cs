@@ -179,12 +179,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicName'>
             /// Name of the topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the resource
+            /// <param name='topicUpdateParameters'>
+            /// Topic update information.
             /// </param>
-            public static Topic Update(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Topic Update(this ITopicsOperations operations, string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters)
             {
-                return operations.UpdateAsync(resourceGroupName, topicName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, topicName, topicUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -202,15 +202,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicName'>
             /// Name of the topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the resource
+            /// <param name='topicUpdateParameters'>
+            /// Topic update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Topic> UpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Topic> UpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, topicName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, topicName, topicUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -612,12 +612,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicName'>
             /// Name of the topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the resource
+            /// <param name='topicUpdateParameters'>
+            /// Topic update information.
             /// </param>
-            public static Topic BeginUpdate(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Topic BeginUpdate(this ITopicsOperations operations, string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, topicName, tags).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, topicName, topicUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -635,15 +635,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicName'>
             /// Name of the topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the resource
+            /// <param name='topicUpdateParameters'>
+            /// Topic update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Topic> BeginUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Topic> BeginUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, topicName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, topicName, topicUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

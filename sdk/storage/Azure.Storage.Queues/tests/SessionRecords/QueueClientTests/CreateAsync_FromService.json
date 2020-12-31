@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "http:\u002f\u002fgapradev.queue.core.windows.net\u002ftest-queue-1bfd17b9-4f1f-5079-23e8-4f3b6a81b0ab",
+      "RequestUri": "http://gapradev.queue.core.windows.net/test-queue-1bfd17b9-4f1f-5079-23e8-4f3b6a81b0ab",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Request-Id": "|7719b489-48b6b165c7c39f15.",
         "User-Agent": [
-          "azsdk-net-Storage.Queues\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190912.1+9a86ae3367dccb76004b59b244c982904496250d",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "385662ab-4aba-7643-9fbd-a16b8f1231d9",
@@ -21,8 +21,8 @@
         "Content-Length": "0",
         "Date": "Thu, 12 Sep 2019 22:04:09 GMT",
         "Server": [
-          "Windows-Azure-Queue\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": "769b6269-a003-0020-1ab6-69e99c000000",
         "x-ms-version": "2018-11-09"
@@ -30,12 +30,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.queue.core.windows.net\u002ftest-queue-1bfd17b9-4f1f-5079-23e8-4f3b6a81b0ab?comp=metadata",
+      "RequestUri": "http://gapradev.queue.core.windows.net/test-queue-1bfd17b9-4f1f-5079-23e8-4f3b6a81b0ab?comp=metadata",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Queues\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190912.1+9a86ae3367dccb76004b59b244c982904496250d",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "078f5885-772b-40f0-3a70-7901e90a4baa",
@@ -50,8 +50,8 @@
         "Content-Length": "0",
         "Date": "Thu, 12 Sep 2019 22:04:09 GMT",
         "Server": [
-          "Windows-Azure-Queue\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-approximate-messages-count": "0",
         "x-ms-request-id": "769b626b-a003-0020-1bb6-69e99c000000",
@@ -60,13 +60,13 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fgapradev.queue.core.windows.net\u002ftest-queue-1bfd17b9-4f1f-5079-23e8-4f3b6a81b0ab",
+      "RequestUri": "http://gapradev.queue.core.windows.net/test-queue-1bfd17b9-4f1f-5079-23e8-4f3b6a81b0ab",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Request-Id": "|7719b48a-48b6b165c7c39f15.",
         "User-Agent": [
-          "azsdk-net-Storage.Queues\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190912.1+9a86ae3367dccb76004b59b244c982904496250d",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "36e6aaed-2a82-ceae-821b-4b7c5c6e4495",
@@ -80,8 +80,8 @@
         "Content-Length": "0",
         "Date": "Thu, 12 Sep 2019 22:04:09 GMT",
         "Server": [
-          "Windows-Azure-Queue\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": "769b626c-a003-0020-1cb6-69e99c000000",
         "x-ms-version": "2018-11-09"
@@ -91,6 +91,6 @@
   ],
   "Variables": {
     "RandomSeed": "389963495",
-    "Storage_TestConfigDefault": "ProductionTenant\ngapradev\nU2FuaXRpemVk\nhttp:\u002f\u002fgapradev.blob.core.windows.net\nhttp:\u002f\u002fgapradev.file.core.windows.net\nhttp:\u002f\u002fgapradev.queue.core.windows.net\nhttp:\u002f\u002fgapradev.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fgapradev-secondary.blob.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.file.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.queue.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fgapradev.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fgapradev.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fgapradev.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fgapradev.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.file.core.windows.net\u002f;AccountName=gapradev;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\ngapradev\nU2FuaXRpemVk\nhttp://gapradev.blob.core.windows.net\nhttp://gapradev.file.core.windows.net\nhttp://gapradev.queue.core.windows.net\nhttp://gapradev.table.core.windows.net\n\n\n\n\nhttp://gapradev-secondary.blob.core.windows.net\nhttp://gapradev-secondary.file.core.windows.net\nhttp://gapradev-secondary.queue.core.windows.net\nhttp://gapradev-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://gapradev.blob.core.windows.net/;QueueEndpoint=http://gapradev.queue.core.windows.net/;TableEndpoint=http://gapradev.table.core.windows.net/;FileEndpoint=http://gapradev.file.core.windows.net/;BlobSecondaryEndpoint=http://gapradev-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://gapradev-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://gapradev-secondary.table.core.windows.net/;FileSecondaryEndpoint=http://gapradev-secondary.file.core.windows.net/;AccountName=gapradev;AccountKey=Sanitized\nseanscope1"
   }
 }

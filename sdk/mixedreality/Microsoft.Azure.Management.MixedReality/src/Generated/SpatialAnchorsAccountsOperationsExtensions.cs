@@ -92,12 +92,12 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
-            public static void Delete(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName)
+            public static void Delete(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                operations.DeleteAsync(resourceGroupName, spatialAnchorsAccountName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -109,15 +109,15 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, spatialAnchorsAccountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -129,12 +129,12 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
-            public static SpatialAnchorsAccount Get(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName)
+            public static SpatialAnchorsAccount Get(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                return operations.GetAsync(resourceGroupName, spatialAnchorsAccountName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -146,15 +146,15 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SpatialAnchorsAccount> GetAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SpatialAnchorsAccount> GetAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, spatialAnchorsAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -169,15 +169,15 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='spatialAnchorsAccount'>
             /// Spatial Anchors Account parameter.
             /// </param>
-            public static SpatialAnchorsAccount Update(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, SpatialAnchorsAccount spatialAnchorsAccount)
+            public static SpatialAnchorsAccount Update(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName, SpatialAnchorsAccount spatialAnchorsAccount)
             {
-                return operations.UpdateAsync(resourceGroupName, spatialAnchorsAccountName, spatialAnchorsAccount).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, spatialAnchorsAccount).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -189,8 +189,8 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='spatialAnchorsAccount'>
             /// Spatial Anchors Account parameter.
@@ -198,9 +198,9 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SpatialAnchorsAccount> UpdateAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, SpatialAnchorsAccount spatialAnchorsAccount, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SpatialAnchorsAccount> UpdateAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName, SpatialAnchorsAccount spatialAnchorsAccount, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, spatialAnchorsAccountName, spatialAnchorsAccount, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, spatialAnchorsAccount, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -215,15 +215,15 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='spatialAnchorsAccount'>
             /// Spatial Anchors Account parameter.
             /// </param>
-            public static SpatialAnchorsAccount Create(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, SpatialAnchorsAccount spatialAnchorsAccount)
+            public static SpatialAnchorsAccount Create(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName, SpatialAnchorsAccount spatialAnchorsAccount)
             {
-                return operations.CreateAsync(resourceGroupName, spatialAnchorsAccountName, spatialAnchorsAccount).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, accountName, spatialAnchorsAccount).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -235,8 +235,8 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='spatialAnchorsAccount'>
             /// Spatial Anchors Account parameter.
@@ -244,16 +244,16 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SpatialAnchorsAccount> CreateAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, SpatialAnchorsAccount spatialAnchorsAccount, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SpatialAnchorsAccount> CreateAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName, SpatialAnchorsAccount spatialAnchorsAccount, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, spatialAnchorsAccountName, spatialAnchorsAccount, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, spatialAnchorsAccount, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get Both of the 2 Keys of a Spatial Anchors Account
+            /// List Both of the 2 Keys of a Spatial Anchors Account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -261,16 +261,16 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
-            public static SpatialAnchorsAccountKeys GetKeys(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName)
+            public static AccountKeys ListKeys(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                return operations.GetKeysAsync(resourceGroupName, spatialAnchorsAccountName).GetAwaiter().GetResult();
+                return operations.ListKeysAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get Both of the 2 Keys of a Spatial Anchors Account
+            /// List Both of the 2 Keys of a Spatial Anchors Account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -278,22 +278,22 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SpatialAnchorsAccountKeys> GetKeysAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccountKeys> ListKeysAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetKeysWithHttpMessagesAsync(resourceGroupName, spatialAnchorsAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Regenerate 1 Key of a Spatial Anchors Account
+            /// Regenerate specified Key of a Spatial Anchors Account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -301,19 +301,19 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='serial'>
             /// serial of key to be regenerated
             /// </param>
-            public static SpatialAnchorsAccountKeys RegenerateKeys(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, int? serial = 1)
+            public static AccountKeys RegenerateKeys(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName, int? serial = 1)
             {
-                return operations.RegenerateKeysAsync(resourceGroupName, spatialAnchorsAccountName, serial).GetAwaiter().GetResult();
+                return operations.RegenerateKeysAsync(resourceGroupName, accountName, serial).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Regenerate 1 Key of a Spatial Anchors Account
+            /// Regenerate specified Key of a Spatial Anchors Account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -321,8 +321,8 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='resourceGroupName'>
             /// Name of an Azure resource group.
             /// </param>
-            /// <param name='spatialAnchorsAccountName'>
-            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// <param name='accountName'>
+            /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='serial'>
             /// serial of key to be regenerated
@@ -330,9 +330,9 @@ namespace Microsoft.Azure.Management.MixedReality
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SpatialAnchorsAccountKeys> RegenerateKeysAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, int? serial = 1, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccountKeys> RegenerateKeysAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string accountName, int? serial = 1, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, spatialAnchorsAccountName, serial, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, accountName, serial, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

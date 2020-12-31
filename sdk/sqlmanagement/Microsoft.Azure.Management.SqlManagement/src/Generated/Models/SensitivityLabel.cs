@@ -43,7 +43,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Applicable for recommended sensitivity label only. Specifies
         /// whether the sensitivity recommendation on this column is disabled
         /// (dismissed) or not.</param>
-        public SensitivityLabel(string id = default(string), string name = default(string), string type = default(string), string labelName = default(string), string labelId = default(string), string informationType = default(string), string informationTypeId = default(string), bool? isDisabled = default(bool?))
+        /// <param name="rank">Possible values include: 'None', 'Low',
+        /// 'Medium', 'High', 'Critical'</param>
+        public SensitivityLabel(string id = default(string), string name = default(string), string type = default(string), string labelName = default(string), string labelId = default(string), string informationType = default(string), string informationTypeId = default(string), bool? isDisabled = default(bool?), SensitivityLabelRank? rank = default(SensitivityLabelRank?))
             : base(id, name, type)
         {
             LabelName = labelName;
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             InformationType = informationType;
             InformationTypeId = informationTypeId;
             IsDisabled = isDisabled;
+            Rank = rank;
             CustomInit();
         }
 
@@ -91,6 +94,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isDisabled")]
         public bool? IsDisabled { get; private set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'None', 'Low', 'Medium',
+        /// 'High', 'Critical'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rank")]
+        public SensitivityLabelRank? Rank { get; set; }
 
     }
 }

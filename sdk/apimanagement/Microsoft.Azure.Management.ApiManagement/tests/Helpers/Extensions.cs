@@ -45,5 +45,15 @@ namespace ApiManagementManagement.Tests.Helpers
                 yield return enumerator.Current;
             }
         }
+
+        public static string ToLowerAndRemoveWhiteSpaces(this string candidate)
+        {
+            if (string.IsNullOrEmpty(candidate))
+            {
+                return candidate;
+            }
+
+            return candidate.Replace(" ", string.Empty).ToLowerInvariant();
+        }
     }
 }

@@ -2,16 +2,15 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services CustomVision Training SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services CustomVision Training APIs.</Description>
-    <Version>1.1.0-preview.1</Version>
+    <Version>2.1.0-preview</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Custom Vision;Custom Vision Training API;Custom Vision Training SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
     This is a public release of the Cognitive Services Custom Vision Training SDK.
 
     Changes in this release:
-    1) Added an advanced training option to set a budget to train longer for improved iteration performance.
-    2) Added additional export options targetting Vision AI Dev Kit and Docker ARM for Raspberry Pi.
-
+      1) Added support to train a new iteration using another iteration as the starting point.
+      2) Added more information about exportable models.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

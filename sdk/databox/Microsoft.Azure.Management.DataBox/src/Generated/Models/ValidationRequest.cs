@@ -17,8 +17,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Input request for all pre job creation validation.
+    /// Minimum request requirement of any validation category.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ValidationRequest")]
     public partial class ValidationRequest
     {
         /// <summary>

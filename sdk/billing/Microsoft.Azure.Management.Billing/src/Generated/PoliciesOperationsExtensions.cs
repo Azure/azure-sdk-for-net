@@ -22,17 +22,18 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class PoliciesOperationsExtensions
     {
             /// <summary>
-            /// The policy for a given billing account name and billing profile name.
+            /// Lists the policies for a billing profile. This operation is supported only
+            /// for billing accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             public static Policy GetByBillingProfile(this IPoliciesOperations operations, string billingAccountName, string billingProfileName)
             {
@@ -40,17 +41,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// The policy for a given billing account name and billing profile name.
+            /// Lists the policies for a billing profile. This operation is supported only
+            /// for billing accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -64,19 +66,20 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// The operation to update a policy.
+            /// Updates the policies for a billing profile. This operation is supported
+            /// only for billing accounts with agreement type Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the update policy operation.
+            /// Request parameters that are provided to the update policies operation.
             /// </param>
             public static Policy Update(this IPoliciesOperations operations, string billingAccountName, string billingProfileName, Policy parameters)
             {
@@ -84,19 +87,20 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// The operation to update a policy.
+            /// Updates the policies for a billing profile. This operation is supported
+            /// only for billing accounts with agreement type Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the update policy operation.
+            /// Request parameters that are provided to the update policies operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -110,17 +114,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// The policy for a given billing account name and customer name.
+            /// Lists the policies for a customer. This operation is supported only for
+            /// billing accounts with agreement type Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             public static CustomerPolicy GetByCustomer(this IPoliciesOperations operations, string billingAccountName, string customerName)
             {
@@ -128,17 +133,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// The policy for a given billing account name and customer name.
+            /// Lists the policies for a customer. This operation is supported only for
+            /// billing accounts with agreement type Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -152,19 +158,20 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// The operation to update a Customer policy.
+            /// Updates the policies for a customer. This operation is supported only for
+            /// billing accounts with agreement type Microsoft Partner Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the update customer policy operation.
+            /// Request parameters that are provided to the update policies operation.
             /// </param>
             public static CustomerPolicy UpdateCustomer(this IPoliciesOperations operations, string billingAccountName, string customerName, CustomerPolicy parameters)
             {
@@ -172,19 +179,20 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// The operation to update a Customer policy.
+            /// Updates the policies for a customer. This operation is supported only for
+            /// billing accounts with agreement type Microsoft Partner Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the update customer policy operation.
+            /// Request parameters that are provided to the update policies operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -22,7 +23,7 @@ namespace Azure.Security.KeyVault.Certificates
         internal const string CertificatesPath = "/certificates/";
         internal const string DeletedCertificatesPath = "/deletedcertificates/";
         private const string IssuersPath = "/certificates/issuers/";
-        private const string ContactsPath = "/contacts/";
+        private const string ContactsPath = "/certificates/contacts/";
 
         private readonly KeyVaultPipeline _pipeline;
 
@@ -36,7 +37,10 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificateClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">
+        /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
+        /// If you have a certificate <see cref="Uri"/>, use <see cref="KeyVaultCertificateIdentifier"/> to parse the <see cref="KeyVaultCertificateIdentifier.VaultUri"/> and other information.
+        /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public CertificateClient(Uri vaultUri, TokenCredential credential)
@@ -47,7 +51,10 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificateClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">
+        /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
+        /// If you have a certificate <see cref="Uri"/>, use <see cref="KeyVaultCertificateIdentifier"/> to parse the <see cref="KeyVaultCertificateIdentifier.VaultUri"/> and other information.
+        /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="CertificateClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
@@ -90,7 +97,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             var parameters = new CertificateCreateParameters(policy, enabled, tags);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.StartCreateCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -129,7 +136,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             var parameters = new CertificateCreateParameters(policy, enabled, tags);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.StartCreateCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -146,6 +153,120 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        /// <summary>
+        /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
+        /// that contains the full certificate. If you do not have permissions to get the secret,
+        /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to download.</param>
+        /// <param name="version">Optional version of a certificate to download.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">Downloading PEM-formatted certificates is not supported.</exception>
+        /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
+            scope.AddAttribute("certificate", certificateName);
+            scope.Start();
+
+            try
+            {
+                KeyVaultCertificateWithPolicy certificate = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName, "/", version);
+                Response<KeyVaultSecret> secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken);
+
+                KeyVaultSecret secret = secretResponse.Value;
+                string value = secret.Value;
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new InvalidOperationException($"Secret {certificate.SecretId} contains no value");
+                }
+
+                if (secret.ContentType == CertificateContentType.Pem)
+                {
+                    throw new NotSupportedException($"PEM-formatted certificates are not supported");
+                }
+
+                byte[] rawData = Convert.FromBase64String(value);
+
+                return Response.FromValue(new X509Certificate2(rawData), secretResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
+        /// that contains the full certificate. If you do not have permissions to get the secret,
+        /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to download.</param>
+        /// <param name="version">Optional version of a certificate to download.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">Downloading PEM-formatted certificates is not supported.</exception>
+        /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
+            scope.AddAttribute("certificate", certificateName);
+            scope.Start();
+
+            try
+            {
+                KeyVaultCertificateWithPolicy certificate = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName, "/", version).ConfigureAwait(false);
+                Response<KeyVaultSecret> secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken).ConfigureAwait(false);
+
+                KeyVaultSecret secret = secretResponse.Value;
+                string value = secret.Value;
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new InvalidOperationException($"Secret {certificate.SecretId} contains no value");
+                }
+
+                if (secret.ContentType == CertificateContentType.Pem)
+                {
+                    throw new NotSupportedException($"PEM-formatted certificates are not supported");
+                }
+
+                byte[] rawData = Convert.FromBase64String(value);
+
+                return Response.FromValue(new X509Certificate2(rawData), secretResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+#pragma warning restore AZC0015 // Unexpected client method return type.
+
         /// <summary>
         /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with its <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
         /// </summary>
@@ -158,7 +279,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -185,7 +306,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -213,7 +334,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateVersion");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -242,7 +363,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateVersion");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -270,7 +391,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             var parameters = new CertificateUpdateParameters(properties);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateCertificateProperties");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
             scope.AddAttribute("certificate", properties.Name);
             scope.Start();
 
@@ -298,7 +419,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             var parameters = new CertificateUpdateParameters(properties);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateCertificateProperties");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
             scope.AddAttribute("certificate", properties.Name);
             scope.Start();
 
@@ -330,7 +451,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.StartDeleteCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartDeleteCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -363,7 +484,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.StartDeleteCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartDeleteCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -392,7 +513,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetDeletedCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetDeletedCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -420,7 +541,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetDeletedCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetDeletedCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -448,7 +569,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.StartRecoverDeletedCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartRecoverDeletedCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -477,7 +598,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.StartRecoverDeletedCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartRecoverDeletedCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -506,7 +627,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.PurgeDeletedCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -534,7 +655,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.PurgeDeletedCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -562,7 +683,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.BackupCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(BackupCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -592,7 +713,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.BackupCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(BackupCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -621,7 +742,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.RestoreCertificateBackup");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(RestoreCertificateBackup)}");
             scope.Start();
 
             try
@@ -647,7 +768,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.RestoreCertificateBackup");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(RestoreCertificateBackup)}");
             scope.Start();
 
             try
@@ -662,7 +783,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
+        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM-format, and must contain the private key as well as the X.509 certificates. This operation requires the
         /// certificates/import permission.
         /// </summary>
         /// <param name="importCertificateOptions">The details of the certificate to import to the key vault.</param>
@@ -675,7 +796,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNull(importCertificateOptions, nameof(importCertificateOptions));
             Argument.AssertNotNullOrEmpty(importCertificateOptions.Name, nameof(importCertificateOptions.Name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.ImportCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(ImportCertificate)}");
             scope.AddAttribute("certificate", importCertificateOptions.Name);
             scope.Start();
 
@@ -691,7 +812,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
+        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM-format, and must contain the private key as well as the X.509 certificates. This operation requires the
         /// certificates/import permission.
         /// </summary>
         /// <param name="importCertificateOptions">The details of the certificate to import to the key vault.</param>
@@ -704,7 +825,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNull(importCertificateOptions, nameof(importCertificateOptions));
             Argument.AssertNotNullOrEmpty(importCertificateOptions.Name, nameof(importCertificateOptions.Name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.ImportCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(ImportCertificate)}");
             scope.AddAttribute("certificate", importCertificateOptions.Name);
             scope.Start();
 
@@ -821,7 +942,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificatePolicy");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificatePolicy)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -848,7 +969,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificatePolicy");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificatePolicy)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -876,7 +997,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateCertificatePolicy");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -904,7 +1025,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateCertificatePolicy");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -941,7 +1062,7 @@ namespace Azure.Security.KeyVault.Certificates
                 throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Provider)} cannot be null or an empty string.", nameof(issuer));
             }
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.CreateIssuer");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CreateIssuer)}");
             scope.AddAttribute("issuer", issuer.Name);
             scope.Start();
 
@@ -978,7 +1099,7 @@ namespace Azure.Security.KeyVault.Certificates
                 throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Provider)} cannot be null or an empty string.", nameof(issuer));
             }
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.CreateIssuer");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CreateIssuer)}");
             scope.AddAttribute("issuer", issuer.Name);
             scope.Start();
 
@@ -1005,7 +1126,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetIssuer");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetIssuer)}");
             scope.AddAttribute("issuer", issuerName);
             scope.Start();
 
@@ -1032,7 +1153,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetIssuer");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetIssuer)}");
             scope.AddAttribute("issuer", issuerName);
             scope.Start();
 
@@ -1064,7 +1185,7 @@ namespace Azure.Security.KeyVault.Certificates
                 throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Name)} cannot be null or an empty string.", nameof(issuer));
             }
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateIssuer");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateIssuer)}");
             scope.AddAttribute("issuer", issuer.Name);
             scope.Start();
 
@@ -1096,7 +1217,7 @@ namespace Azure.Security.KeyVault.Certificates
                 throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Name)} cannot be null or an empty string.", nameof(issuer));
             }
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateIssuer");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateIssuer)}");
             scope.AddAttribute("issuer", issuer.Name);
             scope.Start();
 
@@ -1123,7 +1244,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteIssuer");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteIssuer)}");
             scope.AddAttribute("issuer", issuerName);
             scope.Start();
 
@@ -1150,7 +1271,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteIssuer");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteIssuer)}");
             scope.AddAttribute("issuer", issuerName);
             scope.Start();
 
@@ -1175,7 +1296,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new IssuerProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfIssuers", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new IssuerProperties(), $"{nameof(CertificateClient)}.{nameof(GetPropertiesOfIssuers)}", cancellationToken));
         }
 
         /// <summary>
@@ -1188,7 +1309,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new IssuerProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfIssuers", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new IssuerProperties(), $"{nameof(CertificateClient)}.{nameof(GetPropertiesOfIssuers)}", cancellationToken));
         }
 
         /// <summary>
@@ -1203,7 +1324,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateOperation");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateOperation)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -1232,7 +1353,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateOperation");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateOperation)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -1260,7 +1381,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(contacts, nameof(contacts));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.SetContacts");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(SetContacts)}");
             scope.Start();
 
             try
@@ -1287,7 +1408,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(contacts, nameof(contacts));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.SetContacts");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(SetContacts)}");
             scope.Start();
 
             try
@@ -1310,7 +1431,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The certificate contacts of the vault.</returns>
         public virtual Response<IList<CertificateContact>> GetContacts(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetContacts");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetContacts)}");
             scope.Start();
 
             try
@@ -1333,7 +1454,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The certificate contacts of the vault.</returns>
         public virtual async Task<Response<IList<CertificateContact>>> GetContactsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetContacts");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetContacts)}");
             scope.Start();
 
             try
@@ -1356,7 +1477,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The certificate contacts deleted from the vault.</returns>
         public virtual Response<IList<CertificateContact>> DeleteContacts(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteContacts");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteContacts)}");
             scope.Start();
 
             try
@@ -1379,7 +1500,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The certificate contacts deleted from the vault.</returns>
         public virtual async Task<Response<IList<CertificateContact>>> DeleteContactsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteContacts");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteContacts)}");
             scope.Start();
 
             try
@@ -1406,13 +1527,13 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(mergeCertificateOptions, nameof(mergeCertificateOptions));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.MergeCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(MergeCertificate)}");
             scope.AddAttribute("certificate", mergeCertificateOptions.Name);
             scope.Start();
 
             try
             {
-                Response<KeyVaultCertificateWithPolicy> certificate = _pipeline.SendRequest(RequestMethod.Post, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, mergeCertificateOptions.Name, "/pending/merge");
+                Response<KeyVaultCertificateWithPolicy> certificate = _pipeline.SendRequest(RequestMethod.Post, mergeCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, mergeCertificateOptions.Name, "/pending/merge");
 
                 return Response.FromValue(certificate.Value, certificate.GetRawResponse());
             }
@@ -1434,13 +1555,13 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(mergeCertificateOptions, nameof(mergeCertificateOptions));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.MergeCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(MergeCertificate)}");
             scope.AddAttribute("certificate", mergeCertificateOptions.Name);
             scope.Start();
 
             try
             {
-                Response<KeyVaultCertificateWithPolicy> certificate = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, mergeCertificateOptions.Name, "/pending/merge").ConfigureAwait(false);
+                Response<KeyVaultCertificateWithPolicy> certificate = await _pipeline.SendRequestAsync(RequestMethod.Post, mergeCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, mergeCertificateOptions.Name, "/pending/merge").ConfigureAwait(false);
 
                 return Response.FromValue(certificate.Value, certificate.GetRawResponse());
             }
@@ -1455,7 +1576,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetPendingCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetPendingCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -1472,7 +1593,7 @@ namespace Azure.Security.KeyVault.Certificates
                         return Response.FromValue<CertificateOperationProperties>(null, response);
 
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _pipeline.Diagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -1486,7 +1607,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetPendingCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetPendingCertificate)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -1503,7 +1624,7 @@ namespace Azure.Security.KeyVault.Certificates
                         return Response.FromValue<CertificateOperationProperties>(null, response);
 
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1519,7 +1640,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             var parameters = new CertificateOperationUpdateParameters(true);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.CancelCertificateOperation");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CancelCertificateOperation)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -1540,7 +1661,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             var parameters = new CertificateOperationUpdateParameters(true);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.CancelCertificateOperation");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CancelCertificateOperation)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -1559,7 +1680,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteCertificateOperation");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteCertificateOperation)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
@@ -1578,7 +1699,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteCertificateOperation");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteCertificateOperation)}");
             scope.AddAttribute("certificate", certificateName);
             scope.Start();
 

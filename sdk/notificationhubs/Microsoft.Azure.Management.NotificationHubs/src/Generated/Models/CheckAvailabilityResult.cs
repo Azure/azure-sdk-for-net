@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     using System.Linq;
 
     /// <summary>
-    /// Description of a CheckAvailibility resource.
+    /// Description of a CheckAvailability resource.
     /// </summary>
     public partial class CheckAvailabilityResult : Resource
     {

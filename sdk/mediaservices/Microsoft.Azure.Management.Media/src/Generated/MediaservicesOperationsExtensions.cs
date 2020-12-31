@@ -306,6 +306,58 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
+            /// List the media edge policies associated with the Media Services account.
+            /// </summary>
+            /// <remarks>
+            /// List the media edge policies associated with the Media Services account.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='deviceId'>
+            /// Unique identifier of the edge device.
+            /// </param>
+            public static EdgePolicies ListEdgePolicies(this IMediaservicesOperations operations, string resourceGroupName, string accountName, string deviceId = default(string))
+            {
+                return operations.ListEdgePoliciesAsync(resourceGroupName, accountName, deviceId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the media edge policies associated with the Media Services account.
+            /// </summary>
+            /// <remarks>
+            /// List the media edge policies associated with the Media Services account.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='deviceId'>
+            /// Unique identifier of the edge device.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EdgePolicies> ListEdgePoliciesAsync(this IMediaservicesOperations operations, string resourceGroupName, string accountName, string deviceId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListEdgePoliciesWithHttpMessagesAsync(resourceGroupName, accountName, deviceId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List Media Services accounts
             /// </summary>
             /// <remarks>
@@ -314,7 +366,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<SubscriptionMediaService> ListBySubscription(this IMediaservicesOperations operations)
+            public static IPage<MediaService> ListBySubscription(this IMediaservicesOperations operations)
             {
                 return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
             }
@@ -331,7 +383,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SubscriptionMediaService>> ListBySubscriptionAsync(this IMediaservicesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<MediaService>> ListBySubscriptionAsync(this IMediaservicesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -351,7 +403,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='accountName'>
             /// The Media Services account name.
             /// </param>
-            public static SubscriptionMediaService GetBySubscription(this IMediaservicesOperations operations, string accountName)
+            public static MediaService GetBySubscription(this IMediaservicesOperations operations, string accountName)
             {
                 return operations.GetBySubscriptionAsync(accountName).GetAwaiter().GetResult();
             }
@@ -371,7 +423,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionMediaService> GetBySubscriptionAsync(this IMediaservicesOperations operations, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MediaService> GetBySubscriptionAsync(this IMediaservicesOperations operations, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetBySubscriptionWithHttpMessagesAsync(accountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -431,7 +483,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SubscriptionMediaService> ListBySubscriptionNext(this IMediaservicesOperations operations, string nextPageLink)
+            public static IPage<MediaService> ListBySubscriptionNext(this IMediaservicesOperations operations, string nextPageLink)
             {
                 return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -451,7 +503,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SubscriptionMediaService>> ListBySubscriptionNextAsync(this IMediaservicesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<MediaService>> ListBySubscriptionNextAsync(this IMediaservicesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

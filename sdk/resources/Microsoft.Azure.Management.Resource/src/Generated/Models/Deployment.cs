@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,10 +35,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="properties">The deployment properties.</param>
         /// <param name="location">The location to store the deployment
         /// data.</param>
-        public Deployment(DeploymentProperties properties, string location = default(string))
+        /// <param name="tags">Deployment tags</param>
+        public Deployment(DeploymentProperties properties, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Location = location;
             Properties = properties;
+            Tags = tags;
             CustomInit();
         }
 
@@ -56,6 +60,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public DeploymentProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets deployment tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.

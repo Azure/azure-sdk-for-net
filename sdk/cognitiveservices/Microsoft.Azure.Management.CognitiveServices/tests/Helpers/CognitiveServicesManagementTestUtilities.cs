@@ -69,15 +69,15 @@ namespace CognitiveServices.Tests.Helpers
             return Handler;
         }
 
-        public static CognitiveServicesAccountCreateParameters GetDefaultCognitiveServicesAccountParameters()
+        public static CognitiveServicesAccount GetDefaultCognitiveServicesAccountParameters()
         {
-            CognitiveServicesAccountCreateParameters account = new CognitiveServicesAccountCreateParameters
+            CognitiveServicesAccount account = new CognitiveServicesAccount
             {
                 Location = DefaultLocation,
                 Tags = DefaultTags,
                 Sku = new Microsoft.Azure.Management.CognitiveServices.Models.Sku { Name = DefaultSkuName },
                 Kind = DefaultKind,
-                Properties = new object(),
+                Properties = new CognitiveServicesAccountProperties(),
             };
 
             return account;
@@ -104,7 +104,7 @@ namespace CognitiveServices.Tests.Helpers
         public static string CreateCognitiveServicesAccount(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgname, string kind = null)
         {
             string accountName = TestUtilities.GenerateName("csa");
-            CognitiveServicesAccountCreateParameters parameters = GetDefaultCognitiveServicesAccountParameters();
+            var parameters = GetDefaultCognitiveServicesAccountParameters();
             if (!string.IsNullOrEmpty(kind)) parameters.Kind = kind;
             var createRequest2 = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
 
@@ -115,12 +115,12 @@ namespace CognitiveServices.Tests.Helpers
         {
             // Create account with only required params
             var accountName = TestUtilities.GenerateName("csa");
-            var parameters = new CognitiveServicesAccountCreateParameters
+            var parameters = new CognitiveServicesAccount
             {
                 Sku = new Microsoft.Azure.Management.CognitiveServices.Models.Sku { Name = skuName },
                 Kind = accountType,
                 Location = location ?? DefaultLocation,
-                Properties = new object(),
+                Properties = new CognitiveServicesAccountProperties(),
             };
             var account = cognitiveServicesMgmtClient.Accounts.Create(rgName, accountName, parameters);
             VerifyAccountProperties(account, false, accountType, skuName, location ?? DefaultLocation);
@@ -140,8 +140,8 @@ namespace CognitiveServices.Tests.Helpers
             Assert.NotNull(account.Sku);
             Assert.NotNull(account.Sku.Name);
 
-            Assert.NotNull(account.Endpoint);
-            Assert.Equal(ProvisioningState.Succeeded, account.ProvisioningState);
+            Assert.NotNull(account.Properties.Endpoint);
+            Assert.Equal(ProvisioningState.Succeeded, account.Properties.ProvisioningState);
 
             if (useDefaults)
             {

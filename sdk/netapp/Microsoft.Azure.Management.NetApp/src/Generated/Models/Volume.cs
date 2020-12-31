@@ -50,11 +50,23 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="protocolTypes">protocolTypes</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="snapshotId">Snapshot ID</param>
+        /// <param name="backupId">Backup ID</param>
         /// <param name="baremetalTenantId">Baremetal Tenant ID</param>
         /// <param name="mountTargets">mountTargets</param>
         /// <param name="volumeType">What type of volume is this</param>
         /// <param name="dataProtection">DataProtection</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), object mountTargets = default(object), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection))
+        /// <param name="isRestoring">Restoring</param>
+        /// <param name="snapshotDirectoryVisible">If enabled (true) the volume
+        /// will contain a read-only .snapshot directory which provides access
+        /// to each of the volume's snapshots (default to true).</param>
+        /// <param name="kerberosEnabled">Describe if a volume is
+        /// KerberosEnabled. To be use with swagger version 2020-05-01 or
+        /// later</param>
+        /// <param name="securityStyle">The security style of volume. Possible
+        /// values include: 'ntfs', 'unix'</param>
+        /// <param name="throughputMibps">Maximum throughput in Mibps that can
+        /// be achieved by this volume</param>
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), double? throughputMibps = default(double?))
         {
             Location = location;
             Id = id;
@@ -69,11 +81,17 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ProtocolTypes = protocolTypes;
             ProvisioningState = provisioningState;
             SnapshotId = snapshotId;
+            BackupId = backupId;
             BaremetalTenantId = baremetalTenantId;
             SubnetId = subnetId;
             MountTargets = mountTargets;
             VolumeType = volumeType;
             DataProtection = dataProtection;
+            IsRestoring = isRestoring;
+            SnapshotDirectoryVisible = snapshotDirectoryVisible;
+            KerberosEnabled = kerberosEnabled;
+            SecurityStyle = securityStyle;
+            ThroughputMibps = throughputMibps;
             CustomInit();
         }
 
@@ -185,6 +203,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string SnapshotId { get; set; }
 
         /// <summary>
+        /// Gets or sets backup ID
+        /// </summary>
+        /// <remarks>
+        /// UUID v4 or resource identifier used to identify the Backup.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.backupId")]
+        public string BackupId { get; set; }
+
+        /// <summary>
         /// Gets baremetal Tenant ID
         /// </summary>
         /// <remarks>
@@ -207,7 +234,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// List of mount targets
         /// </remarks>
         [JsonProperty(PropertyName = "properties.mountTargets")]
-        public object MountTargets { get; set; }
+        public IList<MountTargetProperties> MountTargets { get; set; }
 
         /// <summary>
         /// Gets or sets what type of volume is this
@@ -219,10 +246,46 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets dataProtection
         /// </summary>
         /// <remarks>
-        /// DataProtection volume, can have a replication object
+        /// DataProtection type volumes include an object containing details of
+        /// the replication
         /// </remarks>
         [JsonProperty(PropertyName = "properties.dataProtection")]
         public VolumePropertiesDataProtection DataProtection { get; set; }
+
+        /// <summary>
+        /// Gets or sets restoring
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isRestoring")]
+        public bool? IsRestoring { get; set; }
+
+        /// <summary>
+        /// Gets or sets if enabled (true) the volume will contain a read-only
+        /// .snapshot directory which provides access to each of the volume's
+        /// snapshots (default to true).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.snapshotDirectoryVisible")]
+        public bool? SnapshotDirectoryVisible { get; set; }
+
+        /// <summary>
+        /// Gets or sets describe if a volume is KerberosEnabled. To be use
+        /// with swagger version 2020-05-01 or later
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.kerberosEnabled")]
+        public bool? KerberosEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the security style of volume. Possible values include:
+        /// 'ntfs', 'unix'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityStyle")]
+        public string SecurityStyle { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum throughput in Mibps that can be achieved by
+        /// this volume
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.throughputMibps")]
+        public double? ThroughputMibps { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -259,6 +322,21 @@ namespace Microsoft.Azure.Management.NetApp.Models
                     throw new ValidationException(ValidationRules.Pattern, "FileSystemId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
                 }
             }
+            if (CreationToken != null)
+            {
+                if (CreationToken.Length > 80)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "CreationToken", 80);
+                }
+                if (CreationToken.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "CreationToken", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(CreationToken, "^[a-zA-Z][a-zA-Z0-9\\-]{0,79}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "CreationToken", "^[a-zA-Z][a-zA-Z0-9\\-]{0,79}$");
+                }
+            }
             if (UsageThreshold > 109951162777600)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 109951162777600);
@@ -282,24 +360,49 @@ namespace Microsoft.Azure.Management.NetApp.Models
                     throw new ValidationException(ValidationRules.Pattern, "SnapshotId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$");
                 }
             }
-            if (BaremetalTenantId != null)
+            if (BackupId != null)
             {
-                if (BaremetalTenantId.Length > 36)
+                if (BackupId.Length > 36)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "BaremetalTenantId", 36);
+                    throw new ValidationException(ValidationRules.MaxLength, "BackupId", 36);
                 }
-                if (BaremetalTenantId.Length < 36)
+                if (BackupId.Length < 36)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "BaremetalTenantId", 36);
+                    throw new ValidationException(ValidationRules.MinLength, "BackupId", 36);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(BaremetalTenantId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(BackupId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "BaremetalTenantId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
+                    throw new ValidationException(ValidationRules.Pattern, "BackupId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$");
+                }
+            }
+            if (MountTargets != null)
+            {
+                foreach (var element in MountTargets)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
                 }
             }
             if (DataProtection != null)
             {
                 DataProtection.Validate();
+            }
+            if (ThroughputMibps != null)
+            {
+                if (ThroughputMibps > 4500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ThroughputMibps", 4500);
+                }
+                if (ThroughputMibps < 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 1);
+                }
+                if (ThroughputMibps % 0.001 != 0)
+                {
+                    throw new ValidationException(ValidationRules.MultipleOf, "ThroughputMibps", 0.001);
+                }
             }
         }
     }

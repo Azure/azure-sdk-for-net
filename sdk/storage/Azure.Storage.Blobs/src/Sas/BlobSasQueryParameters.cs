@@ -13,7 +13,9 @@ namespace Azure.Storage.Sas
     /// parameters.  You can construct a new instance using
     /// <see cref="BlobSasBuilder"/>.
     ///
-    /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
+    /// For more information,
+    /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-service-sas">
+    /// Create a service SAS</see>.
     /// </summary>
     public sealed class BlobSasQueryParameters : SasQueryParameters
     {
@@ -84,7 +86,10 @@ namespace Azure.Storage.Sas
             string contentDisposition = default,
             string contentEncoding = default,
             string contentLanguage = default,
-            string contentType = default)
+            string contentType = default,
+            string authorizedAadObjectId = default,
+            string unauthorizedAadObjectId = default,
+            string correlationId = default)
             : base(
                 version,
                 services,
@@ -101,7 +106,10 @@ namespace Azure.Storage.Sas
                 contentDisposition,
                 contentEncoding,
                 contentLanguage,
-                contentType)
+                contentType,
+                authorizedAadObjectId,
+                unauthorizedAadObjectId,
+                correlationId)
         {
             KeyProperties = new UserDelegationKeyProperties
             {
@@ -138,7 +146,7 @@ namespace Azure.Storage.Sas
         {
             StringBuilder sb = new StringBuilder();
             KeyProperties.AppendProperties(sb);
-            this.AppendProperties(sb);
+            AppendProperties(sb);
             return sb.ToString();
         }
     }

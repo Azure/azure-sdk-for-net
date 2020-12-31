@@ -41,11 +41,11 @@ namespace Azure.Storage
         {
             base.OnSendingRequest(message);
 
-            // Add a x-ms-date header if it doesn't already exist
-            if (IncludeXMsDate && !message.Request.Headers.Contains(Constants.HeaderNames.Date))
+            // Add a x-ms-date header
+            if (IncludeXMsDate)
             {
                 var date = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
-                message.Request.Headers.Add(Constants.HeaderNames.Date, date);
+                message.Request.Headers.SetValue(Constants.HeaderNames.Date, date);
             }
 
             var stringToSign = BuildStringToSign(message);

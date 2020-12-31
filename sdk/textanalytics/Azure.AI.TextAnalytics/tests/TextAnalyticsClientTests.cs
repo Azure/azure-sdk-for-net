@@ -1,177 +1,104 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
-using Azure.Core.Testing;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsClientTests : ClientTestBase
     {
-        private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";
-        private static readonly string s_subscriptionKey = "FakeSubscriptionKey";
-
         public TextAnalyticsClientTests(bool isAsync) : base(isAsync)
         {
-        }
-
-        private TextAnalyticsClient CreateTestClient(HttpPipelineTransport transport)
-        {
-            var options = new TextAnalyticsClientOptions
+            TextAnalyticsClientOptions options = new TextAnalyticsClientOptions
             {
-                Transport = transport
+                Transport = new MockTransport(),
             };
 
-            var client = InstrumentClient(new TextAnalyticsClient(new Uri(s_endpoint), s_subscriptionKey, options));
+             Client = InstrumentClient(new TextAnalyticsClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
+        }
 
-            return client;
+        public TextAnalyticsClient Client { get; set; }
+
+        [Test]
+        public void CreateClientArgumentValidation()
+        {
+            var uri = new Uri("http://localhost");
+
+            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(null, new AzureKeyCredential("apiKey")));
+            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(uri, (AzureKeyCredential)null));
+            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(uri, (TokenCredential)null));
+            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(null, new DefaultAzureCredential()));
         }
 
         [Test]
-        public async Task RecognizeEntitiesResultsSorted_NoErrors()
+        public void DetectLanguageArgumentValidation()
         {
-            var mockResults = new List<RecognizeEntitiesResult>()
-            {
-                new RecognizeEntitiesResult("1", new TextDocumentStatistics(), new List<NamedEntity>()
-                {
-                    new NamedEntity("EntityText0", "EntityType0", "EntitySubType0", 0, 1, 0.5),
-                    new NamedEntity("EntityText1", "EntityType1", "EntitySubType1", 0, 1, 0.5),
-                }),
-                new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<NamedEntity>()
-                {
-                    new NamedEntity("EntityText0", "EntityType0", "EntitySubType0", 0, 1, 0.5),
-                    new NamedEntity("EntityText1", "EntityType1", "EntitySubType1", 0, 1, 0.5),
-                }),
-            };
-            var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
-                new TextDocumentBatchStatistics(2, 2, 0, 2),
-                "modelVersion");
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.SetContent(SerializationHelpers.Serialize(mockResultCollection, SerializeRecognizeEntitiesResultCollection));
-
-            var mockTransport = new MockTransport(mockResponse);
-            TextAnalyticsClient client = CreateTestClient(mockTransport);
-
-            var inputs = new List<TextDocumentInput>()
-            {
-                new TextDocumentInput("1", "TextDocument1"),
-                new TextDocumentInput("2", "TextDocument2"),
-            };
-
-            var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalyticsRequestOptions());
-            var resultCollection = response.Value;
-
-            Assert.AreEqual("1", resultCollection[0].Id);
-            Assert.AreEqual("2", resultCollection[1].Id);
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DetectLanguageAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageAsync((string)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DetectLanguageBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
-        public async Task RecognizeEntitiesResultsSorted_WithErrors()
+        public void RecognizeEntitiesArgumentValidation()
         {
-            var mockResults = new List<RecognizeEntitiesResult>()
-            {
-                new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<NamedEntity>()
-                {
-                    new NamedEntity("EntityText0", "EntityType0", "EntitySubType0", 0, 1, 0.5),
-                    new NamedEntity("EntityText1", "EntityType1", "EntitySubType1", 0, 1, 0.5),
-                }),
-                new RecognizeEntitiesResult("3", new TextDocumentStatistics(), new List<NamedEntity>()
-                {
-                    new NamedEntity("EntityText0", "EntityType0", "EntitySubType0", 0, 1, 0.5),
-                    new NamedEntity("EntityText1", "EntityType1", "EntitySubType1", 0, 1, 0.5),
-                }),
-                new RecognizeEntitiesResult("4", "Document is invalid."),
-                new RecognizeEntitiesResult("5", "Document is invalid."),
-            };
-            var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
-                new TextDocumentBatchStatistics(2, 2, 2, 2),
-                "modelVersion");
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.SetContent(SerializationHelpers.Serialize(mockResultCollection, SerializeRecognizeEntitiesResultCollection));
-
-            var mockTransport = new MockTransport(mockResponse);
-            TextAnalyticsClient client = CreateTestClient(mockTransport);
-
-            var inputs = new List<TextDocumentInput>()
-            {
-                new TextDocumentInput("4", "TextDocument1"),
-                new TextDocumentInput("5", "TextDocument2"),
-                new TextDocumentInput("2", "TextDocument3"),
-                new TextDocumentInput("3", "TextDocument4"),
-            };
-
-            var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalyticsRequestOptions());
-            var resultCollection = response.Value;
-
-            Assert.AreEqual("4", resultCollection[0].Id);
-            Assert.AreEqual("5", resultCollection[1].Id);
-            Assert.AreEqual("2", resultCollection[2].Id);
-            Assert.AreEqual("3", resultCollection[3].Id);
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesAsync((string)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
-        private void SerializeRecognizeEntitiesResultCollection(ref Utf8JsonWriter json, RecognizeEntitiesResultCollection resultCollection)
+        [Test]
+        public void RecognizePiiEntitiesArgumentValidation()
         {
-            json.WriteStartObject();
-            json.WriteStartArray("documents");
-            if (resultCollection.FirstOrDefault(r => r.NamedEntities.Count > 0) != default)
-            {
-                foreach (var result in resultCollection)
-                {
-                    if (result.NamedEntities.Count > 0)
-                    {
-                        json.WriteStartObject();
-                        json.WriteString("id", result.Id);
-                        json.WriteStartArray("entities");
-                        foreach (var entity in result.NamedEntities)
-                        {
-                            json.WriteStartObject();
-                            json.WriteString("text", entity.Text);
-                            json.WriteString("type", entity.Type);
-                            json.WriteString("subtype", entity.SubType);
-                            json.WriteNumber("offset", entity.Offset);
-                            json.WriteNumber("length", entity.Length);
-                            json.WriteNumber("score", entity.Score);
-                            json.WriteEndObject();
-                        }
-                        json.WriteEndArray();
-                        json.WriteEndObject();
-                    }
-                }
-            }
-            json.WriteEndArray();
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizePiiEntitiesAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync((string)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizePiiEntitiesBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync(null, new RecognizePiiEntitiesOptions()));
+        }
 
-            json.WriteStartArray("errors");
-            if (resultCollection.FirstOrDefault(r => r.ErrorMessage != default) != default)
-            {
-                foreach (var result in resultCollection)
-                {
-                    if (result.ErrorMessage != null)
-                    {
-                        json.WriteStartObject();
-                        json.WriteString("id", result.Id);
-                        json.WriteStartObject("error");
-                        json.WriteStartObject("innerError");
-                        json.WriteString("message", result.ErrorMessage);
-                        json.WriteEndObject();
-                        json.WriteEndObject();
-                        json.WriteEndObject();
-                    }
-                }
-            }
-            json.WriteEndArray();
+        [Test]
+        public void AnalyzeSentimentArgumentValidation()
+        {
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.AnalyzeSentimentAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentAsync((string)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.AnalyzeSentimentBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentBatchAsync(null, new TextAnalyticsRequestOptions()));
+        }
 
-            json.WriteString("modelVersion", resultCollection.ModelVersion);
-            json.WriteEndObject();
+        [Test]
+        public void ExtractKeyPhrasesArgumentValidation()
+        {
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesAsync((string)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync(null, new TextAnalyticsRequestOptions()));
+        }
 
-            // TODO: add statistics if needed
+        [Test]
+        public void RecognizeLinkedEntitiesArgumentValidation()
+        {
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeLinkedEntitiesAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync((string)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeLinkedEntitiesBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
     }
 }

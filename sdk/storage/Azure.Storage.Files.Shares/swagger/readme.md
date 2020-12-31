@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2019-02-02/file.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-04-08/file.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -59,6 +59,10 @@ directive:
   where: $["x-ms-paths"]..responses..headers["Date"]
   transform: >
     $["x-az-demote-header"] = true;
+- from: swagger-document
+  where: $["x-ms-paths"]..responses..headers["x-ms-client-request-id"]
+  transform: >
+    $["x-az-demote-header"] = true;
 ```
 
 ### Clean up Failure response
@@ -78,7 +82,7 @@ directive:
 directive:
 - from: swagger-document
   where: $.parameters.ApiVersionParameter
-  transform: $.enum = ["2019-02-02"]
+  transform: $.enum = ["2019-07-07"]
 ```
 
 ### /?restype=service&comp=properties
@@ -165,7 +169,7 @@ directive:
   transform: >
     $.put.responses["201"].description = "Success";
     $.put.responses["201"]["x-az-response-name"] = "ShareInfo";
-    $.get.responses["200"]["x-az-response-name"] = "ShareProperties";
+    $.get.responses["200"]["x-az-response-name"] = "SharePropertiesInternal";
     $.get.responses["200"].headers["x-ms-share-quota"]["x-ms-client-name"] = "QuotaInGB";
 ```
 
@@ -229,6 +233,8 @@ directive:
         delete $.ShareStats;
         $.ShareStatistics.xml = { "name": "ShareStats" };
         $.ShareStatistics.properties.ShareUsageBytes.description = "The approximate size of the data stored in bytes, rounded up to the nearest gigabyte. Note that this value may not include all recently created or recently resized files.";
+        $.ShareStatistics.properties.ShareUsageBytes.format = 'int64';
+        $.ShareStatistics.properties.ShareUsageBytes['x-ms-client-name'] = 'ShareUsageInBytes';
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}?restype=share&comp=stats"]
@@ -536,7 +542,6 @@ directive:
   transform: >
     $.get.responses["200"]["x-az-response-name"] = "ShareFileRangeInfoInternal";
     $.get.responses["200"]["x-az-public"] = false;
-    $.get.responses["200"]["x-az-response-schema-name"] = "Ranges";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=copy
@@ -611,7 +616,7 @@ directive:
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions.ShareProperties
+  where: $.definitions.SharePropertiesInternal
   transform: >
     $.properties.QuotaInGB = $.properties.Quota;
     $.properties.QuotaInGB.xml = { "name": "Quota"};
@@ -626,8 +631,8 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $.ShareProperties.properties.Metadata = {"$ref": "#/definitions/Metadata"};
-    delete $.ShareItem.properties.Metadata;
+    $.SharePropertiesInternal.properties.Metadata = {"$ref": "#/definitions/Metadata"};
+    delete $.ShareItemInternal.properties.Metadata;
 ```
 
 ### FilePermission
@@ -702,16 +707,15 @@ directive:
   transform: >
     $["x-ms-client-name"] = "ShareAccessPolicy";
     $.xml = {"name": "AccessPolicy"};
-    $.properties.StartsOn = $.properties.Start;
-    $.properties.StartsOn.xml = { "name": "Start"};
+    $.properties.PolicyStartsOn = $.properties.Start;
+    $.properties.PolicyStartsOn.xml = { "name": "Start"};
     delete $.properties.Start;
-    $.properties.ExpiresOn = $.properties.Expiry;
-    $.properties.ExpiresOn.xml = { "name": "Expiry"};
+    $.properties.PolicyExpiresOn = $.properties.Expiry;
+    $.properties.PolicyExpiresOn.xml = { "name": "Expiry"};
     delete $.properties.Expiry;
     $.properties.Permissions = $.properties.Permission;
     $.properties.Permissions.xml = { "name": "Permission"};
     delete $.properties.Permission;
-    $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```
 
 ### ShareQuota properties renaming
@@ -751,13 +755,262 @@ directive:
     $.put.parameters[3]["x-ms-enum"].name = "ShareFileRangeWriteType";
 ```
 
-### Hide ranges
+### Hide FileRange
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $.Range["x-az-public"] = false;
+    $.FileRange["x-az-public"] = false;
+```
+
+### Hide ShareFileRangeList
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ShareFileRangeList["x-az-public"] = false;
+```
+
+### Hide ClearRange
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ClearRange["x-az-public"] = false;
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&acquire
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&acquire"]
+  transform: >
+    $.put.responses["201"].description = "The lease operation completed successfully.";
+    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a file's lease";
+    $.put.responses["201"]["x-az-response-name"] = "ShareFileLease";
+```
+
+### /{shareName}?restype=share&comp=lease&acquire
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=lease&acquire"]
+  transform: >
+    $.put.responses["201"].description = "The lease operation completed successfully.";
+    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a file's lease";
+    $.put.responses["201"]["x-az-response-name"] = "ShareFileLease";
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&release
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&release"]
+  transform: >
+    $.put.responses["200"].description = "The lease operation completed successfully.";
+    $.put.responses["200"]["x-az-response-name"] = "FileLeaseReleaseInfo";
+```
+
+### /{shareName}?restype=share&comp=lease&release
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=lease&release"]
+  transform: >
+    $.put.responses["200"].description = "The lease operation completed successfully.";
+    $.put.responses["200"]["x-az-response-name"] = "FileLeaseReleaseInfo";
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&change
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&change"]
+  transform: >
+    $.put.responses["200"].description = "The lease operation completed successfully.";
+    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
+    $.put.responses["200"]["x-az-response-name"] = "ShareFileLease";
+```
+
+### /{shareName}?restype=share&comp=lease&change
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=lease&change"]
+  transform: >
+    $.put.responses["200"].description = "The lease operation completed successfully.";
+    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
+    $.put.responses["200"]["x-az-response-name"] = "ShareFileLease";
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&break
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&break"]
+  transform: >
+    $.put.responses["202"]["x-az-response-name"] = "BrokenLease";
+    $.put.responses["202"]["x-az-public"] = false;
+```
+
+### /{shareName}?restype=share&comp=lease&break
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=lease&break"]
+  transform: >
+    $.put.responses["202"]["x-az-response-name"] = "BrokenLease";
+    $.put.responses["202"]["x-az-public"] = false;
+```
+
+### /{shareName}?restype=share&comp=lease&renew
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=lease&renew"]
+  transform: >
+    $.put.responses["200"].description = "The lease operation completed successfully.";
+    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
+    $.put.responses["200"]["x-az-response-name"] = "ShareFileLease";
+```
+
+### Make lease duration/break period a long
+Lease Duration/Break Period are represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
+type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.LeaseDuration
+  transform: >
+    $.format = "int64";
+- from: swagger-document
+  where: $.parameters.LeaseBreakPeriod
+  transform: >
+    $.format = "int64";
+```
+
+### FileCopyPermissionCopyMode
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.FileCopyPermissionCopyMode
+  transform: >
+    $["x-ms-enum"]["name"] = "PermissionCopyMode";
+```
+
+### LeaseDuration
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
+    $.get.responses["206"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
+    $.head.responses["200"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
+- from: swagger-document
+  where: $.definitions.LeaseDuration
+  transform: >
+    $["x-ms-enum"]["name"] = "ShareLeaseDuration";
+```
+
+### LeaseState
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
+    $.get.responses["206"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
+    $.head.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
+- from: swagger-document
+  where: $.definitions.LeaseState
+  transform: >
+    $["x-ms-enum"]["name"] = "ShareLeaseState";
+```
+
+### LeaseStatus
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
+    $.get.responses["206"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
+    $.head.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
+- from: swagger-document
+  where: $.definitions.LeaseStatus
+  transform: >
+    $["x-ms-enum"]["name"] = "ShareLeaseStatus";
+```
+
+### Rename ShareRestoreResult
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=undelete"]
+  transform: >
+    $.put.responses["201"]["x-az-response-name"] = "ShareInfo";
+```
+
+### Rename ShareItem fields
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ShareItemInternal.properties.Deleted["x-ms-client-name"] = "IsDeleted";
+    $.ShareItemInternal.properties.Version["x-ms-client-name"] = "VersionId";
+```
+
+### Rename ShareProperties fields
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.SharePropertiesInternal.properties.DeletedTime["x-ms-client-name"] = "DeletedOn";
+```
+
+### Rename DeleteSnapshotsOptionType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.DeleteSnapshots["x-ms-enum"]["name"] = "ShareSnapshotsDeleteOptionInternal";
+```
+
+### Hide SharePropertiesInternal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.SharePropertiesInternal["x-az-public"] = false;
+```
+
+### Hide SharePropertiesInternal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ShareItemInternal["x-az-public"] = false;
 ```
 
 ### Treat the API version as a parameter instead of a constant

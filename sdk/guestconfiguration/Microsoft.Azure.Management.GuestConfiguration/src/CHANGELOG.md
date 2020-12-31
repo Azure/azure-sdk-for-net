@@ -1,5 +1,15 @@
 # Microsoft.Azure.Management.GuestConfiguration release notes
 
+## Changes in 1.2.0
+### Features
+Support ARC machines.
+
+### Bug fixes
+None  
+
+### REST API version
+This version of the GuestConfiguration .NET client library targets version 2018-11-20 of the Azure GuestConfiguration REST API.
+
 ## Changes in 1.1.0
 ### Features
 Add package version information to the guest configuration assignment report.

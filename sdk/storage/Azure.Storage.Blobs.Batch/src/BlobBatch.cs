@@ -13,7 +13,8 @@ namespace Azure.Storage.Blobs.Specialized
     /// operations in a single request via <see cref="BlobBatchClient.SubmitBatch"/>.
     ///
     /// For more information, see
-    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch" />.
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch">
+    /// Blob Batch</see>.
     /// </summary>
     public class BlobBatch : IDisposable
     {
@@ -32,7 +33,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Storage requires each batch request to contain the same type of
         /// operation.
         /// </summary>
-        private BlobBatchOperationType? _operationType = null;
+        private BlobBatchOperationType? _operationType;
 
         /// <summary>
         /// The list of messages that will be sent as part of this batch.
@@ -42,7 +43,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// A value indicating whether the batch has already been submitted.
         /// </summary>
-        internal bool Submitted { get; private set; } = false;
+        internal bool Submitted { get; private set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobBatch"/> for mocking.
@@ -113,7 +114,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">Delete Blob</see>.
         /// </summary>
         /// <param name="blobContainerName">
         /// The name of the container containing the blob to delete.
@@ -160,7 +161,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">Delete Blob</see>.
         /// </summary>
         /// <param name="blobUri">
         /// The blob to delete's primary <see cref="Uri"/> endpoint.
@@ -194,7 +195,7 @@ namespace Azure.Storage.Blobs.Specialized
                 ifMatch: conditions?.IfMatch,
                 ifNoneMatch: conditions?.IfNoneMatch);
             _messages.Add(message);
-            return new DelayedResponse(message, BatchRestClient.Blob.DeleteAsync_CreateResponse);
+            return new DelayedResponse(message, response => BatchRestClient.Blob.DeleteAsync_CreateResponse(_client.ClientDiagnostics, response));
         }
         #endregion DeleteBlob
 
@@ -206,8 +207,9 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// A block blob's tier determines Hot/Cool/Archive storage type.  This
         /// operation does not update the blob's ETag.  For detailed
-        /// information about block blob level tiering
-        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
+        /// information about block blob level tiering see
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
         /// </summary>
         /// <param name="blobContainerName">
         /// The name of the container containing the blob to set the tier of.
@@ -258,7 +260,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// A block blob's tier determines Hot/Cool/Archive storage type.  This
         /// operation does not update the blob's ETag.  For detailed
         /// information about block blob level tiering
-        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
+        ///
         /// </summary>
         /// <param name="blobUri">
         /// The blob's primary <see cref="Uri"/> endpoint.
@@ -294,7 +298,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rehydratePriority: rehydratePriority,
                 leaseId: leaseAccessConditions?.LeaseId);
             _messages.Add(message);
-            return new DelayedResponse(message, BatchRestClient.Blob.SetAccessTierAsync_CreateResponse);
+            return new DelayedResponse(message, response => BatchRestClient.Blob.SetAccessTierAsync_CreateResponse(_client.ClientDiagnostics, response));
         }
 
         /// <summary>

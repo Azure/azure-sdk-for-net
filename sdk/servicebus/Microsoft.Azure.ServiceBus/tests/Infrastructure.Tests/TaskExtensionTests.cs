@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -7,10 +6,10 @@ using Xunit;
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     public class TaskExtensionsTests
-    {  
-        // It has been observed during the CI build that test runs can cause delays that were noted at 
-        // 1-2 seconds and were causing intermitten failures as a result.  The long delay has been set at 5 
-        // seconds arbitrarily, which may delay results should tests fail but is otherwise not expected to 
+    {
+        // It has been observed during the CI build that test runs can cause delays that were noted at
+        // 1-2 seconds and were causing intermittent failures as a result.  The long delay has been set at 5
+        // seconds arbitrarily, which may delay results should tests fail but is otherwise not expected to
         // be an actual wait time under normal circumstances.
         private readonly TimeSpan LongDelay = TimeSpan.FromSeconds(5);
         private readonly TimeSpan TinyDelay = TimeSpan.FromMilliseconds(1);
@@ -18,10 +17,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         public void WithTimeoutThrowsWhenATimeoutOccursAndNoActionIsSpecified()
         {
-            Func<Task> actionUnderTest = async () =>  
+            Func<Task> actionUnderTest = async () =>
                 await Task.Delay(LongDelay)
                     .WithTimeout(TinyDelay);
-              
+
             Assert.ThrowsAsync<TimeoutException>(actionUnderTest);
         }
 
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var timeoutActionInvoked = false;
 
             Action timeoutAction = () => { timeoutActionInvoked = true; };
-            
+
             await Task.Delay(LongDelay).WithTimeout(TinyDelay, null, timeoutAction);
             Assert.True(timeoutActionInvoked, "The timeout action should have been invoked.");
         }
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         public async Task WithTimeoutGenericThrowsWhenATimeoutOccursAndNoActionIsSpecified()
         {
-            Func<Task> actionUnderTest = async () => 
+            Func<Task> actionUnderTest = async () =>
                 await Task.Delay(LongDelay)
                     .ContinueWith( _ => "blue")
                     .WithTimeout(TinyDelay);
@@ -53,9 +52,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var timeoutActionInvoked = false;
             var expectedResult = "green";
 
-            Func<string> timeoutCallback = () => 
-            { 
-                timeoutActionInvoked = true; 
+            Func<string> timeoutCallback = () =>
+            {
+                timeoutActionInvoked = true;
                 return expectedResult;
             };
 
@@ -88,13 +87,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         public async Task WithTimeoutGenericDoesNotThrowsWhenATimeoutDoesNotOccur()
         {
             var exceptionObserved = false;
-                        
+
             try
             {
                 await Task.Delay(TinyDelay).ContinueWith( _ => "blue").WithTimeout(LongDelay);
             }
             catch (TimeoutException)
-            {                
+            {
                 exceptionObserved = true;
             }
 
@@ -122,7 +121,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         public async Task WithTimeoutPropagatesAnExceptionThatCompletesBeforeTimeout()
         {
-            Func<Task> actionUnderTest = async () => 
+            Func<Task> actionUnderTest = async () =>
                 await Task.Delay(TinyDelay)
                     .ContinueWith( _ => throw new MissingMemberException("oh no"))
                     .WithTimeout(LongDelay);
@@ -133,7 +132,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         public async Task WithTimeoutGenericPropagatesAnExceptionThatCompletesBeforeTimeout()
         {
-           Func<Task> actionUnderTest = async () => 
+           Func<Task> actionUnderTest = async () =>
                await Task.Delay(TinyDelay)
                    .ContinueWith<string>( _ => throw new MissingMemberException("oh no"))
                    .WithTimeout(LongDelay);

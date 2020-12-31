@@ -31,6 +31,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
     using System;
     using System.Collections.Generic;
     using System.Data.SqlClient;
+    using System.IO;
 
     public class HDInsightManagementHelper
     {
@@ -329,6 +330,26 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
                 SshPassword = commonData.SshUserPassword,
                 Version = commonData.HDInsightClusterVersion
             };
+        }
+
+        public void SubmitSparkJobFile(string resourceGroupName, string storageAccountName,string containerName, string accessKey)
+        {
+            if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
+            {
+                CloudStorageAccount storageAccountClient = new CloudStorageAccount(
+                    new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(
+                        storageAccountName,
+                        accessKey),
+                    useHttps: true);
+                CloudBlobClient blobClient = storageAccountClient.CreateCloudBlobClient();
+                CloudBlobContainer containerReference = blobClient.GetContainerReference(containerName);
+                containerReference.CreateIfNotExistsAsync().GetAwaiter().GetResult();
+                string localPath = "./Jar/";
+                string fileName = "spark-examples.jar";
+                string localFilePath = Path.Combine(localPath, fileName);
+                CloudBlockBlob cloudBlockBlob = containerReference.GetBlockBlobReference(fileName);
+                cloudBlockBlob.UploadFromFileAsync(localFilePath).Wait();
+            }
         }
     }
 }

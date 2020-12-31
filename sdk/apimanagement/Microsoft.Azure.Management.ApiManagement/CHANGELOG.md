@@ -1,5 +1,29 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 6.0.0-preview
+
+- Fixed `quotas` update contract
+
+### Changes in 5.0.0-preview
+
+- Switch the .NET client to use api-version `2019-12-01`
+- `properties` entity renamed to `namedValues` 
+- new `gateway` entity added
+- Added POST operations to get entities secret properties. Secret properties will not be returned with GET or LIST operations anymore. Entities are: `accessInformation`, `authorizationServers`, `delegationSettings`, `identityProviders`, `namedValues`, `openIdConnectProviders`, `subscriptions`. 
+- `diagnostics` entity: `enableHttpCorrelationHeaders` property is not supported, `loggerId` is a required property now.
+- Breaking Change: `capacity` is a required parameter with creating ApiManagement service.
+- Added support for creating `userAssignedIdentity`. 
+- Added support for `disableGateway` property, which allows taking a region out of a multi-region premium sku ApiManagement service
+- Added support for `apiVersionConstraint` property which allows limiting all control plane calls higher than a specific api-version
+- Breaking Change: Exception thrown in case of failure changed from `CloudException` to `ErrorResponseException`.
+
+### Changes in 4.12.0-preview
+
+- Added support for `developerPortal` endpoint in apimanagement service resource.
+- Added support for overriding the `common` tenant when configuring AAD identity provider.
+- Added support for specifying `httpCorrelationProtocol` and `verbosity` when configuring diagnostics on global and api level.
+- Added support for importing OpenApi 3.0 document in Json format.
+
 ### Changes in 4.11.0-preview
 
 - Removed id validation on `groups`, `apis`, `products`, `users` and `backend` to unblock existing customers to onboard to new sdks

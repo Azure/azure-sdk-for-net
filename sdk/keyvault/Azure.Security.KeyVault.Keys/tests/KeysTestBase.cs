@@ -5,36 +5,42 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
-using Azure.Identity;
+using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Tests;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
+    [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V7_0,
+        KeyClientOptions.ServiceVersion.V7_1)]
     [NonParallelizable]
-    public abstract class KeysTestBase : RecordedTestBase
+    public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
+        protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
+            ? TimeSpan.Zero
+            : TimeSpan.FromSeconds(2);
 
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        public KeyClient Client { get; private set; }
 
-        public KeyClient Client { get; set; }
-
-        public Uri VaultUri { get; set; }
+        public virtual Uri Uri => new Uri(TestEnvironment.KeyVaultUrl);
 
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
         private readonly ConcurrentQueue<string> _keysToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _keysToPurge = new ConcurrentStack<string>();
+        private readonly KeyClientOptions.ServiceVersion _serviceVersion;
 
-        protected KeysTestBase(bool isAsync) : base(isAsync)
+        private KeyVaultTestEventListener _listener;
+
+        protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment() /* RecordedTestMode.Record */)
         {
+            _serviceVersion = serviceVersion;
         }
 
-        internal KeyClient GetClient(TestRecording recording = null)
+        internal KeyClient GetClient()
         {
-            recording = recording ?? Recording;
-
             // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
             // we need to delay creation of keys due to aggressive service limits on key creation:
             // https://docs.microsoft.com/azure/key-vault/key-vault-service-limits
@@ -42,9 +48,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             return InstrumentClient(
                 new KeyClient(
-                    new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-                    recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(new KeyClientOptions())),
+                    Uri,
+                    TestEnvironment.Credential,
+                    InstrumentClientOptions(new KeyClientOptions(_serviceVersion))),
                 interceptors);
         }
 
@@ -52,8 +58,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             base.StartTestRecording();
 
+            _listener = new KeyVaultTestEventListener();
+
             Client = GetClient();
-            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+        }
+
+        public override void StopTestRecording()
+        {
+            _listener?.Dispose();
+
+            base.StopTestRecording();
         }
 
         [TearDown]
@@ -171,7 +185,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             if (exp is null && act is null)
                 return;
 
-            CollectionAssert.AreEqual(exp, act);
+            CollectionAssert.AreEquivalent(exp, act);
         }
 
         protected static void AssertAreEqual<TKey, TValue>(IDictionary<TKey, TValue> exp, IDictionary<TKey, TValue> act)

@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "mixedreality/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "mixedreality/resource-manager" -AutoRestVersion "v2"

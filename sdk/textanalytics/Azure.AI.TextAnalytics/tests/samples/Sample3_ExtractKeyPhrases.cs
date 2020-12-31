@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -15,23 +13,33 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void ExtractKeyPhrases()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:ExtractKeyPhrases
-            string input = "My cat might need to see a veterinarian.";
+            string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
+                                little sister thinks it is funny, I am worried it has the cold that I got last week.
+                                We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it
+                                will be covered by the cat's insurance.
+                                It might be good to not let it sleep in my room for a while.";
 
-            // Extract key phrases from the input text.
-            ExtractKeyPhrasesResult result = client.ExtractKeyPhrases(input);
-            IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
-
-            Console.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
-            foreach (string keyPhrase in keyPhrases)
+            try
             {
-                Console.WriteLine(keyPhrase);
+                Response<KeyPhraseCollection> response = client.ExtractKeyPhrases(document);
+                KeyPhraseCollection keyPhrases = response.Value;
+
+                Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
+                foreach (string keyPhrase in keyPhrases)
+                {
+                    Console.WriteLine($"  {keyPhrase}");
+                }
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion
         }

@@ -83,6 +83,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="newClusterCustomTags">Additional tags for cluster
         /// resources. This property is ignored in instance pool
         /// configurations.</param>
+        /// <param name="newClusterLogDestination">Specify a location to
+        /// deliver Spark driver, worker, and event logs. Type: string (or
+        /// Expression with resultType string).</param>
         /// <param name="newClusterDriverNodeType">The driver node type for the
         /// new job cluster. This property is ignored in instance pool
         /// configurations. Type: string (or Expression with resultType
@@ -99,7 +102,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureDatabricksLinkedService(object domain, SecretBase accessToken, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object existingClusterId = default(object), object instancePoolId = default(object), object newClusterVersion = default(object), object newClusterNumOfWorker = default(object), object newClusterNodeType = default(object), IDictionary<string, object> newClusterSparkConf = default(IDictionary<string, object>), IDictionary<string, object> newClusterSparkEnvVars = default(IDictionary<string, object>), IDictionary<string, object> newClusterCustomTags = default(IDictionary<string, object>), object newClusterDriverNodeType = default(object), object newClusterInitScripts = default(object), object newClusterEnableElasticDisk = default(object), object encryptedCredential = default(object))
+        public AzureDatabricksLinkedService(object domain, SecretBase accessToken, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object existingClusterId = default(object), object instancePoolId = default(object), object newClusterVersion = default(object), object newClusterNumOfWorker = default(object), object newClusterNodeType = default(object), IDictionary<string, object> newClusterSparkConf = default(IDictionary<string, object>), IDictionary<string, object> newClusterSparkEnvVars = default(IDictionary<string, object>), IDictionary<string, object> newClusterCustomTags = default(IDictionary<string, object>), object newClusterLogDestination = default(object), object newClusterDriverNodeType = default(object), object newClusterInitScripts = default(object), object newClusterEnableElasticDisk = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Domain = domain;
@@ -112,6 +115,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             NewClusterSparkConf = newClusterSparkConf;
             NewClusterSparkEnvVars = newClusterSparkEnvVars;
             NewClusterCustomTags = newClusterCustomTags;
+            NewClusterLogDestination = newClusterLogDestination;
             NewClusterDriverNodeType = newClusterDriverNodeType;
             NewClusterInitScripts = newClusterInitScripts;
             NewClusterEnableElasticDisk = newClusterEnableElasticDisk;
@@ -208,6 +212,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.newClusterCustomTags")]
         public IDictionary<string, object> NewClusterCustomTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify a location to deliver Spark driver, worker,
+        /// and event logs. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.newClusterLogDestination")]
+        public object NewClusterLogDestination { get; set; }
 
         /// <summary>
         /// Gets or sets the driver node type for the new job cluster. This

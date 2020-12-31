@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8?restype=share",
+      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8?restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Request-Id": "|77a7b64f-49eee2d80859fa87.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190913.1\u002b3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190913.1+3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "e0a05e674925d6b689de8ba6162eca61",
@@ -21,11 +21,11 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 13 Sep 2019 21:39:44 GMT",
-        "ETag": "\u00220x8D73892E4A60440\u0022",
+        "ETag": "\"0x8D73892E4A60440\"",
         "Last-Modified": "Fri, 13 Sep 2019 21:39:44 GMT",
         "Server": [
-          "Windows-Azure-File\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "e0a05e674925d6b689de8ba6162eca61",
         "x-ms-request-id": "71d09fc4-901a-0041-7a7b-6a2219000000",
@@ -34,13 +34,13 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c?restype=directory",
+      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c?restype=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Request-Id": "|77a7b650-49eee2d80859fa87.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190913.1\u002b3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190913.1+3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "8ba96ec5cbdf674cf4bdd5cc54787444",
@@ -58,11 +58,11 @@
         "Connection": "close",
         "Content-Length": "0",
         "Date": "Fri, 13 Sep 2019 21:39:44 GMT",
-        "ETag": "\u00220x8D73892E4AB2714\u0022",
+        "ETag": "\"0x8D73892E4AB2714\"",
         "Last-Modified": "Fri, 13 Sep 2019 21:39:44 GMT",
         "Server": [
-          "Windows-Azure-File\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "8ba96ec5cbdf674cf4bdd5cc54787444",
         "x-ms-file-attributes": "Directory",
@@ -79,12 +79,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile",
+      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190913.1\u002b3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190913.1+3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "a7e13f243e858e812387c86a7e3152bc",
@@ -103,11 +103,11 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 13 Sep 2019 21:39:44 GMT",
-        "ETag": "\u00220x8D73892E4B4ECDB\u0022",
+        "ETag": "\"0x8D73892E4B4ECDB\"",
         "Last-Modified": "Fri, 13 Sep 2019 21:39:44 GMT",
         "Server": [
-          "Windows-Azure-File\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "a7e13f243e858e812387c86a7e3152bc",
         "x-ms-file-attributes": "Archive",
@@ -124,17 +124,17 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile?comp=range",
+      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190913.1\u002b3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190913.1+3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
-        "x-ms-copy-source": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile",
+        "x-ms-copy-source": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile",
         "x-ms-date": "Fri, 13 Sep 2019 21:39:45 GMT",
         "x-ms-range": "bytes=256-511",
         "x-ms-return-client-request-id": "true",
@@ -146,11 +146,11 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "229",
-        "Content-Type": "application\u002fxml",
+        "Content-Type": "application/xml",
         "Date": "Fri, 13 Sep 2019 21:39:44 GMT",
         "Server": [
-          "Windows-Azure-File\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
         "x-ms-error-code": "CannotVerifyCopySource",
@@ -158,23 +158,23 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>CannotVerifyCopySource</Code><Message>The specified resource does not exist.\n",
         "RequestId:ce5b254f-501a-005c-3b7b-6afbf3000000\n",
-        "Time:2019-09-13T21:39:45.1023596Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "Time:2019-09-13T21:39:45.1023596Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile?comp=range",
+      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190913.1\u002b3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190913.1+3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
-        "x-ms-copy-source": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile",
+        "x-ms-copy-source": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile",
         "x-ms-date": "Fri, 13 Sep 2019 21:39:45 GMT",
         "x-ms-range": "bytes=256-511",
         "x-ms-return-client-request-id": "true",
@@ -186,11 +186,11 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "229",
-        "Content-Type": "application\u002fxml",
+        "Content-Type": "application/xml",
         "Date": "Fri, 13 Sep 2019 21:39:44 GMT",
         "Server": [
-          "Windows-Azure-File\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
         "x-ms-error-code": "CannotVerifyCopySource",
@@ -198,23 +198,23 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>CannotVerifyCopySource</Code><Message>The specified resource does not exist.\n",
         "RequestId:ce5b2550-501a-005c-3c7b-6afbf3000000\n",
-        "Time:2019-09-13T21:39:45.5676879Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "Time:2019-09-13T21:39:45.5676879Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile?comp=range",
+      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190913.1\u002b3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190913.1+3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
-        "x-ms-copy-source": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile",
+        "x-ms-copy-source": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile",
         "x-ms-date": "Fri, 13 Sep 2019 21:39:45 GMT",
         "x-ms-range": "bytes=256-511",
         "x-ms-return-client-request-id": "true",
@@ -226,11 +226,11 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "229",
-        "Content-Type": "application\u002fxml",
+        "Content-Type": "application/xml",
         "Date": "Fri, 13 Sep 2019 21:39:45 GMT",
         "Server": [
-          "Windows-Azure-File\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
         "x-ms-error-code": "CannotVerifyCopySource",
@@ -238,23 +238,23 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>CannotVerifyCopySource</Code><Message>The specified resource does not exist.\n",
         "RequestId:ce5b2552-501a-005c-3d7b-6afbf3000000\n",
-        "Time:2019-09-13T21:39:46.4783295Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "Time:2019-09-13T21:39:46.4783295Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile?comp=range",
+      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190913.1\u002b3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190913.1+3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
-        "x-ms-copy-source": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile",
+        "x-ms-copy-source": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile",
         "x-ms-date": "Fri, 13 Sep 2019 21:39:45 GMT",
         "x-ms-range": "bytes=256-511",
         "x-ms-return-client-request-id": "true",
@@ -266,11 +266,11 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "229",
-        "Content-Type": "application\u002fxml",
+        "Content-Type": "application/xml",
         "Date": "Fri, 13 Sep 2019 21:39:47 GMT",
         "Server": [
-          "Windows-Azure-File\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
         "x-ms-error-code": "CannotVerifyCopySource",
@@ -278,23 +278,23 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>CannotVerifyCopySource</Code><Message>The specified resource does not exist.\n",
         "RequestId:ce5b2555-501a-005c-3f7b-6afbf3000000\n",
-        "Time:2019-09-13T21:39:48.8399945Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "Time:2019-09-13T21:39:48.8399945Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile?comp=range",
+      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190913.1\u002b3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190913.1+3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
-        "x-ms-copy-source": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile",
+        "x-ms-copy-source": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile",
         "x-ms-date": "Fri, 13 Sep 2019 21:39:45 GMT",
         "x-ms-range": "bytes=256-511",
         "x-ms-return-client-request-id": "true",
@@ -306,11 +306,11 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "229",
-        "Content-Type": "application\u002fxml",
+        "Content-Type": "application/xml",
         "Date": "Fri, 13 Sep 2019 21:39:51 GMT",
         "Server": [
-          "Windows-Azure-File\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
         "x-ms-error-code": "CannotVerifyCopySource",
@@ -318,23 +318,23 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>CannotVerifyCopySource</Code><Message>The specified resource does not exist.\n",
         "RequestId:ce5b2559-501a-005c-417b-6afbf3000000\n",
-        "Time:2019-09-13T21:39:52.6516815Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "Time:2019-09-13T21:39:52.6516815Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile?comp=range",
+      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190913.1\u002b3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190913.1+3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
-        "x-ms-copy-source": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8\u002ftest-directory-bcee705a-5427-a7fe-34e2-78909584ba4c\u002fdestFile",
+        "x-ms-copy-source": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8/test-directory-bcee705a-5427-a7fe-34e2-78909584ba4c/destFile",
         "x-ms-date": "Fri, 13 Sep 2019 21:39:45 GMT",
         "x-ms-range": "bytes=256-511",
         "x-ms-return-client-request-id": "true",
@@ -346,11 +346,11 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "229",
-        "Content-Type": "application\u002fxml",
+        "Content-Type": "application/xml",
         "Date": "Fri, 13 Sep 2019 21:39:59 GMT",
         "Server": [
-          "Windows-Azure-File\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "1723346db3e4abffdd972be7200996cf",
         "x-ms-error-code": "CannotVerifyCopySource",
@@ -358,19 +358,19 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>CannotVerifyCopySource</Code><Message>The specified resource does not exist.\n",
         "RequestId:ce5b2564-501a-005c-447b-6afbf3000000\n",
-        "Time:2019-09-13T21:40:00.9185100Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "Time:2019-09-13T21:40:00.9185100Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8?restype=share",
+      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-5f93aab1-e0aa-8a1f-7336-dff9773ad6b8?restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Request-Id": "|77a7b651-49eee2d80859fa87.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190913.1\u002b3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190913.1+3b7c1716d58bcb115840c9a8149364b6e7c09eb8",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "14a8cf7bcc972ebffc10e3c55126932e",
@@ -384,8 +384,8 @@
         "Content-Length": "0",
         "Date": "Fri, 13 Sep 2019 21:40:00 GMT",
         "Server": [
-          "Windows-Azure-File\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "14a8cf7bcc972ebffc10e3c55126932e",
         "x-ms-request-id": "ce5b2565-501a-005c-457b-6afbf3000000",
@@ -396,6 +396,6 @@
   ],
   "Variables": {
     "RandomSeed": "912105173",
-    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttp:\u002f\u002fseandevtest.blob.core.windows.net\nhttp:\u002f\u002fseandevtest.file.core.windows.net\nhttp:\u002f\u002fseandevtest.queue.core.windows.net\nhttp:\u002f\u002fseandevtest.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fseandevtest-secondary.blob.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.file.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.queue.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fseandevtest.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fseandevtest.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fseandevtest.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fseandevtest.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.file.core.windows.net\u002f;AccountName=seandevtest;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttp://seandevtest.blob.core.windows.net\nhttp://seandevtest.file.core.windows.net\nhttp://seandevtest.queue.core.windows.net\nhttp://seandevtest.table.core.windows.net\n\n\n\n\nhttp://seandevtest-secondary.blob.core.windows.net\nhttp://seandevtest-secondary.file.core.windows.net\nhttp://seandevtest-secondary.queue.core.windows.net\nhttp://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seandevtest.blob.core.windows.net/;QueueEndpoint=http://seandevtest.queue.core.windows.net/;TableEndpoint=http://seandevtest.table.core.windows.net/;FileEndpoint=http://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seandevtest-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://seandevtest-secondary.table.core.windows.net/;FileSecondaryEndpoint=http://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Sanitized\nseanscope1"
   }
 }

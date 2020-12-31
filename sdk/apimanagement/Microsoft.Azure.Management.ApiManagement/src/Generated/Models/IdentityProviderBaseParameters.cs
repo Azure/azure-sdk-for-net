@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -37,6 +36,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="type">Identity Provider Type identifier. Possible
         /// values include: 'facebook', 'google', 'microsoft', 'twitter',
         /// 'aad', 'aadB2C'</param>
+        /// <param name="signinTenant">The TenantId to use instead of Common
+        /// when logging into Active Directory</param>
         /// <param name="allowedTenants">List of Allowed Tenants when
         /// configuring Azure Active Directory login.</param>
         /// <param name="authority">OpenID Connect discovery endpoint hostname
@@ -49,9 +50,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Only applies to AAD B2C Identity Provider.</param>
         /// <param name="passwordResetPolicyName">Password Reset Policy Name.
         /// Only applies to AAD B2C Identity Provider.</param>
-        public IdentityProviderBaseParameters(string type = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string))
+        public IdentityProviderBaseParameters(string type = default(string), string signinTenant = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string))
         {
             Type = type;
+            SigninTenant = signinTenant;
             AllowedTenants = allowedTenants;
             Authority = authority;
             SignupPolicyName = signupPolicyName;
@@ -73,6 +75,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the TenantId to use instead of Common when logging
+        /// into Active Directory
+        /// </summary>
+        [JsonProperty(PropertyName = "signinTenant")]
+        public string SigninTenant { get; set; }
 
         /// <summary>
         /// Gets or sets list of Allowed Tenants when configuring Azure Active
@@ -116,49 +125,5 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "passwordResetPolicyName")]
         public string PasswordResetPolicyName { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (AllowedTenants != null)
-            {
-                if (AllowedTenants.Count > 32)
-                {
-                    throw new ValidationException(ValidationRules.MaxItems, "AllowedTenants", 32);
-                }
-            }
-            if (SignupPolicyName != null)
-            {
-                if (SignupPolicyName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "SignupPolicyName", 1);
-                }
-            }
-            if (SigninPolicyName != null)
-            {
-                if (SigninPolicyName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "SigninPolicyName", 1);
-                }
-            }
-            if (ProfileEditingPolicyName != null)
-            {
-                if (ProfileEditingPolicyName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "ProfileEditingPolicyName", 1);
-                }
-            }
-            if (PasswordResetPolicyName != null)
-            {
-                if (PasswordResetPolicyName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "PasswordResetPolicyName", 1);
-                }
-            }
-        }
     }
 }

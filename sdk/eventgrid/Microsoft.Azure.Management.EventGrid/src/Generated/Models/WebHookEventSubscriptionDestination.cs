@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about the webhook destination for an event subscription
+    /// Information about the webhook destination for an event subscription.
     /// </summary>
     [Newtonsoft.Json.JsonObject("WebHook")]
     [Rest.Serialization.JsonTransformation]

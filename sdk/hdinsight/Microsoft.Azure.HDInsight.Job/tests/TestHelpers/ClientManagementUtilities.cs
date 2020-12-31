@@ -38,7 +38,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         /// </summary>
         /// <param name="testFixture">the test class</param>
         /// <returns>A HDInsight job management client, created from the current context (environment variables)</returns>
-        public static HDInsightJobManagementClient GetHDInsightJobManagementClient(this CommonTestsFixture testFixture, MockContext context)
+        public static HDInsightJobClient GetHDInsightJobClient(this CommonTestsFixture testFixture, MockContext context)
         {
             var credentials = new BasicAuthenticationCredentials
             {
@@ -47,8 +47,28 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
             };
 
             TestEnvironment currentEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-            var client = context.GetServiceClientWithCredentials<HDInsightJobManagementClient>(currentEnvironment, credentials, true);
-            client.ClusterDnsName = testFixture.HDInsightClusterUrl;
+            var client = context.GetServiceClientWithCredentials<HDInsightJobClient>(currentEnvironment, credentials, true);
+            client.Endpoint = testFixture.HDInsightClusterUrl;
+            client.Username = CultureInfo.CurrentCulture.TextInfo.ToLower(credentials.UserName);
+            return client;
+        }
+
+        /// <summary>
+        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="testFixture">the test class</param>
+        /// <returns>A HDInsight spark job management client, created from the current context (environment variables)</returns>
+        public static HDInsightJobClient GetHDInsightSparkJobClient(this SparkJobTestsFixture testFixture, MockContext context)
+        {
+            var credentials = new BasicAuthenticationCredentials
+            {
+                UserName = testFixture.HttpUserName,
+                Password = testFixture.HttpUserPassword
+            };
+
+            TestEnvironment currentEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+            var client = context.GetServiceClientWithCredentials<HDInsightJobClient>(currentEnvironment, credentials, true);
+            client.Endpoint = testFixture.HDInsightClusterUrl;
             client.Username = CultureInfo.CurrentCulture.TextInfo.ToLower(credentials.UserName);
             return client;
         }

@@ -1,0 +1,38 @@
+
+trigger:
+  branches:
+    include:
+    - master
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/communication/
+
+pr:
+  branches:
+    include:
+    - master
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/communication/
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: communication
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Communication.Sms
+      safeName: AzureCommunicationSms
+    - name: Azure.Communication.Chat
+      safeName: AzureCommunicationChat
+    - name: Azure.Communication.Common
+      safeName: AzureCommunicationCommon
+    - name: Azure.Communication.Administration
+      safeName: AzureCommunicationAdministration
+    - name: Azure.ResourceManager.Communication
+      safeName: AzureResourceManagerCommunication

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,33 +16,76 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeEntitiesBatchConvenience()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var inputs = new List<string>
+            #region Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
+            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
+                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
+                                We tried again today and it was amazing. Everyone in my family liked the trail although
+                                it was too challenging for the less athletic among us.
+                                Not necessarily recommended for small children.
+                                A hotel close to the trail offers services for childcare in case you want that.";
+
+            string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
+                                our anniversary so they helped me organize a little surprise for my partner.
+                                The room was clean and with the decoration I requested. It was perfect!";
+
+            string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
+                                They had great amenities that included an indoor pool, a spa, and a bar.
+                                The spa offered couples massages which were really good. 
+                                The spa was clean and felt very peaceful. Overall the whole experience was great.
+                                We will definitely come back.";
+
+            string documentD = string.Empty;
+
+            var documents = new List<string>
             {
-                "Microsoft was founded by Bill Gates and Paul Allen.",
-                "Text Analytics is one of the Azure Cognitive Services.",
-                "A key technology in Text Analytics is Named Entity Recognition (NER).",
+                documentA,
+                documentB,
+                documentC,
+                documentD
             };
 
-            RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs);
+            Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(documents);
+            RecognizeEntitiesResultCollection entititesPerDocuments = response.Value;
 
-            Debug.WriteLine($"Recognized entities for each input are:");
             int i = 0;
-            foreach (var result in results)
-            {
-                Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.NamedEntities.Count()} entities were found: ");
+            Console.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{entititesPerDocuments.ModelVersion}\"");
+            Console.WriteLine("");
 
-                foreach (var entity in result.NamedEntities)
+            foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)
+            {
+                Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
+                Console.WriteLine("");
+
+                if (entitiesInDocument.HasError)
                 {
-                    Debug.WriteLine($"    Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    Console.WriteLine("  Error!");
+                    Console.WriteLine($"  Document error code: {entitiesInDocument.Error.ErrorCode}.");
+                    Console.WriteLine($"  Message: {entitiesInDocument.Error.Message}");
                 }
+                else
+                {
+                    Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count()} entities:");
+
+                    foreach (CategorizedEntity entity in entitiesInDocument.Entities)
+                    {
+                        Console.WriteLine($"    Text: {entity.Text}");
+                        Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"    Category: {entity.Category}");
+                        if (!string.IsNullOrEmpty(entity.SubCategory))
+                            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                        Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+                        Console.WriteLine("");
+                    }
+                }
+                Console.WriteLine("");
             }
+            #endregion
         }
     }
 }

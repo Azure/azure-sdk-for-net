@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.HybridData
         }
 
         /// <summary>
-        /// Gets the data service that match the data service name given.
+        /// Gets the data service that matches the data service name given.
         /// </summary>
         /// <param name='dataServiceName'>
         /// The name of the data service that is being queried.

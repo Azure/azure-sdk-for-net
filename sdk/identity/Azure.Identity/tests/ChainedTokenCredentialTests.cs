@@ -14,7 +14,6 @@ namespace Azure.Identity.Tests
     {
         public class MockException : Exception
         {
-
         }
 
         public class SimpleMockTokenCredential : TokenCredential
@@ -72,7 +71,7 @@ namespace Azure.Identity.Tests
         {
             Assert.Throws<ArgumentNullException>(() => new ChainedTokenCredential(null));
 
-            Assert.Throws<ArgumentException>(() => new ChainedTokenCredential());
+            Assert.Throws<ArgumentException>(() => new ChainedTokenCredential(Array.Empty<TokenCredential>()));
 
             Assert.Throws<ArgumentException>(() => new ChainedTokenCredential((TokenCredential)null));
 

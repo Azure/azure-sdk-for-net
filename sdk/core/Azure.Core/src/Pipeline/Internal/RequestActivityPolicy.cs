@@ -11,6 +11,7 @@ namespace Azure.Core.Pipeline
     internal class RequestActivityPolicy : HttpPipelinePolicy
     {
         private readonly bool _isDistributedTracingEnabled;
+        private readonly string? _resourceProviderNamespace;
 
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
@@ -18,9 +19,10 @@ namespace Azure.Core.Pipeline
 
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Core");
 
-        public RequestActivityPolicy(bool isDistributedTracingEnabled)
+        public RequestActivityPolicy(bool isDistributedTracingEnabled, string? resourceProviderNamespace)
         {
             _isDistributedTracingEnabled = isDistributedTracingEnabled;
+            _resourceProviderNamespace = resourceProviderNamespace;
         }
 
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -62,6 +64,11 @@ namespace Azure.Core.Pipeline
             activity.AddTag("requestId", message.Request.ClientRequestId);
             activity.AddTag("kind", "client");
 
+            if (_resourceProviderNamespace != null)
+            {
+                activity.AddTag("az.namespace", _resourceProviderNamespace);
+            }
+
             if (message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {
                 activity.AddTag("http.user_agent", userAgent);
@@ -78,40 +85,46 @@ namespace Azure.Core.Pipeline
                 activity.Start();
             }
 
+            try
+            {
+                if (isAsync)
+                {
+                    await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNextAsync(message, pipeline, false).EnsureCompleted();
+                }
 
-            if (isAsync)
-            {
-                await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
+                activity.AddTag("http.status_code", message.Response.Status.ToString(CultureInfo.InvariantCulture));
+                activity.AddTag("serviceRequestId", message.Response.Headers.RequestId);
             }
-            else
+            finally
             {
-                ProcessNextAsync(message, pipeline, false).EnsureCompleted();
-            }
-
-            activity.AddTag("http.status_code", message.Response.Status.ToString(CultureInfo.InvariantCulture));
-            activity.AddTag("serviceRequestId", message.Response.Headers.RequestId);
-
-            if (diagnosticSourceActivityEnabled)
-            {
-                s_diagnosticSource.StopActivity(activity, message);
-            }
-            else
-            {
-                activity.Stop();
+                if (diagnosticSourceActivityEnabled)
+                {
+                    s_diagnosticSource.StopActivity(activity, message);
+                }
+                else
+                {
+                    activity.Stop();
+                }
             }
         }
 
         private static async ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
-            Activity currentActivity = Activity.Current;
+            Activity? currentActivity = Activity.Current;
 
             if (currentActivity != null)
             {
+                var currentActivityId = currentActivity.Id ?? string.Empty;
+
                 if (currentActivity.IsW3CFormat())
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
-                        message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
+                        message.Request.Headers.Add(TraceParentHeaderName, currentActivityId);
                         if (currentActivity.TryGetTraceState(out string? traceStateString) && traceStateString != null)
                         {
                             message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
@@ -122,7 +135,7 @@ namespace Azure.Core.Pipeline
                 {
                     if (!message.Request.Headers.Contains(RequestIdHeaderName))
                     {
-                        message.Request.Headers.Add(RequestIdHeaderName, currentActivity.Id);
+                        message.Request.Headers.Add(RequestIdHeaderName, currentActivityId);
                     }
                 }
             }

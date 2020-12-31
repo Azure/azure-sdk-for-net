@@ -1,0 +1,372 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"Examples Test App\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "507dfc3e5c29448e98fad6046cdee451"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28619.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "142"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c"
+        ],
+        "Apim-Request-Id": [
+          "81cd6a9b-d129-4914-820b-d95fca9e19ad"
+        ],
+        "Request-Id": [
+          "81cd6a9b-d129-4914-820b-d95fca9e19ad"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:56:00 GMT"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "\"46a51b73-64e1-47d1-b2a3-2eb4d8665e7c\"",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/intents",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQ2YTUxYjczLTY0ZTEtNDdkMS1iMmEzLTJlYjRkODY2NWU3Yy92ZXJzaW9ucy8wLjEvaW50ZW50cw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"WeatherInPlace\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "507dfc3e5c29448e98fad6046cdee451"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28619.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "32"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/intents/33d25319-9471-4142-a92e-5922881b2911"
+        ],
+        "Apim-Request-Id": [
+          "d51e9f6e-0904-4b15-9e7f-a2add77d09b6"
+        ],
+        "Request-Id": [
+          "d51e9f6e-0904-4b15-9e7f-a2add77d09b6"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/intents/33d25319-9471-4142-a92e-5922881b2911"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:56:01 GMT"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "\"33d25319-9471-4142-a92e-5922881b2911\"",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/entities",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQ2YTUxYjczLTY0ZTEtNDdkMS1iMmEzLTJlYjRkODY2NWU3Yy92ZXJzaW9ucy8wLjEvZW50aXRpZXM=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"children\": [\r\n    {\r\n      \"name\": \"City\"\r\n    },\r\n    {\r\n      \"name\": \"Country\"\r\n    }\r\n  ],\r\n  \"name\": \"Place\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "507dfc3e5c29448e98fad6046cdee451"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28619.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "122"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/entities/4224a47a-9948-43e8-b04a-4715506db3be"
+        ],
+        "Apim-Request-Id": [
+          "f9c4f2be-6057-49ba-86cc-34a128f74f5c"
+        ],
+        "Request-Id": [
+          "f9c4f2be-6057-49ba-86cc-34a128f74f5c"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/entities/4224a47a-9948-43e8-b04a-4715506db3be"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:56:01 GMT"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "\"4224a47a-9948-43e8-b04a-4715506db3be\"",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/example?enableNestedChildren=true",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQ2YTUxYjczLTY0ZTEtNDdkMS1iMmEzLTJlYjRkODY2NWU3Yy92ZXJzaW9ucy8wLjEvZXhhbXBsZT9lbmFibGVOZXN0ZWRDaGlsZHJlbj10cnVl",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"text\": \"whats the weather in buenos aires, argentina?\",\r\n  \"entityLabels\": [\r\n    {\r\n      \"entityName\": \"Place\",\r\n      \"startCharIndex\": 21,\r\n      \"endCharIndex\": 43,\r\n      \"children\": [\r\n        {\r\n          \"entityName\": \"City\",\r\n          \"startCharIndex\": 21,\r\n          \"endCharIndex\": 32\r\n        },\r\n        {\r\n          \"entityName\": \"Country\",\r\n          \"startCharIndex\": 35,\r\n          \"endCharIndex\": 43\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"intentName\": \"WeatherInPlace\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "507dfc3e5c29448e98fad6046cdee451"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28619.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "495"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "25e089b2-e97c-4d44-bc4b-6e6d1301f5a0"
+        ],
+        "Request-Id": [
+          "25e089b2-e97c-4d44-bc4b-6e6d1301f5a0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:56:01 GMT"
+        ],
+        "Content-Length": [
+          "88"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"ExampleId\": 1103291778,\r\n  \"UtteranceText\": \"whats the weather in buenos aires, argentina?\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/examples?skip=0&take=100&enableNestedChildren=true",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQ2YTUxYjczLTY0ZTEtNDdkMS1iMmEzLTJlYjRkODY2NWU3Yy92ZXJzaW9ucy8wLjEvZXhhbXBsZXM/c2tpcD0wJnRha2U9MTAwJmVuYWJsZU5lc3RlZENoaWxkcmVuPXRydWU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "507dfc3e5c29448e98fad6046cdee451"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28619.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "ffae117b-52db-4898-8289-fb0ab9e2fc0f"
+        ],
+        "Request-Id": [
+          "ffae117b-52db-4898-8289-fb0ab9e2fc0f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:56:02 GMT"
+        ],
+        "Content-Length": [
+          "652"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": 1103291778,\r\n    \"text\": \"whats the weather in buenos aires, argentina?\",\r\n    \"intentLabel\": \"WeatherInPlace\",\r\n    \"tokenizedText\": [\r\n      \"whats\",\r\n      \"the\",\r\n      \"weather\",\r\n      \"in\",\r\n      \"buenos\",\r\n      \"aires\",\r\n      \",\",\r\n      \"argentina\",\r\n      \"?\"\r\n    ],\r\n    \"entityLabels\": [\r\n      {\r\n        \"entityName\": \"Place\",\r\n        \"startTokenIndex\": 4,\r\n        \"endTokenIndex\": 7,\r\n        \"role\": null,\r\n        \"roleId\": null,\r\n        \"children\": [\r\n          {\r\n            \"entityName\": \"City\",\r\n            \"startTokenIndex\": 4,\r\n            \"endTokenIndex\": 5,\r\n            \"role\": null,\r\n            \"roleId\": null,\r\n            \"children\": []\r\n          },\r\n          {\r\n            \"entityName\": \"Country\",\r\n            \"startTokenIndex\": 7,\r\n            \"endTokenIndex\": 7,\r\n            \"role\": null,\r\n            \"roleId\": null,\r\n            \"children\": []\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"intentPredictions\": [\r\n      {\r\n        \"name\": \"None\",\r\n        \"score\": -1.0\r\n      },\r\n      {\r\n        \"name\": \"WeatherInPlace\",\r\n        \"score\": -1.0\r\n      }\r\n    ],\r\n    \"entityPredictions\": [],\r\n    \"multiIntentPredictions\": null\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c?force=false",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQ2YTUxYjczLTY0ZTEtNDdkMS1iMmEzLTJlYjRkODY2NWU3Yz9mb3JjZT1mYWxzZQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "507dfc3e5c29448e98fad6046cdee451"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28619.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "db1bb543-9df3-4478-95d8-bf9bd373ef49"
+        ],
+        "Request-Id": [
+          "db1bb543-9df3-4478-95d8-bf9bd373ef49"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:56:03 GMT"
+        ],
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

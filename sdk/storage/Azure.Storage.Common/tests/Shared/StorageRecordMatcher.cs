@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Xml.Linq;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -83,9 +83,8 @@ namespace Azure.Storage.Test.Shared
         /// Creates a new StorageRecordMatcher to determine whether recordings
         /// have been meaningfully updated.
         /// </summary>
-        /// <param name="sanitizer">The test record sanitizer.</param>
-        public StorageRecordMatcher(RecordedTestSanitizer sanitizer)
-            : base(sanitizer)
+        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11632
+        public StorageRecordMatcher():base(compareBodies: false)
         {
             // Storage specific request headers to ignore
             VolatileHeaders.Add("x-ms-source-if-match");
@@ -93,6 +92,7 @@ namespace Azure.Storage.Test.Shared
             VolatileHeaders.Add("x-ms-source-if-modified-since");
             VolatileHeaders.Add("x-ms-source-if-unmodified-since");
             VolatileHeaders.Add("x-ms-copy-source");
+            VolatileHeaders.Add("x-ms-rename-source");
 
             // Storage specific response headers to ignore
             VolatileResponseHeaders.Add("Server");
@@ -156,7 +156,6 @@ namespace Azure.Storage.Test.Shared
                 // can't analyze them
                 default:
                     return false;
-
             }
         }
 
@@ -330,7 +329,6 @@ namespace Azure.Storage.Test.Shared
                     case JsonValueKind.Null:
                     default:
                         return null;
-
                 }
             }
         }

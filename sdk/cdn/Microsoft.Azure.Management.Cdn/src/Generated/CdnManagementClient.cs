@@ -93,6 +93,11 @@ namespace Microsoft.Azure.Management.Cdn
         public virtual IOriginsOperations Origins { get; private set; }
 
         /// <summary>
+        /// Gets the IOriginGroupsOperations.
+        /// </summary>
+        public virtual IOriginGroupsOperations OriginGroups { get; private set; }
+
+        /// <summary>
         /// Gets the ICustomDomainsOperations.
         /// </summary>
         public virtual ICustomDomainsOperations CustomDomains { get; private set; }
@@ -111,6 +116,16 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets the IEdgeNodesOperations.
         /// </summary>
         public virtual IEdgeNodesOperations EdgeNodes { get; private set; }
+
+        /// <summary>
+        /// Gets the IPoliciesOperations.
+        /// </summary>
+        public virtual IPoliciesOperations Policies { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedRuleSetsOperations.
+        /// </summary>
+        public virtual IManagedRuleSetsOperations ManagedRuleSets { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CdnManagementClient class.
@@ -356,12 +371,15 @@ namespace Microsoft.Azure.Management.Cdn
             Profiles = new ProfilesOperations(this);
             Endpoints = new EndpointsOperations(this);
             Origins = new OriginsOperations(this);
+            OriginGroups = new OriginGroupsOperations(this);
             CustomDomains = new CustomDomainsOperations(this);
             ResourceUsage = new ResourceUsageOperations(this);
             Operations = new Operations(this);
             EdgeNodes = new EdgeNodesOperations(this);
+            Policies = new PoliciesOperations(this);
+            ManagedRuleSets = new ManagedRuleSetsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-04-15";
+            ApiVersion = "2020-04-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

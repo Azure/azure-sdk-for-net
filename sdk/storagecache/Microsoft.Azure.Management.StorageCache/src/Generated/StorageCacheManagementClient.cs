@@ -352,6 +352,8 @@ namespace Microsoft.Azure.Management.StorageCache
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StorageTargetProperties>("targetBaseType"));
+            DeserializationSettings.Converters.Add(new  PolymorphicDeserializeJsonConverter<StorageTargetProperties>("targetBaseType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
         }

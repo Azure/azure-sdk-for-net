@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Secrets.Samples
 {
@@ -16,15 +16,13 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     /// and list deleted secrets in a soft delete-enabled key vault
     /// using the asynchronous methods of the SecretClient.
     /// </summary>
-    [LiveOnly]
-    [NonParallelizable]
     public partial class GetSecrets
     {
         [Test]
         public async Task GetSecretsAsync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
@@ -44,6 +42,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             await foreach (SecretProperties secret in client.GetPropertiesOfSecretsAsync())
             {
+                /*@@*/ if (secret.Managed) continue;
                 // Getting a disabled secret will fail, so skip disabled secrets.
                 if (!secret.Enabled.GetValueOrDefault())
                 {

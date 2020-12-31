@@ -35,16 +35,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="subscriptionId">The subscription ID.</param>
         /// <param name="name">The location name.</param>
         /// <param name="displayName">The display name of the location.</param>
-        /// <param name="latitude">The latitude of the location.</param>
-        /// <param name="longitude">The longitude of the location.</param>
-        public Location(string id = default(string), string subscriptionId = default(string), string name = default(string), string displayName = default(string), string latitude = default(string), string longitude = default(string))
+        /// <param name="regionalDisplayName">The display name of the location
+        /// and its region.</param>
+        /// <param name="metadata">Metadata of the location, such as lat/long,
+        /// paired region, and others.</param>
+        public Location(string id = default(string), string subscriptionId = default(string), string name = default(string), string displayName = default(string), string regionalDisplayName = default(string), LocationMetadata metadata = default(LocationMetadata))
         {
             Id = id;
             SubscriptionId = subscriptionId;
             Name = name;
             DisplayName = displayName;
-            Latitude = latitude;
-            Longitude = longitude;
+            RegionalDisplayName = regionalDisplayName;
+            Metadata = metadata;
             CustomInit();
         }
 
@@ -79,16 +81,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets the latitude of the location.
+        /// Gets the display name of the location and its region.
         /// </summary>
-        [JsonProperty(PropertyName = "latitude")]
-        public string Latitude { get; private set; }
+        [JsonProperty(PropertyName = "regionalDisplayName")]
+        public string RegionalDisplayName { get; private set; }
 
         /// <summary>
-        /// Gets the longitude of the location.
+        /// Gets or sets metadata of the location, such as lat/long, paired
+        /// region, and others.
         /// </summary>
-        [JsonProperty(PropertyName = "longitude")]
-        public string Longitude { get; private set; }
+        [JsonProperty(PropertyName = "metadata")]
+        public LocationMetadata Metadata { get; set; }
 
     }
 }

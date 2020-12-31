@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -25,6 +26,9 @@ namespace Azure.Storage
             var builder = new UriBuilder(uri);
             var path = builder.Path;
             var seperator = (path.Length == 0 || path[path.Length - 1] != '/') ? "/" : "";
+            // In URLs, the percent sign is used to encode special characters, so if the segment
+            // has a percent sign in their URL path, we have to encode it before adding it to the path
+            segment = segment.Replace(Constants.PercentSign, Constants.EncodedPercentSign);
             builder.Path += seperator + segment;
             return builder.Uri;
         }
@@ -116,9 +120,10 @@ namespace Azure.Storage
         /// <param name="uri">The Uri.</param>
         /// <returns>True if using IP Endpoint style.</returns>
         public static bool IsHostIPEndPointStyle(this Uri uri) =>
-           !string.IsNullOrEmpty(uri.Host) &&
+            (!string.IsNullOrEmpty(uri.Host) &&
             uri.Host.IndexOf(".", StringComparison.InvariantCulture) >= 0 &&
-            IPAddress.TryParse(uri.Host, out _);
+            IPAddress.TryParse(uri.Host, out _)) ||
+            Constants.Sas.PathStylePorts.Contains(uri.Port);
 
         /// <summary>
         /// Appends a query parameter to the string builder.

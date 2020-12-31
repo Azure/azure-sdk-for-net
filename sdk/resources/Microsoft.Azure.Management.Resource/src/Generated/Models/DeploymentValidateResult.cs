@@ -45,10 +45,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the deployment validation error.
+        /// Gets the deployment validation error.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorResponse Error { get; set; }
+        public ErrorResponse Error { get; private set; }
 
         /// <summary>
         /// Gets or sets the template deployment properties.

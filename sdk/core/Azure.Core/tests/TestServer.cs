@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
@@ -20,11 +21,19 @@ namespace Azure.Core.Tests
 
         public Uri Address => new Uri(_host.ServerFeatures.Get<IServerAddressesFeature>().Addresses.First());
 
+        public TestServer(Action<HttpContext> app) : this(context => { app(context); return Task.CompletedTask;})
+        {
+        }
+
         public TestServer(RequestDelegate app)
         {
             _app = app;
             _host = new WebHostBuilder()
-                .UseKestrel(options => options.Listen(new IPEndPoint(IPAddress.Loopback, 0)))
+                .UseKestrel(options =>
+                {
+                    options.Limits.MaxRequestBodySize = null;
+                    options.Listen(new IPEndPoint(IPAddress.Loopback, 0));
+                })
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<IStartup>(this);

@@ -57,6 +57,24 @@ namespace Azure.Storage.Sas
         Process = 128,
 
         /// <summary>
+        /// Indicates that reading and writing Tags is permitted.
+        /// Blob service only.
+        /// </summary>
+        Tag = 256,
+
+        /// <summary>
+        /// Indicates that filtering by tag is permitted.
+        /// Blob service only.
+        /// </summary>
+        Filter = 512,
+
+        /// <summary>
+        /// Indicates that deleting a BlobVersion is permitted.
+        /// Blob Service only.
+        /// </summary>
+        DeleteVersion = 1024,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -90,6 +108,10 @@ namespace Azure.Storage
             {
                 sb.Append(Constants.Sas.Permissions.Delete);
             }
+            if ((permissions & AccountSasPermissions.DeleteVersion) == AccountSasPermissions.DeleteVersion)
+            {
+                sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
+            }
             if ((permissions & AccountSasPermissions.List) == AccountSasPermissions.List)
             {
                 sb.Append(Constants.Sas.Permissions.List);
@@ -109,6 +131,14 @@ namespace Azure.Storage
             if ((permissions & AccountSasPermissions.Process) == AccountSasPermissions.Process)
             {
                 sb.Append(Constants.Sas.Permissions.Process);
+            }
+            if ((permissions & AccountSasPermissions.Tag) == AccountSasPermissions.Tag)
+            {
+                sb.Append(Constants.Sas.Permissions.Tag);
+            }
+            if ((permissions & AccountSasPermissions.Filter) == AccountSasPermissions.Filter)
+            {
+                sb.Append(Constants.Sas.Permissions.FilterByTags);
             }
             return sb.ToString();
         }

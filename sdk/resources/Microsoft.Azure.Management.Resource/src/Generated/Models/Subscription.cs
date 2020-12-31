@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,6 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// /subscriptions/00000000-0000-0000-0000-000000000000.</param>
         /// <param name="subscriptionId">The subscription ID.</param>
         /// <param name="displayName">The subscription display name.</param>
+        /// <param name="tenantId">The subscription tenant ID.</param>
         /// <param name="state">The subscription state. Possible values are
         /// Enabled, Warned, PastDue, Disabled, and Deleted. Possible values
         /// include: 'Enabled', 'Warned', 'PastDue', 'Disabled',
@@ -44,14 +47,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// request. Valid values are one or more combinations of Legacy,
         /// RoleBased, Bypassed, Direct and Management. For example, 'Legacy,
         /// RoleBased'.</param>
-        public Subscription(string id = default(string), string subscriptionId = default(string), string displayName = default(string), SubscriptionState? state = default(SubscriptionState?), SubscriptionPolicies subscriptionPolicies = default(SubscriptionPolicies), string authorizationSource = default(string))
+        /// <param name="managedByTenants">An array containing the tenants
+        /// managing the subscription.</param>
+        /// <param name="tags">The tags attached to the subscription.</param>
+        public Subscription(string id = default(string), string subscriptionId = default(string), string displayName = default(string), string tenantId = default(string), SubscriptionState? state = default(SubscriptionState?), SubscriptionPolicies subscriptionPolicies = default(SubscriptionPolicies), string authorizationSource = default(string), IList<ManagedByTenant> managedByTenants = default(IList<ManagedByTenant>), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             SubscriptionId = subscriptionId;
             DisplayName = displayName;
+            TenantId = tenantId;
             State = state;
             SubscriptionPolicies = subscriptionPolicies;
             AuthorizationSource = authorizationSource;
+            ManagedByTenants = managedByTenants;
+            Tags = tags;
             CustomInit();
         }
 
@@ -80,6 +89,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string DisplayName { get; private set; }
 
         /// <summary>
+        /// Gets the subscription tenant ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "tenantId")]
+        public string TenantId { get; private set; }
+
+        /// <summary>
         /// Gets the subscription state. Possible values are Enabled, Warned,
         /// PastDue, Disabled, and Deleted. Possible values include: 'Enabled',
         /// 'Warned', 'PastDue', 'Disabled', 'Deleted'
@@ -100,6 +115,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "authorizationSource")]
         public string AuthorizationSource { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array containing the tenants managing the
+        /// subscription.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedByTenants")]
+        public IList<ManagedByTenant> ManagedByTenants { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags attached to the subscription.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

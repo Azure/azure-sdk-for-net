@@ -34,8 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'RemoteAddr', 'RequestMethod', 'QueryString', 'PostArgs',
         /// 'RequestUri', 'RequestHeaders', 'RequestBody',
         /// 'RequestCookies'</param>
-        /// <param name="selector">Describes field of the matchVariable
-        /// collection.</param>
+        /// <param name="selector">The selector of match variable.</param>
         public MatchVariable(string variableName, string selector = default(string))
         {
             VariableName = variableName;
@@ -57,7 +56,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string VariableName { get; set; }
 
         /// <summary>
-        /// Gets or sets describes field of the matchVariable collection.
+        /// Gets or sets the selector of match variable.
         /// </summary>
         [JsonProperty(PropertyName = "selector")]
         public string Selector { get; set; }

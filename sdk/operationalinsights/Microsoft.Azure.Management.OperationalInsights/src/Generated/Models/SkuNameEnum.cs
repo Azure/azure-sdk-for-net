@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public const string PerNode = "PerNode";
         public const string PerGB2018 = "PerGB2018";
         public const string Standalone = "Standalone";
+        public const string CapacityReservation = "CapacityReservation";
     }
 }

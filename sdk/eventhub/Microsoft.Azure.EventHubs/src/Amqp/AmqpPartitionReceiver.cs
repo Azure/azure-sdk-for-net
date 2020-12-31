@@ -99,12 +99,21 @@ namespace Microsoft.Azure.EventHubs.Amqp
                     {
                         throw AmqpExceptionHelper.ToMessagingContract(amqpException.Error);
                     }
+                    catch (Exception ex)
+                    {
+                        if (AmqpExceptionHelper.TryTranslateToRetriableException(ex, out var retriableEx))
+                        {
+                            throw retriableEx;
+                        }
+
+                        throw;
+                    }
                 }
                 catch (Exception ex)
                 {
                     // Evaluate retry condition?
                     TimeSpan? retryInterval = this.RetryPolicy.GetNextRetryInterval(ex, timeoutHelper.RemainingTime(), ++retryCount);
-                    if (retryInterval != null && !this.EventHubClient.IsClosed)
+                    if (retryInterval != null && !this.IsClosed && !this.EventHubClient.IsClosed)
                     {
                         await Task.Delay(retryInterval.Value).ConfigureAwait(false);
                         shouldRetry = true;
@@ -112,7 +121,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
                     else
                     {
                         // Handle EventHubsTimeoutException explicitly.
-                        // We don't really want to to throw EventHubsTimeoutException on this call.
+                        // We don't really want to throw EventHubsTimeoutException on this call.
                         if (ex is EventHubsTimeoutException)
                         {
                             break;

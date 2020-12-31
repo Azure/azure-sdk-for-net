@@ -35,13 +35,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the RerunTumblingWindowTrigger class.
         /// </summary>
+        /// <param name="parentTrigger">The parent trigger reference.</param>
         /// <param name="requestedStartTime">The start time for the time period
         /// for which restatement is initiated. Only UTC time is currently
         /// supported.</param>
         /// <param name="requestedEndTime">The end time for the time period for
         /// which restatement is initiated. Only UTC time is currently
         /// supported.</param>
-        /// <param name="maxConcurrency">The max number of parallel time
+        /// <param name="rerunConcurrency">The max number of parallel time
         /// windows (ready for execution) for which a rerun is
         /// triggered.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -52,14 +53,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the trigger.</param>
-        /// <param name="parentTrigger">The parent trigger reference.</param>
-        public RerunTumblingWindowTrigger(System.DateTime requestedStartTime, System.DateTime requestedEndTime, int maxConcurrency, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<object> annotations = default(IList<object>), object parentTrigger = default(object))
+        public RerunTumblingWindowTrigger(object parentTrigger, System.DateTime requestedStartTime, System.DateTime requestedEndTime, int rerunConcurrency, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<object> annotations = default(IList<object>))
             : base(additionalProperties, description, runtimeState, annotations)
         {
             ParentTrigger = parentTrigger;
             RequestedStartTime = requestedStartTime;
             RequestedEndTime = requestedEndTime;
-            MaxConcurrency = maxConcurrency;
+            RerunConcurrency = rerunConcurrency;
             CustomInit();
         }
 
@@ -92,8 +92,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the max number of parallel time windows (ready for
         /// execution) for which a rerun is triggered.
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.maxConcurrency")]
-        public int MaxConcurrency { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.rerunConcurrency")]
+        public int RerunConcurrency { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -103,13 +103,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (MaxConcurrency > 50)
+            if (ParentTrigger == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxConcurrency", 50);
+                throw new ValidationException(ValidationRules.CannotBeNull, "ParentTrigger");
             }
-            if (MaxConcurrency < 1)
+            if (RerunConcurrency > 50)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxConcurrency", 1);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RerunConcurrency", 50);
+            }
+            if (RerunConcurrency < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RerunConcurrency", 1);
             }
         }
     }

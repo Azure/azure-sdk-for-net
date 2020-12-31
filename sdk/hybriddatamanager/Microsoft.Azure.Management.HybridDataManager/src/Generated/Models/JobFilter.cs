@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.HybridData.Models
         /// </summary>
         /// <param name="status">The status of the job. Possible values
         /// include: 'None', 'InProgress', 'Succeeded', 'WaitingForAction',
-        /// 'Failed', 'Cancelled', 'Cancelling'</param>
+        /// 'Failed', 'Cancelled', 'Cancelling', 'PartiallySucceeded'</param>
         /// <param name="startTime">The start time of the job.</param>
         public JobFilter(JobStatus status, System.DateTime? startTime = default(System.DateTime?))
         {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.HybridData.Models
         /// <summary>
         /// Gets or sets the status of the job. Possible values include:
         /// 'None', 'InProgress', 'Succeeded', 'WaitingForAction', 'Failed',
-        /// 'Cancelled', 'Cancelling'
+        /// 'Cancelled', 'Cancelling', 'PartiallySucceeded'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public JobStatus Status { get; set; }

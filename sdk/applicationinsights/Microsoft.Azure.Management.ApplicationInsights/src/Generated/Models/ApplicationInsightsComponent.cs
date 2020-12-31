@@ -80,7 +80,21 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// <param name="samplingPercentage">Percentage of the data produced by
         /// the application being monitored that is being sampled for
         /// Application Insights telemetry.</param>
-        public ApplicationInsightsComponent(string location, string kind, string applicationType, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string applicationId = default(string), string appId = default(string), string flowType = default(string), string requestSource = default(string), string instrumentationKey = default(string), System.DateTime? creationDate = default(System.DateTime?), string tenantId = default(string), string hockeyAppId = default(string), string hockeyAppToken = default(string), string provisioningState = default(string), double? samplingPercentage = default(double?))
+        /// <param name="connectionString">Application Insights component
+        /// connection string.</param>
+        /// <param name="retentionInDays">Retention period in days.</param>
+        /// <param name="disableIpMasking">Disable IP masking.</param>
+        /// <param name="immediatePurgeDataOn30Days">Purge data immediately
+        /// after 30 days.</param>
+        /// <param name="privateLinkScopedResources">List of linked private
+        /// link scope resources.</param>
+        /// <param name="publicNetworkAccessForIngestion">The network access
+        /// type for accessing Application Insights ingestion. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        /// <param name="publicNetworkAccessForQuery">The network access type
+        /// for accessing Application Insights query. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        public ApplicationInsightsComponent(string location, string kind, string applicationType, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string applicationId = default(string), string appId = default(string), string flowType = default(string), string requestSource = default(string), string instrumentationKey = default(string), System.DateTime? creationDate = default(System.DateTime?), string tenantId = default(string), string hockeyAppId = default(string), string hockeyAppToken = default(string), string provisioningState = default(string), double? samplingPercentage = default(double?), string connectionString = default(string), int? retentionInDays = default(int?), bool? disableIpMasking = default(bool?), bool? immediatePurgeDataOn30Days = default(bool?), IList<PrivateLinkScopedResource> privateLinkScopedResources = default(IList<PrivateLinkScopedResource>), string publicNetworkAccessForIngestion = default(string), string publicNetworkAccessForQuery = default(string))
             : base(location, id, name, type, tags)
         {
             Kind = kind;
@@ -96,6 +110,13 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
             HockeyAppToken = hockeyAppToken;
             ProvisioningState = provisioningState;
             SamplingPercentage = samplingPercentage;
+            ConnectionString = connectionString;
+            RetentionInDays = retentionInDays;
+            DisableIpMasking = disableIpMasking;
+            ImmediatePurgeDataOn30Days = immediatePurgeDataOn30Days;
+            PrivateLinkScopedResources = privateLinkScopedResources;
+            PublicNetworkAccessForIngestion = publicNetworkAccessForIngestion;
+            PublicNetworkAccessForQuery = publicNetworkAccessForQuery;
             CustomInit();
         }
 
@@ -204,6 +225,50 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.SamplingPercentage")]
         public double? SamplingPercentage { get; set; }
+
+        /// <summary>
+        /// Gets application Insights component connection string.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ConnectionString")]
+        public string ConnectionString { get; private set; }
+
+        /// <summary>
+        /// Gets or sets retention period in days.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.RetentionInDays")]
+        public int? RetentionInDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets disable IP masking.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.DisableIpMasking")]
+        public bool? DisableIpMasking { get; set; }
+
+        /// <summary>
+        /// Gets or sets purge data immediately after 30 days.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ImmediatePurgeDataOn30Days")]
+        public bool? ImmediatePurgeDataOn30Days { get; set; }
+
+        /// <summary>
+        /// Gets list of linked private link scope resources.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.PrivateLinkScopedResources")]
+        public IList<PrivateLinkScopedResource> PrivateLinkScopedResources { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the network access type for accessing Application
+        /// Insights ingestion. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccessForIngestion")]
+        public string PublicNetworkAccessForIngestion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the network access type for accessing Application
+        /// Insights query. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccessForQuery")]
+        public string PublicNetworkAccessForQuery { get; set; }
 
         /// <summary>
         /// Validate the object.

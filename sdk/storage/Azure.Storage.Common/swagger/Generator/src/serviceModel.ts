@@ -928,7 +928,7 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
     const successes = all.filter(s => s.code[0] === '2');
     switch (successes.length) {
         case 0:
-            throw `No succesful responses (in ${location})`;
+            throw `No successful responses (in ${location})`;
             break;
         case 1:
             model = successes[0].model = createResponseType(successes[0], defaultName, `${location}['${successes[0].code}']`);

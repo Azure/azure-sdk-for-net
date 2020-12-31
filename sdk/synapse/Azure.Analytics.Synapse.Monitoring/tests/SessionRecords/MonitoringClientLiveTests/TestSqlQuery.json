@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/monitoring/workloadTypes/sql/querystring?api-version=2019-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7d1c86515332fa44869d34b52953413b-f34c60a2d4d87c4d-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Monitoring/1.0.0-alpha.20201013.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "e481721a8c6e652feb2fe57122eb3d13",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 13 Oct 2020 12:02:03 GMT",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "e481721a8c6e652feb2fe57122eb3d13",
+        "x-ms-request-id": "c8038a9f-53a8-4dac-8748-463344cbae01"
+      },
+      "ResponseBody": {
+        "query": "select * from( SELECT COUNT(*) OVER () AS total_count, r.request_id,r.status, r.submit_time, r.command, r.end_time, r.start_time, r.importance, r.classifier_name, r.group_name, r.total_elapsed_time, s.login_name, s.session_id, Row_number() over (  ORDER BY r.submit_time desc) as rownum FROM sys.dm_pdw_exec_requests r INNER JOIN sys.dm_pdw_exec_sessions s ON r.session_Id = s.session_Id where  s.session_id not in (select distinct session_id from sys.dm_pdw_exec_requests  where command like\u0027%@@Azure.Synapse.Monitoring.SQLQuerylist%\u0027))tbl where rownum between  0 and 100-- @@Azure.Synapse.Monitoring.SQLQuerylist"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapseworkspace.dev.azuresynapse.net",
+    "RandomSeed": "1984850228"
+  }
+}

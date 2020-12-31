@@ -296,7 +296,7 @@ namespace ResourceGroups.Tests
             'contentVersion': '1.0.0.0',
             'parameters': {
                 'roleDefName': {
-                    'value': 'myCustomRole'
+                   'value': 'myCustomRole'
                 }
             }
         }")]
@@ -393,6 +393,362 @@ namespace ResourceGroups.Tests
 
                 Assert.NotNull(change.After);
                 Assert.Equal("myResourceGroup", JToken.FromObject(change.After)["name"]);
+            }
+        }
+
+        [Fact]
+        public void WhatIfAtManagementGroupScope_SendingRequest_SetsHeaders()
+        {
+            // Arrange.
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var deploymentWhatIf = new ScopedDeploymentWhatIf("westus", new DeploymentWhatIfProperties());
+
+            using (ResourceManagementClient client = CreateResourceManagementClient(handler))
+            {
+                // Act.
+                client.Deployments.WhatIfAtManagementGroupScope("test-mg", "test-mg-deploy", deploymentWhatIf);
+            }
+
+            // Assert.
+            Assert.Equal("application/json; charset=utf-8", handler.ContentHeaders.GetValues("Content-Type").First());
+            Assert.Equal(HttpMethod.Post, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+        }
+
+        [Fact]
+        public void WhatIfAtManagementGroupScope_SendingRequest_SerializesPayload()
+        {
+            // Arrange.
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var deploymentWhatIf = new ScopedDeploymentWhatIf
+            {
+                Location = "westus",
+                Properties = new DeploymentWhatIfProperties
+                {
+                    Mode = DeploymentMode.Complete,
+                    TemplateLink = new TemplateLink
+                    {
+                        Uri = "https://example.com",
+                        ContentVersion = "1.0.0.0"
+                    },
+                    ParametersLink = new ParametersLink
+                    {
+                        Uri = "https://example.com/parameters",
+                        ContentVersion = "1.0.0.0"
+                    },
+                    Template = JObject.Parse("{ '$schema': 'fake' }"),
+                    Parameters = new Dictionary<string, object>
+                    {
+                        ["param1"] = "foo",
+                        ["param2"] = new Dictionary<string, object>
+                        {
+                            ["param2_1"] = 123,
+                            ["param2_2"] = "bar"
+                        }
+                    }
+                }
+            };
+
+            using (ResourceManagementClient client = CreateResourceManagementClient(handler))
+            {
+                // Act.
+                client.Deployments.WhatIfAtManagementGroupScope("test-mg", "test-mg-deploy", deploymentWhatIf);
+            }
+
+            // Assert.
+            JObject resultJson = JObject.Parse(handler.Request);
+            Assert.Equal("westus", resultJson["location"]);
+            Assert.Equal("Complete", resultJson["properties"]["mode"]);
+            Assert.Equal("https://example.com", resultJson["properties"]["templateLink"]["uri"]);
+            Assert.Equal("1.0.0.0", resultJson["properties"]["templateLink"]["contentVersion"]);
+            Assert.Equal("https://example.com/parameters", resultJson["properties"]["parametersLink"]["uri"]);
+            Assert.Equal("1.0.0.0", resultJson["properties"]["parametersLink"]["contentVersion"]);
+            Assert.Equal(JObject.Parse("{ '$schema': 'fake' }"), resultJson["properties"]["template"]);
+            Assert.Equal("foo", resultJson["properties"]["parameters"]["param1"]);
+            Assert.Equal(123, resultJson["properties"]["parameters"]["param2"]["param2_1"]);
+            Assert.Equal("bar", resultJson["properties"]["parameters"]["param2"]["param2_2"]);
+        }
+
+        [Theory]
+        [InlineData(@"{
+            '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#',
+            'contentVersion': '1.0.0.0',
+            'parameters': {
+                'roleDefName': {
+                   'value': 'myCustomRole'
+                }
+            }
+        }")]
+        [InlineData(@"{
+            'roleDefName': {
+                'value': 'myCustomRole'
+            }
+        }")]
+        public void WhatIfAtManagementGroupScope_SendingRequestWithStrings_SerializesPayload(string parameterContent)
+        {
+            // Arrange.
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            string templateContent = @"{
+                '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#',
+                'contentVersion': '1.0.0.0',
+                'parameters': {
+                    'roleDefName': {
+		                'type': 'string'
+	                }
+                },
+                'resources': [
+                ],
+                'outputs': {}
+            }";
+
+        var deploymentWhatIf = new ScopedDeploymentWhatIf
+            {
+                Location = "westus",
+                Properties = new DeploymentWhatIfProperties
+                {
+                    Mode = DeploymentMode.Incremental,
+                    Template = templateContent,
+                    Parameters = parameterContent
+                }
+            };
+
+            using (ResourceManagementClient client = CreateResourceManagementClient(handler))
+            {
+                // Act.
+                client.Deployments.WhatIfAtManagementGroupScope("test-mg", "test-mg-deploy", deploymentWhatIf);
+            }
+
+            // Assert.
+            JObject resultJson = JObject.Parse(handler.Request);
+            Assert.Equal("Incremental", resultJson["properties"]["mode"]);
+            Assert.Equal("1.0.0.0", resultJson["properties"]["template"]["contentVersion"]);
+            Assert.Equal("myCustomRole", resultJson["properties"]["parameters"]["roleDefName"]["value"]);
+        }
+
+        [Fact]
+        public void WhatIfAtManagementGroupScope_ReceivingResponse_DeserializesResult()
+        {
+            // Arrange.
+            var deploymentWhatIf = new ScopedDeploymentWhatIf("westus", new DeploymentWhatIfProperties());
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                    'status': 'Succeeded',
+                    'properties': {
+                        'changes': [
+                            {
+                                'resourceId': '/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyDefinitions/testDef',
+                                'changeType': 'Create',
+                                'after': {
+                                    'apiVersion': '2018-03-01',
+                                    'id': '/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyDefinitions/testDef',
+                                    'type': 'Microsoft.Authorization/policyDefinitions',
+                                    'name': 'testDef'
+                                }
+                            }
+                        ]
+                    }
+                }")
+            };
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (ResourceManagementClient client = CreateResourceManagementClient(handler))
+            {
+                // Act.
+                WhatIfOperationResult result =
+                    client.Deployments.WhatIfAtManagementGroupScope("test-mg", "test-mg-deploy", deploymentWhatIf);
+
+                // Assert.
+                Assert.Equal("Succeeded", result.Status);
+                Assert.NotNull(result.Changes);
+                Assert.Equal(1, result.Changes.Count);
+
+                WhatIfChange change = result.Changes[0];
+                Assert.Equal(ChangeType.Create, change.ChangeType);
+
+                Assert.Null(change.Before);
+                Assert.Null(change.Delta);
+
+                Assert.NotNull(change.After);
+                Assert.Equal("testDef", JToken.FromObject(change.After)["name"]);
+            }
+        }
+
+        [Fact]
+        public void WhatIfAtTenantScope_SendingRequest_SetsHeaders()
+        {
+            // Arrange.
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var deploymentWhatIf = new ScopedDeploymentWhatIf("westus", new DeploymentWhatIfProperties());
+
+            using (ResourceManagementClient client = CreateResourceManagementClient(handler))
+            {
+                // Act.
+                client.Deployments.WhatIfAtTenantScope("test-tenant-deploy", deploymentWhatIf);
+            }
+
+            // Assert.
+            Assert.Equal("application/json; charset=utf-8", handler.ContentHeaders.GetValues("Content-Type").First());
+            Assert.Equal(HttpMethod.Post, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+        }
+
+        [Fact]
+        public void WhatIfAtTenantScope_SendingRequest_SerializesPayload()
+        {
+            // Arrange.
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var deploymentWhatIf = new ScopedDeploymentWhatIf
+            {
+                Location = "westus",
+                Properties = new DeploymentWhatIfProperties
+                {
+                    Mode = DeploymentMode.Complete,
+                    TemplateLink = new TemplateLink
+                    {
+                        Uri = "https://example.com",
+                        ContentVersion = "1.0.0.0"
+                    },
+                    ParametersLink = new ParametersLink
+                    {
+                        Uri = "https://example.com/parameters",
+                        ContentVersion = "1.0.0.0"
+                    },
+                    Template = JObject.Parse("{ '$schema': 'fake' }"),
+                    Parameters = new Dictionary<string, object>
+                    {
+                        ["param1"] = "foo",
+                        ["param2"] = new Dictionary<string, object>
+                        {
+                            ["param2_1"] = 123,
+                            ["param2_2"] = "bar"
+                        }
+                    }
+                }
+            };
+
+            using (ResourceManagementClient client = CreateResourceManagementClient(handler))
+            {
+                // Act.
+                client.Deployments.WhatIfAtTenantScope("test-tenant-deploy", deploymentWhatIf);
+            }
+
+            // Assert.
+            JObject resultJson = JObject.Parse(handler.Request);
+            Assert.Equal("westus", resultJson["location"]);
+            Assert.Equal("Complete", resultJson["properties"]["mode"]);
+            Assert.Equal("https://example.com", resultJson["properties"]["templateLink"]["uri"]);
+            Assert.Equal("1.0.0.0", resultJson["properties"]["templateLink"]["contentVersion"]);
+            Assert.Equal("https://example.com/parameters", resultJson["properties"]["parametersLink"]["uri"]);
+            Assert.Equal("1.0.0.0", resultJson["properties"]["parametersLink"]["contentVersion"]);
+            Assert.Equal(JObject.Parse("{ '$schema': 'fake' }"), resultJson["properties"]["template"]);
+            Assert.Equal("foo", resultJson["properties"]["parameters"]["param1"]);
+            Assert.Equal(123, resultJson["properties"]["parameters"]["param2"]["param2_1"]);
+            Assert.Equal("bar", resultJson["properties"]["parameters"]["param2"]["param2_2"]);
+        }
+
+        [Theory]
+        [InlineData(@"{
+            '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#',
+            'contentVersion': '1.0.0.0',
+            'parameters': {
+                'roleDefName': {
+                   'value': 'myCustomRole'
+                }
+            }
+        }")]
+        [InlineData(@"{
+            'roleDefName': {
+                'value': 'myCustomRole'
+            }
+        }")]
+        public void WhatIfAtTenantScope_SendingRequestWithStrings_SerializesPayload(string parameterContent)
+        {
+            // Arrange.
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            string templateContent = @"{
+                '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#',
+                'contentVersion': '1.0.0.0',
+                'parameters': {
+                    'roleDefName': {
+                  'type': 'string'
+                 }
+                },
+                'resources': [
+                ],
+                'outputs': {}
+            }";
+
+            var deploymentWhatIf = new ScopedDeploymentWhatIf
+            {
+                Location = "westus",
+                Properties = new DeploymentWhatIfProperties
+                {
+                    Mode = DeploymentMode.Incremental,
+                    Template = templateContent,
+                    Parameters = parameterContent
+                }
+            };
+
+            using (ResourceManagementClient client = CreateResourceManagementClient(handler))
+            {
+                // Act.
+                client.Deployments.WhatIfAtTenantScope("test-tenant-deploy", deploymentWhatIf);
+            }
+
+            // Assert.
+            JObject resultJson = JObject.Parse(handler.Request);
+            Assert.Equal("Incremental", resultJson["properties"]["mode"]);
+            Assert.Equal("1.0.0.0", resultJson["properties"]["template"]["contentVersion"]);
+            Assert.Equal("myCustomRole", resultJson["properties"]["parameters"]["roleDefName"]["value"]);
+        }
+
+        [Fact]
+        public void WhatIfAtTenantScope_ReceivingResponse_DeserializesResult()
+        {
+            // Arrange.
+            var deploymentWhatIf = new ScopedDeploymentWhatIf("westus", new DeploymentWhatIfProperties());
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                    'status': 'Succeeded',
+                    'properties': {
+                        'changes': [
+                            {
+                                'resourceId': '/providers/Microsoft.Management/managementGroups/myManagementGroup',
+                                'changeType': 'Create',
+                                'after': {
+                                    'apiVersion': '2018-03-01',
+                                    'id': '/providers/Microsoft.Management/managementGroups/myManagementGroup',
+                                    'type': 'Microsoft.Management/managementGroup',
+                                    'name': 'myManagementGroup'
+                                }
+                            }
+                        ]
+                    }
+                }")
+            };
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (ResourceManagementClient client = CreateResourceManagementClient(handler))
+            {
+                // Act.
+                WhatIfOperationResult result =
+                    client.Deployments.WhatIfAtTenantScope("test-tenent-deploy", deploymentWhatIf);
+
+                // Assert.
+                Assert.Equal("Succeeded", result.Status);
+                Assert.NotNull(result.Changes);
+                Assert.Equal(1, result.Changes.Count);
+
+                WhatIfChange change = result.Changes[0];
+                Assert.Equal(ChangeType.Create, change.ChangeType);
+
+                Assert.Null(change.Before);
+                Assert.Null(change.Delta);
+
+                Assert.NotNull(change.After);
+                Assert.Equal("myManagementGroup", JToken.FromObject(change.After)["name"]);
             }
         }
 

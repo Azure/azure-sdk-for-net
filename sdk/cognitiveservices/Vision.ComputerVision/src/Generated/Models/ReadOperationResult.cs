@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,13 +30,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Initializes a new instance of the ReadOperationResult class.
         /// </summary>
         /// <param name="status">Status of the read operation. Possible values
-        /// include: 'NotStarted', 'Running', 'Failed', 'Succeeded'</param>
-        /// <param name="recognitionResults">An array of text recognition
-        /// result of the read operation.</param>
-        public ReadOperationResult(TextOperationStatusCodes status = default(TextOperationStatusCodes), IList<TextRecognitionResult> recognitionResults = default(IList<TextRecognitionResult>))
+        /// include: 'notStarted', 'running', 'failed', 'succeeded'</param>
+        /// <param name="createdDateTime">Get UTC date time the batch operation
+        /// was submitted.</param>
+        /// <param name="lastUpdatedDateTime">Get last updated UTC date time of
+        /// this batch operation.</param>
+        /// <param name="analyzeResult">Analyze batch operation result.</param>
+        public ReadOperationResult(OperationStatusCodes status = default(OperationStatusCodes), string createdDateTime = default(string), string lastUpdatedDateTime = default(string), AnalyzeResults analyzeResult = default(AnalyzeResults))
         {
             Status = status;
-            RecognitionResults = recognitionResults;
+            CreatedDateTime = createdDateTime;
+            LastUpdatedDateTime = lastUpdatedDateTime;
+            AnalyzeResult = analyzeResult;
             CustomInit();
         }
 
@@ -49,17 +52,42 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 
         /// <summary>
         /// Gets or sets status of the read operation. Possible values include:
-        /// 'NotStarted', 'Running', 'Failed', 'Succeeded'
+        /// 'notStarted', 'running', 'failed', 'succeeded'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public TextOperationStatusCodes Status { get; set; }
+        public OperationStatusCodes Status { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of text recognition result of the read
+        /// Gets or sets get UTC date time the batch operation was submitted.
+        /// </summary>
+        [JsonProperty(PropertyName = "createdDateTime")]
+        public string CreatedDateTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets get last updated UTC date time of this batch
         /// operation.
         /// </summary>
-        [JsonProperty(PropertyName = "recognitionResults")]
-        public IList<TextRecognitionResult> RecognitionResults { get; set; }
+        [JsonProperty(PropertyName = "lastUpdatedDateTime")]
+        public string LastUpdatedDateTime { get; set; }
 
+        /// <summary>
+        /// Gets or sets analyze batch operation result.
+        /// </summary>
+        [JsonProperty(PropertyName = "analyzeResult")]
+        public AnalyzeResults AnalyzeResult { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (AnalyzeResult != null)
+            {
+                AnalyzeResult.Validate();
+            }
+        }
     }
 }

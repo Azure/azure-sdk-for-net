@@ -10,13 +10,17 @@
 
 namespace Microsoft.Azure.Management.Attestation.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Client supplied parameters passed to attestation service.
+    /// Parameters for creating an attestation service instance
     /// </summary>
-    public partial class AttestationServiceCreationParams
+    public partial class AttestationServiceCreationParams : IResource
     {
         /// <summary>
         /// Initializes a new instance of the AttestationServiceCreationParams
@@ -31,15 +35,17 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// Initializes a new instance of the AttestationServiceCreationParams
         /// class.
         /// </summary>
-        /// <param name="attestationPolicy">Name of attestation policy.</param>
-        /// <param name="policySigningCertificates">JSON Web Key Set defining a
-        /// set of X.509 Certificates that will represent the parent
-        /// certificate for the signing certificate used for policy
-        /// operations</param>
-        public AttestationServiceCreationParams(string attestationPolicy = default(string), JSONWebKeySet policySigningCertificates = default(JSONWebKeySet))
+        /// <param name="location">The supported Azure location where the
+        /// attestation service instance should be created.</param>
+        /// <param name="properties">Properties of the attestation service
+        /// instance</param>
+        /// <param name="tags">The tags that will be assigned to the
+        /// attestation service instance.</param>
+        public AttestationServiceCreationParams(string location, AttestationServiceCreationSpecificParams properties, IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            AttestationPolicy = attestationPolicy;
-            PolicySigningCertificates = policySigningCertificates;
+            Location = location;
+            Tags = tags;
+            Properties = properties;
             CustomInit();
         }
 
@@ -49,18 +55,41 @@ namespace Microsoft.Azure.Management.Attestation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of attestation policy.
+        /// Gets or sets the supported Azure location where the attestation
+        /// service instance should be created.
         /// </summary>
-        [JsonProperty(PropertyName = "attestationPolicy")]
-        public string AttestationPolicy { get; set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets JSON Web Key Set defining a set of X.509 Certificates
-        /// that will represent the parent certificate for the signing
-        /// certificate used for policy operations
+        /// Gets or sets the tags that will be assigned to the attestation
+        /// service instance.
         /// </summary>
-        [JsonProperty(PropertyName = "policySigningCertificates")]
-        public JSONWebKeySet PolicySigningCertificates { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// Gets or sets properties of the attestation service instance
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public AttestationServiceCreationSpecificParams Properties { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (Properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+        }
     }
 }

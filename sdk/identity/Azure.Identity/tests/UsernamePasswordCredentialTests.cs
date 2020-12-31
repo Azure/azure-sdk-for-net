@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 using System;
@@ -16,7 +16,6 @@ namespace Azure.Identity.Tests
         {
         }
 
-
         [Test]
         public async Task VerifyMsalClientExceptionAsync()
         {
@@ -26,8 +25,10 @@ namespace Azure.Identity.Tests
 
             var username = Guid.NewGuid().ToString();
             var password = Guid.NewGuid().ToString();
+            var clientId = Guid.NewGuid().ToString();
+            var tenantId = Guid.NewGuid().ToString();
 
-            var credential = InstrumentClient(new UsernamePasswordCredential(username, password, CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new UsernamePasswordCredential(username, password, clientId, tenantId, default, default, mockMsalClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -39,6 +40,5 @@ namespace Azure.Identity.Tests
 
             await Task.CompletedTask;
         }
-
     }
 }

@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="virtualNetworkTaps">The reference to Virtual Network
         /// Taps.</param>
         /// <param name="applicationGatewayBackendAddressPools">The reference
-        /// of ApplicationGatewayBackendAddressPool resource.</param>
-        /// <param name="loadBalancerBackendAddressPools">The reference of
+        /// to ApplicationGatewayBackendAddressPool resource.</param>
+        /// <param name="loadBalancerBackendAddressPools">The reference to
         /// LoadBalancerBackendAddressPool resource.</param>
         /// <param name="loadBalancerInboundNatRules">A list of references of
         /// LoadBalancerInboundNatRules.</param>
@@ -103,14 +103,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<VirtualNetworkTap> VirtualNetworkTaps { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of ApplicationGatewayBackendAddressPool
+        /// Gets or sets the reference to ApplicationGatewayBackendAddressPool
         /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
         public IList<ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of LoadBalancerBackendAddressPool
+        /// Gets or sets the reference to LoadBalancerBackendAddressPool
         /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
@@ -196,5 +196,38 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (VirtualNetworkTaps != null)
+            {
+                foreach (var element in VirtualNetworkTaps)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (LoadBalancerInboundNatRules != null)
+            {
+                foreach (var element1 in LoadBalancerInboundNatRules)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+            if (PublicIPAddress != null)
+            {
+                PublicIPAddress.Validate();
+            }
+        }
     }
 }

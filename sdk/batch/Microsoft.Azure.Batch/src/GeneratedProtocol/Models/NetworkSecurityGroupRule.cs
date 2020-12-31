@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// example, rules could be specified with order numbers of 150, 250,
         /// and 350. The rule with the order number of 150 takes precedence
         /// over the rule that has an order of 250. Allowed priorities are 150
-        /// to 3500. If any reserved or duplicate values are provided the
+        /// to 4096. If any reserved or duplicate values are provided the
         /// request fails with HTTP status code 400.
         /// </remarks>
         [JsonProperty(PropertyName = "priority")]

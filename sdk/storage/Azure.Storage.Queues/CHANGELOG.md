@@ -1,5 +1,86 @@
 # Release History
 
+## 12.6.0-beta.2 (Unreleased)
+
+
+## 12.6.0-beta.1 (2020-12-07)
+- Fixed bug where QueueServiceClient.GetQueueClient() and QueueClient.WithClientSideEncryptionOptions() created clients that could not generate a SAS from clients that could generate a SAS.
+
+## 12.5.0 (2020-11-10)
+- Includes all features from 12.5.0-preview.1
+- Fixed a bug where QueueServiceClient.SetProperties and QueueService.GetProperties where the creating/parsing XML Service Queue Properties CorsRules incorrectly causing Invalid XML Errors
+- Fixed bug where Queues SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
+- Added CanGenerateSasUri property, GenerateSasUri() to QueueClient.
+- Added CanGenerateAccountSasUri property, GenerateAccountSasUri() to QueueServiceClient.
+
+### Support for binary data, custom shapes and Base64 encoding
+This release adds a convinient way to send and receive binary data and custom shapes as a payload.
+Additionally, support for Base64 encoding in HTTP requests and reponses has been added that makes interoperability with V11 and prior Storage SDK easier to implement.
+
+The `QueueClient.SendMessage` and `QueueClient.SendMessageAsync` consume `System.BinaryData` in addition to `string`.
+`QueueMessage` and `PeekedMessage` expose new property `Body` of `System.BinaryData` type to access message payload and should be used instead of `MessageText`.
+
+See [System.BinaryData](https://github.com/Azure/azure-sdk-for-net/blob/System.Memory.Data_1.0.0/sdk/core/System.Memory.Data/README.md) for more information about handling `string`, binary data and custom shapes.
+
+#### Receiving message as string
+Before:
+```C#
+QueueMessage message = await queueClient.ReceiveMessage();
+string messageText = message.MessageText;
+```
+
+After:
+```C#
+QueueMessage message = await queueClient.ReceiveMessage();
+BinaryData body = message.Body;
+string messageText = body.ToString();
+```
+
+## 12.5.0-preview.1 (2020-09-30)
+- This preview contains bug fixes to improve quality.
+
+## 12.4.2 (2020-08-31)
+- Fixed a bug where QueueClient.UpdateMessage and QueueClient.UpdateMessageAsync were erasing message content if only visiblityTimeout was provided.
+
+## 12.4.1 (2020-08-18)
+- Fixed bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 12.4.0 (2020-08-13)
+- Includes all features from 12.4.0-preview.1 through 12.4.0-preview.6.
+- This preview contains bug fixes to improve quality.
+
+## 12.4.0-preview.6 (2020-07-27)
+- Updated QueueSasBuilder to correctly order raw string permissions and make the permissions lowercase.
+
+## 12.4.0-preview.5 (2020-07-03)
+- Fixed a bug in queue client-side encryption deserialization.
+- This release contains bug fixes to improve quality.
+
+## 12.4.0-preview.4 (2020-06)
+- This preview contains bug fixes to improve quality.
+
+## 12.4.0-preview.1 (2020-06)
+- This preview adds support for client-side encryption, compatible with data uploaded in previous major versions.
+
+## 12.3.2 (2020-06)
+- This release contains bug fixes to improve quality.
+
+## 12.3.1 (2020-06)
+- This release contains bug fixes to improve quality.
+
+## 12.3.0 (2020-03)
+- Added Exists(), CreateIfNotExists() and DeleteIfNotExists() to QueueClient.
+
+## 12.2.0 (2020-02)
+- Added support for service version 2019-07-07.
+- Fixed issue where SAS didn't work with signed identifiers.
+- Sanitized header values in exceptions.
+
+## 12.1.1 (2020-01)
+ - Fixed issue where SAS content headers were not URL encoded when using QueueSasBuilder.
+ - Fixed bug where using SAS connection string from portal would throw an exception if it included
+   table endpoint.
+
 ## 12.1.0
 - Added check to enforce TokenCredential is used only over HTTPS
 - Support using SAS token from connection string

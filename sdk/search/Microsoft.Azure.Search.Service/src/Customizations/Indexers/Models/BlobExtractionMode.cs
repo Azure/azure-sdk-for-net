@@ -20,19 +20,19 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Specifies that only the standard blob properties and user-specified metadata will be indexed. 
-        /// <see href="https://docs.microsoft.com/azure/storage/storage-properties-metadata" />
+        /// For more information, see <see href="https://docs.microsoft.com/azure/storage/blobs/storage-blob-container-properties-metadata">Manage container properties and metadata with .NET</see>.
         /// </summary>
         public static readonly BlobExtractionMode StorageMetadata = new BlobExtractionMode("storageMetadata");
 
         /// <summary>
         /// Specifies that storage metadata and the content-type specific metadata extracted from the blob content will be indexed.
-        /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage#content-type-specific-metadata-properties" /> 
+        /// For more information, see <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage#content-type-specific-metadata-properties">Content type-specific metadata properties</see>.
         /// </summary>
         public static readonly BlobExtractionMode AllMetadata = new BlobExtractionMode("allMetadata");
 
         /// <summary>
         /// Specifies that all metadata and textual content extracted from the blob will be indexed. This is the default value.  
-        /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage#document-extraction-process"/>
+        /// For more information, see <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage">How to index documents in Azure Blob Storage with Azure Cognitive Search</see>.
         /// </summary>
         public static readonly BlobExtractionMode ContentAndMetadata = new BlobExtractionMode("contentAndMetadata");
 

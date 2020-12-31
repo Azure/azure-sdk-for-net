@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Details about a reseller.
+    /// Details of the reseller.
     /// </summary>
     public partial class Reseller
     {
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the Reseller class.
         /// </summary>
-        /// <param name="resellerId">The reseller id.</param>
-        /// <param name="description">A description of the reseller.</param>
+        /// <param name="resellerId">The MPN ID of the reseller.</param>
+        /// <param name="description">The name of the reseller.</param>
         public Reseller(string resellerId = default(string), string description = default(string))
         {
             ResellerId = resellerId;
@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the reseller id.
+        /// Gets the MPN ID of the reseller.
         /// </summary>
         [JsonProperty(PropertyName = "resellerId")]
         public string ResellerId { get; private set; }
 
         /// <summary>
-        /// Gets a description of the reseller.
+        /// Gets the name of the reseller.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; private set; }

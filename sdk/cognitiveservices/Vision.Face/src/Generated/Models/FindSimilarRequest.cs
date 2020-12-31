@@ -132,35 +132,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (FaceListId != null)
-            {
-                if (FaceListId.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "FaceListId", 64);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(FaceListId, "^[a-z0-9-_]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "FaceListId", "^[a-z0-9-_]+$");
-                }
-            }
-            if (LargeFaceListId != null)
-            {
-                if (LargeFaceListId.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "LargeFaceListId", 64);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(LargeFaceListId, "^[a-z0-9-_]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "LargeFaceListId", "^[a-z0-9-_]+$");
-                }
-            }
-            if (FaceIds != null)
-            {
-                if (FaceIds.Count > 1000)
-                {
-                    throw new ValidationException(ValidationRules.MaxItems, "FaceIds", 1000);
-                }
-            }
             if (MaxNumOfCandidatesReturned > 1000)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxNumOfCandidatesReturned", 1000);

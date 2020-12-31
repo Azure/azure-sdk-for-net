@@ -44,15 +44,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         partial void CustomInit();
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

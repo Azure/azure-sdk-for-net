@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about the service bus destination for an event subscription
+    /// Information about the service bus destination for an event
+    /// subscription.
     /// </summary>
     [Newtonsoft.Json.JsonObject("ServiceBusQueue")]
     [Rest.Serialization.JsonTransformation]

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -77,28 +76,5 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "apiVersionSet")]
         public ApiVersionSetContractDetails ApiVersionSet { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ApiVersionName != null)
-            {
-                if (ApiVersionName.Length > 100)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ApiVersionName", 100);
-                }
-            }
-            if (ApiRevisionDescription != null)
-            {
-                if (ApiRevisionDescription.Length > 256)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ApiRevisionDescription", 256);
-                }
-            }
-        }
     }
 }

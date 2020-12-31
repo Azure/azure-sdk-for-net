@@ -24,7 +24,7 @@
 
         /// <summary>
         /// Gets or sets the HTTP status code for the request.
-        /// In cases where an HTTP response was never recieved (for example on client side timeout) this property is null.
+        /// In cases where an HTTP response was never received (for example on client side timeout) this property is null.
         /// </summary>
         public HttpStatusCode? HttpStatusCode { get; protected internal set; }
 

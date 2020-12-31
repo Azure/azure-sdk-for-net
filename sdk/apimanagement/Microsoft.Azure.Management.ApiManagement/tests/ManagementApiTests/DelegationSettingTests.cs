@@ -15,6 +15,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class DelegationSettingTests : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CreateUpdateReset()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -60,8 +61,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                     // update the delegation settings
                     portalDelegationSettings.Subscriptions.Enabled = false;
                     portalDelegationSettings.UserRegistration.Enabled = false;
-                    portalDelegationSettings.Url = null;
-                    portalDelegationSettings.ValidationKey = null;
 
                     await testBase.client.DelegationSettings.UpdateAsync(
                         testBase.rgName,

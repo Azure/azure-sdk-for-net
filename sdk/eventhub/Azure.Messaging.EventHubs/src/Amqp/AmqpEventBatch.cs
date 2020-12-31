@@ -28,11 +28,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The maximum number of bytes that a message may be to be considered small.</summary>
         private const byte MaximumBytesSmallMessage = 255;
 
+        /// <summary>The size of the batch, in bytes, to reserve for the AMQP message overhead.</summary>
+        private readonly long ReservedSize;
+
         /// <summary>A flag that indicates whether or not the instance has been disposed.</summary>
-        private bool _disposed = false;
+        private volatile bool _disposed;
 
         /// <summary>The size of the batch, in bytes, as it will be sent via the AMQP transport.</summary>
-        private long _sizeBytes = 0;
+        private long _sizeBytes;
 
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
@@ -49,10 +52,16 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override long SizeInBytes => _sizeBytes;
 
         /// <summary>
+        ///   The flags specifying the set of special transport features that have been opted-into.
+        /// </summary>
+        ///
+        public override TransportProducerFeatures ActiveFeatures { get; }
+
+        /// <summary>
         ///   The count of events contained in the batch.
         /// </summary>
         ///
-        public override int Count => BatchMessages.Count;
+        public override int Count => BatchEvents.Count;
 
         /// <summary>
         ///   The converter to use for translating <see cref="EventData" /> into the corresponding AMQP message.
@@ -67,10 +76,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         private CreateBatchOptions Options { get; }
 
         /// <summary>
-        ///   The set of messages that have been added to the batch.
+        ///   The set of events that have been added to the batch.
         /// </summary>
         ///
-        private List<AmqpMessage> BatchMessages { get; } = new List<AmqpMessage>();
+        private List<EventData> BatchEvents { get; } = new List<EventData>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpEventBatch"/> class.
@@ -78,9 +87,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="messageConverter">The converter to use for translating <see cref="EventData" /> into the corresponding AMQP message.</param>
         /// <param name="options">The set of options to apply to the batch.</param>
+        /// <param name="activeFeatures">The flags specifying the set of special transport features have been opted-into.</param>
         ///
         public AmqpEventBatch(AmqpMessageConverter messageConverter,
-                              CreateBatchOptions options)
+                              CreateBatchOptions options,
+                              TransportProducerFeatures activeFeatures)
         {
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(options, nameof(options));
@@ -89,11 +100,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             MessageConverter = messageConverter;
             Options = options;
             MaximumSizeInBytes = options.MaximumSizeInBytes.Value;
+            ActiveFeatures = activeFeatures;
 
             // Initialize the size by reserving space for the batch envelope.
 
             using AmqpMessage envelope = messageConverter.CreateBatchFromEvents(Enumerable.Empty<EventData>(), options.PartitionKey);
-            _sizeBytes = envelope.SerializedMessageSize;
+            ReservedSize = envelope.SerializedMessageSize;
+            _sizeBytes = ReservedSize;
         }
 
         /// <summary>
@@ -110,10 +123,20 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotDisposed(_disposed, nameof(EventDataBatch));
 
-            AmqpMessage eventMessage = MessageConverter.CreateMessageFromEvent(eventData, Options.PartitionKey);
+            // Reserve space for producer-owned fields that correspond to special
+            // features, if enabled.
+
+            if ((ActiveFeatures & TransportProducerFeatures.IdempotentPublishing) != 0)
+            {
+                eventData.PendingPublishSequenceNumber = int.MaxValue;
+                eventData.PendingProducerGroupId = long.MaxValue;
+                eventData.PendingProducerOwnerLevel = short.MaxValue;
+            }
 
             try
             {
+                using var eventMessage = MessageConverter.CreateMessageFromEvent(eventData, Options.PartitionKey);
+
                 // Calculate the size for the event, based on the AMQP message size and accounting for a
                 // bit of reserved overhead size.
 
@@ -125,20 +148,29 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (size > MaximumSizeInBytes)
                 {
-                    eventMessage.Dispose();
                     return false;
                 }
 
                 _sizeBytes = size;
-                BatchMessages.Add(eventMessage);
+                BatchEvents.Add(eventData);
 
                 return true;
             }
-            catch
+            finally
             {
-                eventMessage?.Dispose();
-                throw;
+                eventData.ClearPublishingState();
             }
+        }
+
+        /// <summary>
+        ///   Clears the batch, removing all events and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        public override void Clear()
+        {
+            BatchEvents.Clear();
+            _sizeBytes = ReservedSize;
         }
 
         /// <summary>
@@ -152,12 +184,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public override IEnumerable<T> AsEnumerable<T>()
         {
-            if (typeof(T) != typeof(AmqpMessage))
+            if (typeof(T) != typeof(EventData))
             {
                 throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
 
-            return (IEnumerable<T>)BatchMessages;
+            return (IEnumerable<T>)BatchEvents;
         }
 
         /// <summary>
@@ -167,14 +199,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override void Dispose()
         {
             _disposed = true;
-
-            foreach (AmqpMessage message in BatchMessages)
-            {
-                message.Dispose();
-            }
-
-            BatchMessages.Clear();
-            _sizeBytes = 0;
+            Clear();
         }
     }
 }

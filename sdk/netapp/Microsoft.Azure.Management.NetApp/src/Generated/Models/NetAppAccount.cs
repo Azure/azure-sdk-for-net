@@ -113,6 +113,16 @@ namespace Microsoft.Azure.Management.NetApp.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
+            if (ActiveDirectories != null)
+            {
+                foreach (var element in ActiveDirectories)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
         }
     }
 }

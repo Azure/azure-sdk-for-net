@@ -42,6 +42,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// sync member.</param>
         /// <param name="sqlServerDatabaseId">SQL Server database id of the
         /// sync member.</param>
+        /// <param name="syncMemberAzureDatabaseResourceId">ARM resource id of
+        /// the sync member logical database, for sync members in
+        /// Azure.</param>
+        /// <param name="usePrivateLinkConnection">Whether to use private link
+        /// connection.</param>
+        /// <param name="privateEndpointName">Private endpoint name of the sync
+        /// member if use private link connection is enabled, for sync members
+        /// in Azure.</param>
         /// <param name="serverName">Server name of the member database in the
         /// sync member</param>
         /// <param name="databaseName">Database name of the member database in
@@ -60,12 +68,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'UnProvisioned', 'Provisioning', 'Provisioned', 'ProvisionFailed',
         /// 'DeProvisioning', 'DeProvisioned', 'DeProvisionFailed',
         /// 'Reprovisioning', 'ReprovisionFailed', 'UnReprovisioned'</param>
-        public SyncMember(string id = default(string), string name = default(string), string type = default(string), string databaseType = default(string), string syncAgentId = default(string), System.Guid? sqlServerDatabaseId = default(System.Guid?), string serverName = default(string), string databaseName = default(string), string userName = default(string), string password = default(string), string syncDirection = default(string), string syncState = default(string))
+        public SyncMember(string id = default(string), string name = default(string), string type = default(string), string databaseType = default(string), string syncAgentId = default(string), System.Guid? sqlServerDatabaseId = default(System.Guid?), string syncMemberAzureDatabaseResourceId = default(string), bool? usePrivateLinkConnection = default(bool?), string privateEndpointName = default(string), string serverName = default(string), string databaseName = default(string), string userName = default(string), string password = default(string), string syncDirection = default(string), string syncState = default(string))
             : base(id, name, type)
         {
             DatabaseType = databaseType;
             SyncAgentId = syncAgentId;
             SqlServerDatabaseId = sqlServerDatabaseId;
+            SyncMemberAzureDatabaseResourceId = syncMemberAzureDatabaseResourceId;
+            UsePrivateLinkConnection = usePrivateLinkConnection;
+            PrivateEndpointName = privateEndpointName;
             ServerName = serverName;
             DatabaseName = databaseName;
             UserName = userName;
@@ -98,6 +109,26 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sqlServerDatabaseId")]
         public System.Guid? SqlServerDatabaseId { get; set; }
+
+        /// <summary>
+        /// Gets or sets ARM resource id of the sync member logical database,
+        /// for sync members in Azure.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.syncMemberAzureDatabaseResourceId")]
+        public string SyncMemberAzureDatabaseResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to use private link connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.usePrivateLinkConnection")]
+        public bool? UsePrivateLinkConnection { get; set; }
+
+        /// <summary>
+        /// Gets private endpoint name of the sync member if use private link
+        /// connection is enabled, for sync members in Azure.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointName")]
+        public string PrivateEndpointName { get; private set; }
 
         /// <summary>
         /// Gets or sets server name of the member database in the sync member

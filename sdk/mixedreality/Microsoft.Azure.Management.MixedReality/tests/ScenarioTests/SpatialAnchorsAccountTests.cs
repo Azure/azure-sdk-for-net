@@ -2,6 +2,7 @@ using Microsoft.Azure.Management.MixedReality;
 using Microsoft.Azure.Management.MixedReality.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Rest.Azure;
 using System.Net;
 using Xunit;
 
@@ -50,12 +51,12 @@ namespace MixedReality.Tests
                     Assert.Equal(Location, account.Location);
 
                     // Primary Key
-                    var oldKey = operations.GetKeys(resourceGroup.Name, account.Name).PrimaryKey;
+                    var oldKey = operations.ListKeys(resourceGroup.Name, account.Name).PrimaryKey;
                     var newKey = operations.RegenerateKeys(resourceGroup.Name, account.Name, 1).PrimaryKey;
                     Assert.NotEqual(oldKey, newKey);
 
                     // Secondary Key
-                    oldKey = operations.GetKeys(resourceGroup.Name, account.Name).SecondaryKey;
+                    oldKey = operations.ListKeys(resourceGroup.Name, account.Name).SecondaryKey;
                     newKey = operations.RegenerateKeys(resourceGroup.Name, account.Name, 2).SecondaryKey;
                     Assert.NotEqual(oldKey, newKey);
 
@@ -80,7 +81,7 @@ namespace MixedReality.Tests
             {
                 operations.Get(resourceGroupName, spatialAnchorsAccountName);
             }
-            catch (ErrorResponseException e)
+            catch (CloudException e)
             {
                 Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
             }

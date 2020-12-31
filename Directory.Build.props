@@ -6,7 +6,6 @@
     <RepoSdkPath>$(RepoRoot)src/SDKs</RepoSdkPath>
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
     <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and '$(IsClientLibrary)' == 'true'">true</IsDataPlaneProject>
-    <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and $(MSBuildProjectDirectory.Contains('data-plane'))">true</IsDataPlaneProject>
   </PropertyGroup>
 
   <!-- Setup default project properties -->
@@ -33,7 +32,7 @@
     <IntermediateOutputPath Condition="'$(PlatformName)' == 'AnyCPU'">$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
     <IntermediateOutputPath Condition="'$(PlatformName)' != 'AnyCPU'">$(BaseIntermediateOutputPath)$(PlatformName)\$(Configuration)\</IntermediateOutputPath>
 
-    <PackageOutputPath>$(ArtifactsPackagesDir)</PackageOutputPath>
+    <PackageOutputPath>$(ArtifactsPackagesDir)/$(MSBuildProjectName)</PackageOutputPath>
   </PropertyGroup>
 
   <Import Project="$(RepoEngPath)\mgmt\Directory.Build.Mgmt.props" Condition="'$(IsDataPlaneProject)' != 'true'" />

@@ -24,24 +24,24 @@ namespace Sql.Tests
             {
                 Guid objectId = new Guid(TestEnvironmentUtilities.GetUserObjectId());
                 Guid tenantId = new Guid(TestEnvironmentUtilities.GetTenantId());
-
+                
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 ResourceGroup resourceGroup = context.CreateResourceGroup();
                 Server server = context.CreateServer(resourceGroup);
 
                 // Add new Active Directory Admin
                 ServerAzureADAdministrator newAdmin = new ServerAzureADAdministrator(
-                    aadAdmin, objectId, tenantId);
+                    aadAdmin, objectId, tenantId: tenantId);
                 ServerAzureADAdministrator createResult = sqlClient.ServerAzureADAdministrators.CreateOrUpdate(resourceGroup.Name, server.Name, newAdmin);
 
                 Assert.Equal(aadAdmin, createResult.Login);
 
                 // Get the current Active Directory Admin
-                ServerAzureADAdministrator getResult = sqlClient.ServerAzureADAdministrators.Get(resourceGroup.Name, server.Name);
-                Assert.Equal(aadAdmin, getResult.Login);
-                Assert.Equal(objectId, getResult.Sid);
-                Assert.Equal(tenantId, getResult.TenantId);
-
+                ServerAzureADAdministrator getCreateResult = sqlClient.ServerAzureADAdministrators.Get(resourceGroup.Name, server.Name);
+                Assert.Equal(aadAdmin, getCreateResult.Login);
+                Assert.Equal(objectId, getCreateResult.Sid);
+                Assert.Equal(tenantId, getCreateResult.TenantId);
+                
                 // Delete the Active Directory Admin on server
                 sqlClient.ServerAzureADAdministrators.Delete(resourceGroup.Name, server.Name);
 

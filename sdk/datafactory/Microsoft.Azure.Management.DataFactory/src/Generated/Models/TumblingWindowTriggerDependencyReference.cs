@@ -85,9 +85,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                 {
                     throw new ValidationException(ValidationRules.MinLength, "Offset", 8);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Offset, "((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Offset, "-?((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Offset", "((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))");
+                    throw new ValidationException(ValidationRules.Pattern, "Offset", "-?((\\d+)\\.)?(\\d\\d):(60|([0-5][0-9])):(60|([0-5][0-9]))");
                 }
             }
             if (Size != null)

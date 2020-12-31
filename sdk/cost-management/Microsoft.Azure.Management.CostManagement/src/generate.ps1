@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "cost-management/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "cost-management/resource-manager" -AutoRestVersion "v2"

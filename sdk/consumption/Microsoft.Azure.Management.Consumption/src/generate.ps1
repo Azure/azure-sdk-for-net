@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "consumption/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "consumption/resource-manager" -AutoRestVersion "v2"

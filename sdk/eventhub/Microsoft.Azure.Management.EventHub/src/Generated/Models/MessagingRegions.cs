@@ -31,11 +31,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Initializes a new instance of the MessagingRegions class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="location">Resource location.</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="properties">Properties of Messaging Region</param>
         public MessagingRegions(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), MessagingRegionsProperties properties = default(MessagingRegionsProperties))
             : base(id, name, type, location, tags)
         {
@@ -49,6 +50,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets properties of Messaging Region
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public MessagingRegionsProperties Properties { get; set; }

@@ -58,9 +58,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="authentication">Authentication method used for calling
         /// the endpoint.</param>
         /// <param name="reportStatusOnCallBack">When set to true, statusCode,
-        /// output and error in callback request body will be consumed by
-        /// activity. The activity can be marked as failed by setting
-        /// statusCode &gt;= 400 in callback request. Default is false. Type:
+        /// output and error in callback request body will be consumed by
+        /// activity. The activity can be marked as failed by setting
+        /// statusCode &gt;= 400 in callback request. Default is false. Type:
         /// boolean (or Expression with resultType boolean).</param>
         public WebHookActivity(string name, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), string timeout = default(string), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication), object reportStatusOnCallBack = default(object))
             : base(name, additionalProperties, description, dependsOn, userProperties)
@@ -127,9 +127,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public WebActivityAuthentication Authentication { get; set; }
 
         /// <summary>
-        /// Gets or sets when set to true, statusCode, output and error in
-        /// callback request body will be consumed by activity. The activity
-        /// can be marked as failed by setting statusCode &amp;gt;= 400 in
+        /// Gets or sets when set to true, statusCode, output and error in
+        /// callback request body will be consumed by activity. The activity
+        /// can be marked as failed by setting statusCode &amp;gt;= 400 in
         /// callback request. Default is false. Type: boolean (or Expression
         /// with resultType boolean).
         /// </summary>

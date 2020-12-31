@@ -3,10 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.Identity.Tests
 {
@@ -14,7 +15,7 @@ namespace Azure.Identity.Tests
     {
         public override void Sanitize(RecordEntry entry)
         {
-            if (entry.RequestUri.EndsWith("/token"))
+            if (entry.RequestUri.Split('?')[0].EndsWith("/token"))
             {
                 SanitizeTokenRequest(entry);
                 SanitizeTokenResponse(entry);
@@ -27,12 +28,15 @@ namespace Azure.Identity.Tests
         {
             entry.Request.Body = Encoding.UTF8.GetBytes("Sanitized");
 
-            UpdateSanitizedContentLength(entry.Request.Headers, 0, entry.Request.Body.Length);
-
+            UpdateSanitizedContentLength(entry.Request.Headers, entry.Request.Body.Length);
         }
 
         private void SanitizeTokenResponse(RecordEntry entry)
         {
+            if (entry.Response.Body == null)
+            {
+                return;
+            }
             var originalJson = JsonDocument.Parse(entry.Response.Body).RootElement;
 
             var writer = new ArrayBufferWriter<byte>(entry.Response.Body.Length);
@@ -43,7 +47,6 @@ namespace Azure.Identity.Tests
 
             foreach (JsonProperty prop in originalJson.EnumerateObject())
             {
-
                 sanitizedJson.WritePropertyName(prop.Name);
 
                 switch (prop.Name)

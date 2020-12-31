@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Provides the version state of a succesfully released path or file system.
+    /// Provides the version state of a successfully released path or file system.
     /// object.
     /// </summary>
     public readonly struct ReleasedObjectInfo : IEquatable<ReleasedObjectInfo>

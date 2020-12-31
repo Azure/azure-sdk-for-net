@@ -1,27 +1,30 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8%3A4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/billingPermissions?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNzIzYzhjZTAtMzNiYS01YmE3LWVmMjMtZTFiNzJmMTVmMWQ4JTNBNGNlNWI1MzAtYzgyYi00NGU4LTk3ZWMtNDlmM2NjZTlmMTRkXzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0g2UkktVFhXQy1CRzctUEdCL2JpbGxpbmdQZXJtaXNzaW9ucz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/billingPermissions?api-version=2020-05-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNjkyYTFlZjYtNTk1YS01NTc4LTg3NzYtZGUxMGM5ZDY0ODYxJTNBNTg2OWVhMTAtYTIxZS00MjNmLTkyMTMtMmNhMGQxOTM4OTA4XzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0RTTkgtV1VaRS1CRzctVEdCL2JpbGxpbmdQZXJtaXNzaW9ucz9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "268d4569-3f8a-485f-bc15-fed248b298c3"
+          "751b4543-3795-45d4-a848-225cf41670fb"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Billing.BillingManagementClient/3.1.1.0"
+          "Microsoft.Azure.Management.Billing.BillingManagementClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Tue, 02 Jun 2020 21:56:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -29,38 +32,35 @@
         "Vary": [
           "Accept-Encoding"
         ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "9.11.1047.343"
+          "10.5.1249.546"
         ],
         "api-supported-versions": [
-          "2019-10-01-preview"
+          "2019-10-01-preview, 2020-05-01"
         ],
         "X-Frame-Options": [
           "DENY"
         ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
         "x-ms-request-id": [
-          "2036356a-57f0-45a0-a7ce-4abf97f052d9"
+          "16726de2-db28-4782-80cd-a448e3f1290e"
         ],
         "x-ms-correlation-request-id": [
-          "2036356a-57f0-45a0-a7ce-4abf97f052d9"
+          "16726de2-db28-4782-80cd-a448e3f1290e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191118T234146Z:2036356a-57f0-45a0-a7ce-4abf97f052d9"
+          "NORTHEUROPE:20200602T215610Z:16726de2-db28-4782-80cd-a448e3f1290e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Mon, 18 Nov 2019 23:41:46 GMT"
-        ],
         "Content-Length": [
-          "181"
+          "415"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,12 +69,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"40000000-aaaa-bbbb-cccc-200000000000\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000006\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000007\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000008\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"40000000-aaaa-bbbb-cccc-200000000000\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000006\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000007\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000008\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000004\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000001\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000005\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000002\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000003\",\r\n        \"40000000-aaaa-bbbb-cccc-200000000011\"\r\n      ]\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "df6e24cd-21d5-4f70-ac15-32bb1f8b4536"
+    "SubscriptionId": "0195fcc8-69cd-4440-852b-237bdae4e36c"
   }
 }

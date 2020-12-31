@@ -41,11 +41,6 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
@@ -115,11 +110,6 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         IProactiveDetectionConfigurationsOperations ProactiveDetectionConfigurations { get; }
 
         /// <summary>
-        /// Gets the IComponentsOperations.
-        /// </summary>
-        IComponentsOperations Components { get; }
-
-        /// <summary>
         /// Gets the IWorkItemConfigurationsOperations.
         /// </summary>
         IWorkItemConfigurationsOperations WorkItemConfigurations { get; }
@@ -148,6 +138,16 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Gets the IWorkbooksOperations.
         /// </summary>
         IWorkbooksOperations Workbooks { get; }
+
+        /// <summary>
+        /// Gets the IComponentsOperations.
+        /// </summary>
+        IComponentsOperations Components { get; }
+
+        /// <summary>
+        /// Gets the IComponentLinkedStorageAccountsOperations.
+        /// </summary>
+        IComponentLinkedStorageAccountsOperations ComponentLinkedStorageAccounts { get; }
 
     }
 }

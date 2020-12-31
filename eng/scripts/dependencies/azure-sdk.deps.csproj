@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <!-- 
+      Loading a dev version of some dependencies causes some downgrade warnings. 
+      This can happen sometimes after releaseing a new version when the version in 
+      the repo has not yet been updated.
+    -->
+    <NoWarn>$(NoWarn);NU1605</NoWarn>
+  </PropertyGroup>
+  <Import Project="$(AzureSdkProjectReferencesPath)" />
+
+  <Target Name="ListProjects">
+    <Message Importance="High" Text="Included project references from $(AzureSdkProjectReferencesPath)" />
+    <Message Importance="High" Text="List of projects included:" />
+    <Message Importance="High" Text="%(ProjectReference.Filename)" />
+  </Target>
+
+  <Target Name="GenerateDepsFile" DependsOnTargets="ListProjects;Restore;GeneratePublishDependencyFile" />
+</Project>

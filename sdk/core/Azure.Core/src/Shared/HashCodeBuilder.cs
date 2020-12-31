@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+
+#nullable enable
 
 namespace Azure.Core
 {
@@ -38,7 +41,7 @@ namespace Azure.Core
             // over a larger space, so diffusing the bits may help the
             // collection work more efficiently.
 
-            var hc1 = (uint)(value1?.GetHashCode() ?? 0);
+            uint hc1 = (uint)(value1?.GetHashCode() ?? 0);
 
             uint hash = MixEmptyState();
             hash += 4;
@@ -51,8 +54,8 @@ namespace Azure.Core
 
         public static int Combine<T1, T2>(T1 value1, T2 value2)
         {
-            var hc1 = (uint)(value1?.GetHashCode() ?? 0);
-            var hc2 = (uint)(value2?.GetHashCode() ?? 0);
+            uint hc1 = (uint)(value1?.GetHashCode() ?? 0);
+            uint hc2 = (uint)(value2?.GetHashCode() ?? 0);
 
             uint hash = MixEmptyState();
             hash += 8;
@@ -66,9 +69,9 @@ namespace Azure.Core
 
         public static int Combine<T1, T2, T3>(T1 value1, T2 value2, T3 value3)
         {
-            var hc1 = (uint)(value1?.GetHashCode() ?? 0);
-            var hc2 = (uint)(value2?.GetHashCode() ?? 0);
-            var hc3 = (uint)(value3?.GetHashCode() ?? 0);
+            uint hc1 = (uint)(value1?.GetHashCode() ?? 0);
+            uint hc2 = (uint)(value2?.GetHashCode() ?? 0);
+            uint hc3 = (uint)(value3?.GetHashCode() ?? 0);
 
             uint hash = MixEmptyState();
             hash += 12;
@@ -83,10 +86,10 @@ namespace Azure.Core
 
         public static int Combine<T1, T2, T3, T4>(T1 value1, T2 value2, T3 value3, T4 value4)
         {
-            var hc1 = (uint)(value1?.GetHashCode() ?? 0);
-            var hc2 = (uint)(value2?.GetHashCode() ?? 0);
-            var hc3 = (uint)(value3?.GetHashCode() ?? 0);
-            var hc4 = (uint)(value4?.GetHashCode() ?? 0);
+            uint hc1 = (uint)(value1?.GetHashCode() ?? 0);
+            uint hc2 = (uint)(value2?.GetHashCode() ?? 0);
+            uint hc3 = (uint)(value3?.GetHashCode() ?? 0);
+            uint hc4 = (uint)(value4?.GetHashCode() ?? 0);
 
             Initialize(out uint v1, out uint v2, out uint v3, out uint v4);
 
@@ -104,11 +107,11 @@ namespace Azure.Core
 
         public static int Combine<T1, T2, T3, T4, T5>(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5)
         {
-            var hc1 = (uint)(value1?.GetHashCode() ?? 0);
-            var hc2 = (uint)(value2?.GetHashCode() ?? 0);
-            var hc3 = (uint)(value3?.GetHashCode() ?? 0);
-            var hc4 = (uint)(value4?.GetHashCode() ?? 0);
-            var hc5 = (uint)(value5?.GetHashCode() ?? 0);
+            uint hc1 = (uint)(value1?.GetHashCode() ?? 0);
+            uint hc2 = (uint)(value2?.GetHashCode() ?? 0);
+            uint hc3 = (uint)(value3?.GetHashCode() ?? 0);
+            uint hc4 = (uint)(value4?.GetHashCode() ?? 0);
+            uint hc5 = (uint)(value5?.GetHashCode() ?? 0);
 
             Initialize(out uint v1, out uint v2, out uint v3, out uint v4);
 
@@ -128,12 +131,12 @@ namespace Azure.Core
 
         public static int Combine<T1, T2, T3, T4, T5, T6>(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6)
         {
-            var hc1 = (uint)(value1?.GetHashCode() ?? 0);
-            var hc2 = (uint)(value2?.GetHashCode() ?? 0);
-            var hc3 = (uint)(value3?.GetHashCode() ?? 0);
-            var hc4 = (uint)(value4?.GetHashCode() ?? 0);
-            var hc5 = (uint)(value5?.GetHashCode() ?? 0);
-            var hc6 = (uint)(value6?.GetHashCode() ?? 0);
+            uint hc1 = (uint)(value1?.GetHashCode() ?? 0);
+            uint hc2 = (uint)(value2?.GetHashCode() ?? 0);
+            uint hc3 = (uint)(value3?.GetHashCode() ?? 0);
+            uint hc4 = (uint)(value4?.GetHashCode() ?? 0);
+            uint hc5 = (uint)(value5?.GetHashCode() ?? 0);
+            uint hc6 = (uint)(value6?.GetHashCode() ?? 0);
 
             Initialize(out uint v1, out uint v2, out uint v3, out uint v4);
 
@@ -154,13 +157,13 @@ namespace Azure.Core
 
         public static int Combine<T1, T2, T3, T4, T5, T6, T7>(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7)
         {
-            var hc1 = (uint)(value1?.GetHashCode() ?? 0);
-            var hc2 = (uint)(value2?.GetHashCode() ?? 0);
-            var hc3 = (uint)(value3?.GetHashCode() ?? 0);
-            var hc4 = (uint)(value4?.GetHashCode() ?? 0);
-            var hc5 = (uint)(value5?.GetHashCode() ?? 0);
-            var hc6 = (uint)(value6?.GetHashCode() ?? 0);
-            var hc7 = (uint)(value7?.GetHashCode() ?? 0);
+            uint hc1 = (uint)(value1?.GetHashCode() ?? 0);
+            uint hc2 = (uint)(value2?.GetHashCode() ?? 0);
+            uint hc3 = (uint)(value3?.GetHashCode() ?? 0);
+            uint hc4 = (uint)(value4?.GetHashCode() ?? 0);
+            uint hc5 = (uint)(value5?.GetHashCode() ?? 0);
+            uint hc6 = (uint)(value6?.GetHashCode() ?? 0);
+            uint hc7 = (uint)(value7?.GetHashCode() ?? 0);
 
             Initialize(out uint v1, out uint v2, out uint v3, out uint v4);
 
@@ -182,14 +185,14 @@ namespace Azure.Core
 
         public static int Combine<T1, T2, T3, T4, T5, T6, T7, T8>(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8)
         {
-            var hc1 = (uint)(value1?.GetHashCode() ?? 0);
-            var hc2 = (uint)(value2?.GetHashCode() ?? 0);
-            var hc3 = (uint)(value3?.GetHashCode() ?? 0);
-            var hc4 = (uint)(value4?.GetHashCode() ?? 0);
-            var hc5 = (uint)(value5?.GetHashCode() ?? 0);
-            var hc6 = (uint)(value6?.GetHashCode() ?? 0);
-            var hc7 = (uint)(value7?.GetHashCode() ?? 0);
-            var hc8 = (uint)(value8?.GetHashCode() ?? 0);
+            uint hc1 = (uint)(value1?.GetHashCode() ?? 0);
+            uint hc2 = (uint)(value2?.GetHashCode() ?? 0);
+            uint hc3 = (uint)(value3?.GetHashCode() ?? 0);
+            uint hc4 = (uint)(value4?.GetHashCode() ?? 0);
+            uint hc5 = (uint)(value5?.GetHashCode() ?? 0);
+            uint hc6 = (uint)(value6?.GetHashCode() ?? 0);
+            uint hc7 = (uint)(value7?.GetHashCode() ?? 0);
+            uint hc8 = (uint)(value8?.GetHashCode() ?? 0);
 
             Initialize(out uint v1, out uint v2, out uint v3, out uint v4);
 
@@ -220,10 +223,6 @@ namespace Azure.Core
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint RotateLeft(uint value, int offset)
-            => (value << offset) | (value >> (64 - offset));
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static uint Round(uint hash, uint input)
         {
             return RotateLeft(hash + input * Prime2, 13) * Prime1;
@@ -240,6 +239,10 @@ namespace Azure.Core
         {
             return RotateLeft(v1, 1) + RotateLeft(v2, 7) + RotateLeft(v3, 12) + RotateLeft(v4, 18);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint RotateLeft(uint value, int offset)
+            => (value << offset) | (value >> (64 - offset));
 
         private static uint MixEmptyState()
         {
@@ -262,9 +265,9 @@ namespace Azure.Core
             Add(value?.GetHashCode() ?? 0);
         }
 
-        public void Add<T>(T value, IEqualityComparer<T> comparer)
+        public void Add<T>(T value, IEqualityComparer<T>? comparer)
         {
-            Add(comparer != null ? comparer.GetHashCode(value) : (value?.GetHashCode() ?? 0));
+            Add(value is null ? 0 : (comparer?.GetHashCode(value) ?? value.GetHashCode()));
         }
 
         private void Add(int value)
@@ -290,7 +293,7 @@ namespace Azure.Core
             // To see what's really going on here, have a look at the Combine
             // methods.
 
-            var val = (uint)value;
+            uint val = (uint)value;
 
             // Storing the value of _length locally shaves of quite a few bytes
             // in the resulting machine code.
@@ -357,5 +360,28 @@ namespace Azure.Core
             hash = MixFinal(hash);
             return (int)hash;
         }
+
+#pragma warning disable 0809
+        // Obsolete member 'memberA' overrides non-obsolete member 'memberB'.
+        // Disallowing GetHashCode and Equals is by design
+
+        // * We decided to not override GetHashCode() to produce the hash code
+        //   as this would be weird, both naming-wise as well as from a
+        //   behavioral standpoint (GetHashCode() should return the object's
+        //   hash code, not the one being computed).
+
+        // * Even though ToHashCode() can be called safely multiple times on
+        //   this implementation, it is not part of the contract. If the
+        //   implementation has to change in the future we don't want to worry
+        //   about people who might have incorrectly used this type.
+
+        [Obsolete("HashCode is a mutable struct and should not be compared with other HashCodes. Use ToHashCode to retrieve the computed hash code.", error: true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => throw new NotSupportedException();
+
+        [Obsolete("HashCode is a mutable struct and should not be compared with other HashCodes.", error: true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => throw new NotSupportedException();
+#pragma warning restore 0809
     }
 }

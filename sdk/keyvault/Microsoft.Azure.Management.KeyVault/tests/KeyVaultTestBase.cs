@@ -98,15 +98,15 @@ namespace KeyVault.Management.Tests
                 ObjectId = objectIdGuid,
                 Permissions = new Permissions
                 {
-                    Keys = new string[] { "all" },
-                    Secrets = new string[] { "all" },
-                    Certificates = new string[] { "all" },
-                    Storage = new string[] { "all" },
+                    Keys = new string[] { KeyPermissions.All },
+                    Secrets = new string[] { SecretPermissions.All },
+                    Certificates = new string[] { CertificatePermissions.All },
+                    Storage = new string[] { StoragePermissions.All },
                 }
             };
 
             IList < IPRule > ipRules = new List<IPRule>();
-            ipRules.Add(new IPRule() { Value = "10.0.0.0/24" });
+            ipRules.Add(new IPRule() { Value = "1.2.3.4/32" });
             ipRules.Add(new IPRule() { Value = "1.0.0.0/25" });
 
             vaultProperties = new VaultProperties

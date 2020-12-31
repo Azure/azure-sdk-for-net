@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -17,23 +14,41 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task RecognizeEntitiesAsync()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:RecognizeEntitiesAsync
-            string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+            string document = @"We love this trail and make the trip every year. The views are breathtaking and well
+                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
+                                We tried again today and it was amazing. Everyone in my family liked the trail although
+                                it was too challenging for the less athletic among us.
+                                Not necessarily recommended for small children.
+                                A hotel close to the trail offers services for childcare in case you want that.";
 
-            // Recognize categorized entities in the input text
-            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
-
-            Console.WriteLine($"Recognized {entities.Count()} entities:");
-            foreach (NamedEntity entity in entities)
+            try
             {
-                Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+                Response<CategorizedEntityCollection> response = await client.RecognizeEntitiesAsync(document);
+                CategorizedEntityCollection entitiesInDocument = response.Value;
+
+                Console.WriteLine($"Recognized {entitiesInDocument.Count} entities:");
+                foreach (CategorizedEntity entity in entitiesInDocument)
+                {
+                    Console.WriteLine($"    Text: {entity.Text}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Category: {entity.Category}");
+                    if (!string.IsNullOrEmpty(entity.SubCategory))
+                        Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                    Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine("");
+                }
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion
         }

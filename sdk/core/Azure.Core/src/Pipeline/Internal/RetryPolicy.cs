@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ namespace Azure.Core.Pipeline
             while (true)
             {
                 Exception? lastException = null;
-
+                var before = Stopwatch.GetTimestamp();
                 try
                 {
                     if (async)
@@ -72,6 +73,9 @@ namespace Azure.Core.Pipeline
                     lastException = ex;
                 }
 
+                var after = Stopwatch.GetTimestamp();
+                double elapsed = (after - before) / (double)Stopwatch.Frequency;
+
                 TimeSpan delay;
 
                 attempt++;
@@ -80,14 +84,14 @@ namespace Azure.Core.Pipeline
 
                 if (lastException != null)
                 {
-                    if (shouldRetry && message.ResponseClassifier.IsRetriableException(lastException))
+                    if (shouldRetry && message.ResponseClassifier.IsRetriable(message, lastException))
                     {
                         GetDelay(attempt, out delay);
                     }
                     else
                     {
                         // Rethrow a singular exception
-                        if (exceptions?.Count == 1)
+                        if (exceptions!.Count == 1)
                         {
                             ExceptionDispatchInfo.Capture(lastException).Throw();
                         }
@@ -123,7 +127,13 @@ namespace Azure.Core.Pipeline
                     }
                 }
 
-                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt);
+                if (message.HasResponse)
+                {
+                    // Dispose the content stream to free up a connection if the request has any
+                    message.Response.ContentStream?.Dispose();
+                }
+
+                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt, elapsed);
             }
         }
 

@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -15,78 +14,101 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void AnalyzeSentimentBatch()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var inputs = new List<TextDocumentInput>
+            #region Snippet:TextAnalyticsSample2AnalyzeSentimentBatch
+            string documentA = @"The food and service were unacceptable, but the concierge were nice.
+                                After talking to them about the quality of the food and the process
+                                to get room service they refunded the money we spent at the restaurant and
+                                gave us a voucher for nearby restaurants.";
+
+            string documentB = @"Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia
+                                sabía de nuestra celebración y me ayudaron a tenerle una sorpresa a mi pareja.
+                                La habitación estaba limpia y decorada como yo había pedido. Una gran experiencia.
+                                El próximo año volveremos.";
+
+            string documentC = @"The rooms were beautiful. The AC was good and quiet, which was key for us as outside
+                                it was 100F and our baby was getting uncomfortable because of the heat. The breakfast
+                                was good too with good options and good servicing times.
+                                The thing we didn't like was that the toilet in our bathroom was smelly.
+                                It could have been that the toilet was not cleaned before we arrived.
+                                Either way it was very uncomfortable. Once we notified the staff, they came and cleaned
+                                it and left candles.";
+
+            var documents = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1", "That was the best day of my life!")
+                new TextDocumentInput("1", documentA)
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("2", "This food is very bad. Everyone who ate with us got sick.")
+                new TextDocumentInput("2", documentB)
+                {
+                     Language = "es",
+                },
+                new TextDocumentInput("3", documentC)
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("3", "I'm not sure how I feel about this product.")
-                {
-                     Language = "en",
-                },
-                new TextDocumentInput("4", "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.")
-                {
-                     Language = "en",
-                }
+                new TextDocumentInput("4", string.Empty)
             };
 
-            AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            var options = new AnalyzeSentimentOptions { IncludeStatistics = true };
+
+            Response<AnalyzeSentimentResultCollection> response = client.AnalyzeSentimentBatch(documents, options);
+            AnalyzeSentimentResultCollection sentimentPerDocuments = response.Value;
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
-            Debug.WriteLine("");
+            Console.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{sentimentPerDocuments.ModelVersion}\"");
+            Console.WriteLine("");
 
-            foreach (var result in results)
+            foreach (AnalyzeSentimentResult sentimentInDocument in sentimentPerDocuments)
             {
-                var document = inputs[i++];
+                TextDocumentInput document = documents[i++];
 
-                if (result.ErrorMessage != default)
+                Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
+
+                if (sentimentInDocument.HasError)
                 {
-                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                    Console.WriteLine("  Error!");
+                    Console.WriteLine($"  Document error: {sentimentInDocument.Error.ErrorCode}.");
+                    Console.WriteLine($"  Message: {sentimentInDocument.Error.Message}");
                 }
                 else
                 {
-                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.SentimentClass.ToString()}, with scores: ");
-                    Debug.WriteLine($"    Positive score: {result.DocumentSentiment.PositiveScore:0.00}.");
-                    Debug.WriteLine($"    Neutral score: {result.DocumentSentiment.NeutralScore:0.00}.");
-                    Debug.WriteLine($"    Negative score: {result.DocumentSentiment.NegativeScore:0.00}.");
+                    Console.WriteLine($"Document sentiment is {sentimentInDocument.DocumentSentiment.Sentiment}, with confidence scores: ");
+                    Console.WriteLine($"  Positive confidence score: {sentimentInDocument.DocumentSentiment.ConfidenceScores.Positive}.");
+                    Console.WriteLine($"  Neutral confidence score: {sentimentInDocument.DocumentSentiment.ConfidenceScores.Neutral}.");
+                    Console.WriteLine($"  Negative confidence score: {sentimentInDocument.DocumentSentiment.ConfidenceScores.Negative}.");
+                    Console.WriteLine("");
+                    Console.WriteLine($"  Sentence sentiment results:");
 
-                    Debug.WriteLine($"    Sentence sentiment results:");
-
-                    foreach (var sentenceSentiment in result.SentenceSentiments)
+                    foreach (SentenceSentiment sentimentInSentence in sentimentInDocument.DocumentSentiment.Sentences)
                     {
-                        Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
-
-                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.SentimentClass.ToString()}, with scores: ");
-                        Debug.WriteLine($"        Positive score: {sentenceSentiment.PositiveScore:0.00}.");
-                        Debug.WriteLine($"        Neutral score: {sentenceSentiment.NeutralScore:0.00}.");
-                        Debug.WriteLine($"        Negative score: {sentenceSentiment.NegativeScore:0.00}.");
+                        Console.WriteLine($"  For sentence: \"{sentimentInSentence.Text}\"");
+                        Console.WriteLine($"  Sentiment is {sentimentInSentence.Sentiment}, with confidence scores: ");
+                        Console.WriteLine($"    Positive confidence score: {sentimentInSentence.ConfidenceScores.Positive}.");
+                        Console.WriteLine($"    Neutral confidence score: {sentimentInSentence.ConfidenceScores.Neutral}.");
+                        Console.WriteLine($"    Negative confidence score: {sentimentInSentence.ConfidenceScores.Negative}.");
+                        Console.WriteLine("");
                     }
 
-                    Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                    Debug.WriteLine("");
+                    Console.WriteLine($"  Document statistics:");
+                    Console.WriteLine($"    Character count: {sentimentInDocument.Statistics.CharacterCount}");
+                    Console.WriteLine($"    Transaction count: {sentimentInDocument.Statistics.TransactionCount}");
                 }
+                Console.WriteLine("");
             }
 
-            Debug.WriteLine($"Batch operation statistics:");
-            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
-            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
-            Debug.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
-            Debug.WriteLine("");
+            Console.WriteLine($"Batch operation statistics:");
+            Console.WriteLine($"  Document count: {sentimentPerDocuments.Statistics.DocumentCount}");
+            Console.WriteLine($"  Valid document count: {sentimentPerDocuments.Statistics.ValidDocumentCount}");
+            Console.WriteLine($"  Invalid document count: {sentimentPerDocuments.Statistics.InvalidDocumentCount}");
+            Console.WriteLine($"  Transaction count: {sentimentPerDocuments.Statistics.TransactionCount}");
+            #endregion
         }
     }
 }

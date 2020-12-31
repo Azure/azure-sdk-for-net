@@ -25,7 +25,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List all ResourceHealthMetadata for all sites in the subscription.
             /// </summary>
             /// <remarks>
-            /// List all ResourceHealthMetadata for all sites in the subscription.
+            /// Description for List all ResourceHealthMetadata for all sites in the
+            /// subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +40,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List all ResourceHealthMetadata for all sites in the subscription.
             /// </summary>
             /// <remarks>
-            /// List all ResourceHealthMetadata for all sites in the subscription.
+            /// Description for List all ResourceHealthMetadata for all sites in the
+            /// subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,8 +62,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// subscription.
             /// </summary>
             /// <remarks>
-            /// List all ResourceHealthMetadata for all sites in the resource group in the
-            /// subscription.
+            /// Description for List all ResourceHealthMetadata for all sites in the
+            /// resource group in the subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -79,8 +81,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// subscription.
             /// </summary>
             /// <remarks>
-            /// List all ResourceHealthMetadata for all sites in the resource group in the
-            /// subscription.
+            /// Description for List all ResourceHealthMetadata for all sites in the
+            /// resource group in the subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -104,8 +106,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// collection
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site as a
-            /// collection
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site as a collection
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -126,8 +128,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// collection
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site as a
-            /// collection
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site as a collection
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -153,7 +155,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the category of ResourceHealthMetadata to use for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -173,7 +176,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the category of ResourceHealthMetadata to use for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -200,8 +204,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// collection
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site as a
-            /// collection
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site as a collection
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -226,8 +230,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// collection
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site as a
-            /// collection
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site as a collection
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -257,7 +261,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the category of ResourceHealthMetadata to use for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -281,7 +286,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the category of ResourceHealthMetadata to use for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -311,7 +317,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List all ResourceHealthMetadata for all sites in the subscription.
             /// </summary>
             /// <remarks>
-            /// List all ResourceHealthMetadata for all sites in the subscription.
+            /// Description for List all ResourceHealthMetadata for all sites in the
+            /// subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -328,7 +335,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List all ResourceHealthMetadata for all sites in the subscription.
             /// </summary>
             /// <remarks>
-            /// List all ResourceHealthMetadata for all sites in the subscription.
+            /// Description for List all ResourceHealthMetadata for all sites in the
+            /// subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -352,8 +360,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// subscription.
             /// </summary>
             /// <remarks>
-            /// List all ResourceHealthMetadata for all sites in the resource group in the
-            /// subscription.
+            /// Description for List all ResourceHealthMetadata for all sites in the
+            /// resource group in the subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -371,8 +379,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// subscription.
             /// </summary>
             /// <remarks>
-            /// List all ResourceHealthMetadata for all sites in the resource group in the
-            /// subscription.
+            /// Description for List all ResourceHealthMetadata for all sites in the
+            /// resource group in the subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -396,8 +404,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// collection
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site as a
-            /// collection
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site as a collection
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -415,8 +423,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// collection
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site as a
-            /// collection
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site as a collection
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -440,8 +448,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// collection
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site as a
-            /// collection
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site as a collection
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -459,8 +467,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// collection
             /// </summary>
             /// <remarks>
-            /// Gets the category of ResourceHealthMetadata to use for the given site as a
-            /// collection
+            /// Description for Gets the category of ResourceHealthMetadata to use for the
+            /// given site as a collection
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

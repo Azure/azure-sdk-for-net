@@ -53,7 +53,8 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets the tags to be applied to the merged certificate.
+        /// Gets the tags to be applied to the merged certificate. Although this collection cannot be set, it can be modified
+        ///  or initialized with a <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/how-to-initialize-a-dictionary-with-a-collection-initializer">collection initializer</see>.
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
@@ -86,8 +87,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 foreach (byte[] x509certificate in X509Certificates)
                 {
-                    string encoded = Base64Url.Encode(x509certificate);
-                    json.WriteStringValue(encoded);
+                    json.WriteBase64StringValue(x509certificate);
                 }
 
                 json.WriteEndArray();

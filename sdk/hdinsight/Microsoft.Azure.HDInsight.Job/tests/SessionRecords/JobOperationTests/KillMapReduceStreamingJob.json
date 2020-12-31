@@ -16,7 +16,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.HDInsight.Job.HDInsightJobManagementClient/3.0.0.0"
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
         ],
         "Content-Type": [
           "text/plain"
@@ -67,7 +67,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.HDInsight.Job.HDInsightJobManagementClient/3.0.0.0"
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -109,7 +109,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.HDInsight.Job.HDInsightJobManagementClient/3.0.0.0"
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {

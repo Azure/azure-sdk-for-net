@@ -99,13 +99,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
+            /// <param name='tagDescriptionId'>
+            /// Tag description identifier. Used when creating tagDescription for API/Tag
+            /// association. Based on API and Tag names.
             /// </param>
-            public static ApiTagDescriptionGetEntityTagHeaders GetEntityTag(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId)
+            public static ApiTagDescriptionGetEntityTagHeaders GetEntityTag(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId)
             {
-                return operations.GetEntityTagAsync(resourceGroupName, serviceName, apiId, tagId).GetAwaiter().GetResult();
+                return operations.GetEntityTagAsync(resourceGroupName, serviceName, apiId, tagDescriptionId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -125,16 +125,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
+            /// <param name='tagDescriptionId'>
+            /// Tag description identifier. Used when creating tagDescription for API/Tag
+            /// association. Based on API and Tag names.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApiTagDescriptionGetEntityTagHeaders> GetEntityTagAsync(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApiTagDescriptionGetEntityTagHeaders> GetEntityTagAsync(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagDescriptionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -157,13 +157,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
+            /// <param name='tagDescriptionId'>
+            /// Tag description identifier. Used when creating tagDescription for API/Tag
+            /// association. Based on API and Tag names.
             /// </param>
-            public static TagDescriptionContract Get(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId)
+            public static TagDescriptionContract Get(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId)
             {
-                return operations.GetAsync(resourceGroupName, serviceName, apiId, tagId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serviceName, apiId, tagDescriptionId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -183,16 +183,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
+            /// <param name='tagDescriptionId'>
+            /// Tag description identifier. Used when creating tagDescription for API/Tag
+            /// association. Based on API and Tag names.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagDescriptionContract> GetAsync(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagDescriptionContract> GetAsync(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagDescriptionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -215,9 +215,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
+            /// <param name='tagDescriptionId'>
+            /// Tag description identifier. Used when creating tagDescription for API/Tag
+            /// association. Based on API and Tag names.
             /// </param>
             /// <param name='parameters'>
             /// Create parameters.
@@ -226,9 +226,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static TagDescriptionContract CreateOrUpdate(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, TagDescriptionCreateParameters parameters, string ifMatch = default(string))
+            public static TagDescriptionContract CreateOrUpdate(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, TagDescriptionCreateParameters parameters, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, apiId, tagId, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, apiId, tagDescriptionId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -248,9 +248,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
+            /// <param name='tagDescriptionId'>
+            /// Tag description identifier. Used when creating tagDescription for API/Tag
+            /// association. Based on API and Tag names.
             /// </param>
             /// <param name='parameters'>
             /// Create parameters.
@@ -262,9 +262,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagDescriptionContract> CreateOrUpdateAsync(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, TagDescriptionCreateParameters parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagDescriptionContract> CreateOrUpdateAsync(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, TagDescriptionCreateParameters parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagDescriptionId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -287,18 +287,18 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
+            /// <param name='tagDescriptionId'>
+            /// Tag description identifier. Used when creating tagDescription for API/Tag
+            /// association. Based on API and Tag names.
             /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. ETag should match the current entity state from the
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Delete(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, string ifMatch)
+            public static void Delete(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, string ifMatch)
             {
-                operations.DeleteAsync(resourceGroupName, serviceName, apiId, tagId, ifMatch).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serviceName, apiId, tagDescriptionId, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -318,9 +318,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
+            /// <param name='tagDescriptionId'>
+            /// Tag description identifier. Used when creating tagDescription for API/Tag
+            /// association. Based on API and Tag names.
             /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. ETag should match the current entity state from the
@@ -330,9 +330,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IApiTagDescriptionOperations operations, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagDescriptionId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

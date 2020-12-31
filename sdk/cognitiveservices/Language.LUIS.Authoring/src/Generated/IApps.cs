@@ -545,5 +545,61 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<Stream>> PackageTrainedApplicationAsGzipWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Imports an application to LUIS, the application's structure is
+        /// included in the request body.
+        /// </summary>
+        /// <param name='luisAppV2'>
+        /// A LUIS application structure.
+        /// </param>
+        /// <param name='appName'>
+        /// The application name to create. If not specified, the application
+        /// name will be read from the imported object. If the application name
+        /// already exists, an error is returned.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<System.Guid>> ImportV2AppWithHttpMessagesAsync(LuisAppV2 luisAppV2, string appName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Imports an application to LUIS, the application's structure is
+        /// included in the request body.
+        /// </summary>
+        /// <param name='luisAppLu'>
+        /// A LUIS application structure.
+        /// </param>
+        /// <param name='appName'>
+        /// The application name to create. If not specified, the application
+        /// name will be read from the imported object. If the application name
+        /// already exists, an error is returned.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<System.Guid>> ImportLuFormatWithHttpMessagesAsync(string luisAppLu, string appName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -241,6 +241,8 @@ namespace Microsoft.Azure.EventHubs
                 : null;
         }
 
+        internal static bool IsEnabledForSendActivity => DiagnosticListener.IsEnabled(SendActivityName);
+
         private static void SetRelatedOperations(Activity activity, IEnumerable<EventData> eventDatas)
         {
             if (eventDatas != null && eventDatas.Any())

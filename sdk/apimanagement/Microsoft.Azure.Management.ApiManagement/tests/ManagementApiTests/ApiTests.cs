@@ -19,6 +19,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class ApiTests : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -341,6 +342,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CloneApiUsingSourceApiId()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -380,7 +382,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             apiCreateOrUpdate);
 
                     Assert.NotNull(swaggerApiResponse);
-                    Assert.Null(swaggerApiResponse.SubscriptionRequired);
+                    Assert.True(swaggerApiResponse.SubscriptionRequired);
                     Assert.Equal(path, swaggerApiResponse.Path);
 
                     var swagerApiOperations = await testBase.client.ApiOperation.ListByApiAsync(

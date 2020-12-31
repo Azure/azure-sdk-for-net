@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="type">Identity Provider Type identifier. Possible
         /// values include: 'facebook', 'google', 'microsoft', 'twitter',
         /// 'aad', 'aadB2C'</param>
+        /// <param name="signinTenant">The TenantId to use instead of Common
+        /// when logging into Active Directory</param>
         /// <param name="allowedTenants">List of Allowed Tenants when
         /// configuring Azure Active Directory login.</param>
         /// <param name="authority">OpenID Connect discovery endpoint hostname
@@ -58,9 +60,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// external Identity Provider, used to authenticate login request. For
         /// example, it is App Secret for Facebook login, API Key for Google
         /// login, Public Key for Microsoft.</param>
-        public IdentityProviderUpdateParameters(string type = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string), string clientId = default(string), string clientSecret = default(string))
+        public IdentityProviderUpdateParameters(string type = default(string), string signinTenant = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string), string clientId = default(string), string clientSecret = default(string))
         {
             Type = type;
+            SigninTenant = signinTenant;
             AllowedTenants = allowedTenants;
             Authority = authority;
             SignupPolicyName = signupPolicyName;
@@ -84,6 +87,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the TenantId to use instead of Common when logging
+        /// into Active Directory
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.signinTenant")]
+        public string SigninTenant { get; set; }
 
         /// <summary>
         /// Gets or sets list of Allowed Tenants when configuring Azure Active
@@ -144,63 +154,5 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "properties.clientSecret")]
         public string ClientSecret { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (AllowedTenants != null)
-            {
-                if (AllowedTenants.Count > 32)
-                {
-                    throw new ValidationException(ValidationRules.MaxItems, "AllowedTenants", 32);
-                }
-            }
-            if (SignupPolicyName != null)
-            {
-                if (SignupPolicyName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "SignupPolicyName", 1);
-                }
-            }
-            if (SigninPolicyName != null)
-            {
-                if (SigninPolicyName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "SigninPolicyName", 1);
-                }
-            }
-            if (ProfileEditingPolicyName != null)
-            {
-                if (ProfileEditingPolicyName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "ProfileEditingPolicyName", 1);
-                }
-            }
-            if (PasswordResetPolicyName != null)
-            {
-                if (PasswordResetPolicyName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "PasswordResetPolicyName", 1);
-                }
-            }
-            if (ClientId != null)
-            {
-                if (ClientId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "ClientId", 1);
-                }
-            }
-            if (ClientSecret != null)
-            {
-                if (ClientSecret.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "ClientSecret", 1);
-                }
-            }
-        }
     }
 }

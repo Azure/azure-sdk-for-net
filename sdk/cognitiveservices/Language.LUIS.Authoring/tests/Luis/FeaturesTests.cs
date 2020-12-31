@@ -57,6 +57,33 @@
         }
 
         [Fact]
+        public void AddModelAsRequiredFeatureForEntity()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = "0.1";
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Name = "flat entity"
+                });
+
+                var featureEntityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Name = "feature entity"
+                });
+
+                var featureToAdd = await client.Features.AddEntityFeatureAsync(GlobalAppId, versionId, entityId, new ModelFeatureInformation
+                {
+                    ModelName = "feature entity",
+                    IsRequired = true
+                });
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, featureEntityId);
+            });
+        }
+
+        [Fact]
         public void AddModelAsFeatureForEntity()
         {
             UseClientFor(async client =>

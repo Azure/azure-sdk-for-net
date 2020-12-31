@@ -33,15 +33,14 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="location">The supported Azure location where the key
-        /// vault should be created.</param>
-        /// <param name="id">The Azure Resource Manager resource ID for the key
-        /// vault.</param>
-        /// <param name="name">The name of the key vault.</param>
-        /// <param name="type">The resource type of the key vault.</param>
-        /// <param name="tags">The tags that will be assigned to the key vault.
-        /// </param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="id">Fully qualified identifier of the key vault
+        /// resource.</param>
+        /// <param name="name">Name of the key vault resource.</param>
+        /// <param name="type">Resource type of the key vault resource.</param>
+        /// <param name="location">Azure location of the key vault
+        /// resource.</param>
+        /// <param name="tags">Tags assigned to the key vault resource.</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
@@ -57,48 +56,34 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the Azure Resource Manager resource ID for the key vault.
+        /// Gets fully qualified identifier of the key vault resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the name of the key vault.
+        /// Gets name of the key vault resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the resource type of the key vault.
+        /// Gets resource type of the key vault resource.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the supported Azure location where the key vault
-        /// should be created.
+        /// Gets azure location of the key vault resource.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        public string Location { get; private set; }
 
         /// <summary>
-        /// Gets or sets the tags that will be assigned to the key vault.
+        /// Gets tags assigned to the key vault resource.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-        }
     }
 }

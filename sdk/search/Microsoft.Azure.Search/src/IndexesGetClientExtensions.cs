@@ -18,11 +18,11 @@ namespace Microsoft.Azure.Search
         /// </summary>
         /// <param name="operations">The operation group for indexes of the Search service.</param>
         /// <param name="indexName">The name of the index.</param>
-        /// <returns>A new <c cref="Microsoft.Azure.Search.SearchIndexClient">SearchIndexClient</c> instance.</returns>
+        /// <returns>A new <see cref="Microsoft.Azure.Search.SearchIndexClient" /> instance.</returns>
         /// <remarks>
         /// The new client is configured with full read-write access to the index. If you are only planning to use the
         /// client for query operations, we recommend directly creating a 
-        /// <c cref="Microsoft.Azure.Search.SearchIndexClient">SearchIndexClient</c> instance instead.
+        /// <see cref="Microsoft.Azure.Search.SearchIndexClient" /> instance instead.
         /// </remarks>
         public static ISearchIndexClient GetClient(this IIndexesOperations operations, string indexName)
         {

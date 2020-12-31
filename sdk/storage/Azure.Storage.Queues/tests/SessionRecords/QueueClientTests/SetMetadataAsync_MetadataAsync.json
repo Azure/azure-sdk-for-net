@@ -8,7 +8,7 @@
         "Request-Id": "00-fcbe9c982b1af9408c97e4d6d0e03882-cb74fed92c8b6f44-00",
         "traceparent": "00-fcbe9c982b1af9408c97e4d6d0e03882-cb74fed92c8b6f44-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.0.0-dev.20191015.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20191015.1+57ef4720914a34ab66322af016d927dc4992c5c9",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "dff66881-e545-863e-f139-1a45f05753cb",
@@ -38,7 +38,7 @@
         "Request-Id": "00-269373c83c0da54791c920c5c176fcf6-c1b4bec604244d4b-00",
         "traceparent": "00-269373c83c0da54791c920c5c176fcf6-c1b4bec604244d4b-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.0.0-dev.20191015.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20191015.1+57ef4720914a34ab66322af016d927dc4992c5c9",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "3ce025f7-82c8-0c82-f914-cad9f12716ae",
@@ -72,7 +72,7 @@
         "Request-Id": "00-e22b2be0671ac74393725004fbcdc4fa-339471fe1e7b504b-00",
         "traceparent": "00-e22b2be0671ac74393725004fbcdc4fa-339471fe1e7b504b-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.0.0-dev.20191015.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20191015.1+57ef4720914a34ab66322af016d927dc4992c5c9",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "cb4ea13b-1677-9d02-a1fb-f329d5f2dd62",
@@ -108,7 +108,7 @@
         "Request-Id": "00-5f9dcea5c0630447b99fef1e3f5b5974-fc5e38680064d24d-00",
         "traceparent": "00-5f9dcea5c0630447b99fef1e3f5b5974-fc5e38680064d24d-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.0.0-dev.20191015.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20191015.1+57ef4720914a34ab66322af016d927dc4992c5c9",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "4f9efa1c-4ad9-3e37-be5d-3071b2370ba8",
@@ -133,6 +133,6 @@
   ],
   "Variables": {
     "RandomSeed": "1221593603",
-    "Storage_TestConfigDefault": "ProductionTenant\namandadev2\nU2FuaXRpemVk\nhttp://amandadev2.blob.core.windows.net\nhttp://amandadev2.file.core.windows.net\nhttp://amandadev2.queue.core.windows.net\nhttp://amandadev2.table.core.windows.net\n\n\n\n\nhttp://amandadev2-secondary.blob.core.windows.net\nhttp://amandadev2-secondary.file.core.windows.net\nhttp://amandadev2-secondary.queue.core.windows.net\nhttp://amandadev2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://amandadev2.blob.core.windows.net/;QueueEndpoint=http://amandadev2.queue.core.windows.net/;TableEndpoint=http://amandadev2.table.core.windows.net/;FileEndpoint=http://amandadev2.file.core.windows.net/;BlobSecondaryEndpoint=http://amandadev2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandadev2-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://amandadev2-secondary.table.core.windows.net/;FileSecondaryEndpoint=http://amandadev2-secondary.file.core.windows.net/;AccountName=amandadev2;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\namandadev2\nU2FuaXRpemVk\nhttp://amandadev2.blob.core.windows.net\nhttp://amandadev2.file.core.windows.net\nhttp://amandadev2.queue.core.windows.net\nhttp://amandadev2.table.core.windows.net\n\n\n\n\nhttp://amandadev2-secondary.blob.core.windows.net\nhttp://amandadev2-secondary.file.core.windows.net\nhttp://amandadev2-secondary.queue.core.windows.net\nhttp://amandadev2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://amandadev2.blob.core.windows.net/;QueueEndpoint=http://amandadev2.queue.core.windows.net/;TableEndpoint=http://amandadev2.table.core.windows.net/;FileEndpoint=http://amandadev2.file.core.windows.net/;BlobSecondaryEndpoint=http://amandadev2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandadev2-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://amandadev2-secondary.table.core.windows.net/;FileSecondaryEndpoint=http://amandadev2-secondary.file.core.windows.net/;AccountName=amandadev2;AccountKey=Sanitized\nseanscope1"
   }
 }

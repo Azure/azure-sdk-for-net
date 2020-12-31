@@ -1243,6 +1243,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The number of entries to return. Maximum page size is 500. Default
         /// is 100.
         /// </param>
+        /// <param name='enableNestedChildren'>
+        /// Toggles nested/flat format
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -1258,7 +1261,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<IntentsSuggestionExample>>> ListIntentSuggestionsWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<IntentsSuggestionExample>>> ListIntentSuggestionsWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, int? take = 100, bool? enableNestedChildren = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get suggested example utterances that would improve the accuracy of
         /// the entity model in a version of the application.
@@ -1276,6 +1279,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The number of entries to return. Maximum page size is 500. Default
         /// is 100.
         /// </param>
+        /// <param name='enableNestedChildren'>
+        /// Toggles nested/flat format
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -1291,7 +1297,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntitiesSuggestionExample>>> ListEntitySuggestionsWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntitiesSuggestionExample>>> ListEntitySuggestionsWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, int? take = 100, bool? enableNestedChildren = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a sublist to an existing list entity in a version of the
         /// application.

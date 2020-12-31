@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Samples
             // Create a client that can authenticate with a connection string
             BlobServiceClient service = new BlobServiceClient(connectionString);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs.Samples
                 Uri endpoint = blob.Uri;
                 BlobClient anonymous = new BlobClient(endpoint);
 
-                // Make a service request to verify we've succesfully authenticated
+                // Make a service request to verify we've successfully authenticated
                 await anonymous.GetPropertiesAsync();
             }
             finally
@@ -117,7 +117,7 @@ namespace Azure.Storage.Blobs.Samples
             // Create a client that can authenticate with a connection string
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
 
@@ -162,7 +162,7 @@ namespace Azure.Storage.Blobs.Samples
             // Create a client that can authenticate with the SAS URI
             BlobServiceClient service = new BlobServiceClient(sasUri.Uri);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
 
             // Try to create a new container (which is beyond our
@@ -202,7 +202,7 @@ namespace Azure.Storage.Blobs.Samples
             // Create a client that can authenticate using our token credential
             BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
     }

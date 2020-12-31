@@ -22,121 +22,67 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class ProductsOperationsExtensions
     {
             /// <summary>
-            /// Lists products by customer id.
+            /// Lists the products for a customer. These don't include products billed
+            /// based on usage.The operation is supported only for billing accounts with
+            /// agreement type Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
-            /// <param name='filter'>
-            /// May be used to filter by product type. The filter supports 'eq', 'lt',
-            /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
-            /// separated by a colon (:).
-            /// </param>
-            public static ProductsListResult ListByCustomer(this IProductsOperations operations, string billingAccountName, string customerName, string filter = default(string))
+            public static IPage<Product> ListByCustomer(this IProductsOperations operations, string billingAccountName, string customerName)
             {
-                return operations.ListByCustomerAsync(billingAccountName, customerName, filter).GetAwaiter().GetResult();
+                return operations.ListByCustomerAsync(billingAccountName, customerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists products by customer id.
+            /// Lists the products for a customer. These don't include products billed
+            /// based on usage.The operation is supported only for billing accounts with
+            /// agreement type Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
-            /// </param>
-            /// <param name='filter'>
-            /// May be used to filter by product type. The filter supports 'eq', 'lt',
-            /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
-            /// separated by a colon (:).
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProductsListResult> ListByCustomerAsync(this IProductsOperations operations, string billingAccountName, string customerName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Product>> ListByCustomerAsync(this IProductsOperations operations, string billingAccountName, string customerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByCustomerWithHttpMessagesAsync(billingAccountName, customerName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByCustomerWithHttpMessagesAsync(billingAccountName, customerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get a customer's product by name.
+            /// Lists the products for a billing account. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='customerName'>
-            /// Customer name.
-            /// </param>
-            /// <param name='productName'>
-            /// Invoice Id.
-            /// </param>
-            public static Product GetByCustomer(this IProductsOperations operations, string billingAccountName, string customerName, string productName)
-            {
-                return operations.GetByCustomerAsync(billingAccountName, customerName, productName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a customer's product by name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='customerName'>
-            /// Customer name.
-            /// </param>
-            /// <param name='productName'>
-            /// Invoice Id.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Product> GetByCustomerAsync(this IProductsOperations operations, string billingAccountName, string customerName, string productName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetByCustomerWithHttpMessagesAsync(billingAccountName, customerName, productName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists products by billing account name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter by product type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             public static IPage<Product> ListByBillingAccount(this IProductsOperations operations, string billingAccountName, string filter = default(string))
@@ -145,19 +91,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists products by billing account name.
+            /// Lists the products for a billing account. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter by product type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             /// <param name='cancellationToken'>
@@ -172,58 +120,120 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists products by invoice section name.
+            /// Lists the products for a billing profile. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter by product type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
-            public static ProductsListResult ListByInvoiceSection(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string filter = default(string))
+            public static IPage<Product> ListByBillingProfile(this IProductsOperations operations, string billingAccountName, string billingProfileName, string filter = default(string))
             {
-                return operations.ListByInvoiceSectionAsync(billingAccountName, billingProfileName, invoiceSectionName, filter).GetAwaiter().GetResult();
+                return operations.ListByBillingProfileAsync(billingAccountName, billingProfileName, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists products by invoice section name.
+            /// Lists the products for a billing profile. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter by product type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProductsListResult> ListByInvoiceSectionAsync(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Product>> ListByBillingProfileAsync(this IProductsOperations operations, string billingAccountName, string billingProfileName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the products for an invoice section. These don't include products
+            /// billed based on usage. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// The ID that uniquely identifies a billing profile.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// The ID that uniquely identifies an invoice section.
+            /// </param>
+            /// <param name='filter'>
+            /// May be used to filter by product type. The filter supports 'eq', 'lt',
+            /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
+            /// 'not'. Tag filter is a key value pair string where key and value are
+            /// separated by a colon (:).
+            /// </param>
+            public static IPage<Product> ListByInvoiceSection(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string filter = default(string))
+            {
+                return operations.ListByInvoiceSectionAsync(billingAccountName, billingProfileName, invoiceSectionName, filter).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the products for an invoice section. These don't include products
+            /// billed based on usage. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// The ID that uniquely identifies a billing profile.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// The ID that uniquely identifies an invoice section.
+            /// </param>
+            /// <param name='filter'>
+            /// May be used to filter by product type. The filter supports 'eq', 'lt',
+            /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
+            /// 'not'. Tag filter is a key value pair string where key and value are
+            /// separated by a colon (:).
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Product>> ListByInvoiceSectionAsync(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByInvoiceSectionWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -232,235 +242,255 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get a single product by name.
+            /// Gets a product by ID. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
-            public static Product Get(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName)
+            public static Product Get(this IProductsOperations operations, string billingAccountName, string productName)
             {
-                return operations.GetAsync(billingAccountName, billingProfileName, invoiceSectionName, productName).GetAwaiter().GetResult();
+                return operations.GetAsync(billingAccountName, productName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get a single product by name.
+            /// Gets a product by ID. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Product> GetAsync(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Product> GetAsync(this IProductsOperations operations, string billingAccountName, string productName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, productName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, productName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// The operation to transfer a Product to another invoice section.
+            /// Updates the properties of a Product. Currently, auto renew can be updated.
+            /// The operation is supported only for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Transfer Product operation.
+            /// Request parameters that are provided to the update product operation.
             /// </param>
-            public static Product Transfer(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName, TransferProductRequestProperties parameters)
+            public static Product Update(this IProductsOperations operations, string billingAccountName, string productName, Product parameters)
             {
-                return operations.TransferAsync(billingAccountName, billingProfileName, invoiceSectionName, productName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(billingAccountName, productName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The operation to transfer a Product to another invoice section.
+            /// Updates the properties of a Product. Currently, auto renew can be updated.
+            /// The operation is supported only for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Transfer Product operation.
+            /// Request parameters that are provided to the update product operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Product> TransferAsync(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName, TransferProductRequestProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Product> UpdateAsync(this IProductsOperations operations, string billingAccountName, string productName, Product parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TransferWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, productName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(billingAccountName, productName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Validates the transfer of products across invoice sections.
+            /// Moves a product's charges to a new invoice section. The new invoice section
+            /// must belong to the same billing profile as the existing invoice section.
+            /// This operation is supported only for products that are purchased with a
+            /// recurring charge and for billing accounts with agreement type Microsoft
+            /// Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Transfer Products operation.
+            /// Request parameters that are provided to the move product operation.
             /// </param>
-            public static ValidateProductTransferEligibilityResult ValidateTransfer(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName, TransferProductRequestProperties parameters)
+            public static Product Move(this IProductsOperations operations, string billingAccountName, string productName, TransferProductRequestProperties parameters)
             {
-                return operations.ValidateTransferAsync(billingAccountName, billingProfileName, invoiceSectionName, productName, parameters).GetAwaiter().GetResult();
+                return operations.MoveAsync(billingAccountName, productName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Validates the transfer of products across invoice sections.
+            /// Moves a product's charges to a new invoice section. The new invoice section
+            /// must belong to the same billing profile as the existing invoice section.
+            /// This operation is supported only for products that are purchased with a
+            /// recurring charge and for billing accounts with agreement type Microsoft
+            /// Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Transfer Products operation.
+            /// Request parameters that are provided to the move product operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ValidateProductTransferEligibilityResult> ValidateTransferAsync(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName, TransferProductRequestProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Product> MoveAsync(this IProductsOperations operations, string billingAccountName, string productName, TransferProductRequestProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ValidateTransferWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, productName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.MoveWithHttpMessagesAsync(billingAccountName, productName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Cancel auto renew for product by product id and invoice section name
+            /// Validates if a product's charges can be moved to a new invoice section.
+            /// This operation is supported only for products that are purchased with a
+            /// recurring charge and for billing accounts with agreement type Microsoft
+            /// Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
-            /// <param name='body'>
-            /// Update auto renew request parameters.
+            /// <param name='parameters'>
+            /// Request parameters that are provided to the validate move eligibility
+            /// operation.
             /// </param>
-            public static UpdateAutoRenewOperation UpdateAutoRenewByInvoiceSection(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName, UpdateAutoRenewRequest body)
+            public static ValidateProductTransferEligibilityResult ValidateMove(this IProductsOperations operations, string billingAccountName, string productName, TransferProductRequestProperties parameters)
             {
-                return operations.UpdateAutoRenewByInvoiceSectionAsync(billingAccountName, billingProfileName, invoiceSectionName, productName, body).GetAwaiter().GetResult();
+                return operations.ValidateMoveAsync(billingAccountName, productName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Cancel auto renew for product by product id and invoice section name
+            /// Validates if a product's charges can be moved to a new invoice section.
+            /// This operation is supported only for products that are purchased with a
+            /// recurring charge and for billing accounts with agreement type Microsoft
+            /// Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
-            /// <param name='body'>
-            /// Update auto renew request parameters.
+            /// <param name='parameters'>
+            /// Request parameters that are provided to the validate move eligibility
+            /// operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UpdateAutoRenewOperation> UpdateAutoRenewByInvoiceSectionAsync(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName, UpdateAutoRenewRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ValidateProductTransferEligibilityResult> ValidateMoveAsync(this IProductsOperations operations, string billingAccountName, string productName, TransferProductRequestProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateAutoRenewByInvoiceSectionWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, productName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ValidateMoveWithHttpMessagesAsync(billingAccountName, productName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists products by billing account name.
+            /// Lists the products for a customer. These don't include products billed
+            /// based on usage.The operation is supported only for billing accounts with
+            /// agreement type Microsoft Partner Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Product> ListByCustomerNext(this IProductsOperations operations, string nextPageLink)
+            {
+                return operations.ListByCustomerNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the products for a customer. These don't include products billed
+            /// based on usage.The operation is supported only for billing accounts with
+            /// agreement type Microsoft Partner Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Product>> ListByCustomerNextAsync(this IProductsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByCustomerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the products for a billing account. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -475,7 +505,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists products by billing account name.
+            /// Lists the products for a billing account. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -490,6 +522,86 @@ namespace Microsoft.Azure.Management.Billing
             public static async Task<IPage<Product>> ListByBillingAccountNextAsync(this IProductsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByBillingAccountNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the products for a billing profile. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Product> ListByBillingProfileNext(this IProductsOperations operations, string nextPageLink)
+            {
+                return operations.ListByBillingProfileNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the products for a billing profile. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Product>> ListByBillingProfileNextAsync(this IProductsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingProfileNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the products for an invoice section. These don't include products
+            /// billed based on usage. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Product> ListByInvoiceSectionNext(this IProductsOperations operations, string nextPageLink)
+            {
+                return operations.ListByInvoiceSectionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the products for an invoice section. These don't include products
+            /// billed based on usage. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Product>> ListByInvoiceSectionNextAsync(this IProductsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByInvoiceSectionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

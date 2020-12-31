@@ -1,60 +1,60 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments?api-version=2018-11-20",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL3ZpdmdhL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvdml2Z2EwL3Byb3ZpZGVycy9NaWNyb3NvZnQuR3Vlc3RDb25maWd1cmF0aW9uL2d1ZXN0Q29uZmlndXJhdGlvbkFzc2lnbm1lbnRzP2FwaS12ZXJzaW9uPTIwMTgtMTEtMjA=",
+      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments?api-version=2020-06-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL2dlVGVzdFJlc291cmNlR3JvdXAwMDIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9HZVdpbjIwMjAwNTA3L3Byb3ZpZGVycy9NaWNyb3NvZnQuR3Vlc3RDb25maWd1cmF0aW9uL2d1ZXN0Q29uZmlndXJhdGlvbkFzc2lnbm1lbnRzP2FwaS12ZXJzaW9uPTIwMjAtMDYtMjU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "deb0caeb-c74d-4698-b937-135b5a5ef06d"
+          "84f8cc76-5d2e-4645-b152-a85adc4b90c3"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.1.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.3.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 01 Feb 2019 20:01:33 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
         ],
         "X-Powered-By": [
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11998"
         ],
         "x-ms-request-id": [
-          "797a04eb-a0c5-4e1d-9d9f-2eeaea579f28"
+          "071df6ba-fc85-4a6e-aada-d873008a7001"
         ],
         "x-ms-correlation-request-id": [
-          "797a04eb-a0c5-4e1d-9d9f-2eeaea579f28"
+          "071df6ba-fc85-4a6e-aada-d873008a7001"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190201T200134Z:797a04eb-a0c5-4e1d-9d9f-2eeaea579f28"
+          "WESTUS:20200713T164503Z:071df6ba-fc85-4a6e-aada-d873008a7001"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Mon, 13 Jul 2020 16:45:02 GMT"
+        ],
         "Content-Length": [
-          "3856"
+          "2697"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,12 +63,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westcentralus\",\r\n      \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignmentHash\": \"98ACBE11E578A78AC17C43A19045E3E80D08E764CC90C4B3BC1BFD48E8243140.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855\",\r\n        \"latestReportId\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/28818230-4514-4aaf-ba81-31ba0756c255\",\r\n        \"lastComplianceStatusChecked\": \"2019-02-01T19:31:53Z\",\r\n        \"context\": null,\r\n        \"guestConfiguration\": {\r\n          \"kind\": null,\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"version\": \"1.*\",\r\n          \"contentUri\": \"https://oaasguestconfigwcuss1.blob.core.windows.net/builtinconfig/AuditSecureProtocol/AuditSecureProtocol_1.1.0.0.zip\",\r\n          \"contentHash\": \"98ACBE11E578A78AC17C43A19045E3E80D08E764CC90C4B3BC1BFD48E8243140\",\r\n          \"contentType\": null,\r\n          \"configurationParameter\": [],\r\n          \"configurationSetting\": null\r\n        },\r\n        \"provisioningState\": null\r\n      }\r\n    },\r\n    {\r\n      \"location\": \"westcentralus\",\r\n      \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/NotInstalledApplication\",\r\n      \"name\": \"NotInstalledApplication\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"Compliant\",\r\n        \"assignmentHash\": \"520E428984E2C33C0BCC7BC1CF8982D6AF065B14BD8D36DA5082D7BE7FF4E578.2C5D17ECE6FA069B3EBC5A9C1790E443FB8CD58E0B2332E4F8BAE86C915DA89A\",\r\n        \"latestReportId\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/NotInstalledApplication/reports/2ef6dd19-c6e4-4638-a7fd-a476b73a9335\",\r\n        \"lastComplianceStatusChecked\": \"2019-01-18T18:49:56Z\",\r\n        \"context\": null,\r\n        \"guestConfiguration\": {\r\n          \"kind\": null,\r\n          \"name\": \"NotInstalledApplication\",\r\n          \"version\": \"1.*\",\r\n          \"contentUri\": \"https://oaasguestconfigwcuss1.blob.core.windows.net/builtinconfig/NotInstalledApplication/NotInstalledApplication_1.0.0.0.zip\",\r\n          \"contentHash\": \"520E428984E2C33C0BCC7BC1CF8982D6AF065B14BD8D36DA5082D7BE7FF4E578\",\r\n          \"contentType\": null,\r\n          \"configurationParameter\": [\r\n            {\r\n              \"name\": \"[InstalledApplication]NotInstalledApplicationResource1;Name\",\r\n              \"value\": \"*Chrome*\"\r\n            }\r\n          ],\r\n          \"configurationSetting\": null\r\n        },\r\n        \"provisioningState\": null\r\n      }\r\n    },\r\n    {\r\n      \"location\": \"westcentralus\",\r\n      \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WhitelistedApplication\",\r\n      \"name\": \"WhitelistedApplication\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignmentHash\": \"F606DAC934FA367A32FCF695F7CA7399F009AF1A1B45CDFCBD34B89972E73394.E381A1748D08855C4004123F85A5DAE5D26E33B38FFDAACE715AB39B88F8BF04\",\r\n        \"latestReportId\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WhitelistedApplication/reports/e0628ede-dbe4-48ac-a490-156489f8da3b\",\r\n        \"lastComplianceStatusChecked\": \"2019-01-18T18:49:53Z\",\r\n        \"context\": null,\r\n        \"guestConfiguration\": {\r\n          \"kind\": null,\r\n          \"name\": \"WhitelistedApplication\",\r\n          \"version\": \"1.*\",\r\n          \"contentUri\": \"https://oaasguestconfigwcuss1.blob.core.windows.net/builtinconfig/WhitelistedApplication/WhitelistedApplication_1.3.0.0.zip\",\r\n          \"contentHash\": \"F606DAC934FA367A32FCF695F7CA7399F009AF1A1B45CDFCBD34B89972E73394\",\r\n          \"contentType\": null,\r\n          \"configurationParameter\": [\r\n            {\r\n              \"name\": \"[InstalledApplication]bwhitelistedapp;Name\",\r\n              \"value\": \"*Chrome*\"\r\n            }\r\n          ],\r\n          \"configurationSetting\": null\r\n        },\r\n        \"provisioningState\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"southcentralus\",\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/GeTestCheckBitlockerService\",\r\n      \"name\": \"GeTestCheckBitlockerService\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignmentHash\": \"937C6F0D3C89FA524C3112428FE9DD7503EDCB9027B8B60B093CFEBD8C246C33.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855\",\r\n        \"parameterHash\": \"\",\r\n        \"latestReportId\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/GeTestCheckBitlockerService/reports/c0ca66d8-26da-422d-9187-850700548765\",\r\n        \"lastComplianceStatusChecked\": \"2020-07-13T16:39:03Z\",\r\n        \"context\": null,\r\n        \"guestConfiguration\": {\r\n          \"kind\": null,\r\n          \"name\": \"GeTestCheckBitlockerService\",\r\n          \"version\": \"1.1.9.10\",\r\n          \"contentUri\": \"https://github.com/gehuang-dut/TestRepo/raw/master/GeTestCheckBitlockerService.zip\",\r\n          \"contentHash\": \"937C6F0D3C89FA524C3112428FE9DD7503EDCB9027B8B60B093CFEBD8C246C33\",\r\n          \"contentType\": null,\r\n          \"assignmentType\": null,\r\n          \"configurationParameter\": [],\r\n          \"configurationProtectedParameter\": [],\r\n          \"configurationSetting\": null\r\n        },\r\n        \"provisioningState\": null\r\n      }\r\n    },\r\n    {\r\n      \"location\": \"westcentralus\",\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"Compliant\",\r\n        \"assignmentHash\": \"E0D8941DD713F284284561648C00C18FA76C8602943C7CD38AFD73B56AE4C35F.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855\",\r\n        \"parameterHash\": \"\",\r\n        \"latestReportId\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/7f2510fe-763e-49c5-af84-353d4a453d4f\",\r\n        \"lastComplianceStatusChecked\": \"2020-07-13T16:39:10Z\",\r\n        \"context\": null,\r\n        \"guestConfiguration\": {\r\n          \"kind\": null,\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"version\": \"1.0.0.3\",\r\n          \"contentUri\": \"https://oaasguestconfigscuss1.blob.core.windows.net/builtinconfig/AuditSecureProtocol/AuditSecureProtocol_1.0.0.3.zip\",\r\n          \"contentHash\": \"E0D8941DD713F284284561648C00C18FA76C8602943C7CD38AFD73B56AE4C35F\",\r\n          \"contentType\": null,\r\n          \"assignmentType\": null,\r\n          \"configurationParameter\": [],\r\n          \"configurationProtectedParameter\": [],\r\n          \"configurationSetting\": null\r\n        },\r\n        \"provisioningState\": null\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "b5e4748c-f69a-467c-8749-e2f9c8cd3db0"
+    "SubscriptionId": "f66367e1-cf7d-407b-ba39-53230cc79071"
   }
 }

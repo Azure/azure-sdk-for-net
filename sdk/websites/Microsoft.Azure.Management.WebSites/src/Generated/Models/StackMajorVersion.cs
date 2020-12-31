@@ -43,13 +43,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="applicationInsights">&lt;code&gt;true&lt;/code&gt; if
         /// this supports Application Insights; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
-        public StackMajorVersion(string displayVersion = default(string), string runtimeVersion = default(string), bool? isDefault = default(bool?), IList<StackMinorVersion> minorVersions = default(IList<StackMinorVersion>), bool? applicationInsights = default(bool?))
+        /// <param name="isPreview">&lt;code&gt;true&lt;/code&gt; if this stack
+        /// is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;.</param>
+        /// <param name="isDeprecated">&lt;code&gt;true&lt;/code&gt; if this
+        /// stack has been deprecated, otherwise
+        /// &lt;code&gt;false&lt;/code&gt;.</param>
+        /// <param name="isHidden">&lt;code&gt;true&lt;/code&gt; if this stack
+        /// should be hidden for new customers on portal, otherwise
+        /// &lt;code&gt;false&lt;/code&gt;.</param>
+        public StackMajorVersion(string displayVersion = default(string), string runtimeVersion = default(string), bool? isDefault = default(bool?), IList<StackMinorVersion> minorVersions = default(IList<StackMinorVersion>), bool? applicationInsights = default(bool?), bool? isPreview = default(bool?), bool? isDeprecated = default(bool?), bool? isHidden = default(bool?))
         {
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
             IsDefault = isDefault;
             MinorVersions = minorVersions;
             ApplicationInsights = applicationInsights;
+            IsPreview = isPreview;
+            IsDeprecated = isDeprecated;
+            IsHidden = isHidden;
             CustomInit();
         }
 
@@ -91,6 +102,30 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "applicationInsights")]
         public bool? ApplicationInsights { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if this
+        /// stack is in Preview, otherwise
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "isPreview")]
+        public bool? IsPreview { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if this
+        /// stack has been deprecated, otherwise
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDeprecated")]
+        public bool? IsDeprecated { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if this
+        /// stack should be hidden for new customers on portal, otherwise
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "isHidden")]
+        public bool? IsHidden { get; set; }
 
     }
 }

@@ -44,17 +44,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="queryTimeout">Query timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
         /// <param name="query">SAP HANA Sql query. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="packetSize">The packet size of data read from SAP
         /// HANA. Type: integer(or Expression with resultType integer).</param>
         /// <param name="partitionOption">The partition mechanism that will be
         /// used for SAP HANA read in parallel. Possible values include:
-        /// 'None', 'PhysicalPartitionsOfTable', 'SapHanaDynamicRange'</param>
+        /// "None", "PhysicalPartitionsOfTable", "SapHanaDynamicRange".
+        /// </param>
         /// <param name="partitionSettings">The settings that will be leveraged
         /// for SAP HANA source partitioning.</param>
-        public SapHanaSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object query = default(object), object packetSize = default(object), string partitionOption = default(string), SapHanaPartitionSettings partitionSettings = default(SapHanaPartitionSettings))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
+        public SapHanaSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), object packetSize = default(object), object partitionOption = default(object), SapHanaPartitionSettings partitionSettings = default(SapHanaPartitionSettings))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
         {
             Query = query;
             PacketSize = packetSize;
@@ -84,11 +88,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the partition mechanism that will be used for SAP HANA
-        /// read in parallel. Possible values include: 'None',
-        /// 'PhysicalPartitionsOfTable', 'SapHanaDynamicRange'
+        /// read in parallel. Possible values include: "None",
+        /// "PhysicalPartitionsOfTable", "SapHanaDynamicRange".
         /// </summary>
         [JsonProperty(PropertyName = "partitionOption")]
-        public string PartitionOption { get; set; }
+        public object PartitionOption { get; set; }
 
         /// <summary>
         /// Gets or sets the settings that will be leveraged for SAP HANA

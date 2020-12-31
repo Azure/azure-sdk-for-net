@@ -11,51 +11,65 @@
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
-    /// The alias type.
+    /// Defines values for AliasType.
     /// </summary>
-    public partial class AliasType
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum AliasType
     {
         /// <summary>
-        /// Initializes a new instance of the AliasType class.
+        /// Alias type is unknown (same as not providing alias type).
         /// </summary>
-        public AliasType()
+        [EnumMember(Value = "NotSpecified")]
+        NotSpecified,
+        /// <summary>
+        /// Alias value is not secret.
+        /// </summary>
+        [EnumMember(Value = "PlainText")]
+        PlainText,
+        /// <summary>
+        /// Alias value is secret.
+        /// </summary>
+        [EnumMember(Value = "Mask")]
+        Mask
+    }
+    internal static class AliasTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this AliasType? value)
         {
-            CustomInit();
+            return value == null ? null : ((AliasType)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the AliasType class.
-        /// </summary>
-        /// <param name="name">The alias name.</param>
-        /// <param name="paths">The paths for an alias.</param>
-        public AliasType(string name = default(string), IList<AliasPathType> paths = default(IList<AliasPathType>))
+        internal static string ToSerializedValue(this AliasType value)
         {
-            Name = name;
-            Paths = paths;
-            CustomInit();
+            switch( value )
+            {
+                case AliasType.NotSpecified:
+                    return "NotSpecified";
+                case AliasType.PlainText:
+                    return "PlainText";
+                case AliasType.Mask:
+                    return "Mask";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the alias name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the paths for an alias.
-        /// </summary>
-        [JsonProperty(PropertyName = "paths")]
-        public IList<AliasPathType> Paths { get; set; }
-
+        internal static AliasType? ParseAliasType(this string value)
+        {
+            switch( value )
+            {
+                case "NotSpecified":
+                    return AliasType.NotSpecified;
+                case "PlainText":
+                    return AliasType.PlainText;
+                case "Mask":
+                    return AliasType.Mask;
+            }
+            return null;
+        }
     }
 }

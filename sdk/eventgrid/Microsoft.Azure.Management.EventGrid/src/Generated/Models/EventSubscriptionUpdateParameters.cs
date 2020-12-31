@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of the Event Subscription update
+    /// Properties of the Event Subscription update.
     /// </summary>
     public partial class EventSubscriptionUpdateParameters
     {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// time for the event subscription.</param>
         /// <param name="eventDeliverySchema">The event delivery schema for the
         /// event subscription. Possible values include: 'EventGridSchema',
-        /// 'CustomInputSchema', 'CloudEventSchemaV1_0'.</param>
+        /// 'CustomInputSchema', 'CloudEventSchemaV1_0'</param>
         /// <param name="retryPolicy">The retry policy for events. This can be
         /// used to configure maximum number of delivery attempts and time to
         /// live for events.</param>
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Gets or sets the event delivery schema for the event subscription.
         /// Possible values include: 'EventGridSchema', 'CustomInputSchema',
-        /// 'CloudEventSchemaV1_0'.
+        /// 'CloudEventSchemaV1_0'
         /// </summary>
         [JsonProperty(PropertyName = "eventDeliverySchema")]
         public string EventDeliverySchema { get; set; }

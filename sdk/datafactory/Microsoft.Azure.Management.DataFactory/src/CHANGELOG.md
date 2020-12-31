@@ -1,5 +1,80 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.13.0
+###  Feature Additions
+- Added publicNetworkAccess property to datafactory
+- Added logSettings property into CopyActivity
+- Added connectionProperties property into Concur linkedService
+- Added authenticationType and sessionToken properties into AmazonS3 linkedService
+- Added support for more frequency types for TumblingWindowTrigger
+- Set computeType, coreCount to object type to allow expressions
+- Change property PartitionOption type to object for NetezzaSource, OracleSource, SapHanaSource, SapTableSource, SqlDWSource, SqlMISource, SqlServerSource, SqlSource, TeradataSource. 
+
+## Version 4.12.0
+###  Feature Additions
+- Added logLevel/enableReliableLogging to LogStorageSettings
+- Support Tar GZip compression type in Data Factory
+- Added maxRowPerFile/fileNamePrefix to tabular format settings
+- Added support for AzureDatabricks delta lake
+- Update Rest Sink properties
+- Added support lzo in orc format
+- Added MongoDbAtlas Source Connector in DataFactory
+
+## Version 4.11.0
+###  Feature Additions
+- Added support for Trigger Run Cancel API
+- Added column delimiter for SAP Table/open hub
+- Added azureCloudType for Aad Auth
+- Added snapshot to Azure File Storage linked service
+- Support HDFS for delete activity and deleteFilesAfterCompletion feature in copy activity
+- Added support for managed Virtual Network and managed private endpoint CRUD APIs
+- Added Support for Query EC List API
+- Added more options on XML and CosmosDbSqlApi copy source
+- Fix bug: Added AzureFileStorageWriteSettings
+
+## Version 4.10.0
+###  Feature Additions
+- Added connectionProperties property to QuickBooks, Square, Xero, Zoho, SalesforceMarketingCloud linked service
+- Added support of Message server connecting from SAP Open Hub
+- Enable Sql Sources (AzureSqlDatabase, SqlSever, Synapse, SqlMI) read in parallel, support partition by dynamic range and sql built-in partitions.
+- Added Rest as Sink Type in Copy Sink
+- Added NewClusterLogDestination property to Azure Databricks linked service
+- Support expression (object) type for data flow staging folder path
+- Add new type "AzPowerShellSetup" to parameter "ExpressCustomSetup" for "AzureRmDataFactoryV2IntegrationRuntime" cmd to install Azure PowerShell
+
+## Version 4.9.0
+###  Feature Additions
+- Added support for specifying a linked service as a Data Flow source and sink type
+- Added support for providing a schema linked service reference within Data Flow sources and sinks
+- Added support for xml dataset in ADF
+- Added support for excel dataset in ADF
+- Added new type conversion support in Copy activity
+- Added support for copying data to and from Snowflake using copy activity
+- Added package store support for Azure-SSIS integration runtime
+- Added httpRequestTimeout for ODataSource, SapEccSource, SapCloudForCustomerSource, SapCloudForCustomerSink, DynamicsAXSource
+- Added SharePointOnlineListConnector
+- Added auth by accountKey/SASuri to azure file connector
+- Added prefix filter to azure file source
+- Added fileFilter to file server source
+- Added partitionRootPath to binary connector
+- Added an option to support unzip file directly to target folder
+
+## Version 4.8.0
+###  Feature Additions
+- Added new API to query on triggers with filters like type and parentTrigger
+- Fixed offset value validation in self dependency and trigger dependency for tumbling window trigger, now accepts negative offsets
+- Introduced a new rerunTumblingWindowTrigger which can rerun multiple windows of an existing tumblingWindowTrigger with independent concurrency
+- Added rerun from failed activity support for create pipeline run
+- Added apiVersion property and set SecurityToken from required to optional for Salesforce
+- Added connectionString property to DB2 linked service
+- Added useTempFileRename to SFTP sink
+- Added additionalColumns for copy source
+- Added validate data consistency for copy activity
+- Added support session log for copy activity
+- Added isolationLevel for sql source
+- Added expiryDateTime for ADLS Gen1 source
+- Added fileListPath for binary sources
+
 ## Version 4.7.0
 ###  Feature Additions
 - Added compute support in execute data flow activity
@@ -179,7 +254,7 @@ AzureBlobStorageWriteSettings, AzureBlobFSWriteSettings, AzureDataLakeStoreWrite
 
 ## Version 1.0.0
 ### Feature Additions
-* Azure Data Factory new capabilities now fall under General Availability SLA. ADF has made cloud data integration easier than ever before. Build, schedule and manage data integration at scale wherever your data lives, in cloud or on-premises, with enterprise-grade security. Accelerate your data integration projects with over 70 data source connectors available, please refer to https://docs.microsoft.com/en-us/azure/data-factory/copy-activity-overview. Transform raw data into finished, shaped data that is ready for consumption by BI tools or custom applications. Easily lift your SQL Server Integration Services (SSIS) packages to Azure and let ADF manage your resources for you so you can increase productivity and lower TCO, please refer to https://docs.microsoft.com/en-us/sql/integration-services/lift-shift/ssis-azure-lift-shift-ssis-packages-overview?view=sql-server-2017. Meet your security and compliance needs while taking advantage of extensive capabilities and paying only for what you use. The ADF GA SDK changes include the following:
+* Azure Data Factory new capabilities now fall under General Availability SLA. ADF has made cloud data integration easier than ever before. Build, schedule and manage data integration at scale wherever your data lives, in cloud or on-premises, with enterprise-grade security. Accelerate your data integration projects with over 70 data source connectors available, please refer to https://docs.microsoft.com/azure/data-factory/copy-activity-overview. Transform raw data into finished, shaped data that is ready for consumption by BI tools or custom applications. Easily lift your SQL Server Integration Services (SSIS) packages to Azure and let ADF manage your resources for you so you can increase productivity and lower TCO, please refer to https://docs.microsoft.com/sql/integration-services/lift-shift/ssis-azure-lift-shift-ssis-packages-overview?view=sql-server-2017. Meet your security and compliance needs while taking advantage of extensive capabilities and paying only for what you use. The ADF GA SDK changes include the following:
         -    The API 'removeNode’ on IR has been removed and replaced with DELETE API on IR node.
         -    The API 'POST pipelineRuns’ was renamed to 'POST queryPipelineRuns’ and 'PipelineRunFilterParameters’ was renamed to 'RunFilterParameters’.
         -    The API 'GET activityRuns’ using pipeline run id has been replaced with 'POST queryActivityRuns’. It also takes RunFilterParameters object in the body to provide more options to query and order the result.

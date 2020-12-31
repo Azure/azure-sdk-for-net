@@ -35,11 +35,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Azure.</param>
         /// <param name="name">Name of this resource.</param>
         /// <param name="type">Type of this resource.</param>
-        public AzureResourceBase(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        public AzureResourceBase(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -65,6 +68,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets azure Resource Manager metadata containing createdBy and
+        /// modifiedBy information.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

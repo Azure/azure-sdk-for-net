@@ -14,8 +14,9 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     using System.Linq;
 
     /// <summary>
-    /// Error reponse indicates NotificationHubs service is not able to process
-    /// the incoming request. The reason is provided in the error message.
+    /// Error response indicates NotificationHubs service is not able to
+    /// process the incoming request. The reason is provided in the error
+    /// message.
     /// </summary>
     public partial class ErrorResponse
     {

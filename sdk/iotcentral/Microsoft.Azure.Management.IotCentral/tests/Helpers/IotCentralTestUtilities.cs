@@ -13,7 +13,7 @@ namespace IotCentral.Tests.Helpers
 
     public class IotCentralTestUtilities
     {
-        public static string DefaultLocation = "WestUS";
+        public static string DefaultLocation = "EastUS";
         public static string DefaultResourceName = "dotnetsdkapp";
         public static string DefaultUpdateResourceName = "dotnetsdkappupdate";
         public static string DefaultSubdomain = "dotnetsdksubdomain";

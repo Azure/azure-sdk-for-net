@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Threading;
@@ -54,7 +54,6 @@ namespace Azure.Core.Tests
         {
             HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
             message.SetProperty("someName", "value");
-
 
             Assert.False(message.TryGetProperty("SomeName", out _));
         }

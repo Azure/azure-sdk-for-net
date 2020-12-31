@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Storage
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -46,9 +44,13 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional. When specified, only share names starting with the filter will be
             /// listed.
             /// </param>
-            public static IPage<FileShareItem> List(this IFileSharesOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string))
+            /// <param name='expand'>
+            /// Optional, used to expand the properties within share's properties. Possible
+            /// values include: 'deleted'
+            /// </param>
+            public static IPage<FileShareItem> List(this IFileSharesOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), ListSharesExpand? expand = default(ListSharesExpand?))
             {
-                return operations.ListAsync(resourceGroupName, accountName, maxpagesize, filter).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, accountName, maxpagesize, filter, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -74,12 +76,16 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional. When specified, only share names starting with the filter will be
             /// listed.
             /// </param>
+            /// <param name='expand'>
+            /// Optional, used to expand the properties within share's properties. Possible
+            /// values include: 'deleted'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FileShareItem>> ListAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<FileShareItem>> ListAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), ListSharesExpand? expand = default(ListSharesExpand?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, maxpagesize, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, maxpagesize, filter, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -108,17 +114,12 @@ namespace Microsoft.Azure.Management.Storage
             /// lower-case letters and dash (-) only. Every dash (-) character must be
             /// immediately preceded and followed by a letter or number.
             /// </param>
-            /// <param name='metadata'>
-            /// A name-value pair to associate with the share as metadata.
+            /// <param name='fileShare'>
+            /// Properties of the file share to create.
             /// </param>
-            /// <param name='shareQuota'>
-            /// The maximum size of the share, in gigabytes. Must be greater than 0, and
-            /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
-            /// is 102400.
-            /// </param>
-            public static FileShare Create(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?))
+            public static FileShare Create(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, FileShare fileShare)
             {
-                return operations.CreateAsync(resourceGroupName, accountName, shareName, metadata, shareQuota).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, accountName, shareName, fileShare).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -144,20 +145,15 @@ namespace Microsoft.Azure.Management.Storage
             /// lower-case letters and dash (-) only. Every dash (-) character must be
             /// immediately preceded and followed by a letter or number.
             /// </param>
-            /// <param name='metadata'>
-            /// A name-value pair to associate with the share as metadata.
-            /// </param>
-            /// <param name='shareQuota'>
-            /// The maximum size of the share, in gigabytes. Must be greater than 0, and
-            /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
-            /// is 102400.
+            /// <param name='fileShare'>
+            /// Properties of the file share to create.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileShare> CreateAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileShare> CreateAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, metadata, shareQuota, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, fileShare, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -186,17 +182,12 @@ namespace Microsoft.Azure.Management.Storage
             /// lower-case letters and dash (-) only. Every dash (-) character must be
             /// immediately preceded and followed by a letter or number.
             /// </param>
-            /// <param name='metadata'>
-            /// A name-value pair to associate with the share as metadata.
+            /// <param name='fileShare'>
+            /// Properties to update for the file share.
             /// </param>
-            /// <param name='shareQuota'>
-            /// The maximum size of the share, in gigabytes. Must be greater than 0, and
-            /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
-            /// is 102400.
-            /// </param>
-            public static FileShare Update(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?))
+            public static FileShare Update(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, FileShare fileShare)
             {
-                return operations.UpdateAsync(resourceGroupName, accountName, shareName, metadata, shareQuota).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, shareName, fileShare).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -222,20 +213,15 @@ namespace Microsoft.Azure.Management.Storage
             /// lower-case letters and dash (-) only. Every dash (-) character must be
             /// immediately preceded and followed by a letter or number.
             /// </param>
-            /// <param name='metadata'>
-            /// A name-value pair to associate with the share as metadata.
-            /// </param>
-            /// <param name='shareQuota'>
-            /// The maximum size of the share, in gigabytes. Must be greater than 0, and
-            /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
-            /// is 102400.
+            /// <param name='fileShare'>
+            /// Properties to update for the file share.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileShare> UpdateAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileShare> UpdateAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, metadata, shareQuota, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, fileShare, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -262,9 +248,13 @@ namespace Microsoft.Azure.Management.Storage
             /// lower-case letters and dash (-) only. Every dash (-) character must be
             /// immediately preceded and followed by a letter or number.
             /// </param>
-            public static FileShare Get(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName)
+            /// <param name='expand'>
+            /// Optional, used to expand the properties within share's properties. Possible
+            /// values include: 'stats'
+            /// </param>
+            public static FileShare Get(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?))
             {
-                return operations.GetAsync(resourceGroupName, accountName, shareName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, shareName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -288,12 +278,16 @@ namespace Microsoft.Azure.Management.Storage
             /// lower-case letters and dash (-) only. Every dash (-) character must be
             /// immediately preceded and followed by a letter or number.
             /// </param>
+            /// <param name='expand'>
+            /// Optional, used to expand the properties within share's properties. Possible
+            /// values include: 'stats'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileShare> GetAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileShare> GetAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, shareName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, shareName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -352,6 +346,75 @@ namespace Microsoft.Azure.Management.Storage
             public static async Task DeleteAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restore a file share within a valid retention days if share soft delete is
+            /// enabled
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the file share within the specified storage account. File share
+            /// names must be between 3 and 63 characters in length and use numbers,
+            /// lower-case letters and dash (-) only. Every dash (-) character must be
+            /// immediately preceded and followed by a letter or number.
+            /// </param>
+            /// <param name='deletedShareName'>
+            /// Required. Identify the name of the deleted share that will be restored.
+            /// </param>
+            /// <param name='deletedShareVersion'>
+            /// Required. Identify the version of the deleted share that will be restored.
+            /// </param>
+            public static void Restore(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, string deletedShareName, string deletedShareVersion)
+            {
+                operations.RestoreAsync(resourceGroupName, accountName, shareName, deletedShareName, deletedShareVersion).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restore a file share within a valid retention days if share soft delete is
+            /// enabled
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the file share within the specified storage account. File share
+            /// names must be between 3 and 63 characters in length and use numbers,
+            /// lower-case letters and dash (-) only. Every dash (-) character must be
+            /// immediately preceded and followed by a letter or number.
+            /// </param>
+            /// <param name='deletedShareName'>
+            /// Required. Identify the name of the deleted share that will be restored.
+            /// </param>
+            /// <param name='deletedShareVersion'>
+            /// Required. Identify the version of the deleted share that will be restored.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RestoreAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, string deletedShareName, string deletedShareVersion, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RestoreWithHttpMessagesAsync(resourceGroupName, accountName, shareName, deletedShareName, deletedShareVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

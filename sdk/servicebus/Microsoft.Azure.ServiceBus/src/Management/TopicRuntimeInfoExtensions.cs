@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 {
     using System;
     using System.Xml.Linq;
+    using System.Collections.Generic;
 
     internal static class TopicRuntimeInfoExtensions
     {
@@ -89,6 +90,35 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
 
             return topicRuntimeInfo;
+        }
+
+        public static List<TopicRuntimeInfo> ParseCollectionFromContent(string xml)
+        {
+            try
+            {
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
+                {
+                    if (xDoc.Name.LocalName == "feed")
+                    {
+                        var topicList = new List<TopicRuntimeInfo>();
+
+                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
+                        foreach (var entry in entryList)
+                        {
+                            topicList.Add(ParseFromEntryElement(entry));
+                        }
+
+                        return topicList;
+                    }
+                }
+            }
+            catch (Exception ex) when (!(ex is ServiceBusException))
+            {
+                throw new ServiceBusException(false, ex);
+            }
+
+            throw new MessagingEntityNotFoundException("No topics were found");
         }
     }
 }

@@ -33,12 +33,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Model
         /// <param name="tagId">Id of the predicted tag.</param>
         /// <param name="tagName">Name of the predicted tag.</param>
         /// <param name="boundingBox">Bounding box of the prediction.</param>
-        public PredictionModel(double probability = default(double), System.Guid tagId = default(System.Guid), string tagName = default(string), BoundingBox boundingBox = default(BoundingBox))
+        /// <param name="tagType">Type of the predicted tag. Possible values
+        /// include: 'Regular', 'Negative', 'GeneralProduct'</param>
+        public PredictionModel(double probability = default(double), System.Guid tagId = default(System.Guid), string tagName = default(string), BoundingBox boundingBox = default(BoundingBox), string tagType = default(string))
         {
             Probability = probability;
             TagId = tagId;
             TagName = tagName;
             BoundingBox = boundingBox;
+            TagType = tagType;
             CustomInit();
         }
 
@@ -70,6 +73,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Model
         /// </summary>
         [JsonProperty(PropertyName = "boundingBox")]
         public BoundingBox BoundingBox { get; private set; }
+
+        /// <summary>
+        /// Gets type of the predicted tag. Possible values include: 'Regular',
+        /// 'Negative', 'GeneralProduct'
+        /// </summary>
+        [JsonProperty(PropertyName = "tagType")]
+        public string TagType { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -9,22 +9,33 @@ using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
-   internal class CredentialPipeline
+    internal class CredentialPipeline
     {
-        private static readonly Lazy<CredentialPipeline> s_Singleton = new Lazy<CredentialPipeline>(() => new CredentialPipeline(new TokenCredentialOptions()));
+        private static readonly Lazy<CredentialPipeline> s_singleton = new Lazy<CredentialPipeline>(() => new CredentialPipeline(new TokenCredentialOptions()));
+
+        private static readonly IScopeHandler _defaultScopeHandler = new ScopeHandler();
 
         private CredentialPipeline(TokenCredentialOptions options)
         {
             AuthorityHost = options.AuthorityHost;
 
-            HttpPipeline = HttpPipelineBuilder.Build(options);
+            HttpPipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new CredentialResponseClassifier());
 
             Diagnostics = new ClientDiagnostics(options);
         }
 
+        public CredentialPipeline(Uri authorityHost, HttpPipeline httpPipeline, ClientDiagnostics diagnostics)
+        {
+            AuthorityHost = authorityHost;
+
+            HttpPipeline = httpPipeline;
+
+            Diagnostics = diagnostics;
+        }
+
         public static CredentialPipeline GetInstance(TokenCredentialOptions options)
         {
-            return (options is null) ? s_Singleton.Value : new CredentialPipeline(options);
+            return options is null ? s_singleton.Value : new CredentialPipeline(options);
         }
 
         public Uri AuthorityHost { get; }
@@ -38,20 +49,38 @@ namespace Azure.Identity
             return ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
         }
 
-        public MsalPublicClient CreateMsalPublicClient(string clientId, string tenantId = default, string redirectUrl = default, bool attachSharedCache = false)
-        {
-            return new MsalPublicClient(HttpPipeline, clientId, tenantId, redirectUrl, attachSharedCache);
-        }
-
         public CredentialDiagnosticScope StartGetTokenScope(string fullyQualifiedMethod, TokenRequestContext context)
         {
-            AzureIdentityEventSource.Singleton.GetToken(fullyQualifiedMethod, context);
+            IScopeHandler scopeHandler = ScopeGroupHandler.Current ?? _defaultScopeHandler;
 
-            CredentialDiagnosticScope scope = new CredentialDiagnosticScope(fullyQualifiedMethod, Diagnostics.CreateScope(fullyQualifiedMethod), context);
-
+            CredentialDiagnosticScope scope = new CredentialDiagnosticScope(Diagnostics, fullyQualifiedMethod, context, scopeHandler);
             scope.Start();
-
             return scope;
+        }
+
+        public CredentialDiagnosticScope StartGetTokenScopeGroup(string fullyQualifiedMethod, TokenRequestContext context)
+        {
+            var scopeHandler = new ScopeGroupHandler(fullyQualifiedMethod);
+
+            CredentialDiagnosticScope scope = new CredentialDiagnosticScope(Diagnostics, fullyQualifiedMethod, context, scopeHandler);
+            scope.Start();
+            return scope;
+        }
+
+        private class CredentialResponseClassifier : ResponseClassifier
+        {
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                return base.IsRetriableResponse(message) || message.Response.Status == 404;
+            }
+        }
+
+        private class ScopeHandler : IScopeHandler
+        {
+            public DiagnosticScope CreateScope(ClientDiagnostics diagnostics, string name) => diagnostics.CreateScope(name);
+            public void Start(string name, in DiagnosticScope scope) => scope.Start();
+            public void Dispose(string name, in DiagnosticScope scope) => scope.Dispose();
+            public void Fail(string name, in DiagnosticScope scope, Exception exception) => scope.Failed(exception);
         }
     }
 }

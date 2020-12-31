@@ -699,7 +699,7 @@ namespace Monitor.Tests.Helpers
             if(exp != null)
             {
                 Assert.Equal(exp.ActionGroupId, act.ActionGroupId);
-                AreEqual(exp.WebhookProperties, act.WebhookProperties);
+                AreEqual(exp.WebHookProperties, act.WebHookProperties);
 
             }
             else

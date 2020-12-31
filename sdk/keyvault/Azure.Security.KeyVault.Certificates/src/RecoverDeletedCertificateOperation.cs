@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.RecoverDeletedCertificateOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(RecoverDeletedCertificateOperation)}.{nameof(UpdateStatus)}");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.RecoverDeletedCertificateOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(RecoverDeletedCertificateOperation)}.{nameof(UpdateStatus)}");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 
@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Certificates
         public override ValueTask<Response<KeyVaultCertificateWithPolicy>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        private static async ValueTask<bool> CheckCompletedAsync(Response response)
+        private async ValueTask<bool> CheckCompletedAsync(Response response)
         {
             switch (response.Status)
             {
@@ -117,10 +117,10 @@ namespace Azure.Security.KeyVault.Certificates
                     return false;
 
                 default:
-                    throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                    throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
             }
         }
-        private static bool CheckCompleted(Response response)
+        private bool CheckCompleted(Response response)
         {
             switch (response.Status)
             {
@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Certificates
                     return false;
 
                 default:
-                    throw response.CreateRequestFailedException();
+                    throw _pipeline.Diagnostics.CreateRequestFailedException(response);
             }
         }
     }

@@ -35,10 +35,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// customizability of the public IP. Only standard coverage will have
         /// the ability to be customized. Possible values include: 'Basic',
         /// 'Standard'</param>
-        public DdosSettings(SubResource ddosCustomPolicy = default(SubResource), string protectionCoverage = default(string))
+        /// <param name="protectedIP">Enables DDoS protection on the public
+        /// IP.</param>
+        public DdosSettings(SubResource ddosCustomPolicy = default(SubResource), string protectionCoverage = default(string), bool? protectedIP = default(bool?))
         {
             DdosCustomPolicy = ddosCustomPolicy;
             ProtectionCoverage = protectionCoverage;
+            ProtectedIP = protectedIP;
             CustomInit();
         }
 
@@ -60,6 +63,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "protectionCoverage")]
         public string ProtectionCoverage { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables DDoS protection on the public IP.
+        /// </summary>
+        [JsonProperty(PropertyName = "protectedIP")]
+        public bool? ProtectedIP { get; set; }
 
     }
 }

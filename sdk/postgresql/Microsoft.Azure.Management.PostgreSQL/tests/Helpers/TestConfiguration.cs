@@ -5,6 +5,6 @@ namespace PostgreSQL.Tests.Helpers
 {
     public static class TestConfiguration
     {
-        public const string Location = "koreasouth";
+        public const string Location = "eastus2";
     }
 }

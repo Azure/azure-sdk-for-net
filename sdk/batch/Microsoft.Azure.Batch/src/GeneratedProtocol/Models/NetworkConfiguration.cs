@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -39,14 +37,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// assignment.</param>
         /// <param name="endpointConfiguration">The configuration for endpoints
         /// on Compute Nodes in the Batch Pool.</param>
-        /// <param name="publicIPs">The list of public IPs which the Batch
-        /// service will use when provisioning Compute Nodes.</param>
-        public NetworkConfiguration(string subnetId = default(string), DynamicVNetAssignmentScope? dynamicVNetAssignmentScope = default(DynamicVNetAssignmentScope?), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration), IList<string> publicIPs = default(IList<string>))
+        /// <param name="publicIPAddressConfiguration">The Public IPAddress
+        /// configuration for Compute Nodes in the Batch Pool.</param>
+        public NetworkConfiguration(string subnetId = default(string), DynamicVNetAssignmentScope? dynamicVNetAssignmentScope = default(DynamicVNetAssignmentScope?), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration), PublicIPAddressConfiguration publicIPAddressConfiguration = default(PublicIPAddressConfiguration))
         {
             SubnetId = subnetId;
             DynamicVNetAssignmentScope = dynamicVNetAssignmentScope;
             EndpointConfiguration = endpointConfiguration;
-            PublicIPs = publicIPs;
+            PublicIPAddressConfiguration = publicIPAddressConfiguration;
             CustomInit();
         }
 
@@ -66,7 +64,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the Azure Batch Account. The specified subnet should have enough
         /// free IP addresses to accommodate the number of Compute Nodes in the
         /// Pool. If the subnet doesn't have enough free IP addresses, the Pool
-        /// will partially allocate Nodes, and a resize error will occur. The
+        /// will partially allocate Nodes and a resize error will occur. The
         /// 'MicrosoftAzureBatch' service principal must have the 'Classic
         /// Virtual Machine Contributor' Role-Based Access Control (RBAC) role
         /// for the specified VNet. The specified subnet must allow
@@ -113,19 +111,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public PoolEndpointConfiguration EndpointConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of public IPs which the Batch service will
-        /// use when provisioning Compute Nodes.
+        /// Gets or sets the Public IPAddress configuration for Compute Nodes
+        /// in the Batch Pool.
         /// </summary>
         /// <remarks>
-        /// The number of IPs specified here limits the maximum size of the
-        /// Pool - 50 dedicated nodes or 20 low-priority nodes can be allocated
-        /// for each public IP. For example, a pool needing 150 dedicated VMs
-        /// would need at least 3 public IPs specified. Each element of this
-        /// collection is of the form:
-        /// /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}.
+        /// Public IP configuration property is only supported on Pools with
+        /// the virtualMachineConfiguration property.
         /// </remarks>
-        [JsonProperty(PropertyName = "publicIPs")]
-        public IList<string> PublicIPs { get; set; }
+        [JsonProperty(PropertyName = "publicIPAddressConfiguration")]
+        public PublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
 
     }
 }

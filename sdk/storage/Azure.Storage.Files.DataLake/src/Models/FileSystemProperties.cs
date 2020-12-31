@@ -21,17 +21,17 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// <see cref="LeaseStatus"/> of the file system.
         /// </summary>
-        public LeaseStatus? LeaseStatus { get; internal set; }
+        public DataLakeLeaseStatus? LeaseStatus { get; internal set; }
 
         /// <summary>
         /// <see cref="LeaseState"/> of the file system.
         /// </summary>
-        public LeaseState? LeaseState { get; internal set; }
+        public DataLakeLeaseState? LeaseState { get; internal set; }
 
         /// <summary>
-        /// <see cref="LeaseDurationType"/> of the file system.
+        /// <see cref="DataLakeLeaseDuration"/> of the file system.
         /// </summary>
-        public LeaseDurationType? LeaseDuration { get; internal set; }
+        public DataLakeLeaseDuration? LeaseDuration { get; internal set; }
 
         /// <summary>
         /// <see cref="PublicAccessType"/> of the file system.

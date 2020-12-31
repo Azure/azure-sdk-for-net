@@ -143,10 +143,12 @@
             Assert.NotEqual(Guid.Empty, results.Iteration);
             Assert.Equal(2, results.Predictions.Count);
             Assert.Equal("Tag1", results.Predictions[0].TagName);
+            Assert.Equal(TagType.Regular, results.Predictions[0].TagType);
             Assert.InRange(results.Predictions[0].Probability, 0, 1);
             Assert.NotEqual(Guid.Empty, results.Predictions[0].TagId);
             Assert.Null(results.Predictions[0].BoundingBox);
             Assert.Equal("Tag2", results.Predictions[1].TagName);
+            Assert.Equal(TagType.Regular, results.Predictions[1].TagType);
             Assert.InRange(results.Predictions[1].Probability, 0, 0.1);
             Assert.NotEqual(Guid.Empty, results.Predictions[1].TagId);
             Assert.Null(results.Predictions[1].BoundingBox);
@@ -156,13 +158,14 @@
         {
             Assert.Equal(ObjectDetectionProjectId, results.Project);
             Assert.NotEqual(Guid.Empty, results.Iteration);
-            Assert.Equal(7, results.Predictions.Count);
+            Assert.Equal(4, results.Predictions.Count);
 
-            var expectedTags = new string[] { "fork", "fork", "fork", "fork", "scissors", "scissors", "scissors" };
+            var expectedTags = new string[] { "fork", "fork", "scissors", "scissors" };
 
             for (var i = 0; i < expectedTags.Length; i++)
             {
                 Assert.Equal(expectedTags[i], results.Predictions[i].TagName);
+                Assert.Equal(TagType.Regular, results.Predictions[i].TagType);
                 Assert.InRange(results.Predictions[i].Probability, 0, 1);
                 Assert.NotEqual(Guid.Empty, results.Predictions[i].TagId);
                 Assert.NotNull(results.Predictions[i].BoundingBox);

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.MixedReality
     public static partial class MixedRealityClientExtensions
     {
             /// <summary>
-            /// Check Name Availability for global uniqueness
+            /// Check Name Availability for local uniqueness
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// Check Name Availability for global uniqueness
+            /// Check Name Availability for local uniqueness
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

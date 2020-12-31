@@ -47,16 +47,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -77,9 +75,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the ILinkedServicesOperations.
+        /// Gets the IDataExportsOperations.
         /// </summary>
-        public virtual ILinkedServicesOperations LinkedServices { get; private set; }
+        public virtual IDataExportsOperations DataExports { get; private set; }
 
         /// <summary>
         /// Gets the IDataSourcesOperations.
@@ -87,14 +85,89 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public virtual IDataSourcesOperations DataSources { get; private set; }
 
         /// <summary>
-        /// Gets the IWorkspacesOperations.
+        /// Gets the IIntelligencePacksOperations.
         /// </summary>
-        public virtual IWorkspacesOperations Workspaces { get; private set; }
+        public virtual IIntelligencePacksOperations IntelligencePacks { get; private set; }
+
+        /// <summary>
+        /// Gets the ILinkedServicesOperations.
+        /// </summary>
+        public virtual ILinkedServicesOperations LinkedServices { get; private set; }
+
+        /// <summary>
+        /// Gets the ILinkedStorageAccountsOperations.
+        /// </summary>
+        public virtual ILinkedStorageAccountsOperations LinkedStorageAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagementGroupsOperations.
+        /// </summary>
+        public virtual IManagementGroupsOperations ManagementGroups { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationStatusesOperations.
+        /// </summary>
+        public virtual IOperationStatusesOperations OperationStatuses { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedKeysOperations.
+        /// </summary>
+        public virtual ISharedKeysOperations SharedKeys { get; private set; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        public virtual IUsagesOperations Usages { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspacesOperations.
+        /// </summary>
+        public virtual IWorkspacesOperations Workspaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeletedWorkspacesOperations.
+        /// </summary>
+        public virtual IDeletedWorkspacesOperations DeletedWorkspaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IClustersOperations.
+        /// </summary>
+        public virtual IClustersOperations Clusters { get; private set; }
+
+        /// <summary>
+        /// Gets the IStorageInsightConfigsOperations.
+        /// </summary>
+        public virtual IStorageInsightConfigsOperations StorageInsightConfigs { get; private set; }
+
+        /// <summary>
+        /// Gets the ISavedSearchesOperations.
+        /// </summary>
+        public virtual ISavedSearchesOperations SavedSearches { get; private set; }
+
+        /// <summary>
+        /// Gets the IAvailableServiceTiersOperations.
+        /// </summary>
+        public virtual IAvailableServiceTiersOperations AvailableServiceTiers { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewaysOperations.
+        /// </summary>
+        public virtual IGatewaysOperations Gateways { get; private set; }
+
+        /// <summary>
+        /// Gets the ISchemaOperations.
+        /// </summary>
+        public virtual ISchemaOperations Schema { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspacePurgeOperations.
+        /// </summary>
+        public virtual IWorkspacePurgeOperations WorkspacePurge { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the OperationalInsightsManagementClient class.
@@ -337,12 +410,27 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </summary>
         private void Initialize()
         {
-            LinkedServices = new LinkedServicesOperations(this);
+            DataExports = new DataExportsOperations(this);
             DataSources = new DataSourcesOperations(this);
-            Workspaces = new WorkspacesOperations(this);
+            IntelligencePacks = new IntelligencePacksOperations(this);
+            LinkedServices = new LinkedServicesOperations(this);
+            LinkedStorageAccounts = new LinkedStorageAccountsOperations(this);
+            ManagementGroups = new ManagementGroupsOperations(this);
             Operations = new Operations(this);
+            OperationStatuses = new OperationStatusesOperations(this);
+            SharedKeys = new SharedKeysOperations(this);
+            Usages = new UsagesOperations(this);
+            Workspaces = new WorkspacesOperations(this);
+            DeletedWorkspaces = new DeletedWorkspacesOperations(this);
+            Clusters = new ClustersOperations(this);
+            StorageInsightConfigs = new StorageInsightConfigsOperations(this);
+            SavedSearches = new SavedSearchesOperations(this);
+            AvailableServiceTiers = new AvailableServiceTiersOperations(this);
+            Gateways = new GatewaysOperations(this);
+            Schema = new SchemaOperations(this);
+            WorkspacePurge = new WorkspacePurgeOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2015-11-01-preview";
+            ApiVersion = "2020-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

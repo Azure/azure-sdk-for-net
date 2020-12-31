@@ -66,9 +66,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// free offer expires.</param>
         /// <param name="resourceGroup">Resource group of the App Service
         /// plan.</param>
-        /// <param name="reserved">If Linux app service plan
-        /// &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;
-        /// otherwise.</param>
+        /// <param name="reserved">This needs to set to
+        /// &lt;code&gt;true&lt;/code&gt; when creating a Linux App Service
+        /// Plan, along with &lt;code&gt;kind&lt;/code&gt; set to
+        /// &lt;code&gt;Linux&lt;/code&gt;. It should be
+        /// &lt;code&gt;false&lt;/code&gt; otherwise.</param>
         /// <param name="isXenon">Obsolete: If Hyper-V container app service
         /// plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;
         /// otherwise.</param>
@@ -198,8 +200,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string ResourceGroup { get; private set; }
 
         /// <summary>
-        /// Gets or sets if Linux app service plan
-        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;,
+        /// Gets or sets this needs to set to
+        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; when creating a Linux
+        /// App Service Plan, along with
+        /// &amp;lt;code&amp;gt;kind&amp;lt;/code&amp;gt; set to
+        /// &amp;lt;code&amp;gt;Linux&amp;lt;/code&amp;gt;. It should be
         /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; otherwise.
         /// </summary>
         [JsonProperty(PropertyName = "properties.reserved")]

@@ -15,8 +15,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using System.Linq;
 
     /// <summary>
-    /// The result returned from a data connections check name availability
-    /// request.
+    /// A data connection check name availability request.
     /// </summary>
     public partial class DataConnectionCheckNameRequest
     {

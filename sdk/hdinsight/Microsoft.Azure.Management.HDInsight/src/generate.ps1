@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "hdinsight/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "hdinsight/resource-manager" -AutoRestVersion "v2"

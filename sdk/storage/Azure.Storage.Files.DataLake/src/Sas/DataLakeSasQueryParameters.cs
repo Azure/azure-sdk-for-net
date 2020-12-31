@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace Azure.Storage.Sas
@@ -13,7 +15,9 @@ namespace Azure.Storage.Sas
     /// parameters.  You can construct a new instance using
     /// <see cref="DataLakeSasBuilder"/>.
     ///
-    /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
+    /// For more information,
+    /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-service-sas">
+    /// Create a service SAS</see>.
     /// </summary>
     public sealed class DataLakeSasQueryParameters : SasQueryParameters
     {
@@ -84,24 +88,32 @@ namespace Azure.Storage.Sas
             string contentDisposition = default,
             string contentEncoding = default,
             string contentLanguage = default,
-            string contentType = default)
+            string contentType = default,
+            string authorizedAadObjectId = default,
+            string unauthorizedAadObjectId = default,
+            string correlationId = default,
+            int? directoryDepth = default)
             : base(
-                version,
-                services,
-                resourceTypes,
-                protocol,
-                startsOn,
-                expiresOn,
-                ipRange,
-                identifier,
-                resource,
-                permissions,
-                signature,
-                cacheControl,
-                contentDisposition,
-                contentEncoding,
-                contentLanguage,
-                contentType)
+                version: version,
+                services: services,
+                resourceTypes: resourceTypes,
+                protocol: protocol,
+                startsOn: startsOn,
+                expiresOn: expiresOn,
+                ipRange: ipRange,
+                identifier: identifier,
+                resource: resource,
+                permissions: permissions,
+                signature: signature,
+                cacheControl: cacheControl,
+                contentDisposition: contentDisposition,
+                contentEncoding: contentEncoding,
+                contentLanguage: contentLanguage,
+                contentType: contentType,
+                authorizedAadObjectId: authorizedAadObjectId,
+                unauthorizedAadObjectId: unauthorizedAadObjectId,
+                correlationId: correlationId,
+                directoryDepth: directoryDepth)
         {
             KeyProperties = new UserDelegationKeyProperties
             {

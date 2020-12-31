@@ -54,6 +54,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="uri">The cluster URI.</param>
         /// <param name="dataIngestionUri">The cluster data ingestion
         /// URI.</param>
+        /// <param name="stateReason">The reason for the cluster's current
+        /// state.</param>
         /// <param name="trustedExternalTenants">The cluster's external
         /// tenants.</param>
         /// <param name="optimizedAutoscale">Optimized auto scale
@@ -66,7 +68,15 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// definition.</param>
         /// <param name="keyVaultProperties">KeyVault properties for the
         /// cluster encryption.</param>
-        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties))
+        /// <param name="enablePurge">A boolean value that indicates if the
+        /// purge operations are enabled.</param>
+        /// <param name="languageExtensions">List of the cluster's language
+        /// extensions.</param>
+        /// <param name="enableDoubleEncryption">A boolean value that indicates
+        /// if double encryption is enabled.</param>
+        /// <param name="engineType">The engine type. Possible values include:
+        /// 'V2', 'V3'</param>
+        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string engineType = default(string))
             : base(id, name, type)
         {
             Tags = tags;
@@ -77,12 +87,17 @@ namespace Microsoft.Azure.Management.Kusto.Models
             ProvisioningState = provisioningState;
             Uri = uri;
             DataIngestionUri = dataIngestionUri;
+            StateReason = stateReason;
             TrustedExternalTenants = trustedExternalTenants;
             OptimizedAutoscale = optimizedAutoscale;
             EnableDiskEncryption = enableDiskEncryption;
             EnableStreamingIngest = enableStreamingIngest;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             KeyVaultProperties = keyVaultProperties;
+            EnablePurge = enablePurge;
+            LanguageExtensions = languageExtensions;
+            EnableDoubleEncryption = enableDoubleEncryption;
+            EngineType = engineType;
             CustomInit();
         }
 
@@ -144,6 +159,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string DataIngestionUri { get; private set; }
 
         /// <summary>
+        /// Gets the reason for the cluster's current state.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.stateReason")]
+        public string StateReason { get; private set; }
+
+        /// <summary>
         /// Gets or sets the cluster's external tenants.
         /// </summary>
         [JsonProperty(PropertyName = "properties.trustedExternalTenants")]
@@ -180,6 +201,32 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.keyVaultProperties")]
         public KeyVaultProperties KeyVaultProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value that indicates if the purge operations
+        /// are enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enablePurge")]
+        public bool? EnablePurge { get; set; }
+
+        /// <summary>
+        /// Gets list of the cluster's language extensions.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.languageExtensions")]
+        public LanguageExtensionsList LanguageExtensions { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value that indicates if double encryption is
+        /// enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableDoubleEncryption")]
+        public bool? EnableDoubleEncryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the engine type. Possible values include: 'V2', 'V3'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.engineType")]
+        public string EngineType { get; set; }
 
         /// <summary>
         /// Validate the object.

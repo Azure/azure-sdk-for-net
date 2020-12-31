@@ -1,5 +1,77 @@
 # Release History
 
+## 4.2.0-beta.4 (Unreleased)
+
+
+## 4.2.0-beta.3 (2020-11-12)
+
+### Added
+
+- Added `DownloadCertificate` and `DownloadCertificateAsync` methods to get `X509Certificate2` with private key if permitted ([#12083](https://github.com/Azure/azure-sdk-for-net/issues/12083))
+
+### Changed
+
+- Clarified in documentation that `LifetimeActions` requires a single value at this time.
+
+## 4.2.0-beta.2 (2020-10-06)
+
+- Bug fixes and performance improvements.
+
+## 4.2.0-beta.1 (2020-09-08)
+
+### Added
+
+- Added `KeyVaultCertificateIdentifier` to parse certificate URIs.
+- Added link to sample on `KeyVaultCertificate.Cer` to the private key.
+
+## 4.1.0 (2020-08-11)
+
+### Added
+
+- Added `RecoverableDays` property to `CertificateProperties`.
+
+### Changed
+
+- Default service version is now 7.1.
+
+## 4.0.3 (2020-07-09)
+
+### Fixed
+
+- Fixed an issue where the issuer name was always null ([#10908](https://github.com/Azure/azure-sdk-for-net/issues/10908))
+- Fixed an issue where GetIssuerAsync would throw for issuers with contact information populated ([#10905](https://github.com/Azure/azure-sdk-for-net/issues/10905))
+- Fixed an issue where some Certificate policy properties were not serialized properly ([#11669](https://github.com/azure/azure-sdk-for-net/issues/11669))
+
+## 4.0.2 (2020-03-18)
+
+### Fixed
+
+- Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
+
+## 4.1.0-preview.1 (2020-03-09)
+
+### Added
+
+- Add `RecoverableDays` property to `CertificateProperties`.
+
+## 4.0.1 (2020-03-03)
+
+### Fixed
+
+- Fixed issue that prevented certificate contacts from being created, enumerated, or deleted.
+- Reset challenge cache so tests can be run individually and in any order. ([#9356](https://github.com/Azure/azure-sdk-for-net/issues/9356))
+- Properly import PKCS12 or PEM-encoded certificate. ([#9963](https://github.com/Azure/azure-sdk-for-net/issues/9963))
+- Serialize the `MergeCertificateOptions` in `CertificateClient.MergeCertificate`. ([#9986](https://github.com/Azure/azure-sdk-for-net/issues/9986))
+- Shorten diagnostic scope names. ([#9651](https://github.com/Azure/azure-sdk-for-net/issues/9651))
+- Include resource namespace in diagnostics scope. ([#9655](https://github.com/Azure/azure-sdk-for-net/issues/9655))
+- Sanitize header values in exceptions. ([#9782](https://github.com/Azure/azure-sdk-for-net/issues/9782))
+
+## 4.0.0 (2020-01-08)
+
+### Minor changes
+
+- Challenge-based authentication requests are only sent over HTTPS.
+
 ## 4.0.0-preview.8
 
 ### Breaking changes

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,13 +38,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="type">The type of the deployment.</param>
         /// <param name="location">the location of the deployment.</param>
         /// <param name="properties">Deployment properties.</param>
-        public DeploymentExtended(string id = default(string), string name = default(string), string type = default(string), string location = default(string), DeploymentPropertiesExtended properties = default(DeploymentPropertiesExtended))
+        /// <param name="tags">Deployment tags</param>
+        public DeploymentExtended(string id = default(string), string name = default(string), string type = default(string), string location = default(string), DeploymentPropertiesExtended properties = default(DeploymentPropertiesExtended), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Properties = properties;
+            Tags = tags;
             CustomInit();
         }
 
@@ -80,6 +84,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public DeploymentPropertiesExtended Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets deployment tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.

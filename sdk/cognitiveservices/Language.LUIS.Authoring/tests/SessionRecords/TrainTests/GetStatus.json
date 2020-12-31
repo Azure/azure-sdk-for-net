@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/train",
-      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi92ZXJzaW9ucy8wLjEvdHJhaW4=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/57145764-300b-4640-a4ed-0289ad085e05/versions/0.1/train",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzU3MTQ1NzY0LTMwMGItNDY0MC1hNGVkLTAyODlhZDA4NWUwNS92ZXJzaW9ucy8wLjEvdHJhaW4=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "120f721e60454544a884022b1bc988a5"
+          "507dfc3e5c29448e98fad6046cdee451"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,16 +24,16 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/train/"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/57145764-300b-4640-a4ed-0289ad085e05/versions/0.1/train/"
         ],
         "Apim-Request-Id": [
-          "ccf537ac-b177-4e7d-80e0-ce1b123bdcbb"
+          "1aa259f8-dd7a-44bd-8aa4-716e00c8b357"
         ],
         "Request-Id": [
-          "ccf537ac-b177-4e7d-80e0-ce1b123bdcbb"
+          "1aa259f8-dd7a-44bd-8aa4-716e00c8b357"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/train/"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/57145764-300b-4640-a4ed-0289ad085e05/versions/0.1/train/"
         ],
         "Access-Control-Expose-Headers": [
           "Operation-Location"
@@ -51,7 +51,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Tue, 29 Oct 2019 13:23:15 GMT"
+          "Wed, 13 May 2020 15:46:05 GMT"
         ],
         "Content-Length": [
           "32"
@@ -64,19 +64,19 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/train",
-      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi92ZXJzaW9ucy8wLjEvdHJhaW4=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/57145764-300b-4640-a4ed-0289ad085e05/versions/0.1/train",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzU3MTQ1NzY0LTMwMGItNDY0MC1hNGVkLTAyODlhZDA4NWUwNS92ZXJzaW9ucy8wLjEvdHJhaW4=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "120f721e60454544a884022b1bc988a5"
+          "507dfc3e5c29448e98fad6046cdee451"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -87,10 +87,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "abd8dd65-d28f-4e2f-a1a2-46aa1800b93d"
+          "ff60b20c-63f8-4d07-bdc2-23481649627d"
         ],
         "Request-Id": [
-          "abd8dd65-d28f-4e2f-a1a2-46aa1800b93d"
+          "ff60b20c-63f8-4d07-bdc2-23481649627d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -105,32 +105,32 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Tue, 29 Oct 2019 13:23:16 GMT"
+          "Wed, 13 May 2020 15:46:05 GMT"
         ],
         "Content-Length": [
-          "1217"
+          "334"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"7de1c115-4bee-4488-845c-bcc94b660082\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"1f65d5ab-3daf-44f5-af17-7cd6f3f4dcce\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"f3ff4992-88d3-45ef-a1ec-d0e77fa02df9\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"0da76691-d27b-435a-8318-062e6338f5e3\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"f3a9fbb1-ae4f-4fcb-962d-f1af369c0a1b\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"b70ce982-f1dc-4a20-a193-b3cac214af44\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"731e7ac1-b1d4-4e4e-bc1b-d79f67e2b890\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"abf20029-becf-4779-b8e9-8ced75f54163\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"c1671d3e-8eab-40f6-a4a6-e7ac497191db\",\r\n    \"details\": {\r\n      \"statusId\": 9,\r\n      \"status\": \"Queued\",\r\n      \"exampleCount\": 0\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"26c734cc-849b-4a02-9a6d-b3a4649060cf\",\r\n    \"details\": {\r\n      \"statusId\": 9,\r\n      \"status\": \"Queued\",\r\n      \"exampleCount\": 0\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"c37db464-84a5-4e4e-8715-f394ed0ccd41\",\r\n    \"details\": {\r\n      \"statusId\": 9,\r\n      \"status\": \"Queued\",\r\n      \"exampleCount\": 0\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/train",
-      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi92ZXJzaW9ucy8wLjEvdHJhaW4=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/57145764-300b-4640-a4ed-0289ad085e05/versions/0.1/train",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzU3MTQ1NzY0LTMwMGItNDY0MC1hNGVkLTAyODlhZDA4NWUwNS92ZXJzaW9ucy8wLjEvdHJhaW4=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "120f721e60454544a884022b1bc988a5"
+          "507dfc3e5c29448e98fad6046cdee451"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -141,10 +141,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "cc63cb60-8579-42eb-a866-c1ad32fa8734"
+          "94bc5f82-46ac-4fbc-a4b7-a3f8da51c3ba"
         ],
         "Request-Id": [
-          "cc63cb60-8579-42eb-a866-c1ad32fa8734"
+          "94bc5f82-46ac-4fbc-a4b7-a3f8da51c3ba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -159,32 +159,32 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Tue, 29 Oct 2019 13:23:17 GMT"
+          "Wed, 13 May 2020 15:46:07 GMT"
         ],
         "Content-Length": [
-          "1185"
+          "457"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"7de1c115-4bee-4488-845c-bcc94b660082\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"1f65d5ab-3daf-44f5-af17-7cd6f3f4dcce\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"f3ff4992-88d3-45ef-a1ec-d0e77fa02df9\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"0da76691-d27b-435a-8318-062e6338f5e3\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"f3a9fbb1-ae4f-4fcb-962d-f1af369c0a1b\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"b70ce982-f1dc-4a20-a193-b3cac214af44\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"731e7ac1-b1d4-4e4e-bc1b-d79f67e2b890\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"abf20029-becf-4779-b8e9-8ced75f54163\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"c1671d3e-8eab-40f6-a4a6-e7ac497191db\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"26c734cc-849b-4a02-9a6d-b3a4649060cf\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"c37db464-84a5-4e4e-8715-f394ed0ccd41\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/train",
-      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi92ZXJzaW9ucy8wLjEvdHJhaW4=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/57145764-300b-4640-a4ed-0289ad085e05/versions/0.1/train",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzU3MTQ1NzY0LTMwMGItNDY0MC1hNGVkLTAyODlhZDA4NWUwNS92ZXJzaW9ucy8wLjEvdHJhaW4=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "120f721e60454544a884022b1bc988a5"
+          "507dfc3e5c29448e98fad6046cdee451"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -195,10 +195,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "74ecb9fe-884e-43ea-b767-541293e09b51"
+          "96508802-ff85-4e80-b227-880341e2cfec"
         ],
         "Request-Id": [
-          "74ecb9fe-884e-43ea-b767-541293e09b51"
+          "96508802-ff85-4e80-b227-880341e2cfec"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -213,32 +213,32 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Tue, 29 Oct 2019 13:23:18 GMT"
+          "Wed, 13 May 2020 15:46:08 GMT"
         ],
         "Content-Length": [
-          "1185"
+          "457"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"7de1c115-4bee-4488-845c-bcc94b660082\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"1f65d5ab-3daf-44f5-af17-7cd6f3f4dcce\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"f3ff4992-88d3-45ef-a1ec-d0e77fa02df9\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"0da76691-d27b-435a-8318-062e6338f5e3\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"f3a9fbb1-ae4f-4fcb-962d-f1af369c0a1b\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"b70ce982-f1dc-4a20-a193-b3cac214af44\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"731e7ac1-b1d4-4e4e-bc1b-d79f67e2b890\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"abf20029-becf-4779-b8e9-8ced75f54163\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"c1671d3e-8eab-40f6-a4a6-e7ac497191db\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"26c734cc-849b-4a02-9a6d-b3a4649060cf\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"c37db464-84a5-4e4e-8715-f394ed0ccd41\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"CollectingData\"\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/train",
-      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi92ZXJzaW9ucy8wLjEvdHJhaW4=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/57145764-300b-4640-a4ed-0289ad085e05/versions/0.1/train",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzU3MTQ1NzY0LTMwMGItNDY0MC1hNGVkLTAyODlhZDA4NWUwNS92ZXJzaW9ucy8wLjEvdHJhaW4=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "120f721e60454544a884022b1bc988a5"
+          "507dfc3e5c29448e98fad6046cdee451"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -249,10 +249,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "aa221358-cdca-46da-aaad-91566edd8388"
+          "6bb76911-fb36-424e-ac07-86459569a620"
         ],
         "Request-Id": [
-          "aa221358-cdca-46da-aaad-91566edd8388"
+          "6bb76911-fb36-424e-ac07-86459569a620"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -267,32 +267,32 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Tue, 29 Oct 2019 13:23:19 GMT"
+          "Wed, 13 May 2020 15:46:09 GMT"
         ],
         "Content-Length": [
-          "1185"
+          "445"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"7de1c115-4bee-4488-845c-bcc94b660082\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"1f65d5ab-3daf-44f5-af17-7cd6f3f4dcce\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"f3ff4992-88d3-45ef-a1ec-d0e77fa02df9\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"0da76691-d27b-435a-8318-062e6338f5e3\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"f3a9fbb1-ae4f-4fcb-962d-f1af369c0a1b\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"b70ce982-f1dc-4a20-a193-b3cac214af44\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"731e7ac1-b1d4-4e4e-bc1b-d79f67e2b890\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"abf20029-becf-4779-b8e9-8ced75f54163\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"c1671d3e-8eab-40f6-a4a6-e7ac497191db\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"26c734cc-849b-4a02-9a6d-b3a4649060cf\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"c37db464-84a5-4e4e-8715-f394ed0ccd41\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/train",
-      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi92ZXJzaW9ucy8wLjEvdHJhaW4=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/57145764-300b-4640-a4ed-0289ad085e05/versions/0.1/train",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzU3MTQ1NzY0LTMwMGItNDY0MC1hNGVkLTAyODlhZDA4NWUwNS92ZXJzaW9ucy8wLjEvdHJhaW4=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "120f721e60454544a884022b1bc988a5"
+          "507dfc3e5c29448e98fad6046cdee451"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -303,10 +303,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "c19be7c4-87a2-49f0-be8a-198902cd49bf"
+          "65c7c9d5-8d66-4cc5-8537-1f551aebebbb"
         ],
         "Request-Id": [
-          "c19be7c4-87a2-49f0-be8a-198902cd49bf"
+          "65c7c9d5-8d66-4cc5-8537-1f551aebebbb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -321,16 +321,70 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Tue, 29 Oct 2019 13:23:21 GMT"
+          "Wed, 13 May 2020 15:46:11 GMT"
         ],
         "Content-Length": [
-          "1249"
+          "445"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"1f65d5ab-3daf-44f5-af17-7cd6f3f4dcce\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 607,\r\n      \"trainingDateTime\": \"2019-10-29T13:23:16Z\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"731e7ac1-b1d4-4e4e-bc1b-d79f67e2b890\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 607,\r\n      \"trainingDateTime\": \"2019-10-29T13:23:16Z\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"abf20029-becf-4779-b8e9-8ced75f54163\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 607,\r\n      \"trainingDateTime\": \"2019-10-29T13:23:16Z\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"b70ce982-f1dc-4a20-a193-b3cac214af44\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 607,\r\n      \"trainingDateTime\": \"2019-10-29T13:23:16Z\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"0da76691-d27b-435a-8318-062e6338f5e3\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 607,\r\n      \"trainingDateTime\": \"2019-10-29T13:23:16Z\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"f3ff4992-88d3-45ef-a1ec-d0e77fa02df9\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 607,\r\n      \"trainingDateTime\": \"2019-10-29T13:23:17Z\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"7de1c115-4bee-4488-845c-bcc94b660082\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 607,\r\n      \"trainingDateTime\": \"2019-10-29T13:23:17Z\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"f3a9fbb1-ae4f-4fcb-962d-f1af369c0a1b\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 607,\r\n      \"trainingDateTime\": \"2019-10-29T13:23:17Z\"\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"c1671d3e-8eab-40f6-a4a6-e7ac497191db\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"26c734cc-849b-4a02-9a6d-b3a4649060cf\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"c37db464-84a5-4e4e-8715-f394ed0ccd41\",\r\n    \"details\": {\r\n      \"statusId\": 3,\r\n      \"status\": \"InProgress\",\r\n      \"exampleCount\": 0,\r\n      \"progressSubstatus\": \"InProgress\"\r\n    }\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/57145764-300b-4640-a4ed-0289ad085e05/versions/0.1/train",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzU3MTQ1NzY0LTMwMGItNDY0MC1hNGVkLTAyODlhZDA4NWUwNS92ZXJzaW9ucy8wLjEvdHJhaW4=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "507dfc3e5c29448e98fad6046cdee451"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28619.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "3d98e2d5-9330-4995-ab80-47553f2bd86b"
+        ],
+        "Request-Id": [
+          "3d98e2d5-9330-4995-ab80-47553f2bd86b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 15:46:12 GMT"
+        ],
+        "Content-Length": [
+          "469"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"modelId\": \"26c734cc-849b-4a02-9a6d-b3a4649060cf\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 580,\r\n      \"trainingDateTime\": \"2020-05-13T15:46:09Z\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"c37db464-84a5-4e4e-8715-f394ed0ccd41\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 580,\r\n      \"trainingDateTime\": \"2020-05-13T15:46:09Z\"\r\n    }\r\n  },\r\n  {\r\n    \"modelId\": \"c1671d3e-8eab-40f6-a4a6-e7ac497191db\",\r\n    \"details\": {\r\n      \"statusId\": 0,\r\n      \"status\": \"Success\",\r\n      \"exampleCount\": 580,\r\n      \"trainingDateTime\": \"2020-05-13T15:46:09Z\"\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],

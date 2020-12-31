@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,30 +15,22 @@ namespace Azure.Core.Pipeline
 {
     internal class LoggingPolicy : HttpPipelinePolicy
     {
-        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters)
+        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters, string? assemblyName)
         {
+            _sanitizer = new HttpMessageSanitizer(allowedQueryParameters, allowedHeaderNames);
             _logContent = logContent;
             _maxLength = maxLength;
-            _allowedHeaderNames = new HashSet<string>(allowedHeaderNames, StringComparer.InvariantCultureIgnoreCase);
-            _logAllHeaders = _allowedHeaderNames.Contains(LogAllValue);
-            _allowedQueryParameters = allowedQueryParameters;
-            _logFullQueries = allowedQueryParameters.Contains(LogAllValue);
+            _assemblyName = assemblyName;
         }
 
-        private const string LogAllValue = "*";
-        private const string RedactedPlaceholder = "REDACTED";
         private const double RequestTooLongTime = 3.0; // sec
 
         private static readonly AzureCoreEventSource s_eventSource = AzureCoreEventSource.Singleton;
 
         private readonly bool _logContent;
         private readonly int _maxLength;
-
-        private readonly HashSet<string> _allowedHeaderNames;
-        private readonly string[] _allowedQueryParameters;
-
-        private readonly bool _logAllHeaders;
-        private readonly bool _logFullQueries;
+        private HttpMessageSanitizer _sanitizer;
+        private readonly string? _assemblyName;
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -63,7 +54,7 @@ namespace Azure.Core.Pipeline
 
             Request request = message.Request;
 
-            s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers));
+            s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers), _assemblyName);
 
             Encoding? requestTextEncoding = null;
 
@@ -78,13 +69,21 @@ namespace Azure.Core.Pipeline
 
             var before = Stopwatch.GetTimestamp();
 
-            if (async)
+            try
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                if (async)
+                {
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNext(message, pipeline);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ProcessNext(message, pipeline);
+                s_eventSource.ExceptionResponse(request.ClientRequestId, ex.ToString());
+                throw;
             }
 
             var after = Stopwatch.GetTimestamp();
@@ -126,7 +125,7 @@ namespace Azure.Core.Pipeline
 
         private string FormatUri(RequestUriBuilder requestUri)
         {
-            return _logFullQueries ? requestUri.ToString() : requestUri.ToString(_allowedQueryParameters, RedactedPlaceholder);
+            return _sanitizer.SanitizeUrl(requestUri.ToString());
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -141,14 +140,8 @@ namespace Azure.Core.Pipeline
             {
                 stringBuilder.Append(header.Name);
                 stringBuilder.Append(':');
-                if (_logAllHeaders || _allowedHeaderNames.Contains(header.Name))
-                {
-                    stringBuilder.AppendLine(header.Value);
-                }
-                else
-                {
-                    stringBuilder.AppendLine(RedactedPlaceholder);
-                }
+                string newValue = _sanitizer.SanitizeHeader(header.Name, header.Value);
+                stringBuilder.AppendLine(newValue);
             }
             return stringBuilder.ToString();
         }
@@ -211,7 +204,9 @@ namespace Azure.Core.Pipeline
 
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 var result = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
 
                 var countToLog = result;
                 DecrementLength(ref countToLog);
@@ -276,7 +271,6 @@ namespace Azure.Core.Pipeline
 
                 var bytes = await FormatAsync(stream, async).ConfigureAwait(false).EnsureCompleted(async);
                 Log(requestId, eventType, bytes, textEncoding);
-
             }
 
             public async ValueTask LogAsync(string requestId, RequestContent? content, Encoding? textEncoding, bool async)

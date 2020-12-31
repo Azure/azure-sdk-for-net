@@ -44,15 +44,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="queryTimeout">Query timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
         /// <param name="query">A query to retrieve data from source. Type:
         /// string (or Expression with resultType string).</param>
         /// <param name="partitionOption">The partition mechanism that will be
-        /// used for Netezza read in parallel. Possible values include: 'None',
-        /// 'DataSlice', 'DynamicRange'</param>
+        /// used for Netezza read in parallel. Possible values include: "None",
+        /// "DataSlice", "DynamicRange".</param>
         /// <param name="partitionSettings">The settings that will be leveraged
         /// for Netezza source partitioning.</param>
-        public NetezzaSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object query = default(object), string partitionOption = default(string), NetezzaPartitionSettings partitionSettings = default(NetezzaPartitionSettings))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
+        public NetezzaSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), object partitionOption = default(object), NetezzaPartitionSettings partitionSettings = default(NetezzaPartitionSettings))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
         {
             Query = query;
             PartitionOption = partitionOption;
@@ -74,11 +77,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the partition mechanism that will be used for Netezza
-        /// read in parallel. Possible values include: 'None', 'DataSlice',
-        /// 'DynamicRange'
+        /// read in parallel. Possible values include: "None", "DataSlice",
+        /// "DynamicRange".
         /// </summary>
         [JsonProperty(PropertyName = "partitionOption")]
-        public string PartitionOption { get; set; }
+        public object PartitionOption { get; set; }
 
         /// <summary>
         /// Gets or sets the settings that will be leveraged for Netezza source

@@ -141,9 +141,9 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The unique annotation ID. This is unique within a Application Insights
             /// component.
             /// </param>
-            public static object Delete(this IAnnotationsOperations operations, string resourceGroupName, string resourceName, string annotationId)
+            public static void Delete(this IAnnotationsOperations operations, string resourceGroupName, string resourceName, string annotationId)
             {
-                return operations.DeleteAsync(resourceGroupName, resourceName, annotationId).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, resourceName, annotationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -165,12 +165,9 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> DeleteAsync(this IAnnotationsOperations operations, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IAnnotationsOperations operations, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceName, annotationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceName, annotationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

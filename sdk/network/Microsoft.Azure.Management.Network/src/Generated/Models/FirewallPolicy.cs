@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="ruleGroups">List of references to
-        /// FirewallPolicyRuleGroups.</param>
+        /// <param name="ruleCollectionGroups">List of references to
+        /// FirewallPolicyRuleCollectionGroups.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// firewall policy resource. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
@@ -53,18 +53,33 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="threatIntelMode">The operation mode for Threat
         /// Intelligence. Possible values include: 'Alert', 'Deny',
         /// 'Off'</param>
+        /// <param name="threatIntelWhitelist">ThreatIntel Whitelist for
+        /// Firewall Policy.</param>
+        /// <param name="dnsSettings">DNS Proxy Settings definition.</param>
+        /// <param name="intrusionDetection">The configuration for Intrusion
+        /// detection.</param>
+        /// <param name="transportSecurity">TLS Configuration
+        /// definition.</param>
+        /// <param name="sku">The Firewall Policy SKU.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public FirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResource> ruleGroups = default(IList<SubResource>), string provisioningState = default(string), SubResource basePolicy = default(SubResource), IList<SubResource> firewalls = default(IList<SubResource>), IList<SubResource> childPolicies = default(IList<SubResource>), string threatIntelMode = default(string), string etag = default(string))
+        /// <param name="identity">The identity of the firewall policy.</param>
+        public FirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResource> ruleCollectionGroups = default(IList<SubResource>), string provisioningState = default(string), SubResource basePolicy = default(SubResource), IList<SubResource> firewalls = default(IList<SubResource>), IList<SubResource> childPolicies = default(IList<SubResource>), string threatIntelMode = default(string), FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default(FirewallPolicyThreatIntelWhitelist), DnsSettings dnsSettings = default(DnsSettings), FirewallPolicyIntrusionDetection intrusionDetection = default(FirewallPolicyIntrusionDetection), FirewallPolicyTransportSecurity transportSecurity = default(FirewallPolicyTransportSecurity), FirewallPolicySku sku = default(FirewallPolicySku), string etag = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
             : base(id, name, type, location, tags)
         {
-            RuleGroups = ruleGroups;
+            RuleCollectionGroups = ruleCollectionGroups;
             ProvisioningState = provisioningState;
             BasePolicy = basePolicy;
             Firewalls = firewalls;
             ChildPolicies = childPolicies;
             ThreatIntelMode = threatIntelMode;
+            ThreatIntelWhitelist = threatIntelWhitelist;
+            DnsSettings = dnsSettings;
+            IntrusionDetection = intrusionDetection;
+            TransportSecurity = transportSecurity;
+            Sku = sku;
             Etag = etag;
+            Identity = identity;
             CustomInit();
         }
 
@@ -74,10 +89,10 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets list of references to FirewallPolicyRuleGroups.
+        /// Gets list of references to FirewallPolicyRuleCollectionGroups.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ruleGroups")]
-        public IList<SubResource> RuleGroups { get; private set; }
+        [JsonProperty(PropertyName = "properties.ruleCollectionGroups")]
+        public IList<SubResource> RuleCollectionGroups { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the firewall policy resource.
@@ -115,11 +130,47 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ThreatIntelMode { get; set; }
 
         /// <summary>
+        /// Gets or sets threatIntel Whitelist for Firewall Policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.threatIntelWhitelist")]
+        public FirewallPolicyThreatIntelWhitelist ThreatIntelWhitelist { get; set; }
+
+        /// <summary>
+        /// Gets or sets DNS Proxy Settings definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsSettings")]
+        public DnsSettings DnsSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the configuration for Intrusion detection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.intrusionDetection")]
+        public FirewallPolicyIntrusionDetection IntrusionDetection { get; set; }
+
+        /// <summary>
+        /// Gets or sets TLS Configuration definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.transportSecurity")]
+        public FirewallPolicyTransportSecurity TransportSecurity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Firewall Policy SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sku")]
+        public FirewallPolicySku Sku { get; set; }
+
+        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the firewall policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
     }
 }

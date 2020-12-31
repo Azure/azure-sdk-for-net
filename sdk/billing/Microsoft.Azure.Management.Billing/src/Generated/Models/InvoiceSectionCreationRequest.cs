@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties of an InvoiceSection.
+    /// The properties of the invoice section.
     /// </summary>
     public partial class InvoiceSectionCreationRequest
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Initializes a new instance of the InvoiceSectionCreationRequest
         /// class.
         /// </summary>
-        /// <param name="displayName">The name of the InvoiceSection.</param>
+        /// <param name="displayName">The name of the invoice section.</param>
         public InvoiceSectionCreationRequest(string displayName = default(string))
         {
             DisplayName = displayName;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the InvoiceSection.
+        /// Gets or sets the name of the invoice section.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }

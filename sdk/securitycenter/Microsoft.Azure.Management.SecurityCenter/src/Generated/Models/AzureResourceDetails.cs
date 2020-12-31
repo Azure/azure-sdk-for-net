@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the resource that was assessed
+    /// Details of the Azure resource that was assessed
     /// </summary>
     [Newtonsoft.Json.JsonObject("Azure")]
     public partial class AzureResourceDetails : ResourceDetails
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the AzureResourceDetails class.
         /// </summary>
-        /// <param name="id">Azure resource ID of the assessed resource</param>
+        /// <param name="id">Azure resource Id of the assessed resource</param>
         public AzureResourceDetails(string id = default(string))
         {
             Id = id;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets azure resource ID of the assessed resource
+        /// Gets azure resource Id of the assessed resource
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }

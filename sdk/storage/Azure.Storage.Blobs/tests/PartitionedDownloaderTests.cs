@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Blobs.Test
 {
     [TestFixture(true)]
     [TestFixture(false)]
@@ -84,12 +84,46 @@ namespace Azure.Storage.Blobs.Tests
 
             SetupDownload(blockClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10}, 20);
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 20
+                });
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
-            // First block request is 20, and 10 for every block after that.
             Assert.AreEqual(dataSource.Requests.Count, 9);
+            AssertContent(100, stream);
+            Assert.NotNull(result);
+        }
+
+        [Test]
+        public async Task RespectsInitialTransferSizeBeforeDownloadingInBlocks()
+        {
+            MemoryStream stream = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100);
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
+            BlobProperties smallLengthProperties = new BlobProperties()
+            {
+                ContentLength = 100
+            };
+
+            SetupDownload(blockClient, dataSource);
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 40,
+                    InitialTransferLength = 10
+                });
+
+            Response result = await InvokeDownloadToAsync(downloader, stream);
+
+            Assert.AreEqual(dataSource.Requests.Count, 4);
             AssertContent(100, stream);
             Assert.NotNull(result);
         }
@@ -109,7 +143,13 @@ namespace Azure.Storage.Blobs.Tests
 
             SetupDownload(blockClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10}, 10);
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                });
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -159,7 +199,7 @@ namespace Azure.Storage.Blobs.Tests
                     .Throws(e);
             }
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10}, 20);
+            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10});
 
             Exception thrown = Assert.ThrowsAsync<Exception>(async () => await InvokeDownloadToAsync(downloader, stream));
 

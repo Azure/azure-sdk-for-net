@@ -2,19 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Files.Shares.Tests;
+using System.Threading.Tasks;
 using Azure.Storage.Sas;
+using Azure.Storage.Test;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
-namespace Azure.Storage.Files.Test
+namespace Azure.Storage.Files.Shares.Tests
 {
     public class FileSasBuilderTests : FileTestBase
     {
         private const string Permissions = "rcwd";
 
-        public FileSasBuilderTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public FileSasBuilderTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -85,6 +86,183 @@ namespace Azure.Storage.Files.Test
 
             // Act
             Assert.Throws<ArgumentNullException>(() => fileSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
+        }
+
+        [Test]
+        public void FileSasBuilder_IdentifierTest()
+        {
+            // Arrange
+            TestConstants constants = new TestConstants(this);
+            string shareName = GetNewShareName();
+            string resource = "s";
+            ShareSasBuilder sasBuilder = new ShareSasBuilder
+            {
+                Identifier = constants.Sas.Identifier,
+                ShareName = shareName,
+                Resource = resource,
+                Protocol = SasProtocol.Https,
+                Version = constants.Sas.Version
+            };
+
+            // Act
+            SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+
+            // Assert
+            Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
+            Assert.AreEqual(resource, sasQueryParameters.Resource);
+            Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
+            Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
+        }
+
+        [Test]
+        [TestCase("FTPUCALXDWR")]
+        [TestCase("rwdxlacuptf")]
+        public async Task AccountPermissionsRawPermissions(string permissionsString)
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            AccountSasBuilder accountSasBuilder = new AccountSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Services = AccountSasServices.Files,
+                ResourceTypes = AccountSasResourceTypes.All
+            };
+
+            accountSasBuilder.SetPermissions(permissionsString);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+
+            Uri uri = new Uri($"{test.Share.Uri}?{accountSasBuilder.ToSasQueryParameters(sharedKeyCredential)}");
+
+            ShareClient sasShareClient = new ShareClient(uri, GetOptions());
+
+            // Act
+            await sasShareClient.GetPropertiesAsync();
+        }
+
+        [Test]
+        public async Task AccountPermissionsRawPermissions_InvalidPermission()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            AccountSasBuilder accountSasBuilder = new AccountSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Services = AccountSasServices.Blobs,
+                ResourceTypes = AccountSasResourceTypes.All
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => accountSasBuilder.SetPermissions("werteyfg"),
+                new ArgumentException("e is not a valid SAS permission"));
+        }
+
+        [Test]
+        [TestCase("LDWCR")]
+        [TestCase("rcwdl")]
+        public async Task SharePermissionsRawPermissions(string permissionsString)
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareSasBuilder blobSasBuilder = new ShareSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                ShareName = test.Share.Name
+            };
+
+            blobSasBuilder.SetPermissions(
+                rawPermissions: permissionsString,
+                normalize: true);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+
+            ShareUriBuilder blobUriBuilder = new ShareUriBuilder(test.Share.Uri)
+            {
+                Sas = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            ShareClient sasShareClient = new ShareClient(blobUriBuilder.ToUri(), GetOptions());
+
+            // Act
+            await sasShareClient.GetRootDirectoryClient().GetPropertiesAsync();
+        }
+
+        [Test]
+        public async Task SharePermissionsRawPermissions_Invalid()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareSasBuilder blobSasBuilder = new ShareSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                ShareName = test.Share.Name
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => blobSasBuilder.SetPermissions(
+                    rawPermissions: "ptsdfsd",
+                    normalize: true),
+                new ArgumentException("s is not a valid SAS permission"));
+        }
+
+        [Test]
+        public void ShareUriBuilder_LocalDockerUrl_PortTest()
+        {
+            // Arrange
+            // BlobEndpoint from https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
+            var uriString = "http://docker_container:10000/devstoreaccount1/sharename";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", fileUriBuilder.Scheme);
+            Assert.AreEqual("docker_container", fileUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", fileUriBuilder.AccountName);
+            Assert.AreEqual("sharename", fileUriBuilder.ShareName);
+            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", fileUriBuilder.Snapshot);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(10000, fileUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void ShareUriBuilder_CustomUri_AccountShareFileTest()
+        {
+            // Arrange
+            var uriString = "https://www.mycustomname.com/sharename/filename";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", fileUriBuilder.Scheme);
+            Assert.AreEqual("www.mycustomname.com", fileUriBuilder.Host);
+            Assert.AreEqual(String.Empty, fileUriBuilder.AccountName);
+            Assert.AreEqual("sharename", fileUriBuilder.ShareName);
+            Assert.AreEqual("filename", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", fileUriBuilder.Snapshot);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(443, fileUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
         }
 
         private ShareSasBuilder BuildFileSasBuilder(bool includeVersion, bool includeFilePath, TestConstants constants, string shareName, string filePath)

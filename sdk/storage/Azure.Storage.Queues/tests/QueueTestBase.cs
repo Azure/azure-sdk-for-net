@@ -7,7 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -42,8 +42,8 @@ namespace Azure.Storage.Queues.Tests
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 },
                 Transport = GetTransport()
         };
@@ -52,17 +52,17 @@ namespace Azure.Storage.Queues.Tests
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
-        public QueueServiceClient GetServiceClient_SharedKey()
+        public QueueServiceClient GetServiceClient_SharedKey(QueueClientOptions options = default)
             => InstrumentClient(
                 new QueueServiceClient(
                     new Uri(TestConfigDefault.QueueServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
-                    GetOptions()));
+                    options ?? GetOptions()));
 
         public QueueServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
@@ -75,6 +75,23 @@ namespace Azure.Storage.Queues.Tests
                 new QueueServiceClient(
                     new Uri($"{TestConfigDefault.QueueServiceEndpoint}?{sasCredentials ?? GetNewQueueServiceSasCredentials(queueName, sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
                     GetOptions()));
+
+        public Security.KeyVault.Keys.KeyClient GetKeyClient_TargetKeyClient()
+            => GetKeyClient(TestConfigurations.DefaultTargetKeyVault);
+
+        public TokenCredential GetTokenCredential_TargetKeyClient()
+            => GetKeyClientTokenCredential(TestConfigurations.DefaultTargetKeyVault);
+
+        private static Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
+            => new Security.KeyVault.Keys.KeyClient(
+                new Uri(config.VaultEndpoint),
+                GetKeyClientTokenCredential(config));
+
+        private static TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+            => new Identity.ClientSecretCredential(
+                config.ActiveDirectoryTenantId,
+                config.ActiveDirectoryApplicationId,
+                config.ActiveDirectoryApplicationSecret);
 
         public QueueServiceClient GetServiceClient_OauthAccount() =>
             GetServiceClientFromOauthConfig(TestConfigOAuth);
@@ -124,12 +141,24 @@ namespace Azure.Storage.Queues.Tests
                     GetOAuthCredential(config),
                     GetOptions()));
 
-        public async Task<DisposingQueue> GetTestQueueAsync(QueueServiceClient service = default, IDictionary<string, string> metadata = default)
+        public async Task<DisposingQueue> GetTestQueueAsync(
+            QueueServiceClient service = default,
+            IDictionary<string, string> metadata = default)
         {
             service ??= GetServiceClient_SharedKey();
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             QueueClient queue = InstrumentClient(service.GetQueueClient(GetNewQueueName()));
             return await DisposingQueue.CreateAsync(queue, metadata);
+        }
+
+        public QueueClient GetEncodingClient(
+            string queueName,
+            QueueMessageEncoding encoding)
+        {
+            var options = GetOptions();
+            options.MessageEncoding = encoding;
+            var service = GetServiceClient_SharedKey(options);
+            return InstrumentClient(service.GetQueueClient(queueName));
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
@@ -202,7 +231,7 @@ namespace Azure.Storage.Queues.Tests
 
             public static async Task<DisposingQueue> CreateAsync(QueueClient queue, IDictionary<string, string> metadata)
             {
-                await queue.CreateAsync(metadata: metadata);
+                await queue.CreateIfNotExistsAsync(metadata: metadata);
                 return new DisposingQueue(queue);
             }
 
@@ -217,7 +246,7 @@ namespace Azure.Storage.Queues.Tests
                 {
                     try
                     {
-                        await Queue.DeleteAsync();
+                        await Queue.DeleteIfExistsAsync();
                         Queue = null;
                     }
                     catch
@@ -241,6 +270,54 @@ namespace Azure.Storage.Queues.Tests
                             ExpiresOn =  Recording.UtcNow.AddHours(1),
                             Permissions = "raup"
                         }
+                }
+            };
+
+        public QueueServiceProperties GetQueueServiceProperties() =>
+            new QueueServiceProperties()
+            {
+                Logging = new QueueAnalyticsLogging()
+                {
+                    Version = "1.0",
+                    Read = false,
+                    Write = false,
+                    Delete = false,
+                    RetentionPolicy = new QueueRetentionPolicy()
+                    {
+                        Enabled = false
+                    }
+                },
+                HourMetrics = new QueueMetrics()
+                {
+                    Version = "1.0",
+                    Enabled = true,
+                    IncludeApis = true,
+                    RetentionPolicy = new QueueRetentionPolicy()
+                    {
+                        Enabled = true,
+                        Days = 7
+                    }
+                },
+                MinuteMetrics = new QueueMetrics()
+                {
+                    Version = "1.0",
+                    Enabled = false,
+                    RetentionPolicy = new QueueRetentionPolicy()
+                    {
+                        Enabled = true,
+                        Days = 7
+                    }
+                },
+                Cors = new[]
+                {
+                    new QueueCorsRule()
+                    {
+                        AllowedOrigins = "http://www.contoso.com,http://www.fabrikam.com",
+                        AllowedMethods = "GET,PUT",
+                        MaxAgeInSeconds = 500,
+                        ExposedHeaders = "x-ms-meta-customheader,x-ms-meta-data*",
+                        AllowedHeaders = "x-ms-meta-customheader,x-ms-meta-target*"
+                    }
                 }
             };
     }

@@ -8,7 +8,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Media.")]
 
 [assembly: AssemblyVersion("2.0.1.0")]
-[assembly: AssemblyFileVersion("2.0.4.0")]
+[assembly: AssemblyFileVersion("2.0.5.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]

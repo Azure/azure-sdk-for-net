@@ -22,23 +22,48 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The versions of Azure Blob Storage supported by this client
         /// library.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services" />.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
+        /// Versioning for Azure Storage Services</see>.
         /// </summary>
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
             /// The 2019-02-02 service version described at
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services#version-2019-02-02" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2019-02-02">
+            /// Version 2019-02-02</see>
             /// </summary>
-            V2019_02_02 = 1
+            V2019_02_02 = 1,
+
+            /// <summary>
+            /// The 2019-07-07 service version described at
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2019-07-07">
+            /// Version 2019-07-07</see>
+            /// </summary>
+            V2019_07_07 = 2,
+
+            /// <summary>
+            /// The 2019-12-12 service version.
+            /// </summary>
+            V2019_12_12 = 3,
+
+            /// <summary>
+            /// The 2020-02-10 service version.
+            /// </summary>
+            V2020_02_10 = 4,
+
+            /// <summary>
+            /// The 2020-04-08 service version.
+            /// </summary>
+            V2020_04_08 = 5
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services" />.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
+        /// Versioning for Azure Storage Services</see>.
         /// </summary>
         public ServiceVersion Version { get; }
 
@@ -46,6 +71,11 @@ namespace Azure.Storage.Blobs
         /// Gets the <see cref="CustomerProvidedKey"/> to be used when making requests.
         /// </summary>
         public CustomerProvidedKey? CustomerProvidedKey { get; set; }
+
+        /// <summary>
+        /// Gets the <see cref="EncryptionScope"/> to be used when making requests.
+        /// </summary>
+        public string EncryptionScope { get; set; }
 
         /// <summary>
         /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
@@ -59,6 +89,10 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
 
+        #region Advanced Options
+        internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClientOptions"/>
         /// class.
@@ -69,7 +103,16 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
+            if (ServiceVersion.V2019_02_02 <= version
+                && version <= LatestVersion)
+            {
+                Version = version;
+            }
+            else
+            {
+                throw Errors.VersionNotSupported(nameof(version));
+            }
+
             this.Initialize();
             AddHeadersAndQueryParameters();
         }

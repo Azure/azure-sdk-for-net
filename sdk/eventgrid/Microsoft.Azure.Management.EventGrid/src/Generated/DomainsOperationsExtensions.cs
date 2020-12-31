@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.EventGrid
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -181,12 +179,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='domainName'>
             /// Name of the domain.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the domains resource.
+            /// <param name='domainUpdateParameters'>
+            /// Domain update information.
             /// </param>
-            public static Domain Update(this IDomainsOperations operations, string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Domain Update(this IDomainsOperations operations, string resourceGroupName, string domainName, DomainUpdateParameters domainUpdateParameters)
             {
-                return operations.UpdateAsync(resourceGroupName, domainName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, domainName, domainUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -204,15 +202,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='domainName'>
             /// Name of the domain.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the domains resource.
+            /// <param name='domainUpdateParameters'>
+            /// Domain update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Domain> UpdateAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Domain> UpdateAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, DomainUpdateParameters domainUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, domainName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, domainName, domainUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -558,12 +556,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='domainName'>
             /// Name of the domain.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the domains resource.
+            /// <param name='domainUpdateParameters'>
+            /// Domain update information.
             /// </param>
-            public static Domain BeginUpdate(this IDomainsOperations operations, string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Domain BeginUpdate(this IDomainsOperations operations, string resourceGroupName, string domainName, DomainUpdateParameters domainUpdateParameters)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, domainName, tags).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, domainName, domainUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -581,15 +579,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='domainName'>
             /// Name of the domain.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the domains resource.
+            /// <param name='domainUpdateParameters'>
+            /// Domain update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Domain> BeginUpdateAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Domain> BeginUpdateAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, DomainUpdateParameters domainUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, domainName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, domainName, domainUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

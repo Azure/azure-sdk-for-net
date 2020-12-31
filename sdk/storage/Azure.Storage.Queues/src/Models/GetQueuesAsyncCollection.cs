@@ -4,6 +4,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -26,19 +27,16 @@ namespace Azure.Storage.Queues.Models
         public override async ValueTask<Page<QueueItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
-            bool isAsync,
+            bool async,
             CancellationToken cancellationToken)
         {
-            Task<Response<QueuesSegment>> task = _client.GetQueuesInternal(
+            Response<QueuesSegment> response = await _client.GetQueuesInternal(
                 continuationToken,
                 _traits,
                 _prefix,
                 pageSizeHint,
-                isAsync,
-                cancellationToken);
-            Response<QueuesSegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
+                async,
+                cancellationToken).ConfigureAwait(false);
 
             return Page<QueueItem>.FromValues(
                 response.Value.QueueItems.ToArray(),

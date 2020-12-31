@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.HybridData
         public HybridDataManagementClient Client { get; private set; }
 
         /// <summary>
-        /// This method gets all the operations.
+        /// The list of operations for Microsoft.HybridData provider.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.HybridData
         }
 
         /// <summary>
-        /// This method gets all the operations.
+        /// The list of operations for Microsoft.HybridData provider.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

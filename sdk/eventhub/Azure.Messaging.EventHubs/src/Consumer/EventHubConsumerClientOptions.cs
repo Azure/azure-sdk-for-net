@@ -8,7 +8,7 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs.Consumer
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating a <see cref="EventHubConsumerClient" />
+    ///   The set of options that can be specified when creating an <see cref="EventHubConsumerClient" />
     ///   to configure its behavior.
     /// </summary>
     ///
@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>
-        ///   Gets or sets the options used for configuring the connection to the Event Hubs service.
+        ///   The options used for configuring the connection to the Event Hubs service.
         /// </summary>
         ///
         public EventHubConnectionOptions ConnectionOptions
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <summary>
         ///   The set of options to use for determining whether a failed operation should be retried and,
         ///   if so, the amount of time to wait between retry attempts.  These options also control the
-        ///   amount of time allowed for publishing events and other interactions with the Event Hubs service.
+        ///   amount of time allowed for reading events and other interactions with the Event Hubs service.
         /// </summary>
         ///
         public EventHubsRetryOptions RetryOptions

@@ -229,6 +229,106 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
+            /// Gets upgrade profile for an agent pool.
+            /// </summary>
+            /// <remarks>
+            /// Gets the details of the upgrade profile for an agent pool with a specified
+            /// resource group and managed cluster name.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            public static AgentPoolUpgradeProfile GetUpgradeProfile(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName)
+            {
+                return operations.GetUpgradeProfileAsync(resourceGroupName, resourceName, agentPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets upgrade profile for an agent pool.
+            /// </summary>
+            /// <remarks>
+            /// Gets the details of the upgrade profile for an agent pool with a specified
+            /// resource group and managed cluster name.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AgentPoolUpgradeProfile> GetUpgradeProfileAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUpgradeProfileWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of supported versions for the specified agent pool.
+            /// </summary>
+            /// <remarks>
+            /// Gets a list of supported versions for the specified agent pool.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            public static AgentPoolAvailableVersions GetAvailableAgentPoolVersions(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName)
+            {
+                return operations.GetAvailableAgentPoolVersionsAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of supported versions for the specified agent pool.
+            /// </summary>
+            /// <remarks>
+            /// Gets a list of supported versions for the specified agent pool.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AgentPoolAvailableVersions> GetAvailableAgentPoolVersionsAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAvailableAgentPoolVersionsWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates an agent pool.
             /// </summary>
             /// <remarks>

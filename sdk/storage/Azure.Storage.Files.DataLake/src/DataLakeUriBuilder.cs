@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -97,8 +98,24 @@ namespace Azure.Storage.Files.DataLake
         public string DirectoryOrFilePath
         {
             get => _directoryOrFilePath;
-            set { ResetUri(); _directoryOrFilePath = value.TrimEnd('/'); }
+            set
+            {
+                ResetUri();
+                if (value == null)
+                {
+                    _directoryOrFilePath = null;
+                }
+                else if (value == "/")
+                {
+                    _directoryOrFilePath = value;
+                }
+                else
+                {
+                    _directoryOrFilePath = value.TrimEnd('/');
+                }
+            }
         }
+
         private string _directoryOrFilePath;
 
         /// <summary>
@@ -194,16 +211,27 @@ namespace Azure.Storage.Files.DataLake
                 }
 
                 // Find the next slash (if it exists)
-
                 var shareEndIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture);
                 if (shareEndIndex == -1)
                 {
-                    FileSystemName = path.Substring(startIndex); // Slash not found; path has share name & no directory/file path
+                    // Slash not found; path has file system & no directory/file path
+                    FileSystemName = path.Substring(startIndex);
                 }
                 else
                 {
-                    FileSystemName = path.Substring(startIndex, shareEndIndex - startIndex); // The share name is the part between the slashes
-                    DirectoryOrFilePath = path.Substring(shareEndIndex + 1);   // The directory/file path name is after the share slash
+                    // The file system name is the part between the slashes
+                    FileSystemName = path.Substring(startIndex, shareEndIndex - startIndex);
+                    string directoryOrFilePath = path.Substring(shareEndIndex + 1);
+
+                    // The directory/file path name is after the share slash
+                    if (directoryOrFilePath.Length == 0)
+                    {
+                        DirectoryOrFilePath = "/";
+                    }
+                    else
+                    {
+                        DirectoryOrFilePath = directoryOrFilePath.UnescapePath();
+                    }
                 }
             }
 
@@ -288,7 +316,6 @@ namespace Azure.Storage.Files.DataLake
                         4);
                     Host = stringBuilder.ToString();
                 }
-
             }
 
             return ToUri();
@@ -325,14 +352,22 @@ namespace Azure.Storage.Files.DataLake
             // regular style Uri will already have account name in domain
             if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(AccountName);
+                path.Append('/').Append(AccountName);
             }
             if (!string.IsNullOrWhiteSpace(FileSystemName))
             {
-                path.Append("/").Append(FileSystemName);
+                path.Append('/').Append(FileSystemName);
                 if (!string.IsNullOrWhiteSpace(DirectoryOrFilePath))
                 {
-                    path.Append("/").Append(DirectoryOrFilePath);
+                    if (DirectoryOrFilePath == "/")
+                    {
+                        path.Append(_directoryOrFilePath);
+                    }
+                    else
+                    {
+                        // Encode path.
+                        path.Append('/').Append(DirectoryOrFilePath.EscapePath());
+                    }
                 }
             }
 
@@ -341,14 +376,14 @@ namespace Azure.Storage.Files.DataLake
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
+                { query.Append('&'); }
+                query.Append(Constants.SnapshotParameterName).Append('=').Append(Snapshot);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
+                { query.Append('&'); }
                 query.Append(sas);
             }
 

@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -158,7 +159,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     ConvertCollection(_collection, CancellationToken)
                     .AsPages(continuationToken, pageHintSize);
 
-                await foreach (Page<BlobContainerItem> page in pages)
+                await foreach (Page<BlobContainerItem> page in pages.ConfigureAwait(false))
                 {
                     yield return ConvertPage(page);
                 }
@@ -186,7 +187,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     ConvertCollection(_collection, cancellationToken)
                     .AsPages();
 
-                await foreach (Page<BlobContainerItem> page in pages)
+                await foreach (Page<BlobContainerItem> page in pages.ConfigureAwait(false))
                 {
                     foreach (BlobContainerItem item in page.Values)
                     {

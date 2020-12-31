@@ -51,7 +51,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="state">The state of the server.</param>
         /// <param name="fullyQualifiedDomainName">The fully qualified domain
         /// name of the server.</param>
-        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), string kind = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string))
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections on a server</param>
+        /// <param name="minimalTlsVersion">Minimal TLS version. Allowed
+        /// values: '1.0', '1.1', '1.2'</param>
+        /// <param name="publicNetworkAccess">Whether or not public endpoint
+        /// access is allowed for this server.  Value is optional but if passed
+        /// in, must be 'Enabled' or 'Disabled'. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), string kind = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -61,6 +69,9 @@ namespace Microsoft.Azure.Management.Sql.Models
             Version = version;
             State = state;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
+            PrivateEndpointConnections = privateEndpointConnections;
+            MinimalTlsVersion = minimalTlsVersion;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -115,6 +126,27 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string FullyQualifiedDomainName { get; private set; }
 
         /// <summary>
+        /// Gets list of private endpoint connections on a server
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<ServerPrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets or sets minimal TLS version. Allowed values: '1.0', '1.1',
+        /// '1.2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimalTlsVersion")]
+        public string MinimalTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not public endpoint access is allowed for
+        /// this server.  Value is optional but if passed in, must be 'Enabled'
+        /// or 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -123,6 +155,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         public override void Validate()
         {
             base.Validate();
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element in PrivateEndpointConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
         }
     }
 }

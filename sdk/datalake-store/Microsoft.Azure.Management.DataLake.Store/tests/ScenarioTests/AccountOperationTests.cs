@@ -203,7 +203,7 @@ namespace DataLakeStore.Tests
                     commonData.DataLakeStoreAccountName + "acct2"
                 );
 
-                // Delete the account again and make sure it continues to result in a succesful code.
+                // Delete the account again and make sure it continues to result in a successful code.
                 clientToUse.Accounts.Delete(
                     commonData.ResourceGroupName,
                     commonData.DataLakeStoreAccountName + "acct2"

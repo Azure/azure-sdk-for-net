@@ -341,6 +341,52 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
+            /// Gets the client secret details of the authorization server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='authsid'>
+            /// Identifier of the authorization server.
+            /// </param>
+            public static ClientSecretContract ListSecrets(this IAuthorizationServerOperations operations, string resourceGroupName, string serviceName, string authsid)
+            {
+                return operations.ListSecretsAsync(resourceGroupName, serviceName, authsid).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the client secret details of the authorization server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='authsid'>
+            /// Identifier of the authorization server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClientSecretContract> ListSecretsAsync(this IAuthorizationServerOperations operations, string resourceGroupName, string serviceName, string authsid, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, authsid, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists a collection of authorization servers defined within a service
             /// instance.
             /// </summary>

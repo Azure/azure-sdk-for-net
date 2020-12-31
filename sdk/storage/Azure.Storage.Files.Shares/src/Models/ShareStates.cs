@@ -24,6 +24,11 @@ namespace Azure.Storage.Files.Shares.Models
         Snapshots = 1,
 
         /// <summary>
+        /// Flag specifying that deleted shares should be included.
+        /// </summary>
+        Deleted = 2,
+
+        /// <summary>
         /// Flag specifying that shares of all states should be included.
         /// </summary>
         All = ~None

@@ -25,13 +25,6 @@ namespace Azure.Storage.Blobs.Specialized
         public const string BatchSeparator = "--";
         public const string HttpVersion = "HTTP/1.1";
 
-        public const string BatchOperationName =
-            nameof(Azure) + "." +
-            nameof(Storage) + "." +
-            nameof(Blobs) + "." +
-            nameof(Specialized) + "." +
-            nameof(BlobBatchClient) + "." +
-            nameof(BlobBatchClient.SubmitBatch);
-        public const string DelayedResponsePropertyName = BatchOperationName + ":DelayedResponse";
+        public static readonly string DelayedResponsePropertyName = $"{nameof(BlobBatchClient)}.{nameof(BlobBatchClient.SubmitBatch)}:DelayedResponse";
     }
 }

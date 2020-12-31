@@ -33,12 +33,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="internalHttpPort">Internal HTTP port.</param>
         /// <param name="internalHttpsPort">Internal HTTPS port.</param>
         /// <param name="inUse">Is virtual IP mapping in use.</param>
-        public VirtualIPMapping(string virtualIP = default(string), int? internalHttpPort = default(int?), int? internalHttpsPort = default(int?), bool? inUse = default(bool?))
+        /// <param name="serviceName">name of the service that virtual IP is
+        /// assigned to</param>
+        public VirtualIPMapping(string virtualIP = default(string), int? internalHttpPort = default(int?), int? internalHttpsPort = default(int?), bool? inUse = default(bool?), string serviceName = default(string))
         {
             VirtualIP = virtualIP;
             InternalHttpPort = internalHttpPort;
             InternalHttpsPort = internalHttpsPort;
             InUse = inUse;
+            ServiceName = serviceName;
             CustomInit();
         }
 
@@ -70,6 +73,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "inUse")]
         public bool? InUse { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of the service that virtual IP is assigned to
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceName")]
+        public string ServiceName { get; set; }
 
     }
 }

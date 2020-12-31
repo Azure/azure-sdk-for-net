@@ -144,18 +144,49 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void FailureReasonsAreWellKnown()
         {
-             var knownReasons = new List<EventHubsException.FailureReason>();
+            var knownReasons = new List<EventHubsException.FailureReason>();
 
-             foreach (var name in Enum.GetNames(typeof(EventHubsException.FailureReason)))
-             {
+            foreach (var name in Enum.GetNames(typeof(EventHubsException.FailureReason)))
+            {
                 knownReasons.Add((EventHubsException.FailureReason)Enum.Parse(typeof(EventHubsException.FailureReason), name));
-             }
+            }
 
             IOrderedEnumerable<EventHubsException.FailureReason> reasonTestCases = ExceptionTransientTestCases()
                 .Select(testCase => (EventHubsException.FailureReason)testCase[0])
                 .OrderBy(item => item.ToString());
 
             Assert.That(knownReasons.OrderBy(item => item.ToString()), Is.EquivalentTo(reasonTestCases), "All failure reasons defined by EventHubsException in the client library should have a matching IsTransient test case.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsException.ToString" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToStringContainsExceptionDetails()
+        {
+            var message = "Test message!";
+            var eventHubName = "the-thub";
+            var reason = EventHubsException.FailureReason.QuotaExceeded;
+
+            EventHubsException instance;
+
+            try
+            {
+                throw new EventHubsException(false, eventHubName, message, reason);
+            }
+            catch (EventHubsException ex)
+            {
+                instance = ex;
+            }
+
+            var exceptionString = instance.ToString();
+            Assert.That(exceptionString, Is.Not.Null.And.Not.Empty, "The ToString value should be populated.");
+            Assert.That(exceptionString, Contains.Substring(typeof(EventHubsException).FullName), "The ToString value should contain the type name.");
+            Assert.That(exceptionString, Contains.Substring(reason.ToString()), "The ToString value should contain the failure reason.");
+            Assert.That(exceptionString, Contains.Substring(eventHubName), "The ToString value should contain the Event Hub name.");
+            Assert.That(exceptionString, Contains.Substring($"{ Environment.NewLine }{ instance.StackTrace }"), "The ToString value should contain the stack trace on a new line.");
         }
     }
 }

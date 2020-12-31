@@ -99,12 +99,6 @@
             ],
             "features": [
                 {
-                    "modelName": "Communication.Confirm"
-                },
-                {
-                    "modelName": "Calendar.Subject"
-                },
-                {
                     "featureName": "phraselist1"
                 }
             ]
@@ -118,12 +112,6 @@
             },
             "roles": [],
             "features": [
-                {
-                    "modelName": "Communication.Confirm"
-                },
-                {
-                    "modelName": "Communication.AddMore"
-                },
                 {
                     "modelName": "simpleentity1"
                 },
@@ -178,12 +166,6 @@
             ],
             "roles": [],
             "features": [
-                {
-                    "modelName": "Communication.Confirm"
-                },
-                {
-                    "modelName": "Calendar.Subject"
-                },
                 {
                     "modelName": "simpleentity1"
                 },

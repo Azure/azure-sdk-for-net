@@ -56,7 +56,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="currentScenarioStatusDescription">The recovery plan
         /// status description.</param>
         /// <param name="groups">The recovery plan groups.</param>
-        public RecoveryPlanProperties(string friendlyName = default(string), string primaryFabricId = default(string), string primaryFabricFriendlyName = default(string), string recoveryFabricId = default(string), string recoveryFabricFriendlyName = default(string), string failoverDeploymentModel = default(string), IList<string> replicationProviders = default(IList<string>), IList<string> allowedOperations = default(IList<string>), System.DateTime? lastPlannedFailoverTime = default(System.DateTime?), System.DateTime? lastUnplannedFailoverTime = default(System.DateTime?), System.DateTime? lastTestFailoverTime = default(System.DateTime?), CurrentScenarioDetails currentScenario = default(CurrentScenarioDetails), string currentScenarioStatus = default(string), string currentScenarioStatusDescription = default(string), IList<RecoveryPlanGroup> groups = default(IList<RecoveryPlanGroup>))
+        /// <param name="providerSpecificDetails">The provider id and provider
+        /// specific details.</param>
+        public RecoveryPlanProperties(string friendlyName = default(string), string primaryFabricId = default(string), string primaryFabricFriendlyName = default(string), string recoveryFabricId = default(string), string recoveryFabricFriendlyName = default(string), string failoverDeploymentModel = default(string), IList<string> replicationProviders = default(IList<string>), IList<string> allowedOperations = default(IList<string>), System.DateTime? lastPlannedFailoverTime = default(System.DateTime?), System.DateTime? lastUnplannedFailoverTime = default(System.DateTime?), System.DateTime? lastTestFailoverTime = default(System.DateTime?), CurrentScenarioDetails currentScenario = default(CurrentScenarioDetails), string currentScenarioStatus = default(string), string currentScenarioStatusDescription = default(string), IList<RecoveryPlanGroup> groups = default(IList<RecoveryPlanGroup>), IList<RecoveryPlanProviderSpecificDetails> providerSpecificDetails = default(IList<RecoveryPlanProviderSpecificDetails>))
         {
             FriendlyName = friendlyName;
             PrimaryFabricId = primaryFabricId;
@@ -73,6 +75,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             CurrentScenarioStatus = currentScenarioStatus;
             CurrentScenarioStatusDescription = currentScenarioStatusDescription;
             Groups = groups;
+            ProviderSpecificDetails = providerSpecificDetails;
             CustomInit();
         }
 
@@ -170,6 +173,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "groups")]
         public IList<RecoveryPlanGroup> Groups { get; set; }
+
+        /// <summary>
+        /// Gets the provider id and provider specific details.
+        /// </summary>
+        [JsonProperty(PropertyName = "providerSpecificDetails")]
+        public IList<RecoveryPlanProviderSpecificDetails> ProviderSpecificDetails { get; private set; }
 
     }
 }

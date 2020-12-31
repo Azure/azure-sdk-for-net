@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an API key for a given Azure Search service that has
-    /// permissions for query operations only.
+    /// Describes an API key for a given Azure Cognitive Search service that
+    /// has permissions for query operations only.
     /// </summary>
     public partial class QueryKey
     {

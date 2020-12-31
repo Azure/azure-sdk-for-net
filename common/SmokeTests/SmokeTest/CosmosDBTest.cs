@@ -67,7 +67,7 @@ namespace SmokeTest
             await CreateDatabase();
             await CreateCollection();
             await CreateDocuments();
-            await ExecuteSimpleQuery();
+            ExecuteSimpleQuery();
             await DeleteDatabase();
         }
 
@@ -117,7 +117,7 @@ namespace SmokeTest
                     }
                 }
             });
-            
+
             //The items must NOT exists in the collection
             foreach (Planet planet in planets)
             {
@@ -130,7 +130,7 @@ namespace SmokeTest
         /// <summary>
         /// The query retrieve all planets, this is going to verify that planets match
         /// </summary>
-        private static async Task ExecuteSimpleQuery(){
+        private static void ExecuteSimpleQuery(){
             Console.Write("Querying... ");
             IQueryable<Planet> planetarySqlQuery = client.CreateDocumentQuery<Planet>(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), "SELECT * FROM c");
 

@@ -3,14 +3,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues.Specialized;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Queues
 {
@@ -72,6 +78,18 @@ namespace Azure.Storage.Queues
         internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
+        /// The <see cref="QueueClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        private readonly QueueClientSideEncryptionOptions _clientSideEncryption;
+
+        /// <summary>
+        /// The <see cref="QueueClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        internal virtual QueueClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
+
+        internal bool UsingClientSideEncryption => ClientSideEncryption != default;
+
+        /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
         /// you can retrieve with each call to Peek.
         /// </summary>
@@ -104,6 +122,10 @@ namespace Azure.Storage.Queues
         /// </summary>
         private string _name;
 
+        private QueueMessageEncoding _messageEncoding;
+
+        internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
+
         /// <summary>
         /// Gets the name of the queue.
         /// </summary>
@@ -115,6 +137,22 @@ namespace Azure.Storage.Queues
                 return _name;
             }
         }
+
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -134,7 +172,9 @@ namespace Azure.Storage.Queues
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
         /// </param>
         /// <param name="queueName">
         /// The name of the queue in the storage account to reference.
@@ -153,7 +193,9 @@ namespace Azure.Storage.Queues
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
         /// </param>
         /// <param name="queueName">
         /// The name of the queue in the storage account to reference.
@@ -166,17 +208,20 @@ namespace Azure.Storage.Queues
         public QueueClient(string connectionString, string queueName, QueueClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder =
-                new QueueUriBuilder(conn.QueueEndpoint)
-                {
-                    QueueName = queueName
-                };
+            var builder = new QueueUriBuilder(conn.QueueEndpoint)
+            {
+                QueueName = queueName
+            };
             _uri = builder.ToUri();
             _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            _messageEncoding = options.MessageEncoding;
+            AssertEncodingForEncryption();
         }
 
         /// <summary>
@@ -194,7 +239,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, QueueClientOptions options = default)
-            : this(queueUri, (HttpPipelinePolicy)null, options)
+            : this(queueUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -216,7 +261,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, StorageSharedKeyCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options)
+            : this(queueUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -238,7 +283,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options)
+            : this(queueUri, credential.AsPolicy(), options, null)
         {
             Errors.VerifyHttpsTokenAuth(queueUri);
         }
@@ -260,7 +305,14 @@ namespace Azure.Storage.Queues
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal QueueClient(Uri queueUri, HttpPipelinePolicy authentication, QueueClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal QueueClient(
+            Uri queueUri,
+            HttpPipelinePolicy authentication,
+            QueueClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
@@ -268,6 +320,10 @@ namespace Azure.Storage.Queues
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
+            _messageEncoding = options.MessageEncoding;
+            AssertEncodingForEncryption();
         }
 
         /// <summary>
@@ -282,6 +338,9 @@ namespace Azure.Storage.Queues
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -289,13 +348,30 @@ namespace Azure.Storage.Queues
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal QueueClient(Uri queueUri, HttpPipeline pipeline, QueueClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        /// <param name="encryptionOptions">
+        /// Options for client-side encryption.
+        /// </param>
+        /// <param name="messageEncoding">
+        /// The encoding of the message sent over the wire.
+        /// </param>
+        internal QueueClient(
+            Uri queueUri,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            QueueClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics,
+            ClientSideEncryptionOptions encryptionOptions,
+            QueueMessageEncoding messageEncoding)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
+            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(encryptionOptions);
+            _messageEncoding = messageEncoding;
+            AssertEncodingForEncryption();
         }
         #endregion ctors
 
@@ -312,11 +388,31 @@ namespace Azure.Storage.Queues
             }
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="QueueClient"/> class, maintaining all the same
+        /// internals but specifying new <see cref="ClientSideEncryptionOptions"/>.
+        /// </summary>
+        /// <param name="clientSideEncryptionOptions">New encryption options. Setting this to <code>default</code> will clear client-side encryption.</param>
+        /// <returns>New instance with provided options and same internals otherwise.</returns>
+        protected internal virtual QueueClient WithClientSideEncryptionOptionsCore(ClientSideEncryptionOptions clientSideEncryptionOptions)
+        {
+            return new QueueClient(
+                Uri,
+                Pipeline,
+                SharedKeyCredential,
+                Version,
+                ClientDiagnostics,
+                clientSideEncryptionOptions,
+                MessageEncoding);
+        }
+
         #region Create
         /// <summary>
         /// Creates a queue.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">
+        /// Create Queue</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional <see cref="Metadata"/>.
@@ -339,7 +435,9 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Creates a queue.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">
+        /// Create Queue</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional <see cref="Metadata"/>.
@@ -362,7 +460,9 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Creates a queue.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">
+        /// Create Queue</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional <see cref="Metadata"/>.
@@ -373,13 +473,17 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
         private async Task<Response> CreateInternal(
             Metadata metadata,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -395,6 +499,7 @@ namespace Azure.Storage.Queues
                         version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
+                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -411,10 +516,367 @@ namespace Azure.Storage.Queues
         }
         #endregion Create
 
+        #region CreateIfNotExists
+        /// <summary>
+        /// The <see cref="CreateIfNotExists"/>
+        /// operation creates a new queue under the specified account.
+        /// If the queue already exists, it is not changed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">
+        /// Create Queue</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this queue.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the queue does not already exist, a <see cref="Response"/>
+        /// describing the newly created queue. If the queue already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response CreateIfNotExists(
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default) =>
+            CreateIfNotExistsInternal(
+                metadata,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync"/>
+        /// operation creates a new queue under the specified account.
+        /// If the queue already exists, it is not changed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">
+        /// Create Queue</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this queue.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the queue does not already exist, a <see cref="Response"/>
+        /// describing the newly created queue. If the queue already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> CreateIfNotExistsAsync(
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateIfNotExistsInternal(
+                metadata,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsInternal"/>
+        /// operation creates a new queue under the specified account.
+        /// If the queue already exists, it is not changed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">
+        /// Create Queue</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this queue.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the queue does not already exist, a <see cref="Response"/>
+        /// describing the newly created queue. If the queue already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response> CreateIfNotExistsInternal(
+            Metadata metadata,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(QueueClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(metadata)}: {metadata}");
+                Response response;
+                try
+                {
+                    response = await CreateInternal(
+                        metadata,
+                        async,
+                        cancellationToken,
+                        $"{nameof(QueueClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+
+                    if (response.Status == Constants.Queue.StatusCodeNoContent)
+                    {
+                        response = default;
+                    }
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == QueueErrorCode.QueueAlreadyExists)
+                {
+                    response = default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(QueueClient));
+                }
+                return response;
+            }
+        }
+        #endregion CreateIfNotExists
+
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="QueueClient"/> to see if the associated queue
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the queue exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default) =>
+            ExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// <see cref="QueueClient"/> to see if the associated queue
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the queue exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await ExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ExistsInternal"/> operation can be called on a
+        /// <see cref="QueueClient"/> to see if the associated queue
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the queue exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> ExistsInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(QueueClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    Response<QueueProperties> response = await GetPropertiesInternal(
+                        async: async,
+                        operationName: $"{nameof(QueueClient)}.{nameof(Exists)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(true, response.GetRawResponse());
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == QueueErrorCode.QueueNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(QueueClient));
+                }
+            }
+        }
+        #endregion Exists
+
+        #region DeleteIfExists
+        /// <summary>
+        /// The <see cref="DeleteIfExists"/> operation deletes the specified
+        /// queue if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3">
+        /// Delete Queue</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> Returns true if queue exists and was
+        /// deleted, return false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            CancellationToken cancellationToken = default) =>
+            DeleteIfExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync"/> operation deletes the specified
+        /// queue if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3">
+        /// Delete Queue</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> Returns true if queue exists and was
+        /// deleted, return false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await DeleteIfExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsInternal"/> operation deletes the specified
+        /// queue if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3">
+        /// Delete Queue</see>.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> Returns true if queue exists and was
+        /// deleted, return false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> DeleteIfExistsInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(QueueClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    Response response = await DeleteInternal(
+                        async,
+                        cancellationToken,
+                        $"{nameof(QueueClient)}.{nameof(DeleteIfExists)}")
+                        .ConfigureAwait(false);
+                    return Response.FromValue(true, response);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == QueueErrorCode.QueueNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(QueueClient));
+                }
+            }
+        }
+        #endregion DeleteIfExists
+
         #region Delete
         /// <summary>
         /// Deletes a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-queue3">
+        /// Delete Queue</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -431,7 +893,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Deletes a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-queue3">
+        /// Delete Queue</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -448,7 +913,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Deletes a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-queue3">
+        /// Delete Queue</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -456,12 +924,16 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
         private async Task<Response> DeleteInternal(
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -476,6 +948,7 @@ namespace Azure.Storage.Queues
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
+                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -496,7 +969,10 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Retrieves queue properties and user-defined metadata and properties on the specified queue.
         /// Metadata is associated with the queue as name-values pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-metadata"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-metadata">
+        /// Get Queue Metadata</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -514,7 +990,10 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Retrieves queue properties and user-defined metadata and properties on the specified queue.
         /// Metadata is associated with the queue as name-values pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-metadata"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-metadata">
+        /// Get Queue Metadata</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -532,7 +1011,10 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Retrieves queue properties and user-defined metadata and properties on the specified queue.
         /// Metadata is associated with the queue as name-values pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-metadata"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-metadata">
+        /// Get Queue Metadata</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -540,12 +1022,16 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response{QueueProperties}"/>
         /// </returns>
         private async Task<Response<QueueProperties>> GetPropertiesInternal(
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -560,6 +1046,7 @@ namespace Azure.Storage.Queues
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
+                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -579,7 +1066,10 @@ namespace Azure.Storage.Queues
         #region SetMetadata
         /// <summary>
         /// Sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-metadata"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-metadata">
+        /// Set Queue Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// <see cref="Metadata"/>
@@ -601,7 +1091,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-metadata"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-metadata">
+        /// Set Queue Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// <see cref="Metadata"/>
@@ -623,7 +1116,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-metadata"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-metadata">
+        /// Set Queue Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// <see cref="Metadata"/>
@@ -676,7 +1172,10 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Returns details about any stored access policies specified on the queue that may be used with
         /// Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-acl"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-acl">
+        /// Get Queue ACL</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -694,7 +1193,10 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Returns details about any stored access policies specified on the queue that may be used with
         /// Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-acl"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-acl">
+        /// Get Queue ACL</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -712,7 +1214,10 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Returns details about any stored access policies specified on the queue that may be used with
         /// Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-acl"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-acl">
+        /// Get Queue ACL</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -759,7 +1264,10 @@ namespace Azure.Storage.Queues
         #region SetAccessPolicy
         /// <summary>
         /// SetAccessPolicyAsync sets stored access policies for the queue that may be used with Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-acl">
+        /// Set Queue ACL</see>.
         /// </summary>
         /// <param name="permissions">
         /// IEnumerable of <see cref="QueueSignedIdentifier"/>
@@ -781,7 +1289,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// SetAccessPolicyAsync sets stored access policies for the queue that may be used with Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-acl">
+        /// Set Queue ACL</see>.
         /// </summary>
         /// <param name="permissions">
         /// IEnumerable of <see cref="QueueSignedIdentifier"/>
@@ -803,7 +1314,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// SetAccessPolicyInternal sets stored access policies for the queue that may be used with Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-acl">
+        /// Set Queue ACL</see>.
         /// </summary>
         /// <param name="permissions">
         /// IEnumerable of <see cref="QueueSignedIdentifier"/>
@@ -855,7 +1369,10 @@ namespace Azure.Storage.Queues
         #region ClearMessages
         /// <summary>
         /// Deletes all messages from a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/clear-messages">
+        /// Clear Messages</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>.
@@ -872,7 +1389,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Deletes all messages from a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/clear-messages">
+        /// Clear Messages</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>.
@@ -889,7 +1409,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Deletes all messages from a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/clear-messages">
+        /// Clear Messages</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -917,7 +1440,7 @@ namespace Azure.Storage.Queues
                         MessagesUri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Queue.ClearMessagesOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(ClearMessages)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -935,11 +1458,17 @@ namespace Azure.Storage.Queues
         #endregion ClearMessages
 
         #region SendMessage
-        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -947,6 +1476,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual Response<SendReceipt> SendMessage(string messageText) =>
             SendMessage(
                 messageText,
@@ -954,8 +1488,15 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -963,17 +1504,28 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText) =>
             await SendMessageAsync(
                 messageText,
                 null) // Pass anything else so we don't recurse on this overload
             .ConfigureAwait(false);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -984,6 +1536,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual Response<SendReceipt> SendMessage(string messageText, CancellationToken cancellationToken = default) =>
             SendMessage(
                 messageText,
@@ -992,8 +1549,15 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -1004,6 +1568,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText, CancellationToken cancellationToken = default) =>
             await SendMessageAsync(messageText,
                 cancellationToken: cancellationToken,
@@ -1012,8 +1581,15 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -1030,13 +1606,18 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual Response<SendReceipt> SendMessage(
             string messageText,
             TimeSpan? visibilityTimeout = default,
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
             SendMessageInternal(
-                messageText,
+                ToBinaryData(messageText),
                 visibilityTimeout,
                 timeToLive,
                 false, // async
@@ -1045,8 +1626,60 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
+        /// </summary>
+        /// <param name="message">
+        /// Message.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Visibility timeout.  Optional with a default value of 0.  Cannot be larger than 7 days.
+        /// </param>
+        /// <param name="timeToLive">
+        /// Optional. Specifies the time-to-live interval for the message
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{SendReceipt}"/>
+        /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
+        public virtual Response<SendReceipt> SendMessage(
+            BinaryData message,
+            TimeSpan? visibilityTimeout = default,
+            TimeSpan? timeToLive = default,
+            CancellationToken cancellationToken = default) =>
+            SendMessageInternal(
+                message,
+                visibilityTimeout,
+                timeToLive,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -1063,13 +1696,18 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(
             string messageText,
             TimeSpan? visibilityTimeout = default,
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
             await SendMessageInternal(
-                messageText,
+                ToBinaryData(messageText),
                 visibilityTimeout,
                 timeToLive,
                 true, // async
@@ -1078,10 +1716,62 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
         /// </summary>
-        /// <param name="messageText">
+        /// <param name="message">
+        /// Message.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Visibility timeout.  Optional with a default value of 0.  Cannot be larger than 7 days.
+        /// </param>
+        /// <param name="timeToLive">
+        /// Optional. Specifies the time-to-live interval for the message
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{SendReceipt}"/>
+        /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
+        public virtual async Task<Response<SendReceipt>> SendMessageAsync(
+            BinaryData message,
+            TimeSpan? visibilityTimeout = default,
+            TimeSpan? timeToLive = default,
+            CancellationToken cancellationToken = default) =>
+            await SendMessageInternal(
+                message,
+                visibilityTimeout,
+                timeToLive,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
+        /// to Dequeue and Peek operations.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
+        /// </summary>
+        /// <param name="message">
         /// Message text.
         /// </param>
         /// <param name="visibilityTimeout">
@@ -1099,8 +1789,13 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendMessageResult}"/>
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         private async Task<Response<SendReceipt>> SendMessageInternal(
-            string messageText,
+            BinaryData message,
             TimeSpan? visibilityTimeout,
             TimeSpan? timeToLive,
             bool async,
@@ -1116,17 +1811,23 @@ namespace Azure.Storage.Queues
                     $"{nameof(timeToLive)}: {timeToLive}");
                 try
                 {
+                    if (UsingClientSideEncryption)
+                    {
+                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                            .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
+                    }
+
                     Response<IEnumerable<SendReceipt>> messages =
                         await QueueRestClient.Messages.EnqueueAsync(
                             ClientDiagnostics,
                             Pipeline,
                             MessagesUri,
-                            message: new QueueSendMessage { MessageText = messageText },
+                            message: new QueueSendMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, _messageEncoding) },
                             version: Version.ToVersionString(),
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
                             async: async,
-                            operationName: Constants.Queue.SendMessageOperationName,
+                            operationName: $"{nameof(QueueClient)}.{nameof(SendMessage)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
@@ -1147,10 +1848,12 @@ namespace Azure.Storage.Queues
         #endregion SendMessage
 
         #region ReceiveMessages
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         /// <summary>
         /// Receives one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
+        /// Get Messages</see>.
         /// </summary>
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
@@ -1159,7 +1862,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
+        /// Get Messages</see>.
         /// </summary>
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
@@ -1167,11 +1873,13 @@ namespace Azure.Storage.Queues
         public virtual async Task<Response<QueueMessage[]>> ReceiveMessagesAsync() =>
             await ReceiveMessagesAsync(null)  // Pass anything else so we don't recurse on this overload
             .ConfigureAwait(false);
-        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// Receives one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
+        /// Get Messages</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
@@ -1186,7 +1894,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
+        /// Get Messages</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
@@ -1202,7 +1913,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Receives one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
+        /// Get Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
@@ -1224,13 +1938,17 @@ namespace Azure.Storage.Queues
             ReceiveMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
+                $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
+        /// Get Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
@@ -1252,13 +1970,17 @@ namespace Azure.Storage.Queues
             await ReceiveMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
+                $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
+        /// Get Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
@@ -1266,6 +1988,9 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="visibilityTimeout">
         /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
+        /// </param>
+        /// <param name="operationName">
+        /// Operation name for diagnostic logging.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1279,6 +2004,7 @@ namespace Azure.Storage.Queues
         private async Task<Response<QueueMessage[]>> ReceiveMessagesInternal(
             int? maxMessages,
             TimeSpan? visibilityTimeout,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1300,14 +2026,26 @@ namespace Azure.Storage.Queues
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
-                        operationName: Constants.Queue.ReceiveMessagesOperationName,
+                        operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     // Return an exploding Response on 304
-                    return response.IsUnavailable() ?
-                        response.GetRawResponse().AsNoBodyResponse<QueueMessage[]>() :
-                        Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
+                    if (response.IsUnavailable())
+                    {
+                        return response.GetRawResponse().AsNoBodyResponse<QueueMessage[]>();
+                    }
+                    else if (UsingClientSideEncryption)
+                    {
+                        return Response.FromValue(
+                            await new QueueClientSideDecryptor(ClientSideEncryption)
+                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
+                            response.GetRawResponse());
+                    }
+                    else
+                    {
+                        return Response.FromValue(response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray(), response.GetRawResponse());
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1320,12 +2058,172 @@ namespace Azure.Storage.Queues
                 }
             }
         }
+
         #endregion ReceiveMessages
+
+        #region ReceiveMessage
+
+        /// <summary>
+        /// Receives one message from the front of the queue.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
+        /// Get Messages</see>.
+        /// </summary>
+        /// <param name="visibilityTimeout">
+        /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is a <see cref="QueueMessage"/>
+        /// </returns>
+        public virtual Response<QueueMessage> ReceiveMessage(
+            TimeSpan? visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            ReceiveMessageInternal(
+                visibilityTimeout,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Retrieves one message from the front of the queue.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
+        /// Get Messages</see>.
+        /// </summary>
+        /// <param name="visibilityTimeout">
+        /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is a <see cref="QueueMessage"/>
+        /// </returns>
+        public virtual async Task<Response<QueueMessage>> ReceiveMessageAsync(
+            TimeSpan? visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            await ReceiveMessageInternal(
+                visibilityTimeout,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Retrieves one message from the front of the queue.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
+        /// Get Messages</see>.
+        /// </summary>
+        /// <param name="visibilityTimeout">
+        /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is a <see cref="QueueMessage"/>
+        /// </returns>
+        private async Task<Response<QueueMessage>> ReceiveMessageInternal(
+            TimeSpan? visibilityTimeout,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var response = await ReceiveMessagesInternal(
+                1,
+                visibilityTimeout,
+                $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
+                async,
+                cancellationToken).ConfigureAwait(false);
+            var queueMessage = response.Value.FirstOrDefault();
+            var rawResponse = response.GetRawResponse();
+            return Response.FromValue(queueMessage, rawResponse);
+        }
+        #endregion ReceiveMessage
+
+        #region PeekMessage
+        /// <summary>
+        /// Retrieves one message from the front of the queue but does not alter the visibility of the message.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
+        /// Peek Messages</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
+        /// </returns>
+        public virtual Response<PeekedMessage> PeekMessage(
+            CancellationToken cancellationToken = default) =>
+            PeekMessageInternal(
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Retrieves one message from the front of the queue but does not alter the visibility of the message.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
+        /// Peek Messages</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
+        /// </returns>
+        public virtual async Task<Response<PeekedMessage>> PeekMessageAsync(
+            CancellationToken cancellationToken = default) =>
+            await PeekMessageInternal(
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Retrieves one message from the front of the queue but does not alter the visibility of the message.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
+        /// Peek Messages</see>.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
+        /// </returns>
+        private async Task<Response<PeekedMessage>> PeekMessageInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var response = await PeekMessagesInternal(1, $"{nameof(QueueClient)}.{nameof(PeekMessage)}", async, cancellationToken).ConfigureAwait(false);
+            var message = response.Value.FirstOrDefault();
+            var rawResonse = response.GetRawResponse();
+            return Response.FromValue(message, rawResonse);
+        }
+        #endregion PeekMessage
 
         #region PeekMessages
         /// <summary>
         /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
+        /// Peek Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
@@ -1342,13 +2240,17 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken = default) =>
             PeekMessagesInternal(
                 maxMessages,
+                $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
+        /// Peek Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
@@ -1365,17 +2267,24 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken = default) =>
             await PeekMessagesInternal(
                 maxMessages,
+                $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
+        /// Peek Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
         /// By default, a single message is peeked from the queue with this operation.
+        /// </param>
+        /// <param name="operationName">
+        /// Operation name for diagnostic logging.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1388,6 +2297,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         private async Task<Response<PeekedMessage[]>> PeekMessagesInternal(
             int? maxMessages,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1400,21 +2310,33 @@ namespace Azure.Storage.Queues
                     $"{nameof(maxMessages)}: {maxMessages}");
                 try
                 {
-                    Response<IEnumerable<PeekedMessage>> response = await QueueRestClient.Messages.PeekAsync(
+                    Response<IEnumerable<PeekedMessageItem>> response = await QueueRestClient.Messages.PeekAsync(
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
                         version: Version.ToVersionString(),
                         numberOfMessages: maxMessages,
                         async: async,
-                        operationName: Constants.Queue.PeekMessagesOperationName,
+                        operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     // Return an exploding Response on 304
-                    return response.IsUnavailable() ?
-                        response.GetRawResponse().AsNoBodyResponse<PeekedMessage[]>() :
-                        Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
+                    if (response.IsUnavailable())
+                    {
+                        return response.GetRawResponse().AsNoBodyResponse<PeekedMessage[]>();
+                    }
+                    else if (UsingClientSideEncryption)
+                    {
+                        return Response.FromValue(
+                            await new QueueClientSideDecryptor(ClientSideEncryption)
+                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
+                            response.GetRawResponse());
+                    }
+                    else
+                    {
+                        return Response.FromValue(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray(), response.GetRawResponse());
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1440,7 +2362,10 @@ namespace Azure.Storage.Queues
         #region DeleteMessage
         /// <summary>
         /// Permanently removes the specified message from its queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-message2"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-message2">
+        /// Delete Message</see>.
         /// </summary>
         /// <param name="messageId">ID of the message to delete.</param>
         /// <param name="popReceipt">
@@ -1465,7 +2390,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Permanently removes the specified message from its queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-message2"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-message2">
+        /// Delete Message</see>.
         /// </summary>
         /// <param name="messageId">ID of the message to delete.</param>
         /// <param name="popReceipt">
@@ -1490,7 +2418,10 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Permanently removes the specified message from its queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-message2"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-message2">
+        /// Delete Message</see>.
         /// </summary>
         /// <param name="messageId">ID of the message to delete.</param>
         /// <param name="popReceipt">
@@ -1528,7 +2459,7 @@ namespace Azure.Storage.Queues
                         popReceipt: popReceipt,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Queue.DeleteMessageOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(DeleteMessage)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1547,8 +2478,15 @@ namespace Azure.Storage.Queues
 
         #region UpdateMessage
         /// <summary>
-        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
+        /// Changes a message's visibility timeout and contents.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
+        /// Update Message</see>.
         /// </summary>
         /// <param name="messageId">ID of the message to update.</param>
         /// <param name="popReceipt">
@@ -1568,6 +2506,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual Response<UpdateReceipt> UpdateMessage(
             string messageId,
             string popReceipt,
@@ -1575,7 +2518,7 @@ namespace Azure.Storage.Queues
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             UpdateMessageInternal(
-                messageText,
+                ToBinaryData(messageText),
                 messageId,
                 popReceipt,
                 visibilityTimeout,
@@ -1584,8 +2527,64 @@ namespace Azure.Storage.Queues
                 .EnsureCompleted();
 
         /// <summary>
-        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
+        /// Changes a message's visibility timeout and contents.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
+        /// Update Message</see>.
+        /// </summary>
+        /// <param name="messageId">ID of the message to update.</param>
+        /// <param name="popReceipt">
+        /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="message">
+        /// Optional. Updated message.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
+        /// expiry time. A message can be updated until it has been deleted or has expired.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{UpdateReceipt}"/>.
+        /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
+        public virtual Response<UpdateReceipt> UpdateMessage(
+            string messageId,
+            string popReceipt,
+            BinaryData message,
+            TimeSpan visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            UpdateMessageInternal(
+                message,
+                messageId,
+                popReceipt,
+                visibilityTimeout,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Changes a message's visibility timeout and contents.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
+        /// Update Message</see>.
         /// </summary>
         /// <param name="messageId">ID of the message to update.</param>
         /// <param name="popReceipt">
@@ -1605,6 +2604,11 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
             string messageId,
             string popReceipt,
@@ -1612,7 +2616,7 @@ namespace Azure.Storage.Queues
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             await UpdateMessageInternal(
-                messageText,
+                ToBinaryData(messageText),
                 messageId,
                 popReceipt,
                 visibilityTimeout,
@@ -1621,11 +2625,67 @@ namespace Azure.Storage.Queues
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
+        /// Changes a message's visibility timeout and contents.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
+        /// Update Message</see>.
         /// </summary>
-        /// <param name="messageText">
-        /// Updated message text.
+        /// <param name="messageId">ID of the message to update.</param>
+        /// <param name="popReceipt">
+        /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="message">
+        /// Optional. Updated message.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
+        /// expiry time. A message can be updated until it has been deleted or has expired.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{UpdateReceipt}"/>.
+        /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
+        public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
+            string messageId,
+            string popReceipt,
+            BinaryData message,
+            TimeSpan visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            await UpdateMessageInternal(
+                message,
+                messageId,
+                popReceipt,
+                visibilityTimeout,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Changes a message's visibility timeout and contents.
+        ///
+        /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
+        /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
+        /// The encoded message can be up to 64 KiB in size for versions 2011-08-18 and newer, or 8 KiB in size for previous versions.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
+        /// Update Message</see>.
+        /// </summary>
+        /// <param name="message">
+        /// Updated message.
         /// </param>
         /// <param name="messageId">ID of the message to update.</param>
         /// <param name="popReceipt">
@@ -1645,8 +2705,13 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
+        /// <remarks>
+        /// This version of library does not encode message by default.
+        /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// </remarks>
         private async Task<Response<UpdateReceipt>> UpdateMessageInternal(
-            string messageText,
+            BinaryData message,
             string messageId,
             string popReceipt,
             TimeSpan visibilityTimeout,
@@ -1664,16 +2729,27 @@ namespace Azure.Storage.Queues
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
+                    if (UsingClientSideEncryption)
+                    {
+                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                            .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
+                    }
+                    QueueSendMessage queueSendMessage = null;
+                    if (message != null)
+                    {
+                        queueSendMessage = new QueueSendMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, _messageEncoding) };
+                    }
+
                     return await QueueRestClient.MessageId.UpdateAsync(
                         ClientDiagnostics,
                         Pipeline,
                         uri,
-                        message: new QueueSendMessage { MessageText = messageText },
+                        message: queueSendMessage,
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Queue.UpdateMessageOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(UpdateMessage)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1689,5 +2765,113 @@ namespace Azure.Storage.Queues
             }
         }
         #endregion UpdateMessage
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateSasUri(QueueSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Queue Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and parameters passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="QueueSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn)
+            => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn) { QueueName = Name });
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(QueueSasBuilder)"/> returns a
+        /// <see cref="Uri"/> that generates a Queue Service SAS Uri based
+        /// on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(
+            QueueSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.QueueName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                // TODO: throw proper exception for non-matching builder name
+                // e.g. containerName doesn't match or leave the containerName in builder
+                // should be left empty. Or should we always default to the client's ContainerName
+                // and chug along if they don't match?
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.QueueName),
+                    nameof(QueueSasBuilder),
+                    nameof(Name));
+            }
+            QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
+            return sasUri.ToUri();
+        }
+        #endregion
+
+        #region Encoding
+        private static BinaryData ToBinaryData(string input)
+        {
+            if (input == null)
+            {
+                return null;
+            } else
+            {
+                return new BinaryData(input);
+            }
+        }
+
+        private void AssertEncodingForEncryption()
+        {
+            if (UsingClientSideEncryption && _messageEncoding != QueueMessageEncoding.None)
+            {
+                throw new ArgumentException($"{nameof(SpecializedQueueClientOptions)} requires {nameof(QueueMessageEncoding)}.{nameof(QueueMessageEncoding.None)}" +
+                    $" if {nameof(SpecializedQueueClientOptions.ClientSideEncryption)} is enabled as encrypted payload is already Base64 encoded.");
+            }
+        }
+        #endregion Encoding
+    }
+}
+
+namespace Azure.Storage.Queues.Specialized
+{
+    /// <summary>
+    /// Add methods to <see cref="Queues"/> clients.
+    /// </summary>
+    public static partial class SpecializedQueueExtensions
+    {
+        /// <summary>
+        /// Creates a new instance of the <see cref="QueueClient"/> class, maintaining all the same
+        /// internals but specifying new <see cref="ClientSideEncryptionOptions"/>.
+        /// </summary>
+        /// <param name="client">Client to base off of.</param>
+        /// <param name="clientSideEncryptionOptions">New encryption options. Setting this to <code>default</code> will clear client-side encryption.</param>
+        /// <returns>New instance with provided options and same internals otherwise.</returns>
+        public static QueueClient WithClientSideEncryptionOptions(this QueueClient client, ClientSideEncryptionOptions clientSideEncryptionOptions)
+            => client.WithClientSideEncryptionOptionsCore(clientSideEncryptionOptions);
     }
 }

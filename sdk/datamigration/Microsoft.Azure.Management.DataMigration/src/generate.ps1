@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "datamigration/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "datamigration/resource-manager" -AutoRestVersion "v2"

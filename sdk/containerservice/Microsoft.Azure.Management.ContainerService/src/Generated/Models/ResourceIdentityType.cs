@@ -23,6 +23,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     {
         [EnumMember(Value = "SystemAssigned")]
         SystemAssigned,
+        [EnumMember(Value = "UserAssigned")]
+        UserAssigned,
         [EnumMember(Value = "None")]
         None
     }
@@ -39,6 +41,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             {
                 case ResourceIdentityType.SystemAssigned:
                     return "SystemAssigned";
+                case ResourceIdentityType.UserAssigned:
+                    return "UserAssigned";
                 case ResourceIdentityType.None:
                     return "None";
             }
@@ -51,6 +55,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             {
                 case "SystemAssigned":
                     return ResourceIdentityType.SystemAssigned;
+                case "UserAssigned":
+                    return ResourceIdentityType.UserAssigned;
                 case "None":
                     return ResourceIdentityType.None;
             }

@@ -1,0 +1,16 @@
+[
+    {
+        "op": "add",
+        "path": "/Humidity",
+        "value": 30
+    },
+    {
+        "op": "replace",
+        "path": "/Temperature",
+        "value": 70
+    },
+    {
+        "op": "remove",
+        "path": "/EmployeeId"
+    }
+]

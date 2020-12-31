@@ -22,6 +22,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         /// <summary>
         /// Sends a list of messages to Service Bus.
+        /// When called on partitioned entities, messages meant for different partitions cannot be batched together.
         /// </summary>
         Task SendAsync(IList<Message> messageList);
 

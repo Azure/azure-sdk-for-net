@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v1.0/models/celebrities/analyze",
-      "EncodedRequestUri": "L3Zpc2lvbi92MS4wL21vZGVscy9jZWxlYnJpdGllcy9hbmFseXpl",
+      "RequestUri": "/vision/v3.0/models/celebrities/analyze",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4wL21vZGVscy9jZWxlYnJpdGllcy9hbmFseXpl",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"http://video.ch9.ms/ch9/ac40/1209d088-5752-4413-b003-fdbeb326ac40/IgniteKeynoteSatya_512.jpg\"\r\n}",
       "RequestHeaders": {

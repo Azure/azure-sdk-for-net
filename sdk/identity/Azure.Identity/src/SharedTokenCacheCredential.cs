@@ -8,35 +8,38 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using System.Globalization;
+using Azure.Core.Pipeline;
+using System.ComponentModel;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Authenticates using tokens in the local cache shared between Microsoft applications.
     /// </summary>
-    public class SharedTokenCacheCredential : TokenCredential, IExtendedTokenCredential
+    public class SharedTokenCacheCredential : TokenCredential
     {
-        internal const string NoAccountsInCacheMessage = "No accounts were found in thecache.  To authenticate with the SharedTokenCacheCredential, login an account through developer tooling supporting Azure single sign on.";
-        internal const string MultipleAccountsInCacheMessage = "Multiple accounts were found in the cache. To authenticate with the SharedTokenCacheCredential, set the AZURE_USERNAME and AZURE_TENANT_ID environment variables to the preferred username and tenantId, or specify them to the constructor. {0}";
-        internal const string NoMatchingAccountsInCacheMessage = "No account matching the specified{0}{1} was found in the cache. To authenticate with the SharedTokenCacheCredential, login an account through developer tooling supporting Azure single sign on. {2}";
-        internal const string MultipleMatchingAccountsInCacheMessage = "Multiple accounts matching the specified{0}{1} were found in the cache. To authenticate with the SharedTokenCacheCredential, set the AZURE_USERNAME and AZURE_TENANT_ID environment variables to the preferred username and tenantId, or specify them to the constructor. {2}";
+        internal const string NoAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.";
+        internal const string MultipleAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts were found in the cache. Use username and tenant id to disambiguate.";
+        internal const string NoMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No account matching the specified{0}{1} was found in the cache.";
+        internal const string MultipleMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified{0}{1} were found in the cache.";
 
-        private readonly MsalPublicClient _client;
+        private static readonly ITokenCacheOptions s_DefaultCacheOptions = new SharedTokenCacheCredentialOptions();
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
         private readonly string _username;
-        private readonly Lazy<Task<(IAccount, Exception)>> _account;
+        private readonly bool _skipTenantValidation;
+        private readonly AuthenticationRecord _record;
+        private readonly AsyncLockWithValue<IAccount> _accountAsyncLock;
+
+        internal MsalPublicClient Client { get; }
 
         /// <summary>
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
         /// </summary>
         public SharedTokenCacheCredential()
-            : this(null, null, CredentialPipeline.GetInstance(null))
+            : this(null, null, null, null, null)
         {
-
         }
 
         /// <summary>
@@ -44,7 +47,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">The client options for the newly created <see cref="SharedTokenCacheCredential"/></param>
         public SharedTokenCacheCredential(SharedTokenCacheCredentialOptions options)
-            : this(options?.TenantId, options?.Username, CredentialPipeline.GetInstance(options))
+            : this(options?.TenantId, options?.Username, options, null, null)
         {
         }
 
@@ -53,106 +56,111 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="username">The username of the user to authenticate</param>
         /// <param name="options">The client options for the newly created <see cref="SharedTokenCacheCredential"/></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public SharedTokenCacheCredential(string username, TokenCredentialOptions options = default)
-            : this(tenantId: null, username: username, pipeline: CredentialPipeline.GetInstance(options))
+            : this(null, username, options, null, null)
         {
         }
 
-        internal SharedTokenCacheCredential(string tenantId, string username, CredentialPipeline pipeline)
-            : this(tenantId: tenantId, username: username, pipeline: pipeline, client: pipeline.CreateMsalPublicClient(Constants.DeveloperSignOnClientId, tenantId: tenantId, attachSharedCache: true))
+        internal SharedTokenCacheCredential(string tenantId, string username, TokenCredentialOptions options, CredentialPipeline pipeline)
+            : this(tenantId, username, options, pipeline, null)
         {
         }
 
-        internal SharedTokenCacheCredential(string tenantId, string username, CredentialPipeline pipeline, MsalPublicClient client)
+        internal SharedTokenCacheCredential(string tenantId, string username, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
             _tenantId = tenantId;
 
             _username = username;
 
-            _pipeline = pipeline;
+            _skipTenantValidation = (options as SharedTokenCacheCredentialOptions)?.EnableGuestTenantAuthentication ?? false;
 
-            _client = client;
+            _record = (options as SharedTokenCacheCredentialOptions)?.AuthenticationRecord;
 
-            _account = new Lazy<Task<(IAccount, Exception)>>(GetAccountAsync);
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+
+            Client = client ?? new MsalPublicClient(_pipeline, tenantId, (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
+
+            _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through a shared MSAL cache. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through a shared MSAL cache. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult().GetTokenOrThrow();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through a shared MSAL cache. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through a shared MSAL cache. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
-        }
-
-        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            IAccount account = null;
-
-            Exception ex = null;
-
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.SharedTokenCacheCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("SharedTokenCacheCredential.GetToken", requestContext);
 
             try
             {
-                (account, ex) = await _account.Value.ConfigureAwait(false);
-
-                if (account != null)
-                {
-                    AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, account, cancellationToken).ConfigureAwait(false);
-
-                    return new ExtendedAccessToken(scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn)));
-                }
-                else
-                {
-                    return new ExtendedAccessToken(scope.Failed(ex));
-                }
+                IAccount account = await GetAccountAsync(async, cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, account, async, cancellationToken).ConfigureAwait(false);
+                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException($"Token acquisition failed for user {_username}. To fix, re-authenticate through developer tooling supporting Azure single sign on.")));
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on."));
             }
             catch (Exception e)
             {
-                return new ExtendedAccessToken(scope.Failed(e));
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
-        private async Task<(IAccount, Exception)> GetAccountAsync()
+        private async ValueTask<IAccount> GetAccountAsync(bool async, CancellationToken cancellationToken)
         {
-            List<IAccount> accounts = (await _client.GetAccountsAsync().ConfigureAwait(false)).ToList();
+            using var asyncLock = await _accountAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            if (asyncLock.HasValue)
+            {
+                return asyncLock.Value;
+            }
 
-            List<IAccount> filteredAccounts = accounts.Where(a => (string.IsNullOrEmpty(_username) || a.Username == _username) && (string.IsNullOrEmpty(_tenantId) || a.HomeAccountId?.TenantId == _tenantId)).ToList();
+            IAccount account;
+            if (_record != null)
+            {
+                account = new AuthenticationAccount(_record);
+                asyncLock.SetValue(account);
+                return account;
+            }
+
+            List<IAccount> accounts = await Client.GetAccountsAsync(async, cancellationToken).ConfigureAwait(false);
+
+            // filter the accounts to those matching the specified user and tenant
+            List<IAccount> filteredAccounts = accounts.Where(a =>
+                // if _username is specified it must match the account
+                ((string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0))
+                &&
+                // if _skipTenantValidation is false and _tenantId is specified it must match the account
+                (_skipTenantValidation || (string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0))
+            ).ToList();
 
             if (filteredAccounts.Count != 1)
             {
-                return (null, new CredentialUnavailableException(GetCredentialUnavailableMessage(accounts, filteredAccounts)));
+                throw new CredentialUnavailableException(GetCredentialUnavailableMessage(accounts, filteredAccounts));
             }
 
-            return (filteredAccounts.First(), null);
+            account = filteredAccounts.First();
+            asyncLock.SetValue(account);
+            return account;
         }
 
         private string GetCredentialUnavailableMessage(List<IAccount> accounts, List<IAccount> filteredAccounts)
@@ -162,11 +170,9 @@ namespace Azure.Identity
                 return NoAccountsInCacheMessage;
             }
 
-            var discoveredAccountsStr = $"[ {{{string.Join("}, {", accounts.Select(a => $"username: {a.Username} tenantId: {a.HomeAccountId?.TenantId}"))}}} ]";
-
             if (string.IsNullOrEmpty(_username) && string.IsNullOrEmpty(_tenantId))
             {
-                return string.Format(CultureInfo.InvariantCulture, MultipleAccountsInCacheMessage, discoveredAccountsStr);
+                return string.Format(CultureInfo.InvariantCulture, MultipleAccountsInCacheMessage);
             }
 
             var usernameStr = string.IsNullOrEmpty(_username) ? string.Empty : $" username: {_username}";
@@ -174,10 +180,10 @@ namespace Azure.Identity
 
             if (filteredAccounts.Count == 0)
             {
-                return string.Format(CultureInfo.InvariantCulture, NoMatchingAccountsInCacheMessage, usernameStr, tenantIdStr, discoveredAccountsStr);
+                return string.Format(CultureInfo.InvariantCulture, NoMatchingAccountsInCacheMessage, usernameStr, tenantIdStr);
             }
 
-            return string.Format(CultureInfo.InvariantCulture, MultipleMatchingAccountsInCacheMessage, usernameStr, tenantIdStr, discoveredAccountsStr);
+            return string.Format(CultureInfo.InvariantCulture, MultipleMatchingAccountsInCacheMessage, usernameStr, tenantIdStr);
         }
     }
 }

@@ -22,6 +22,156 @@ namespace Microsoft.Azure.Management.EventHub
     public static partial class DisasterRecoveryConfigsOperationsExtensions
     {
             /// <summary>
+            /// Gets a list of authorization rules for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            public static IPage<AuthorizationRule> ListAuthorizationRules(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias)
+            {
+                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, alias).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of authorization rules for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AuthorizationRule>> ListAuthorizationRulesAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAuthorizationRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets an AuthorizationRule for a Namespace by rule name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// The authorization rule name.
+            /// </param>
+            public static AuthorizationRule GetAuthorizationRule(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName)
+            {
+                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, alias, authorizationRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an AuthorizationRule for a Namespace by rule name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// The authorization rule name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AuthorizationRule> GetAuthorizationRuleAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the primary and secondary connection strings for the Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// The authorization rule name.
+            /// </param>
+            public static AccessKeys ListKeys(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName)
+            {
+                return operations.ListKeysAsync(resourceGroupName, namespaceName, alias, authorizationRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the primary and secondary connection strings for the Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// The authorization rule name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AccessKeys> ListKeysAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Check the give Namespace name availability.
             /// </summary>
             /// <param name='operations'>
@@ -346,18 +496,12 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
             /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='alias'>
-            /// The Disaster Recovery configuration name
-            /// </param>
-            public static IPage<AuthorizationRule> ListAuthorizationRules(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias)
+            public static IPage<AuthorizationRule> ListAuthorizationRulesNext(this IDisasterRecoveryConfigsOperations operations, string nextPageLink)
             {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, alias).GetAwaiter().GetResult();
+                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -366,125 +510,15 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='alias'>
-            /// The Disaster Recovery configuration name
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<AuthorizationRule>> ListAuthorizationRulesAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AuthorizationRule>> ListAuthorizationRulesNextAsync(this IDisasterRecoveryConfigsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAuthorizationRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets an AuthorizationRule for a Namespace by rule name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='alias'>
-            /// The Disaster Recovery configuration name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
-            /// </param>
-            public static AuthorizationRule GetAuthorizationRule(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName)
-            {
-                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, alias, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets an AuthorizationRule for a Namespace by rule name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='alias'>
-            /// The Disaster Recovery configuration name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<AuthorizationRule> GetAuthorizationRuleAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the primary and secondary connection strings for the Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='alias'>
-            /// The Disaster Recovery configuration name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
-            /// </param>
-            public static AccessKeys ListKeys(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, namespaceName, alias, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the primary and secondary connection strings for the Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='alias'>
-            /// The Disaster Recovery configuration name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<AccessKeys> ListKeysAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAuthorizationRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -519,40 +553,6 @@ namespace Microsoft.Azure.Management.EventHub
             public static async Task<IPage<ArmDisasterRecovery>> ListNextAsync(this IDisasterRecoveryConfigsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets a list of authorization rules for a Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<AuthorizationRule> ListAuthorizationRulesNext(this IDisasterRecoveryConfigsOperations operations, string nextPageLink)
-            {
-                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of authorization rules for a Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<AuthorizationRule>> ListAuthorizationRulesNextAsync(this IDisasterRecoveryConfigsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListAuthorizationRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -18,7 +18,7 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "email"
+                    "datetimeV2"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
                 var pattern = new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {datetimeV2}" };
@@ -45,7 +45,7 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "email",
+                    "datetimeV2",
                     "number"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
@@ -244,7 +244,7 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "email",
+                    "datetimeV2",
                     "number"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);

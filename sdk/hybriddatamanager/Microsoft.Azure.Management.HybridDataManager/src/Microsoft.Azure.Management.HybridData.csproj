@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.HybridData</PackageId>
     <Description></Description>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <AssemblyName>Microsoft.Azure.Management.HybridData</AssemblyName>
     <PackageTags>Management;Storage;StorSimple;StorSimpleDataManager;Azure;HybridDataManager;Microsoft.HybridData</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      This is the first public release of the Azure StorSimple Data Manager SDK (Microsoft.HybridData).
+	  API version 1.0.1: Adding PartiallySucceeded job status
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

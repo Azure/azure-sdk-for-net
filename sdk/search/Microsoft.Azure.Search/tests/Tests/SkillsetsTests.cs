@@ -146,18 +146,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void CreateSkillsetThrowsExceptionWithNonShaperSkillWithNestedInputs()
-        {
-            Run(() =>
-            {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                Skillset skillset = CreateTestSkillsetWithNestedInputs(isShaper: false);
-                CloudException exception = Assert.Throws<CloudException>(() => searchClient.Skillsets.Create(skillset));
-                Assert.Contains("Skill '#1' is not allowed to have recursively defined inputs", exception.Message);
-            });
-        }
-
-        [Fact]
         public void CreateSkillsetReturnsCorrectDefinitionOcrSplitText()
         {
             Run(() =>
@@ -808,10 +796,8 @@ namespace Microsoft.Azure.Search.Tests
                 VisualFeatures = new List<VisualFeature>
                 {
                     VisualFeature.Categories,
-                    VisualFeature.Color,
                     VisualFeature.Description,
                     VisualFeature.Faces,
-                    VisualFeature.ImageType,
                     VisualFeature.Tags
                 },
                 Details = new List<ImageDetail>

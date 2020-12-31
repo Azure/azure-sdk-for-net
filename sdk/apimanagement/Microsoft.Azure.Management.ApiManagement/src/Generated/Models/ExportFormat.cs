@@ -35,5 +35,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Blob.
         /// </summary>
         public const string Openapi = "openapi-link";
+        /// <summary>
+        /// Export the Api Definition in OpenApi Specification 3.0 as JSON
+        /// document to Storage Blob.
+        /// </summary>
+        public const string OpenapiJson = "openapi+json-link";
     }
 }

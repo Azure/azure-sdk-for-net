@@ -35,15 +35,19 @@ namespace ResourceGroups.Tests
 		                'id': '/subscriptions/9167af2d-c13e-4d34-9a57-8f37dba6ff31/locations/eastasia',
 		                'name': 'eastasia',
 		                'displayName': 'East Asia',
-		                'longitude': '114.188',
-		                'latitude': '22.267'
+                        'metadata': {
+                            'longitude': '114.188',
+		                    'latitude': '22.267'
+                        }
 	                },
 	                {
 		                'id': '/subscriptions/9167af2d-c13e-4d34-9a57-8f37dba6ff31/locations/southeastasia',
 		                'name': 'southeastasia',
 		                'displayName': 'Southeast Asia',
-		                'longitude': '103.833',
-		                'latitude': '1.283'
+                        'metadata': {
+                            'longitude': '103.833',
+    		                'latitude': '1.283'
+                        }
 	                }]
                 }")
             };
@@ -67,8 +71,8 @@ namespace ResourceGroups.Tests
             Assert.Equal("/subscriptions/9167af2d-c13e-4d34-9a57-8f37dba6ff31/locations/eastasia", listLocationsResult.FirstOrDefault().Id);
             Assert.Equal("eastasia", listLocationsResult.FirstOrDefault().Name);
             Assert.Equal("East Asia", listLocationsResult.FirstOrDefault().DisplayName);
-            Assert.Equal("114.188", listLocationsResult.FirstOrDefault().Longitude);
-            Assert.Equal("22.267", listLocationsResult.FirstOrDefault().Latitude);
+            Assert.Equal("114.188", listLocationsResult.FirstOrDefault().Metadata.Longitude);
+            Assert.Equal("22.267", listLocationsResult.FirstOrDefault().Metadata.Latitude);
         }
 
         [Fact]
@@ -143,10 +147,14 @@ namespace ResourceGroups.Tests
 	                'subscriptionId': '38b598fc-e57a-423f-b2e7-dc0ddb631f1f',
 	                'displayName': 'Visual Studio Ultimate with MSDN',
 	                'state': 'Disabled',
+                    'tags': {
+                        'tagsTestKey': 'tagsTestValue'
+                    },
 	                'subscriptionPolicies': {
 		                'locationPlacementId': 'Public_2014-09-01',
 		                'quotaId': 'MSDN_2014-09-01'
-	                }
+                    }
+	                ,
                 }")
             };
 
@@ -173,6 +181,9 @@ namespace ResourceGroups.Tests
             Assert.NotNull(getSubscriptionResult.SubscriptionPolicies);
             Assert.Equal("Public_2014-09-01", getSubscriptionResult.SubscriptionPolicies.LocationPlacementId);
             Assert.Equal("MSDN_2014-09-01", getSubscriptionResult.SubscriptionPolicies.QuotaId);
+            Assert.NotNull(getSubscriptionResult.Tags);
+            Assert.True(getSubscriptionResult.Tags.ContainsKey("tagsTestKey"));
+            Assert.Equal("tagsTestValue", getSubscriptionResult.Tags["tagsTestKey"]);
         }
     }
 }

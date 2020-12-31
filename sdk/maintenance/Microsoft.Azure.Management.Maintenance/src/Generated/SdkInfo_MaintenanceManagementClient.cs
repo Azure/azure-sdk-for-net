@@ -19,11 +19,12 @@ namespace Microsoft.Azure.Management.Maintenance
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Maintenance", "ApplyUpdates", "2018-06-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "ConfigurationAssignments", "2018-06-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "MaintenanceConfigurations", "2018-06-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "Operations", "2018-06-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "Updates", "2018-06-01-preview"),
+                new Tuple<string, string, string>("Maintenance", "ApplyUpdates", "2020-07-01-preview"),
+                new Tuple<string, string, string>("Maintenance", "ConfigurationAssignments", "2020-07-01-preview"),
+                new Tuple<string, string, string>("Maintenance", "MaintenanceConfigurations", "2020-07-01-preview"),
+                new Tuple<string, string, string>("Maintenance", "Operations", "2020-07-01-preview"),
+                new Tuple<string, string, string>("Maintenance", "PublicMaintenanceConfigurations", "2020-07-01-preview"),
+                new Tuple<string, string, string>("Maintenance", "Updates", "2020-07-01-preview"),
               }.AsEnumerable();
           }
       }

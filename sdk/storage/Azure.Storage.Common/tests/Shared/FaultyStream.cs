@@ -3,11 +3,8 @@
 
 using System;
 using System.IO;
-using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -17,13 +14,20 @@ namespace Azure.Storage.Test.Shared
         private readonly int _raiseExceptionAt;
         private readonly Exception _exceptionToRaise;
         private int _remainingExceptions;
+        private Action _onFault;
 
-        public FaultyStream(Stream innerStream, int raiseExceptionAt, int maxExceptions, Exception exceptionToRaise)
+        public FaultyStream(
+            Stream innerStream,
+            int raiseExceptionAt,
+            int maxExceptions,
+            Exception exceptionToRaise,
+            Action onFault)
         {
             _innerStream = innerStream;
             _raiseExceptionAt = raiseExceptionAt;
             _exceptionToRaise = exceptionToRaise;
             _remainingExceptions = maxExceptions;
+            _onFault = onFault;
         }
 
         public override bool CanRead => _innerStream.CanRead;
@@ -40,9 +44,6 @@ namespace Azure.Storage.Test.Shared
             set => _innerStream.Position = value;
         }
 
-        public override async Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken) =>
-            await _innerStream.CopyToAsync(destination, bufferSize, cancellationToken);
-
         public override void Flush() => _innerStream.Flush();
 
         public override Task FlushAsync(CancellationToken cancellationToken) =>
@@ -50,40 +51,37 @@ namespace Azure.Storage.Test.Shared
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (_remainingExceptions == 0 || Position + count <= _raiseExceptionAt || Position + count >= _innerStream.Length)
+            if (_remainingExceptions == 0 || Position + count <= _raiseExceptionAt || _raiseExceptionAt >= _innerStream.Length)
             {
                 return _innerStream.Read(buffer, offset, count);
             }
             else
             {
-                _remainingExceptions--;
-                throw _exceptionToRaise;
+                throw Fault();
             }
         }
 
         public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            if (_remainingExceptions == 0 || Position + count <= _raiseExceptionAt || Position + count >= _innerStream.Length)
+            if (_remainingExceptions == 0 || Position + count <= _raiseExceptionAt || _raiseExceptionAt >= _innerStream.Length)
             {
                 return _innerStream.ReadAsync(buffer, offset, count, cancellationToken);
             }
             else
             {
-                _remainingExceptions--;
-                throw _exceptionToRaise;
+                throw Fault();
             }
         }
 
         public override int ReadByte()
         {
-            if (_remainingExceptions == 0 || Position <= _raiseExceptionAt || Position >= _innerStream.Length)
+            if (_remainingExceptions == 0 || Position <= _raiseExceptionAt || _raiseExceptionAt >= _innerStream.Length)
             {
                 return _innerStream.ReadByte();
             }
             else
             {
-                _remainingExceptions--;
-                throw _exceptionToRaise;
+                throw Fault();
             }
         }
 
@@ -95,5 +93,12 @@ namespace Azure.Storage.Test.Shared
 
         public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken) =>
             _innerStream.WriteAsync(buffer, offset, count, cancellationToken);
+
+        private Exception Fault()
+        {
+            _remainingExceptions--;
+            _onFault();
+            return _exceptionToRaise;
+        }
     }
 }

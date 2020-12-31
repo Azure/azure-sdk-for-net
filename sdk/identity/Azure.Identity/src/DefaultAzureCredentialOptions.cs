@@ -28,6 +28,20 @@ namespace Azure.Identity
         public string SharedTokenCacheTenantId { get; set; } = EnvironmentVariables.TenantId;
 
         /// <summary>
+        /// The tenant id of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
+        /// <see cref="VisualStudioCredential"/>. The default is null and will authenticate users to their default tenant.
+        /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
+        /// </summary>
+        public string VisualStudioTenantId { get; set; } = EnvironmentVariables.TenantId;
+
+        /// <summary>
+        /// The tenant id of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
+        /// <see cref="VisualStudioCodeCredential"/>. The default is null and will authenticate users to their default tenant.
+        /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
+        /// </summary>
+        public string VisualStudioCodeTenantId { get; set; } = EnvironmentVariables.TenantId;
+
+        /// <summary>
         /// Specifies the preferred authentication account to be retrieved from the shared token cache for single sign on authentication with
         /// development tools. In the case multiple accounts are found in the shared token.
         /// </summary>
@@ -46,24 +60,39 @@ namespace Azure.Identity
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading
         /// authentication details from the process' environment variables.
         /// </summary>
-        public bool ExcludeEnvironmentCredential { get; set; } = false;
+        public bool ExcludeEnvironmentCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="ManagedIdentityCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables authenticating with managed identity endpoints.
         /// </summary>
-        public bool ExcludeManagedIdentityCredential { get; set; } = false;
+        public bool ExcludeManagedIdentityCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="SharedTokenCacheCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables single sign on authentication with development tools which write to the shared token cache.
         /// </summary>
-        public bool ExcludeSharedTokenCacheCredential { get; set; } = false;
+        public bool ExcludeSharedTokenCacheCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="InteractiveBrowserCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables launching the default system browser to authenticate in development environments.
         /// </summary>
         public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
+
+        /// <summary>
+        /// Specifies whether the <see cref="AzureCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeAzureCliCredential { get; set; }
+
+        /// <summary>
+        /// Specifies whether the <see cref="VisualStudioCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeVisualStudioCredential { get; set; }
+
+        /// <summary>
+        /// Specifies whether the <see cref="VisualStudioCodeCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeVisualStudioCodeCredential { get; set; }
     }
 }

@@ -15,13 +15,14 @@ namespace Billing.Tests.ScenarioTests
 {
     public class TransactionsOperationsTest : TestBase
     {
-        private const string BillingAccountName = "723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31";
-        private const string BillingProfileName = "H6RI-TXWC-BG7-PGB";
-        private const string InvoiceSectionName = "ICYS-ZE5B-PJA-PGB";
-        private const string TransactionName = "98ce813f-facd-43d4-a8fe-b6958fc0f5cf";
+        private const string BillingAccountName = "c017063b-18ad-5e26-f4af-a4d7eff204cb:171df24e-c924-4c58-9daa-a0bdb1686fef_2019-05-31";
+        private const string BillingProfileName = "RZKZ-H3N4-BG7-TGB";
+        private const string InvoiceId = "T000492114";
+        private const string InvoiceSectionName = "L6E4-BU47-PJA-TGB";
+        private const string TransactionName = "a587112e-5509-4621-b53d-53b1bcd92744";
 
         [Fact]
-        public void ListTransactionsByBillingAccountTest()
+        public void ListTransactionsByInvoiceTest()
         {
             var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
             string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
@@ -33,61 +34,12 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Get the transactions
-                var transactions = billingMgmtClient.Transactions.ListByBillingAccount(BillingAccountName, "2018-12-01", "2019-11-18");
+                var transactions = billingMgmtClient.Transactions.ListByInvoice(BillingAccountName, InvoiceId);
 
                 // Verify the response
                 Assert.NotNull(transactions);
-                Assert.Equal(2, transactions.Count());
+                Assert.Equal(3, transactions.Count());
                 var transaction = Assert.Single(transactions.Where(t => t.Name == TransactionName));
-                Assert.Contains(BillingProfileName, transaction.BillingProfileId);
-                Assert.Contains(InvoiceSectionName, transaction.InvoiceSectionId);
-            }
-        }
-
-        [Fact]
-        public void ListTransactionsByBillingProfileTest()
-        {
-            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
-            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
-            HttpMockServer.RecordsDirectory =
-                Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                // Create client
-                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
-
-                // Get the transactions
-                var transactions = billingMgmtClient.Transactions.ListByBillingProfile(BillingAccountName, BillingProfileName, "2018-12-01", "2019-11-18");
-
-                // Verify the response
-                Assert.NotNull(transactions);
-                Assert.Equal(2, transactions.Value.Count);
-                var transaction = Assert.Single(transactions.Value.Where(t => t.Name == TransactionName));
-                Assert.Contains(BillingProfileName, transaction.BillingProfileId);
-                Assert.Contains(InvoiceSectionName, transaction.InvoiceSectionId);
-            }
-        }
-
-        [Fact]
-        public void ListTransactionsByInvoiceSectionTest()
-        {
-            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
-            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
-            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                // Create client
-                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
-                // Get the transactions
-                var transactions = billingMgmtClient.Transactions.ListByInvoiceSection(BillingAccountName, BillingProfileName, InvoiceSectionName, "2018-12-01", "2019-11-18");
-
-                // Verify the response
-                Assert.NotNull(transactions);
-                Assert.Equal(2, transactions.Value.Count);
-                var transaction = Assert.Single(transactions.Value.Where(t => t.Name == TransactionName));
                 Assert.Contains(BillingProfileName, transaction.BillingProfileId);
                 Assert.Contains(InvoiceSectionName, transaction.InvoiceSectionId);
             }

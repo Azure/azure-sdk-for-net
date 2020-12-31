@@ -157,7 +157,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(response, nameof(response));
 
-
             if (!(response.ValueBody?.Value is AmqpMap responseData))
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
@@ -221,7 +220,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(response, nameof(response));
 
-
             if (!(response.ValueBody?.Value is AmqpMap responseData))
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
@@ -233,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 (bool)responseData[AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionBeginSequenceNumber],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber],
-                long.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset]),
+                long.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset], NumberStyles.Integer, CultureInfo.InvariantCulture),
                 new DateTimeOffset((DateTime)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc], TimeSpan.Zero));
         }
 
@@ -306,7 +304,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static AmqpMessage BuildAmqpMessageFromEvent(EventData source,
                                                              string partitionKey)
         {
-            var body = new ArraySegment<byte>((source.Body.IsEmpty) ? Array.Empty<byte>() : source.Body.ToArray());
+            var bodyBytes = source.EventBody.ToMemory();
+            var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
             var message = AmqpMessage.Create(new Data { Value = body });
 
             if (source.Properties?.Count > 0)
@@ -325,6 +324,21 @@ namespace Azure.Messaging.EventHubs.Amqp
             if (!string.IsNullOrEmpty(partitionKey))
             {
                 message.MessageAnnotations.Map[AmqpProperty.PartitionKey] = partitionKey;
+            }
+
+            if (source.PendingPublishSequenceNumber.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerSequenceNumber] = source.PendingPublishSequenceNumber;
+            }
+
+            if (source.PendingProducerGroupId.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerGroupId] = source.PendingProducerGroupId;
+            }
+
+            if (source.PendingProducerOwnerLevel.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerOwnerLevel] = source.PendingProducerOwnerLevel;
             }
 
             return message;
@@ -424,7 +438,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if ((annotations.TryGetValue(AmqpProperty.Offset, out amqpValue))
                     && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue))
-                    && (long.TryParse((string)propertyValue, out var offset)))
+                    && (long.TryParse((string)propertyValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offset)))
                 {
                     systemProperties.Offset = offset;
                     processed.Add(AmqpProperty.Offset.ToString());
@@ -475,7 +489,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if ((source.DeliveryAnnotations.Map.TryGetValue(AmqpProperty.PartitionLastEnqueuedOffset, out amqpValue))
                     && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue))
-                    && (long.TryParse((string)propertyValue, out var offset)))
+                    && (long.TryParse((string)propertyValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offset)))
                 {
                     systemProperties.LastOffset = offset;
                 }

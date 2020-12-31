@@ -15,6 +15,6 @@
 
     <!-- Reference Azure.Core shared source normally included in the properties import -->
     <Compile Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Shared\DiagnosticScope.cs" Link="SharedSource\Azure.Core\%(Filename)%(Extension)"/>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Shared\ClientDiagnostics.cs" Link="SharedSource\Azure.Core\%(Filename)%(Extension)" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" Link="SharedSource\Azure.Core\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

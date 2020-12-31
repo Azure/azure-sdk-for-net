@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="deviceType">Device type to be used for the job.
         /// Possible values include: 'DataBox', 'DataBoxDisk',
         /// 'DataBoxHeavy'</param>
-        /// <param name="preference">Preference requested with respect to
-        /// transport type and data center</param>
+        /// <param name="preference">Preference of transport and data
+        /// center.</param>
         public PreferencesValidationRequest(SkuName deviceType, Preferences preference = default(Preferences))
         {
             Preference = preference;
@@ -50,8 +50,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets preference requested with respect to transport type
-        /// and data center
+        /// Gets or sets preference of transport and data center.
         /// </summary>
         [JsonProperty(PropertyName = "preference")]
         public Preferences Preference { get; set; }

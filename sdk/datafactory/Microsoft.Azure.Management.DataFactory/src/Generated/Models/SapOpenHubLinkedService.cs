@@ -35,6 +35,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the SapOpenHubLinkedService class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
+        /// <param name="connectVia">The integration runtime reference.</param>
+        /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the linked service.</param>
         /// <param name="server">Host name of the SAP BW instance where the
         /// open hub destination is located. Type: string (or Expression with
         /// resultType string).</param>
@@ -46,34 +53,41 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// where the open hub destination is located. (Usually a three-digit
         /// decimal number represented as a string) Type: string (or Expression
         /// with resultType string).</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
-        /// <param name="connectVia">The integration runtime reference.</param>
-        /// <param name="description">Linked service description.</param>
-        /// <param name="parameters">Parameters for linked service.</param>
-        /// <param name="annotations">List of tags that can be used for
-        /// describing the linked service.</param>
         /// <param name="language">Language of the BW system where the open hub
         /// destination is located. The default value is EN. Type: string (or
         /// Expression with resultType string).</param>
+        /// <param name="systemId">SystemID of the SAP system where the table
+        /// is located. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="userName">Username to access the SAP BW server where
         /// the open hub destination is located. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="password">Password to access the SAP BW server where
         /// the open hub destination is located.</param>
+        /// <param name="messageServer">The hostname of the SAP Message Server.
+        /// Type: string (or Expression with resultType string).</param>
+        /// <param name="messageServerService">The service name or port number
+        /// of the Message Server. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="logonGroup">The Logon Group for the SAP System. Type:
+        /// string (or Expression with resultType string).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public SapOpenHubLinkedService(object server, object systemNumber, object clientId, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object language = default(object), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+        public SapOpenHubLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object server = default(object), object systemNumber = default(object), object clientId = default(object), object language = default(object), object systemId = default(object), object userName = default(object), SecretBase password = default(SecretBase), object messageServer = default(object), object messageServerService = default(object), object logonGroup = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Server = server;
             SystemNumber = systemNumber;
             ClientId = clientId;
             Language = language;
+            SystemId = systemId;
             UserName = userName;
             Password = password;
+            MessageServer = messageServer;
+            MessageServerService = messageServerService;
+            LogonGroup = logonGroup;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -118,6 +132,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object Language { get; set; }
 
         /// <summary>
+        /// Gets or sets systemID of the SAP system where the table is located.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.systemId")]
+        public object SystemId { get; set; }
+
+        /// <summary>
         /// Gets or sets username to access the SAP BW server where the open
         /// hub destination is located. Type: string (or Expression with
         /// resultType string).
@@ -131,6 +152,27 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
         public SecretBase Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the hostname of the SAP Message Server. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.messageServer")]
+        public object MessageServer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the service name or port number of the Message Server.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.messageServerService")]
+        public object MessageServerService { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Logon Group for the SAP System. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.logonGroup")]
+        public object LogonGroup { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -149,18 +191,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Server == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Server");
-            }
-            if (SystemNumber == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SystemNumber");
-            }
-            if (ClientId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ClientId");
-            }
         }
     }
 }

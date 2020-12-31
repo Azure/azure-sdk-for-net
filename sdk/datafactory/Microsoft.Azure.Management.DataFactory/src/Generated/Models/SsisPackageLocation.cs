@@ -37,13 +37,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="packagePath">The SSIS package path. Type: string (or
         /// Expression with resultType string).</param>
         /// <param name="type">The type of SSIS package location. Possible
-        /// values include: 'SSISDB', 'File', 'InlinePackage'</param>
+        /// values include: 'SSISDB', 'File', 'InlinePackage',
+        /// 'PackageStore'</param>
         /// <param name="packagePassword">Password of the package.</param>
         /// <param name="accessCredential">The package access
         /// credential.</param>
         /// <param name="configurationPath">The configuration file of the
         /// package execution. Type: string (or Expression with resultType
         /// string).</param>
+        /// <param name="configurationAccessCredential">The configuration file
+        /// access credential.</param>
         /// <param name="packageName">The package name.</param>
         /// <param name="packageContent">The embedded package content. Type:
         /// string (or Expression with resultType string).</param>
@@ -51,13 +54,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// modified date.</param>
         /// <param name="childPackages">The embedded child package
         /// list.</param>
-        public SSISPackageLocation(object packagePath = default(object), string type = default(string), SecretBase packagePassword = default(SecretBase), SSISAccessCredential accessCredential = default(SSISAccessCredential), object configurationPath = default(object), string packageName = default(string), object packageContent = default(object), string packageLastModifiedDate = default(string), IList<SSISChildPackage> childPackages = default(IList<SSISChildPackage>))
+        public SSISPackageLocation(object packagePath = default(object), string type = default(string), SecretBase packagePassword = default(SecretBase), SSISAccessCredential accessCredential = default(SSISAccessCredential), object configurationPath = default(object), SSISAccessCredential configurationAccessCredential = default(SSISAccessCredential), string packageName = default(string), object packageContent = default(object), string packageLastModifiedDate = default(string), IList<SSISChildPackage> childPackages = default(IList<SSISChildPackage>))
         {
             PackagePath = packagePath;
             Type = type;
             PackagePassword = packagePassword;
             AccessCredential = accessCredential;
             ConfigurationPath = configurationPath;
+            ConfigurationAccessCredential = configurationAccessCredential;
             PackageName = packageName;
             PackageContent = packageContent;
             PackageLastModifiedDate = packageLastModifiedDate;
@@ -79,7 +83,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the type of SSIS package location. Possible values
-        /// include: 'SSISDB', 'File', 'InlinePackage'
+        /// include: 'SSISDB', 'File', 'InlinePackage', 'PackageStore'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
@@ -102,6 +106,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.configurationPath")]
         public object ConfigurationPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the configuration file access credential.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.configurationAccessCredential")]
+        public SSISAccessCredential ConfigurationAccessCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the package name.
@@ -139,6 +149,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (AccessCredential != null)
             {
                 AccessCredential.Validate();
+            }
+            if (ConfigurationAccessCredential != null)
+            {
+                ConfigurationAccessCredential.Validate();
             }
             if (ChildPackages != null)
             {
