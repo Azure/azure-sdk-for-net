@@ -34,6 +34,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 PrefetchCount = 300,
                 DefaultStartingPosition = EventPosition.Earliest,
             };
+            InitialOffsetOptions = new InitialOffsetOptions();
         }
 
         public EventProcessorOptions EventProcessorOptions { get; }
@@ -80,6 +81,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// Returns whether the function would be triggered when a receive timeout occurs.
         /// </summary>
         public bool InvokeProcessorAfterReceiveTimeout { get; set; }
+
+        /// <summary>
+        /// Gets or sets the initial offset options to apply when processing.
+        /// </summary>
+        public InitialOffsetOptions InitialOffsetOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.
@@ -275,12 +281,23 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 };
             }
 
+            JObject initialOffsetOptions = null;
+            if (InitialOffsetOptions != null)
+            {
+                initialOffsetOptions = new JObject
+                {
+                    { nameof(InitialOffsetOptions.Type), InitialOffsetOptions.Type },
+                    { nameof(InitialOffsetOptions.EnqueuedTimeUTC), InitialOffsetOptions.EnqueuedTimeUTC },
+                };
+            }
+
             JObject options = new JObject
             {
                 { nameof(MaxBatchSize), MaxBatchSize },
                 { nameof(InvokeProcessorAfterReceiveTimeout), InvokeProcessorAfterReceiveTimeout },
                 { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                 { nameof(EventProcessorOptions), eventProcessorOptions },
+                { nameof(InitialOffsetOptions), initialOffsetOptions }
             };
 
             return options.ToString(Formatting.Indented);

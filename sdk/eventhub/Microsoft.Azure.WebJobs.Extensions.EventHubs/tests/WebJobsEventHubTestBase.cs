@@ -21,6 +21,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected const string TestHubName = "%webjobstesthub%";
         protected const int Timeout = 30000;
         protected static string _testId;
+        protected string _checkpointContainerName;
 
         /// <summary>The active Event Hub resource scope for the test fixture.</summary>
         protected EventHubScope _eventHubScope;
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             _eventHubScope = await EventHubScope.CreateAsync(2);
             _testId = Guid.NewGuid().ToString();
+            _checkpointContainerName = Guid.NewGuid().ToString("D").Substring(0, 13);
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             });
         }
 
-        protected (JobHost, IHost) BuildHost<T>(Action<IHostBuilder> configurationDelegate = null, Action<IHost> preStartCallback = null)
+        protected (JobHost, IHost) BuildHost<T>(Action<IHostBuilder> configurationDelegate = null, Action<IHost> preStartCallback = null, InitialOffsetOptions initialOffsetOptions = null)
         {
             configurationDelegate ??= ConfigureTestEventHub;
 
@@ -73,20 +75,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         {"AzureWebJobsStorage", StorageTestEnvironment.Instance.StorageConnectionString}
                     });
                 })
-                .ConfigureServices(services =>
-                {
-                    services.Configure<EventHubOptions>(options =>
-                    {
-                        options.CheckpointContainer = Guid.NewGuid().ToString("D").Substring(0, 13);
-                        // Speedup shutdown
-                        options.EventProcessorOptions.MaximumWaitTime = TimeSpan.FromSeconds(5);
-                    });
-                })
                 .ConfigureDefaultTestHost<T>(b =>
                 {
                     b.AddEventHubs(options =>
                     {
                         options.EventProcessorOptions.TrackLastEnqueuedEventProperties = true;
+                        options.EventProcessorOptions.MaximumWaitTime = TimeSpan.FromSeconds(5);
+                        if (initialOffsetOptions != null)
+                        {
+                            options.InitialOffsetOptions = initialOffsetOptions;
+                        }
+                        options.CheckpointContainer = _checkpointContainerName;
+                        // We want to validate the default options configuration logic for setting initial offset and not implemente it here
+                        EventHubWebJobsBuilderExtensions.ConfigureOptions(options);
                     });
                 })
                 .ConfigureLogging(b =>
