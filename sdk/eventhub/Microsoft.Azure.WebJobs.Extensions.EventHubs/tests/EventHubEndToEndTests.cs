@@ -217,7 +217,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private static void AssertMultipleDispatchLogs(IHost host)
         {
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
-                            .GetAllLogMessages();
+                .GetAllLogMessages();
 
             Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                 && x.FormattedMessage.Contains("Trigger Details:")
