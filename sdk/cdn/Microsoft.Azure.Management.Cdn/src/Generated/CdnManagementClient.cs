@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Version of the API to be used with the client request. Current version is
         /// 2019-09-01.
         /// </summary>
-        public string ApiVersion { get; private set; }
+        public string ApiVersion { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
