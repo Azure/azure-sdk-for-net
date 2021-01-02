@@ -10,7 +10,6 @@ namespace Azure.Communication.Administration.Models
     /// <summary>
     /// Model factory that enables mocking for the Administration library.
     /// </summary>
-    
     public static class AdministrationModelFactory
     {
         /// <summary>
