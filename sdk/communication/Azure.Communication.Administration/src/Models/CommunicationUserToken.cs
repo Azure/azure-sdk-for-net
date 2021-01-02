@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
@@ -9,6 +10,7 @@ namespace Azure.Communication.Administration.Models
     [CodeGenModel("CommunicationIdentityToken")]
     public partial class CommunicationUserToken
     {
+        [ExcludeFromCodeCoverage]
         internal CommunicationUserToken(string id, string token, DateTimeOffset expiresOn)
         {
             Id = id;
