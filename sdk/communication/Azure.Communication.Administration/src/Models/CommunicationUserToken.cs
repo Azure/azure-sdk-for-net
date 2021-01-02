@@ -8,9 +8,9 @@ using Azure.Core;
 namespace Azure.Communication.Administration.Models
 {
     [CodeGenModel("CommunicationIdentityToken")]
+    [ExcludeFromCodeCoverage]
     public partial class CommunicationUserToken
     {
-        [ExcludeFromCodeCoverage]
         internal CommunicationUserToken(string id, string token, DateTimeOffset expiresOn)
         {
             Id = id;
