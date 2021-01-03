@@ -6,6 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.Administration.Models
 {
     [CodeGenModel("CreateSearchOptions")]
+    [ExcludeFromCodeCoverage]
     public partial class CreateReservationOptions
     {
     }
