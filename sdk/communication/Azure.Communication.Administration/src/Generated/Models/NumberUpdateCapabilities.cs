@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents an individual number capabilities update request. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class NumberUpdateCapabilities
     {
         /// <summary> Initializes a new instance of NumberUpdateCapabilities. </summary>
