@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a service error response body. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class ErrorBody
     {
         /// <summary> Initializes a new instance of ErrorBody. </summary>

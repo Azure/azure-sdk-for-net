@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Definition for number configuration. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class NumberConfiguration
     {
         /// <summary> Initializes a new instance of NumberConfiguration. </summary>

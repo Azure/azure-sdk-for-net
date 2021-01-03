@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a service error response. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
