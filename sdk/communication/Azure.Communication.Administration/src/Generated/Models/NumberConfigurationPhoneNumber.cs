@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The phone number wrapper representing a number configuration request. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class NumberConfigurationPhoneNumber
     {
         /// <summary> Initializes a new instance of NumberConfigurationPhoneNumber. </summary>
