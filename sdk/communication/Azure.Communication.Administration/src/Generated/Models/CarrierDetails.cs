@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents carrier details. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class CarrierDetails
     {
         /// <summary> Initializes a new instance of CarrierDetails. </summary>

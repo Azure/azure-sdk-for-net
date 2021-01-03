@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Response for getting a phone number update capabilities. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class UpdatePhoneNumberCapabilitiesResponse
     {
         /// <summary> Initializes a new instance of UpdatePhoneNumberCapabilitiesResponse. </summary>

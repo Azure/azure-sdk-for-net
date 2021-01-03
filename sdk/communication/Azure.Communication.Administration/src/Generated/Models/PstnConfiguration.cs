@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Definition for pstn number configuration. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class PstnConfiguration
     {
         /// <summary> Initializes a new instance of PstnConfiguration. </summary>

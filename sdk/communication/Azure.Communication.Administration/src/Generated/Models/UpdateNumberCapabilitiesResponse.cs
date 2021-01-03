@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a number capability update response. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class UpdateNumberCapabilitiesResponse
     {
         /// <summary> Initializes a new instance of UpdateNumberCapabilitiesResponse. </summary>

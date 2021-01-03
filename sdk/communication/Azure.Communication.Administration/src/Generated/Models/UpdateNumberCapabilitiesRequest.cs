@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a numbers capabilities update request. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class UpdateNumberCapabilitiesRequest
     {
         /// <summary> Initializes a new instance of UpdateNumberCapabilitiesRequest. </summary>
