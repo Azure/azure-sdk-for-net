@@ -19,7 +19,6 @@ namespace Azure.Communication.Administration.Models
         /// <param name="acquiredCapabilities"> The set of all acquired capabilities of the phone number. </param>
         /// <param name="availableCapabilities"> The set of all available capabilities that can be acquired for this phone number. </param>
         /// <returns>A new <see cref="AcquiredPhoneNumber"/> instance for mocking.</returns>
-        [ExcludeFromCodeCoverage]
         public static AcquiredPhoneNumber AcquiredPhoneNumber(string phoneNumber, IEnumerable<PhoneNumberCapability> acquiredCapabilities, IEnumerable<PhoneNumberCapability> availableCapabilities)
             => new AcquiredPhoneNumber(phoneNumber, acquiredCapabilities, availableCapabilities);
 
@@ -30,7 +29,6 @@ namespace Azure.Communication.Administration.Models
         /// <param name="secondaryAreaCodes"> Represents the list of secondary area codes. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
         /// <returns>A new <see cref="AreaCodes"/> instance for mocking.</returns>
-        [ExcludeFromCodeCoverage]
         public static AreaCodes AreaCodes(IReadOnlyList<string> primaryAreaCodes, IReadOnlyList<string> secondaryAreaCodes, string nextLink)
             => new AreaCodes(primaryAreaCodes, secondaryAreaCodes, nextLink);
 
