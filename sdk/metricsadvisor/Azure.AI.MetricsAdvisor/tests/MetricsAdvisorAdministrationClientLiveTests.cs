@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
@@ -24,34 +23,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             List<DataFeed> feeds = await adminClient.GetDataFeedsAsync(new GetDataFeedsOptions { TopCount = 2 }).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(feeds, Is.Not.Empty);
-        }
-
-        [RecordedTest]
-        public async Task GetDataFeed()
-        {
-            var adminClient = GetMetricsAdvisorAdministrationClient();
-
-            List<DataFeed> feeds = await adminClient.GetDataFeedsAsync().ToEnumerableAsync().ConfigureAwait(false);
-
-            Assert.That(feeds, Is.Not.Empty);
-
-            foreach (DataFeed feed in feeds)
-            {
-                DataFeed feedResult = await adminClient.GetDataFeedAsync(feed.Id);
-
-                Assert.That(feedResult.CreatedTime, Is.EqualTo(feed.CreatedTime));
-                Assert.That(feedResult.Granularity.GranularityType, Is.EqualTo(feed.Granularity.GranularityType));
-                Assert.That(feedResult.Granularity.CustomGranularityValue, Is.EqualTo(feed.Granularity.CustomGranularityValue));
-                Assert.That(feedResult.Id, Is.EqualTo(feed.Id));
-                Assert.That(feedResult.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(feed.IngestionSettings.DataSourceRequestConcurrency));
-                Assert.That(feedResult.IsAdministrator, Is.EqualTo(feed.IsAdministrator));
-                Assert.That(feedResult.MetricIds, Is.EqualTo(feed.MetricIds));
-                Assert.That(feedResult.Name, Is.EqualTo(feed.Name));
-                Assert.That(feedResult.Administrators, Is.EquivalentTo(feed.Administrators));
-                Assert.That(feedResult.Schema.DimensionColumns.Count, Is.EqualTo(feed.Schema.DimensionColumns.Count));
-                Assert.That(feedResult.SourceType, Is.EqualTo(feed.SourceType));
-                Assert.That(feedResult.Status, Is.EqualTo(feed.Status));
-            }
         }
 
         [RecordedTest]
@@ -151,72 +122,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeedIngestionProgress progress = await adminClient.GetDataFeedIngestionProgressAsync(DataFeedId).ConfigureAwait(false);
 
             Assert.That(progress, Is.Not.Null);
-        }
-
-        [RecordedTest]
-        public async Task AnomalyAlertConfigurationOperations()
-        {
-            var adminClient = GetMetricsAdvisorAdministrationClient();
-
-            // Create a Detection Configuration
-            DataFeed feed = await GetFirstDataFeed(adminClient);
-            string createdAnomalyDetectionConfigurationId = await CreateDetectionConfiguration(adminClient).ConfigureAwait(false);
-
-            var alertConfigToCreate = new AnomalyAlertConfiguration(
-                    Recording.GenerateAlphaNumericId("test"),
-                    new List<string>(),
-                    new List<MetricAnomalyAlertConfiguration>
-                    {
-                        new MetricAnomalyAlertConfiguration(
-                            createdAnomalyDetectionConfigurationId,
-                            new MetricAnomalyAlertScope(
-                                MetricAnomalyAlertScopeType.TopN,
-                                new DimensionKey(new List<KeyValuePair<string, string>>
-                                {
-                                    new KeyValuePair<string, string>("test", "test2")
-                                }),
-                                new TopNGroupScope(8, 4, 2)))
-                    });
-
-            string createdAlertConfigId = await adminClient.CreateAlertConfigurationAsync(alertConfigToCreate).ConfigureAwait(false);
-
-            Assert.That(createdAlertConfigId, Is.Not.Null);
-
-            // Validate that we can Get the newly created config
-            AnomalyAlertConfiguration getAlertConfig = await adminClient.GetAlertConfigurationAsync(createdAlertConfigId).ConfigureAwait(false);
-
-            List<AnomalyAlertConfiguration> getAlertConfigs = new List<AnomalyAlertConfiguration>();
-
-            await foreach (var config in adminClient.GetAlertConfigurationsAsync(createdAnomalyDetectionConfigurationId))
-            {
-                getAlertConfigs.Add(config);
-            }
-
-            Assert.That(getAlertConfig.Id, Is.EqualTo(createdAlertConfigId));
-            Assert.That(getAlertConfigs.Any(c => c.Id == createdAlertConfigId));
-
-            getAlertConfig.Description = "Updated";
-            getAlertConfig.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.And;
-
-            await adminClient.UpdateAlertConfigurationAsync(getAlertConfig.Id, getAlertConfig).ConfigureAwait(false);
-
-            // Validate that the update succeeded.
-            getAlertConfig = await adminClient.GetAlertConfigurationAsync(createdAlertConfigId).ConfigureAwait(false);
-
-            Assert.That(getAlertConfig.Description, Is.EqualTo(getAlertConfig.Description));
-
-            // Update again starting with our locally created model.
-            alertConfigToCreate.Description = "updated again!";
-            alertConfigToCreate.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.And;
-            await adminClient.UpdateAlertConfigurationAsync(getAlertConfig.Id, alertConfigToCreate).ConfigureAwait(false);
-
-            // Validate that the update succeeded.
-            getAlertConfig = await adminClient.GetAlertConfigurationAsync(createdAlertConfigId).ConfigureAwait(false);
-
-            Assert.That(getAlertConfig.Description, Is.EqualTo(alertConfigToCreate.Description));
-
-            // Cleanup
-            await adminClient.DeleteAlertConfigurationAsync(createdAlertConfigId).ConfigureAwait(false);
         }
 
         [RecordedTest]
