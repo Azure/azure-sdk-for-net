@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Communication.Pipeline
 {
+    [ExcludeFromCodeCoverage]
     internal class StaticTokenCredential : TokenCredential
     {
         private readonly AccessToken _token;
