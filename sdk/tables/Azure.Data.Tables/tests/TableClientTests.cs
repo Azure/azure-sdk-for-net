@@ -108,7 +108,7 @@ namespace Azure.Tables.Tests
         [Test]
         public void GetSasBuilderGeneratesCorrectUri()
         {
-            var expiry = new DateTimeOffset(2020, 1, 1,1, 1, 1, TimeSpan.Zero);
+            var expiry = new DateTimeOffset(2020, 1, 1, 1, 1, 1, TimeSpan.Zero);
             var permissions = TableSasPermissions.All;
 
             var sas = client.GetSasBuilder(permissions.ToPermissionsString(), expiry);
