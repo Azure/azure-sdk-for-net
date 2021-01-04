@@ -95,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
             CustomObject result = new CustomObject()
             {
-                Text = inputObject.Text + " " + name,
+                Text = inputObject.Text + " " + name + "",
                 Number = inputObject.Number + 1
             };
 
