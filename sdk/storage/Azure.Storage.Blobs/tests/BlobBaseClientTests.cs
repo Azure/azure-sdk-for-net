@@ -1407,6 +1407,8 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(1025, SeekOrigin.Begin),
                 new ArgumentException("You cannot seek past the last known length of the underlying blob or file."));
+
+            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -1451,6 +1453,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 Assert.AreEqual(size + offset, outputStream.Position);
             }
+
+            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -1496,6 +1500,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
+            Assert.AreEqual(size, openReadStream.Length);
             TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
         }
 
@@ -3179,6 +3184,42 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_Exists_CPK()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            await blob.CreateIfNotExistsAsync();
+
+            // Act
+            Response<bool> response = await blob.ExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task ExistsAsync_Exists_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            await blob.CreateIfNotExistsAsync();
+
+            // Act
+            Response<bool> response = await blob.ExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
         }
 
         [Test]

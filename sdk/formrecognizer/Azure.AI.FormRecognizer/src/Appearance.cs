@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    /// <inheritdoc />
     [CodeGenModel("Appearance")]
     [SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Will fix name in future release")]
     public partial class Appearance

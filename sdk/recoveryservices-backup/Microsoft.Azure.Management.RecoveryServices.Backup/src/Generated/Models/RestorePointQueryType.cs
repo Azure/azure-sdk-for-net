@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public const string Differential = "Differential";
         public const string FullAndDifferential = "FullAndDifferential";
         public const string All = "All";
+        public const string Incremental = "Incremental";
     }
 }

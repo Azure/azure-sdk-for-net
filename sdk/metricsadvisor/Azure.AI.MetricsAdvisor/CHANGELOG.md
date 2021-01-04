@@ -2,6 +2,8 @@
 
 ## 1.0.0-beta.3 (Unreleased)
 
+### Key Bug Fixes
+- Fixed a bug in which setting `WebNotificationHook.CertificatePassword` would actually set the property `Username` instead.
 
 ## 1.0.0-beta.2 (2020-11-10)
 

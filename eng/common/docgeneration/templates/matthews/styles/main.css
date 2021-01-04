@@ -300,3 +300,12 @@ article h4 {
     background-color: #0071c5;
   }
 }
+
+.navbar-version-select {	
+  padding: 2px;	
+  border: none;	
+  border-radius: 2px;	
+  box-shadow: none;	
+  -webkit-appearance: media-time-remaining-display;	
+  margin-top: 14px;	
+}

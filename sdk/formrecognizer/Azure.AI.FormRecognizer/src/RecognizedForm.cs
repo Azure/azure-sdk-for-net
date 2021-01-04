@@ -32,9 +32,6 @@ namespace Azure.AI.FormRecognizer.Models
             // Recognized form from a model trained with labels.
             FormType = documentResult.DocType;
 
-            // TODO: validate that PageRange.Length == 2.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10547
-
             PageRange = new FormPageRange(documentResult.PageRange[0], documentResult.PageRange[1]);
 
             // documentResult.Fields is required and not null, according to the swagger file, but it's not

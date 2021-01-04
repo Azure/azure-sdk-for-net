@@ -66,7 +66,7 @@ namespace Azure.Test.Perf
             Console.WriteLine("=== Versions ===");
             Console.WriteLine($"Runtime: {Environment.Version}");
             var azureAssemblies = testType.Assembly.GetReferencedAssemblies()
-                .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase))
+                .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) || a.Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
                 .Where(a => !a.Name.Equals("Azure.Test.Perf", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(a => a.Name);
             foreach (var a in azureAssemblies)
@@ -121,6 +121,19 @@ namespace Azure.Test.Perf
                             await RunTestsAsync(tests, options, title);
                         }
                     }
+                    catch (AggregateException ae)
+                    {
+                        foreach (Exception e in ae.InnerExceptions)
+                        {
+                            Console.WriteLine($"Exception: {e}");
+                        }
+                        throw;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Exception: {e}");
+                        throw;
+                    }
                     finally
                     {
                         if (!options.NoCleanup)
@@ -133,6 +146,11 @@ namespace Azure.Test.Perf
                             await Task.WhenAll(tests.Select(t => t.CleanupAsync()));
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Exception: {e}");
+                    throw;
                 }
                 finally
                 {

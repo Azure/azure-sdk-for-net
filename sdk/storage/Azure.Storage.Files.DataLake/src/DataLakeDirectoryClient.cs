@@ -62,6 +62,64 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
+        /// </param>
+        /// <param name="fileSystemName">
+        /// The name of the file system containing this path.
+        /// </param>
+        /// <param name="directoryPath">
+        /// The path to the directory.
+        /// </param>
+        public DataLakeDirectoryClient(
+            string connectionString,
+            string fileSystemName,
+            string directoryPath)
+            : this(connectionString, fileSystemName, directoryPath, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
+        /// </param>
+        /// <param name="fileSystemName">
+        /// The name of the file system containing this path.
+        /// </param>
+        /// <param name="directoryPath">
+        /// The path to the directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakeDirectoryClient(
+            string connectionString,
+            string fileSystemName,
+            string directoryPath,
+            DataLakeClientOptions options)
+            : base(connectionString, fileSystemName, directoryPath, options)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
         /// class.
         /// </summary>
@@ -1188,7 +1246,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public override Response<PathInfo> SetPermissions(
-            PathPermissions permissions,
+            PathPermissions permissions = default,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
@@ -1252,7 +1310,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public override async Task<Response<PathInfo>> SetPermissionsAsync(
-            PathPermissions permissions,
+            PathPermissions permissions = default,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,

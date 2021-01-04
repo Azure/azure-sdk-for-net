@@ -129,6 +129,46 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task Ctor_ConnectionString_RoundTrip()
+        {
+            // Arrange
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewDirectoryName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(path));
+            await directoryClient.CreateAsync();
+
+            // Act
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            DataLakeFileClient connStringFile = InstrumentClient(new DataLakeFileClient(connectionString, fileSystemName, path, GetOptions()));
+
+            // Assert
+            await connStringFile.GetPropertiesAsync();
+            await connStringFile.GetAccessControlAsync();
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_GenerateSas()
+        {
+            // Arrange
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewDirectoryName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(path));
+            await directoryClient.CreateAsync();
+
+            // Act
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            DataLakeFileClient connStringFile = InstrumentClient(new DataLakeFileClient(connectionString, fileSystemName, path, GetOptions()));
+            Uri sasUri = connStringFile.GenerateSasUri(DataLakeSasPermissions.All, Recording.UtcNow.AddDays(1));
+            DataLakeFileClient sasFileClient = InstrumentClient(new DataLakeFileClient(sasUri, GetOptions()));
+
+            // Assert
+            await sasFileClient.GetPropertiesAsync();
+            await sasFileClient.GetAccessControlAsync();
+        }
+
+        [Test]
         public async Task CreateAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4215,6 +4255,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(size + 10, SeekOrigin.Begin),
                 new ArgumentException("You cannot seek past the last known length of the underlying blob or file."));
+
+            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -4259,6 +4301,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 Assert.AreEqual(size + offset, outputStream.Position);
             }
+
+            Assert.AreEqual(size, outputStream.Length);
         }
 
         [Test]
@@ -4304,6 +4348,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
+            Assert.AreEqual(size, openReadStream.Length);
             TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
         }
 
