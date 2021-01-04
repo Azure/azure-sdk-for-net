@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -28,14 +27,12 @@ namespace Azure.Core
             string signature = _credential.Signature;
             if (signature.StartsWith("?", StringComparison.InvariantCulture))
             {
-                signature = signature.AsSpan().Slice(1).ToString();
+                signature = signature.Substring(1);
             }
             if (!query.Contains(signature))
             {
-                var newQuery = new StringBuilder(query, query.Length + signature.Length + 1);
-                newQuery.Append(string.IsNullOrEmpty(query) ? '?' : '&');
-                newQuery.Append(signature);
-                message.Request.Uri.Query = newQuery.ToString();
+                query = string.IsNullOrEmpty(query) ? '?' + signature : query + '&' + signature;
+                message.Request.Uri.Query = query;
             }
 
             base.OnSendingRequest(message);
