@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -24,15 +25,24 @@ namespace Azure.Core
         public override void OnSendingRequest(HttpMessage message)
         {
             string query = message.Request.Uri.Query;
+            var querySpan = query.AsSpan();
             string signature = _credential.Signature;
-            if (signature.StartsWith("?", StringComparison.InvariantCulture))
+            bool hasLeadingQuestionMark = signature.StartsWith("?", StringComparison.InvariantCulture);
+            var signatureSpan = signature.AsSpan(hasLeadingQuestionMark ? 1 : 0);
+            if (!querySpan.Contains(signatureSpan, StringComparison.InvariantCulture))
             {
-                signature = signature.Substring(1);
-            }
-            if (!query.Contains(signature))
-            {
-                query = string.IsNullOrEmpty(query) ? '?' + signature : query + '&' + signature;
-                message.Request.Uri.Query = query;
+                var finalQuery = new StringBuilder(query.Length + signatureSpan.Length + 1);
+                if (string.IsNullOrEmpty(query))
+                {
+                    finalQuery.Append('?');
+                }
+                else
+                {
+                    finalQuery.Append(query);
+                    finalQuery.Append('&');
+                }
+                finalQuery.Append(signature, hasLeadingQuestionMark ? 1 : 0, hasLeadingQuestionMark ? signature.Length - 1 : signature.Length);
+                message.Request.Uri.Query = finalQuery.ToString();
             }
 
             base.OnSendingRequest(message);
