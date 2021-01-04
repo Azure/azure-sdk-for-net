@@ -289,15 +289,10 @@ AzureKeyCredential credential = new AzureKeyCredential(key);
 SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 
 // Create the index using FieldBuilder.
-SearchIndex index = new SearchIndex("hotels")
-{
-    Fields = new FieldBuilder().Build(typeof(Hotel)),
-    Suggesters =
-    {
-        // Suggest query terms from the hotelName field.
-        new SearchSuggester("sg", "hotelName")
-    }
-};
+SearchIndex index = new SearchIndex("hotels", new FieldBuilder().Build(typeof(Hotel))
+
+// Suggest query terms from the hotelName field.
+index.Suggesters.Add(new SearchSuggester("sg", "hotelName"));
 
 client.CreateIndex(index);
 ```
@@ -327,13 +322,11 @@ SearchIndex index = new SearchIndex("hotels")
                 new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
             }
         }
-    },
-    Suggesters =
-    {
-        // Suggest query terms from the hotelName field.
-        new SearchSuggester("sg", "hotelName")
     }
 };
+
+// Suggest query terms from the hotelName field.
+index.Suggesters.Add(new SearchSuggester("sg", "hotelName"));
 
 client.CreateIndex(index);
 ```
