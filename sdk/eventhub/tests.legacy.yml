@@ -1,0 +1,15 @@
+trigger: none
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    MaxParallel: 6
+    ServiceDirectory: eventhub
+    TimeoutInMinutes: 190
+    ExcludeProjects:
+    - Azure.ResourceManager.EventHubs
+    - Azure.Messaging.EventHubs
+    - Azure.Messaging.EventHubs.Processor
+    - Azure.Messaging.EventHubs.Shared
+    - Azure.Messaging.EventHubs.*
+    Clouds: 'Public,Canary'

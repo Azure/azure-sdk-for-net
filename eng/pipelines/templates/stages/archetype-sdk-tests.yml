@@ -32,6 +32,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: ExcludeProjects
+  type: object
+  default: []
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -128,6 +131,7 @@ stages:
               TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
               Location: ${{ parameters.Location }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              ExcludeProjects: ${{ parameters.ExcludeProjects }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
             Platforms:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
