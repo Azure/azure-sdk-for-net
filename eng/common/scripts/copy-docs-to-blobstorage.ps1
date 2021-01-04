@@ -216,17 +216,21 @@ function Upload-Blobs
    
     LogDebug "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
     & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
-
+    
     LogDebug "Handling versioning files under $($DocDest)/$($PkgName)/versioning/"
     $versionsObj = (Update-Existing-Versions -PkgName $PkgName -PkgVersion $DocVersion -DocDest $DocDest)
+    $latestVersion = $versionsObj.LatestGAPackage 
+    if (!$latestVersion) {
+        $latestVersion = $versionsObj.LatestPreviewPackage 
+    }
 
-    # we can safely assume we have AT LEAST one version here. Reason being we just completed Update-Existing-Versions
-    $latestVersion = ($versionsObj.SortedVersionArray | Select-Object -First 1).RawVersion
-
-    if ($UploadLatest -and ($latestVersion -eq $DocVersion))
+    # Prepare the index.html which can redirect to the latest GA whenever avaiable, otherwise point to latest preview.
+    New-Item -Path $DocDir -Name "latest" -ItemType "directory"
+    New-Item -Path "$($DocDir)/latest" -Name "index.html" -ItemType "file" -Value "<meta http-equiv="refresh" content="0; URL=$($DocDest)/$($PkgName)/$($DocVersion)" />"
+    if ($UploadLatest -and $latestVersion)
     {
         LogDebug "Uploading $($PkgName) to latest folder in $($DocDest)..."
-        & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
+        & $($AzCopy) cp "$($DocDir)/latest/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
     }
 }
 
