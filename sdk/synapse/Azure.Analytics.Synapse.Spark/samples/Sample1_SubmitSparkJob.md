@@ -12,7 +12,7 @@ SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName,
 
 ## Submitting Spark jobs
 
-To submit a Spark job, first create a `SparkBatchJob`, passing in an instance of `SparkBatchJobOptions` describing the job's parameters. Calling `CreateSparkBatchJob` with that job will submit it to Synapse.
+To submit a Spark job, first create a `SparkBatchJob`, passing in an instance of `SparkBatchJobOptions` describing the job's parameters. Calling `StartCreateSparkBatchJob` with that job will submit it to Synapse.
 
 ```C# Snippet:SubmitSparkBatchJob
 string name = $"batch-{Guid.NewGuid()}";
@@ -32,15 +32,28 @@ SparkBatchJobOptions request = new SparkBatchJobOptions(name, file)
     ExecutorCount = 2
 };
 
-SparkBatchJob jobCreated = client.CreateSparkBatchJob(request);
+SparkBatchOperation createOperation = client.StartCreateSparkBatchJob(request);
+while (!createOperation.HasCompleted)
+{
+    System.Threading.Thread.Sleep(2000);
+    createOperation.UpdateStatus();
+}
+SparkBatchJob jobCreated = createOperation.Value;
 ```
 
 ## Retrieve a Spark job
 
-To retrieve the details of a Spark job call `GetSparkBatchJob`, passing in the Spark job ID.
+To retrieve the details of a Spark job call `StartGetSparkBatchJob`, passing in the Spark job ID.
 
 ```C# Snippet:GetSparkBatchJob
-SparkBatchJob retrievedJob = client.GetSparkBatchJob(jobCreated.Id);
+SparkBatchOperation getOperation = client.StartGetSparkBatchJob (jobCreated.Id);
+while (!getOperation.HasCompleted)
+{
+    System.Threading.Thread.Sleep(2000);
+    getOperation.UpdateStatus();
+}
+SparkBatchJob retrievedJob = getOperation.Value;
+
 Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
 ```
 

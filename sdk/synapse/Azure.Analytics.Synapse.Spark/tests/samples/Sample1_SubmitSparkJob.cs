@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Analytics.Synapse.Spark;
 using Azure.Analytics.Synapse.Spark.Models;
@@ -53,7 +52,13 @@ namespace Azure.Analytics.Synapse.Samples
                 ExecutorCount = 2
             };
 
-            SparkBatchJob jobCreated = client.CreateSparkBatchJob(request);
+            SparkBatchOperation createOperation = client.StartCreateSparkBatchJob(request);
+            while (!createOperation.HasCompleted)
+            {
+                System.Threading.Thread.Sleep(2000);
+                createOperation.UpdateStatus();
+            }
+            SparkBatchJob jobCreated = createOperation.Value;
             #endregion
 
             #region Snippet:ListSparkBatchJobs
@@ -65,7 +70,14 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:GetSparkBatchJob
-            SparkBatchJob retrievedJob = client.GetSparkBatchJob(jobCreated.Id);
+            SparkBatchOperation getOperation = client.StartGetSparkBatchJob (jobCreated.Id);
+            while (!getOperation.HasCompleted)
+            {
+                System.Threading.Thread.Sleep(2000);
+                getOperation.UpdateStatus();
+            }
+            SparkBatchJob retrievedJob = getOperation.Value;
+
             Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
             #endregion
 

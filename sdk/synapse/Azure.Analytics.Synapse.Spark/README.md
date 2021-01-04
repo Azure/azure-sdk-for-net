@@ -89,7 +89,13 @@ SparkBatchJobOptions request = new SparkBatchJobOptions(name, file)
     ExecutorCount = 2
 };
 
-SparkBatchJob jobCreated = client.CreateSparkBatchJob(request);
+SparkBatchOperation createOperation = client.StartCreateSparkBatchJob(request);
+while (!createOperation.HasCompleted)
+{
+    System.Threading.Thread.Sleep(2000);
+    createOperation.UpdateStatus();
+}
+SparkBatchJob jobCreated = createOperation.Value;
 ```
 
 ### Cancel spark batch job
