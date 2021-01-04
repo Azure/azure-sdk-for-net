@@ -88,7 +88,29 @@
             "virtualNetworkRules": [],
             "ipRules": [],
             "defaultAction": "Allow"
-        }
+        },
+        "versioningEnableProperties": {
+            "isVersioningEnabled": true,
+            "lastAccessTimeTrackingPolicy": {
+                "enable": true,
+                "name": "AccessTimeTracking",
+                "trackingGranularityInDays": 1,
+                "blobType": [
+                    "blockBlob"
+                ]
+            }
+        },
+        "nullProperties": {
+            "lastAccessTimeTrackingPolicy": {
+                "enable": true,
+                "name": "AccessTimeTracking",
+                "trackingGranularityInDays": 1,
+                "blobType": [
+                    "blockBlob"
+                ]
+            }
+        },
+        "locationsProperty": "[if(parameters('enableStorageVersioning'), variables('versioningEnableProperties'), variables('nullProperties'))]"
     },
     "resources": [
         {
@@ -148,17 +170,7 @@
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[concat(variables('primaryAccountName'), '/default')]",
-            "properties": {
-                "isVersioningEnabled": "[if(parameters('enableStorageVersioning'), true, false)]",
-                "lastAccessTimeTrackingPolicy": {
-                    "enable": true,
-                    "name": "AccessTimeTracking",
-                    "trackingGranularityInDays": 1,
-                    "blobType": [
-                        "blockBlob"
-                    ]
-                }
-            },
+            "properties": "[variables('locationsProperty')]",
             "dependsOn": [
                 "[variables('primaryAccountName')]"
             ]
