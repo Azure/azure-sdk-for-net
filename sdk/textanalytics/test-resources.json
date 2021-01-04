@@ -53,9 +53,9 @@
         },
         "textAnalyticsSku": {
             "type": "string",
-            "defaultValue": "S0",
+            "defaultValue": "S",
             "metadata": {
-                "description": "Text Analytics SKU to deploy. The default is 'S0'"
+                "description": "Text Analytics SKU to deploy. The default is 'S'"
             }
         }
     },
