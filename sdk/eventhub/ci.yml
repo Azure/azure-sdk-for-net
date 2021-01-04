@@ -9,7 +9,12 @@ trigger:
   paths:
     include:
     - sdk/eventhub/
-
+    exclude:
+    - sdk/eventhub/Azure.ResourceManager.EventHubs
+    - sdk/eventhub/Microsoft.Azure.EventHubs
+    - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
+    - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
+    - sdk/eventhub/Microsoft.Azure.Management.EventHub
 pr:
   branches:
     include:
@@ -20,24 +25,28 @@ pr:
   paths:
     include:
     - sdk/eventhub/
+    exclude:
+    - sdk/eventhub/Azure.ResourceManager.EventHubs
+    - sdk/eventhub/Microsoft.Azure.EventHubs
+    - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
+    - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
+    - sdk/eventhub/Microsoft.Azure.Management.EventHub
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: eventhub
+    ExcludeProjects:
+    - Azure.ResourceManager.EventHubs
+    - Microsoft.Azure.EventHubs
+    - Microsoft.Azure.EventHubs.Processor
+    - Microsoft.Azure.EventHubs.ServiceFabricProcessor
+    - Microsoft.Azure.EventHubs.*
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.EventHubs
       safeName: AzureMessagingEventHubs
     - name: Azure.Messaging.EventHubs.Processor
       safeName: AzureMessagingEventHubsProcessor
-    - name: Microsoft.Azure.EventHubs
-      safeName: MicrosoftAzureEventHubs
-    - name: Microsoft.Azure.EventHubs.Processor
-      safeName: MicrosoftAzureEventHubsProcessor
-    - name: Microsoft.Azure.EventHubs.ServiceFabricProcessor
-      safeName: MicrosoftAzureEventHubsServiceFabricProcessor
     - name: Microsoft.Azure.WebJobs.Extensions.EventHubs
       safeName: MicrosoftAzureWebJobsExtensionsEventHubs
-    - name: Azure.ResourceManager.EventHubs
-      safeName: AzureResourceManagerEventHubs
