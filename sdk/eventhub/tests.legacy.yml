@@ -12,4 +12,5 @@ extends:
     - Azure.Messaging.EventHubs.Processor
     - Azure.Messaging.EventHubs.Shared
     - Azure.Messaging.EventHubs.*
+    - Microsoft.Azure.WebJobs.Extensions.EventHubs
     Clouds: 'Public,Canary'
