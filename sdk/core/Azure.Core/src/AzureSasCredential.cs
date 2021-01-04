@@ -53,7 +53,7 @@ namespace Azure
         /// </exception>
         public void Update(string signature)
         {
-            Argument.AssertNotNullOrEmpty(signature, nameof(signature));
+            Argument.AssertNotNullOrWhiteSpace(signature, nameof(signature));
             Signature = signature;
         }
     }
