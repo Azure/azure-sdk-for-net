@@ -33,7 +33,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-ae6e81e6-c3f4-eb09-3dc4-bc1dc5378196/test-directory-9a74467a-0db6-32b7-973c-2a3bc6889197?sv=2020-04-08\u0026se=2020-12-15T21%3A47%3A17Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=directory",
+      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-ae6e81e6-c3f4-eb09-3dc4-bc1dc5378196/test-directory-9a74467a-0db6-32b7-973c-2a3bc6889197?sv=2020-06-12\u0026se=2020-12-15T21%3A47%3A17Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-26e80f8dc9d5164db1e3fbcf910760cd-596e0e69b768bd4d-00",
@@ -63,7 +63,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-ae6e81e6-c3f4-eb09-3dc4-bc1dc5378196?sv=2020-04-08\u0026se=2020-12-15T21%3A47%3A17Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=filesystem\u0026recursive=false\u0026upn=false",
+      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-ae6e81e6-c3f4-eb09-3dc4-bc1dc5378196?sv=2020-06-12\u0026se=2020-12-15T21%3A47%3A17Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=filesystem\u0026recursive=false\u0026upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
