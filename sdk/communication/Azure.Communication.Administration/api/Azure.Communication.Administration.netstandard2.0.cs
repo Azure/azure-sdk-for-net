@@ -100,6 +100,7 @@ namespace Azure.Communication.Administration
 }
 namespace Azure.Communication.Administration.Models
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class AcquiredPhoneNumber
     {
         internal AcquiredPhoneNumber() { }
@@ -110,6 +111,7 @@ namespace Azure.Communication.Administration.Models
         public string PhoneNumber { get { throw null; } }
         public string PlaceName { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ActivationState : System.IEquatable<Azure.Communication.Administration.Models.ActivationState>
     {
@@ -131,10 +133,12 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.ActivationState left, Azure.Communication.Administration.Models.ActivationState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public static partial class AdministrationModelFactory
     {
         public static Azure.Communication.Administration.Models.AcquiredPhoneNumber AcquiredPhoneNumber(string phoneNumber, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.PhoneNumberCapability> acquiredCapabilities, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.PhoneNumberCapability> availableCapabilities) { throw null; }
         public static Azure.Communication.Administration.Models.AreaCodes AreaCodes(System.Collections.Generic.IReadOnlyList<string> primaryAreaCodes, System.Collections.Generic.IReadOnlyList<string> secondaryAreaCodes, string nextLink) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
         public static Azure.Communication.Administration.Models.CarrierDetails CarrierDetails(string name, string localizedName) { throw null; }
         public static Azure.Communication.Administration.Models.CommunicationUserToken CommunicationUserToken(string id, string token, System.DateTimeOffset expiresOn) { throw null; }
         public static Azure.Communication.Administration.Models.LocationOptions LocationOptions(string labelId, string labelName, System.Collections.Generic.IList<Azure.Communication.Administration.Models.LocationOptionsDetails> options) { throw null; }
@@ -157,6 +161,7 @@ namespace Azure.Communication.Administration.Models
         public static Azure.Communication.Administration.Models.UpdateNumberCapabilitiesResponse UpdateNumberCapabilitiesResponse(string capabilitiesUpdateId) { throw null; }
         public static Azure.Communication.Administration.Models.UpdatePhoneNumberCapabilitiesResponse UpdatePhoneNumberCapabilitiesResponse(string capabilitiesUpdateId, System.DateTimeOffset? createdAt, Azure.Communication.Administration.Models.CapabilitiesUpdateStatus? capabilitiesUpdateStatus, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Communication.Administration.Models.NumberUpdateCapabilities> phoneNumberCapabilitiesUpdates) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class AreaCodes
     {
         internal AreaCodes() { }
@@ -164,6 +169,7 @@ namespace Azure.Communication.Administration.Models
         public System.Collections.Generic.IReadOnlyList<string> PrimaryAreaCodes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SecondaryAreaCodes { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AssignmentStatus : System.IEquatable<Azure.Communication.Administration.Models.AssignmentStatus>
     {
@@ -186,6 +192,7 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.AssignmentStatus left, Azure.Communication.Administration.Models.AssignmentStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CapabilitiesUpdateStatus : System.IEquatable<Azure.Communication.Administration.Models.CapabilitiesUpdateStatus>
     {
@@ -206,12 +213,14 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.CapabilitiesUpdateStatus left, Azure.Communication.Administration.Models.CapabilitiesUpdateStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class CarrierDetails
     {
         internal CarrierDetails() { }
         public string LocalizedName { get { throw null; } }
         public string Name { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class CommunicationUserToken
     {
         internal CommunicationUserToken() { }
@@ -219,6 +228,7 @@ namespace Azure.Communication.Administration.Models
         public string Token { get { throw null; } }
         public Azure.Communication.CommunicationUserIdentifier User { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class CreateReservationOptions
     {
         public CreateReservationOptions(string displayName, string description, System.Collections.Generic.IEnumerable<string> phonePlanIds, string areaCode) { }
@@ -229,6 +239,7 @@ namespace Azure.Communication.Administration.Models
         public System.Collections.Generic.IList<string> PhonePlanIds { get { throw null; } }
         public int? Quantity { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CurrencyType : System.IEquatable<Azure.Communication.Administration.Models.CurrencyType>
     {
@@ -246,6 +257,7 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.CurrencyType left, Azure.Communication.Administration.Models.CurrencyType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class LocationOptions
     {
         public LocationOptions() { }
@@ -253,6 +265,7 @@ namespace Azure.Communication.Administration.Models
         public string LabelName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.Administration.Models.LocationOptionsDetails> Options { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class LocationOptionsDetails
     {
         public LocationOptionsDetails() { }
@@ -260,17 +273,20 @@ namespace Azure.Communication.Administration.Models
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class LocationOptionsQuery
     {
         public LocationOptionsQuery() { }
         public string LabelId { get { throw null; } set { } }
         public string OptionsValue { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class LocationOptionsResponse
     {
         internal LocationOptionsResponse() { }
         public Azure.Communication.Administration.Models.LocationOptions LocationOptions { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LocationType : System.IEquatable<Azure.Communication.Administration.Models.LocationType>
     {
@@ -290,17 +306,20 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.LocationType left, Azure.Communication.Administration.Models.LocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class NumberConfigurationResponse
     {
         internal NumberConfigurationResponse() { }
         public Azure.Communication.Administration.Models.PstnConfiguration PstnConfiguration { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class NumberUpdateCapabilities
     {
         public NumberUpdateCapabilities() { }
         public System.Collections.Generic.IList<Azure.Communication.Administration.Models.PhoneNumberCapability> Add { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.Administration.Models.PhoneNumberCapability> Remove { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberCapability : System.IEquatable<Azure.Communication.Administration.Models.PhoneNumberCapability>
     {
@@ -341,12 +360,14 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.PhoneNumberCapability left, Azure.Communication.Administration.Models.PhoneNumberCapability right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class PhoneNumberCountry
     {
         internal PhoneNumberCountry() { }
         public string CountryCode { get { throw null; } }
         public string LocalizedName { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class PhoneNumberEntity
     {
         internal PhoneNumberEntity() { }
@@ -358,6 +379,7 @@ namespace Azure.Communication.Administration.Models
         public int? QuantityObtained { get { throw null; } }
         public string Status { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class PhoneNumberRelease
     {
         internal PhoneNumberRelease() { }
@@ -367,12 +389,14 @@ namespace Azure.Communication.Administration.Models
         public string ReleaseId { get { throw null; } }
         public Azure.Communication.Administration.Models.ReleaseStatus? Status { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class PhoneNumberReleaseDetails
     {
         internal PhoneNumberReleaseDetails() { }
         public int? ErrorCode { get { throw null; } }
         public Azure.Communication.Administration.Models.PhoneNumberReleaseStatus? Status { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberReleaseStatus : System.IEquatable<Azure.Communication.Administration.Models.PhoneNumberReleaseStatus>
     {
@@ -393,6 +417,7 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.PhoneNumberReleaseStatus left, Azure.Communication.Administration.Models.PhoneNumberReleaseStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class PhoneNumberReservation
     {
         internal PhoneNumberReservation() { }
@@ -435,6 +460,7 @@ namespace Azure.Communication.Administration.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.ReservationStatus>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.ReservationStatus>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberType : System.IEquatable<Azure.Communication.Administration.Models.PhoneNumberType>
     {
@@ -455,6 +481,7 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.PhoneNumberType left, Azure.Communication.Administration.Models.PhoneNumberType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class PhonePlan
     {
         internal PhonePlan() { }
@@ -465,6 +492,7 @@ namespace Azure.Communication.Administration.Models
         public int? MaximumSearchSize { get { throw null; } }
         public string PhonePlanId { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class PhonePlanGroup
     {
         internal PhonePlanGroup() { }
@@ -475,18 +503,21 @@ namespace Azure.Communication.Administration.Models
         public string PhonePlanGroupId { get { throw null; } }
         public Azure.Communication.Administration.Models.RateInformation RateInformation { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class PhonePlansResponse
     {
         internal PhonePlansResponse() { }
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhonePlan> PhonePlans { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class PstnConfiguration
     {
         public PstnConfiguration(string callbackUrl) { }
         public string ApplicationId { get { throw null; } set { } }
         public string CallbackUrl { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class RateInformation
     {
         internal RateInformation() { }
@@ -507,6 +538,7 @@ namespace Azure.Communication.Administration.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberRelease>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberRelease>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReleaseStatus : System.IEquatable<Azure.Communication.Administration.Models.ReleaseStatus>
     {
@@ -528,6 +560,7 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.ReleaseStatus left, Azure.Communication.Administration.Models.ReleaseStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReservationStatus : System.IEquatable<Azure.Communication.Administration.Models.ReservationStatus>
     {
@@ -557,11 +590,13 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.ReservationStatus left, Azure.Communication.Administration.Models.ReservationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class UpdateNumberCapabilitiesResponse
     {
         internal UpdateNumberCapabilitiesResponse() { }
         public string CapabilitiesUpdateId { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class UpdatePhoneNumberCapabilitiesResponse
     {
         internal UpdatePhoneNumberCapabilitiesResponse() { }
