@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 {
     /// <summary>
-    /// Various E2E tests that use only the public surface and the real Azure storage
+    /// Various E2E tests that use only the public surface and the real Azure storage (test)
     /// </summary>
     public class AzureStorageEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
     {
