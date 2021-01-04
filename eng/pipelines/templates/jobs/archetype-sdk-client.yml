@@ -23,6 +23,9 @@ parameters:
 - name: LinuxPool
   type: string
   default: azsdk-pool-mms-ubuntu-1804-general
+- name: ExcludeProjects
+  type: object
+  default: []
 
 jobs:
   - job: Build
