@@ -23,6 +23,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: ExcludeProjects
+  type: object
+  default: []
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -95,6 +98,7 @@ jobs:
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
+          /p:ExcludeProjects="${{ join('|', parameters.ExcludeProjects) }}"
           $(AdditionalTestArguments)
 
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
