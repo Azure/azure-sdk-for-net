@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a release. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class PhoneNumberRelease
     {
         /// <summary> Initializes a new instance of PhoneNumberRelease. </summary>

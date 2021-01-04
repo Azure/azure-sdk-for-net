@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents the capabilities of a phone number. </summary>
+    [ExcludeFromCodeCoverage]
     public readonly partial struct PhoneNumberCapability : IEquatable<PhoneNumberCapability>
     {
         private readonly string _value;

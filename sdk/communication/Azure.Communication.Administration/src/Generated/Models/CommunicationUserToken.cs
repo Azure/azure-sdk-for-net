@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The CommunicationIdentityToken. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class CommunicationUserToken
     {
         /// <summary> The token issued for the identity. </summary>

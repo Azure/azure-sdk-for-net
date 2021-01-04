@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     [CodeGenModel("CommunicationIdentityToken")]
-    [ExcludeFromCodeCoverage]
     public partial class CommunicationUserToken
     {
         internal CommunicationUserToken(string id, string token, DateTimeOffset expiresOn)

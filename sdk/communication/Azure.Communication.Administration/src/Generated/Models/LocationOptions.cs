@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a location options. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class LocationOptions
     {
         /// <summary> Initializes a new instance of LocationOptions. </summary>

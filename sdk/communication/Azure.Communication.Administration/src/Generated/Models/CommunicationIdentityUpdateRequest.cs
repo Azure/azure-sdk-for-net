@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The CommunicationIdentityUpdateRequest. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class CommunicationIdentityUpdateRequest
     {
         /// <summary> Initializes a new instance of CommunicationIdentityUpdateRequest. </summary>

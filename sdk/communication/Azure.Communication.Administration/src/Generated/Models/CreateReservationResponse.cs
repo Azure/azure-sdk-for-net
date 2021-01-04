@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a search creation response. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class CreateReservationResponse
     {
         /// <summary> Initializes a new instance of CreateReservationResponse. </summary>

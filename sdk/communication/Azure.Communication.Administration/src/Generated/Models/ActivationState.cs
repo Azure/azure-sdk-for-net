@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The activation state of the phone number. Can be &quot;Activated&quot;, &quot;AssignmentPending&quot;, &quot;AssignmentFailed&quot;, &quot;UpdatePending&quot;, &quot;UpdateFailed&quot;. </summary>
+    [ExcludeFromCodeCoverage]
     public readonly partial struct ActivationState : IEquatable<ActivationState>
     {
         private readonly string _value;

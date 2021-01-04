@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The release status of a phone number. </summary>
+    [ExcludeFromCodeCoverage]
     public readonly partial struct PhoneNumberReleaseStatus : IEquatable<PhoneNumberReleaseStatus>
     {
         private readonly string _value;

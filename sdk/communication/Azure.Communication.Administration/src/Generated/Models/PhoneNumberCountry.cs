@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a country. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class PhoneNumberCountry
     {
         /// <summary> Initializes a new instance of PhoneNumberCountry. </summary>

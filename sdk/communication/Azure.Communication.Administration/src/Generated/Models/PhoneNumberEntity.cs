@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a phone number entity, as part of the response when calling get all searches or releases. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class PhoneNumberEntity
     {
         /// <summary> Initializes a new instance of PhoneNumberEntity. </summary>

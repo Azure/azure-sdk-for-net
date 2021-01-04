@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The PhoneNumberReleaseDetails. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class PhoneNumberReleaseDetails
     {
         /// <summary> Initializes a new instance of PhoneNumberReleaseDetails. </summary>

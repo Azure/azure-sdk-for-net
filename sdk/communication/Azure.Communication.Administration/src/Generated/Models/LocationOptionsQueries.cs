@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a list of location option queries, used for fetching area codes. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class LocationOptionsQueries
     {
         /// <summary> Initializes a new instance of LocationOptionsQueries. </summary>

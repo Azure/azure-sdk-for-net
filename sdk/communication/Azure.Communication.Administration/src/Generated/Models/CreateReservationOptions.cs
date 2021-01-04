@@ -7,12 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a search creation option. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class CreateReservationOptions
     {
         /// <summary> Initializes a new instance of CreateReservationOptions. </summary>

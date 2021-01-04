@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a location options parameter, used for fetching area codes. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class LocationOptionsQuery
     {
         /// <summary> Initializes a new instance of LocationOptionsQuery. </summary>

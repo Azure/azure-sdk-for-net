@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a phone number search. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class PhoneNumberReservation
     {
         /// <summary> Initializes a new instance of PhoneNumberReservation. </summary>

@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The assignment status of the phone number. Conveys what type of entity the number is assigned to. </summary>
+    [ExcludeFromCodeCoverage]
     public readonly partial struct AssignmentStatus : IEquatable<AssignmentStatus>
     {
         private readonly string _value;

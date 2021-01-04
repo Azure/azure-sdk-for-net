@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a list of searches or releases, as part of the response when fetching all searches or releases. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class PhoneNumberEntities
     {
         /// <summary> Initializes a new instance of PhoneNumberEntities. </summary>

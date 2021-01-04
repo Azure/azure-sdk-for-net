@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a wrapper of list of plan groups. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class PhonePlanGroups
     {
         /// <summary> Initializes a new instance of PhonePlanGroups. </summary>

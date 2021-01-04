@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> A communication identity. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class CommunicationIdentity
     {
         /// <summary> Initializes a new instance of CommunicationIdentity. </summary>

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a wrapper around a list of location options. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class LocationOptionsResponse
     {
         /// <summary> Initializes a new instance of LocationOptionsResponse. </summary>

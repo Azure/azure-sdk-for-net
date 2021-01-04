@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The CommunicationTokenRequest. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class CommunicationTokenRequest
     {
         /// <summary> Initializes a new instance of CommunicationTokenRequest. </summary>

@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The phone number type of the plan group. </summary>
+    [ExcludeFromCodeCoverage]
     public readonly partial struct PhoneNumberType : IEquatable<PhoneNumberType>
     {
         private readonly string _value;

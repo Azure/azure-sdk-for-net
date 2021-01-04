@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The currency of a phone plan group. </summary>
+    [ExcludeFromCodeCoverage]
     public readonly partial struct CurrencyType : IEquatable<CurrencyType>
     {
         private readonly string _value;

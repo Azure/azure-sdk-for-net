@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents an acquired phone number. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class AcquiredPhoneNumber
     {
         /// <summary> Initializes a new instance of AcquiredPhoneNumber. </summary>

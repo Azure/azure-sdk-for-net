@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Status of the capabilities update. </summary>
+    [ExcludeFromCodeCoverage]
     public readonly partial struct CapabilitiesUpdateStatus : IEquatable<CapabilitiesUpdateStatus>
     {
         private readonly string _value;

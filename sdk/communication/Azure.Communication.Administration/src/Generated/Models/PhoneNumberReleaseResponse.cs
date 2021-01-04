@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a release response. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class PhoneNumberReleaseResponse
     {
         /// <summary> Initializes a new instance of PhoneNumberReleaseResponse. </summary>

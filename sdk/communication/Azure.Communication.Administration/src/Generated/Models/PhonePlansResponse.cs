@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a wrapper around a list of countries. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class PhonePlansResponse
     {
         /// <summary> Initializes a new instance of PhonePlansResponse. </summary>

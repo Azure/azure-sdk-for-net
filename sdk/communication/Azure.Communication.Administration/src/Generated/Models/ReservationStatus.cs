@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The status of the search. </summary>
+    [ExcludeFromCodeCoverage]
     public readonly partial struct ReservationStatus : IEquatable<ReservationStatus>
     {
         private readonly string _value;

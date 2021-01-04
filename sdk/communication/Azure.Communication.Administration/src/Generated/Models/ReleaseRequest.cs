@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a release request. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class ReleaseRequest
     {
         /// <summary> Initializes a new instance of ReleaseRequest. </summary>

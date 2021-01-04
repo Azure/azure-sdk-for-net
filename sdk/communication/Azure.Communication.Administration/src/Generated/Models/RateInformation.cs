@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a wrapper of rate information. </summary>
+    [ExcludeFromCodeCoverage]
     public partial class RateInformation
     {
         /// <summary> Initializes a new instance of RateInformation. </summary>

@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> The location type of the phone plan. </summary>
+    [ExcludeFromCodeCoverage]
     public readonly partial struct LocationType : IEquatable<LocationType>
     {
         private readonly string _value;
