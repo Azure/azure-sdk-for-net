@@ -74,7 +74,7 @@ parameters:
       OSVmImage: "macOS-10.15"
       TestTargetFramework: netcoreapp2.1
       SupportedClouds: 'Public'
-    Windows_NetCoreApp:
+    Windows_Net50:
       OSVmImage: "windows-2019"
       TestTargetFramework: net5.0
 - name: PlatformPreSteps
