@@ -24,15 +24,18 @@ namespace Azure.AI.FormRecognizer.Samples
             Uri businessCardUri = FormRecognizerTestEnvironment.CreateUri("businessCard.jpg");
 
             #region Snippet:FormRecognizerSampleRecognizeBusinessCardsFromUri
-            RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsFromUriAsync(businessCardUri).WaitForCompletionAsync();
+            //@@ Uri businessCardUri = <businessCardUri>;
+
+            RecognizeBusinessCardsOperation operation = await client.StartRecognizeBusinessCardsFromUriAsync(businessCardUri);
+            Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection businessCards = operationResponse.Value;
 
             // To see the list of the supported fields returned by service and its corresponding types, consult:
             // https://aka.ms/formrecognizer/businesscardfields
 
             foreach (RecognizedForm businessCard in businessCards)
             {
-                FormField ContactNamesField;
-                if (businessCard.Fields.TryGetValue("ContactNames", out ContactNamesField))
+                if (businessCard.Fields.TryGetValue("ContactNames", out FormField ContactNamesField))
                 {
                     if (ContactNamesField.Value.ValueType == FieldValueType.List)
                     {
@@ -44,25 +47,23 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 IReadOnlyDictionary<string, FormField> contactNameFields = contactNameField.Value.AsDictionary();
 
-                                FormField firstNameField;
-                                if (contactNameFields.TryGetValue("FirstName", out firstNameField))
+                                if (contactNameFields.TryGetValue("FirstName", out FormField firstNameField))
                                 {
                                     if (firstNameField.Value.ValueType == FieldValueType.String)
                                     {
                                         string firstName = firstNameField.Value.AsString();
 
-                                        Console.WriteLine($"    First Name: '{firstName}', with confidence {firstNameField.Confidence}");
+                                        Console.WriteLine($"  First Name: '{firstName}', with confidence {firstNameField.Confidence}");
                                     }
                                 }
 
-                                FormField lastNameField;
-                                if (contactNameFields.TryGetValue("LastName", out lastNameField))
+                                if (contactNameFields.TryGetValue("LastName", out FormField lastNameField))
                                 {
                                     if (lastNameField.Value.ValueType == FieldValueType.String)
                                     {
                                         string lastName = lastNameField.Value.AsString();
 
-                                        Console.WriteLine($"    Last Name: '{lastName}', with confidence {lastNameField.Confidence}");
+                                        Console.WriteLine($"  Last Name: '{lastName}', with confidence {lastNameField.Confidence}");
                                     }
                                 }
                             }
@@ -70,8 +71,7 @@ namespace Azure.AI.FormRecognizer.Samples
                     }
                 }
 
-                FormField jobTitlesFields;
-                if (businessCard.Fields.TryGetValue("JobTitles", out jobTitlesFields))
+                if (businessCard.Fields.TryGetValue("JobTitles", out FormField jobTitlesFields))
                 {
                     if (jobTitlesFields.Value.ValueType == FieldValueType.List)
                     {
@@ -81,14 +81,13 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 string jobTitle = jobTitleField.Value.AsString();
 
-                                Console.WriteLine($"  Job Title: '{jobTitle}', with confidence {jobTitleField.Confidence}");
+                                Console.WriteLine($"Job Title: '{jobTitle}', with confidence {jobTitleField.Confidence}");
                             }
                         }
                     }
                 }
 
-                FormField departmentFields;
-                if (businessCard.Fields.TryGetValue("Departments", out departmentFields))
+                if (businessCard.Fields.TryGetValue("Departments", out FormField departmentFields))
                 {
                     if (departmentFields.Value.ValueType == FieldValueType.List)
                     {
@@ -98,14 +97,13 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 string department = departmentField.Value.AsString();
 
-                                Console.WriteLine($"  Department: '{department}', with confidence {departmentField.Confidence}");
+                                Console.WriteLine($"Department: '{department}', with confidence {departmentField.Confidence}");
                             }
                         }
                     }
                 }
 
-                FormField emailFields;
-                if (businessCard.Fields.TryGetValue("Emails", out emailFields))
+                if (businessCard.Fields.TryGetValue("Emails", out FormField emailFields))
                 {
                     if (emailFields.Value.ValueType == FieldValueType.List)
                     {
@@ -115,14 +113,13 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 string email = emailField.Value.AsString();
 
-                                Console.WriteLine($"  Email: '{email}', with confidence {emailField.Confidence}");
+                                Console.WriteLine($"Email: '{email}', with confidence {emailField.Confidence}");
                             }
                         }
                     }
                 }
 
-                FormField websiteFields;
-                if (businessCard.Fields.TryGetValue("Websites", out websiteFields))
+                if (businessCard.Fields.TryGetValue("Websites", out FormField websiteFields))
                 {
                     if (websiteFields.Value.ValueType == FieldValueType.List)
                     {
@@ -132,14 +129,13 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 string website = websiteField.Value.AsString();
 
-                                Console.WriteLine($"  Website: '{website}', with confidence {websiteField.Confidence}");
+                                Console.WriteLine($"Website: '{website}', with confidence {websiteField.Confidence}");
                             }
                         }
                     }
                 }
 
-                FormField mobilePhonesFields;
-                if (businessCard.Fields.TryGetValue("MobilePhones", out mobilePhonesFields))
+                if (businessCard.Fields.TryGetValue("MobilePhones", out FormField mobilePhonesFields))
                 {
                     if (mobilePhonesFields.Value.ValueType == FieldValueType.List)
                     {
@@ -149,14 +145,13 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 string mobilePhone = mobilePhoneField.Value.AsPhoneNumber();
 
-                                Console.WriteLine($"  Mobile phone number: '{mobilePhone}', with confidence {mobilePhoneField.Confidence}");
+                                Console.WriteLine($"Mobile phone number: '{mobilePhone}', with confidence {mobilePhoneField.Confidence}");
                             }
                         }
                     }
                 }
 
-                FormField otherPhonesFields;
-                if (businessCard.Fields.TryGetValue("OtherPhones", out otherPhonesFields))
+                if (businessCard.Fields.TryGetValue("OtherPhones", out FormField otherPhonesFields))
                 {
                     if (otherPhonesFields.Value.ValueType == FieldValueType.List)
                     {
@@ -166,14 +161,13 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 string otherPhone = otherPhoneField.Value.AsPhoneNumber();
 
-                                Console.WriteLine($"  Other phone number: '{otherPhone}', with confidence {otherPhoneField.Confidence}");
+                                Console.WriteLine($"Other phone number: '{otherPhone}', with confidence {otherPhoneField.Confidence}");
                             }
                         }
                     }
                 }
 
-                FormField faxesFields;
-                if (businessCard.Fields.TryGetValue("Faxes", out faxesFields))
+                if (businessCard.Fields.TryGetValue("Faxes", out FormField faxesFields))
                 {
                     if (faxesFields.Value.ValueType == FieldValueType.List)
                     {
@@ -183,14 +177,13 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 string fax = faxField.Value.AsPhoneNumber();
 
-                                Console.WriteLine($"  Fax phone number: '{fax}', with confidence {faxField.Confidence}");
+                                Console.WriteLine($"Fax phone number: '{fax}', with confidence {faxField.Confidence}");
                             }
                         }
                     }
                 }
 
-                FormField addressesFields;
-                if (businessCard.Fields.TryGetValue("Addresses", out addressesFields))
+                if (businessCard.Fields.TryGetValue("Addresses", out FormField addressesFields))
                 {
                     if (addressesFields.Value.ValueType == FieldValueType.List)
                     {
@@ -200,14 +193,13 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 string address = addressField.Value.AsString();
 
-                                Console.WriteLine($"  Address: '{address}', with confidence {addressField.Confidence}");
+                                Console.WriteLine($"Address: '{address}', with confidence {addressField.Confidence}");
                             }
                         }
                     }
                 }
 
-                FormField companyNamesFields;
-                if (businessCard.Fields.TryGetValue("CompanyNames", out companyNamesFields))
+                if (businessCard.Fields.TryGetValue("CompanyNames", out FormField companyNamesFields))
                 {
                     if (companyNamesFields.Value.ValueType == FieldValueType.List)
                     {
@@ -217,7 +209,7 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 string companyName = companyNameField.Value.AsString();
 
-                                Console.WriteLine($"  Company name: '{companyName}', with confidence {companyNameField.Confidence}");
+                                Console.WriteLine($"Company name: '{companyName}', with confidence {companyNameField.Confidence}");
                             }
                         }
                     }
