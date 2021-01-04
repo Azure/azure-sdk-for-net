@@ -254,17 +254,23 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_InitialOffsetFromStart()
         {
-            using (var host = BuildHost<EventHubTestSendOnlyJobs>().Item1)
-            {
-                var method = typeof(EventHubTestSendOnlyJobs).GetMethod(nameof(EventHubTestSendOnlyJobs.SendEvent_TestHub), BindingFlags.Static | BindingFlags.Public);
-                await host.CallAsync(method, new { input = _testId });
-            }
             var initialOffsetOptions = new InitialOffsetOptions()
             {
                 Type = "FromStart"
             };
-            using (var host = BuildHost<EventHubTestInitialOffsetFromEndJobs>(initialOffsetOptions: initialOffsetOptions).Item1)
+            var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromStartEndJobs>(
+                builder =>
+                    builder.ConfigureServices(services =>
+                    {
+                        services.Configure<EventHubOptions>(options =>
+                        {
+                            options.InitialOffsetOptions = initialOffsetOptions;
+                        });
+                    }));
+            using (jobHost)
             {
+                var method = typeof(EventHubTestInitialOffsetFromStartEndJobs).GetMethod(nameof(EventHubTestInitialOffsetFromStartEndJobs.SendEvent_TestHub), BindingFlags.Static | BindingFlags.Public);
+                await jobHost.CallAsync(method, new { input = _testId });
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
             }
@@ -273,42 +279,58 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_InitialOffsetFromEnd()
         {
-            // Send a message to ensure the stream is not empty as we are trying to validate that no messages are delivered in this case
-            using (var host = BuildHost<EventHubTestSendOnlyJobs>().Item1)
-            {
-                var method = typeof(EventHubTestSendOnlyJobs).GetMethod(nameof(EventHubTestSendOnlyJobs.SendEvent_TestHub), BindingFlags.Static | BindingFlags.Public);
-                await host.CallAsync(method, new { input = _testId });
-            }
             var initialOffsetOptions = new InitialOffsetOptions()
             {
                 Type = "FromEnd"
             };
-            using (var host = BuildHost<EventHubTestInitialOffsetFromEndJobs>(initialOffsetOptions: initialOffsetOptions).Item1)
+            // Send a message to ensure the stream is not empty as we are trying to validate that no messages are delivered in this case
+            var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromStartEndJobs>(
+                builder =>
+                    builder.ConfigureServices(services =>
+                    {
+                        services.Configure<EventHubOptions>(options =>
+                        {
+                            options.InitialOffsetOptions = initialOffsetOptions;
+                        });
+                    }));
+            using (jobHost)
             {
+                var method = typeof(EventHubTestInitialOffsetFromStartEndJobs).GetMethod(nameof(EventHubTestInitialOffsetFromStartEndJobs.SendEvent_TestHub), BindingFlags.Static | BindingFlags.Public);
+                await jobHost.CallAsync(method, new { input = _testId });
                 // We don't expect to get signalled as there should be no messages received with a FromEnd initial offset
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.False(result, "An event was received while none were expected.");
+
+                // send a new event which should be received
+                await jobHost.CallAsync(method, new { input = _testId });
+                result = _eventWait.WaitOne(Timeout);
+                Assert.True(result);
             }
         }
 
         [Test]
-        public async Task EventHub_InitialOffsetFromEnqueuedTime()
+        public async Task EventHub_InitialOffsetFromEnqueuedTime_IncludesEventSentAfter()
         {
             // Mark the time now and send a message which should be the only one that is picked up when we run the actual test host
             DateTime initialOffsetEnqueuedTimeUTC = DateTime.UtcNow;
-
-            using (var host = BuildHost<EventHubTestSendOnlyJobs>().Item1)
-            {
-                var method = typeof(EventHubTestSendOnlyJobs).GetMethod(nameof(EventHubTestSendOnlyJobs.SendEvent_TestHub), BindingFlags.Static | BindingFlags.Public);
-                await host.CallAsync(method, new { input = _testId });
-            }
             var initialOffsetOptions = new InitialOffsetOptions()
             {
                 Type = "FromEnqueuedTime",
                 EnqueuedTimeUTC = initialOffsetEnqueuedTimeUTC.ToString("yyyy-MM-ddTHH:mm:ssZ")
             };
-            using (var host = BuildHost<EventHubTestInitialOffsetFromEnqueuedTimeJobs>(initialOffsetOptions: initialOffsetOptions).Item1)
+            var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromEnqueuedTimeJobs>(
+                builder =>
+                    builder.ConfigureServices(services =>
+                    {
+                        services.Configure<EventHubOptions>(options =>
+                        {
+                            options.InitialOffsetOptions = initialOffsetOptions;
+                        });
+                    }));
+            using (jobHost)
             {
+                var method = typeof(EventHubTestInitialOffsetFromEnqueuedTimeJobs).GetMethod(nameof(EventHubTestInitialOffsetFromEnqueuedTimeJobs.SendEvent_TestHub), BindingFlags.Static | BindingFlags.Public);
+                await jobHost.CallAsync(method, new { input = _testId });
                 // Validation that we only got messages after the configured FromEnqueuedTime is done in the JobHost
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result, $"No event was received within the timeout period of {Timeout}. " +
@@ -317,6 +339,33 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     "A message was received that was enqueued before the configured Initial Offset Enqueued Time. " +
                     $"Received message enqueued time: {_earliestReceivedMessageEnqueuedTimeUTC?.ToString("yyyy-MM-ddTHH:mm:ssZ")}" +
                     $", initial offset enqueued time: {initialOffsetEnqueuedTimeUTC.ToString("yyyy-MM-ddTHH:mm:ssZ")}");
+            }
+        }
+
+        [Test]
+        public async Task EventHub_InitialOffsetFromEnqueuedTime_ExcludesEventSentBefore()
+        {
+            var initialOffsetOptions = new InitialOffsetOptions()
+            {
+                Type = "FromEnqueuedTime",
+                EnqueuedTimeUTC = DateTime.UtcNow.AddSeconds(30).ToString("yyyy-MM-ddTHH:mm:ssZ")
+            };
+            var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromEnqueuedTimeJobs>(
+                builder =>
+                    builder.ConfigureServices(services =>
+                    {
+                        services.Configure<EventHubOptions>(options =>
+                        {
+                            options.InitialOffsetOptions = initialOffsetOptions;
+                        });
+                    }));
+            using (jobHost)
+            {
+                var method = typeof(EventHubTestInitialOffsetFromEnqueuedTimeJobs).GetMethod(nameof(EventHubTestInitialOffsetFromEnqueuedTimeJobs.SendEvent_TestHub), BindingFlags.Static | BindingFlags.Public);
+                await jobHost.CallAsync(method, new { input = _testId });
+                bool result = _eventWait.WaitOne(Timeout);
+                // message should not be received as it was sent prior to EnqueuedTimeUTC.
+                Assert.False(result);
             }
         }
 
@@ -553,15 +602,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public string Value { get; set; }
         }
 
-        public class EventHubTestSendOnlyJobs
+        public class EventHubTestInitialOffsetFromStartEndJobs
         {
             public static void SendEvent_TestHub(string input, [EventHub(TestHubName)] out EventData evt)
             {
                 evt = new EventData(Encoding.UTF8.GetBytes(input));
             }
-        }
-        public class EventHubTestInitialOffsetFromEndJobs
-        {
+
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName)] string evt,
                        string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
                        IDictionary<string, object> systemProperties)
@@ -572,6 +619,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class EventHubTestInitialOffsetFromEnqueuedTimeJobs
         {
+            public static void SendEvent_TestHub(string input, [EventHub(TestHubName)] out EventData evt)
+            {
+                evt = new EventData(Encoding.UTF8.GetBytes(input));
+            }
+
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName)] string evt,
                        string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
                        IDictionary<string, object> systemProperties)

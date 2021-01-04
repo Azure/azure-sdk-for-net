@@ -83,9 +83,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public bool InvokeProcessorAfterReceiveTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the initial offset options to apply when processing.
+        /// Gets or sets the initial offset options to apply when processing. This only applies
+        /// when no checkpoint information is available.
         /// </summary>
-        public InitialOffsetOptions InitialOffsetOptions { get; set; }
+        public InitialOffsetOptions InitialOffsetOptions { get; internal set; }
 
         /// <summary>
         /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.

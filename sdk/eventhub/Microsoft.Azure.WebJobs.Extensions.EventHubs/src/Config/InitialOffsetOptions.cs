@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public string Type { get; set; } = "";
 
         /// <summary>
-        /// Gets or sets the time in any format supported by DateTime.Parse that events should be processed after.
+        /// Gets or sets the time that events should be processed after. Any parsable format is accepted.
         /// Only applies when the <see cref="Type"/> is "fromEnqueuedTime".
         /// </summary>
         public string EnqueuedTimeUTC { get; set; } = "";

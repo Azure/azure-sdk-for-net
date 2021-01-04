@@ -21,8 +21,6 @@ namespace Microsoft.Extensions.Hosting
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            builder.AddEventHubs(ConfigureOptions);
-
             return builder;
         }
 
@@ -87,11 +85,12 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.AddAzureClientsCore();
             builder.Services.AddSingleton<EventHubClientFactory>();
             builder.Services.Configure<EventHubOptions>(configure);
+            builder.Services.Configure<EventHubOptions>(ConfigureInitialOffsetOptions);
 
             return builder;
         }
 
-        internal static void ConfigureOptions(EventHubOptions options)
+        internal static void ConfigureInitialOffsetOptions(EventHubOptions options)
         {
             string offsetType = options?.InitialOffsetOptions?.Type?.ToLower(CultureInfo.InvariantCulture) ?? string.Empty;
             if (!string.IsNullOrEmpty(offsetType))
