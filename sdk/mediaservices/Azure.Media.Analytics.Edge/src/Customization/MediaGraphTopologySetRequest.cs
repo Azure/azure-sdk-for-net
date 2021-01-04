@@ -5,22 +5,23 @@ using System.Text.Json;
 
 namespace Azure.Media.Analytics.Edge.Models
 {
+    /// <summary>
+    ///  Represents the MediaGraphTopologyRequest body.
+    /// </summary>
     public partial class MediaGraphTopologySetRequest
     {
-        internal MediaGraphTopologySetRequestBody GraphBody;
+        private MediaGraphTopologySetRequestBody graphBody;
 
         /// <summary>
-        ///  Serialize .
+        ///  Gets the Payload from the request result.
         /// </summary>
-        /// <returns>
-        /// Method payload as Json string.
-        /// </returns>
+        /// <returns>A string containing the Payload. </returns>
         public override string GetPayloadAsJson()
         {
-            GraphBody = new MediaGraphTopologySetRequestBody(Graph.Name);
-            GraphBody.SystemData = Graph.SystemData;
-            GraphBody.Properties = Graph.Properties;
-            return GraphBody.GetPayloadAsJson();
+            graphBody = new MediaGraphTopologySetRequestBody(Graph.Name);
+            graphBody.SystemData = Graph.SystemData;
+            graphBody.Properties = Graph.Properties;
+            return graphBody.GetPayloadAsJson();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.Media.Analytics.Edge.Samples
         public LiveVideoAnalyticsSample()
         {
             #region Snippet:Azure_MediaServices_Samples_ConnectionString
-            var connectionString = "connection-string";
+            var connectionString = "connectionString";
             this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
             #endregion Snippet:Azure_MediaServices_Samples_ConnectionString
 
@@ -103,7 +103,7 @@ namespace Azure.Media.Analytics.Edge.Samples
 
             graphInstanceProperties.Parameters.Add(new MediaGraphParameterDefinition("rtspUrl", "rtsp://sample.com"));
 
-            return new MediaGraphInstance("graphInstance1")
+            return new MediaGraphInstance("graphInstance")
             {
                 Properties = graphInstanceProperties
             };
@@ -154,10 +154,7 @@ namespace Azure.Media.Analytics.Edge.Samples
         {
             graphProperties.Sources.Add(new MediaGraphRtspSource("rtspSource", new MediaGraphUnsecuredEndpoint("${rtspUrl}")
                 {
-                    Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}")
-                    {
-                        Password = "${rtspPassword}"
-                    }
+                    Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
                 })
             );
         }

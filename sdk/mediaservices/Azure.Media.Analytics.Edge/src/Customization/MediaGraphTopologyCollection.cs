@@ -9,21 +9,35 @@ using Azure.Core;
 namespace Azure.Media.Analytics.Edge.Models
 {
     /// <summary>
-    /// Extensions methods to MediaGraphTopologyCollection to add serialization and deserialization
+    /// Extensions methods to MediaGraphTopologyCollection to add serialization and deserialization.
     /// </summary>
     public partial class MediaGraphTopologyCollection
     {
         /// <summary>
+        ///  Deserialize MediaGraphTopology.
+        /// </summary>
+        /// <param name="json">The json data that is to be deserialized.</param>
+        /// <returns>A List of MediaGraphTopology.</returns>
+        public static MediaGraphTopologyCollection Deserialize(string json)
+        {
+            JsonElement element = JsonDocument.Parse(json).RootElement;
+            return DeserializeMediaGraphTopologyCollection(element);
+        }
+
+        /// <summary>
         ///  Serialize MediaGraphTopologyCollection.
         /// </summary>
-        /// <returns>
-        /// Serialized Graph Topology Collection.
-        /// </returns>
+        /// <returns>A string with the serialized MediaGraphTopologyList.</returns>
         public string Serialize()
         {
             return SerializeMediaGraphTopologyCollectionInternal(this);
         }
 
+        /// <summary>
+        ///  Serialize MediaGraphTopologyCollection internally.
+        /// </summary>
+        /// <param name="serializable">The UTF8 serializer.</param>
+        /// <returns>A string with the serialized MediaGraphTopologyList.</returns>
         internal static string SerializeMediaGraphTopologyCollectionInternal(IUtf8JsonSerializable serializable)
         {
             using var memoryStream = new MemoryStream();
@@ -34,19 +48,6 @@ namespace Azure.Media.Analytics.Edge.Models
             }
 
             return Encoding.UTF8.GetString(memoryStream.ToArray());
-        }
-
-        /// <summary>
-        ///  Deserialize MediaGraphTopology.
-        /// </summary>
-        /// <param name="json"></param>
-        /// <returns>
-        /// Deserialized Graph Topologogy Collection.
-        /// </returns>
-        public static MediaGraphTopologyCollection Deserialize(string json)
-        {
-            JsonElement element = JsonDocument.Parse(json).RootElement;
-            return DeserializeMediaGraphTopologyCollection(element);
         }
     }
 }

@@ -8,15 +8,16 @@ using Azure.Core;
 
 namespace Azure.Media.Analytics.Edge.Models
 {
+    /// <summary>
+    ///  Deserialize MediaGraphTopology.
+    /// </summary>
     public partial class MediaGraphTopology
     {
         /// <summary>
         ///  Deserialize MediaGraphTopology.
         /// </summary>
-        /// <param name="json"></param>
-        /// <returns>
-        /// Deserialized Graph Topology.
-        /// </returns>
+        /// <param name="json">The json to be deserialized.</param>
+        /// <returns>A MediaGraphTopology.</returns>
         public static MediaGraphTopology Deserialize(string json)
         {
             JsonElement element = JsonDocument.Parse(json).RootElement;

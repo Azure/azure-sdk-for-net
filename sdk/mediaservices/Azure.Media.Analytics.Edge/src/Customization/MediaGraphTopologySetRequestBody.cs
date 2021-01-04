@@ -3,6 +3,10 @@
 
 namespace Azure.Media.Analytics.Edge.Models
 {
+    /// <summary>
+    ///  Represents the MediaGraphTopologySetRequest body.
+    /// </summary>
     internal partial class MediaGraphTopologySetRequestBody
-    { }
+    {
+    }
 }
