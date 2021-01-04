@@ -51,15 +51,15 @@ namespace Azure.AI.FormRecognizer.Samples
                 Console.WriteLine($"Form was analyzed with model with ID: {form.ModelId}");
                 foreach (FormField field in form.Fields.Values)
                 {
-                    Console.WriteLine($"Field '{field.Name}: ");
+                    Console.WriteLine($"Field '{field.Name}': ");
 
                     if (field.LabelData != null)
                     {
-                        Console.WriteLine($"  Label: '{field.LabelData.Text}");
+                        Console.WriteLine($"  Label: '{field.LabelData.Text}'");
                     }
 
-                    Console.WriteLine($"  Value: '{field.ValueData.Text}");
-                    Console.WriteLine($"  Confidence: '{field.Confidence}");
+                    Console.WriteLine($"  Value: '{field.ValueData.Text}'");
+                    Console.WriteLine($"  Confidence: '{field.Confidence}'");
                 }
             }
             #endregion

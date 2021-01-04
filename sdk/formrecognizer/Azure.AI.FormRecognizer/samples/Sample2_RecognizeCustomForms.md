@@ -37,15 +37,15 @@ foreach (RecognizedForm form in forms)
     Console.WriteLine($"Form was analyzed with model with ID: {form.ModelId}");
     foreach (FormField field in form.Fields.Values)
     {
-        Console.WriteLine($"Field '{field.Name}: ");
+        Console.WriteLine($"Field '{field.Name}': ");
 
         if (field.LabelData != null)
         {
-            Console.WriteLine($"  Label: '{field.LabelData.Text}");
+            Console.WriteLine($"  Label: '{field.LabelData.Text}'");
         }
 
-        Console.WriteLine($"  Value: '{field.ValueData.Text}");
-        Console.WriteLine($"  Confidence: '{field.Confidence}");
+        Console.WriteLine($"  Value: '{field.ValueData.Text}'");
+        Console.WriteLine($"  Confidence: '{field.Confidence}'");
     }
 }
 ```
@@ -56,9 +56,9 @@ To recognize form fields and other content from your custom forms from a file st
 
 ```C# Snippet:FormRecognizerRecognizeCustomFormsFromFile
 string modelId = "<modelId>";
-string formFilePath = "<formFilePath>";
+string filePath = "<filePath>";
 
-using var stream = new FileStream(formFilePath, FileMode.Open);
+using var stream = new FileStream(filePath, FileMode.Open);
 
 RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
@@ -70,15 +70,15 @@ foreach (RecognizedForm form in forms)
     Console.WriteLine($"Form was analyzed with model with ID: {form.ModelId}");
     foreach (FormField field in form.Fields.Values)
     {
-        Console.WriteLine($"Field '{field.Name}: ");
+        Console.WriteLine($"Field '{field.Name}': ");
 
         if (field.LabelData != null)
         {
-            Console.WriteLine($"  Label: '{field.LabelData.Text}");
+            Console.WriteLine($"  Label: '{field.LabelData.Text}'");
         }
 
-        Console.WriteLine($"  Value: '{field.ValueData.Text}");
-        Console.WriteLine($"  Confidence: '{field.Confidence}");
+        Console.WriteLine($"  Value: '{field.ValueData.Text}'");
+        Console.WriteLine($"  Confidence: '{field.Confidence}'");
     }
 }
 ```

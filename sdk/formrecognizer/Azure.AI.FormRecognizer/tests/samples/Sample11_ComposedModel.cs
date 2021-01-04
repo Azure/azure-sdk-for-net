@@ -98,8 +98,7 @@ namespace Azure.AI.FormRecognizer.Samples
             Dictionary<string, List<TrainingDocumentInfo>> trainingDocsPerModel;
             trainingDocsPerModel = purchaseOrderModel.TrainingDocuments.GroupBy(doc => doc.ModelId).ToDictionary(g => g.Key, g => g.ToList());
 
-            Console.WriteLine($"The purchase order model is based on {purchaseOrderModel.Submodels.Count} " +
-                              $"model{(purchaseOrderModel.Submodels.Count > 1 ? "s" : "")}.");
+            Console.WriteLine($"The purchase order model is based on {purchaseOrderModel.Submodels.Count} models");
 
             foreach (CustomFormSubmodel model in purchaseOrderModel.Submodels)
             {

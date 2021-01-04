@@ -34,7 +34,7 @@ foreach (FormPage page in formPages)
     for (int i = 0; i < page.Lines.Count; i++)
     {
         FormLine line = page.Lines[i];
-        Console.WriteLine($"  Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
+        Console.WriteLine($"  Line {i} has {line.Words.Count} {(line.Words.Count == 1 ? "word" : "words")}, and text: '{line.Text}'.");
 
         Console.WriteLine("    Its bounding box is:");
         Console.WriteLine($"    Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
@@ -84,7 +84,7 @@ foreach (FormPage page in formPages)
     for (int i = 0; i < page.Lines.Count; i++)
     {
         FormLine line = page.Lines[i];
-        Console.WriteLine($"  Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
+        Console.WriteLine($"  Line {i} has {line.Words.Count} {(line.Words.Count == 1 ? "word" : "words")}, and text: '{line.Text}'.");
 
         Console.WriteLine("    Its bounding box is:");
         Console.WriteLine($"    Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
