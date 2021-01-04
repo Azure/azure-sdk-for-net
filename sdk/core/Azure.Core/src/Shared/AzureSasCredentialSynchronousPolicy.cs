@@ -6,15 +6,15 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    internal class AzureSasCredentialPolicy : HttpPipelineSynchronousPolicy
+    internal class AzureSasCredentialSynchronousPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly AzureSasCredential _credential;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureSasCredentialPolicy"/> class.
+        /// Initializes a new instance of the <see cref="AzureSasCredentialSynchronousPolicy"/> class.
         /// </summary>
-        /// <param name="credential">The <see cref="AzureSasCredentialPolicy"/> used to authenticate requests.</param>
-        public AzureSasCredentialPolicy(AzureSasCredential credential)
+        /// <param name="credential">The <see cref="AzureSasCredentialSynchronousPolicy"/> used to authenticate requests.</param>
+        public AzureSasCredentialSynchronousPolicy(AzureSasCredential credential)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             _credential = credential;

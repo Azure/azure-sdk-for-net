@@ -9,14 +9,14 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class AzureSasCredentialPolicyTests : PolicyTestBase
+    public class AzureSasCredentialSynchronousPolicyTests : PolicyTestBase
     {
         [TestCase("sig=test_signature_value")]
         [TestCase("?sig=test_signature_value")]
         public async Task SetsSignatureEmptyQuery(string signatureValue)
         {
             var transport = new MockTransport(new MockResponse(200));
-            var sasPolicy = new AzureSasCredentialPolicy(new AzureSasCredential(signatureValue));
+            var sasPolicy = new AzureSasCredentialSynchronousPolicy(new AzureSasCredential(signatureValue));
 
             await SendGetRequest(transport, sasPolicy);
 
@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
         public async Task SetsSignatureNonEmptyQuery(string signatureValue)
         {
             var transport = new MockTransport(new MockResponse(200));
-            var sasPolicy = new AzureSasCredentialPolicy(new AzureSasCredential(signatureValue));
+            var sasPolicy = new AzureSasCredentialSynchronousPolicy(new AzureSasCredential(signatureValue));
             string query = "?foo=bar";
 
             await SendGetRequest(transport, sasPolicy, query: query);
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
         public async Task VerifyRetryEmptyQuery(string signatureValue)
         {
             var transport = new MockTransport(new MockResponse(200), new MockResponse(200));
-            var sasPolicy = new AzureSasCredentialPolicy(new AzureSasCredential(signatureValue));
+            var sasPolicy = new AzureSasCredentialSynchronousPolicy(new AzureSasCredential(signatureValue));
 
             using (Request request = transport.CreateRequest())
             {
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
         public async Task VerifyRetryNonEmptyQuery(string signatureValue)
         {
             var transport = new MockTransport(new MockResponse(200), new MockResponse(200));
-            var sasPolicy = new AzureSasCredentialPolicy(new AzureSasCredential(signatureValue));
+            var sasPolicy = new AzureSasCredentialSynchronousPolicy(new AzureSasCredential(signatureValue));
             string query = "?foo=bar";
 
             using (Request request = transport.CreateRequest())
