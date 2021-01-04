@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public bool InvokeProcessorAfterReceiveTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the initial offset options to apply when processing. This only applies
+        /// Gets the initial offset options to apply when processing. This only applies
         /// when no checkpoint information is available.
         /// </summary>
         public InitialOffsetOptions InitialOffsetOptions { get; internal set; }
