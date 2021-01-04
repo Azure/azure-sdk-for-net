@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ namespace Azure.Communication.Administration.Models
     /// <summary>
     /// Represents a long-running phone number reservation purchase operation.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     public class PhoneNumberReservationPurchaseOperation : Operation<ReservationStatus>
     {
         private bool _hasCompleted;

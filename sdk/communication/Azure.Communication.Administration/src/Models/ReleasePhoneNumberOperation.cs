@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +13,6 @@ namespace Azure.Communication.Administration.Models
     /// <summary>
     /// Represents a long-running operation for releasing a phone number.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     public class ReleasePhoneNumberOperation : Operation<PhoneNumberRelease>
     {
         private readonly PhoneNumberAdministrationClient _client;
