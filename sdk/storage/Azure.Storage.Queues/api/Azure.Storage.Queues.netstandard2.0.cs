@@ -320,10 +320,10 @@ namespace Azure.Storage.Queues.Models
         public static Azure.Storage.Queues.Models.QueueMessage QueueMessage(string messageId, string popReceipt, System.BinaryData body, long dequeueCount, System.DateTimeOffset? nextVisibleOn = default(System.DateTimeOffset?), System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Queues.Models.QueueMessage QueueMessage(string messageId, string popReceipt, string messageText, long dequeueCount, System.DateTimeOffset? nextVisibleOn = default(System.DateTimeOffset?), System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Storage.Queues.Models.QueueProperties QueueProperties(System.Collections.Generic.IDictionary<string, string> metadata, int approximateMessagesCount) { throw null; }
+        public static Azure.Storage.Queues.Models.QueueProperties QueueProperties(int approximateMessagesCount, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
         public static Azure.Storage.Queues.Models.QueueServiceStatistics QueueServiceStatistics(Azure.Storage.Queues.Models.QueueGeoReplication geoReplication = null) { throw null; }
-        public static Azure.Storage.Queues.Models.SendReceipt SendReceipt(string messageId, System.DateTimeOffset insertionTime, System.DateTimeOffset expirationTime, string popReceipt, System.DateTimeOffset timeNextVisible) { throw null; }
-        public static Azure.Storage.Queues.Models.UpdateReceipt UpdateReceipt(string popReceipt, System.DateTimeOffset nextVisibleOn) { throw null; }
+        public static Azure.Storage.Queues.Models.SendReceipt SendReceipt(System.DateTimeOffset timeNextVisible, string popReceipt, System.DateTimeOffset expirationTime, System.DateTimeOffset insertionTime, string messageId) { throw null; }
+        public static Azure.Storage.Queues.Models.UpdateReceipt UpdateReceipt(System.DateTimeOffset nextVisibleOn, string popReceipt) { throw null; }
     }
     [System.FlagsAttribute]
     public enum QueueTraits
