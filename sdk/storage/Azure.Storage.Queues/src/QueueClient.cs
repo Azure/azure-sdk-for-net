@@ -1922,7 +1922,7 @@ namespace Azure.Storage.Queues
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
             await SendMessageInternal(
-                ToBinaryData(messageText),
+                ToBinaryData(messageText ?? string.Empty),
                 visibilityTimeout,
                 timeToLive,
                 true, // async
@@ -2389,41 +2389,46 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders> response;
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(ReceiveMessage)}");
 
-            if (async)
+            try
             {
-                response = await _messagesRestClient.DequeueAsync(
-                    numberOfMessages: 1,
-                    visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                    timeout: null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                response = _messagesRestClient.Dequeue(
-                    numberOfMessages: 1,
-                    visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                    timeout: null,
-                    cancellationToken);
-            }
+                ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders> response;
+                scope.Start();
+
+                if (async)
+                {
+                    response = await _messagesRestClient.DequeueAsync(
+                        numberOfMessages: 1,
+                        visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                        timeout: null,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    response = _messagesRestClient.Dequeue(
+                        numberOfMessages: 1,
+                        visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                        timeout: null,
+                        cancellationToken);
+                }
 
 #pragma warning disable CA1826 // Do not use Enumerable methods on indexable collections
-            DequeuedMessageItem dequeuedMessageItem = response.Value.FirstOrDefault();
-            QueueMessage queueMessage = new QueueMessage
-            {
-                MessageId = dequeuedMessageItem.MessageId,
-                PopReceipt = dequeuedMessageItem.PopReceipt,
-                //TODO fix this
-                //Body = dequeuedMessageItem.MessageText,
-                NextVisibleOn = dequeuedMessageItem.TimeNextVisible,
-                InsertedOn = dequeuedMessageItem.InsertionTime,
-                ExpiresOn = dequeuedMessageItem.ExpirationTime,
-                DequeueCount = dequeuedMessageItem.DequeueCount
-            };
+                DequeuedMessageItem dequeuedMessageItem = response.Value.FirstOrDefault();
+                QueueMessage queueMessage = QueueMessage.ToQueueMessage(dequeuedMessageItem, _messageEncoding);
 #pragma warning restore CA1826 // Do not use Enumerable methods on indexable collections
-            return Response.FromValue(queueMessage, response.GetRawResponse());
+                return Response.FromValue(queueMessage, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion ReceiveMessage
 
@@ -2488,7 +2493,7 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            var response = await PeekMessagesInternal(1, /*$"{nameof(QueueClient)}.{nameof(PeekMessage)}",*/ async, cancellationToken).ConfigureAwait(false);
+            var response = await PeekMessagesInternal(1, async, cancellationToken, $"{nameof(QueueClient)}.{nameof(PeekMessage)}").ConfigureAwait(false);
             var message = response.Value.FirstOrDefault();
             var rawResonse = response.GetRawResponse();
             return Response.FromValue(message, rawResonse);
@@ -2741,9 +2746,14 @@ namespace Azure.Storage.Queues
                     message:
                     $"Uri: {uri}\n" +
                     $"{nameof(popReceipt)}: {popReceipt}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(DeleteMessage)}");
+
                 try
                 {
                     ResponseWithHeaders<QueueDeleteHeaders> response;
+                    scope.Start();
+
                     if (async)
                     {
                         response = await _queueRestClient.DeleteAsync(
@@ -2763,11 +2773,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }

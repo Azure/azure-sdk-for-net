@@ -78,6 +78,11 @@ namespace Azure.Storage.Queues.Models
 
         internal static QueueMessage ToQueueMessage(DequeuedMessageItem dequeuedMessageItem, QueueMessageEncoding messageEncoding)
         {
+            if (dequeuedMessageItem == null)
+            {
+                return null;
+            }
+
             return new QueueMessage()
             {
                 MessageId = dequeuedMessageItem.MessageId,
