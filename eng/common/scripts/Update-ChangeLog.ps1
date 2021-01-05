@@ -3,7 +3,7 @@
 # Parameter description
 # Version : Version to add or replace in change log
 # Unreleased: Default is true. If it is set to false, then today's date will be set in verion title. If it is True then title will show "Unreleased"
-# ReplaceLatestEntry: Replaces the latest changelog entry, including its content.
+# ReplaceLatestEntryTitle: Replaces the latest changelog entry title.
 
 param (
   [Parameter(Mandatory = $true)]
@@ -12,17 +12,20 @@ param (
   [String]$ServiceDirectory,
   [Parameter(Mandatory = $true)]
   [String]$PackageName,
-  [boolean]$Unreleased=$True,
-  [boolean]$ReplaceLatestEntry = $False,
+  [String]$Unreleased=$True,
+  [String]$ReplaceLatestEntryTitle = $False,
   [String]$ReleaseDate
 )
 
-if ($ReleaseDate -and ($Unreleased -eq $True)) {
+[Boolean]$Unreleased = [System.Convert]::ToBoolean($Unreleased)
+[Boolean]$ReplaceLatestEntryTitle = [System.Convert]::ToBoolean($ReplaceLatestEntryTitle)
+
+. (Join-Path $PSScriptRoot common.ps1)
+
+if ($ReleaseDate -and $Unreleased) {
     LogError "Do not pass 'ReleaseDate' arguement when 'Unreleased' is true"
     exit 1
 }
-
-. (Join-Path $PSScriptRoot common.ps1)
 
 if ($ReleaseDate)
 {
@@ -31,22 +34,24 @@ if ($ReleaseDate)
         $ReleaseStatus = "($ReleaseStatus)"
     }
     catch {
-        LogError "Invalid 'ReleaseDate'. Please use a valid date in the format '$CHANGELOG_DATE_FORMAT'"
+        LogError "Invalid 'ReleaseDate'. Please use a valid date in the format '$CHANGELOG_DATE_FORMAT'. See https://aka.ms/azsdk/changelogguide"
         exit 1
     }
 }
-elseif ($Unreleased) {
+elseif ($Unreleased) 
+{
     $ReleaseStatus = $CHANGELOG_UNRELEASED_STATUS
 }
-else {
+else 
+{
     $ReleaseStatus = "$(Get-Date -Format $CHANGELOG_DATE_FORMAT)"
     $ReleaseStatus = "($ReleaseStatus)"
 }
 
 if ($null -eq [AzureEngSemanticVersion]::ParseVersionString($Version))
 {
-    LogError "Version [$Version] is invalid. Please use a valid SemVer"
-    exit(0)
+    LogError "Version [$Version] is invalid. Please use a valid SemVer. See https://aka.ms/azsdk/changelogguide"
+    exit 1
 }
 
 $PkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
@@ -57,13 +62,13 @@ if ($ChangeLogEntries.Contains($Version))
 {
     if ($ChangeLogEntries[$Version].ReleaseStatus -eq $ReleaseStatus)
     {
-        LogWarning "Version is already present in change log with specificed ReleaseStatus [$ReleaseStatus]"
+        LogWarning "Version [$Version] is already present in change log with specificed ReleaseStatus [$ReleaseStatus]. No Change made."
         exit(0)
     }
 
     if ($Unreleased -and ($ChangeLogEntries[$Version].ReleaseStatus -ne $ReleaseStatus))
     {
-        LogWarning "Version is already present in change log with a release date. Please review [$($PkgProperties.ChangeLogPath)]"
+        LogWarning "Version [$Version] is already present in change log with a release date. Please review [$($PkgProperties.ChangeLogPath)]. No Change made."
         exit(0)
     }
 
@@ -71,7 +76,7 @@ if ($ChangeLogEntries.Contains($Version))
     {
         if ((Get-Date ($ChangeLogEntries[$Version].ReleaseStatus).Trim("()")) -gt (Get-Date $ReleaseStatus.Trim("()")))
         {
-            LogWarning "New ReleaseDate for version [$Version] is older than existing release date in changelog. Please review [$($PkgProperties.ChangeLogPath)]"
+            LogWarning "New ReleaseDate for version [$Version] is older than existing release date in changelog. Please review [$($PkgProperties.ChangeLogPath)]. No Change made."
             exit(0)
         }
     }
@@ -80,40 +85,44 @@ if ($ChangeLogEntries.Contains($Version))
 $PresentVersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($ChangeLogEntries.Keys)
 $LatestVersion = $PresentVersionsSorted[0]
 
+LogDebug "The latest release note entry in the changelog is for version [$($LatestVersion)]"
+
 $LatestsSorted = [AzureEngSemanticVersion]::SortVersionStrings(@($LatestVersion, $Version))
 if ($LatestsSorted[0] -ne $Version) {
-    LogWarning "Passed Version [$Version] is older than the latestversion [$LatestVersion] in the changelog. Please use a more recent version."
+    LogWarning "Version [$Version] is older than the latestversion [$LatestVersion] in the changelog. Please use a more recent version."
     exit(0)
 }
 
-if ($ReplaceLatestEntry) 
+if ($ReplaceLatestEntryTitle) 
 {
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -Content $ChangeLogEntries[$LatestVersion].ReleaseContent
+    LogDebug "Resetting latest entry title to [$($newChangeLogEntry.ReleaseTitle)]"
     $ChangeLogEntries.Remove($LatestVersion)
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus
     if ($newChangeLogEntry) {
         $ChangeLogEntries[$Version] = $newChangeLogEntry
     }
     else {
         LogError "Failed to create new changelog entry"
+        exit 1
     }
 }
 elseif ($ChangeLogEntries.Contains($Version))
 {
-    $ChangeLogEntries[$Version].ReleaseVersion = $Version
+    LogDebug "Updating ReleaseStatus for Version [$Version] to [$($ReleaseStatus)]"
     $ChangeLogEntries[$Version].ReleaseStatus = $ReleaseStatus
     $ChangeLogEntries[$Version].ReleaseTitle = "## $Version $ReleaseStatus"
 }
-else 
+else
 {
+    LogDebug "Adding new ChangeLog entry for Version [$Version]"
     $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus
     if ($newChangeLogEntry) {
         $ChangeLogEntries[$Version] = $newChangeLogEntry
     }
     else {
         LogError "Failed to create new changelog entry"
+        exit 1
     }
 }
 
 Set-ChangeLogContent -ChangeLogLocation $PkgProperties.ChangeLogPath -ChangeLogEntries $ChangeLogEntries
-
-
