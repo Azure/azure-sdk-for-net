@@ -33,7 +33,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         internal BlobChangeFeedEventData() { }
         public Azure.Storage.Blobs.ChangeFeed.BlobOperationName BlobOperationName { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Guid ClientRequestId { get { throw null; } }
+        public string ClientRequestIdentifier { get { throw null; } }
         public long ContentLength { get { throw null; } }
         public long? ContentOffset { get { throw null; } }
         public string ContentType { get { throw null; } }
