@@ -15,14 +15,42 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString");
-            writer.WriteStringValue(ConnectionString);
-            writer.WritePropertyName("sqlQuery");
-            writer.WriteStringValue(SqlQuery);
-            writer.WritePropertyName("database");
-            writer.WriteStringValue(Database);
-            writer.WritePropertyName("collectionId");
-            writer.WriteStringValue(CollectionId);
+            if (ConnectionString != null)
+            {
+                writer.WritePropertyName("connectionString");
+                writer.WriteStringValue(ConnectionString);
+            }
+            else
+            {
+                writer.WriteNull("connectionString");
+            }
+            if (SqlQuery != null)
+            {
+                writer.WritePropertyName("sqlQuery");
+                writer.WriteStringValue(SqlQuery);
+            }
+            else
+            {
+                writer.WriteNull("sqlQuery");
+            }
+            if (Database != null)
+            {
+                writer.WritePropertyName("database");
+                writer.WriteStringValue(Database);
+            }
+            else
+            {
+                writer.WriteNull("database");
+            }
+            if (CollectionId != null)
+            {
+                writer.WritePropertyName("collectionId");
+                writer.WriteStringValue(CollectionId);
+            }
+            else
+            {
+                writer.WriteNull("collectionId");
+            }
             writer.WriteEndObject();
         }
 
@@ -36,21 +64,41 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("connectionString"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        connectionString = null;
+                        continue;
+                    }
                     connectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sqlQuery"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sqlQuery = null;
+                        continue;
+                    }
                     sqlQuery = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("database"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        database = null;
+                        continue;
+                    }
                     database = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("collectionId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        collectionId = null;
+                        continue;
+                    }
                     collectionId = property.Value.GetString();
                     continue;
                 }
