@@ -1,12 +1,12 @@
 parameters:
-  - name: Nightly
+  - name: Daily
     default: true
   - name: Artifacts
     type: object
     default: []
 
 jobs:
-  - ${{ if eq(parameters.Nightly, false) }}:
+  - ${{ if eq(parameters.Daily, false) }}:
     - job: smoke_test_eligibility
       displayName: Check Smoke Test Eligibility
       steps:
@@ -32,7 +32,7 @@ jobs:
             RunSmokeTests: $(RunSmokeTests)
 
   - job: SmokeTest
-    ${{ if eq(parameters.Nightly, false) }}:
+    ${{ if eq(parameters.Daily, false) }}:
       dependsOn: smoke_test_eligibility
       condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true))
     strategy:
@@ -96,19 +96,19 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
 
       - task: PowerShell@2
-        ${{ if eq(parameters.Nightly, true) }}:
+        ${{ if eq(parameters.Daily, true) }}:
           displayName: Use latest dev feed package versions
-        ${{ if eq(parameters.Nightly, false) }}:
+        ${{ if eq(parameters.Daily, false) }}:
           displayName: Use latest package versions
         inputs:
           targetType: filePath
           filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
           workingDirectory: common/SmokeTests/SmokeTest
           pwsh: true
-          ${{ if eq(parameters.Nightly, true) }}:
-            arguments: -CI -Nightly
+          ${{ if eq(parameters.Daily, true) }}:
+            arguments: -CI -Daily
             displayName: Use latest dev feed package versions
-          ${{ if eq(parameters.Nightly, false) }}:
+          ${{ if eq(parameters.Daily, false) }}:
             arguments: -CI
             displayName: Use latest package versions
 

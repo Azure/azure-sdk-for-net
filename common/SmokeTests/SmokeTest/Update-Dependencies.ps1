@@ -2,7 +2,7 @@ param(
     [string]$ProjectFile = './SmokeTest.csproj',
     [switch]$SkipVersionValidation,
     [switch]$CI,
-    [switch]$Nightly
+    [switch]$Daily
 )
 
 . $PSScriptRoot/../../../eng/common/scripts/SemVer.ps1
@@ -21,13 +21,11 @@ $PACKAGE_EXCLUSIONS = @{ }
 $PACKAGE_REFERENCE_XPATH = '//Project/ItemGroup/PackageReference'
 
 # Matches the dev.yyyymmdd portion of the version string
-$DEV_DATE_REGEX = 'dev\.(\d{8})'
+$ALPHA_DATE_REGEX = 'alpha\.(\d{8})'
 
 $baselineVersionDate = $null;
 
-$RELEASE_FEED_URL = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
-$NIGHTLY_FEED_NAME = 'NightlyFeed'
-$NIGHTLY_FEED_URL = 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
+$PACKAGE_FEED_URL = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
 
 function Log-Warning($message) {
     if ($CI) {
@@ -37,26 +35,12 @@ function Log-Warning($message) {
     }
 }
 
-function GetAllNightlyPackages {
-    Register-PackageSource `
-        -Name $NIGHTLY_FEED_NAME `
-        -Location $NIGHTLY_FEED_URL `
-        -ProviderName Nuget `
-        -ErrorAction SilentlyContinue `
-
-    # List all packages from the source specified by $FeedName. Packages are sorted
-    # ascending by version according to semver rules (e.g. 4.0.0-preview.1 comes
-    # before 4.0.0) not lexicographically.
-    # Packages cannot be filtered at this stage because the sleet feed to which they
-    # are published does not support filtering by name.
-    return Find-Package -Source $NIGHTLY_FEED_NAME -AllVersion -AllowPrereleaseVersions
-}
-
 function GetAllPackages {
-    if ($Nightly) {
-        return GetAllNightlyPackages
+    $packages = Find-Package -Source $PACKAGE_FEED_URL -AllVersion -AllowPrereleaseVersions
+    if ($Daily) {
+        return $packages | Where-Object { $_.Version.Contains("alpha") }
     }
-    return Find-Package -Source $RELEASE_FEED_URL -AllVersion -AllowPrereleaseVersions
+    return $packages
 }
 
 function GetLatestPackage([array]$packageList, [string]$packageName) {
@@ -106,7 +90,7 @@ function SetLatestPackageVersions([object]$csproj) {
                 return
             }
 
-            if ($_.Node.Version -match $DEV_DATE_REGEX) {
+            if ($_.Node.Version -match $ALPHA_DATE_REGEX) {
                 if ($baselineVersionDate -eq $null) {
                     Write-Host "Using baseline version date: $($matches[1])"
                     $baselineVersionDate = $matches[1]
