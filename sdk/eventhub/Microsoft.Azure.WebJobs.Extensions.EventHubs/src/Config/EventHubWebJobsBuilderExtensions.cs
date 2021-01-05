@@ -86,7 +86,7 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.AddAzureClientsCore();
             builder.Services.AddSingleton<EventHubClientFactory>();
             builder.Services.Configure<EventHubOptions>(configure);
-            builder.Services.Configure<EventHubOptions>(ConfigureInitialOffsetOptions);
+            builder.Services.PostConfigure<EventHubOptions>(ConfigureInitialOffsetOptions);
 
             return builder;
         }
