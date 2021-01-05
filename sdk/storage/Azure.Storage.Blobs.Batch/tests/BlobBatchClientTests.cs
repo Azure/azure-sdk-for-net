@@ -209,6 +209,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [LiveOnly]
         public async Task Batch_AzureSasCredential()
         {
             // Create a container using SAS for Auth
