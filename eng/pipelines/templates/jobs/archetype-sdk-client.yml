@@ -139,6 +139,10 @@ jobs:
         inputs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+      - script: npm i -g cspell
+        displayName: Install cspell
+      - script: cspell lint --config cspell.json --no-summary "sdk/${{ parameters.ServiceDirectory }}/**/*"
+        displayName: Spellcheck (run cspell)
 
   - job: "Test"
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
