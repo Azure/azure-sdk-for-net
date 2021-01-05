@@ -31,15 +31,6 @@
     <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
 
-  <!--
-     Override project inclusions and force removal of those that have been explicitly excluded by the associated parameter.
-     Assume each item identifies a project name under the service directory and build the appropriate path mask.
-  -->
-  <ItemGroup Condition="'$(ExcludeProjects)' != ''">
-    <_ExcludePathsSource Include="$(ExcludeProjects.Split('$(ExcludeProjectsDelimiter)'))" />
-    <ProjectReference Remove="@(_ExcludePathsSource -> '$(MSBuildThisFileDirectory)..\sdk\$(ServiceDirectory)\%(Identity)\**\*.csproj')" />
-  </ItemGroup>
-
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
 
   <Target Name="CheckProjects" AfterTargets="Build">

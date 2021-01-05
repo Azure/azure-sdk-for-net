@@ -39,13 +39,6 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: eventhub
-    ExcludeProjects:
-      - Azure.ResourceManager.EventHubs
-      - Azure.Messaging.EventHubs
-      - Azure.Messaging.EventHubs.Processor
-      - Azure.Messaging.EventHubs.Shared
-      - Azure.Messaging.EventHubs.*
-      - Microsoft.Azure.WebJobs.Extensions.EventHubs
     ArtifactName: packages
     Artifacts:
     - name: Microsoft.Azure.EventHubs

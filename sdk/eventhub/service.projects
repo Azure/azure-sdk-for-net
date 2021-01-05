@@ -1,0 +1,43 @@
+<!--
+  This file allows overrides and extensions to the build configuration defined
+  by the central enginering system, and is considered during pipeline builds for
+  CI, test runs, and package release.
+
+  It operates on environment variables to control which projects within the "eventhub"
+  service directory are included in the build.  The known environment variables are:
+
+  EVENTHUB_BUILD_INCLUDE_MANAGEMENT
+      If this variable is not defined or not equal to "true", then management projects
+      will not be included.  Because management projects have a dedicated set of pipelines,
+      they are excluded by default.
+
+  EVENTHUB_BUILD_EXCLUDE_TRACK_ONE
+      If this variable is defined and equal to "true", then the legacy "track one"
+      projects will be excluded.
+
+  EVENTHUB_BUILD_EXCLUDE_TRACK_TWO
+      If this variable is defined and equal to "true", then the current generation
+      "track two" projects will be excluded.
+-->
+
+<Project>
+   <ItemGroup Condition="'$(EVENTHUB_BUILD_INCLUDE_MANAGEMENT)' != 'true'">
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.ResourceManager.EventHubs\**\*.csproj" />
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.Management.EventHub\**\*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(EVENTHUB_BUILD_EXCLUDE_TRACK_ONE)' == 'true'">
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.EventHubs\**\*.csproj" />
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.EventHubs.*\**\*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(EVENTHUB_BUILD_EXCLUDE_TRACK_TWO)' == 'true'">
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.Messaging.EventHubs\**\*.csproj" />
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.Messaging.EventHubs.*\**\*.csproj" />
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.EventHubs\**\*.csproj" />
+  </ItemGroup>
+
+  <Target Name="EventHubsOutput" BeforeTargets="Build">
+    <Message Text="Final Build References -> @(ProjectReference)" Importance="high"/>
+  </Target>
+</Project>

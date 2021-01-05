@@ -23,9 +23,6 @@ parameters:
 - name: LinuxPool
   type: string
   default: azsdk-pool-mms-ubuntu-1804-general
-- name: ExcludeProjects
-  type: object
-  default: []
 
 jobs:
   - job: Build
@@ -68,7 +65,6 @@ jobs:
           dotnet pack eng/service.proj -warnaserror
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeTests=false
-          /p:ExcludeProjects="${{ join('|', parameters.ExcludeProjects) }}"
           /p:PublicSign=false $(VersioningProperties)
           /p:Configuration=$(BuildConfiguration)
           /p:CommitSHA=$(Build.SourceVersion)
@@ -133,9 +129,7 @@ jobs:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: >
-            -ServiceDirectory ${{parameters.ServiceToTest}} 
-            -ExcludeProjects "${{ join('|', parameters.ExcludeProjects) }}"
+          arguments: -ServiceDirectory ${{parameters.ServiceToTest}}
           pwsh: true
           failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
@@ -197,7 +191,6 @@ jobs:
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{parameters.ServiceToTest}}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
-          /p:ExcludeProjects="${{ join('|', parameters.ExcludeProjects) }}"
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{parameters.ServiceDirectory}}
         displayName: "Build & Test ($(TestTargetFramework))"
