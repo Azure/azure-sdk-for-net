@@ -4741,6 +4741,7 @@ namespace Azure.Storage.Files.Shares
                         marker: marker,
                         maxresults: maxResults,
                         async: async,
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(GetHandles)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

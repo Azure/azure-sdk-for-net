@@ -2427,6 +2427,7 @@ namespace Azure.Storage.Blobs
                           maxresults: pageSizeHint,
                           include: BlobExtensions.AsIncludeItems(traits, states),
                           async: async,
+                          operationName: $"{nameof(BlobContainerClient)}.{nameof(GetBlobs)}",
                           cancellationToken: cancellationToken)
                           .ConfigureAwait(false);
                     if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
@@ -2675,6 +2676,7 @@ namespace Azure.Storage.Blobs
                         include: BlobExtensions.AsIncludeItems(traits, states),
                         delimiter: delimiter,
                         async: async,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(GetBlobsByHierarchy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

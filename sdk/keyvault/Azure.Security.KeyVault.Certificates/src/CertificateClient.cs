@@ -1296,7 +1296,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new IssuerProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfIssuers", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new IssuerProperties(), $"{nameof(CertificateClient)}.{nameof(GetPropertiesOfIssuers)}", cancellationToken));
         }
 
         /// <summary>
@@ -1309,7 +1309,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new IssuerProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfIssuers", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new IssuerProperties(), $"{nameof(CertificateClient)}.{nameof(GetPropertiesOfIssuers)}", cancellationToken));
         }
 
         /// <summary>

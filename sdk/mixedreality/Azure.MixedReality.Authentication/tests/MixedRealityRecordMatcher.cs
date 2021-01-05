@@ -11,7 +11,7 @@ namespace Azure.MixedReality.Authentication.Tests
 
         public MixedRealityRecordMatcher()
         {
-            ExcludeHeaders.Add(ClientCorrelationVectorHeaderName);
+            IgnoredHeaders.Add(ClientCorrelationVectorHeaderName);
             VolatileHeaders.Add(ClientCorrelationVectorHeaderName);
             VolatileResponseHeaders.Add(ClientCorrelationVectorHeaderName);
         }
