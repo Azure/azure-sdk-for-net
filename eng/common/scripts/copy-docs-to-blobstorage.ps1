@@ -223,15 +223,12 @@ function Upload-Blobs
     if (!$latestVersion) {
         $latestVersion = $versionsObj.LatestPreviewPackage 
     }
-    LogDebug "Fetching the latest version. $latestVersion"
+    LogDebug "Fetching the latest version $latestVersion"
     
-    if ($UploadLatest -and $latestVersion)
+    if ($UploadLatest -and ($latestVersion -eq $DocVersion))
     {
-        # Prepare the index.html which can redirect to the latest GA whenever avaiable, otherwise point to latest preview.
-        New-Item -Path $DocDir -Name "latest" -ItemType "directory"
-        New-Item -Path "$($DocDir)/latest" -Name "index.html" -ItemType "file" -Value "<meta http-equiv=`"refresh`" content=`"0; URL=$($DocDest)/$($PkgName)/$($latestVersion)/index.html`" />"
         LogDebug "Uploading $($PkgName) to latest folder in $($DocDest)..."
-        & $($AzCopy) cp "$($DocDir)/latest/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
+        & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
     }
 }
 
