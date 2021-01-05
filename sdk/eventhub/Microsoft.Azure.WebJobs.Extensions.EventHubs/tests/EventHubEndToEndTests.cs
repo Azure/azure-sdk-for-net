@@ -593,7 +593,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                        string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
                        IDictionary<string, object> systemProperties)
             {
-                _eventWait.Set();
+                if (evt == _testId)
+                {
+                    _eventWait.Set();
+                }
             }
         }
 
