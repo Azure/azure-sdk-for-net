@@ -99,8 +99,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var (jobHost, host) = BuildHost<EventHubTestSingleDispatchJobsBinaryData>();
             using (jobHost)
             {
-                var method = typeof(EventHubTestSingleDispatchJobsBinaryData).GetMethod(nameof(EventHubTestSingleDispatchJobsBinaryData.SendEvent_TestHub), BindingFlags.Static | BindingFlags.Public);
-                await jobHost.CallAsync(method, new { input = _testId });
+                await jobHost.CallAsync(nameof(EventHubTestSingleDispatchJobsBinaryData.SendEvent_TestHub), new { input = _testId });
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
@@ -203,9 +202,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var (jobHost, host) = BuildHost<EventHubTestMultipleDispatchJobsBinaryData>();
             using (jobHost)
             {
-                var method = typeof(EventHubTestMultipleDispatchJobsBinaryData).GetMethod(nameof(EventHubTestMultipleDispatchJobsBinaryData.SendEvents_TestHub), BindingFlags.Static | BindingFlags.Public);
                 int numEvents = 5;
-                await jobHost.CallAsync(method, new { numEvents = numEvents, input = _testId });
+                await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchJobsBinaryData.SendEvents_TestHub), new { numEvents = numEvents, input = _testId });
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
@@ -280,11 +278,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class EventHubTestSingleDispatchJobsBinaryData
         {
-            public static void SendEvent_TestHub(string input, [EventHub(TestHubName)] out EventData evt)
+            public static void SendEvent_TestHub(string input, [EventHub(TestHubName)] out BinaryData evt)
             {
-                evt = new EventData(Encoding.UTF8.GetBytes(input));
-                evt.Properties.Add("TestProp1", "value1");
-                evt.Properties.Add("TestProp2", "value2");
+                evt = new BinaryData(input);
             }
 
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName)] BinaryData evt,
@@ -295,10 +291,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 if (evt.ToString() == _testId)
                 {
                     Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
-
-                    Assert.AreEqual("value1", properties["TestProp1"]);
-                    Assert.AreEqual("value2", properties["TestProp2"]);
-
                     _eventWait.Set();
                 }
             }
@@ -385,17 +377,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             private static int s_eventCount;
             private static int s_processedEventCount;
-            public static void SendEvents_TestHub(int numEvents, string input, [EventHub(TestHubName)] out EventData[] events)
+            public static void SendEvents_TestHub(int numEvents, string input, [EventHub(TestHubName)] out BinaryData[] events)
             {
                 s_eventCount = numEvents;
-                events = new EventData[numEvents];
+                events = new BinaryData[numEvents];
                 for (int i = 0; i < numEvents; i++)
                 {
-                    var evt = new EventData(Encoding.UTF8.GetBytes(input));
-                    evt.Properties.Add("TestIndex", i);
-                    evt.Properties.Add("TestProp1", "value1");
-                    evt.Properties.Add("TestProp2", "value2");
-                    events[i] = evt;
+                    events[i] = new BinaryData(input);
                 }
             }
 
@@ -408,15 +396,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual(events.Length, propertiesArray.Length);
                 Assert.AreEqual(events.Length, systemPropertiesArray.Length);
 
-                for (int i = 0; i < events.Length; i++)
-                {
-                    Assert.AreEqual(s_processedEventCount++, propertiesArray[i]["TestIndex"]);
-                }
+                s_processedEventCount += events.Length;
 
                 // filter for the ID the current test is using
                 if (events[0].ToString() == _testId && s_processedEventCount == s_eventCount)
                 {
-                    _results.AddRange(events.Select(e => e.ToString()).ToList());
                     _eventWait.Set();
                 }
             }
