@@ -55,7 +55,7 @@ namespace Azure.Storage
             {
                 throw Errors.SasCredentialRequiresUriWithoutSas(serviceUri);
             }
-            return new AzureSasCredentialPolicy(
+            return new AzureSasCredentialSynchronousPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)));
         }
 
