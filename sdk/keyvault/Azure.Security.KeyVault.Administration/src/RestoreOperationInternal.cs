@@ -92,7 +92,7 @@ namespace Azure.Security.KeyVault.Administration
                 SelectiveKeyRestoreDetailsInternal r => r.JobId,
                 RestoreDetailsInternal r => r.JobId,
                 null => default,
-                _ => throw new ArgumentException("Unknown type", nameof(value))
+                _ => throw new InvalidOperationException("Unknown type")
             };
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Security.KeyVault.Administration
             SelectiveKeyRestoreDetailsInternal r => r.StartTime,
             RestoreDetailsInternal r => r.StartTime,
             null => default,
-            _ => throw new ArgumentException("Unknown type")
+            _ => throw new InvalidOperationException("Unknown type")
         };
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Azure.Security.KeyVault.Administration
             SelectiveKeyRestoreDetailsInternal r => r.EndTime,
             RestoreDetailsInternal r => r.EndTime,
             null => default,
-            _ => throw new ArgumentException("Unknown type")
+            _ => throw new InvalidOperationException("Unknown type")
         };
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.Security.KeyVault.Administration
             SelectiveKeyRestoreDetailsInternal r => r.Error,
             RestoreDetailsInternal r => r.Error,
             null => default,
-            _ => throw new ArgumentException("Unknown type")
+            _ => throw new InvalidOperationException("Unknown type")
         };
 
         /// <inheritdoc/>

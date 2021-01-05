@@ -145,7 +145,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 catch (Exception ex)
                 {
-                    _requestFailedException = new RequestFailedException("Unexpected Failure.", ex);
+                    _requestFailedException = new RequestFailedException("Unexpected failure", ex);
                     throw _requestFailedException;
                 }
                 if (_value != null && _value.EndTime.HasValue && _value.Error != null)
