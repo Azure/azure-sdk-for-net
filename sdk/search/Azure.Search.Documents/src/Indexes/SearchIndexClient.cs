@@ -684,11 +684,11 @@ namespace Azure.Search.Documents.Indexes
         public virtual Pageable<SearchIndex> GetIndexes(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
             {
-                return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -700,13 +700,13 @@ namespace Azure.Search.Documents.Indexes
                         cancellationToken);
 
                     return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -718,11 +718,11 @@ namespace Azure.Search.Documents.Indexes
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -730,18 +730,18 @@ namespace Azure.Search.Documents.Indexes
                     }
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
-                        Constants.All,
-                        cancellationToken)
+                            Constants.All,
+                            cancellationToken)
                         .ConfigureAwait(false);
 
                     return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -753,11 +753,11 @@ namespace Azure.Search.Documents.Indexes
         public virtual Pageable<string> GetIndexNames(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
             {
-                return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -770,13 +770,13 @@ namespace Azure.Search.Documents.Indexes
 
                     IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
                     return Page<string>.FromValues(names, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -788,11 +788,11 @@ namespace Azure.Search.Documents.Indexes
         public virtual AsyncPageable<string> GetIndexNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -800,19 +800,19 @@ namespace Azure.Search.Documents.Indexes
                     }
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
-                        Constants.NameKey,
-                        cancellationToken)
+                            Constants.NameKey,
+                            cancellationToken)
                         .ConfigureAwait(false);
 
                     IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
                     return Page<string>.FromValues(names, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>

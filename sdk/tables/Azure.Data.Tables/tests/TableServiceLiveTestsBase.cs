@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Data.Tables.Tests
 {
@@ -51,6 +52,15 @@ namespace Azure.Data.Tables.Tests
         protected string AccountName;
         protected string AccountKey;
         protected string ConnectionString;
+        private readonly Dictionary<string, string> _cosmosIgnoreTests = new Dictionary<string, string>
+        {
+            {"CustomEntityMergeRespectsEtag", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
+            {"EntityMergeRespectsEtag", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
+            {"EntityMergeDoesPartialPropertyUpdates", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
+            {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},
+            {"GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints."},
+            {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."}
+        };
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
@@ -59,6 +69,12 @@ namespace Azure.Data.Tables.Tests
         [SetUp]
         public async Task TablesTestSetup()
         {
+            // Bail out before attempting the setup if this test is in the CosmosIgnoreTests set.
+            if (_endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason))
+            {
+                Assert.Ignore(ignoreReason);
+            }
+
             ServiceUri = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.StorageUri,
@@ -97,7 +113,10 @@ namespace Azure.Data.Tables.Tests
         {
             try
             {
-                await service.DeleteTableAsync(tableName);
+                if (service != null)
+                {
+                    await service.DeleteTableAsync(tableName);
+                }
             }
             catch { }
         }
