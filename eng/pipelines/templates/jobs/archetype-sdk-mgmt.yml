@@ -33,9 +33,6 @@ jobs:
           echo "##vso[build.addbuildtag]$releaseTag"
         displayName: "Tagging the build"
         condition: ne(variables['System.TeamProject'], 'public')
-      - pwsh: |
-          if ("$(checkFlag)" -eq "false") { exit 1 }
-        displayName: "Failure Check"
 
   - job: Test
 
