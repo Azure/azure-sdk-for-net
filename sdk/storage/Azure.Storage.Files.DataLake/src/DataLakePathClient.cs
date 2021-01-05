@@ -435,6 +435,14 @@ namespace Azure.Storage.Files.DataLake
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+
+            uriBuilder.DirectoryOrFilePath = null;
+            _fileSystemClient = new DataLakeFileSystemClient(
+                uriBuilder.ToDfsUri(),
+                _pipeline,
+                storageSharedKeyCredential,
+                Version,
+                ClientDiagnostics);
         }
 
         /// <summary>

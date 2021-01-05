@@ -4837,6 +4837,31 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task GetPathsAsync_UriCtor()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
+            {
+                DirectoryOrFilePath = directoryName
+            };
+            DataLakeDirectoryClient directory = InstrumentClient(
+                new DataLakeDirectoryClient(uriBuilder.ToUri(), GetStorageSharedKeyCredentials(), GetOptions()));
+            await SetUpDirectoryForListing(directory);
+
+            // Act
+            AsyncPageable<PathItem> response = directory.GetPathsAsync();
+            IList<PathItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, paths.Count);
+            Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
+            Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
+            Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
+        }
+
+        [Test]
         public async Task GetPathsAsync_Recursive()
         {
             // Arrange
