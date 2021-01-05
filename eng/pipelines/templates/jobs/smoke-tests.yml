@@ -4,6 +4,9 @@ parameters:
   - name: Artifacts
     type: object
     default: []
+  - name: ArtifactName
+    type: string
+    default: ""
 
 jobs:
   - ${{ if eq(parameters.Daily, false) }}:
@@ -12,7 +15,7 @@ jobs:
       steps:
         # pipelines only supports template each when it generates the entire script block.
         - ${{ each artifact in parameters.Artifacts }}:
-          - ${{if and(ne(variables['Skip.Release'], 'true'), ne(artifact.skipPublishPackage, 'true')) }}:
+          - ${{ if and(ne(variables['Skip.Release'], 'true'), ne(artifact.skipPublishPackage, 'true')) }}:
             - pwsh: |
                 $deps = (Select-Xml -Path ./common/SmokeTests/SmokeTest/SmokeTest.csproj `
                                     -Xpath //ItemGroup/PackageReference/@Include).Node.Value
@@ -107,10 +110,38 @@ jobs:
           pwsh: true
           ${{ if eq(parameters.Daily, true) }}:
             arguments: -CI -Daily
-            displayName: Use latest dev feed package versions
+            displayName: Use latest daily package versions
           ${{ if eq(parameters.Daily, false) }}:
             arguments: -CI
-            displayName: Use latest package versions
+            displayName: Use latest GA/Beta package versions
+
+      - ${{ if eq(parameters.Daily, false) }}:
+        - download: current
+          artifact: ${{ parameters.ArtifactName }}
+          timeoutInMinutes: 5
+
+        - ${{ each artifact in parameters.Artifacts }}:
+          - ${{ if and(ne(variables['Skip.Release'], 'true'), ne(artifact.skipPublishPackage, 'true')) }}:
+            - pwsh: |
+                [xml]$csproj = Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+                $deps = ($csproj | Select-Xml -Xpath //Project/ItemGroup/PackageReference).Node.Include
+
+                if ($deps.Contains("${{ artifact.name }}")) {
+                  $files = Get-ChildItem "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}/${{ artifact.name }}/*.nupkg"
+                  if ($files -and $files[0] -match "${{ artifact.name }}\.(.*)\.nupkg") {
+                    $element = $csproj
+                      | Select-Xml -Xpath //Project/ItemGroup/PackageReference
+                      | Where-Object { $_.Node.Include -eq "${{ artifact.name }}" }
+                    $element.Node.Version = $matches[1]
+                    Write-Output "Updating ${{ artifact.name }} version to $($element.Node.Version) in SmokeTest.csproj"
+                    $csproj.Save("./common/SmokeTests/SmokeTest/SmokeTest.csproj")
+                  } else {
+                    Write-Output "No build artifact found for smoke test dependency ${{ artifact.name }}"
+                  }
+                } else {
+                  Write-Output "${{ artifact.name }} is not a dependency in SmokeTest.csproj. Not updating..."
+                }
+              displayName: Use ${{ artifact.safeName }} build artifact version
 
       - pwsh: Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
         displayName: Show SmokeTest.csproj

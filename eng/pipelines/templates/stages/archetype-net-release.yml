@@ -231,6 +231,7 @@ stages:
           parameters:
             Daily: false
             Artifacts: ${{ parameters.Artifacts }}
+            ArtifactName: ${{ parameters.ArtifactName }}
 
   - stage: Integration
     dependsOn: Signing
