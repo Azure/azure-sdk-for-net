@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             string metadataVersion = "1";
 
             string api = "PutBlob";
-            string clientRequestIdentifier = $"Azure-Storage-Powershell-{Guid.NewGuid()}";
+            string clientRequestId = $"Azure-Storage-Powershell-{Guid.NewGuid()}";
             Guid requestId = Guid.NewGuid();
             ETag etag = new ETag("0x8D75EF45A3B8617");
             string contentType = "contentType";
@@ -162,7 +162,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 { Constants.ChangeFeed.Event.Data, new Dictionary<string, object>
                     {
                         { Constants.ChangeFeed.EventData.Api, api },
-                        { Constants.ChangeFeed.EventData.ClientRequestId, clientRequestIdentifier.ToString() },
+                        { Constants.ChangeFeed.EventData.ClientRequestId, clientRequestId.ToString() },
                         { Constants.ChangeFeed.EventData.RequestId, requestId.ToString() },
                         { Constants.ChangeFeed.EventData.Etag, etag.ToString() },
                         { Constants.ChangeFeed.EventData.ContentType, contentType },
@@ -231,8 +231,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(metadataVersion, changeFeedEvent.MetadataVersion);
 
             Assert.AreEqual(BlobOperationName.PutBlob, changeFeedEvent.EventData.BlobOperationName);
-            Assert.AreEqual(Guid.Empty, changeFeedEvent.EventData.ClientRequestId);
-            Assert.AreEqual(clientRequestIdentifier, changeFeedEvent.EventData.ClientRequestIdentifier);
+            Assert.AreEqual(clientRequestId, changeFeedEvent.EventData.ClientRequestId);
             Assert.AreEqual(requestId, changeFeedEvent.EventData.RequestId);
             Assert.AreEqual(etag, changeFeedEvent.EventData.ETag);
             Assert.AreEqual(contentType, changeFeedEvent.EventData.ContentType);
