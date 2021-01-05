@@ -29,6 +29,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubOptions() { }
         public int BatchCheckpointFrequency { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.Primitives.EventProcessorOptions EventProcessorOptions { get { throw null; } }
+        public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } }
         public bool InvokeProcessorAfterReceiveTimeout { get { throw null; } set { } }
         public int MaxBatchSize { get { throw null; } set { } }
         public void AddReceiver(string eventHubName, string receiverConnectionString) { }
@@ -41,6 +42,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     {
         public EventHubsWebJobsStartup() { }
         public void Configure(Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { }
+    }
+    public partial class InitialOffsetOptions
+    {
+        public InitialOffsetOptions() { }
+        public string EnqueuedTimeUTC { get { throw null; } set { } }
+        public string Type { get { throw null; } set { } }
     }
 }
 namespace Microsoft.Extensions.Hosting
