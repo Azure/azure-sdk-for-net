@@ -8680,13 +8680,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new FileLeaseReleaseInfo instance for mocking.
         /// </summary>
         public static FileLeaseReleaseInfo FileLeaseReleaseInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified)
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag)
         {
             return new FileLeaseReleaseInfo()
             {
-                ETag = eTag,
                 LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -10380,17 +10380,17 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareFileCopyInfo instance for mocking.
         /// </summary>
         public static ShareFileCopyInfo ShareFileCopyInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
+            Azure.Storage.Files.Shares.Models.CopyStatus copyStatus,
             string copyId,
-            Azure.Storage.Files.Shares.Models.CopyStatus copyStatus)
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag)
         {
             return new ShareFileCopyInfo()
             {
-                ETag = eTag,
-                LastModified = lastModified,
-                CopyId = copyId,
                 CopyStatus = copyStatus,
+                CopyId = copyId,
+                LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -10517,22 +10517,22 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareFileHandle instance for mocking.
         /// </summary>
         public static ShareFileHandle ShareFileHandle(
-            string handleId,
-            string path,
-            string fileId,
-            string sessionId,
             string clientIp,
+            string sessionId,
+            string fileId,
+            string path,
+            string handleId,
             string parentId = default,
             System.DateTimeOffset? openedOn = default,
             System.DateTimeOffset? lastReconnectedOn = default)
         {
             return new ShareFileHandle()
             {
-                HandleId = handleId,
-                Path = path,
-                FileId = fileId,
-                SessionId = sessionId,
                 ClientIp = clientIp,
+                SessionId = sessionId,
+                FileId = fileId,
+                Path = path,
+                HandleId = handleId,
                 ParentId = parentId,
                 OpenedOn = openedOn,
                 LastReconnectedOn = lastReconnectedOn,
@@ -10581,15 +10581,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareFileLease instance for mocking.
         /// </summary>
         public static ShareFileLease ShareFileLease(
-            Azure.ETag eTag,
+            string leaseId,
             System.DateTimeOffset lastModified,
-            string leaseId)
+            Azure.ETag eTag)
         {
             return new ShareFileLease()
             {
-                ETag = eTag,
-                LastModified = lastModified,
                 LeaseId = leaseId,
+                LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -10796,17 +10796,17 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareFileUploadInfo instance for mocking.
         /// </summary>
         public static ShareFileUploadInfo ShareFileUploadInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
+            bool isServerEncrypted,
             byte[] contentHash,
-            bool isServerEncrypted)
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag)
         {
             return new ShareFileUploadInfo()
             {
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentHash = contentHash,
                 IsServerEncrypted = isServerEncrypted,
+                ContentHash = contentHash,
+                LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -10847,13 +10847,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareInfo instance for mocking.
         /// </summary>
         public static ShareInfo ShareInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified)
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag)
         {
             return new ShareInfo()
             {
-                ETag = eTag,
                 LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -11995,15 +11995,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareSnapshotInfo instance for mocking.
         /// </summary>
         public static ShareSnapshotInfo ShareSnapshotInfo(
-            string snapshot,
+            System.DateTimeOffset lastModified,
             Azure.ETag eTag,
-            System.DateTimeOffset lastModified)
+            string snapshot)
         {
             return new ShareSnapshotInfo()
             {
-                Snapshot = snapshot,
-                ETag = eTag,
                 LastModified = lastModified,
+                ETag = eTag,
+                Snapshot = snapshot,
             };
         }
     }
@@ -12339,15 +12339,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new StorageClosedHandlesSegment instance for mocking.
         /// </summary>
         public static StorageClosedHandlesSegment StorageClosedHandlesSegment(
-            string marker,
+            int numberOfHandlesFailedToClose,
             int numberOfHandlesClosed,
-            int numberOfHandlesFailedToClose)
+            string marker)
         {
             return new StorageClosedHandlesSegment()
             {
-                Marker = marker,
-                NumberOfHandlesClosed = numberOfHandlesClosed,
                 NumberOfHandlesFailedToClose = numberOfHandlesFailedToClose,
+                NumberOfHandlesClosed = numberOfHandlesClosed,
+                Marker = marker,
             };
         }
     }
