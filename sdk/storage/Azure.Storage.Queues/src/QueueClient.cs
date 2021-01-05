@@ -340,6 +340,7 @@ namespace Azure.Storage.Queues
             QueueClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(queueUri, nameof(queueUri));
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();

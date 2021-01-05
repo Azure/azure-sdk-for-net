@@ -367,6 +367,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(fileSystemUri, nameof(fileSystemUri));
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
             options ??= new DataLakeClientOptions();
             _uri = fileSystemUri;

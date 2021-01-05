@@ -362,6 +362,7 @@ namespace Azure.Storage.Blobs
             HttpPipeline pipeline,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             _uri = serviceUri;
             _authenticationPolicy = authentication;
             _pipeline = pipeline;

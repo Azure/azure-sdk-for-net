@@ -281,6 +281,7 @@ namespace Azure.Storage.Queues
             QueueClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             _uri = serviceUri;
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);

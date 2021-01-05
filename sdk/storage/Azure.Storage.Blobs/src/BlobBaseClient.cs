@@ -379,6 +379,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(blobUri, nameof(blobUri));
             options ??= new BlobClientOptions();
             _uri = blobUri;
             if (!string.IsNullOrEmpty(blobUri.Query))

@@ -352,6 +352,7 @@ namespace Azure.Storage.Files.DataLake
             ClientDiagnostics clientDiagnostics,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             options ??= new DataLakeClientOptions();
             _pipeline = options.Build(authentication);
             _uri = serviceUri;

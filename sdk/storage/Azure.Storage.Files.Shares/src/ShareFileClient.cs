@@ -324,6 +324,7 @@ namespace Azure.Storage.Files.Shares
             ShareClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
             _pipeline = options.Build(authentication);

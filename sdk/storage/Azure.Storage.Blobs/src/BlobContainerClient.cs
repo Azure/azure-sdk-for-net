@@ -343,6 +343,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         internal BlobContainerClient(Uri blobContainerUri, HttpPipelinePolicy authentication, BlobClientOptions options)
         {
+            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
             _uri = blobContainerUri;
             options ??= new BlobClientOptions();
             _pipeline = options.Build(authentication);
