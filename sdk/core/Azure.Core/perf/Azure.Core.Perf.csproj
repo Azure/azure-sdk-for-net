@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
+  </ItemGroup>
+
+</Project>
