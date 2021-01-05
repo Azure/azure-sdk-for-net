@@ -55,21 +55,21 @@ parameters:
 - name: Platforms
   type: object
   default:
-    Linux_NetCore:
+    Linux:
       OSVmImage: "ubuntu-18.04"
       TestTargetFramework: netcoreapp2.1
-    Windows_NetCore:
+    Windows_NetCoreApp:
       OSVmImage: "windows-2019"
       TestTargetFramework: netcoreapp2.1
       SupportsRecording: true
-    Windows_NetCore_ProjectRefAzureClients:
+    Windows_NetCoreApp_ProjectReferences:
       OSVmImage: "windows-2019"
       TestTargetFramework: netcoreapp2.1
       AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
     Windows_NetFramework:
       OSVmImage: "windows-2019"
       TestTargetFramework: net461
-    Windows_NetFramework_ProjectRefAzureClients:
+    Windows_NetFramework_ProjectReferences:
       OSVmImage: "windows-2019"
       TestTargetFramework: net461
       AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
@@ -77,6 +77,9 @@ parameters:
       OSVmImage: "macOS-10.15"
       TestTargetFramework: netcoreapp2.1
       SupportedClouds: 'Public'
+    Windows_Net50:
+      OSVmImage: "windows-2019"
+      TestTargetFramework: net5.0
 - name: PlatformPreSteps
   type: object
   default:
