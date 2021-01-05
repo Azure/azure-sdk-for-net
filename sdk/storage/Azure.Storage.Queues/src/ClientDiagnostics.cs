@@ -25,17 +25,30 @@ namespace Azure.Core.Pipeline
             string? content,
             ref string? message,
             ref string? errorCode,
-#pragma warning disable CA1801 // Review unused parameters
             ref IDictionary<string, string>? additionalInfo
-#pragma warning restore CA1801 // Review unused parameters
 #pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 #pragma warning restore CA1822
             )
         {
             XDocument xml = XDocument.Parse(content);
+            //TODO make these constants
             errorCode = xml.Root.Element("Code").Value;
             message = xml.Root.Element("Message").Value;
-            //TODO what about additionalInfo??
+            additionalInfo = new Dictionary<string, string>();
+
+            foreach (XElement element in xml.Root.Elements())
+            {
+                switch (element.Name.LocalName)
+                {
+                    //TODO make these constants.
+                    case "Code":
+                    case "Message":
+                        continue;
+                    default:
+                        additionalInfo[element.Name.LocalName] = element.Value;
+                        break;
+                }
+            }
         }
     }
 }
