@@ -250,6 +250,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_InitialOffsetFromStart()
         {
+            var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData(_testId)) });
+
             var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromStartEndJobs>(
                 builder =>
                     builder.ConfigureServices(services =>
@@ -263,8 +266,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     }));
             using (jobHost)
             {
-                var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
-                await producer.SendAsync(new EventData[] { new EventData(new BinaryData(_testId)) });
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
             }
@@ -274,6 +275,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task EventHub_InitialOffsetFromEnd()
         {
             // Send a message to ensure the stream is not empty as we are trying to validate that no messages are delivered in this case
+            var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData(_testId)) });
+
             var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromStartEndJobs>(
                 builder =>
                     builder.ConfigureServices(services =>
@@ -287,9 +291,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     }));
             using (jobHost)
             {
-                var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
-                await producer.SendAsync(new EventData[] { new EventData(new BinaryData(_testId)) });
-
                 // We don't expect to get signalled as there should be no messages received with a FromEnd initial offset
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.False(result, "An event was received while none were expected.");
