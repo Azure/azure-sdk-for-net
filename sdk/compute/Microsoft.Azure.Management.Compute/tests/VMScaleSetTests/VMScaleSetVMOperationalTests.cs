@@ -126,17 +126,15 @@ namespace Compute.Tests
                 m_CrpClient.VirtualMachineScaleSetVMs.Start(rgName, vmScaleSet.Name, instanceId);
                 m_CrpClient.VirtualMachineScaleSetVMs.Reimage(rgName, vmScaleSet.Name, instanceId, tempDisk: null);
 
-                bool forceDeletion = false;
                 if (hasManagedDisks)
                 {
                     m_CrpClient.VirtualMachineScaleSetVMs.ReimageAll(rgName, vmScaleSet.Name, instanceId);
-                    forceDeletion = true;
                 }
 
                 m_CrpClient.VirtualMachineScaleSetVMs.Restart(rgName, vmScaleSet.Name, instanceId);
                 m_CrpClient.VirtualMachineScaleSetVMs.PowerOff(rgName, vmScaleSet.Name, instanceId);
                 m_CrpClient.VirtualMachineScaleSetVMs.Deallocate(rgName, vmScaleSet.Name, instanceId);
-                m_CrpClient.VirtualMachineScaleSetVMs.Delete(rgName, vmScaleSet.Name, instanceId, forceDeletion:forceDeletion);
+                m_CrpClient.VirtualMachineScaleSetVMs.Delete(rgName, vmScaleSet.Name, instanceId);
 
                 passed = true;
             }
@@ -375,6 +373,47 @@ namespace Compute.Tests
                     RetrieveBootDiagnosticsDataResult bootDiagnosticsData =
                         m_CrpClient.VirtualMachineScaleSetVMs.RetrieveBootDiagnosticsData(rgName, vmScaleSet.Name, instanceId);
                     ValidateBootDiagnosticsData(bootDiagnosticsData);
+
+                    passed = true;
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Covers following operations:
+        /// Create RG
+        /// Create VM Scale Set
+        /// Force Delete instance of VM Scale Set
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetVMOperations_ForceDelete()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                instanceId = "0";
+                bool passed = false;
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2EUAP");
+                    InitializeCommon(context);
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true);
+                    m_CrpClient.VirtualMachineScaleSetVMs.Delete(rgName, vmScaleSet.Name, instanceId, forceDeletion: true);
 
                     passed = true;
                 }

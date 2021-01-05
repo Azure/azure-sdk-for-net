@@ -89,16 +89,14 @@ namespace Compute.Tests
                 // TODO: AutoRest skips the following methods - Start, Restart, PowerOff, Deallocate
                 m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name);
                 m_CrpClient.VirtualMachineScaleSets.Reimage(rgName, vmScaleSet.Name);
-                bool forceDeletion = false;
                 if (hasManagedDisks)
                 {
                     m_CrpClient.VirtualMachineScaleSets.ReimageAll(rgName, vmScaleSet.Name);
-                    forceDeletion = true;
                 }
                 m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name);
                 m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name);
                 m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name);
-                m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name, forceDeletion: forceDeletion);
+                m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name);
 
                 passed = true;
             }
@@ -423,6 +421,62 @@ namespace Compute.Tests
             }
         }
 
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create VMScaleSet
+        /// Force Delete VMScaleSet Instance
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetBatchOperation_ForceDelete()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2EUAP");
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                // Create resource group
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                bool passed = false;
+                try
+                {
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName: rgName,
+                        vmssName: vmssName,
+                        storageAccount: storageAccountOutput,
+                        imageRef: imageRef,
+                        inputVMScaleSet: out inputVMScaleSet,
+                        createWithManagedDisks: true
+                    );
+
+                    var virtualMachineScaleSetInstanceIDs = new List<string>() { "0", "1" };
+                    m_CrpClient.VirtualMachineScaleSets.DeleteInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs, forceDeletion: true);
+                    passed = true;
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
         // Create VMScaleSet without single placement group
         // Convert VMScaleSet to Single Placement Group
         // Delete VMScaleSet
@@ -470,6 +524,54 @@ namespace Compute.Tests
                     // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create VMSS
+        /// Force Delete VMSS
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetOperations_ForceDeletion()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                string vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                bool passed = false;
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2EUAP");
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                    StorageAccount storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name, forceDeletion: true);
+
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                 }
 
                 Assert.True(passed);
