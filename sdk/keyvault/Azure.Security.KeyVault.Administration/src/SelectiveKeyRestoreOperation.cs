@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class SelectiveKeyRestoreOperation : Operation<SelectiveKeyRestoreResult>
     {
-        private readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult> _operationInternal;
+        private readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult, SelectiveKeyRestoreDetailsInternal> _operationInternal;
 
         /// <summary>
         /// Creates an instance of a SelectiveKeyRestoreOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
         public SelectiveKeyRestoreOperation(KeyVaultBackupClient client, string id)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult>(client, id);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult, SelectiveKeyRestoreDetailsInternal>(client, id);
         }
 
         /// <summary>
@@ -37,19 +37,19 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
         internal SelectiveKeyRestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders> response)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult>(client, response);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult, SelectiveKeyRestoreDetailsInternal>(client, response);
         }
 
         /// <summary>
         /// Initializes a new instance of a SelectiveKeyRestoreOperation for mocking purposes.
         /// </summary>
-        /// <param name="value">The <see cref="RestoreDetailsInternal" /> that will be used to populate various properties.</param>
+        /// <param name="value">The <see cref="SelectiveKeyRestoreDetailsInternal" /> that will be used to populate various properties.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> or <paramref name="response"/> or <paramref name="client"/> is null.</exception>
-        internal SelectiveKeyRestoreOperation(RestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
+        internal SelectiveKeyRestoreOperation(SelectiveKeyRestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult>(value, response, client);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult, SelectiveKeyRestoreDetailsInternal>(value, response, client);
         }
 
         /// <summary>

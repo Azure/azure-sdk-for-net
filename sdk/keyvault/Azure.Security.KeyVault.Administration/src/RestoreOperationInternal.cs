@@ -5,20 +5,24 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal class RestoreOperationInternal<THeaders, TResult> : Operation<TResult> where TResult : class
+    internal class RestoreOperationInternal<THeaders, TResult, TResponseType> : Operation<TResult>
+        where TResult : class
+        where TResponseType : class
     {
         /// <summary>
         /// The number of seconds recommended by the service to delay before checking on completion status.
         /// </summary>
-        private readonly int? _retryAfterSeconds;
+        internal int? _retryAfterSeconds;
         private readonly KeyVaultBackupClient _client;
         private Response _response;
-        private RestoreDetailsInternal _value;
+        private TResponseType _value;
         private readonly string _id;
+        private RequestFailedException _requestFailedException;
 
         /// <summary>
         /// Creates an instance of a RestoreOperation from a previously started operation.
@@ -68,30 +72,13 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of a RestoreOperation.
-        /// </summary>
-        /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartSelectiveRestore"/> or <see cref="KeyVaultBackupClient.StartSelectiveRestoreAsync"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
-        internal RestoreOperationInternal(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders> response)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(response, nameof(response));
-
-            _id = response.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
-            _client = client;
-            _response = response.GetRawResponse();
-            _retryAfterSeconds = response.Headers.RetryAfter;
-        }
-
-        /// <summary>
         /// Initializes a new instance of a RestoreOperation for mocking purposes.
         /// </summary>
-        /// <param name="value">The <see cref="RestoreDetailsInternal" /> that will be used to populate various properties.</param>
+        /// <param name="value">The response value that will be used to populate various properties.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> or <paramref name="response"/> or <paramref name="client"/> is null.</exception>
-        internal RestoreOperationInternal(RestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
+        internal RestoreOperationInternal(TResponseType value, Response response, KeyVaultBackupClient client)
         {
             Argument.AssertNotNull(value, nameof(value));
             Argument.AssertNotNull(response, nameof(response));
@@ -100,18 +87,47 @@ namespace Azure.Security.KeyVault.Administration
             _client = client;
             _response = response;
             _value = value;
-            _id = value.JobId;
+            _id = value switch
+            {
+                SelectiveKeyRestoreDetailsInternal r => r.JobId,
+                RestoreDetailsInternal r => r.JobId,
+                null => default,
+                _ => throw new InvalidOperationException("Unknown type")
+            };
         }
 
         /// <summary>
         /// The start time of the restore operation.
         /// </summary>
-        public DateTimeOffset? StartTime => _value?.StartTime;
+        public DateTimeOffset? StartTime => _value switch
+        {
+            SelectiveKeyRestoreDetailsInternal r => r.StartTime,
+            RestoreDetailsInternal r => r.StartTime,
+            null => default,
+            _ => throw new InvalidOperationException("Unknown type")
+        };
 
         /// <summary>
         /// The end time of the restore operation.
         /// </summary>
-        public DateTimeOffset? EndTime => _value?.EndTime;
+        public DateTimeOffset? EndTime => _value switch
+        {
+            SelectiveKeyRestoreDetailsInternal r => r.EndTime,
+            RestoreDetailsInternal r => r.EndTime,
+            null => default,
+            _ => throw new InvalidOperationException("Unknown type")
+        };
+
+        /// <summary>
+        /// The error value resturned by the service call.
+        /// </summary>
+        internal KeyVaultServiceError Error => _value switch
+        {
+            SelectiveKeyRestoreDetailsInternal r => r.Error,
+            RestoreDetailsInternal r => r.Error,
+            null => default,
+            _ => throw new InvalidOperationException("Unknown type")
+        };
 
         /// <inheritdoc/>
         public override string Id => _id;
@@ -126,56 +142,84 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     throw new InvalidOperationException("The operation is not complete.");
                 }
-                if (_value != null && _value.EndTime.HasValue && _value.Error != null)
+                if (_requestFailedException != null)
                 {
-                    throw new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
+                    throw _requestFailedException;
                 }
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+
                 TResult result = null;
                 Type resultType = typeof(TResult);
 
                 if (resultType == typeof(RestoreResult))
                 {
-                    result = new RestoreResult(_value.StartTime.Value, _value.EndTime.Value) as TResult;
+                    result = new RestoreResult(StartTime.Value, EndTime.Value) as TResult;
                 }
                 else if (resultType == typeof(SelectiveKeyRestoreResult))
                 {
-                    result = new SelectiveKeyRestoreResult(_value.StartTime.Value, _value.EndTime.Value) as TResult;
+                    result = new SelectiveKeyRestoreResult(StartTime.Value, EndTime.Value) as TResult;
                 }
                 return result;
             }
         }
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _value?.EndTime.HasValue ?? false;
+        public override bool HasCompleted => EndTime.HasValue;
 
         /// <inheritdoc/>
-        public override bool HasValue => _response != null && _value?.Error == null && HasCompleted;
+        public override bool HasValue => _response != null && Error == null && HasCompleted;
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
-        {
-            if (!HasCompleted)
-            {
-                Response<RestoreDetailsInternal> response = _client.GetRestoreDetails(Id, cancellationToken);
-                _value = response.Value;
-                _response = response.GetRawResponse();
-            }
-
-            return GetRawResponse();
-        }
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
+            UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
 
         /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken = default)
         {
             if (!HasCompleted)
             {
-                Response<RestoreDetailsInternal> response = await _client.GetRestoreDetailsAsync(Id, cancellationToken).ConfigureAwait(false);
-                _value = response.Value;
-                _response = response.GetRawResponse();
+                try
+                {
+                    Type resultType = typeof(TResponseType);
+                    Response<TResponseType> response = null;
+
+                    if (resultType == typeof(RestoreDetailsInternal))
+                    {
+                        response = async ?
+                            await _client.GetRestoreDetailsAsync(Id, cancellationToken).ConfigureAwait(false) as Response<TResponseType>
+                            : _client.GetRestoreDetails(Id, cancellationToken) as Response<TResponseType>;
+                    }
+                    else if (resultType == typeof(SelectiveKeyRestoreDetailsInternal))
+                    {
+                        response = async ?
+                            await _client.GetSelectiveKeyRestoreDetailsAsync(Id, cancellationToken).ConfigureAwait(false) as Response<TResponseType>
+                            : _client.GetSelectiveKeyRestoreDetails(Id, cancellationToken) as Response<TResponseType>;
+                    }
+
+                    _value = response.Value;
+                    _response = response.GetRawResponse();
+                }
+                catch (RequestFailedException ex)
+                {
+                    _requestFailedException = ex;
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    _requestFailedException = new RequestFailedException("Unexpected Failure.", ex);
+                    throw _requestFailedException;
+                }
+                if (_value != null && EndTime.HasValue && Error != null)
+                {
+                    _requestFailedException = new RequestFailedException($"{Error.Message}\nInnerError: {Error.InnerError}\nCode: {Error.Code}");
+                    throw _requestFailedException;
+                }
             }
 
             return GetRawResponse();

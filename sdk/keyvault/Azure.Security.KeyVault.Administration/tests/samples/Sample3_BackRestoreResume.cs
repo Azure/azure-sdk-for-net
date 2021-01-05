@@ -37,6 +37,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
             BackupOperation backupOperation = new BackupOperation(client, backupOperationId);
+            /*@@*/backupOperation._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
 
             // Wait for completion of the BackupOperation.
             Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
@@ -60,6 +61,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.
             RestoreOperation restoreOperation = new RestoreOperation(client, restoreOperationId);
+            /*@@*/restoreOperation._operationInternal._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
 
             // Wait for completion of the RestoreOperation.
             RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
