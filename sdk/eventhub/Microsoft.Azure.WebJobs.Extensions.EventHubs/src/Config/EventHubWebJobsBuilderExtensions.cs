@@ -21,6 +21,7 @@ namespace Microsoft.Extensions.Hosting
                 throw new ArgumentNullException(nameof(builder));
             }
 
+            builder.AddEventHubs(p => { });
             return builder;
         }
 

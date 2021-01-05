@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubOptions() { }
         public int BatchCheckpointFrequency { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.Primitives.EventProcessorOptions EventProcessorOptions { get { throw null; } }
-        public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } }
         public bool InvokeProcessorAfterReceiveTimeout { get { throw null; } set { } }
         public int MaxBatchSize { get { throw null; } set { } }
         public void AddReceiver(string eventHubName, string receiverConnectionString) { }

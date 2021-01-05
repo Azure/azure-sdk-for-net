@@ -60,9 +60,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             });
         }
 
-        protected (JobHost, IHost) BuildHost<T>(Action<IHostBuilder> configurationDelegate = null, Action<IHost> preStartCallback = null, InitialOffsetOptions initialOffsetOptions = null)
+        protected (JobHost, IHost) BuildHost<T>(Action<IHostBuilder> configurationDelegate = null, Action<IHost> preStartCallback = null)
         {
             var hostBuilder = new HostBuilder();
+            configurationDelegate ??= ConfigureTestEventHub;
             configurationDelegate?.Invoke(hostBuilder);
             hostBuilder
                 .ConfigureAppConfiguration(builder =>
@@ -86,8 +87,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     b.SetMinimumLevel(LogLevel.Debug);
                 });
-
-            ConfigureTestEventHub(hostBuilder);
 
             IHost host = hostBuilder.Build();
 
