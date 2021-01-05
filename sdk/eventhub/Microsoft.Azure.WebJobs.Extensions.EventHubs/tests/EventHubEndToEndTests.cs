@@ -263,7 +263,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     }));
             using (jobHost)
             {
-                await jobHost.CallAsync(nameof(EventHubTestInitialOffsetFromStartEndJobs.SendEvent_TestHub), new { input = _testId });
+                var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+                await producer.SendAsync(new EventData[] { new EventData(new BinaryData(_testId)) });
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
             }
@@ -286,13 +287,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     }));
             using (jobHost)
             {
-                await jobHost.CallAsync(nameof(EventHubTestInitialOffsetFromStartEndJobs.SendEvent_TestHub), new { input = _testId });
+                var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+                await producer.SendAsync(new EventData[] { new EventData(new BinaryData(_testId)) });
+
                 // We don't expect to get signalled as there should be no messages received with a FromEnd initial offset
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.False(result, "An event was received while none were expected.");
 
                 // send a new event which should be received
-                await jobHost.CallAsync(nameof(EventHubTestInitialOffsetFromStartEndJobs.SendEvent_TestHub), new { input = _testId });
+                await producer.SendAsync(new EventData[] { new EventData(new BinaryData(_testId)) });
                 result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
             }
@@ -584,11 +587,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class EventHubTestInitialOffsetFromStartEndJobs
         {
-            public static void SendEvent_TestHub(string input, [EventHub(TestHubName)] out EventData evt)
-            {
-                evt = new EventData(Encoding.UTF8.GetBytes(input));
-            }
-
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName)] string evt,
                        string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
                        IDictionary<string, object> systemProperties)
