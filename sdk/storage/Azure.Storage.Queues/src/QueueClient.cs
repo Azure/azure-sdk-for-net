@@ -1409,9 +1409,13 @@ namespace Azure.Storage.Queues
                 Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(GetAccessPolicy)}");
+
                 try
                 {
                     ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders> response;
+                    scope.Start();
 
                     if (async)
                     {
@@ -1436,11 +1440,13 @@ namespace Azure.Storage.Queues
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2751,19 +2757,23 @@ namespace Azure.Storage.Queues
 
                 try
                 {
-                    ResponseWithHeaders<QueueDeleteHeaders> response;
+                    ResponseWithHeaders<MessageIdDeleteHeaders> response;
                     scope.Start();
 
                     if (async)
                     {
-                        response = await _queueRestClient.DeleteAsync(
+                        response = await _messageIdRestClient.DeleteAsync(
+                            messageId,
+                            popReceipt,
                             timeout: null,
                             cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = _queueRestClient.Delete(
+                        response = _messageIdRestClient.Delete(
+                            messageId,
+                            popReceipt,
                             timeout: null,
                             cancellationToken);
                     }
