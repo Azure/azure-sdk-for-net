@@ -9,8 +9,5 @@ namespace Azure.Security.KeyVault.Administration
     [CodeGenModel("RoleAssignment")]
     public partial class KeyVaultRoleAssignment
     {
-        /// <summary> The role assignment type. </summary>
-        [CodeGenMember("Type")]
-        public string RoleAssignmentType { get; }
     }
 }
