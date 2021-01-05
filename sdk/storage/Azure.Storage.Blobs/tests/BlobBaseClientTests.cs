@@ -194,6 +194,33 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential_UserDelegationSAS()
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+            var client = test.Container.GetBlobClient(GetNewBlobName());
+            await client.UploadAsync(new MemoryStream());
+            Uri blobUri = client.Uri;
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            var sasBuilder = new BlobSasBuilder(BlobSasPermissions.All, Recording.UtcNow.AddHours(1))
+            {
+                BlobContainerName = client.BlobContainerName,
+                BlobName = client.Name,
+            };
+            var sas = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, client.AccountName).ToString();
+
+            // Act
+            var sasClient = InstrumentClient(new BlobBaseClient(blobUri, new AzureSasCredential(sas), GetOptions()));
+            BlobProperties blobProperties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(blobProperties);
+        }
+
+        [Test]
         public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
         {
             // Arrange
