@@ -263,7 +263,7 @@ namespace Azure.Storage.Blobs
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public BlobServiceClient(Uri serviceUri, AzureSasCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(serviceUri), options ?? new BlobClientOptions())
+            : this(serviceUri, credential.AsPolicy<BlobUriBuilder>(serviceUri), options ?? new BlobClientOptions())
         {
         }
 

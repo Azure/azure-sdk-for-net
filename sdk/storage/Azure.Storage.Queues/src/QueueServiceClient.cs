@@ -230,7 +230,7 @@ namespace Azure.Storage.Queues
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public QueueServiceClient(Uri serviceUri, AzureSasCredential credential, QueueClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(serviceUri), options, null)
+            : this(serviceUri, credential.AsPolicy<QueueUriBuilder>(serviceUri), options, null)
         {
         }
 

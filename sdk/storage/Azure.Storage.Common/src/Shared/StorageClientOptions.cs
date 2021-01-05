@@ -48,12 +48,12 @@ namespace Azure.Storage
         /// <param name="credential">Credential to use.</param>
         /// <param name="serviceUri">Service Uri. Must not contain shared access signature.</param>
         /// <returns>An authentication policy.</returns>
-        public static HttpPipelinePolicy AsPolicy(this AzureSasCredential credential, Uri serviceUri)
+        public static HttpPipelinePolicy AsPolicy<TUriBuilder>(this AzureSasCredential credential, Uri serviceUri)
         {
             var queryParameters = serviceUri.GetQueryParameters();
             if (queryParameters.ContainsKey("sig"))
             {
-                throw Errors.SasCredentialRequiresUriWithoutSas(serviceUri);
+                throw Errors.SasCredentialRequiresUriWithoutSas<TUriBuilder>(serviceUri);
             }
             return new AzureSasCredentialSynchronousPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)));

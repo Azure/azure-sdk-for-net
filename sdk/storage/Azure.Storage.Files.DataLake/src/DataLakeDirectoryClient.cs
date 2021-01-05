@@ -180,7 +180,7 @@ namespace Azure.Storage.Files.DataLake
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public DataLakeDirectoryClient(Uri directoryUri, AzureSasCredential credential, DataLakeClientOptions options = default)
-            : this(directoryUri, credential.AsPolicy(directoryUri), options, null)
+            : this(directoryUri, credential.AsPolicy<DataLakeUriBuilder>(directoryUri), options, null)
         {
         }
 

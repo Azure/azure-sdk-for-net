@@ -240,7 +240,7 @@ namespace Azure.Storage.Files.Shares
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public ShareClient(Uri shareUri, AzureSasCredential credential, ShareClientOptions options = default)
-            : this(shareUri, credential.AsPolicy(shareUri), options, null)
+            : this(shareUri, credential.AsPolicy<ShareUriBuilder>(shareUri), options, null)
         {
         }
 
