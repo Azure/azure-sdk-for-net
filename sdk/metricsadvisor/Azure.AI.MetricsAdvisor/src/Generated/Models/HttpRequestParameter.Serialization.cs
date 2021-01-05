@@ -15,14 +15,42 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("url");
-            writer.WriteStringValue(Url);
-            writer.WritePropertyName("httpHeader");
-            writer.WriteStringValue(HttpHeader);
-            writer.WritePropertyName("httpMethod");
-            writer.WriteStringValue(HttpMethod);
-            writer.WritePropertyName("payload");
-            writer.WriteStringValue(Payload);
+            if (Url != null)
+            {
+                writer.WritePropertyName("url");
+                writer.WriteStringValue(Url);
+            }
+            else
+            {
+                writer.WriteNull("url");
+            }
+            if (HttpHeader != null)
+            {
+                writer.WritePropertyName("httpHeader");
+                writer.WriteStringValue(HttpHeader);
+            }
+            else
+            {
+                writer.WriteNull("httpHeader");
+            }
+            if (HttpMethod != null)
+            {
+                writer.WritePropertyName("httpMethod");
+                writer.WriteStringValue(HttpMethod);
+            }
+            else
+            {
+                writer.WriteNull("httpMethod");
+            }
+            if (Payload != null)
+            {
+                writer.WritePropertyName("payload");
+                writer.WriteStringValue(Payload);
+            }
+            else
+            {
+                writer.WriteNull("payload");
+            }
             writer.WriteEndObject();
         }
 
@@ -36,21 +64,41 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("url"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
                     url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("httpHeader"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        httpHeader = null;
+                        continue;
+                    }
                     httpHeader = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("httpMethod"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        httpMethod = null;
+                        continue;
+                    }
                     httpMethod = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("payload"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        payload = null;
+                        continue;
+                    }
                     payload = property.Value.GetString();
                     continue;
                 }
