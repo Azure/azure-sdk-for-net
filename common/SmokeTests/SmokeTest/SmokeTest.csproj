@@ -12,8 +12,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" Version="1.4.0-dev.*" />
     <PackageReference Include="Azure.Identity" Version="1.2.0-dev.*" />
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.1.0-dev.*" />
-    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.1.0-dev.*" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.3.0-beta.*" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.3.0-beta.*" />
     <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.1.0-dev.*" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.5.0-dev.*" />
     <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.8" />
