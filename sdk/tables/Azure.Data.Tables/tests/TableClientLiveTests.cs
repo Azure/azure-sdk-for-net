@@ -283,11 +283,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task EntityMergeRespectsEtag()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13555");
-            }
-
             string tableName = $"testtable{Recording.GenerateId()}";
 
             const string rowKeyValue = "1";
@@ -344,11 +339,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task EntityMergeDoesPartialPropertyUpdates()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13555");
-            }
-
             string tableName = $"testtable{Recording.GenerateId()}";
 
             const string rowKeyValue = "1";
@@ -740,11 +730,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task CustomEntityMergeRespectsEtag()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13555");
-            }
-
             string tableName = $"testtable{Recording.GenerateId()}";
 
             const string rowKeyValue = "1";
@@ -928,11 +913,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task GetAccessPoliciesReturnsPolicies()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("GetAccessPolicy is currently not supported by Cosmos endpoints.");
-            }
-
             // Create some policies.
 
             var policyToCreate = new List<SignedIdentifier>

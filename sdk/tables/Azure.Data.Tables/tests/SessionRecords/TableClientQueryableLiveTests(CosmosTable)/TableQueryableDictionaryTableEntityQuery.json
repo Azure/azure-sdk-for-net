@@ -1,191 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json",
+        "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-b6d796b2eba7cb44bc2eae465e870bcf-242a2da0f3316c44-00",
+        "traceparent": "00-445a7b03f3cada4a940496031dac7740-41b27d71555eb147-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Data.Tables/3.0.0-alpha.20210104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "6ae088948ff8c1b04b7637c53647313e",
-        "x-ms-date": "Tue, 25 Aug 2020 16:35:21 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
-      },
-      "RequestBody": {
-        "TableName": "testtabledzrwvdr6"
-      },
-      "StatusCode": 429,
-      "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Tue, 25 Aug 2020 16:35:20 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "6ae08894-8ff8-c1b0-4b76-37c53647313e"
-      },
-      "ResponseBody": [
-        "{\u0022odata.error\u0022:{\u0022code\u0022:\u0022429\u0022,\u0022message\u0022:{\u0022lang\u0022:\u0022en-us\u0022,\u0022value\u0022:\u0022Message: {\\\u0022Errors\\\u0022:[\\\u0022Request rate is large. More Request Units may be needed, so no changes were made. Please retry this request later. Learn more: http://aka.ms/cosmosdb-error-429\\\u0022]}\\r\\nActivityId: 1c0a3f09-54be-4833-bcef-e544b8db976e, Request URI: /apps/65b0b36e-d528-403d-872e-6a1053e48e3d/services/a82d2903-67a5-4a5a-8dc0-7c5a1421f721/partitions/87d8bdaa-a936-4df3-8363-94235d9faaf9/replicas/132428460044248672p, RequestStats: , SDK: Microsoft.Azure.Documents.Common/2.11.0, documentdb-dotnet-sdk/2.11.0 Host/64-bit MicrosoftWindowsNT/6.2.9200.0\\nRequestID:6ae08894-8ff8-c1b0-4b76-37c53647313e\\n\u0022}}}\r\n"
-      ]
-    },
-    {
-      "RequestUri": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
-        "DataServiceVersion": "3.0",
-        "traceparent": "00-b6d796b2eba7cb44bc2eae465e870bcf-242a2da0f3316c44-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "6ae088948ff8c1b04b7637c53647313e",
-        "x-ms-date": "Tue, 25 Aug 2020 16:35:22 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
-      },
-      "RequestBody": {
-        "TableName": "testtabledzrwvdr6"
-      },
-      "StatusCode": 429,
-      "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Tue, 25 Aug 2020 16:35:22 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "6ae08894-8ff8-c1b0-4b76-37c53647313e"
-      },
-      "ResponseBody": [
-        "{\u0022odata.error\u0022:{\u0022code\u0022:\u0022429\u0022,\u0022message\u0022:{\u0022lang\u0022:\u0022en-us\u0022,\u0022value\u0022:\u0022Message: {\\\u0022Errors\\\u0022:[\\\u0022Request rate is large. More Request Units may be needed, so no changes were made. Please retry this request later. Learn more: http://aka.ms/cosmosdb-error-429\\\u0022]}\\r\\nActivityId: 6b030057-9bfb-43f0-a75e-047db2dc7959, Request URI: /apps/65b0b36e-d528-403d-872e-6a1053e48e3d/services/a82d2903-67a5-4a5a-8dc0-7c5a1421f721/partitions/87d8bdaa-a936-4df3-8363-94235d9faaf9/replicas/132428460044248672p, RequestStats: , SDK: Microsoft.Azure.Documents.Common/2.11.0, documentdb-dotnet-sdk/2.11.0 Host/64-bit MicrosoftWindowsNT/6.2.9200.0\\nRequestID:6ae08894-8ff8-c1b0-4b76-37c53647313e\\n\u0022}}}\r\n"
-      ]
-    },
-    {
-      "RequestUri": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
-        "DataServiceVersion": "3.0",
-        "traceparent": "00-b6d796b2eba7cb44bc2eae465e870bcf-242a2da0f3316c44-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "6ae088948ff8c1b04b7637c53647313e",
-        "x-ms-date": "Tue, 25 Aug 2020 16:35:23 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
-      },
-      "RequestBody": {
-        "TableName": "testtabledzrwvdr6"
-      },
-      "StatusCode": 429,
-      "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Tue, 25 Aug 2020 16:35:23 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "6ae08894-8ff8-c1b0-4b76-37c53647313e"
-      },
-      "ResponseBody": [
-        "{\u0022odata.error\u0022:{\u0022code\u0022:\u0022429\u0022,\u0022message\u0022:{\u0022lang\u0022:\u0022en-us\u0022,\u0022value\u0022:\u0022Message: {\\\u0022Errors\\\u0022:[\\\u0022Request rate is large. More Request Units may be needed, so no changes were made. Please retry this request later. Learn more: http://aka.ms/cosmosdb-error-429\\\u0022]}\\r\\nActivityId: 4cc74a6f-e2bb-4ce2-bb16-7f06b69dc6ec, Request URI: /apps/65b0b36e-d528-403d-872e-6a1053e48e3d/services/a82d2903-67a5-4a5a-8dc0-7c5a1421f721/partitions/87d8bdaa-a936-4df3-8363-94235d9faaf9/replicas/132428460044248672p, RequestStats: , SDK: Microsoft.Azure.Documents.Common/2.11.0, documentdb-dotnet-sdk/2.11.0 Host/64-bit MicrosoftWindowsNT/6.2.9200.0\\nRequestID:6ae08894-8ff8-c1b0-4b76-37c53647313e\\n\u0022}}}\r\n"
-      ]
-    },
-    {
-      "RequestUri": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
-        "DataServiceVersion": "3.0",
-        "traceparent": "00-b6d796b2eba7cb44bc2eae465e870bcf-242a2da0f3316c44-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "6ae088948ff8c1b04b7637c53647313e",
-        "x-ms-date": "Tue, 25 Aug 2020 16:35:26 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
-      },
-      "RequestBody": {
-        "TableName": "testtabledzrwvdr6"
-      },
-      "StatusCode": 429,
-      "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Tue, 25 Aug 2020 16:35:26 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "6ae08894-8ff8-c1b0-4b76-37c53647313e"
-      },
-      "ResponseBody": [
-        "{\u0022odata.error\u0022:{\u0022code\u0022:\u0022429\u0022,\u0022message\u0022:{\u0022lang\u0022:\u0022en-us\u0022,\u0022value\u0022:\u0022Message: {\\\u0022Errors\\\u0022:[\\\u0022Request rate is large. More Request Units may be needed, so no changes were made. Please retry this request later. Learn more: http://aka.ms/cosmosdb-error-429\\\u0022]}\\r\\nActivityId: aa853ad0-be70-4923-9993-8d1166d8b51c, Request URI: /apps/65b0b36e-d528-403d-872e-6a1053e48e3d/services/a82d2903-67a5-4a5a-8dc0-7c5a1421f721/partitions/87d8bdaa-a936-4df3-8363-94235d9faaf9/replicas/132428460044248672p, RequestStats: , SDK: Microsoft.Azure.Documents.Common/2.11.0, documentdb-dotnet-sdk/2.11.0 Host/64-bit MicrosoftWindowsNT/6.2.9200.0\\nRequestID:6ae08894-8ff8-c1b0-4b76-37c53647313e\\n\u0022}}}\r\n"
-      ]
-    },
-    {
-      "RequestUri": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
-        "DataServiceVersion": "3.0",
-        "traceparent": "00-f1971a526ea7aa47b243d75fe0a7ac1e-5928dafc991a214a-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "a6edef80dd61e3e1b742557c0de552e2",
-        "x-ms-date": "Tue, 25 Aug 2020 16:35:28 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
-      },
-      "RequestBody": {
-        "TableName": "testtabledzrwvdr6"
-      },
-      "StatusCode": 429,
-      "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Tue, 25 Aug 2020 16:35:28 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "a6edef80-dd61-e3e1-b742-557c0de552e2"
-      },
-      "ResponseBody": [
-        "{\u0022odata.error\u0022:{\u0022code\u0022:\u0022429\u0022,\u0022message\u0022:{\u0022lang\u0022:\u0022en-us\u0022,\u0022value\u0022:\u0022Message: {\\\u0022Errors\\\u0022:[\\\u0022Request rate is large. More Request Units may be needed, so no changes were made. Please retry this request later. Learn more: http://aka.ms/cosmosdb-error-429\\\u0022]}\\r\\nActivityId: 5308b283-1e65-4df8-9f77-83fd8b4841ac, Request URI: /apps/65b0b36e-d528-403d-872e-6a1053e48e3d/services/a82d2903-67a5-4a5a-8dc0-7c5a1421f721/partitions/87d8bdaa-a936-4df3-8363-94235d9faaf9/replicas/132428460044248672p, RequestStats: , SDK: Microsoft.Azure.Documents.Common/2.11.0, documentdb-dotnet-sdk/2.11.0 Host/64-bit MicrosoftWindowsNT/6.2.9200.0\\nRequestID:a6edef80-dd61-e3e1-b742-557c0de552e2\\n\u0022}}}\r\n"
-      ]
-    },
-    {
-      "RequestUri": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
-        "DataServiceVersion": "3.0",
-        "traceparent": "00-f1971a526ea7aa47b243d75fe0a7ac1e-5928dafc991a214a-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "a6edef80dd61e3e1b742557c0de552e2",
-        "x-ms-date": "Tue, 25 Aug 2020 16:35:28 GMT",
+        "x-ms-date": "Mon, 04 Jan 2021 22:28:33 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -194,36 +24,36 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Tue, 25 Aug 2020 16:35:29 GMT",
-        "ETag": "W/\u0022datetime\u00272020-08-25T16%3A35%3A29.0220552Z\u0027\u0022",
-        "Location": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/Tables(\u0027testtabledzrwvdr6\u0027)",
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "Date": "Mon, 04 Jan 2021 22:28:23 GMT",
+        "ETag": "W/\u0022datetime\u00272021-01-04T22%3A28%3A23.3063432Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.cosmos.azure.com/Tables(\u0027testtabledzrwvdr6\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "a6edef80-dd61-e3e1-b742-557c0de552e2"
+        "x-ms-request-id": "6ae08894-8ff8-c1b0-4b76-37c53647313e"
       },
       "ResponseBody": {
         "TableName": "testtabledzrwvdr6",
-        "odata.metadata": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/$metadata#Tables/@Element"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#Tables/@Element"
       }
     },
     {
-      "RequestUri": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/testtabledzrwvdr6?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtabledzrwvdr6?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json",
+        "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
         "Content-Length": "1663",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-436ce3e56057dc45aa2f185ce4e18d20-66ed0413a5d03e44-00",
+        "traceparent": "00-ae63b358a9868849905de2db4c8080b0-9e6db82919c71249-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Data.Tables/3.0.0-alpha.20210104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "9d8c45f0254cbf2b7ddcedd28fb026e4",
-        "x-ms-date": "Tue, 25 Aug 2020 16:35:29 GMT",
+        "x-ms-client-request-id": "a6edef80dd61e3e1b742557c0de552e2",
+        "x-ms-date": "Mon, 04 Jan 2021 22:28:34 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -291,32 +121,32 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 25 Aug 2020 16:35:29 GMT",
-        "ETag": "W/\u0022datetime\u00272020-08-25T16%3A35%3A29.6005128Z\u0027\u0022",
-        "Location": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/testtabledzrwvdr6(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
+        "Date": "Mon, 04 Jan 2021 22:28:23 GMT",
+        "ETag": "W/\u0022datetime\u00272021-01-04T22%3A28%3A23.8537736Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.cosmos.azure.com/testtabledzrwvdr6(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "9d8c45f0-254c-bf2b-7ddc-edd28fb026e4"
+        "x-ms-request-id": "a6edef80-dd61-e3e1-b742-557c0de552e2"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/testtabledzrwvdr6?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtabledzrwvdr6?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json",
+        "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
         "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-6fb390f4c8f0454ca2626eba8ba8eea5-2fa4643c8c37a241-00",
+        "traceparent": "00-262bc1bfd53f564bb4603290407c7bc2-526d6f5cebc81646-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Data.Tables/3.0.0-alpha.20210104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "7e3e87584c13b771a7fdb2b53a34b365",
-        "x-ms-date": "Tue, 25 Aug 2020 16:35:29 GMT",
+        "x-ms-client-request-id": "9d8c45f0254cbf2b7ddcedd28fb026e4",
+        "x-ms-date": "Mon, 04 Jan 2021 22:28:34 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -384,44 +214,45 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 25 Aug 2020 16:35:29 GMT",
-        "ETag": "W/\u0022datetime\u00272020-08-25T16%3A35%3A29.6740360Z\u0027\u0022",
-        "Location": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/testtabledzrwvdr6(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
+        "Date": "Mon, 04 Jan 2021 22:28:23 GMT",
+        "ETag": "W/\u0022datetime\u00272021-01-04T22%3A28%3A23.9272968Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.cosmos.azure.com/testtabledzrwvdr6(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
         "Preference-Applied": "return-no-content",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "7e3e8758-4c13-b771-a7fd-b2b53a34b365"
+        "x-ms-request-id": "9d8c45f0-254c-bf2b-7ddc-edd28fb026e4"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/testtabledzrwvdr6()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28RowKey%20eq%20%270002%27%29",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtabledzrwvdr6()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28RowKey%20eq%20%270002%27%29",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
+        "Accept": "application/json; odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
+        "traceparent": "00-57795a9cf5fb10418ac2fa89516ccf5f-2841097dc2adc14d-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Data.Tables/3.0.0-alpha.20210104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "f0d5542494ba5af2c42e2984ef0e5307",
-        "x-ms-date": "Tue, 25 Aug 2020 16:35:29 GMT",
+        "x-ms-client-request-id": "7e3e87584c13b771a7fdb2b53a34b365",
+        "x-ms-date": "Mon, 04 Jan 2021 22:28:34 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Tue, 25 Aug 2020 16:35:29 GMT",
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "Date": "Mon, 04 Jan 2021 22:28:23 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "f0d55424-94ba-5af2-c42e-2984ef0e5307"
+        "x-ms-request-id": "7e3e8758-4c13-b771-a7fd-b2b53a34b365"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-25T16%3A35%3A29.6740360Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272021-01-04T22%3A28%3A23.9272968Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:03:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -463,25 +294,25 @@
             "String": "0002",
             "PartitionKey": "somPartition",
             "RowKey": "0002",
-            "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-25T16:35:29.6740360Z"
+            "Timestamp": "2021-01-04T22:28:23.9272968Z"
           }
-        ]
+        ],
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtabledzrwvdr6"
       }
     },
     {
-      "RequestUri": "https://t487ba7ce49634c8eprim.table.cosmos.azure.com/Tables(\u0027testtabledzrwvdr6\u0027)",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/Tables(\u0027testtabledzrwvdr6\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5f1111fe5ead5348ade1261f373c9873-efc00416c0f3c541-00",
+        "traceparent": "00-039800d432c5e641bb434cd736002aef-155b0599c85e144b-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Data.Tables/3.0.0-alpha.20210104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "8624711cd3a6a4cfd3d4f64f73758549",
-        "x-ms-date": "Tue, 25 Aug 2020 16:35:29 GMT",
+        "x-ms-client-request-id": "f0d5542494ba5af2c42e2984ef0e5307",
+        "x-ms-date": "Mon, 04 Jan 2021 22:28:34 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -489,16 +320,17 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 25 Aug 2020 16:35:29 GMT",
+        "Date": "Mon, 04 Jan 2021 22:28:23 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "8624711c-d3a6-a4cf-d3d4-f64f73758549"
+        "x-ms-request-id": "f0d55424-94ba-5af2-c42e-2984ef0e5307"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
+    "COSMOS_TABLES_ENDPOINT_SUFFIX": null,
     "RandomSeed": "323290225",
-    "TABLES_COSMOS_ACCOUNT_NAME": "t487ba7ce49634c8eprim",
+    "TABLES_COSMOS_ACCOUNT_NAME": "chrisstablesprim",
     "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
   }
 }

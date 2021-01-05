@@ -78,7 +78,7 @@ namespace Azure.Data.Tables
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("DataServiceVersion", "3.0");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
@@ -147,8 +147,8 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(tableProperties);
             request.Content = content;
@@ -322,7 +322,7 @@ namespace Azure.Data.Tables
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("DataServiceVersion", "3.0");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
@@ -423,7 +423,7 @@ namespace Azure.Data.Tables
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("DataServiceVersion", "3.0");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
@@ -546,8 +546,8 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (tableEntityProperties != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -891,8 +891,8 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             if (tableEntityProperties != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -1096,8 +1096,8 @@ namespace Azure.Data.Tables
             uri.AppendQuery("comp", "acl", true);
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
+            request.Headers.Add("Accept", "application/xml");
             if (tableAcl != null)
             {
                 var content = new XmlWriterContent();
