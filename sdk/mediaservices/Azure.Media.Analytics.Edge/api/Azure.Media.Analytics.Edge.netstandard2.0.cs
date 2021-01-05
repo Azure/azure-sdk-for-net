@@ -142,9 +142,9 @@ namespace Azure.Media.Analytics.Edge.Models
     }
     public partial class MediaGraphImageScale
     {
-        public MediaGraphImageScale(Azure.Media.Analytics.Edge.Models.MediaGraphImageScaleMode mode) { }
+        public MediaGraphImageScale() { }
         public string Height { get { throw null; } set { } }
-        public Azure.Media.Analytics.Edge.Models.MediaGraphImageScaleMode Mode { get { throw null; } set { } }
+        public Azure.Media.Analytics.Edge.Models.MediaGraphImageScaleMode? Mode { get { throw null; } set { } }
         public string Width { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -264,6 +264,8 @@ namespace Azure.Media.Analytics.Edge.Models
         public MediaGraphNodeInput() { }
         public string NodeName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelector> OutputSelectors { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput FromNodeName(string nodeName) { throw null; }
+        public static implicit operator Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput (string nodeName) { throw null; }
     }
     public partial class MediaGraphOutputSelector
     {
@@ -302,6 +304,8 @@ namespace Azure.Media.Analytics.Edge.Models
     public partial class MediaGraphPemCertificateList : Azure.Media.Analytics.Edge.Models.MediaGraphCertificateSource
     {
         public MediaGraphPemCertificateList(System.Collections.Generic.IEnumerable<string> certificates) { }
+        public MediaGraphPemCertificateList(System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> certificates) { }
+        public MediaGraphPemCertificateList(params System.Security.Cryptography.X509Certificates.X509Certificate2[] certificates) { }
         public System.Collections.Generic.IList<string> Certificates { get { throw null; } }
     }
     public partial class MediaGraphProcessor
@@ -426,7 +430,7 @@ namespace Azure.Media.Analytics.Edge.Models
     }
     public partial class MediaGraphUsernamePasswordCredentials : Azure.Media.Analytics.Edge.Models.MediaGraphCredentials
     {
-        public MediaGraphUsernamePasswordCredentials(string username) { }
+        public MediaGraphUsernamePasswordCredentials(string username, string password) { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
