@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.MixedReality.RemoteRendering.Tests
 {
-    public class AzureRemoteRenderingTestEnvironment : TestEnvironment
+    public class RemoteRenderingTestEnvironment : TestEnvironment
     {
         /// <summary>
         /// Gets the account domain.

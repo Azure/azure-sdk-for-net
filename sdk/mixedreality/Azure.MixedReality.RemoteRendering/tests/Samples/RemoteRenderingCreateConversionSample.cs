@@ -9,7 +9,7 @@ using Azure.MixedReality.RemoteRendering.Tests;
 
 namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 {
-    public class RemoteRenderingCreateConversionSample : SamplesBase<AzureRemoteRenderingTestEnvironment>
+    public class RemoteRenderingCreateConversionSample : SamplesBase<RemoteRenderingTestEnvironment>
     {
         public RemoteRenderingCreateConversionSample()
         {
