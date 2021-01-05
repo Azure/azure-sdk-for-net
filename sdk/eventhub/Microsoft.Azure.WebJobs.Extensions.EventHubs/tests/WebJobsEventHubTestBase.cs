@@ -63,7 +63,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             configurationDelegate ??= ConfigureTestEventHub;
 
             var hostBuilder = new HostBuilder();
-            configurationDelegate(hostBuilder);
             hostBuilder
                 .ConfigureAppConfiguration(builder =>
                 {
@@ -86,8 +85,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     b.SetMinimumLevel(LogLevel.Debug);
                 });
-
+            configurationDelegate(hostBuilder);
             IHost host = hostBuilder.Build();
+
             preStartCallback?.Invoke(host);
 
             JobHost jobHost = host.GetJobHost();
