@@ -18,9 +18,6 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: ExcludeProjects
-  type: object
-  default: []
 - name: ServiceToTest
   type: string
   default: ''
@@ -47,7 +44,6 @@ stages:
       parameters:
         ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        ExcludeProjects: ${{ parameters.ExcludeProjects }}
         Artifacts: ${{ parameters.Artifacts }}
         TestPipeline: ${{ parameters.TestPipeline }}
         ArtifactName: packages
