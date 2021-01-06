@@ -41,6 +41,9 @@ namespace Azure.Data.Tables.Sas
         /// </summary>
         public string EndRowKey { get; set; }
 
+        /// <summary>
+        /// Gets empty shared access signature query parameters.
+        /// </summary>
         public static TableSasQueryParameters Empty => new TableSasQueryParameters();
 
         internal TableSasQueryParameters()
@@ -96,7 +99,7 @@ namespace Azure.Data.Tables.Sas
         internal TableSasQueryParameters(
             IDictionary<string, string> values)
             : base(values)
-        {}
+        { }
 
         /// <summary>
         /// Convert the SAS query parameters into a URL encoded query string.
