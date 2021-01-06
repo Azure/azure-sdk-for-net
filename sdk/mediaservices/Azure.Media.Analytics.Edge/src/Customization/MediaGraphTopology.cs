@@ -17,7 +17,8 @@ namespace Azure.Media.Analytics.Edge.Models
         /// <returns>A MediaGraphTopology.</returns>
         public static MediaGraphTopology Deserialize(string json)
         {
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using JsonDocument doc = JsonDocument.Parse(json);
+            JsonElement element = doc.RootElement;
             return DeserializeMediaGraphTopology(element);
         }
     }

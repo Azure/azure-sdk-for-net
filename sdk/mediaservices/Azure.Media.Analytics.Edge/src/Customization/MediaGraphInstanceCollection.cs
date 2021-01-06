@@ -17,7 +17,8 @@ namespace Azure.Media.Analytics.Edge.Models
         /// <returns> Deserialized Graph Instance Collection. </returns>
         public static MediaGraphInstanceCollection Deserialize(string json)
         {
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using JsonDocument doc = JsonDocument.Parse(json);
+            JsonElement element = doc.RootElement;
             return DeserializeMediaGraphInstanceCollection(element);
         }
     }
