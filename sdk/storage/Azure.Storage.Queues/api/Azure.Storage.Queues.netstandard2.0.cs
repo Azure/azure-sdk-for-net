@@ -141,6 +141,15 @@ namespace Azure.Storage.Queues.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MessageText { get { throw null; } }
     }
+    public partial class PeekedMessageItem
+    {
+        internal PeekedMessageItem() { }
+        public long DequeueCount { get { throw null; } }
+        public System.DateTimeOffset ExpirationTime { get { throw null; } }
+        public System.DateTimeOffset InsertionTime { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string MessageText { get { throw null; } }
+    }
     public partial class QueueAccessPolicy
     {
         public QueueAccessPolicy() { }
@@ -151,6 +160,7 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueAnalyticsLogging
     {
         public QueueAnalyticsLogging() { }
+        public QueueAnalyticsLogging(string version, bool delete, bool read, bool write, Azure.Storage.Queues.Models.QueueRetentionPolicy retentionPolicy) { }
         public bool Delete { get { throw null; } set { } }
         public bool Read { get { throw null; } set { } }
         public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { get { throw null; } set { } }
@@ -160,6 +170,7 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueCorsRule
     {
         public QueueCorsRule() { }
+        public QueueCorsRule(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, int maxAgeInSeconds) { }
         public string AllowedHeaders { get { throw null; } set { } }
         public string AllowedMethods { get { throw null; } set { } }
         public string AllowedOrigins { get { throw null; } set { } }
@@ -242,8 +253,8 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueGeoReplication
     {
         internal QueueGeoReplication() { }
-        public System.DateTimeOffset? LastSyncedOn { get { throw null; } }
-        public Azure.Storage.Queues.Models.QueueGeoReplicationStatus Status { get { throw null; } }
+        public System.DateTimeOffset? LastSyncedOn { get { throw null; } set { } }
+        public Azure.Storage.Queues.Models.QueueGeoReplicationStatus Status { get { throw null; } set { } }
     }
     public enum QueueGeoReplicationStatus
     {
@@ -259,7 +270,7 @@ namespace Azure.Storage.Queues.Models
     }
     public partial class QueueMessage
     {
-        internal QueueMessage() { }
+        public QueueMessage(string messageText) { }
         public System.BinaryData Body { get { throw null; } }
         public long DequeueCount { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
@@ -274,6 +285,7 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueMetrics
     {
         public QueueMetrics() { }
+        public QueueMetrics(bool enabled) { }
         public bool Enabled { get { throw null; } set { } }
         public bool? IncludeApis { get { throw null; } set { } }
         public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { get { throw null; } set { } }
@@ -288,6 +300,7 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueRetentionPolicy
     {
         public QueueRetentionPolicy() { }
+        public QueueRetentionPolicy(bool enabled) { }
         public int? Days { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
     }
@@ -307,6 +320,7 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueSignedIdentifier
     {
         public QueueSignedIdentifier() { }
+        public QueueSignedIdentifier(string id, Azure.Storage.Queues.Models.QueueAccessPolicy accessPolicy) { }
         public Azure.Storage.Queues.Models.QueueAccessPolicy AccessPolicy { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
     }

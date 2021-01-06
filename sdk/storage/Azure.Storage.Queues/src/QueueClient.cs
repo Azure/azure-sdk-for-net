@@ -578,9 +578,7 @@ namespace Azure.Storage.Queues
         /// <see cref="Response"/>
         /// </returns>
         private async Task<Response> CreateInternal(
-#pragma warning disable CA1801 // Review unused parameters
             Metadata metadata,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
