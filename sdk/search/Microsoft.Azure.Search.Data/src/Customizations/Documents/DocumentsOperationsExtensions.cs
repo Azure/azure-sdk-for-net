@@ -12,7 +12,8 @@ namespace Microsoft.Azure.Search
 
     /// <summary>
     /// Operations for querying an index and uploading, merging, and deleting documents.
-    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Document-operations" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Document-operations">
+    /// Document operations</see>.
     /// </summary>
     public static class DocumentsOperationsExtensions
     {
