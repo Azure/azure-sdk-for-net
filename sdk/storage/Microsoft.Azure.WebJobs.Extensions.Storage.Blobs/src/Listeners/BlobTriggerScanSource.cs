@@ -3,7 +3,7 @@
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
-    internal enum BlobTriggerSource
+    internal enum BlobTriggerScanSource
     {
         ContainerScan,
         LogScan
