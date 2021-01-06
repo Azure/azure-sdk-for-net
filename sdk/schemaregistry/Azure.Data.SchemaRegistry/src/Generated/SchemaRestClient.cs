@@ -131,8 +131,8 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Serialization-Type", serializationType.ToString());
-            request.Headers.Add("Content-Type", "text/plain; charset=utf-8");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "text/plain; charset=utf-8");
             request.Content = new StringRequestContent(schemaContent);
             return message;
         }
@@ -230,8 +230,8 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Serialization-Type", serializationType.ToString());
-            request.Headers.Add("Content-Type", "text/plain; charset=utf-8");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "text/plain; charset=utf-8");
             request.Content = new StringRequestContent(schemaContent);
             return message;
         }

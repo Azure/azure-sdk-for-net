@@ -126,8 +126,8 @@ namespace Azure.Communication.Administration
             uri.AppendQuery("phonePlanId", phonePlanId, true);
             uri.AppendQuery("api-version", "2020-07-20-preview1", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             LocationOptionsQueries locationOptionsQueries = new LocationOptionsQueries();
             foreach (var value in locationOptions)
             {
@@ -295,8 +295,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/administration/phonenumbers/capabilities", false);
             uri.AppendQuery("api-version", "2020-07-20-preview1", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new UpdateNumberCapabilitiesRequest(phoneNumberCapabilitiesUpdate);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -440,8 +440,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/administration/phonenumbers/numberconfiguration", false);
             uri.AppendQuery("api-version", "2020-07-20-preview1", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new NumberConfigurationPhoneNumber(phoneNumber);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -513,8 +513,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/administration/phonenumbers/numberconfiguration/configure", false);
             uri.AppendQuery("api-version", "2020-07-20-preview1", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new NumberConfiguration(pstnConfiguration, phoneNumber);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -586,8 +586,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/administration/phonenumbers/numberconfiguration/unconfigure", false);
             uri.AppendQuery("api-version", "2020-07-20-preview1", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new NumberConfigurationPhoneNumber(phoneNumber);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -1012,8 +1012,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/administration/phonenumbers/releases", false);
             uri.AppendQuery("api-version", "2020-07-20-preview1", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new ReleaseRequest(phoneNumbers);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -1220,10 +1220,10 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/administration/phonenumbers/searches", false);
             uri.AppendQuery("api-version", "2020-07-20-preview1", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (body != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(body);
                 request.Content = content;

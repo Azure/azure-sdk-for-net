@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -594,8 +594,8 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/regenerateKeys", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -809,8 +809,8 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(eventHubName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
