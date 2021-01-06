@@ -30,8 +30,8 @@ namespace Azure.Storage.Queues.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MessageText
         {
-            get => Body.ToString();
-            internal set => Body = new BinaryData(value);
+            get => Body?.ToString();
+            internal set => Body = value == null ? null : new BinaryData(value);
         }
 
         /// <summary>
