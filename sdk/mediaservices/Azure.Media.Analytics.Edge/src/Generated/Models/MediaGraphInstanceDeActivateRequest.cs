@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    /// <summary> The MediaGraphInstanceDeActivateRequest. </summary>
+    /// <summary> Represents the MediaGraphInstanceDeactivateRequest. </summary>
     public partial class MediaGraphInstanceDeActivateRequest : ItemNonSetRequestBase
     {
         /// <summary> Initializes a new instance of MediaGraphInstanceDeActivateRequest. </summary>

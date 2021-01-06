@@ -8,9 +8,6 @@ using Azure.Core;
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    /// <summary>
-    ///  Deserialize MediaGraphTopology.
-    /// </summary>
     public partial class MediaGraphTopology
     {
         /// <summary>

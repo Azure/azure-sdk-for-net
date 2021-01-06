@@ -164,7 +164,7 @@ namespace Azure.Media.Analytics.Edge.Samples
         {
             var graphNodeInput = new List<MediaGraphNodeInput>
             {
-                { new MediaGraphNodeInput{NodeName = "rtspSource"} }
+                new MediaGraphNodeInput("rtspSource")
             };
             var cachePath = "/var/lib/azuremediaservices/tmp/";
             var cacheMaxSize = "2048";

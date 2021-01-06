@@ -29,10 +29,7 @@ namespace Azure.Media.Analytics.Edge.Models
         /// <returns>A node input.</returns>
         public static MediaGraphNodeInput FromNodeName(string nodeName)
         {
-            return new MediaGraphNodeInput()
-            {
-                NodeName = nodeName,
-            };
+            return new MediaGraphNodeInput(nodeName);
         }
     }
 }

@@ -8,9 +8,6 @@ using Azure.Core;
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    /// <summary>
-    ///  MediaGraphInstance model.
-    /// </summary>
     public partial class MediaGraphInstance
     {
         /// <summary>

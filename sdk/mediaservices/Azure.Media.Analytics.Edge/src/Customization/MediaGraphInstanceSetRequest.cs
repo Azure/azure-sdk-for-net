@@ -3,15 +3,9 @@
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    /// <summary>
-    ///  MediaGraphInstanceSetRequest model.
-    /// </summary>
     public partial class MediaGraphInstanceSetRequest
     {
-        /// <summary>
-        ///  The GraphInstanceSet request Body.
-        /// </summary>
-        private MediaGraphInstanceSetRequestBody instanceBody;
+        private MediaGraphInstanceSetRequestBody _instanceBody;
 
         /// <summary>
         ///  Serialize .
@@ -19,10 +13,10 @@ namespace Azure.Media.Analytics.Edge.Models
         /// <returns>A String containing the Payload.</returns>
         public override string GetPayloadAsJson()
         {
-            instanceBody = new MediaGraphInstanceSetRequestBody(Instance.Name);
-            instanceBody.SystemData = Instance.SystemData;
-            instanceBody.Properties = Instance.Properties;
-            return instanceBody.GetPayloadAsJson();
+            _instanceBody = new MediaGraphInstanceSetRequestBody(Instance.Name);
+            _instanceBody.SystemData = Instance.SystemData;
+            _instanceBody.Properties = Instance.Properties;
+            return _instanceBody.GetPayloadAsJson();
         }
     }
 }
