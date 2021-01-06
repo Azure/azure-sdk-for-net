@@ -33,7 +33,6 @@ jobs:
           echo "##vso[build.addbuildtag]$releaseTag"
         displayName: "Tagging the build"
         condition: ne(variables['System.TeamProject'], 'public')
-        env:
 
   - job: Test
 
