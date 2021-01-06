@@ -112,6 +112,11 @@ namespace Microsoft.Azure.Management.Compute
         IVirtualMachineImagesOperations VirtualMachineImages { get; }
 
         /// <summary>
+        /// Gets the IVirtualMachineImagesEdgeZoneOperations.
+        /// </summary>
+        IVirtualMachineImagesEdgeZoneOperations VirtualMachineImagesEdgeZone { get; }
+
+        /// <summary>
         /// Gets the IUsageOperations.
         /// </summary>
         IUsageOperations Usage { get; }
@@ -220,6 +225,26 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IGalleryApplicationVersionsOperations.
         /// </summary>
         IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; }
+
+        /// <summary>
+        /// Gets the IGallerySharingProfileOperations.
+        /// </summary>
+        IGallerySharingProfileOperations GallerySharingProfile { get; }
+
+        /// <summary>
+        /// Gets the ISharedGalleriesOperations.
+        /// </summary>
+        ISharedGalleriesOperations SharedGalleries { get; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImagesOperations.
+        /// </summary>
+        ISharedGalleryImagesOperations SharedGalleryImages { get; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImageVersionsOperations.
+        /// </summary>
+        ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; }
 
         /// <summary>
         /// Gets the IContainerServicesOperations.
