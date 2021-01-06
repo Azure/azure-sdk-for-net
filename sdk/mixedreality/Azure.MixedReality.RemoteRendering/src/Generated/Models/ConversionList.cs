@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.MixedReality.RemoteRendering;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
         /// <summary> Initializes a new instance of ConversionList. </summary>
         /// <param name="conversions"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversions"/> is null. </exception>
-        internal ConversionList(IEnumerable<Conversion> conversions)
+        internal ConversionList(IEnumerable<ConversionInformation> conversions)
         {
             if (conversions == null)
             {
@@ -30,13 +31,13 @@ namespace Azure.MixedReality.RemoteRendering.Models
         /// <summary> Initializes a new instance of ConversionList. </summary>
         /// <param name="conversions"> . </param>
         /// <param name="nextLink"> If more conversions are available this link with the same authentication header can be used to retrieve further values. </param>
-        internal ConversionList(IReadOnlyList<Conversion> conversions, string nextLink)
+        internal ConversionList(IReadOnlyList<ConversionInformation> conversions, string nextLink)
         {
             Conversions = conversions;
             NextLink = nextLink;
         }
 
-        public IReadOnlyList<Conversion> Conversions { get; }
+        public IReadOnlyList<ConversionInformation> Conversions { get; }
         /// <summary> If more conversions are available this link with the same authentication header can be used to retrieve further values. </summary>
         public string NextLink { get; }
     }

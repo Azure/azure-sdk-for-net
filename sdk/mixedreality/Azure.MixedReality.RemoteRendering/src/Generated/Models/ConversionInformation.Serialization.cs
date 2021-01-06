@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.RemoteRendering.Models;
 
-namespace Azure.MixedReality.RemoteRendering.Models
+namespace Azure.MixedReality.RemoteRendering
 {
-    public partial class Conversion
+    public partial class ConversionInformation
     {
-        internal static Conversion DeserializeConversion(JsonElement element)
+        internal static ConversionInformation DeserializeConversionInformation(JsonElement element)
         {
             string id = default;
             ConversionSettings settings = default;
@@ -69,7 +70,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
                     continue;
                 }
             }
-            return new Conversion(id, settings, output.Value, error, status, Optional.ToNullable(creationTime));
+            return new ConversionInformation(id, settings, output.Value, error, status, Optional.ToNullable(creationTime));
         }
     }
 }

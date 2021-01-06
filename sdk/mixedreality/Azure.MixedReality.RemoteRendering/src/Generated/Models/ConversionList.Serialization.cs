@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.RemoteRendering;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
@@ -15,16 +16,16 @@ namespace Azure.MixedReality.RemoteRendering.Models
     {
         internal static ConversionList DeserializeConversionList(JsonElement element)
         {
-            IReadOnlyList<Conversion> conversions = default;
+            IReadOnlyList<ConversionInformation> conversions = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conversions"))
                 {
-                    List<Conversion> array = new List<Conversion>();
+                    List<ConversionInformation> array = new List<ConversionInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Conversion.DeserializeConversion(item));
+                        array.Add(ConversionInformation.DeserializeConversionInformation(item));
                     }
                     conversions = array;
                     continue;

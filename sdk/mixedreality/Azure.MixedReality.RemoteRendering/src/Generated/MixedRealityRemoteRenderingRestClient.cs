@@ -86,9 +86,9 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                 case 201:
                     {
-                        Conversion value = default;
+                        ConversionInformation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Conversion.DeserializeConversion(document.RootElement);
+                        value = ConversionInformation.DeserializeConversionInformation(document.RootElement);
                         return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateConversionHeaders>(value, headers, message.Response);
                     }
                 case 400:
@@ -141,9 +141,9 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                 case 201:
                     {
-                        Conversion value = default;
+                        ConversionInformation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Conversion.DeserializeConversion(document.RootElement);
+                        value = ConversionInformation.DeserializeConversionInformation(document.RootElement);
                         return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateConversionHeaders>(value, headers, message.Response);
                     }
                 case 400:
@@ -199,9 +199,9 @@ namespace Azure.MixedReality.RemoteRendering
             {
                 case 200:
                     {
-                        Conversion value = default;
+                        ConversionInformation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Conversion.DeserializeConversion(document.RootElement);
+                        value = ConversionInformation.DeserializeConversionInformation(document.RootElement);
                         return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetConversionHeaders>(value, headers, message.Response);
                     }
                 case 401:
@@ -240,9 +240,9 @@ namespace Azure.MixedReality.RemoteRendering
             {
                 case 200:
                     {
-                        Conversion value = default;
+                        ConversionInformation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Conversion.DeserializeConversion(document.RootElement);
+                        value = ConversionInformation.DeserializeConversionInformation(document.RootElement);
                         return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetConversionHeaders>(value, headers, message.Response);
                     }
                 case 401:

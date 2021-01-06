@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using Azure.MixedReality.RemoteRendering.Models;
 
-namespace Azure.MixedReality.RemoteRendering.Models
+namespace Azure.MixedReality.RemoteRendering
 {
     /// <summary> The Conversion. </summary>
-    public partial class Conversion
+    public partial class ConversionInformation
     {
-        /// <summary> Initializes a new instance of Conversion. </summary>
+        /// <summary> Initializes a new instance of ConversionInformation. </summary>
         /// <param name="id"> . </param>
         /// <param name="settings"> Settings for where to retrieve input files from and where to write output files. </param>
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
         /// <param name="status"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="settings"/> is null. </exception>
-        internal Conversion(string id, ConversionSettings settings, Error error, CreatedByType status)
+        internal ConversionInformation(string id, ConversionSettings settings, Error error, CreatedByType status)
         {
             if (id == null)
             {
@@ -35,14 +36,14 @@ namespace Azure.MixedReality.RemoteRendering.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of Conversion. </summary>
+        /// <summary> Initializes a new instance of ConversionInformation. </summary>
         /// <param name="id"> . </param>
         /// <param name="settings"> Settings for where to retrieve input files from and where to write output files. </param>
         /// <param name="output"> . </param>
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
         /// <param name="status"> . </param>
         /// <param name="creationTime"> . </param>
-        internal Conversion(string id, ConversionSettings settings, ConversionOutput output, Error error, CreatedByType status, DateTimeOffset? creationTime)
+        internal ConversionInformation(string id, ConversionSettings settings, ConversionOutput output, Error error, CreatedByType status, DateTimeOffset? creationTime)
         {
             Id = id;
             Settings = settings;
