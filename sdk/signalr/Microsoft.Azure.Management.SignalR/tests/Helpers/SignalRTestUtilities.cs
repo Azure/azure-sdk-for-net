@@ -72,7 +72,6 @@ namespace SignalR.Tests
                 {
                     Name = "Standard_S1",
                     Tier = "Standard",
-                    Size = "S1",
                     Capacity = capacity,
                 };
             }
@@ -82,7 +81,6 @@ namespace SignalR.Tests
                 {
                     Name = "Free_F1",
                     Tier = "Free",
-                    Size = "F1",
                 };
             }
 

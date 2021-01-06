@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/providers/Microsoft.SignalRService?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2U/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/providers/Microsoft.SignalRService?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2U/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d5a381a2-2ae0-4d45-9356-fb6a8a4c24db"
+          "720b7481-b23f-4f55-bed5-cfeb9a655937"
         ],
         "accept-language": [
           "en-US"
@@ -15,7 +15,7 @@
         "User-Agent": [
           "FxVersion/4.6.00001.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -24,22 +24,22 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 May 2020 08:53:15 GMT"
+          "Wed, 06 Jan 2021 08:24:08 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11996"
         ],
         "x-ms-request-id": [
-          "f2579910-d3a7-4c1c-b396-f11a00091be0"
+          "141ffed7-df9b-44c9-b22b-aad93587850b"
         ],
         "x-ms-correlation-request-id": [
-          "f2579910-d3a7-4c1c-b396-f11a00091be0"
+          "141ffed7-df9b-44c9-b22b-aad93587850b"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085315Z:f2579910-d3a7-4c1c-b396-f11a00091be0"
+          "SOUTHEASTASIA:20210106T082409Z:141ffed7-df9b-44c9-b22b-aad93587850b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,7 +48,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "2732"
+          "3633"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -57,17 +57,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/providers/Microsoft.SignalRService\",\r\n  \"namespace\": \"Microsoft.SignalRService\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"cdad765c-f191-43ba-b9f5-7aef392f811d\",\r\n      \"roleDefinitionId\": \"346b504e-4aec-45d1-be25-a6e10f3cb4fe\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"SignalR\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationStatuses\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/checkNameAvailability\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"SignalR/eventGridFilters\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/providers/Microsoft.SignalRService\",\r\n  \"namespace\": \"Microsoft.SignalRService\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"cdad765c-f191-43ba-b9f5-7aef392f811d\",\r\n      \"roleDefinitionId\": \"346b504e-4aec-45d1-be25-a6e10f3cb4fe\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"SignalR\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"Switzerland North\",\r\n        \"Southeast Asia\",\r\n        \"Central US EUAP\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Canada Central\",\r\n        \"Germany West Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-07-01-preview\",\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2020-07-01-preview\",\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"Switzerland North\",\r\n        \"Southeast Asia\",\r\n        \"Central US EUAP\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Canada Central\",\r\n        \"Germany West Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-07-01-preview\",\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationStatuses\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"Switzerland North\",\r\n        \"Southeast Asia\",\r\n        \"Central US EUAP\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Canada Central\",\r\n        \"Germany West Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-07-01-preview\",\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"Southeast Asia\",\r\n        \"Central US EUAP\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-07-01-preview\",\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/checkNameAvailability\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"Switzerland North\",\r\n        \"Southeast Asia\",\r\n        \"Central US EUAP\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Canada Central\",\r\n        \"Germany West Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-07-01-preview\",\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"Switzerland North\",\r\n        \"Southeast Asia\",\r\n        \"Central US EUAP\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Canada Central\",\r\n        \"Germany West Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-07-01-preview\",\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"SignalR/eventGridFilters\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\",\r\n        \"South Central US\",\r\n        \"Brazil South\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"Switzerland North\",\r\n        \"Southeast Asia\",\r\n        \"Central US EUAP\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Canada Central\",\r\n        \"Germany West Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-07-01-preview\",\r\n        \"2020-05-01\",\r\n        \"2018-10-01\",\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourcegroups/signalr-test-rg64?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlZ3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourcegroups/signalr-test-rg6675?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlZ3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzU/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "81e94a83-5120-45e1-87d5-096553c0972a"
+          "68c53b7c-d5ee-493c-804b-73503c5349f6"
         ],
         "accept-language": [
           "en-US"
@@ -75,7 +75,7 @@
         "User-Agent": [
           "FxVersion/4.6.00001.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
         "Content-Type": [
@@ -90,7 +90,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 May 2020 08:53:18 GMT"
+          "Wed, 06 Jan 2021 08:24:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -99,13 +99,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "3b86af0e-e4c9-4483-98fd-684373899687"
+          "85c2bbf9-a90c-4c04-afec-a933046725f5"
         ],
         "x-ms-correlation-request-id": [
-          "3b86af0e-e4c9-4483-98fd-684373899687"
+          "85c2bbf9-a90c-4c04-afec-a933046725f5"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085318Z:3b86af0e-e4c9-4483-98fd-684373899687"
+          "SOUTHEASTASIA:20210106T082412Z:85c2bbf9-a90c-4c04-afec-a933046725f5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -114,7 +114,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "187"
+          "191"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -123,17 +123,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64\",\r\n  \"name\": \"signalr-test-rg64\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675\",\r\n  \"name\": \"signalr-test-rg6675\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2P2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Free_F1\",\r\n    \"tier\": \"Free\",\r\n    \"size\": \"F1\"\r\n  },\r\n  \"properties\": {\r\n    \"features\": [\r\n      {\r\n        \"flag\": \"ServiceMode\",\r\n        \"value\": \"Default\"\r\n      }\r\n    ],\r\n    \"upstream\": {\r\n      \"templates\": [\r\n        {\r\n          \"urlTemplate\": \"http://foo.com\"\r\n        }\r\n      ]\r\n    },\r\n    \"networkACLs\": {\r\n      \"defaultAction\": \"Deny\",\r\n      \"publicNetwork\": {\r\n        \"allow\": [\r\n          \"ClientConnection\"\r\n        ]\r\n      },\r\n      \"privateEndpoints\": [\r\n        {\r\n          \"name\": \"mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e\",\r\n          \"allow\": [\r\n            \"ServerConnection\"\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"kind\": \"SignalR\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Free_F1\",\r\n    \"tier\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"features\": [\r\n      {\r\n        \"flag\": \"ServiceMode\",\r\n        \"value\": \"Default\"\r\n      }\r\n    ],\r\n    \"upstream\": {\r\n      \"templates\": [\r\n        {\r\n          \"urlTemplate\": \"http://foo.com\"\r\n        }\r\n      ]\r\n    },\r\n    \"networkACLs\": {\r\n      \"defaultAction\": \"Deny\",\r\n      \"publicNetwork\": {\r\n        \"allow\": [\r\n          \"ClientConnection\"\r\n        ]\r\n      },\r\n      \"privateEndpoints\": [\r\n        {\r\n          \"name\": \"mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e\",\r\n          \"allow\": [\r\n            \"ServerConnection\"\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"kind\": \"SignalR\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "03562a14-f26b-48be-adfc-13bf158903c9"
+          "21c14364-7432-410e-ba62-4cbf42a34c2d"
         ],
         "accept-language": [
           "en-US"
@@ -141,14 +141,14 @@
         "User-Agent": [
           "FxVersion/4.6.00001.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "810"
+          "791"
         ]
       },
       "ResponseHeaders": {
@@ -156,13 +156,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 May 2020 08:53:28 GMT"
+          "Wed, 06 Jan 2021 08:24:24 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationResults/8b85b22d-92ef-407c-85e1-c40510e44241/SignalR/signalr-test9756?api-version=2020-05-01"
+          "https://management.azure.com/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationResults/e66e1266-72c4-4d86-9706-a9b352a536d1/SignalR/signalr-test2356?api-version=2020-07-01-preview"
         ],
         "Server": [
           "Kestrel"
@@ -177,25 +177,25 @@
           "nosniff"
         ],
         "x-ms-client-request-id": [
-          "03562a14-f26b-48be-adfc-13bf158903c9"
+          "21c14364-7432-410e-ba62-4cbf42a34c2d"
         ],
         "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/8b85b22d-92ef-407c-85e1-c40510e44241?api-version=2020-05-01"
+          "https://management.azure.com/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/e66e1266-72c4-4d86-9706-a9b352a536d1/SignalR/signalr-test2356?api-version=2020-07-01-preview"
         ],
         "x-ms-request-id": [
-          "abb5f990-e3a8-4cc2-84de-7e1a95fb019b"
+          "84621d7f-5383-4388-8e3a-636a2dd930d4"
         ],
         "x-ms-correlation-request-id": [
-          "f71ec196-fb7a-4ba4-8d33-225a6a71b42f"
+          "5bc61a17-6b3c-40e3-902e-2c833372778a"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085328Z:f71ec196-fb7a-4ba4-8d33-225a6a71b42f"
+          "SOUTHEASTASIA:20210106T082424Z:5bc61a17-6b3c-40e3-902e-2c833372778a"
         ],
         "Content-Length": [
-          "1072"
+          "1113"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -204,20 +204,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Free_F1\",\r\n    \"tier\": \"Free\",\r\n    \"size\": \"F1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"externalIP\": null,\r\n    \"hostName\": \"signalr-test9756.service.signalr.net\",\r\n    \"publicPort\": 443,\r\n    \"serverPort\": 443,\r\n    \"version\": \"1.0-preview\",\r\n    \"privateEndpointConnections\": [],\r\n    \"hostNamePrefix\": \"signalr-test9756\",\r\n    \"features\": [\r\n      {\r\n        \"flag\": \"ServiceMode\",\r\n        \"value\": \"Default\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableConnectivityLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableMessagingLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      }\r\n    ],\r\n    \"cors\": {\r\n      \"allowedOrigins\": [\r\n        \"*\"\r\n      ]\r\n    },\r\n    \"upstream\": {\r\n      \"templates\": [\r\n        {\r\n          \"hubPattern\": \"*\",\r\n          \"eventPattern\": \"*\",\r\n          \"categoryPattern\": \"*\",\r\n          \"urlTemplate\": \"http://foo.com\"\r\n        }\r\n      ]\r\n    },\r\n    \"networkACLs\": {\r\n      \"defaultAction\": \"Deny\",\r\n      \"publicNetwork\": {\r\n        \"allow\": [\r\n          \"ClientConnection\"\r\n        ],\r\n        \"deny\": null\r\n      },\r\n      \"privateEndpoints\": []\r\n    }\r\n  },\r\n  \"kind\": \"SignalR\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/SignalR/signalr-test9756\",\r\n  \"name\": \"signalr-test9756\",\r\n  \"type\": \"Microsoft.SignalRService/SignalR\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Free_F1\",\r\n    \"tier\": \"Free\",\r\n    \"size\": \"F1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"externalIP\": null,\r\n    \"hostName\": \"signalr-test2356.service.signalr.net\",\r\n    \"publicPort\": 443,\r\n    \"serverPort\": 443,\r\n    \"version\": \"1.0-preview\",\r\n    \"privateEndpointConnections\": [],\r\n    \"tls\": {\r\n      \"clientCertEnabled\": false\r\n    },\r\n    \"features\": [\r\n      {\r\n        \"flag\": \"ServiceMode\",\r\n        \"value\": \"Default\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableConnectivityLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableMessagingLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      }\r\n    ],\r\n    \"cors\": {\r\n      \"allowedOrigins\": [\r\n        \"*\"\r\n      ]\r\n    },\r\n    \"upstream\": {\r\n      \"templates\": [\r\n        {\r\n          \"hubPattern\": \"*\",\r\n          \"eventPattern\": \"*\",\r\n          \"categoryPattern\": \"*\",\r\n          \"urlTemplate\": \"http://foo.com\",\r\n          \"auth\": null\r\n        }\r\n      ]\r\n    },\r\n    \"networkACLs\": {\r\n      \"defaultAction\": \"Deny\",\r\n      \"publicNetwork\": {\r\n        \"allow\": [\r\n          \"ServerConnection\",\r\n          \"ClientConnection\",\r\n          \"RESTAPI\"\r\n        ],\r\n        \"deny\": null\r\n      },\r\n      \"privateEndpoints\": []\r\n    }\r\n  },\r\n  \"kind\": \"SignalR\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/SignalR/signalr-test2356\",\r\n  \"name\": \"signalr-test2356\",\r\n  \"type\": \"Microsoft.SignalRService/SignalR\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/8b85b22d-92ef-407c-85e1-c40510e44241?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25TdGF0dXNlcy9zaWduYWxyLXRlc3Q5NzU2L29wZXJhdGlvbklkLzhiODViMjJkLTkyZWYtNDA3Yy04NWUxLWM0MDUxMGU0NDI0MT9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/e66e1266-72c4-4d86-9706-a9b352a536d1/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblN0YXR1c2VzL2U2NmUxMjY2LTcyYzQtNGQ4Ni05NzA2LWE5YjM1MmE1MzZkMS9TaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.00001.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -225,196 +225,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 May 2020 08:53:58 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "b7daa484-169e-446b-8cf7-34bd36a4cbad"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "9fb68823-6843-4e5b-a564-4252ed92ad59"
-        ],
-        "x-ms-correlation-request-id": [
-          "3549cdbc-a76a-4f30-81e9-19240e81f39a"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085358Z:3549cdbc-a76a-4f30-81e9-19240e81f39a"
-        ],
-        "Content-Length": [
-          "337"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/8b85b22d-92ef-407c-85e1-c40510e44241\",\r\n  \"name\": \"8b85b22d-92ef-407c-85e1-c40510e44241\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-05-29T08:53:25.7348335Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/8b85b22d-92ef-407c-85e1-c40510e44241?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25TdGF0dXNlcy9zaWduYWxyLXRlc3Q5NzU2L29wZXJhdGlvbklkLzhiODViMjJkLTkyZWYtNDA3Yy04NWUxLWM0MDUxMGU0NDI0MT9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:54:28 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "6a897d7c-88d6-4a8f-82ee-78f29bc947fb"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "62883f46-9fb7-4f53-933f-ea9126eba5bc"
-        ],
-        "x-ms-correlation-request-id": [
-          "6c132eb5-837a-42bc-be9f-24ad4b4f6065"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085429Z:6c132eb5-837a-42bc-be9f-24ad4b4f6065"
-        ],
-        "Content-Length": [
-          "337"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/8b85b22d-92ef-407c-85e1-c40510e44241\",\r\n  \"name\": \"8b85b22d-92ef-407c-85e1-c40510e44241\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-05-29T08:53:25.7348335Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/8b85b22d-92ef-407c-85e1-c40510e44241?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25TdGF0dXNlcy9zaWduYWxyLXRlc3Q5NzU2L29wZXJhdGlvbklkLzhiODViMjJkLTkyZWYtNDA3Yy04NWUxLWM0MDUxMGU0NDI0MT9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:54:59 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "e46328be-da3e-4c73-bb6a-ec048ffd5540"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "164b3385-9551-4a82-84d6-a3492b6cc85e"
-        ],
-        "x-ms-correlation-request-id": [
-          "d64e982b-e1fa-48af-b8e7-5cf43c992d2a"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085459Z:d64e982b-e1fa-48af-b8e7-5cf43c992d2a"
-        ],
-        "Content-Length": [
-          "337"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/8b85b22d-92ef-407c-85e1-c40510e44241\",\r\n  \"name\": \"8b85b22d-92ef-407c-85e1-c40510e44241\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-05-29T08:53:25.7348335Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/8b85b22d-92ef-407c-85e1-c40510e44241?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25TdGF0dXNlcy9zaWduYWxyLXRlc3Q5NzU2L29wZXJhdGlvbklkLzhiODViMjJkLTkyZWYtNDA3Yy04NWUxLWM0MDUxMGU0NDI0MT9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:55:29 GMT"
+          "Wed, 06 Jan 2021 08:24:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -432,22 +243,22 @@
           "nosniff"
         ],
         "x-ms-client-request-id": [
-          "7f8a519e-f4f7-40a7-b888-687a35914db1"
+          "bfb4fea1-cf36-49b7-a792-b6d3b645fc9a"
         ],
         "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
         ],
         "x-ms-request-id": [
-          "ca6f9e90-2fa1-4b49-a903-d03efdf5ef40"
+          "bd6d5f0f-f190-4ded-91cc-9c3b2d220418"
         ],
         "x-ms-correlation-request-id": [
-          "1b155a79-7c07-48a0-aad5-8290a4a633b3"
+          "63940ceb-4504-482a-8ab9-e11d23535de6"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085529Z:1b155a79-7c07-48a0-aad5-8290a4a633b3"
+          "SOUTHEASTASIA:20210106T082455Z:63940ceb-4504-482a-8ab9-e11d23535de6"
         ],
         "Content-Length": [
-          "380"
+          "335"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -456,20 +267,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/8b85b22d-92ef-407c-85e1-c40510e44241\",\r\n  \"name\": \"8b85b22d-92ef-407c-85e1-c40510e44241\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-05-29T08:53:25.7348335Z\",\r\n  \"endTime\": \"2020-05-29T08:55:06.4039615Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/e66e1266-72c4-4d86-9706-a9b352a536d1/SignalR/signalr-test2356\",\r\n  \"name\": \"e66e1266-72c4-4d86-9706-a9b352a536d1\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2021-01-06T08:24:21.4482323Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2P2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/e66e1266-72c4-4d86-9706-a9b352a536d1/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblN0YXR1c2VzL2U2NmUxMjY2LTcyYzQtNGQ4Ni05NzA2LWE5YjM1MmE1MzZkMS9TaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.00001.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -477,7 +288,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 May 2020 08:55:29 GMT"
+          "Wed, 06 Jan 2021 08:25:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -495,22 +306,22 @@
           "nosniff"
         ],
         "x-ms-client-request-id": [
-          "6c8cfe7f-7df4-4fd1-bea3-1a99f621c6e5"
+          "dbbd620c-d25d-45e0-af88-d514f3b6f50b"
         ],
         "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
         ],
         "x-ms-request-id": [
-          "1ff35bb2-782f-46f5-80e8-81c9865a4c8a"
+          "70df6c01-f597-4325-9da2-55a5231260d2"
         ],
         "x-ms-correlation-request-id": [
-          "42285ebd-9874-499d-88f3-1cad45d26219"
+          "4b841a72-79ed-4523-b7c7-30bbd5e0babe"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085530Z:42285ebd-9874-499d-88f3-1cad45d26219"
+          "SOUTHEASTASIA:20210106T082525Z:4b841a72-79ed-4523-b7c7-30bbd5e0babe"
         ],
         "Content-Length": [
-          "1073"
+          "335"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -519,26 +330,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Free_F1\",\r\n    \"tier\": \"Free\",\r\n    \"size\": \"F1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"externalIP\": \"20.42.72.7\",\r\n    \"hostName\": \"signalr-test9756.service.signalr.net\",\r\n    \"publicPort\": 443,\r\n    \"serverPort\": 443,\r\n    \"version\": \"1.0\",\r\n    \"privateEndpointConnections\": [],\r\n    \"hostNamePrefix\": \"signalr-test9756\",\r\n    \"features\": [\r\n      {\r\n        \"flag\": \"ServiceMode\",\r\n        \"value\": \"Default\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableConnectivityLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableMessagingLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      }\r\n    ],\r\n    \"cors\": {\r\n      \"allowedOrigins\": [\r\n        \"*\"\r\n      ]\r\n    },\r\n    \"upstream\": {\r\n      \"templates\": [\r\n        {\r\n          \"hubPattern\": \"*\",\r\n          \"eventPattern\": \"*\",\r\n          \"categoryPattern\": \"*\",\r\n          \"urlTemplate\": \"http://foo.com\"\r\n        }\r\n      ]\r\n    },\r\n    \"networkACLs\": {\r\n      \"defaultAction\": \"Deny\",\r\n      \"publicNetwork\": {\r\n        \"allow\": [\r\n          \"ClientConnection\"\r\n        ],\r\n        \"deny\": null\r\n      },\r\n      \"privateEndpoints\": []\r\n    }\r\n  },\r\n  \"kind\": \"SignalR\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/SignalR/signalr-test9756\",\r\n  \"name\": \"signalr-test9756\",\r\n  \"type\": \"Microsoft.SignalRService/SignalR\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/e66e1266-72c4-4d86-9706-a9b352a536d1/SignalR/signalr-test2356\",\r\n  \"name\": \"e66e1266-72c4-4d86-9706-a9b352a536d1\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2021-01-06T08:24:21.4482323Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2P2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/e66e1266-72c4-4d86-9706-a9b352a536d1/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblN0YXR1c2VzL2U2NmUxMjY2LTcyYzQtNGQ4Ni05NzA2LWE5YjM1MmE1MzZkMS9TaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "887410fc-1dfc-4ca7-94f5-daaef62b9777"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.00001.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -546,139 +351,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 May 2020 08:55:30 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "887410fc-1dfc-4ca7-94f5-daaef62b9777"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "317a44cb-e2f3-4ec7-871c-4e42fa00cf83"
-        ],
-        "x-ms-correlation-request-id": [
-          "db9993e5-2277-485d-95d7-929dd61e947b"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085530Z:db9993e5-2277-485d-95d7-929dd61e947b"
-        ],
-        "Content-Length": [
-          "1073"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Free_F1\",\r\n    \"tier\": \"Free\",\r\n    \"size\": \"F1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"externalIP\": \"20.42.72.7\",\r\n    \"hostName\": \"signalr-test9756.service.signalr.net\",\r\n    \"publicPort\": 443,\r\n    \"serverPort\": 443,\r\n    \"version\": \"1.0\",\r\n    \"privateEndpointConnections\": [],\r\n    \"hostNamePrefix\": \"signalr-test9756\",\r\n    \"features\": [\r\n      {\r\n        \"flag\": \"ServiceMode\",\r\n        \"value\": \"Default\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableConnectivityLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableMessagingLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      }\r\n    ],\r\n    \"cors\": {\r\n      \"allowedOrigins\": [\r\n        \"*\"\r\n      ]\r\n    },\r\n    \"upstream\": {\r\n      \"templates\": [\r\n        {\r\n          \"hubPattern\": \"*\",\r\n          \"eventPattern\": \"*\",\r\n          \"categoryPattern\": \"*\",\r\n          \"urlTemplate\": \"http://foo.com\"\r\n        }\r\n      ]\r\n    },\r\n    \"networkACLs\": {\r\n      \"defaultAction\": \"Deny\",\r\n      \"publicNetwork\": {\r\n        \"allow\": [\r\n          \"ClientConnection\"\r\n        ],\r\n        \"deny\": null\r\n      },\r\n      \"privateEndpoints\": []\r\n    }\r\n  },\r\n  \"kind\": \"SignalR\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/SignalR/signalr-test9756\",\r\n  \"name\": \"signalr-test9756\",\r\n  \"type\": \"Microsoft.SignalRService/SignalR\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2P2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:57:04 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11988"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "785c2ae5-5a24-4c3c-bcda-831ada0f599e"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "1fcbb59f-3bbe-431e-b160-b176dd5bf4b1"
-        ],
-        "x-ms-correlation-request-id": [
-          "5ac45b54-4b9d-4814-a6bd-237cdf1d07f6"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085705Z:5ac45b54-4b9d-4814-a6bd-237cdf1d07f6"
-        ],
-        "Content-Length": [
-          "1147"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"capacity\": 5\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"externalIP\": \"20.42.64.135\",\r\n    \"hostName\": \"signalr-test9756.service.signalr.net\",\r\n    \"publicPort\": 443,\r\n    \"serverPort\": 443,\r\n    \"version\": \"1.0\",\r\n    \"privateEndpointConnections\": [],\r\n    \"hostNamePrefix\": \"signalr-test9756\",\r\n    \"features\": [\r\n      {\r\n        \"flag\": \"ServiceMode\",\r\n        \"value\": \"Serverless\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableConnectivityLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableMessagingLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      }\r\n    ],\r\n    \"cors\": {\r\n      \"allowedOrigins\": [\r\n        \"http://example.com:12345\",\r\n        \"https://contoso.com\"\r\n      ]\r\n    },\r\n    \"upstream\": {\r\n      \"templates\": [\r\n        {\r\n          \"hubPattern\": \"*\",\r\n          \"eventPattern\": \"*\",\r\n          \"categoryPattern\": \"*\",\r\n          \"urlTemplate\": \"http://foo.com\"\r\n        }\r\n      ]\r\n    },\r\n    \"networkACLs\": {\r\n      \"defaultAction\": \"Deny\",\r\n      \"publicNetwork\": {\r\n        \"allow\": [\r\n          \"ClientConnection\"\r\n        ],\r\n        \"deny\": null\r\n      },\r\n      \"privateEndpoints\": []\r\n    }\r\n  },\r\n  \"kind\": \"SignalR\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"key2\": \"value2\",\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\"\r\n  },\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/SignalR/signalr-test9756\",\r\n  \"name\": \"signalr-test9756\",\r\n  \"type\": \"Microsoft.SignalRService/SignalR\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUj9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "59ce8d7f-069a-4279-b15c-96db777712a5"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:55:29 GMT"
+          "Wed, 06 Jan 2021 08:25:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -696,22 +369,22 @@
           "nosniff"
         ],
         "x-ms-client-request-id": [
-          "59ce8d7f-069a-4279-b15c-96db777712a5"
+          "661309c9-d4ab-4670-a669-a73c66888891"
         ],
         "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
         ],
         "x-ms-request-id": [
-          "f2421770-8612-480f-aafc-9039d038106b"
+          "bd218ace-938c-4585-afc2-d5f829e585ca"
         ],
         "x-ms-correlation-request-id": [
-          "0bdf9690-f56f-4424-98f5-64b55967e2b8"
+          "e4864cb4-ee81-43f8-a37a-421f322aefc6"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085530Z:0bdf9690-f56f-4424-98f5-64b55967e2b8"
+          "SOUTHEASTASIA:20210106T082555Z:e4864cb4-ee81-43f8-a37a-421f322aefc6"
         ],
         "Content-Length": [
-          "1085"
+          "335"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -720,374 +393,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"Free_F1\",\r\n        \"tier\": \"Free\",\r\n        \"size\": \"F1\",\r\n        \"capacity\": 1\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"externalIP\": \"20.42.72.7\",\r\n        \"hostName\": \"signalr-test9756.service.signalr.net\",\r\n        \"publicPort\": 443,\r\n        \"serverPort\": 443,\r\n        \"version\": \"1.0\",\r\n        \"privateEndpointConnections\": [],\r\n        \"hostNamePrefix\": \"signalr-test9756\",\r\n        \"features\": [\r\n          {\r\n            \"flag\": \"ServiceMode\",\r\n            \"value\": \"Default\",\r\n            \"properties\": {}\r\n          },\r\n          {\r\n            \"flag\": \"EnableConnectivityLogs\",\r\n            \"value\": \"False\",\r\n            \"properties\": {}\r\n          },\r\n          {\r\n            \"flag\": \"EnableMessagingLogs\",\r\n            \"value\": \"False\",\r\n            \"properties\": {}\r\n          }\r\n        ],\r\n        \"cors\": {\r\n          \"allowedOrigins\": [\r\n            \"*\"\r\n          ]\r\n        },\r\n        \"upstream\": {\r\n          \"templates\": [\r\n            {\r\n              \"hubPattern\": \"*\",\r\n              \"eventPattern\": \"*\",\r\n              \"categoryPattern\": \"*\",\r\n              \"urlTemplate\": \"http://foo.com\"\r\n            }\r\n          ]\r\n        },\r\n        \"networkACLs\": {\r\n          \"defaultAction\": \"Deny\",\r\n          \"publicNetwork\": {\r\n            \"allow\": [\r\n              \"ClientConnection\"\r\n            ],\r\n            \"deny\": null\r\n          },\r\n          \"privateEndpoints\": []\r\n        }\r\n      },\r\n      \"kind\": \"SignalR\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      },\r\n      \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/SignalR/signalr-test9756\",\r\n      \"name\": \"signalr-test9756\",\r\n      \"type\": \"Microsoft.SignalRService/SignalR\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/e66e1266-72c4-4d86-9706-a9b352a536d1/SignalR/signalr-test2356\",\r\n  \"name\": \"e66e1266-72c4-4d86-9706-a9b352a536d1\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2021-01-06T08:24:21.4482323Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756/listKeys?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2L2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "5ed1f1d3-d11f-4294-ad58-41781af50b15"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:55:30 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "5ed1f1d3-d11f-4294-ad58-41781af50b15"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "163a2529-34fb-40da-af25-6301095a47b0"
-        ],
-        "x-ms-correlation-request-id": [
-          "554ee7b0-dcf4-43c4-85fa-ac3855f7b76a"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085531Z:554ee7b0-dcf4-43c4-85fa-ac3855f7b76a"
-        ],
-        "Content-Length": [
-          "425"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"ubam9JvnBfbVMHvdXo1A/FIEVg8pOuLbWHLgDS88I24=\",\r\n  \"secondaryKey\": \"9hmiy9YgrWV15fTA62sZ47jzmoBfeppKpj9JQJpXKCI=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=ubam9JvnBfbVMHvdXo1A/FIEVg8pOuLbWHLgDS88I24=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=9hmiy9YgrWV15fTA62sZ47jzmoBfeppKpj9JQJpXKCI=;Version=1.0;\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756/listKeys?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2L2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "a1d8cec6-d8c9-4b1a-9d49-97502dceddcb"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:57:05 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "a1d8cec6-d8c9-4b1a-9d49-97502dceddcb"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "0aa4a3c3-4cee-4b27-ba20-7f3ef6d4e08a"
-        ],
-        "x-ms-correlation-request-id": [
-          "e46ed0be-a4a4-4f46-bbb4-cb5da07b1f14"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085705Z:e46ed0be-a4a4-4f46-bbb4-cb5da07b1f14"
-        ],
-        "Content-Length": [
-          "425"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"ubam9JvnBfbVMHvdXo1A/FIEVg8pOuLbWHLgDS88I24=\",\r\n  \"secondaryKey\": \"9hmiy9YgrWV15fTA62sZ47jzmoBfeppKpj9JQJpXKCI=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=ubam9JvnBfbVMHvdXo1A/FIEVg8pOuLbWHLgDS88I24=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=9hmiy9YgrWV15fTA62sZ47jzmoBfeppKpj9JQJpXKCI=;Version=1.0;\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756/listKeys?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2L2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "9bee8864-2bc0-43b6-bd01-a8b7ba77ddf9"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:57:36 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "9bee8864-2bc0-43b6-bd01-a8b7ba77ddf9"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "d388bbcb-9e22-418c-b5ac-c7b058541c1f"
-        ],
-        "x-ms-correlation-request-id": [
-          "92ab75a2-7674-4dfa-a445-d5cd81f96e0e"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085737Z:92ab75a2-7674-4dfa-a445-d5cd81f96e0e"
-        ],
-        "Content-Length": [
-          "425"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"MLt0+nluixTOAmY4UnZP43rjRquDiJLCwiJh9UrGY0I=\",\r\n  \"secondaryKey\": \"9hmiy9YgrWV15fTA62sZ47jzmoBfeppKpj9JQJpXKCI=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=MLt0+nluixTOAmY4UnZP43rjRquDiJLCwiJh9UrGY0I=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=9hmiy9YgrWV15fTA62sZ47jzmoBfeppKpj9JQJpXKCI=;Version=1.0;\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756/listKeys?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2L2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "eee3e210-6de5-471a-96ba-cd45ed703f17"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:58:08 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "eee3e210-6de5-471a-96ba-cd45ed703f17"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "725ea519-a412-4bf1-8e96-a4e4f6da4257"
-        ],
-        "x-ms-correlation-request-id": [
-          "139913ec-0b96-4c0c-9906-8c30775d8e35"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085809Z:139913ec-0b96-4c0c-9906-8c30775d8e35"
-        ],
-        "Content-Length": [
-          "425"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"MLt0+nluixTOAmY4UnZP43rjRquDiJLCwiJh9UrGY0I=\",\r\n  \"secondaryKey\": \"B50bGtmik5qksM+T8gsI9bzf9FgAJ2J7M9ZOTBsUyFM=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=MLt0+nluixTOAmY4UnZP43rjRquDiJLCwiJh9UrGY0I=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=B50bGtmik5qksM+T8gsI9bzf9FgAJ2J7M9ZOTBsUyFM=;Version=1.0;\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2P2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
-      "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"capacity\": 5\r\n  },\r\n  \"properties\": {\r\n    \"hostNamePrefix\": \"signalr-service-test3132\",\r\n    \"features\": [\r\n      {\r\n        \"value\": \"Serverless\"\r\n      }\r\n    ],\r\n    \"cors\": {\r\n      \"allowedOrigins\": [\r\n        \"http://example.com:12345\",\r\n        \"https://contoso.com\"\r\n      ]\r\n    }\r\n  },\r\n  \"tags\": {\r\n    \"key2\": \"value2\",\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\"\r\n  }\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "a848d5d1-5078-41a9-94e6-1726f2e8683c"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "477"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:55:33 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationResults/3937c29f-0615-4c49-94e5-489653d89555/SignalR/signalr-test9756?api-version=2020-05-01"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "a848d5d1-5078-41a9-94e6-1726f2e8683c"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/3937c29f-0615-4c49-94e5-489653d89555?api-version=2020-05-01"
-        ],
-        "x-ms-request-id": [
-          "27d1ccf8-c760-4aeb-92b2-5acaf4d2a2f8"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
-        ],
-        "x-ms-correlation-request-id": [
-          "d9e92e7d-b4fb-4e22-9e8a-a2df12181b96"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085533Z:d9e92e7d-b4fb-4e22-9e8a-a2df12181b96"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/3937c29f-0615-4c49-94e5-489653d89555?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25TdGF0dXNlcy9zaWduYWxyLXRlc3Q5NzU2L29wZXJhdGlvbklkLzM5MzdjMjlmLTA2MTUtNGM0OS05NGU1LTQ4OTY1M2Q4OTU1NT9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/e66e1266-72c4-4d86-9706-a9b352a536d1/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblN0YXR1c2VzL2U2NmUxMjY2LTcyYzQtNGQ4Ni05NzA2LWE5YjM1MmE1MzZkMS9TaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.00001.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -1095,7 +414,70 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 May 2020 08:56:03 GMT"
+          "Wed, 06 Jan 2021 08:26:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "860a04cb-1fb3-4018-87b4-fc2cbb35b5d1"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "36c06b11-0dca-4f3e-b6ee-96fc1c1d8d2c"
+        ],
+        "x-ms-correlation-request-id": [
+          "c857b604-d897-4501-b8fc-f8558a7e43a4"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082625Z:c857b604-d897-4501-b8fc-f8558a7e43a4"
+        ],
+        "Content-Length": [
+          "378"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/e66e1266-72c4-4d86-9706-a9b352a536d1/SignalR/signalr-test2356\",\r\n  \"name\": \"e66e1266-72c4-4d86-9706-a9b352a536d1\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-01-06T08:24:21.4482323Z\",\r\n  \"endTime\": \"2021-01-06T08:25:57.4541983Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:26:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1113,22 +495,22 @@
           "nosniff"
         ],
         "x-ms-client-request-id": [
-          "e1087cd4-717c-40e8-a3c9-6e0f35268cfa"
+          "289c3b7b-c6b3-43fb-bdc3-232c3af19e66"
         ],
         "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
         ],
         "x-ms-request-id": [
-          "f945e7c7-51b1-476d-b986-f20675e286e9"
+          "6e72d2eb-4997-4aa5-8d52-14765120df84"
         ],
         "x-ms-correlation-request-id": [
-          "2cfa5c5b-309c-4da2-89e5-33e759530048"
+          "b9e06047-6e8e-4f09-b651-b5da493fc711"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085604Z:2cfa5c5b-309c-4da2-89e5-33e759530048"
+          "SOUTHEASTASIA:20210106T082626Z:b9e06047-6e8e-4f09-b651-b5da493fc711"
         ],
         "Content-Length": [
-          "337"
+          "1116"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1137,83 +519,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/3937c29f-0615-4c49-94e5-489653d89555\",\r\n  \"name\": \"3937c29f-0615-4c49-94e5-489653d89555\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-05-29T08:55:33.2517031Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Free_F1\",\r\n    \"tier\": \"Free\",\r\n    \"size\": \"F1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"externalIP\": \"20.42.64.128\",\r\n    \"hostName\": \"signalr-test2356.service.signalr.net\",\r\n    \"publicPort\": 443,\r\n    \"serverPort\": 443,\r\n    \"version\": \"1.0\",\r\n    \"privateEndpointConnections\": [],\r\n    \"tls\": {\r\n      \"clientCertEnabled\": false\r\n    },\r\n    \"features\": [\r\n      {\r\n        \"flag\": \"ServiceMode\",\r\n        \"value\": \"Default\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableConnectivityLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableMessagingLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      }\r\n    ],\r\n    \"cors\": {\r\n      \"allowedOrigins\": [\r\n        \"*\"\r\n      ]\r\n    },\r\n    \"upstream\": {\r\n      \"templates\": [\r\n        {\r\n          \"hubPattern\": \"*\",\r\n          \"eventPattern\": \"*\",\r\n          \"categoryPattern\": \"*\",\r\n          \"urlTemplate\": \"http://foo.com\",\r\n          \"auth\": null\r\n        }\r\n      ]\r\n    },\r\n    \"networkACLs\": {\r\n      \"defaultAction\": \"Deny\",\r\n      \"publicNetwork\": {\r\n        \"allow\": [\r\n          \"ServerConnection\",\r\n          \"ClientConnection\",\r\n          \"RESTAPI\"\r\n        ],\r\n        \"deny\": null\r\n      },\r\n      \"privateEndpoints\": []\r\n    }\r\n  },\r\n  \"kind\": \"SignalR\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/SignalR/signalr-test2356\",\r\n  \"name\": \"signalr-test2356\",\r\n  \"type\": \"Microsoft.SignalRService/SignalR\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/3937c29f-0615-4c49-94e5-489653d89555?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25TdGF0dXNlcy9zaWduYWxyLXRlc3Q5NzU2L29wZXJhdGlvbklkLzM5MzdjMjlmLTA2MTUtNGM0OS05NGU1LTQ4OTY1M2Q4OTU1NT9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:56:34 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11990"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
         "x-ms-client-request-id": [
-          "654c167b-4aea-4bfc-af22-cdc6d7c95474"
+          "355708bc-06e0-4132-bb79-111e82aeb57c"
         ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
+        "accept-language": [
+          "en-US"
         ],
-        "x-ms-request-id": [
-          "b3253df7-8a32-4ae6-896c-a438fe14c0f6"
-        ],
-        "x-ms-correlation-request-id": [
-          "0ceb01fb-99d1-42cb-89d6-39631fb8081c"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085634Z:0ceb01fb-99d1-42cb-89d6-39631fb8081c"
-        ],
-        "Content-Length": [
-          "337"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/3937c29f-0615-4c49-94e5-489653d89555\",\r\n  \"name\": \"3937c29f-0615-4c49-94e5-489653d89555\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-05-29T08:55:33.2517031Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/3937c29f-0615-4c49-94e5-489653d89555?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25TdGF0dXNlcy9zaWduYWxyLXRlc3Q5NzU2L29wZXJhdGlvbklkLzM5MzdjMjlmLTA2MTUtNGM0OS05NGU1LTQ4OTY1M2Q4OTU1NT9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.00001.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -1221,7 +546,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 May 2020 08:57:04 GMT"
+          "Wed, 06 Jan 2021 08:26:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1239,22 +564,22 @@
           "nosniff"
         ],
         "x-ms-client-request-id": [
-          "bd52199f-26eb-47c2-acfc-3ec7d1d7b465"
+          "355708bc-06e0-4132-bb79-111e82aeb57c"
         ],
         "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
         ],
         "x-ms-request-id": [
-          "29683873-a9ce-4281-9ef8-5904766a66b0"
+          "eecb8c26-94e3-4a52-b3d9-9e8a0d07c429"
         ],
         "x-ms-correlation-request-id": [
-          "2f8b9ae3-4257-4741-95eb-dbc8d4a92a81"
+          "9a59fb09-2f23-4dd6-a9e5-4bf0c7e83cd2"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085704Z:2f8b9ae3-4257-4741-95eb-dbc8d4a92a81"
+          "SOUTHEASTASIA:20210106T082627Z:9a59fb09-2f23-4dd6-a9e5-4bf0c7e83cd2"
         ],
         "Content-Length": [
-          "380"
+          "1116"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1263,182 +588,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/3937c29f-0615-4c49-94e5-489653d89555\",\r\n  \"name\": \"3937c29f-0615-4c49-94e5-489653d89555\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-05-29T08:55:33.2517031Z\",\r\n  \"endTime\": \"2020-05-29T08:56:55.0340166Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Free_F1\",\r\n    \"tier\": \"Free\",\r\n    \"size\": \"F1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"externalIP\": \"20.42.64.128\",\r\n    \"hostName\": \"signalr-test2356.service.signalr.net\",\r\n    \"publicPort\": 443,\r\n    \"serverPort\": 443,\r\n    \"version\": \"1.0\",\r\n    \"privateEndpointConnections\": [],\r\n    \"tls\": {\r\n      \"clientCertEnabled\": false\r\n    },\r\n    \"features\": [\r\n      {\r\n        \"flag\": \"ServiceMode\",\r\n        \"value\": \"Default\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableConnectivityLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableMessagingLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      }\r\n    ],\r\n    \"cors\": {\r\n      \"allowedOrigins\": [\r\n        \"*\"\r\n      ]\r\n    },\r\n    \"upstream\": {\r\n      \"templates\": [\r\n        {\r\n          \"hubPattern\": \"*\",\r\n          \"eventPattern\": \"*\",\r\n          \"categoryPattern\": \"*\",\r\n          \"urlTemplate\": \"http://foo.com\",\r\n          \"auth\": null\r\n        }\r\n      ]\r\n    },\r\n    \"networkACLs\": {\r\n      \"defaultAction\": \"Deny\",\r\n      \"publicNetwork\": {\r\n        \"allow\": [\r\n          \"ServerConnection\",\r\n          \"ClientConnection\",\r\n          \"RESTAPI\"\r\n        ],\r\n        \"deny\": null\r\n      },\r\n      \"privateEndpoints\": []\r\n    }\r\n  },\r\n  \"kind\": \"SignalR\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/SignalR/signalr-test2356\",\r\n  \"name\": \"signalr-test2356\",\r\n  \"type\": \"Microsoft.SignalRService/SignalR\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756/regenerateKey?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2L3JlZ2VuZXJhdGVLZXk/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
-      "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"keyType\": \"Primary\"\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "52659847-8f6e-4857-84fb-c6c71b14e3a9"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "28"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:57:05 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationResults/baa33931-e170-4292-ab0c-88ed0156f8ae/SignalR/signalr-test9756?api-version=2020-05-01"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "52659847-8f6e-4857-84fb-c6c71b14e3a9"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/baa33931-e170-4292-ab0c-88ed0156f8ae?api-version=2020-05-01"
-        ],
-        "x-ms-request-id": [
-          "100e1e1f-fd6b-4800-a7c1-fe7958695816"
-        ],
-        "x-ms-correlation-request-id": [
-          "80b1a2d5-4e8f-4f91-8c90-e99871900c3f"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085706Z:80b1a2d5-4e8f-4f91-8c90-e99871900c3f"
-        ],
-        "Content-Length": [
-          "425"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"MLt0+nluixTOAmY4UnZP43rjRquDiJLCwiJh9UrGY0I=\",\r\n  \"secondaryKey\": \"9hmiy9YgrWV15fTA62sZ47jzmoBfeppKpj9JQJpXKCI=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=MLt0+nluixTOAmY4UnZP43rjRquDiJLCwiJh9UrGY0I=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=9hmiy9YgrWV15fTA62sZ47jzmoBfeppKpj9JQJpXKCI=;Version=1.0;\"\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756/regenerateKey?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2L3JlZ2VuZXJhdGVLZXk/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
-      "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"keyType\": \"Secondary\"\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "ee6875d0-75e9-472e-b517-e879a8f3c84d"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "30"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:57:37 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationResults/877a83be-dcfa-46ae-b598-0634854a73cc/SignalR/signalr-test9756?api-version=2020-05-01"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "ee6875d0-75e9-472e-b517-e879a8f3c84d"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/877a83be-dcfa-46ae-b598-0634854a73cc?api-version=2020-05-01"
-        ],
-        "x-ms-request-id": [
-          "d5808984-0515-41d9-a993-5f9d59b85900"
-        ],
-        "x-ms-correlation-request-id": [
-          "f59ed408-b9a0-46ee-ba18-789d55360750"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085738Z:f59ed408-b9a0-46ee-ba18-789d55360750"
-        ],
-        "Content-Length": [
-          "425"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"MLt0+nluixTOAmY4UnZP43rjRquDiJLCwiJh9UrGY0I=\",\r\n  \"secondaryKey\": \"B50bGtmik5qksM+T8gsI9bzf9FgAJ2J7M9ZOTBsUyFM=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=MLt0+nluixTOAmY4UnZP43rjRquDiJLCwiJh9UrGY0I=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test9756.service.signalr.net;AccessKey=B50bGtmik5qksM+T8gsI9bzf9FgAJ2J7M9ZOTBsUyFM=;Version=1.0;\"\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationResults/baa33931-e170-4292-ab0c-88ed0156f8ae/SignalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25SZXN1bHRzL2JhYTMzOTMxLWUxNzAtNDI5Mi1hYjBjLTg4ZWQwMTU2ZjhhZS9TaWduYWxSL3NpZ25hbHItdGVzdDk3NTY/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.00001.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -1446,373 +609,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 May 2020 08:57:35 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "63e3d3bd-a695-4afd-ae8b-f20637676113"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "e23c5c21-d425-40be-a37c-e20298f10322"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11987"
-        ],
-        "x-ms-correlation-request-id": [
-          "898fc716-d1d5-4fde-98ee-e4144c8623bf"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085736Z:898fc716-d1d5-4fde-98ee-e4144c8623bf"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationResults/baa33931-e170-4292-ab0c-88ed0156f8ae/SignalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25SZXN1bHRzL2JhYTMzOTMxLWUxNzAtNDI5Mi1hYjBjLTg4ZWQwMTU2ZjhhZS9TaWduYWxSL3NpZ25hbHItdGVzdDk3NTY/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:57:36 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "2f9bd772-b33b-4a14-befb-81fb703f96ae"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "ee007d41-c217-4f4b-bb31-454f404a1486"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11986"
-        ],
-        "x-ms-correlation-request-id": [
-          "4040192b-43fa-4a47-86a7-aef78df4276c"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085736Z:4040192b-43fa-4a47-86a7-aef78df4276c"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationResults/877a83be-dcfa-46ae-b598-0634854a73cc/SignalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25SZXN1bHRzLzg3N2E4M2JlLWRjZmEtNDZhZS1iNTk4LTA2MzQ4NTRhNzNjYy9TaWduYWxSL3NpZ25hbHItdGVzdDk3NTY/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:58:07 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "85e7058b-643b-4aa6-af31-52aa7e2bb2f3"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "699f2f54-8bd5-4ea9-b48e-fddc55b77832"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11985"
-        ],
-        "x-ms-correlation-request-id": [
-          "f1f38054-8cfb-4e66-b155-40077ba64c30"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085808Z:f1f38054-8cfb-4e66-b155-40077ba64c30"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationResults/877a83be-dcfa-46ae-b598-0634854a73cc/SignalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25SZXN1bHRzLzg3N2E4M2JlLWRjZmEtNDZhZS1iNTk4LTA2MzQ4NTRhNzNjYy9TaWduYWxSL3NpZ25hbHItdGVzdDk3NTY/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:58:07 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "54a569b4-9d8c-496c-8c6e-e5f06653c238"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "x-ms-request-id": [
-          "33b579f9-5eda-40e6-9776-68b13b478e99"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11984"
-        ],
-        "x-ms-correlation-request-id": [
-          "66416ef4-5e26-46b5-a193-2b8cb0812222"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085808Z:66416ef4-5e26-46b5-a193-2b8cb0812222"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2P2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "be29ed72-a0e8-46a6-b96e-299774489e7d"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:58:09 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationResults/72981ac0-25be-44d3-9053-4737453791f4/SignalR/signalr-test9756?api-version=2020-05-01"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-client-request-id": [
-          "be29ed72-a0e8-46a6-b96e-299774489e7d"
-        ],
-        "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/72981ac0-25be-44d3-9053-4737453791f4?api-version=2020-05-01"
-        ],
-        "x-ms-request-id": [
-          "cee0d801-3baf-4e33-8ed0-fc438dc9be32"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
-        ],
-        "x-ms-correlation-request-id": [
-          "bc6f08a3-d16e-4c84-94a6-18b56ffe7d84"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085810Z:bc6f08a3-d16e-4c84-94a6-18b56ffe7d84"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/signalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2Uvc2lnbmFsUi9zaWduYWxyLXRlc3Q5NzU2P2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "488fe0da-b1ae-4e59-af81-6510e073dd38"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:58:41 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14998"
-        ],
-        "x-ms-request-id": [
-          "d9b0f816-9dad-45dd-8e75-800d1a696cb7"
-        ],
-        "x-ms-correlation-request-id": [
-          "d9b0f816-9dad-45dd-8e75-800d1a696cb7"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085841Z:d9b0f816-9dad-45dd-8e75-800d1a696cb7"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 204
-    },
-    {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/72981ac0-25be-44d3-9053-4737453791f4?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25TdGF0dXNlcy9zaWduYWxyLXRlc3Q5NzU2L29wZXJhdGlvbklkLzcyOTgxYWMwLTI1YmUtNDRkMy05MDUzLTQ3Mzc0NTM3OTFmND9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.00001.0",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 May 2020 08:58:40 GMT"
+          "Wed, 06 Jan 2021 08:29:01 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1830,22 +627,22 @@
           "nosniff"
         ],
         "x-ms-client-request-id": [
-          "af2c0299-6e69-433a-88f3-310385b003bb"
+          "4f4fa3f8-fbe3-4bfe-aeeb-7d1820886e95"
         ],
         "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
         ],
         "x-ms-request-id": [
-          "68fb86f8-3d2e-4a5d-96d8-d6276f2be3ca"
+          "fec93a28-d6ae-41da-a3cc-3d1f14650498"
         ],
         "x-ms-correlation-request-id": [
-          "1c326d86-e551-4d26-9fcf-29be9c6323c6"
+          "df26d794-83f6-475b-beba-68a7e12d30e3"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085840Z:1c326d86-e551-4d26-9fcf-29be9c6323c6"
+          "SOUTHEASTASIA:20210106T082902Z:df26d794-83f6-475b-beba-68a7e12d30e3"
         ],
         "Content-Length": [
-          "380"
+          "1186"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1854,20 +651,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/signalr-test9756/operationId/72981ac0-25be-44d3-9053-4737453791f4\",\r\n  \"name\": \"72981ac0-25be-44d3-9053-4737453791f4\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-05-29T08:58:09.5145309Z\",\r\n  \"endTime\": \"2020-05-29T08:58:19.6796337Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"capacity\": 5\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"externalIP\": \"20.42.72.3\",\r\n    \"hostName\": \"signalr-test2356.service.signalr.net\",\r\n    \"publicPort\": 443,\r\n    \"serverPort\": 443,\r\n    \"version\": \"1.0\",\r\n    \"privateEndpointConnections\": [],\r\n    \"tls\": {\r\n      \"clientCertEnabled\": false\r\n    },\r\n    \"features\": [\r\n      {\r\n        \"flag\": \"ServiceMode\",\r\n        \"value\": \"Serverless\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableConnectivityLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      },\r\n      {\r\n        \"flag\": \"EnableMessagingLogs\",\r\n        \"value\": \"False\",\r\n        \"properties\": {}\r\n      }\r\n    ],\r\n    \"cors\": {\r\n      \"allowedOrigins\": [\r\n        \"http://example.com:12345\",\r\n        \"https://contoso.com\"\r\n      ]\r\n    },\r\n    \"upstream\": {\r\n      \"templates\": [\r\n        {\r\n          \"hubPattern\": \"*\",\r\n          \"eventPattern\": \"*\",\r\n          \"categoryPattern\": \"*\",\r\n          \"urlTemplate\": \"http://foo.com\",\r\n          \"auth\": null\r\n        }\r\n      ]\r\n    },\r\n    \"networkACLs\": {\r\n      \"defaultAction\": \"Deny\",\r\n      \"publicNetwork\": {\r\n        \"allow\": [\r\n          \"ServerConnection\",\r\n          \"ClientConnection\",\r\n          \"RESTAPI\"\r\n        ],\r\n        \"deny\": null\r\n      },\r\n      \"privateEndpoints\": []\r\n    }\r\n  },\r\n  \"kind\": \"SignalR\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"key2\": \"value2\",\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\"\r\n  },\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/SignalR/signalr-test2356\",\r\n  \"name\": \"signalr-test2356\",\r\n  \"type\": \"Microsoft.SignalRService/SignalR\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/signalr-test-rg64/providers/Microsoft.SignalRService/locations/eastus/operationResults/72981ac0-25be-44d3-9053-4737453791f4/SignalR/signalr-test9756?api-version=2020-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWNhZjJhMWUtOWM0OS00OWI2LTg5YTItNTZiZGVjN2UzZjk3L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL2Vhc3R1cy9vcGVyYXRpb25SZXN1bHRzLzcyOTgxYWMwLTI1YmUtNDRkMy05MDUzLTQ3Mzc0NTM3OTFmNC9TaWduYWxSL3NpZ25hbHItdGVzdDk3NTY/YXBpLXZlcnNpb249MjAyMC0wNS0wMQ==",
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSP2FwaS12ZXJzaW9uPTIwMjAtMDctMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c6abc18b-2853-4f59-bda3-4fef552778c3"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
           "FxVersion/4.6.00001.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.0.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -1875,7 +678,901 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 May 2020 08:58:41 GMT"
+          "Wed, 06 Jan 2021 08:26:25 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "c6abc18b-2853-4f59-bda3-4fef552778c3"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "91e6b7ff-4526-4d30-9eff-ae02acdd65b6"
+        ],
+        "x-ms-correlation-request-id": [
+          "de350a40-29f3-440e-b511-f5738f9dc014"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082626Z:de350a40-29f3-440e-b511-f5738f9dc014"
+        ],
+        "Content-Length": [
+          "1128"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"Free_F1\",\r\n        \"tier\": \"Free\",\r\n        \"size\": \"F1\",\r\n        \"capacity\": 1\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"externalIP\": \"20.42.64.128\",\r\n        \"hostName\": \"signalr-test2356.service.signalr.net\",\r\n        \"publicPort\": 443,\r\n        \"serverPort\": 443,\r\n        \"version\": \"1.0\",\r\n        \"privateEndpointConnections\": [],\r\n        \"tls\": {\r\n          \"clientCertEnabled\": false\r\n        },\r\n        \"features\": [\r\n          {\r\n            \"flag\": \"ServiceMode\",\r\n            \"value\": \"Default\",\r\n            \"properties\": {}\r\n          },\r\n          {\r\n            \"flag\": \"EnableConnectivityLogs\",\r\n            \"value\": \"False\",\r\n            \"properties\": {}\r\n          },\r\n          {\r\n            \"flag\": \"EnableMessagingLogs\",\r\n            \"value\": \"False\",\r\n            \"properties\": {}\r\n          }\r\n        ],\r\n        \"cors\": {\r\n          \"allowedOrigins\": [\r\n            \"*\"\r\n          ]\r\n        },\r\n        \"upstream\": {\r\n          \"templates\": [\r\n            {\r\n              \"hubPattern\": \"*\",\r\n              \"eventPattern\": \"*\",\r\n              \"categoryPattern\": \"*\",\r\n              \"urlTemplate\": \"http://foo.com\",\r\n              \"auth\": null\r\n            }\r\n          ]\r\n        },\r\n        \"networkACLs\": {\r\n          \"defaultAction\": \"Deny\",\r\n          \"publicNetwork\": {\r\n            \"allow\": [\r\n              \"ServerConnection\",\r\n              \"ClientConnection\",\r\n              \"RESTAPI\"\r\n            ],\r\n            \"deny\": null\r\n          },\r\n          \"privateEndpoints\": []\r\n        }\r\n      },\r\n      \"kind\": \"SignalR\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      },\r\n      \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/SignalR/signalr-test2356\",\r\n      \"name\": \"signalr-test2356\",\r\n      \"type\": \"Microsoft.SignalRService/SignalR\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356/listKeys?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTYvbGlzdEtleXM/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e532cdee-5a78-4e61-8759-b2b3b9ccde74"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:26:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "e532cdee-5a78-4e61-8759-b2b3b9ccde74"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "1c292e39-8eb3-4ac5-8a23-4580958260e7"
+        ],
+        "x-ms-correlation-request-id": [
+          "42c1c1ca-4522-4157-b20a-733e2109e8f6"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082627Z:42c1c1ca-4522-4157-b20a-733e2109e8f6"
+        ],
+        "Content-Length": [
+          "425"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryKey\": \"eoZeV+FV4xvIemitkNvgR7uVXGBPIhL2boCpAu/AB8Y=\",\r\n  \"secondaryKey\": \"ir5dwmfTRKp96VTIC/TdGMkmyLSAxoU5VRGan52VYsQ=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=eoZeV+FV4xvIemitkNvgR7uVXGBPIhL2boCpAu/AB8Y=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=ir5dwmfTRKp96VTIC/TdGMkmyLSAxoU5VRGan52VYsQ=;Version=1.0;\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356/listKeys?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTYvbGlzdEtleXM/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4e4a0018-57f0-4113-8de9-88e4719e97cc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:29:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "4e4a0018-57f0-4113-8de9-88e4719e97cc"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "d21d4b5b-38bc-4642-a095-2ed99cfc29ff"
+        ],
+        "x-ms-correlation-request-id": [
+          "b3c9e697-a918-47a6-a410-82242c0ef67b"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082903Z:b3c9e697-a918-47a6-a410-82242c0ef67b"
+        ],
+        "Content-Length": [
+          "425"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryKey\": \"eoZeV+FV4xvIemitkNvgR7uVXGBPIhL2boCpAu/AB8Y=\",\r\n  \"secondaryKey\": \"ir5dwmfTRKp96VTIC/TdGMkmyLSAxoU5VRGan52VYsQ=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=eoZeV+FV4xvIemitkNvgR7uVXGBPIhL2boCpAu/AB8Y=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=ir5dwmfTRKp96VTIC/TdGMkmyLSAxoU5VRGan52VYsQ=;Version=1.0;\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356/listKeys?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTYvbGlzdEtleXM/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a6384caf-1b52-49b4-8457-25258d488b03"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:29:35 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "a6384caf-1b52-49b4-8457-25258d488b03"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "82262b7c-8d7f-4541-b09a-6b091e8a9f95"
+        ],
+        "x-ms-correlation-request-id": [
+          "44b1878f-1ddf-4a1c-aa44-6cf4194139aa"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082935Z:44b1878f-1ddf-4a1c-aa44-6cf4194139aa"
+        ],
+        "Content-Length": [
+          "425"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryKey\": \"yMsiFT/wo/O2d4kJAfNtmFRVltYEIYXgIUxsHznrB6Q=\",\r\n  \"secondaryKey\": \"ir5dwmfTRKp96VTIC/TdGMkmyLSAxoU5VRGan52VYsQ=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=yMsiFT/wo/O2d4kJAfNtmFRVltYEIYXgIUxsHznrB6Q=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=ir5dwmfTRKp96VTIC/TdGMkmyLSAxoU5VRGan52VYsQ=;Version=1.0;\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356/listKeys?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTYvbGlzdEtleXM/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "129fbb40-bd3f-400b-9af6-62d172813cda"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:30:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "129fbb40-bd3f-400b-9af6-62d172813cda"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "908df5d7-3266-4a7a-923f-43076f5593f4"
+        ],
+        "x-ms-correlation-request-id": [
+          "b5c47634-00a6-46f2-92bd-562254bce2dc"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T083007Z:b5c47634-00a6-46f2-92bd-562254bce2dc"
+        ],
+        "Content-Length": [
+          "425"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryKey\": \"yMsiFT/wo/O2d4kJAfNtmFRVltYEIYXgIUxsHznrB6Q=\",\r\n  \"secondaryKey\": \"F2alGfg178WKfftB7pBw0tJ91mB/K/5tCmsTGFhITFQ=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=yMsiFT/wo/O2d4kJAfNtmFRVltYEIYXgIUxsHznrB6Q=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=F2alGfg178WKfftB7pBw0tJ91mB/K/5tCmsTGFhITFQ=;Version=1.0;\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 5\r\n  },\r\n  \"properties\": {\r\n    \"features\": [\r\n      {\r\n        \"value\": \"Serverless\"\r\n      }\r\n    ],\r\n    \"cors\": {\r\n      \"allowedOrigins\": [\r\n        \"http://example.com:12345\",\r\n        \"https://contoso.com\"\r\n      ]\r\n    }\r\n  },\r\n  \"tags\": {\r\n    \"key2\": \"value2\",\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2ce426ac-2e56-4f6c-aa71-a2540e62e69b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "407"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:26:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationResults/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356?api-version=2020-07-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "2ce426ac-2e56-4f6c-aa71-a2540e62e69b"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356?api-version=2020-07-01-preview"
+        ],
+        "x-ms-request-id": [
+          "129b068c-311b-4378-9ae2-c32cd50268b4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "5583f0f4-4f05-4452-be1a-d3d1ee7274b2"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082630Z:5583f0f4-4f05-4452-be1a-d3d1ee7274b2"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblN0YXR1c2VzLzlkMmJmYjNmLTdhOGYtNGRkMC1hMDNiLThiZGYzNDM2MDRmYS9TaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:27:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "c6462d92-bb3b-4bf2-92b0-014963242b56"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "79315dd8-3e04-48ad-96c5-d2fa0fe77c88"
+        ],
+        "x-ms-correlation-request-id": [
+          "7a50a4a1-7e59-45b1-aa49-e32379994049"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082700Z:7a50a4a1-7e59-45b1-aa49-e32379994049"
+        ],
+        "Content-Length": [
+          "335"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356\",\r\n  \"name\": \"9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2021-01-06T08:26:30.2233141Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblN0YXR1c2VzLzlkMmJmYjNmLTdhOGYtNGRkMC1hMDNiLThiZGYzNDM2MDRmYS9TaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:27:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "3fad49c0-5599-4883-9eac-3f1a7e529b57"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "63d2c623-eeaf-42bb-b06b-a2281d538047"
+        ],
+        "x-ms-correlation-request-id": [
+          "6cf77299-c0b5-4fca-a102-e852e741762e"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082731Z:6cf77299-c0b5-4fca-a102-e852e741762e"
+        ],
+        "Content-Length": [
+          "335"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356\",\r\n  \"name\": \"9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2021-01-06T08:26:30.2233141Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblN0YXR1c2VzLzlkMmJmYjNmLTdhOGYtNGRkMC1hMDNiLThiZGYzNDM2MDRmYS9TaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:28:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11986"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "566ff9a1-a42e-4e4a-aa2e-0de2c8afe37d"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "e59197e1-22c7-4698-a275-d7e4f4dca1ea"
+        ],
+        "x-ms-correlation-request-id": [
+          "bb456a8a-d54e-4f1e-be31-b862e00f05eb"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082801Z:bb456a8a-d54e-4f1e-be31-b862e00f05eb"
+        ],
+        "Content-Length": [
+          "335"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356\",\r\n  \"name\": \"9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2021-01-06T08:26:30.2233141Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblN0YXR1c2VzLzlkMmJmYjNmLTdhOGYtNGRkMC1hMDNiLThiZGYzNDM2MDRmYS9TaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:28:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11985"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "5260b9d1-93c7-4b40-a182-7efddf50a863"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "e8ce3063-3801-4217-8bbc-ef4d32f1a85c"
+        ],
+        "x-ms-correlation-request-id": [
+          "e2a9b298-ee6e-4423-a14b-94af8d49f621"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082831Z:e2a9b298-ee6e-4423-a14b-94af8d49f621"
+        ],
+        "Content-Length": [
+          "335"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356\",\r\n  \"name\": \"9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2021-01-06T08:26:30.2233141Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblN0YXR1c2VzLzlkMmJmYjNmLTdhOGYtNGRkMC1hMDNiLThiZGYzNDM2MDRmYS9TaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:29:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "694e4e79-9142-4471-ba8d-9a7dff7a9f5e"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "e405e53b-2197-4f6b-815c-ff3509d448ef"
+        ],
+        "x-ms-correlation-request-id": [
+          "53232389-3ba5-4757-8e79-826b8f705c21"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082902Z:53232389-3ba5-4757-8e79-826b8f705c21"
+        ],
+        "Content-Length": [
+          "378"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa/SignalR/signalr-test2356\",\r\n  \"name\": \"9d2bfb3f-7a8f-4dd0-a03b-8bdf343604fa\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-01-06T08:26:30.2233141Z\",\r\n  \"endTime\": \"2021-01-06T08:28:54.7295746Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356/regenerateKey?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTYvcmVnZW5lcmF0ZUtleT9hcGktdmVyc2lvbj0yMDIwLTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"keyType\": \"Primary\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f9e33c3e-20dc-42ad-ae5a-02770567ecdd"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:29:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationResults/a7169c99-4a5f-4128-a68a-61fbe07a02e8/SignalR/signalr-test2356?api-version=2020-07-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "f9e33c3e-20dc-42ad-ae5a-02770567ecdd"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/a7169c99-4a5f-4128-a68a-61fbe07a02e8/SignalR/signalr-test2356?api-version=2020-07-01-preview"
+        ],
+        "x-ms-request-id": [
+          "f911e7af-9dba-49df-964c-c6e2b0dc5798"
+        ],
+        "x-ms-correlation-request-id": [
+          "3bf68320-4499-459a-bd55-0331b4796ddd"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082904Z:3bf68320-4499-459a-bd55-0331b4796ddd"
+        ],
+        "Content-Length": [
+          "425"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryKey\": \"yMsiFT/wo/O2d4kJAfNtmFRVltYEIYXgIUxsHznrB6Q=\",\r\n  \"secondaryKey\": \"ir5dwmfTRKp96VTIC/TdGMkmyLSAxoU5VRGan52VYsQ=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=yMsiFT/wo/O2d4kJAfNtmFRVltYEIYXgIUxsHznrB6Q=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=ir5dwmfTRKp96VTIC/TdGMkmyLSAxoU5VRGan52VYsQ=;Version=1.0;\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356/regenerateKey?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTYvcmVnZW5lcmF0ZUtleT9hcGktdmVyc2lvbj0yMDIwLTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"keyType\": \"Secondary\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cce1bd53-439e-42b1-aaa5-c106d308710a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "30"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:29:36 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationResults/2519aab5-19f1-49a9-8fbd-c8b8855ea56a/SignalR/signalr-test2356?api-version=2020-07-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "cce1bd53-439e-42b1-aaa5-c106d308710a"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/2519aab5-19f1-49a9-8fbd-c8b8855ea56a/SignalR/signalr-test2356?api-version=2020-07-01-preview"
+        ],
+        "x-ms-request-id": [
+          "14ca8c67-1b67-407b-a03e-d788876d4f45"
+        ],
+        "x-ms-correlation-request-id": [
+          "24c49125-b08a-425d-a8da-34eb363de0a8"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082936Z:24c49125-b08a-425d-a8da-34eb363de0a8"
+        ],
+        "Content-Length": [
+          "425"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryKey\": \"yMsiFT/wo/O2d4kJAfNtmFRVltYEIYXgIUxsHznrB6Q=\",\r\n  \"secondaryKey\": \"F2alGfg178WKfftB7pBw0tJ91mB/K/5tCmsTGFhITFQ=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=yMsiFT/wo/O2d4kJAfNtmFRVltYEIYXgIUxsHznrB6Q=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test2356.service.signalr.net;AccessKey=F2alGfg178WKfftB7pBw0tJ91mB/K/5tCmsTGFhITFQ=;Version=1.0;\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationResults/a7169c99-4a5f-4128-a68a-61fbe07a02e8/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvYTcxNjljOTktNGE1Zi00MTI4LWE2OGEtNjFmYmUwN2EwMmU4L1NpZ25hbFIvc2lnbmFsci10ZXN0MjM1Nj9hcGktdmVyc2lvbj0yMDIwLTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:29:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1890,22 +1587,451 @@
           "nosniff"
         ],
         "x-ms-client-request-id": [
-          "a602c34d-2c9a-4348-bedc-f70c4f438a6d"
+          "5945d404-eaa8-4f34-84e4-a4ac33efb694"
         ],
         "x-rp-server-mvid": [
-          "55bd3e84-35c8-42d9-8de9-042c3a9c1079"
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
         ],
         "x-ms-request-id": [
-          "bea6e1e6-8a73-4c65-af06-0af4c8eb615d"
+          "f435f1ec-bbad-4825-ab2c-f423a32dc332"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11982"
         ],
         "x-ms-correlation-request-id": [
-          "667fd1aa-c2b1-4d68-9a4b-fa49b788dfd5"
+          "4f591830-0576-42b0-9220-6865c5738a14"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20200529T085841Z:667fd1aa-c2b1-4d68-9a4b-fa49b788dfd5"
+          "SOUTHEASTASIA:20210106T082934Z:4f591830-0576-42b0-9220-6865c5738a14"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationResults/a7169c99-4a5f-4128-a68a-61fbe07a02e8/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvYTcxNjljOTktNGE1Zi00MTI4LWE2OGEtNjFmYmUwN2EwMmU4L1NpZ25hbFIvc2lnbmFsci10ZXN0MjM1Nj9hcGktdmVyc2lvbj0yMDIwLTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:29:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "f7df5cf1-e3f8-4b30-aee7-a9a79150b6f9"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "980a3326-3dbd-4783-bd41-8c8e0da7172f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11981"
+        ],
+        "x-ms-correlation-request-id": [
+          "edb2ca07-f1eb-405f-b5a4-cacfcbf18e4b"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T082935Z:edb2ca07-f1eb-405f-b5a4-cacfcbf18e4b"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationResults/2519aab5-19f1-49a9-8fbd-c8b8855ea56a/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvMjUxOWFhYjUtMTlmMS00OWE5LThmYmQtYzhiODg1NWVhNTZhL1NpZ25hbFIvc2lnbmFsci10ZXN0MjM1Nj9hcGktdmVyc2lvbj0yMDIwLTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:30:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "37d6db49-810f-4c35-b86a-85ae1916836e"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "fa25e4cc-6e93-4b0b-aae2-b0874ea8f918"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11980"
+        ],
+        "x-ms-correlation-request-id": [
+          "054f8c55-d3fe-4803-9572-48a931b551c7"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T083006Z:054f8c55-d3fe-4803-9572-48a931b551c7"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationResults/2519aab5-19f1-49a9-8fbd-c8b8855ea56a/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvMjUxOWFhYjUtMTlmMS00OWE5LThmYmQtYzhiODg1NWVhNTZhL1NpZ25hbFIvc2lnbmFsci10ZXN0MjM1Nj9hcGktdmVyc2lvbj0yMDIwLTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:30:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "e6454201-d122-4d47-b468-e368ade25ed7"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "ea409a28-da52-4693-92ae-fbaa538c45a6"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11979"
+        ],
+        "x-ms-correlation-request-id": [
+          "bd770ae9-1749-4521-aa16-2cb45735c1ed"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T083007Z:bd770ae9-1749-4521-aa16-2cb45735c1ed"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6c952dcd-188e-4a08-a679-9f299930f688"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:30:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationResults/633168a0-e8b4-4b32-bf4c-b0613d8aa557/SignalR/signalr-test2356?api-version=2020-07-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "6c952dcd-188e-4a08-a679-9f299930f688"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/633168a0-e8b4-4b32-bf4c-b0613d8aa557/SignalR/signalr-test2356?api-version=2020-07-01-preview"
+        ],
+        "x-ms-request-id": [
+          "4f283338-5565-450e-a852-e89c77ef9603"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "b49734d5-f10e-4f9b-89b9-52daba51d083"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T083008Z:b49734d5-f10e-4f9b-89b9-52daba51d083"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/signalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e6de6c72-5b7f-4007-b838-60e4e17b656b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:30:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "61c103e4-5bc8-4af0-834e-3b8a8c630edf"
+        ],
+        "x-ms-correlation-request-id": [
+          "61c103e4-5bc8-4af0-834e-3b8a8c630edf"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T083039Z:61c103e4-5bc8-4af0-834e-3b8a8c630edf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/633168a0-e8b4-4b32-bf4c-b0613d8aa557/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblN0YXR1c2VzLzYzMzE2OGEwLWU4YjQtNGIzMi1iZjRjLWIwNjEzZDhhYTU1Ny9TaWduYWxSL3NpZ25hbHItdGVzdDIzNTY/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:30:38 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11978"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "b66e60dd-3aa5-49e5-a5ae-0db00fbb5703"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "ffed68f5-539a-4838-9688-aa9dd504fb97"
+        ],
+        "x-ms-correlation-request-id": [
+          "65385683-9a04-4035-b028-1587095bbd0c"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T083039Z:65385683-9a04-4035-b028-1587095bbd0c"
+        ],
+        "Content-Length": [
+          "378"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationStatuses/633168a0-e8b4-4b32-bf4c-b0613d8aa557/SignalR/signalr-test2356\",\r\n  \"name\": \"633168a0-e8b4-4b32-bf4c-b0613d8aa557\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-01-06T08:30:08.5380895Z\",\r\n  \"endTime\": \"2021-01-06T08:30:19.9142889Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ef72249e-9785-4799-a76b-7cdd80e1b1d0/resourceGroups/signalr-test-rg6675/providers/Microsoft.SignalRService/locations/eastus/operationResults/633168a0-e8b4-4b32-bf4c-b0613d8aa557/SignalR/signalr-test2356?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWY3MjI0OWUtOTc4NS00Nzk5LWE3NmItN2NkZDgwZTFiMWQwL3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzY2NzUvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNjMzMTY4YTAtZThiNC00YjMyLWJmNGMtYjA2MTNkOGFhNTU3L1NpZ25hbFIvc2lnbmFsci10ZXN0MjM1Nj9hcGktdmVyc2lvbj0yMDIwLTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SignalR.SignalRManagementClient/1.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Jan 2021 08:30:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "03eab982-d7af-42f1-a1aa-88a3e65c79e1"
+        ],
+        "x-rp-server-mvid": [
+          "7e5321a5-c0c2-45cc-b2d9-1c712b58a9d7"
+        ],
+        "x-ms-request-id": [
+          "64110a5d-7ca9-4311-b6ed-5838d67b0a00"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11977"
+        ],
+        "x-ms-correlation-request-id": [
+          "69e35662-217f-4e95-aa4a-150e768cb383"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210106T083039Z:69e35662-217f-4e95-aa4a-150e768cb383"
         ],
         "Expires": [
           "-1"
@@ -1917,19 +2043,16 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "signalr-test-rg64"
+      "signalr-test-rg6675"
     ],
     "SignalRFreeTierToStandardTest": [
-      "signalr-service-test-0820506"
+      "signalr-service-test-08201429"
     ],
     "CreateSignalR": [
-      "signalr-test9756"
-    ],
-    "SignalRScenarioVerification": [
-      "signalr-service-test3132"
+      "signalr-test2356"
     ]
   },
   "Variables": {
-    "SubscriptionId": "9caf2a1e-9c49-49b6-89a2-56bdec7e3f97"
+    "SubscriptionId": "ef72249e-9785-4799-a76b-7cdd80e1b1d0"
   }
 }
