@@ -243,7 +243,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
-        /// Must not contain shared access signature.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
         /// </param>
         /// <param name="credential">
         /// The shared access signature credential used to sign requests.

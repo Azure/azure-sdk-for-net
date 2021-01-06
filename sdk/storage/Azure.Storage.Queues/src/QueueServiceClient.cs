@@ -216,7 +216,7 @@ namespace Azure.Storage.Queues
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the queue service.
         /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
-        /// Must not contain shared access signature.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
         /// </param>
         /// <param name="credential">
         /// The shared access signature credential used to sign requests.

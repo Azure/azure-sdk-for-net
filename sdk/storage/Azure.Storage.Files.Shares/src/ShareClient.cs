@@ -226,7 +226,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareUri">
         /// A <see cref="Uri"/> referencing the share that includes the
         /// name of the account and the name of the share.
-        /// Must not contain shared access signature.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
         /// </param>
         /// <param name="credential">
         /// The shared access signature credential used to sign requests.

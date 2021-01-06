@@ -200,7 +200,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the file service.
-        /// Must not contain shared access signature.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
         /// </param>
         /// <param name="credential">
         /// The shared access signature credential used to sign requests.

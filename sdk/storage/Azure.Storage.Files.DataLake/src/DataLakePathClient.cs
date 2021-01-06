@@ -352,7 +352,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Uri"/> referencing the resource that includes the
         /// name of the account, the name of the file system, and the path to the
         /// resource.
-        /// Must not contain shared access signature.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
         /// </param>
         /// <param name="credential">
         /// The shared access signature credential used to sign requests.
@@ -373,7 +373,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Uri"/> referencing the resource that includes the
         /// name of the account, the name of the file system, and the path to the
         /// resource.
-        /// Must not contain shared access signature.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
         /// </param>
         /// <param name="credential">
         /// The shared access signature credential used to sign requests.

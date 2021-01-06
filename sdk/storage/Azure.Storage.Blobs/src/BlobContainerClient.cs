@@ -283,7 +283,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Uri"/> referencing the blob container that includes the
         /// name of the account and the name of the container.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}".
-        /// Must not contain shared access signature.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
         /// </param>
         /// <param name="credential">
         /// The shared access signature credential used to sign requests.
