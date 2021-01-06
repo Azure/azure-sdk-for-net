@@ -26,7 +26,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new synonym map or updates a synonym map if it already
         /// exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map">
+        /// Update synonym map</see>.
         /// </summary>
         /// <param name='synonymMapName'>
         /// The name of the synonym map to create or update.

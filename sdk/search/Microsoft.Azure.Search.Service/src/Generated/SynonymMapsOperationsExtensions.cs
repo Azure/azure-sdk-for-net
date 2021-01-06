@@ -21,53 +21,55 @@ namespace Microsoft.Azure.Search
     /// </summary>
     public static partial class SynonymMapsOperationsExtensions
     {
-            /// <summary>
-            /// Creates a new synonym map or updates a synonym map if it already exists.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='synonymMapName'>
-            /// The name of the synonym map to create or update.
-            /// </param>
-            /// <param name='synonymMap'>
-            /// The definition of the synonym map to create or update.
-            /// </param>
-            /// <param name='searchRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='accessCondition'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static SynonymMap CreateOrUpdate(this ISynonymMapsOperations operations, string synonymMapName, SynonymMap synonymMap, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
-            {
-                return operations.CreateOrUpdateAsync(synonymMapName, synonymMap, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
-            }
+        /// <summary>
+        /// Creates a new synonym map or updates a synonym map if it already exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map">
+        /// Update synonym map</see>
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='synonymMapName'>
+        /// The name of the synonym map to create or update.
+        /// </param>
+        /// <param name='synonymMap'>
+        /// The definition of the synonym map to create or update.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='accessCondition'>
+        /// Additional parameters for the operation
+        /// </param>
+        public static SynonymMap CreateOrUpdate(this ISynonymMapsOperations operations, string synonymMapName, SynonymMap synonymMap, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
+        {
+            return operations.CreateOrUpdateAsync(synonymMapName, synonymMap, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
+        }
 
-            /// <summary>
-            /// Creates a new synonym map or updates a synonym map if it already exists.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='synonymMapName'>
-            /// The name of the synonym map to create or update.
-            /// </param>
-            /// <param name='synonymMap'>
-            /// The definition of the synonym map to create or update.
-            /// </param>
-            /// <param name='searchRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='accessCondition'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SynonymMap> CreateOrUpdateAsync(this ISynonymMapsOperations operations, string synonymMapName, SynonymMap synonymMap, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// Creates a new synonym map or updates a synonym map if it already exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map">
+        /// Update synonym map</see>
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='synonymMapName'>
+        /// The name of the synonym map to create or update.
+        /// </param>
+        /// <param name='synonymMap'>
+        /// The definition of the synonym map to create or update.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='accessCondition'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<SynonymMap> CreateOrUpdateAsync(this ISynonymMapsOperations operations, string synonymMapName, SynonymMap synonymMap, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(synonymMapName, synonymMap, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
                 {
