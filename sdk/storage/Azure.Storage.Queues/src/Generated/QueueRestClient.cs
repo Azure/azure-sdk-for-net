@@ -53,7 +53,7 @@ namespace Azure.Storage.Queues
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, string metadata)
+        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,7 +69,7 @@ namespace Azure.Storage.Queues
             request.Uri = uri;
             if (metadata != null)
             {
-                request.Headers.Add("x-ms-meta", metadata);
+                request.Headers.Add("x-ms-meta-", metadata);
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/xml");
@@ -80,7 +80,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue&apos;s metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueueCreateHeaders>> CreateAsync(int? timeout = null, string metadata = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, metadata);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -99,7 +99,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue&apos;s metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueueCreateHeaders> Create(int? timeout = null, string metadata = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, metadata);
             _pipeline.Send(message, cancellationToken);
@@ -221,7 +221,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, string metadata)
+        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -238,7 +238,7 @@ namespace Azure.Storage.Queues
             request.Uri = uri;
             if (metadata != null)
             {
-                request.Headers.Add("x-ms-meta", metadata);
+                request.Headers.Add("x-ms-meta-", metadata);
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/xml");
@@ -249,7 +249,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue&apos;s metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueueSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, string metadata = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetMetadataRequest(timeout, metadata);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -267,7 +267,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue&apos;s metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueueSetMetadataHeaders> SetMetadata(int? timeout = null, string metadata = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetMetadataRequest(timeout, metadata);
             _pipeline.Send(message, cancellationToken);

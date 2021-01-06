@@ -602,8 +602,7 @@ namespace Azure.Storage.Queues
                     {
                         reponse = await _queueRestClient.CreateAsync(
                             timeout: null,
-                            //TODO fix this
-                            metadata: null,
+                            metadata,
                             cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -611,8 +610,7 @@ namespace Azure.Storage.Queues
                     {
                         reponse = _queueRestClient.Create(
                             timeout: null,
-                            //TODO fix this
-                            metadata: null,
+                            metadata,
                             cancellationToken);
                     }
                     return reponse.GetRawResponse();
@@ -1193,8 +1191,7 @@ namespace Azure.Storage.Queues
                     QueueProperties queueProperties = new QueueProperties
                     {
                         ApproximateMessagesCount = response.Headers.ApproximateMessagesCount.GetValueOrDefault(),
-                        //TODO fix this
-                        //Metadata = response.Headers.Metadata
+                        Metadata = response.Headers.Metadata
                     };
 
                     return Response.FromValue(
@@ -1309,8 +1306,7 @@ namespace Azure.Storage.Queues
                     {
                         response = await _queueRestClient.SetMetadataAsync(
                             timeout: default,
-                            //TODO fix this.
-                            metadata.ToString(),
+                            metadata,
                             cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1318,8 +1314,7 @@ namespace Azure.Storage.Queues
                     {
                         response = _queueRestClient.SetMetadata(
                             timeout: default,
-                            // TODO fix this.
-                            metadata: metadata.ToString(),
+                            metadata,
                             cancellationToken);
                     }
 
