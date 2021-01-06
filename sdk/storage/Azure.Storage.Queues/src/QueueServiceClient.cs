@@ -418,7 +418,6 @@ namespace Azure.Storage.Queues
                     IEnumerable<string> includeTypes = traits.AsIncludeTypes();
                     if (async)
                     {
-                        // TODO make Version a parameter and pass it in.
                         response = await _serviceRestClient.ListQueuesSegmentAsync(
                             prefix,
                             marker,
@@ -430,7 +429,6 @@ namespace Azure.Storage.Queues
                     }
                     else
                     {
-                        // TODO make Version a parameter and pass it in.
                         response = _serviceRestClient.ListQueuesSegment(
                             prefix,
                             marker,

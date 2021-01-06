@@ -34,8 +34,7 @@ namespace Azure.Storage.Queues.Models
         internal static IEnumerable<string> AsIncludeTypes(this QueueTraits traits) =>
             ((traits & QueueTraits.Metadata) == QueueTraits.Metadata)
                 ?
-                // TODO make this a constant
-                new string[] { "metadata" } :
+                new string[] { Constants.Queue.QueueTraitsMetadata } :
                 Array.Empty<string>();
     }
 }

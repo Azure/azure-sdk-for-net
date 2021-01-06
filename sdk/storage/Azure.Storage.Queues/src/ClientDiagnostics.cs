@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Storage;
 
 namespace Azure.Core.Pipeline
 {
@@ -31,18 +32,16 @@ namespace Azure.Core.Pipeline
             )
         {
             XDocument xml = XDocument.Parse(content);
-            //TODO make these constants
-            errorCode = xml.Root.Element("Code").Value;
-            message = xml.Root.Element("Message").Value;
+            errorCode = xml.Root.Element(Constants.ErrorCode).Value;
+            message = xml.Root.Element(Constants.ErrorMessage).Value;
             additionalInfo = new Dictionary<string, string>();
 
             foreach (XElement element in xml.Root.Elements())
             {
                 switch (element.Name.LocalName)
                 {
-                    //TODO make these constants.
-                    case "Code":
-                    case "Message":
+                    case Constants.ErrorCode:
+                    case Constants.ErrorMessage:
                         continue;
                     default:
                         additionalInfo[element.Name.LocalName] = element.Value;
