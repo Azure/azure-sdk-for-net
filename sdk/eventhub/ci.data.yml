@@ -8,6 +8,7 @@ trigger:
     - release/*
   paths:
     include:
+    - sdk/eventhub/ci.data.yml
     - sdk/eventhub/Microsoft.Azure.EventHubs
     - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
     - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
@@ -21,6 +22,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/eventhub/ci.data.yml
     - sdk/eventhub/Microsoft.Azure.EventHubs
     - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
     - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
