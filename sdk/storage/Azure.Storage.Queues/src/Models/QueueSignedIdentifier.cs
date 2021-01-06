@@ -15,5 +15,11 @@ namespace Azure.Storage.Queues.Models
         /// Constructor.
         /// </summary>
         public QueueSignedIdentifier() { }
+
+        internal QueueSignedIdentifier(string id, QueueAccessPolicy accessPolicy)
+        {
+            Id = id;
+            AccessPolicy = accessPolicy;
+        }
     }
 }

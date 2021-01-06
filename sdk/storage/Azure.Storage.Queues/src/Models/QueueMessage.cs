@@ -14,9 +14,10 @@ namespace Azure.Storage.Queues.Models
     {
         internal QueueMessage() { }
 
-#pragma warning disable CA1801 // Review unused parameters
-        internal QueueMessage(string messageText) { }
-#pragma warning restore CA1801 // Review unused parameters
+        internal QueueMessage(string messageText)
+        {
+            MessageText = messageText;
+        }
 
         /// <summary>
         /// The Id of the Message.

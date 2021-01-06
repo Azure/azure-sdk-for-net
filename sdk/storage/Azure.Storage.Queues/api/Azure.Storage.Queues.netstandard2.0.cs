@@ -311,7 +311,6 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueSignedIdentifier
     {
         public QueueSignedIdentifier() { }
-        public QueueSignedIdentifier(string id, Azure.Storage.Queues.Models.QueueAccessPolicy accessPolicy) { }
         public Azure.Storage.Queues.Models.QueueAccessPolicy AccessPolicy { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
     }
