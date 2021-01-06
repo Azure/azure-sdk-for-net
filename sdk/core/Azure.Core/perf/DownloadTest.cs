@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Identity;
 using Azure.Test.Perf;
 
 namespace Azure.Template.Perf
@@ -21,7 +20,7 @@ namespace Azure.Template.Perf
         public DownloadTest(DownloadTestOptions options) : base(options)
         {
             _server ??= InProcTestServer.CreateStaticResponse(options.Size);
-            _pipeline ??= HttpPipelineBuilder.Build(new DefaultAzureCredentialOptions());
+            _pipeline ??= HttpPipelineBuilder.Build(new TestClientOptions());
         }
 
         public override void Run(CancellationToken cancellationToken)
@@ -48,5 +47,7 @@ namespace Azure.Template.Perf
             base.Dispose(disposing);
             _server.Dispose();
         }
+
+        public class TestClientOptions: ClientOptions {}
     }
 }
