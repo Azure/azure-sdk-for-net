@@ -67,7 +67,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="settings"> The settings for an asset conversion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> or <paramref name="settings"/> is null. </exception>
-        public Response<Conversion> CreateConversion(string conversionId, ConversionSettings settings, CancellationToken cancellationToken = default)
+        public virtual Response<Conversion> CreateConversion(string conversionId, ConversionSettings settings, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateConversion)}");
             // TODO Add some attributes?
