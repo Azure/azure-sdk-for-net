@@ -1,6 +1,6 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0 (2020-01-06)
 
 ### Added
 - `AzureSasCredential` and its respective policy.
