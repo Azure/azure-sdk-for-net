@@ -21,10 +21,12 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
             RemoteRenderingClient client = new RemoteRenderingClient(mixedRealityAccountId);
 
-            // TODO Fill in details.
-            ConversionRequest request = new ConversionRequest();
+            // TODO Fill in with viable details.
+            ConversionInputSettings input = new ConversionInputSettings("foo", "bar.fbx");
+            ConversionOutputSettings output = new ConversionOutputSettings("foobar.arrAsset");
+            ConversionSettings settings = new ConversionSettings(input, output);
 
-            Response<Conversion> conversion = client.CreateConversion("test", request);
+            Response<Conversion> conversion = client.CreateConversion("MyConversionId", settings);
         }
     }
 }

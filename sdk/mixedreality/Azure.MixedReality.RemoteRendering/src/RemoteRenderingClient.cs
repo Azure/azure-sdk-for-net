@@ -42,7 +42,7 @@ namespace Azure.MixedReality.RemoteRendering
         {
             _accountId = new Guid(accountId);
             _clientDiagnostics = new ClientDiagnostics(options);
-            // TODO
+            // TODO auth details.
             _pipeline = new HttpPipeline();
             _restClient = new MixedRealityRemoteRenderingRestClient(_clientDiagnostics, _pipeline);
         }
@@ -64,10 +64,10 @@ namespace Azure.MixedReality.RemoteRendering
         /// .
         /// </summary>
         /// <param name="conversionId"> An ID uniquely identifying the conversion for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
-        /// <param name="body"> Request body configuring the settings for an asset conversion. </param>
+        /// <param name="settings"> The settings for an asset conversion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> or <paramref name="body"/> is null. </exception>
-        public Response<Conversion> CreateConversion(string conversionId, ConversionRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> or <paramref name="settings"/> is null. </exception>
+        public Response<Conversion> CreateConversion(string conversionId, ConversionSettings settings, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateConversion)}");
             // TODO Add some attributes?
@@ -76,19 +76,19 @@ namespace Azure.MixedReality.RemoteRendering
 
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateConversionHeaders> response = _restClient.CreateConversion(_accountId, conversionId, body, cancellationToken);
+                ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateConversionHeaders> response = _restClient.CreateConversion(_accountId, conversionId, new ConversionRequest(settings), cancellationToken);
 
-                // TODO switch (response.Status) ?
                 switch (response.Value)
                 {
                     case Conversion c:
                         return ResponseWithHeaders.FromValue(c, response.Headers, response.GetRawResponse());
                     case ErrorResponse e:
-                        // TODO throw _clientDiagnostics.CreateRequestFailedException ?
-                        throw new Exception("TODO Need to carry details from e and possibly headers");
+                        // TODO e.Error.Details
+                        // TODO e.Error.InnerError
+                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
                     case null:
                     default:
-                        throw new Exception("TODO Need to carry details from headers");
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception ex)
