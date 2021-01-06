@@ -41,15 +41,5 @@ namespace Azure.Core
         {
             return Encode(UTF8Encoding.UTF8.GetBytes(value));
         }
-
-        public static string HexToBase64Url(string hex)
-        {
-            byte[] bytes = new byte[hex.Length / 2];
-
-            for (int i = 0; i < hex.Length; i += 2)
-                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-
-            return Base64Url.Encode(bytes);
-        }
     }
 }
