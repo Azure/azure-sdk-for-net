@@ -9,7 +9,6 @@
     <Import_RootNamespace>Azure.Security.KeyVault</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Base64Url.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ChallengeBasedAuthenticationPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClientDiagnostics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClientOptionsExtensions.cs" />
@@ -21,5 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\HashCodeBuilder.cs" />
+    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" Link="Shared\Base64Url.cs" />
   </ItemGroup>
 </Project>

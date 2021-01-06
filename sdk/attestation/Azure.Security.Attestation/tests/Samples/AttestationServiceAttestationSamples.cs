@@ -8,6 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.Attestation.Models;

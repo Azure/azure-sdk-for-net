@@ -8,7 +8,6 @@ using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.Security.Attestation.Models;
 using System.Security.Cryptography.X509Certificates;
-using Azure.Security.Attestation.Common;
 using System.Text;
 
 namespace Azure.Security.Attestation
