@@ -29,5 +29,3 @@ extends:
     Artifacts:
     - name: Azure.DigitalTwins.Core
       safeName: AzureDigitalTwinsCore
-    - name: Microsoft.Azure.Management.DigitalTwins
-      safeName: MicrosoftAzureManagementDigitalTwins
