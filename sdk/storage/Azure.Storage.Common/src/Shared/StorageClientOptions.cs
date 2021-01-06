@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -51,13 +50,13 @@ namespace Azure.Storage
         public static HttpPipelinePolicy AsPolicy<TUriBuilder>(this AzureSasCredential credential, Uri resourceUri)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNull(credential, nameof(credential));
             var queryParameters = resourceUri.GetQueryParameters();
             if (queryParameters.ContainsKey("sig"))
             {
                 throw Errors.SasCredentialRequiresUriWithoutSas<TUriBuilder>(resourceUri);
             }
-            return new AzureSasCredentialSynchronousPolicy(
-                credential ?? throw Errors.ArgumentNull(nameof(credential)));
+            return new AzureSasCredentialSynchronousPolicy(credential);
         }
 
         /// <summary>
