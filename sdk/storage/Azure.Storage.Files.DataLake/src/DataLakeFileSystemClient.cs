@@ -290,6 +290,26 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="credential">
         /// The shared access signature credential used to sign requests.
         /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeFileSystemClient(Uri fileSystemUri, AzureSasCredential credential)
+            : this(fileSystemUri, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileSystemUri">
+        /// A <see cref="Uri"/> referencing the share that includes the
+        /// name of the account and the name of the file system.
+        /// Must not contain shared access signature.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -298,7 +318,7 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
-        public DataLakeFileSystemClient(Uri fileSystemUri, AzureSasCredential credential, DataLakeClientOptions options = default)
+        public DataLakeFileSystemClient(Uri fileSystemUri, AzureSasCredential credential, DataLakeClientOptions options)
             : this(fileSystemUri, credential.AsPolicy<DataLakeUriBuilder>(fileSystemUri), options, null)
         {
         }
