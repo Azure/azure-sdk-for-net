@@ -40,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             HealthcareOperation operation = await client.StartHealthcareAsync(document);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
@@ -77,7 +77,6 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(relation.Source.Length, 5);
                     Assert.AreEqual(relation.Source.Offset, 18);
 
-
                     Assert.AreEqual(relation.Target.Text, "ibuprofen");
                     Assert.AreEqual(relation.Target.Category, "MedicationName");
                     Assert.AreEqual(relation.Target.ConfidenceScore, 1);
@@ -95,7 +94,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             HealthcareOperation operation = await client.StartHealthcareBatchAsync(new List<string>() { document }, "en");
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
@@ -118,7 +117,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             HealthcareOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, options);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
@@ -142,7 +141,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             HealthcareOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, options);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
@@ -169,7 +168,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
@@ -187,7 +186,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
@@ -207,7 +206,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents, "en", options);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
@@ -231,7 +230,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
@@ -251,7 +250,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents, options);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 

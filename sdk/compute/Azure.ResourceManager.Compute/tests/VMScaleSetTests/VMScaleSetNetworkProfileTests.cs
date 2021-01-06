@@ -207,7 +207,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
             publicipConfiguration.IpTags.Add(new VirtualMachineScaleSetIpTag("FirstPartyUsage", "/Sql"));
 
-
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(
                 rgName: rgName,
                 vmssName: vmssName,

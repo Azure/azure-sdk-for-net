@@ -411,8 +411,6 @@ namespace Azure.Messaging.ServiceBus
             return sequenceNumbers[0];
         }
 
-
-
         /// <summary>
         /// Schedules a set of messages to appear on Service Bus at a later time.
         /// </summary>

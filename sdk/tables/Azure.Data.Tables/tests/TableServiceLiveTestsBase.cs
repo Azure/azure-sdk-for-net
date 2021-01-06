@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Data.Tables.Tests
 {
@@ -20,7 +21,6 @@ namespace Azure.Data.Tables.Tests
     /// </remarks>
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
-
         public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
         {
             _endpointType = endpointType;
@@ -52,6 +52,15 @@ namespace Azure.Data.Tables.Tests
         protected string AccountName;
         protected string AccountKey;
         protected string ConnectionString;
+        private readonly Dictionary<string, string> _cosmosIgnoreTests = new Dictionary<string, string>
+        {
+            {"CustomEntityMergeRespectsEtag", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
+            {"EntityMergeRespectsEtag", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
+            {"EntityMergeDoesPartialPropertyUpdates", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
+            {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},
+            {"GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints."},
+            {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."}
+        };
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
@@ -60,6 +69,11 @@ namespace Azure.Data.Tables.Tests
         [SetUp]
         public async Task TablesTestSetup()
         {
+            // Bail out before attempting the setup if this test is in the CosmosIgnoreTests set.
+            if (_endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason))
+            {
+                Assert.Ignore(ignoreReason);
+            }
 
             ServiceUri = _endpointType switch
             {
@@ -94,13 +108,15 @@ namespace Azure.Data.Tables.Tests
             client = service.GetTableClient(tableName);
         }
 
-
         [TearDown]
         public async Task TablesTeardown()
         {
             try
             {
-                await service.DeleteTableAsync(tableName);
+                if (service != null)
+                {
+                    await service.DeleteTableAsync(tableName);
+                }
             }
             catch { }
         }
@@ -113,7 +129,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
@@ -142,7 +157,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
@@ -171,7 +185,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
@@ -200,7 +213,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {

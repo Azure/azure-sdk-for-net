@@ -71,7 +71,7 @@ namespace Azure.Core.Pipeline
 
             if (diagnostics.IsLoggingEnabled)
             {
-                string assemblyName = options.GetType().Assembly.GetName().Name;
+                string assemblyName = options.GetType().Assembly!.GetName().Name!;
 
                 policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit,
                     diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray(), assemblyName));
@@ -93,9 +93,9 @@ namespace Azure.Core.Pipeline
         {
             const string PackagePrefix = "Azure.";
 
-            Assembly clientAssembly = options.GetType().Assembly;
+            Assembly clientAssembly = options.GetType().Assembly!;
 
-            AssemblyInformationalVersionAttribute versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
             {
                 throw new InvalidOperationException($"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{clientAssembly.FullName}' (inferred from the use of options type '{options.GetType().FullName}').");
@@ -103,13 +103,13 @@ namespace Azure.Core.Pipeline
 
             string version = versionAttribute.InformationalVersion;
 
-            string assemblyName = clientAssembly.GetName().Name;
+            string assemblyName = clientAssembly.GetName().Name!;
             if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
             {
                 assemblyName = assemblyName.Substring(PackagePrefix.Length);
             }
 
-            int hashSeparator = version.IndexOf('+');
+            int hashSeparator = version.IndexOfOrdinal('+');
             if (hashSeparator != -1)
             {
                 version = version.Substring(0, hashSeparator);

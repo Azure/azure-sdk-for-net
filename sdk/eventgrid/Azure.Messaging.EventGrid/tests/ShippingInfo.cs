@@ -3,7 +3,6 @@
 
 namespace Azure.Messaging.EventGrid.Tests
 {
-
     public class ShippingInfo
     {
         public string ShippingType { get; set; }

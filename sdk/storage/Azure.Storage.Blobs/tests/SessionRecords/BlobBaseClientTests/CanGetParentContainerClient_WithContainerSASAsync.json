@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "d816f59f-4080-b238-c1f3-d926c148b79c",
         "x-ms-date": "Thu, 29 Oct 2020 20:28:07 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,12 +29,12 @@
         ],
         "x-ms-client-request-id": "d816f59f-4080-b238-c1f3-d926c148b79c",
         "x-ms-request-id": "aba1c740-501e-00d0-0232-aecb77000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://kasobolcanarytest.blob.core.windows.net/test-container-27bc5db1-56de-ae54-7e24-15e7f6b7146d?sv=2020-02-10\u0026st=2020-10-29T19%3A28%3A08Z\u0026se=2020-10-29T21%3A28%3A08Z\u0026sr=c\u0026sp=racwdxlt\u0026sig=Sanitized\u0026restype=container\u0026comp=list",
+      "RequestUri": "http://kasobolcanarytest.blob.core.windows.net/test-container-27bc5db1-56de-ae54-7e24-15e7f6b7146d?sv=2020-04-08\u0026st=2020-10-29T19%3A28%3A08Z\u0026se=2020-10-29T21%3A28%3A08Z\u0026sr=c\u0026sp=racwdxlt\u0026sig=Sanitized\u0026restype=container\u0026comp=list",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
@@ -43,7 +43,7 @@
         ],
         "x-ms-client-request-id": "df6d774e-e17b-71b3-f186-7e73a2607068",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -57,7 +57,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "df6d774e-e17b-71b3-f186-7e73a2607068",
         "x-ms-request-id": "7041e0a4-301e-00a4-4b32-aeff87000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://kasobolcanarytest.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-27bc5db1-56de-ae54-7e24-15e7f6b7146d\u0022\u003E\u003CBlobs /\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -74,7 +74,7 @@
         "x-ms-client-request-id": "ca895f1f-25eb-273e-45d6-0e1abd78bee0",
         "x-ms-date": "Thu, 29 Oct 2020 20:28:08 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -87,7 +87,7 @@
         ],
         "x-ms-client-request-id": "ca895f1f-25eb-273e-45d6-0e1abd78bee0",
         "x-ms-request-id": "aba1c775-501e-00d0-2a32-aecb77000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

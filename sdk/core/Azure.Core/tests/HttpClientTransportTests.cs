@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
@@ -69,7 +70,6 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(expectedUri, requestUri);
         }
-
 
         public static object[] HeadersWithValuesAndType =>
             new object[]
@@ -146,7 +146,6 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
         }
 
-
         private static Request CreateRequest(HttpClientTransport transport, byte[] bytes = null)
         {
             Request request = transport.CreateRequest();
@@ -168,6 +167,11 @@ namespace Azure.Core.Tests
                 return Task.CompletedTask;
             }
 
+#if NET5_0
+            protected override void SerializeToStream(Stream stream, TransportContext context, CancellationToken cancellationToken)
+            {
+            }
+#endif
             protected override bool TryComputeLength(out long length)
             {
                 length = 0;

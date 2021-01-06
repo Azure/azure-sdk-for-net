@@ -122,8 +122,9 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Gets a new <see cref="CertificatePolicy"/> suitable for self-signed certificate requests.
-        /// You should change the <see cref="Subject"/> before passing this policy to create a certificate.
+        /// Gets a new <see cref="CertificatePolicy"/> suitable for self-signed certificate requests
+        /// with the <see cref="Subject"/> "CN=DefaultPolicy". To change the Subject, create a new instance
+        /// using one of the constructors.
         /// </summary>
         public static CertificatePolicy Default => new CertificatePolicy(DefaultIssuerName, DefaultSubject);
 
@@ -267,7 +268,6 @@ namespace Azure.Security.KeyVault.Certificates
                             LifetimeActions.Add(LifetimeAction.FromJsonObject(actionElem));
                         }
                         break;
-
                 }
             }
         }

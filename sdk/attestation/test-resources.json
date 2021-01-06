@@ -1,0 +1,70 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseName": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "The base resource name."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location of the resource. By default, this is the same as the resource group."
+      }
+    },
+    "isolatedSigningCertificate": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "locationShortName": {
+      "type": "string",
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "isolatedTenantName": "[concat(parameters('baseName'), 'iso')]",
+    "aadTenantName": "[concat(parameters('baseName'), 'aad')]",
+    "isolatedUri": "[format('https://{0}.{1}.attest.azure.net', variables('isolatedTenantName'), parameters('locationShortName'))]",
+    "aadUri": "[format('https://{0}.{1}.attest.azure.net', variables('aadTenantName'), parameters('locationShortName'))]",
+    "PolicySigningCertificates": {
+      "PolicySigningCertificates": {
+        "keys": [
+          {
+            "kty": "RSA",
+            "use": "sig",
+            "x5c": [ "[parameters('isolatedSigningCertificate')]" ]
+          }
+        ]
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Attestation/attestationProviders",
+      "apiVersion": "2020-10-01",
+      "name": "[variables('aadTenantName')]",
+      "location": "[parameters('location')]",
+    },
+    {
+      "type": "Microsoft.Attestation/attestationProviders",
+      "apiVersion": "2020-10-01",
+      "name": "[variables('isolatedTenantName')]",
+      "location": "[parameters('location')]",
+      "properties": "[variables('PolicySigningCertificates')]"
+    }
+  ],
+  "outputs": {
+    "ISOLATED_ATTESTATION_URL": {
+      "type": "string",
+      "value": "[variables('isolatedUri')]"
+    },
+    "AAD_ATTESTATION_URL": {
+      "type": "string",
+      "value": "[variables('aadUri')]"
+    }
+  }
+}

@@ -22,7 +22,7 @@
         5. Remove EncryptionAtRestWithPlatformKey in diskEncryptionSetType
         6. Remove maximum for PlatformFaultDomainCount of DedicatedHostGroup
         7. New API: RunCommand resource for VM and VMSS instance
-		8. CloudServices (Extended Support)
+		    8. CloudServices (Extended Support)
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

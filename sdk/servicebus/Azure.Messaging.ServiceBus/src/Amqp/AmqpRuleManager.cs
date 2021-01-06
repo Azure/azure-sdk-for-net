@@ -305,7 +305,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             _managementLink?.Dispose();
-
         }
     }
 }

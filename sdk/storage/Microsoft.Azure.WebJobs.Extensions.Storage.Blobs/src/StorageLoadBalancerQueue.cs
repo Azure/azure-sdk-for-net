@@ -66,7 +66,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 this._queue = queue;
             }
 
-
             public async Task AddAsync(T item, CancellationToken cancellationToken = default(CancellationToken))
             {
                 string contents = JsonConvert.SerializeObject(

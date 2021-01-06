@@ -5,5 +5,11 @@ extends:
   parameters:
     MaxParallel: 6
     ServiceDirectory: eventhub
-    TimeoutInMinutes: 130
+    TimeoutInMinutes: 190
+    ExcludeProjects:
+    - Azure.ResourceManager.EventHubs
+    - Microsoft.Azure.EventHubs
+    - Microsoft.Azure.EventHubs.Processor
+    - Microsoft.Azure.EventHubs.ServiceFabricProcessor
+    - Microsoft.Azure.EventHubs.*
     Clouds: 'Public,Canary'

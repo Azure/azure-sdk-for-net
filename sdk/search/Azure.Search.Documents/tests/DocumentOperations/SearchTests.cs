@@ -593,7 +593,6 @@ namespace Azure.Search.Documents.Tests
             RangeFacetResult<double> last = facets.ElementAt(3).AsRangeFacetResult<double>();
             Assert.AreEqual(null, first.From);
             Assert.AreEqual(null, last.To);
-
         }
 
         [Test]

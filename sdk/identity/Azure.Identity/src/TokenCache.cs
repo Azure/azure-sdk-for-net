@@ -88,7 +88,6 @@ namespace Azure.Identity
             await SerializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
 
-
         /// <summary>
         /// Deserializes the <see cref="TokenCache"/> from the specified <see cref="Stream"/>.
         /// </summary>
@@ -191,7 +190,6 @@ namespace Azure.Identity
                 _lock.Release();
             }
         }
-
 
         private async Task OnAfterCacheAccessAsync(TokenCacheNotificationArgs args)
         {

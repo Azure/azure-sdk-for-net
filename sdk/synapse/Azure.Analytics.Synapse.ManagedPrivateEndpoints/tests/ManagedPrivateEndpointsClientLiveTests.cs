@@ -27,6 +27,7 @@ namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
         {
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
         public async Task TestManagedPrivateEndpoints()
         {

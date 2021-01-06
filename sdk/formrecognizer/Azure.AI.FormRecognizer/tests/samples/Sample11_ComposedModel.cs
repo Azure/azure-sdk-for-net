@@ -25,10 +25,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string purchaseOrderOfficeSuppliesUrl = trainingFileUrl;
-            string purchaseOrderOfficeEquipmentUrl = trainingFileUrl;
-            string purchaseOrderFurnitureUrl = trainingFileUrl;
-            string purchaseOrderCleaningSuppliesUrl = trainingFileUrl;
+            Uri officeSuppliesUri = new Uri(trainingFileUrl);
+            Uri officeEquipmentUri = new Uri(trainingFileUrl);
+            Uri furnitureUri = new Uri(trainingFileUrl);
+            Uri cleaningSuppliesUri = new Uri(trainingFileUrl);
 
             #region Snippet:FormRecognizerSampleTrainVariousModels
             // For this sample, you can use the training forms found in the `trainingFiles` folder.
@@ -36,15 +36,35 @@ namespace Azure.AI.FormRecognizer.Samples
             // For instructions on setting up forms for training in an Azure Storage Blob Container, see
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
-            //@@ string purchaseOrderOfficeSuppliesUrl = "<purchaseOrderOfficeSupplies>";
-            //@@ string purchaseOrderOfficeEquipmentUrl = "<purchaseOrderOfficeEquipment>";
-            //@@ string purchaseOrderFurnitureUrl = "<purchaseOrderFurniture>";
-            //@@ string purchaseOrderCleaningSuppliesUrl = "<purchaseOrderCleaningSupplies>";
+            bool useLabels = true;
 
-            CustomFormModel purchaseOrderOfficeSuppliesModel = (await client.StartTrainingAsync(new Uri(purchaseOrderOfficeSuppliesUrl), useTrainingLabels: true, "Purchase order - Office supplies").WaitForCompletionAsync()).Value;
-            CustomFormModel purchaseOrderOfficeEquipmentModel = (await client.StartTrainingAsync(new Uri(purchaseOrderOfficeEquipmentUrl), useTrainingLabels: true, "Purchase order - Office Equipment").WaitForCompletionAsync()).Value;
-            CustomFormModel purchaseOrderFurnitureModel = (await client.StartTrainingAsync(new Uri(purchaseOrderFurnitureUrl), useTrainingLabels: true, "Purchase order - Furniture").WaitForCompletionAsync()).Value;
-            CustomFormModel purchaseOrderCleaningSuppliesModel = (await client.StartTrainingAsync(new Uri(purchaseOrderCleaningSuppliesUrl), useTrainingLabels: true, "Purchase order - Cleaning Supplies").WaitForCompletionAsync()).Value;
+            //@@ Uri officeSuppliesUri = <purchaseOrderOfficeSuppliesUri>;
+            string suppliesModelName = "Purchase order - Office supplies";
+
+            TrainingOperation suppliesOperation = await client.StartTrainingAsync(officeSuppliesUri, useLabels, suppliesModelName);
+            Response<CustomFormModel> suppliesOperationResponse = await suppliesOperation.WaitForCompletionAsync();
+            CustomFormModel officeSuppliesModel = suppliesOperationResponse.Value;
+
+            //@@ Uri officeEquipmentUri = <purchaseOrderOfficeEquipmentUri>;
+            string equipmentModelName = "Purchase order - Office Equipment";
+
+            TrainingOperation equipmentOperation = await client.StartTrainingAsync(officeEquipmentUri, useLabels, equipmentModelName);
+            Response<CustomFormModel> equipmentOperationResponse = await equipmentOperation.WaitForCompletionAsync();
+            CustomFormModel officeEquipmentModel = equipmentOperationResponse.Value;
+
+            //@@ Uri furnitureUri = <purchaseOrderFurnitureUri>;
+            string furnitureModelName = "Purchase order - Furniture";
+
+            TrainingOperation furnitureOperation = await client.StartTrainingAsync(furnitureUri, useLabels, furnitureModelName);
+            Response<CustomFormModel> furnitureOperationResponse = await furnitureOperation.WaitForCompletionAsync();
+            CustomFormModel furnitureModel = furnitureOperationResponse.Value;
+
+            //@@ Uri cleaningSuppliesUri = <purchaseOrderCleaningSuppliesUri>;
+            string cleaningModelName = "Purchase order - Cleaning Supplies";
+
+            TrainingOperation cleaningOperation = await client.StartTrainingAsync(cleaningSuppliesUri, useLabels, cleaningModelName);
+            Response<CustomFormModel> cleaningOperationResponse = await cleaningOperation.WaitForCompletionAsync();
+            CustomFormModel cleaningSuppliesModel = cleaningOperationResponse.Value;
 
             #endregion
 
@@ -52,36 +72,41 @@ namespace Azure.AI.FormRecognizer.Samples
 
             List<string> modelIds = new List<string>()
             {
-                purchaseOrderOfficeSuppliesModel.ModelId,
-                purchaseOrderOfficeEquipmentModel.ModelId,
-                purchaseOrderFurnitureModel.ModelId,
-                purchaseOrderCleaningSuppliesModel.ModelId
+                officeSuppliesModel.ModelId,
+                officeEquipmentModel.ModelId,
+                furnitureModel.ModelId,
+                cleaningSuppliesModel.ModelId
             };
 
-            CustomFormModel purchaseOrderModel = (await client.StartCreateComposedModelAsync(modelIds, "Composed Purchase order").WaitForCompletionAsync()).Value;
+            string purchaseModelName = "Composed Purchase order";
+            CreateComposedModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, purchaseModelName);
+            Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+            CustomFormModel purchaseOrderModel = operationResponse.Value;
 
             Console.WriteLine($"Purchase Order Model Info:");
-            Console.WriteLine($"    Is composed model: {purchaseOrderModel.Properties.IsComposedModel}");
-            Console.WriteLine($"    Model Id: {purchaseOrderModel.ModelId}");
-            Console.WriteLine($"    Model name: {purchaseOrderModel.ModelName}");
-            Console.WriteLine($"    Model Status: {purchaseOrderModel.Status}");
-            Console.WriteLine($"    Create model started on: {purchaseOrderModel.TrainingStartedOn}");
-            Console.WriteLine($"    Create model completed on: {purchaseOrderModel.TrainingCompletedOn}");
+            Console.WriteLine($"  Is composed model: {purchaseOrderModel.Properties.IsComposedModel}");
+            Console.WriteLine($"  Model Id: {purchaseOrderModel.ModelId}");
+            Console.WriteLine($"  Model name: {purchaseOrderModel.ModelName}");
+            Console.WriteLine($"  Model Status: {purchaseOrderModel.Status}");
+            Console.WriteLine($"  Create model started on: {purchaseOrderModel.TrainingStartedOn}");
+            Console.WriteLine($"  Create model completed on: {purchaseOrderModel.TrainingCompletedOn}");
 
             #endregion
 
             #region Snippet:FormRecognizerSampleSubmodelsInComposedModel
 
-            Dictionary<string, List<TrainingDocumentInfo>> trainingDocsPerModel = purchaseOrderModel.TrainingDocuments.GroupBy(doc => doc.ModelId).ToDictionary(g => g.Key, g => g.ToList());
+            Dictionary<string, List<TrainingDocumentInfo>> trainingDocsPerModel;
+            trainingDocsPerModel = purchaseOrderModel.TrainingDocuments.GroupBy(doc => doc.ModelId).ToDictionary(g => g.Key, g => g.ToList());
 
-            Console.WriteLine($"The purchase order model is based on {purchaseOrderModel.Submodels.Count} model{(purchaseOrderModel.Submodels.Count > 1 ? "s" : "")}.");
+            Console.WriteLine($"The purchase order model is based on {purchaseOrderModel.Submodels.Count} models");
+
             foreach (CustomFormSubmodel model in purchaseOrderModel.Submodels)
             {
-                Console.WriteLine($"    Model Id: {model.ModelId}");
-                Console.WriteLine("    The documents used to trained the model are: ");
+                Console.WriteLine($"  Model Id: {model.ModelId}");
+                Console.WriteLine("  The documents used to trained the model are: ");
                 foreach (var doc in trainingDocsPerModel[model.ModelId])
                 {
-                    Console.WriteLine($"        {doc.Name}");
+                    Console.WriteLine($"    {doc.Name}");
                 }
             }
 
@@ -92,38 +117,37 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerSampleRecognizeCustomFormWithComposedModel
 
             //@@ string purchaseOrderFilePath = "<purchaseOrderFilePath>";
-            FormRecognizerClient formRecognizerClient = client.GetFormRecognizerClient();
+            FormRecognizerClient recognizeClient = client.GetFormRecognizerClient();
+            using var stream = new FileStream(purchaseOrderFilePath, FileMode.Open);
 
-            RecognizedFormCollection forms;
-            using (FileStream stream = new FileStream(purchaseOrderFilePath, FileMode.Open))
+            RecognizeCustomFormsOperation recognizeOperation = await recognizeClient.StartRecognizeCustomFormsAsync(purchaseOrderModel.ModelId, stream);
+            Response<RecognizedFormCollection> recognizeOperationResponse = await recognizeOperation.WaitForCompletionAsync();
+            RecognizedFormCollection forms = recognizeOperationResponse.Value;
+
+            // Find labeled field.
+            foreach (RecognizedForm form in forms)
             {
-                forms = await formRecognizerClient.StartRecognizeCustomFormsAsync(purchaseOrderModel.ModelId, stream).WaitForCompletionAsync();
-
-                // Find labeled field.
-                foreach (RecognizedForm form in forms)
+                // Setting an arbitrary confidence level
+                if (form.FormTypeConfidence.Value > 0.9)
                 {
-                    // Setting an arbitrary confidence level
-                    if (form.FormTypeConfidence.Value > 0.9)
+                    if (form.Fields.TryGetValue("Total", out FormField field))
                     {
-                        if (form.Fields.TryGetValue("Total", out FormField field))
-                        {
-                            Console.WriteLine($"Total value in the form `{form.FormType}` is `{field.ValueData.Text}`");
-                        }
+                        Console.WriteLine($"Total value in the form `{form.FormType}` is `{field.ValueData.Text}`");
                     }
-                    else
-                    {
-                        Console.WriteLine("Unable to recognize form.");
-                    }
+                }
+                else
+                {
+                    Console.WriteLine("Unable to recognize form.");
                 }
             }
 
             #endregion
 
             // Delete the models on completion to clean environment.
-            await client.DeleteModelAsync(purchaseOrderOfficeSuppliesModel.ModelId).ConfigureAwait(false);
-            await client.DeleteModelAsync(purchaseOrderOfficeEquipmentModel.ModelId).ConfigureAwait(false);
-            await client.DeleteModelAsync(purchaseOrderFurnitureModel.ModelId).ConfigureAwait(false);
-            await client.DeleteModelAsync(purchaseOrderCleaningSuppliesModel.ModelId).ConfigureAwait(false);
+            await client.DeleteModelAsync(officeSuppliesModel.ModelId).ConfigureAwait(false);
+            await client.DeleteModelAsync(officeEquipmentModel.ModelId).ConfigureAwait(false);
+            await client.DeleteModelAsync(furnitureModel.ModelId).ConfigureAwait(false);
+            await client.DeleteModelAsync(cleaningSuppliesModel.ModelId).ConfigureAwait(false);
             await client.DeleteModelAsync(purchaseOrderModel.ModelId).ConfigureAwait(false);
         }
     }

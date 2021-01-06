@@ -90,7 +90,6 @@ namespace Azure.Identity
         /// </summary>
         public bool ExcludeVisualStudioCredential { get; set; }
 
-
         /// <summary>
         /// Specifies whether the <see cref="VisualStudioCodeCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// </summary>

@@ -198,8 +198,8 @@ namespace Azure.Iot.Hub.Service
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(device);
             request.Content = content;
@@ -420,8 +420,8 @@ namespace Azure.Iot.Hub.Service
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deviceTwinInfo);
             request.Content = content;
@@ -509,8 +509,8 @@ namespace Azure.Iot.Hub.Service
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deviceTwinInfo);
             request.Content = content;
@@ -595,8 +595,8 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/methods", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(directMethodRequest);
             request.Content = content;

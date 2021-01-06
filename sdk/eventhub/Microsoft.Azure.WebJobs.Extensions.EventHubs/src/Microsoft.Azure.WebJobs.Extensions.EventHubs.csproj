@@ -1,17 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK EventHubs Extension</Description>
     <Version>5.0.0-beta.1</Version>
-    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
+    
+    <!-- TODO: Switch to centralized versions when Microsoft.Extensions.Azure GA -->
+    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.1.0-beta.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../Azure.Messaging.EventHubs/src/Azure.Messaging.EventHubs.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Processor/StorageManager.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/CancellationTokenExtensions.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/BasicRetryPolicy.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/EventHubsRetryOptionsExtensions.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/BlobCheckpointStore/*.cs" LinkBase="SharedSource" />
+    <Compile Include="../../../extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Shared/WebJobsConfigurationExtensions.cs" LinkBase="SharedSource" />
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Azure.Messaging.EventHubs.Core</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

@@ -320,7 +320,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void DataLakeUriBuilder_SasStartExpiryTimeFormats(string startTime, string expiryTime)
         {
             // Arrange
-            Uri initialUri = new Uri($"https://account.dfs.core.windows.net/filesystem/directory/file?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            Uri initialUri = new Uri($"https://account.dfs.core.windows.net/filesystem/directory/file?sv=2020-04-08&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(initialUri);
 
             // Act
@@ -338,7 +338,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             string startTime = "2020-10-27T12Z";
             string expiryTime = "2020-10-28T13Z";
-            Uri initialUri = new Uri($"https://account.dfs.core.windows.net/filesystem/directory/file?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            Uri initialUri = new Uri($"https://account.dfs.core.windows.net/filesystem/directory/file?sv=2020-04-08&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
 
             // Act
             try

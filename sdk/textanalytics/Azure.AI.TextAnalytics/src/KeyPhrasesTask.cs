@@ -15,6 +15,5 @@ namespace Azure.AI.TextAnalytics
         /// Parameters for KeyPhrasesTask
         /// </summary>
         public KeyPhrasesTaskParameters Parameters { get; set; }
-
     }
 }

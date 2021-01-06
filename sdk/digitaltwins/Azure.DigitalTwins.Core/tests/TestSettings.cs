@@ -36,7 +36,6 @@ namespace Azure.DigitalTwins.Core.Tests
                 return;
             }
 
-
             string codeBase = Assembly.GetExecutingAssembly().Location;
             string workingDirectory = Path.GetDirectoryName(codeBase);
 

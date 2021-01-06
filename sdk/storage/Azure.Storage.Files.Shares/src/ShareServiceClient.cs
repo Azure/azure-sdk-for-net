@@ -91,10 +91,15 @@ namespace Azure.Storage.Files.Shares
         private StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateAccountSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateAccountSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -235,7 +240,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="ShareClient"/> for the desired share.
         /// </returns>
         public virtual ShareClient GetShareClient(string shareName) =>
-            new ShareClient(Uri.AppendToPath(shareName), Pipeline, Version, ClientDiagnostics);
+            new ShareClient(Uri.AppendToPath(shareName), Pipeline, SharedKeyCredential, Version, ClientDiagnostics);
 
         #region GetShares
         /// <summary>
@@ -395,14 +400,15 @@ namespace Azure.Storage.Files.Shares
                         maxresults: pageSizeHint,
                         include: ShareExtensions.AsIncludeItems(traits, states),
                         async: async,
+                        operationName: $"{nameof(ShareServiceClient)}.{nameof(GetShares)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     if ((traits & ShareTraits.Metadata) != ShareTraits.Metadata)
                     {
-                        IEnumerable<ShareItem> shareItems = response.Value.ShareItems;
-                        foreach (ShareItem shareItem in shareItems)
+                        IEnumerable<ShareItemInternal> shareItemInternals = response.Value.ShareItems;
+                        foreach (ShareItemInternal shareItemInternal in shareItemInternals)
                         {
-                            shareItem.Properties.Metadata = null;
+                            shareItemInternal.Properties.Metadata = null;
                         }
                     }
                     return response;
@@ -704,6 +710,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.Protocols,
+                options?.RootSquash,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -750,6 +758,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.Protocols,
+                options?.RootSquash,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -801,6 +811,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                rootSquash: default,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -852,6 +864,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                rootSquash: default,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1245,7 +1259,7 @@ namespace Azure.Storage.Files.Shares
                     nameof(AccountSasServices.Files));
             }
             UriBuilder sasUri = new UriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
             return sasUri.Uri;
         }
         #endregion
