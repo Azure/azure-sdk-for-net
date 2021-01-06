@@ -141,15 +141,6 @@ namespace Azure.Storage.Queues.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MessageText { get { throw null; } }
     }
-    public partial class PeekedMessageItem
-    {
-        internal PeekedMessageItem() { }
-        public long DequeueCount { get { throw null; } }
-        public System.DateTimeOffset ExpirationTime { get { throw null; } }
-        public System.DateTimeOffset InsertionTime { get { throw null; } }
-        public string MessageId { get { throw null; } }
-        public string MessageText { get { throw null; } }
-    }
     public partial class QueueAccessPolicy
     {
         public QueueAccessPolicy() { }

@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The object returned in the QueueMessageList array when calling Peek Messages on a Queue. </summary>
-    public partial class PeekedMessageItem
+    internal partial class PeekedMessageItem
     {
         /// <summary> Initializes a new instance of PeekedMessageItem. </summary>
         /// <param name="messageId"> The Id of the Message. </param>

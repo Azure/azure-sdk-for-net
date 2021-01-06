@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class PeekedMessageItem
+    internal partial class PeekedMessageItem
     {
         internal static PeekedMessageItem DeserializePeekedMessageItem(XElement element)
         {
