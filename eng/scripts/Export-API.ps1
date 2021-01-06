@@ -3,7 +3,7 @@ param (
     [Parameter(Position=0)]
     [ValidateNotNullOrEmpty()]
     [string] $ServiceDirectory,
-    [string] $SDKType="client"
+    [string] $SDKType = "client"
 )
 
 $servicesProj = Resolve-Path "$PSScriptRoot/../service.proj"

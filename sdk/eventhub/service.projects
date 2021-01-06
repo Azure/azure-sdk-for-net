@@ -26,13 +26,14 @@
     <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Microsoft.Azure.EventHubs*\**\*.csproj" />
   </ItemGroup>
 
-  <!-- Remove all but the included projects based on sdk type -->
+  <!-- Remove all projects under this directory but the included projects based on sdk type -->
   <ItemGroup>
-    <ProjectsToRemove Include="@(ProjectReference)" Exclude="@(ProjectsToInclude)" />
+    <ProjectsToRemove Include="$(MSBuildThisFileDirectory)**\*.csproj" Exclude="@(ProjectsToInclude)" />
     <ProjectReference Remove="@(ProjectsToRemove)" />
   </ItemGroup>
 
   <Target Name="EventHubsOutput" BeforeTargets="Build">
-    <Message Text="Final Build References -> @(ProjectReference)" Importance="high"/>
+    <Message Text="Final Build References:" Importance="high"/>
+    <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
   </Target>
 </Project>
