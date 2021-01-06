@@ -40,8 +40,10 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// <param name="metadata">List of metadata associated with the
         /// answer.</param>
         /// <param name="context">Context of a QnA</param>
-        public PromptDTOQna(string answer, IList<string> questions, int? id = default(int?), string source = default(string), IList<MetadataDTO> metadata = default(IList<MetadataDTO>), QnADTOContext context = default(QnADTOContext))
-            : base(answer, questions, id, source, metadata, context)
+        /// <param name="lastUpdatedTimestamp">Timestamp when the QnA was last
+        /// updated.</param>
+        public PromptDTOQna(string answer, IList<string> questions, int? id = default(int?), string source = default(string), IList<MetadataDTO> metadata = default(IList<MetadataDTO>), QnADTOContext context = default(QnADTOContext), string lastUpdatedTimestamp = default(string))
+            : base(answer, questions, id, source, metadata, context, lastUpdatedTimestamp)
         {
             CustomInit();
         }

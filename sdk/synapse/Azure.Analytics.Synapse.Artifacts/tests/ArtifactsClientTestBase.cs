@@ -26,9 +26,6 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
 
         protected ArtifactsClientTestBase(bool isAsync) : base(isAsync)
         {
-#if DEBUG
-            SaveDebugRecordingsOnFailure = true;
-#endif
         }
 
         public override void StartTestRecording()
@@ -64,7 +61,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         internal PipelineClient CreatePipelineClient()
         {
             return InstrumentClient(new PipelineClient(
-                new Uri(TestEnvironment.WorkspaceUrl),
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())));
         }
@@ -72,7 +69,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         internal NotebookClient CreateNotebookClient()
         {
             return InstrumentClient(new NotebookClient(
-                new Uri(TestEnvironment.WorkspaceUrl),
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())));
         }
@@ -80,7 +77,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         internal TriggerClient CreateTriggerClient()
         {
             return InstrumentClient(new TriggerClient(
-                new Uri(TestEnvironment.WorkspaceUrl),
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())));
         }
@@ -88,7 +85,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         internal LinkedServiceClient CreateLinkedServiceClient()
         {
             return InstrumentClient(new LinkedServiceClient(
-                new Uri(TestEnvironment.WorkspaceUrl),
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())));
         }
@@ -96,7 +93,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         internal DatasetClient CreateDatasetClient()
         {
             return InstrumentClient(new DatasetClient(
-                new Uri(TestEnvironment.WorkspaceUrl),
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())));
         }
@@ -104,7 +101,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         internal DataFlowClient CreateDataFlowClient()
         {
             return InstrumentClient(new DataFlowClient(
-                new Uri(TestEnvironment.WorkspaceUrl),
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())));
         }

@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Communication.Tests

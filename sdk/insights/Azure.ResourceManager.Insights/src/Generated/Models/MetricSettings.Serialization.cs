@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("timeGrain"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timeGrain = property.Value.GetTimeSpan("P");
                     continue;
                 }
@@ -61,6 +66,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("retentionPolicy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);
                     continue;
                 }

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyTitle>CloudNative CloudEvents support for Azure.Messaging.EventGrid library</AssemblyTitle>
+    <Description>This library allows the CloudEvent model from CloudNative.CloudEvents to be published using the Azure Event Grid client library.</Description>
+    <Version>1.0.0-preview.1</Version>
+    <PackageTags>Microsoft Azure SDK CloudNative CloudEvents</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Pull in Shared Source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <PackageReference Include="CloudNative.CloudEvents" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\eventgrid\Azure.Messaging.EventGrid\src\Azure.Messaging.EventGrid.csproj" />
+  </ItemGroup>
+</Project>

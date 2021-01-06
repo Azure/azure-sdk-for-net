@@ -21,11 +21,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("aggregatedState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     aggregatedState = new AggregatedReplicationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("summary"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<RegionalReplicationStatus> array = new List<RegionalReplicationStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

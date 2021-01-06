@@ -203,7 +203,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return _jobsRestClient.CancelImportExportJob(jobId);
+            return _jobsRestClient.CancelImportExportJob(jobId, cancellationToken);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return _jobsRestClient.CancelImportExportJobAsync(jobId);
+            return _jobsRestClient.CancelImportExportJobAsync(jobId, cancellationToken);
         }
     }
 }

@@ -6,14 +6,14 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The operator to be applied between conditions in the same <see cref="MetricAnomalyDetectionConditions"/>
+    /// The operator to be applied between conditions in the same <see cref="MetricWholeSeriesDetectionCondition"/>
     /// instance.
     /// </summary>
     [CodeGenModel("WholeMetricConfigurationConditionOperator")]
     public readonly partial struct DetectionConditionsOperator
     {
         /// <summary>
-        /// The data point is considered an anomaly if all conditions defined in <see cref="MetricAnomalyDetectionConditions"/>
+        /// The data point is considered an anomaly if all conditions defined in <see cref="MetricWholeSeriesDetectionCondition"/>
         /// are satisfied.
         /// </summary>
         [CodeGenMember("AND")]
@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The data point is considered an anomaly if at least one of the conditions defined in
-        /// <see cref="MetricAnomalyDetectionConditions"/> is satisfied.
+        /// <see cref="MetricWholeSeriesDetectionCondition"/> is satisfied.
         /// </summary>
         [CodeGenMember("OR")]
         public static DetectionConditionsOperator Or { get; } = new DetectionConditionsOperator(OrValue);

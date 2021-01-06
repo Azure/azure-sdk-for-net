@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The CommentFeedbackValue. </summary>
-    public partial class CommentFeedbackValue
+    internal partial class CommentFeedbackValue
     {
         /// <summary> Initializes a new instance of CommentFeedbackValue. </summary>
         /// <param name="commentValue"> the comment string. </param>

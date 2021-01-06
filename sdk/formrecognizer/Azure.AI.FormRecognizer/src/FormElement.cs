@@ -5,10 +5,13 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// Represents a form element recognized from the input document. Its text can be a line,
-    /// a word, the content of a table cell, etc.
+    /// a word, the content of a table cell, a selection mark, etc.
     /// </summary>
     public abstract class FormElement
     {
+        internal FormElement(FieldBoundingBox boundingBox, int pageNumber)
+            : this(boundingBox, pageNumber, default) { }
+
         internal FormElement(FieldBoundingBox boundingBox, int pageNumber, string text)
         {
             BoundingBox = boundingBox;

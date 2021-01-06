@@ -105,8 +105,14 @@ namespace Microsoft.Azure.ServiceBus.Management
             {
                 switch (element.Name.LocalName)
                 {
+                    case "LockDuration":
+                        subscriptionDesc.LockDuration = XmlConvert.ToTimeSpan(element.Value);
+                        break;
                     case "RequiresSession":
                         subscriptionDesc.RequiresSession = bool.Parse(element.Value);
+                        break;
+                    case "DefaultMessageTimeToLive":
+                        subscriptionDesc.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
                         break;
                     case "DeadLetteringOnMessageExpiration":
                         subscriptionDesc.EnableDeadLetteringOnMessageExpiration = bool.Parse(element.Value);
@@ -114,26 +120,14 @@ namespace Microsoft.Azure.ServiceBus.Management
                     case "DeadLetteringOnFilterEvaluationExceptions":
                         subscriptionDesc.EnableDeadLetteringOnFilterEvaluationExceptions = bool.Parse(element.Value);
                         break;
-                    case "LockDuration":
-                        subscriptionDesc.LockDuration = XmlConvert.ToTimeSpan(element.Value);
-                        break;
-                    case "DefaultMessageTimeToLive":
-                        subscriptionDesc.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
-                        break;
                     case "MaxDeliveryCount":
                         subscriptionDesc.MaxDeliveryCount = int.Parse(element.Value);
-                        break;
-                    case "Status":
-                        subscriptionDesc.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
                         break;
                     case "EnableBatchedOperations":
                         subscriptionDesc.EnableBatchedOperations = bool.Parse(element.Value);
                         break;
-                    case "UserMetadata":
-                        subscriptionDesc.UserMetadata = element.Value;
-                        break;
-                    case "AutoDeleteOnIdle":
-                        subscriptionDesc.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
+                    case "Status":
+                        subscriptionDesc.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
                         break;
                     case "ForwardTo":
                         if (!string.IsNullOrWhiteSpace(element.Value))
@@ -141,11 +135,17 @@ namespace Microsoft.Azure.ServiceBus.Management
                             subscriptionDesc.ForwardTo = element.Value;
                         }
                         break;
+                    case "UserMetadata":
+                        subscriptionDesc.UserMetadata = element.Value;
+                        break;
                     case "ForwardDeadLetteredMessagesTo":
                         if (!string.IsNullOrWhiteSpace(element.Value))
                         {
                             subscriptionDesc.ForwardDeadLetteredMessagesTo = element.Value;
                         }
+                        break;
+                    case "AutoDeleteOnIdle":
+                        subscriptionDesc.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
                         break;
                     case "AccessedAt":
                     case "CreatedAt":
@@ -153,6 +153,9 @@ namespace Microsoft.Azure.ServiceBus.Management
                     case "SizeInBytes":
                     case "UpdatedAt":
                     case "CountDetails":
+                    case "DefaultRuleDescription":
+                    case "EntityAvailabilityStatus":
+                    case "SkippedUpdate":
                         // Ignore known properties
                         // Do nothing
                         break;

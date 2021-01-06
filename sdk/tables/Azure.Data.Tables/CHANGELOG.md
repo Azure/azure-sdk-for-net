@@ -1,7 +1,22 @@
 # Release History
 
-## 3.0.0-beta.3 (Unreleased)
+## 3.0.0-beta.5 (Unreleased)
 
+
+## 3.0.0-beta.4 (2020-12-10)
+
+### Fixed
+
+- Fixed an issue with custom entity model serialization of the ETag property
+- Properly create secondary endpoint Uri for Azurite endpoints
+
+## 3.0.0-beta.3 (2020-11-12)
+
+### Added
+
+- Added support for Upsert batch operations.
+- Added support for some numeric type coercion for TableEntity properties.
+- Added TryGetFailedEntityFromException method on TablesTransactionalBatch to extract the entity that caused a batch failure from a RequestFailedException.
 
 ## 3.0.0-beta.2 (2020-10-06)
 

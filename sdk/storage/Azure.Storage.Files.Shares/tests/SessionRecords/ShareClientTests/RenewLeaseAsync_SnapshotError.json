@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "85a23e13-2cfa-9a31-9203-cd03c7a5ebbe",
         "x-ms-date": "Wed, 05 Aug 2020 22:26:33 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "85a23e13-2cfa-9a31-9203-cd03c7a5ebbe",
         "x-ms-request-id": "77eb9f2e-a01a-004f-7377-6bab96000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-lease-action": "renew",
         "x-ms-lease-id": "347cb6af-b5c6-9fb2-f1a8-13ca38c65ef4",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "50bfcb5b-8a0a-5eea-8c03-9351196661cb",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "77eb9f39-a01a-004f-7c77-6bab96000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
@@ -84,7 +84,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:33 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,7 +97,7 @@
         ],
         "x-ms-client-request-id": "6d6f0706-0e07-83e9-4a63-cf75c9c4da61",
         "x-ms-request-id": "77eb9f3a-a01a-004f-7d77-6bab96000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

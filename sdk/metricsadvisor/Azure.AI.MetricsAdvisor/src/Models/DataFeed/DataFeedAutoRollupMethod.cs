@@ -6,13 +6,14 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The roll-up method the service should apply to the ingested data for anomaly detection.
+    /// The roll-up method performs an aggregation (for example SUM, MAX, MIN) on each dimension during ingestion. Used to
+    /// build a hierarchy which will be used in root case analysis and other diagnostic features.
     /// </summary>
     [CodeGenModel("DataFeedDetailRollUpMethod")]
     public readonly partial struct DataFeedAutoRollupMethod
     {
-        // TODODOCS: when is this used for?
         /// <summary>
+        /// This option means Metrics Advisor doesn't need to roll up the data because, for example, the rows are already summed.
         /// </summary>
         public static DataFeedAutoRollupMethod None { get; } = new DataFeedAutoRollupMethod(NoneValue);
 
@@ -33,7 +34,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         [CodeGenMember("Min")]
         public static DataFeedAutoRollupMethod Minimum { get; } = new DataFeedAutoRollupMethod(MinimumValue);
 
-        // TODODOCS: double check if it's in fact an arithmetic mean.
         /// <summary>
         /// The rolled-up column should contain the arithmetic mean of the ingested values.
         /// </summary>

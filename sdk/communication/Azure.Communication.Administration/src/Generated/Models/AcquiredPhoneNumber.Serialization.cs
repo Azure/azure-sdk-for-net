@@ -50,6 +50,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("assignmentStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     assignmentStatus = new AssignmentStatus(property.Value.GetString());
                     continue;
                 }
@@ -60,6 +65,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("activationState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     activationState = new ActivationState(property.Value.GetString());
                     continue;
                 }

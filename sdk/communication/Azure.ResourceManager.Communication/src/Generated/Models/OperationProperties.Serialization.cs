@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 if (property.NameEquals("serviceSpecification"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property.Value);
                     continue;
                 }

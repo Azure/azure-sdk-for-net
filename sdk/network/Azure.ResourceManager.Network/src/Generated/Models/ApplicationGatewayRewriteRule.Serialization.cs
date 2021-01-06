@@ -59,11 +59,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ruleSequence"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ruleSequence = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("conditions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationGatewayRewriteRuleCondition> array = new List<ApplicationGatewayRewriteRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -74,6 +84,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("actionSet"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value);
                     continue;
                 }

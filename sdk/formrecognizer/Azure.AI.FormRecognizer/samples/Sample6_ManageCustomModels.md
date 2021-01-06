@@ -42,7 +42,7 @@ await foreach (CustomFormModelInfo modelInfo in models)
 {
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-    Console.WriteLine($"    Model display name: {modelInfo.DisplayName}");
+    Console.WriteLine($"    Model name: {modelInfo.ModelName}");
     Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
     Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
@@ -50,12 +50,12 @@ await foreach (CustomFormModelInfo modelInfo in models)
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = "My new model" }).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My new model").WaitForCompletionAsync();
 
 // Get the model that was just created
 CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
 
-Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.DisplayName} recognizes the following form types:");
+Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.ModelName} recognizes the following form types:");
 
 foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 {
@@ -94,7 +94,7 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
 {
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-    Console.WriteLine($"    Model display name: {modelInfo.DisplayName}");
+    Console.WriteLine($"    Model name: {modelInfo.ModelName}");
     Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
     Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
@@ -102,12 +102,12 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = "My new model" }).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false, "My new model").WaitForCompletionAsync();
 
 // Get the model that was just created
 CustomFormModel modelCopy = client.GetCustomModel(model.ModelId);
 
-Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.DisplayName} recognizes the following form types:");
+Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.ModelName} recognizes the following form types:");
 
 foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 {

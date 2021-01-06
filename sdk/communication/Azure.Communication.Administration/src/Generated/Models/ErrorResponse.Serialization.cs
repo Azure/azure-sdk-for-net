@@ -19,6 +19,11 @@ namespace Azure.Communication.Administration.Models
             {
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     error = ErrorBody.DeserializeErrorBody(property.Value);
                     continue;
                 }
