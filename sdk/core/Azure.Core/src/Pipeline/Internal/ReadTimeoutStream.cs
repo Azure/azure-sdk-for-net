@@ -138,7 +138,10 @@ namespace Azure.Core.Pipeline
         {
             try
             {
-                _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                if (_stream.CanTimeout)
+                {
+                    _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                }
             }
             catch
             {

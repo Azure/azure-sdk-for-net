@@ -5,9 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../Azure.Core/src/Azure.Core.csproj" />
+    <ProjectReference Condition="'$(AzureCoreVersion)' == ''" Include="../../Azure.Core/src/Azure.Core.csproj" />
+    <PackageReference Condition="'$(AzureCoreVersion)' != ''" Include="Azure.Core" VersionOverride="$(AzureCoreVersion)" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
   </ItemGroup>
 

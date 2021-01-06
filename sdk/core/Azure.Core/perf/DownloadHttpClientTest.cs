@@ -6,8 +6,6 @@ using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
-using Azure.Identity;
 using Azure.Test.Perf;
 
 namespace Azure.Template.Perf
