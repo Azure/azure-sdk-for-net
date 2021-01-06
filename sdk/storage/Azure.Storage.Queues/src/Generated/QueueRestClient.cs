@@ -176,6 +176,7 @@ namespace Azure.Storage.Queues
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(queueName, true);
+            uri.AppendQuery("comp", "metadata", true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -229,6 +230,7 @@ namespace Azure.Storage.Queues
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(queueName, true);
+            uri.AppendQuery("comp", "metadata", true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -288,6 +290,7 @@ namespace Azure.Storage.Queues
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(queueName, true);
+            uri.AppendQuery("comp", "acl", true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -367,6 +370,7 @@ namespace Azure.Storage.Queues
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(queueName, true);
+            uri.AppendQuery("comp", "acl", true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
