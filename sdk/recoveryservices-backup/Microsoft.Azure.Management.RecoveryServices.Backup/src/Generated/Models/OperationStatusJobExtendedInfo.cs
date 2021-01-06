@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Operation status job extended info.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("OperationStatusJobExtendedInfo")]
     public partial class OperationStatusJobExtendedInfo : OperationStatusExtendedInfo
     {
         /// <summary>

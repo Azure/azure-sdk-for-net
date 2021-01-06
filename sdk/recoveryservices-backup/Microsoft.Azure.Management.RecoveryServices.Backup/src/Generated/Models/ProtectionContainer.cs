@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// Base class for container with backup items. Containers with specific
     /// workloads are derived from this class.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ProtectionContainer")]
     public partial class ProtectionContainer
     {
         /// <summary>

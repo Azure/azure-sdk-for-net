@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Log policy schedule.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("LogSchedulePolicy")]
     public partial class LogSchedulePolicy : SchedulePolicy
     {
         /// <summary>

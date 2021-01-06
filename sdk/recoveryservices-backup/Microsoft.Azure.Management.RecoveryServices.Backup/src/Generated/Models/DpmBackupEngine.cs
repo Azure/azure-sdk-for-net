@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Data Protection Manager (DPM) specific backup engine.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DpmBackupEngine")]
     public partial class DpmBackupEngine : BackupEngineBase
     {
         /// <summary>

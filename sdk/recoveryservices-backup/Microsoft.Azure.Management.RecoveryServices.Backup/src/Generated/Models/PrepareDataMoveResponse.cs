@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Prepare DataMove Response
     /// </summary>
+    [Newtonsoft.Json.JsonObject("PrepareDataMoveResponse")]
     public partial class PrepareDataMoveResponse : VaultStorageConfigOperationResultResponse
     {
         /// <summary>

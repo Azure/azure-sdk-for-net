@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Operation result response for Vault Storage Config
     /// </summary>
+    [Newtonsoft.Json.JsonObject("VaultStorageConfigOperationResultResponse")]
     public partial class VaultStorageConfigOperationResultResponse
     {
         /// <summary>

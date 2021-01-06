@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// AzureWorkload SQL -specific restore. Specifically for PointInTime/Log
     /// restore
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureWorkloadSQLPointInTimeRestoreRequest")]
     public partial class AzureWorkloadSQLPointInTimeRestoreRequest : AzureWorkloadSQLRestoreRequest
     {
         /// <summary>

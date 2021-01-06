@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Base class for backup ProtectionIntent.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ProtectionIntent")]
     public partial class ProtectionIntent
     {
         /// <summary>
