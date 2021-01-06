@@ -7,9 +7,9 @@
   the set of projects to to match what type of SDK we are interested in building.
 
   SDKType values
-   - empty or client will build the new track 2 client/data libraries
-   - mgmtclient will build the track 2 mgmt libraries
-   - data will build the track 1 data plane libraries
+   - empty or "client" will build the new track 2 client/data libraries
+   - "mgmtclient" will build the track 2 mgmt libraries
+   - "data" will build the track 1 data plane libraries
 -->
 
 <Project>
