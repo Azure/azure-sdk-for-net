@@ -16,6 +16,11 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         public QueueMetrics() { }
 
+        internal QueueMetrics(bool enabled)
+        {
+            Enabled = enabled;
+        }
+
         /// <summary>
         /// Indicates whether metrics should generate summary statistics for called API operations.
         /// </summary>

@@ -15,5 +15,19 @@ namespace Azure.Storage.Queues.Models
         /// Constructor.
         /// </summary>
         public QueueCorsRule() { }
+
+        internal QueueCorsRule(
+            string allowedOrigins,
+            string allowedMethods,
+            string allowedHeaders,
+            string exposedHeaders,
+            int maxAgeInSeconds)
+        {
+            AllowedOrigins = allowedOrigins;
+            AllowedMethods = allowedMethods;
+            AllowedHeaders = allowedHeaders;
+            ExposedHeaders = exposedHeaders;
+            MaxAgeInSeconds = maxAgeInSeconds;
+        }
     }
 }

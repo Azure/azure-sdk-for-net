@@ -15,5 +15,19 @@ namespace Azure.Storage.Queues.Models
         /// Constructor.
         /// </summary>
         public QueueAnalyticsLogging() { }
+
+        internal QueueAnalyticsLogging(
+            string version,
+            bool delete,
+            bool read,
+            bool write,
+            QueueRetentionPolicy retentionPolicy)
+        {
+            Version = version;
+            Delete = delete;
+            Read = read;
+            Write = write;
+            RetentionPolicy = retentionPolicy;
+        }
     }
 }

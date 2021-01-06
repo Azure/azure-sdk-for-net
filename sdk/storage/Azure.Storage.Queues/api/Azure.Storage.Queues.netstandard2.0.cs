@@ -151,7 +151,6 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueAnalyticsLogging
     {
         public QueueAnalyticsLogging() { }
-        public QueueAnalyticsLogging(string version, bool delete, bool read, bool write, Azure.Storage.Queues.Models.QueueRetentionPolicy retentionPolicy) { }
         public bool Delete { get { throw null; } set { } }
         public bool Read { get { throw null; } set { } }
         public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { get { throw null; } set { } }
@@ -161,7 +160,6 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueCorsRule
     {
         public QueueCorsRule() { }
-        public QueueCorsRule(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, int maxAgeInSeconds) { }
         public string AllowedHeaders { get { throw null; } set { } }
         public string AllowedMethods { get { throw null; } set { } }
         public string AllowedOrigins { get { throw null; } set { } }
@@ -276,7 +274,6 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueMetrics
     {
         public QueueMetrics() { }
-        public QueueMetrics(bool enabled) { }
         public bool Enabled { get { throw null; } set { } }
         public bool? IncludeApis { get { throw null; } set { } }
         public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { get { throw null; } set { } }
