@@ -18,9 +18,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
     {
         private readonly ILogger _logger;
 
-        public HttpRequestProcessor(ILoggerFactory loggerFactory)
+        public HttpRequestProcessor(ILogger<HttpRequestProcessor> logger)
         {
-            _logger = loggerFactory.CreateLogger<HttpRequestProcessor>();
+            _logger = logger;
         }
 
         internal async Task<HttpResponseMessage> ProcessAsync(HttpRequestMessage req, string functionName, Func<JArray, string, CancellationToken, Task<HttpResponseMessage>> eventsFunc, CancellationToken cancellationToken)
