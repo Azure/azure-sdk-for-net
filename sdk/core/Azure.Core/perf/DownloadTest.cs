@@ -15,14 +15,13 @@ namespace Azure.Template.Perf
     {
         // Stream.CopyToAsync default buffer
         private const int BufferSize = 81920;
-        private readonly HttpPipeline _pipeline;
-        private readonly InProcTestServer _server;
+        private static InProcTestServer _server;
+        private static HttpPipeline _pipeline;
 
         public DownloadTest(DownloadTestOptions options) : base(options)
         {
-            var buffer = new byte[BufferSize];
-            _server = InProcTestServer.CreateStaticResponse(options.Size);
-            _pipeline = HttpPipelineBuilder.Build(new DefaultAzureCredentialOptions());
+            _server ??= InProcTestServer.CreateStaticResponse(options.Size);
+            _pipeline ??= HttpPipelineBuilder.Build(new DefaultAzureCredentialOptions());
         }
 
         public override void Run(CancellationToken cancellationToken)

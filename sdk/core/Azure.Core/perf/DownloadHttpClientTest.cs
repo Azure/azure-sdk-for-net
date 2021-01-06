@@ -14,13 +14,13 @@ namespace Azure.Template.Perf
 {
     public class DownloadHttpClientTest : PerfTest<DownloadTestOptions>
     {
-        private readonly HttpClient _client;
-        private readonly InProcTestServer _server;
+        private static HttpClient _client;
+        private static InProcTestServer _server;
 
         public DownloadHttpClientTest(DownloadTestOptions options) : base(options)
         {
-            _server = InProcTestServer.CreateStaticResponse(options.Size);
-            _client = new HttpClient();
+            _server ??= InProcTestServer.CreateStaticResponse(options.Size);
+            _client ??= new HttpClient();
         }
 
         public override void Run(CancellationToken cancellationToken)

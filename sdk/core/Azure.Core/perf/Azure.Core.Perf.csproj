@@ -5,10 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
-  </ItemGroup>
-  
-  <ItemGroup>
+    <ProjectReference Include="../../Azure.Core/src/Azure.Core.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
