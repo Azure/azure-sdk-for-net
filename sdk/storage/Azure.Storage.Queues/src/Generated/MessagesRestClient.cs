@@ -319,7 +319,6 @@ namespace Azure.Storage.Queues
             uri.AppendPath("/", false);
             uri.AppendPath(queueName, true);
             uri.AppendPath("/messages", false);
-            uri.AppendQuery("peekonly", "true", true);
             if (numberOfMessages != null)
             {
                 uri.AppendQuery("numofmessages", numberOfMessages.Value, true);
