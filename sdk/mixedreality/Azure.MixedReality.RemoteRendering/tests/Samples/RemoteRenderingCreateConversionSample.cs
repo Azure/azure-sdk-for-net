@@ -13,13 +13,20 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 {
     public class RemoteRenderingCreateConversionSample : SamplesBase<RemoteRenderingTestEnvironment>
     {
+        private readonly string _accountDomain;
+        private readonly string _accountId;
+        private readonly string _accountKey;
+
         public RemoteRenderingCreateConversionSample()
         {
-            string mixedRealityAccountDomain = TestEnvironment.AccountDomain;
-            string mixedRealityAccountId = TestEnvironment.AccountId;
-            string mixedRealityAccountKey = TestEnvironment.AccountKey;
+            _accountDomain = TestEnvironment.AccountDomain;
+            _accountId = TestEnvironment.AccountId;
+            _accountKey = TestEnvironment.AccountKey;
+        }
 
-            RemoteRenderingClient client = new RemoteRenderingClient(mixedRealityAccountId);
+        public void CreateConversion()
+        {
+            RemoteRenderingClient client = new RemoteRenderingClient(_accountId);
 
             // TODO Fill in with viable details.
             ConversionInputSettings input = new ConversionInputSettings("foo", "bar.fbx");
