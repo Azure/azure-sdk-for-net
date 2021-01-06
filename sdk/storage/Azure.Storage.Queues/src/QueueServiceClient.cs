@@ -415,7 +415,7 @@ namespace Azure.Storage.Queues
                     ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders> response;
 
                     scope.Start();
-
+                    IEnumerable<string> includeTypes = traits.AsIncludeTypes();
                     if (async)
                     {
                         // TODO make Version a parameter and pass it in.
@@ -423,8 +423,7 @@ namespace Azure.Storage.Queues
                             prefix,
                             marker,
                             pageSizeHint,
-                            //TODO fix this.
-                            include: null,
+                            include: includeTypes.Any() ? includeTypes : null,
                             timeout: null,
                             cancellationToken)
                             .ConfigureAwait(false);
@@ -436,8 +435,7 @@ namespace Azure.Storage.Queues
                             prefix,
                             marker,
                             pageSizeHint,
-                            //TODO fix this.
-                            include: null,
+                            include: includeTypes.Any() ? includeTypes : null,
                             timeout: null,
                             cancellationToken);
                     }
@@ -447,8 +445,7 @@ namespace Azure.Storage.Queues
                         IEnumerable<QueueItem> queueItems = response.Value.QueueItems;
                         foreach (QueueItem queueItem in queueItems)
                         {
-                            // TODO fix this.
-                            //queueItem.Metadata = null;
+                            queueItem.Metadata = null;
                         }
                     }
                     return response;
