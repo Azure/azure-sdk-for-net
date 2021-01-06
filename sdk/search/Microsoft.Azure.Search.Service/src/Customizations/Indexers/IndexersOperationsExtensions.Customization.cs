@@ -11,7 +11,8 @@ namespace Microsoft.Azure.Search
 
     /// <summary>
     /// Operations for managing indexers. 
-    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Indexer-operations" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Indexer-operations">
+    /// Indexer operations</see>.
     /// </summary>
     public static partial class IndexersOperationsExtensions
     {
