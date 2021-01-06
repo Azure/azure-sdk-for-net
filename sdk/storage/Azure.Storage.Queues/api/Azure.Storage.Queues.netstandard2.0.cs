@@ -242,8 +242,8 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueGeoReplication
     {
         internal QueueGeoReplication() { }
-        public System.DateTimeOffset? LastSyncedOn { get { throw null; } set { } }
-        public Azure.Storage.Queues.Models.QueueGeoReplicationStatus Status { get { throw null; } set { } }
+        public System.DateTimeOffset? LastSyncedOn { get { throw null; } }
+        public Azure.Storage.Queues.Models.QueueGeoReplicationStatus Status { get { throw null; } }
     }
     public enum QueueGeoReplicationStatus
     {

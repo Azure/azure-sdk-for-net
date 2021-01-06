@@ -22,10 +22,10 @@ namespace Azure.Storage.Queues.Models
         /// Primary writes after this point in time may or may not be available for reads.
         /// </summary>
         [CodeGenMember("LastSyncTime")]
-        public DateTimeOffset? LastSyncedOn { get; set; }
+        public DateTimeOffset? LastSyncedOn { get; internal set; }
 
         /// <summary> The status of the secondary location. </summary>
         [CodeGenMember("Status")]
-        public QueueGeoReplicationStatus Status { get; set; }
+        public QueueGeoReplicationStatus Status { get; internal set; }
     }
 }
