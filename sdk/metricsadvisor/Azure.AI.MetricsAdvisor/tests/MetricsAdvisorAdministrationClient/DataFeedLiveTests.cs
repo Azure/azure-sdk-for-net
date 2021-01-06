@@ -572,7 +572,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureApplicationInsightsDataFeedSource(DataSourceAppId, DataSourceKey, DataSourceCloud, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -600,7 +600,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureApplicationInsightsDataFeedSource(DataSourceAppId, DataSourceKey, DataSourceCloud, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -681,7 +681,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureBlobDataFeedSource(DataSourceConnectionString, DataSourceContainer, DataSourceTemplate);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -708,7 +708,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureBlobDataFeedSource(DataSourceConnectionString, DataSourceContainer, DataSourceTemplate);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -788,7 +788,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureCosmosDbDataFeedSource(DataSourceConnectionString, DataSourceQuery, DataSourceDatabase, DataSourceCollectionId);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -816,7 +816,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureCosmosDbDataFeedSource(DataSourceConnectionString, DataSourceQuery, DataSourceDatabase, DataSourceCollectionId);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -898,7 +898,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataExplorerDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -926,7 +926,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataExplorerDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1007,7 +1007,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataLakeStorageGen2DataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1034,7 +1034,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataLakeStorageGen2DataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1113,7 +1113,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureTableDataFeedSource(DataSourceConnectionString, DataSourceTable, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1140,7 +1140,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureTableDataFeedSource(DataSourceConnectionString, DataSourceTable, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1219,7 +1219,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new ElasticsearchDataFeedSource(DataSourceHost, DataSourcePort, DataSourceAuth, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1246,7 +1246,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new ElasticsearchDataFeedSource(DataSourceHost, DataSourcePort, DataSourceAuth, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1325,7 +1325,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new HttpRequestDataFeedSource(new Uri(DataSourceHost), DataSourceHeader, DataSourceMethod, DataSourcePayload);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1352,7 +1352,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new HttpRequestDataFeedSource(new Uri(DataSourceHost), DataSourceHeader, DataSourceMethod, DataSourcePayload);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1429,7 +1429,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new InfluxDbDataFeedSource(DataSourceConnectionString, DataSourceDatabase, DataSourceUsername, DataSourcePassword, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1456,7 +1456,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new InfluxDbDataFeedSource(DataSourceConnectionString, DataSourceDatabase, DataSourceUsername, DataSourcePassword, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1535,7 +1535,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new MongoDbDataFeedSource(DataSourceConnectionString, DataSourceDatabase, DataSourceCommand);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1562,7 +1562,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new MongoDbDataFeedSource(DataSourceConnectionString, DataSourceDatabase, DataSourceCommand);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1641,7 +1641,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new MySqlDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1668,7 +1668,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new MySqlDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1747,7 +1747,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new PostgreSqlDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1774,7 +1774,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new PostgreSqlDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1853,7 +1853,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new SqlServerDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -1880,7 +1880,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new SqlServerDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            var description = "This data feed was created to test the .NET client.";
+            const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
