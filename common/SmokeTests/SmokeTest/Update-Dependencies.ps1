@@ -59,7 +59,7 @@ function SetLatestPackageVersions([xml]$csproj) {
 
             $targetVersion = GetLatestPackage $allPackages $packageName
 
-            if ($targetVersion -eq $null) {
+            if ($null -eq $targetVersion) {
                 return
             }
 
@@ -73,13 +73,14 @@ function SetLatestPackageVersions([xml]$csproj) {
             }
 
             if ($_.Node.Version -match $ALPHA_DATE_REGEX) {
-                if ($baselineVersionDate -eq $null) {
-                    Write-Host "Using baseline version date: $($matches[1])"
-                    $baselineVersionDate = $matches[1]
+                $capture = $matches[1]
+                if ($null -eq $baselineVersionDate) {
+                    Write-Host "Using baseline version date: $capture"
+                    $baselineVersionDate = $capture
                 }
 
                 if ($baselineVersionDate -ne $matches[1]) {
-                    Log-Warning "$($_.Node.Include) uses invalid version. Expected: $baselineVersionDate, Actual: $($matches[1])"
+                    Log-Warning "$($_.Node.Include) uses invalid version. Expected: $baselineVersionDate, Actual: $capture"
                 }
             }
         }

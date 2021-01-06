@@ -1,5 +1,6 @@
 parameters:
   - name: Daily
+    type: boolean
     default: true
   - name: Artifacts
     type: object
@@ -28,8 +29,8 @@ jobs:
               name: check_smoke_tests_${{ artifact.safeName }}
               displayName: Check smoke test eligibility for ${{ artifact.name }}
         - pwsh: |
-            Write-Host "Setting RunSmokeTests to $($env:RunSmokeTests)"
-            Write-Host "##vso[task.setvariable variable=RunSmokeTests;isOutput=true]$($env:RunSmokeTests)"
+            Write-Host "Setting RunSmokeTests to ${env:RunSmokeTests}"
+            Write-Host "##vso[task.setvariable variable=RunSmokeTests;isOutput=true]${env:RunSmokeTests}"
           name: output_eligibility
           env:
             RunSmokeTests: $(RunSmokeTests)
@@ -126,20 +127,20 @@ jobs:
                 [xml]$csproj = Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
                 $deps = ($csproj | Select-Xml -Xpath //Project/ItemGroup/PackageReference).Node.Include
 
-                if ($deps.Contains("${{ artifact.name }}")) {
+                if ($deps.Contains('${{ artifact.name }}')) {
                   $files = Get-ChildItem "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}/${{ artifact.name }}/*.nupkg"
                   if ($files -and $files[0] -match "${{ artifact.name }}\.(.*)\.nupkg") {
                     $element = $csproj
                       | Select-Xml -Xpath //Project/ItemGroup/PackageReference
-                      | Where-Object { $_.Node.Include -eq "${{ artifact.name }}" }
+                      | Where-Object { $_.Node.Include -eq '${{ artifact.name }}' }
                     $element.Node.Version = $matches[1]
-                    Write-Output "Updating ${{ artifact.name }} version to $($element.Node.Version) in SmokeTest.csproj"
-                    $csproj.Save("./common/SmokeTests/SmokeTest/SmokeTest.csproj")
+                    Write-Host "Updating ${{ artifact.name }} version to $($element.Node.Version) in SmokeTest.csproj"
+                    $csproj.Save('./common/SmokeTests/SmokeTest/SmokeTest.csproj')
                   } else {
-                    Write-Output "No build artifact found for smoke test dependency ${{ artifact.name }}"
+                    Write-Host 'No build artifact found for smoke test dependency ${{ artifact.name }}'
                   }
                 } else {
-                  Write-Output "${{ artifact.name }} is not a dependency in SmokeTest.csproj. Not updating..."
+                  Write-Host '${{ artifact.name }} is not a dependency in SmokeTest.csproj. Not updating...'
                 }
               displayName: Use ${{ artifact.safeName }} build artifact version
 
