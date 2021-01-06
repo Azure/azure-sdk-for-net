@@ -53,6 +53,7 @@ function SetLatestPackageVersions([xml]$csproj) {
     $csproj |
         Select-XML $PACKAGE_REFERENCE_XPATH |
         Where-Object { $_.Node.HasAttribute('Version') } |
+        Where-Object { -not $_.Node.HasAttribute('DoNotUpdate') }
         ForEach-Object {
             # Resolve package version:
             $packageName = $_.Node.Include
