@@ -1,0 +1,24 @@
+{
+  "Name": "NodePlacementConfiguration",
+  "ProtocolName": "Models.NodePlacementConfiguration",
+  "SummaryComment": "Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy.",
+  "IsConstructorPublic": true,
+  "Properties": [
+    {
+      "Key": {
+        "Type": "Common.NodePlacementPolicyType?",
+        "Name": "Policy",
+        "SummaryComment": "The placement policy for allocating nodes in the pool",
+        "RemarksComment": "The default value is regional.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required",
+        "HideSetter": true
+      },
+      "Value": {
+        "Type": "Models.NodePlacementPolicyType?",
+        "Name": "Policy"
+      }
+    }
+  ]
+}

@@ -120,6 +120,16 @@ namespace Microsoft.Azure.Batch.Protocol
         public virtual IComputeNodeOperations ComputeNode { get; private set; }
 
         /// <summary>
+        /// Gets the IComputeNodeExtensionOperations.
+        /// </summary>
+        public virtual IComputeNodeExtensionOperations ComputeNodeExtension { get; private set; }
+
+        /// <summary>
+        /// Gets the IComputeNodeExtensionsOperations.
+        /// </summary>
+        public virtual IComputeNodeExtensionsOperations ComputeNodeExtensions { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the BatchServiceClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -255,8 +265,10 @@ namespace Microsoft.Azure.Batch.Protocol
             JobSchedule = new JobScheduleOperations(this);
             Task = new TaskOperations(this);
             ComputeNode = new ComputeNodeOperations(this);
+            ComputeNodeExtension = new ComputeNodeExtensionOperations(this);
+            ComputeNodeExtensions = new ComputeNodeExtensionsOperations(this);
             BaseUri = "{batchUrl}";
-            ApiVersion = "2020-09-01.12.0";
+            ApiVersion = "9999-09-09.99.99";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -1,0 +1,43 @@
+{
+  "Name": "UserAssignedIdentity",
+  "ProtocolName": "Models.UserAssignedIdentity",
+  "SummaryComment": "The user assigned Identity",
+  "IsUsedInCollections": true,
+  "Properties": [
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "ResourceId",
+        "SummaryComment": "The ARM resource id of the user assigned identity",
+        "RemarksComment": "The ARM resource id of the user assigned identity",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "ClientId",
+        "SummaryComment": "The client id of the user assigned identity.",
+        "RemarksComment": "The client id of the user assigned identity.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write",
+        "HideSetter":  false
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "PrincipalId",
+        "SummaryComment": "The principal id of the user assigned identity.",
+        "RemarksComment": "The principal id of the user assigned identity.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "HideSetter": false
+      },
+      "Value": null
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "Name": "ComputeNodeExtension",
+  "ProtocolName": "Models.ComputeNodeExtension",
+  "SummaryComment": "The compute node extension class.",
+  "IsConstructorPublic": false,
+  "Properties": [
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "PoolId",
+        "SummaryComment": "The ID of the Pool that contains the Compute Node.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "string",
+        "Name": "PoolId"
+      }
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "NodeId",
+        "SummaryComment": "The ID of the Compute Node that contains the extensions.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "string",
+        "Name": "PoolId"
+      }
+    }
+  ]
+}

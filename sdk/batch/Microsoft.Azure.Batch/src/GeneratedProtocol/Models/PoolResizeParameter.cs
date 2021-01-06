@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="targetDedicatedNodes">The desired number of dedicated
         /// Compute Nodes in the Pool.</param>
-        /// <param name="targetLowPriorityNodes">The desired number of
-        /// low-priority Compute Nodes in the Pool.</param>
+        /// <param name="targetLowPriorityNodes">The desired number of low
+        /// priority Compute Nodes in the Pool.</param>
         /// <param name="resizeTimeout">The timeout for allocation of Nodes to
         /// the Pool or removal of Compute Nodes from the Pool.</param>
         /// <param name="nodeDeallocationOption">Determines what to do with a
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of low-priority Compute Nodes in
+        /// Gets or sets the desired number of low priority Compute Nodes in
         /// the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "targetLowPriorityNodes")]

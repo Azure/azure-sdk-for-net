@@ -1,0 +1,33 @@
+{
+  "Name": "BatchPoolIdentity",
+  "ProtocolName": "Models.BatchPoolIdentity",
+  "SummaryComment": "The type of identity used for the Batch Pool.",
+  "IsConstructorPublic": false,
+  "Properties": [
+    {
+      "Key": {
+        "Type": "Common.PoolIdentityType",
+        "Name": "Type",
+        "SummaryComment": "The type of identity used for the Batch Pool.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "Models.PoolIdentityType",
+        "Name": "Type"
+      }
+    },
+    {
+      "Key": {
+        "Type": "IList<UserAssignedIdentity>",
+        "Name": "UserAssignedIdentities",
+        "SummaryComment": "The list of user identities.",
+        "RemarksComment": "The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    }
+  ]
+}

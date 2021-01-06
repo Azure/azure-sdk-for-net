@@ -85,6 +85,17 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "NodePlacementConfiguration",
+            "Name": "NodePlacementConfiguration",
+            "SummaryComment": "The node placement configuration for the pool.",
+            "RemarksComment": "This configuration will specify rules on how nodes in the pool will be physically allocated.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value":  null
         }
       ]
     }

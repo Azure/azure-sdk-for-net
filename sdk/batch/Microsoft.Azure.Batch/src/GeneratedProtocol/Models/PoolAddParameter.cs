@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Nodes to the Pool.</param>
         /// <param name="targetDedicatedNodes">The desired number of dedicated
         /// Compute Nodes in the Pool.</param>
-        /// <param name="targetLowPriorityNodes">The desired number of
-        /// low-priority Compute Nodes in the Pool.</param>
+        /// <param name="targetLowPriorityNodes">The desired number of low
+        /// priority Compute Nodes in the Pool.</param>
         /// <param name="enableAutoScale">Whether the Pool size should
         /// automatically adjust over time.</param>
         /// <param name="autoScaleFormula">A formula for the desired number of
@@ -77,7 +77,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the Pool as metadata.</param>
         /// <param name="mountConfiguration">Mount storage using specified file
         /// system for the entire lifetime of the pool.</param>
-        public PoolAddParameter(string id, string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>))
+        /// <param name="batchPoolIdentity">The identity type for the
+        /// pool.</param>
+        public PoolAddParameter(string id, string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), BatchPoolIdentity batchPoolIdentity = default(BatchPoolIdentity))
         {
             Id = id;
             DisplayName = displayName;
@@ -101,6 +103,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             UserAccounts = userAccounts;
             Metadata = metadata;
             MountConfiguration = mountConfiguration;
+            BatchPoolIdentity = batchPoolIdentity;
             CustomInit();
         }
 
@@ -205,7 +208,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of low-priority Compute Nodes in
+        /// Gets or sets the desired number of low priority Compute Nodes in
         /// the Pool.
         /// </summary>
         /// <remarks>
@@ -221,7 +224,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// time.
         /// </summary>
         /// <remarks>
-        /// If false, at least one of targetDedicateNodes and
+        /// If false, at least one of targetDedicatedNodes and
         /// targetLowPriorityNodes must be specified. If true, the
         /// autoScaleFormula property is required and the Pool automatically
         /// resizes according to the formula. The default value is false.
@@ -382,6 +385,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "mountConfiguration")]
         public IList<MountConfiguration> MountConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity type for the pool.
+        /// </summary>
+        /// <remarks>
+        /// The identity type for the pool.
+        /// </remarks>
+        [JsonProperty(PropertyName = "BatchPoolIdentity")]
+        public BatchPoolIdentity BatchPoolIdentity { get; set; }
 
     }
 }

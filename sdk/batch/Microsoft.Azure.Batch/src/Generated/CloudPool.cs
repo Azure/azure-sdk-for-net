@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<TimeSpan?> AutoScaleEvaluationIntervalProperty;
             public readonly PropertyAccessor<string> AutoScaleFormulaProperty;
             public readonly PropertyAccessor<AutoScaleRun> AutoScaleRunProperty;
+            public readonly PropertyAccessor<BatchPoolIdentity> BatchPoolIdentityProperty;
             public readonly PropertyAccessor<IList<CertificateReference>> CertificateReferencesProperty;
             public readonly PropertyAccessor<CloudServiceConfiguration> CloudServiceConfigurationProperty;
             public readonly PropertyAccessor<DateTime?> CreationTimeProperty;
@@ -70,6 +71,7 @@ namespace Microsoft.Azure.Batch
                 this.AutoScaleEvaluationIntervalProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(AutoScaleEvaluationInterval), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleFormulaProperty = this.CreatePropertyAccessor<string>(nameof(AutoScaleFormula), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleRunProperty = this.CreatePropertyAccessor<AutoScaleRun>(nameof(AutoScaleRun), BindingAccess.None);
+                this.BatchPoolIdentityProperty = this.CreatePropertyAccessor<BatchPoolIdentity>(nameof(BatchPoolIdentity), BindingAccess.Read | BindingAccess.Write);
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor<IList<CertificateReference>>(nameof(CertificateReferences), BindingAccess.Read | BindingAccess.Write);
                 this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor<CloudServiceConfiguration>(nameof(CloudServiceConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(CreationTime), BindingAccess.None);
@@ -132,6 +134,10 @@ namespace Microsoft.Azure.Batch
                 this.AutoScaleRunProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AutoScaleRun, o => new AutoScaleRun(o).Freeze()),
                     nameof(AutoScaleRun),
+                    BindingAccess.Read);
+                this.BatchPoolIdentityProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.BatchPoolIdentity, o => new BatchPoolIdentity(o).Freeze()),
+                    nameof(BatchPoolIdentity),
                     BindingAccess.Read);
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor(
                     CertificateReference.ConvertFromProtocolCollection(protocolObject.CertificateReferences),
@@ -392,6 +398,18 @@ namespace Microsoft.Azure.Batch
         public AutoScaleRun AutoScaleRun
         {
             get { return this.propertyContainer.AutoScaleRunProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the type of identity used for the Batch Pool.
+        /// </summary>
+        /// <remarks>
+        /// The type of identity used for the Batch Pool.
+        /// </remarks>
+        public BatchPoolIdentity BatchPoolIdentity
+        {
+            get { return this.propertyContainer.BatchPoolIdentityProperty.Value; }
+            set { this.propertyContainer.BatchPoolIdentityProperty.Value = value; }
         }
 
         /// <summary>
@@ -706,6 +724,7 @@ namespace Microsoft.Azure.Batch
                 EnableAutoScale = this.AutoScaleEnabled,
                 AutoScaleEvaluationInterval = this.AutoScaleEvaluationInterval,
                 AutoScaleFormula = this.AutoScaleFormula,
+                BatchPoolIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.BatchPoolIdentity, (o) => o.GetTransportObject()),
                 CertificateReferences = UtilitiesInternal.ConvertToProtocolCollection(this.CertificateReferences),
                 CloudServiceConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.CloudServiceConfiguration, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,

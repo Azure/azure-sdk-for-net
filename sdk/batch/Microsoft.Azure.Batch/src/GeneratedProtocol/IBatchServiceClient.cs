@@ -113,5 +113,15 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </summary>
         IComputeNodeOperations ComputeNode { get; }
 
+        /// <summary>
+        /// Gets the IComputeNodeExtensionOperations.
+        /// </summary>
+        IComputeNodeExtensionOperations ComputeNodeExtension { get; }
+
+        /// <summary>
+        /// Gets the IComputeNodeExtensionsOperations.
+        /// </summary>
+        IComputeNodeExtensionsOperations ComputeNodeExtensions { get; }
+
     }
 }

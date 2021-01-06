@@ -30,6 +30,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<ImageReference> ImageReferenceProperty;
             public readonly PropertyAccessor<string> LicenseTypeProperty;
             public readonly PropertyAccessor<string> NodeAgentSkuIdProperty;
+            public readonly PropertyAccessor<NodePlacementConfiguration> NodePlacementConfigurationProperty;
             public readonly PropertyAccessor<WindowsConfiguration> WindowsConfigurationProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
@@ -40,6 +41,7 @@ namespace Microsoft.Azure.Batch
                 this.ImageReferenceProperty = this.CreatePropertyAccessor<ImageReference>(nameof(ImageReference), BindingAccess.Read | BindingAccess.Write);
                 this.LicenseTypeProperty = this.CreatePropertyAccessor<string>(nameof(LicenseType), BindingAccess.Read | BindingAccess.Write);
                 this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor<string>(nameof(NodeAgentSkuId), BindingAccess.Read | BindingAccess.Write);
+                this.NodePlacementConfigurationProperty = this.CreatePropertyAccessor<NodePlacementConfiguration>(nameof(NodePlacementConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.WindowsConfigurationProperty = this.CreatePropertyAccessor<WindowsConfiguration>(nameof(WindowsConfiguration), BindingAccess.Read | BindingAccess.Write);
             }
 
@@ -68,6 +70,10 @@ namespace Microsoft.Azure.Batch
                 this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor(
                     protocolObject.NodeAgentSKUId,
                     nameof(NodeAgentSkuId),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.NodePlacementConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NodePlacementConfiguration, o => new NodePlacementConfiguration(o)),
+                    nameof(NodePlacementConfiguration),
                     BindingAccess.Read | BindingAccess.Write);
                 this.WindowsConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.WindowsConfiguration, o => new WindowsConfiguration(o)),
@@ -185,6 +191,18 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the node placement configuration for the pool.
+        /// </summary>
+        /// <remarks>
+        /// This configuration will specify rules on how nodes in the pool will be physically allocated.
+        /// </remarks>
+        public NodePlacementConfiguration NodePlacementConfiguration
+        {
+            get { return this.propertyContainer.NodePlacementConfigurationProperty.Value; }
+            set { this.propertyContainer.NodePlacementConfigurationProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets windows operating system settings on the Virtual Machine. This property must not be specified if 
         /// the ImageReference property specifies a Linux OS image.
         /// </summary>
@@ -226,6 +244,7 @@ namespace Microsoft.Azure.Batch
                 ImageReference = UtilitiesInternal.CreateObjectWithNullCheck(this.ImageReference, (o) => o.GetTransportObject()),
                 LicenseType = this.LicenseType,
                 NodeAgentSKUId = this.NodeAgentSkuId,
+                NodePlacementConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NodePlacementConfiguration, (o) => o.GetTransportObject()),
                 WindowsConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.WindowsConfiguration, (o) => o.GetTransportObject()),
             };
 
