@@ -143,7 +143,7 @@ namespace Azure.Data.Tables.Tests
                         {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
                         {Int64TypePropertyName, long.Parse(number)},
                         {DoubleTypePropertyName, double.Parse($"{number}.0")},
-                        {DoubleDecimalTypePropertyName, n + 0.1},
+                        {DoubleDecimalTypePropertyName, n + 0.5},
                         {IntTypePropertyName, n},
                     };
             }).ToList();
@@ -171,7 +171,7 @@ namespace Azure.Data.Tables.Tests
                         {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
                         {Int64TypePropertyName, long.Parse(number)},
                         {DoubleTypePropertyName, (double)n},
-                        {DoubleDecimalTypePropertyName, n + 0.1},
+                        {DoubleDecimalTypePropertyName, n + 0.5},
                         {IntTypePropertyName, n},
                     });
             }).ToList();
@@ -228,11 +228,11 @@ namespace Azure.Data.Tables.Tests
                     DateTimeAsString = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n).ToString("o"),
                     DateTimeN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                     DateTimeOffsetN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
-                    Double = n + ((double)n / 100),
+                    Double = n + 0.5,
                     DoubleInteger = double.Parse($"{n.ToString()}.0"),
-                    DoubleN = n + ((double)n / 100),
-                    DoublePrimitive = n + ((double)n / 100),
-                    DoublePrimitiveN = n + ((double)n / 100),
+                    DoubleN = n + 0.5,
+                    DoublePrimitive = n + 0.5,
+                    DoublePrimitiveN = n + 0.5,
                     Guid = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
                     GuidN = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
                     Int32 = n,
