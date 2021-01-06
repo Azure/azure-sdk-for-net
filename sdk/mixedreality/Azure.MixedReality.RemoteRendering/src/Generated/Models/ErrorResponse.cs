@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.MixedReality.RemoteRendering;
+
 namespace Azure.MixedReality.RemoteRendering.Models
 {
     /// <summary> The ErrorResponse. </summary>
@@ -17,12 +19,12 @@ namespace Azure.MixedReality.RemoteRendering.Models
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         /// <param name="error"> The error object containing details of why the request failed. </param>
-        internal ErrorResponse(Error error)
+        internal ErrorResponse(ErrorDetails error)
         {
             Error = error;
         }
 
         /// <summary> The error object containing details of why the request failed. </summary>
-        public Error Error { get; }
+        public ErrorDetails Error { get; }
     }
 }

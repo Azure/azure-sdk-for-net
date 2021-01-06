@@ -19,7 +19,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
         /// <param name="status"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="settings"/> is null. </exception>
-        internal ConversionInformation(string id, ConversionSettings settings, Error error, CreatedByType status)
+        internal ConversionInformation(string id, ConversionSettings settings, ErrorDetails error, CreatedByType status)
         {
             if (id == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
         /// <param name="status"> . </param>
         /// <param name="creationTime"> . </param>
-        internal ConversionInformation(string id, ConversionSettings settings, ConversionOutput output, Error error, CreatedByType status, DateTimeOffset? creationTime)
+        internal ConversionInformation(string id, ConversionSettings settings, ConversionOutput output, ErrorDetails error, CreatedByType status, DateTimeOffset? creationTime)
         {
             Id = id;
             Settings = settings;
@@ -58,7 +58,7 @@ namespace Azure.MixedReality.RemoteRendering
         public ConversionSettings Settings { get; }
         public ConversionOutput Output { get; }
         /// <summary> The error object containing details about the rendering session startup failure. </summary>
-        public Error Error { get; }
+        public ErrorDetails Error { get; }
         public CreatedByType Status { get; }
         public DateTimeOffset? CreationTime { get; }
     }

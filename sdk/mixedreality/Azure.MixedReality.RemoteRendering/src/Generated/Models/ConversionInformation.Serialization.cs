@@ -19,7 +19,7 @@ namespace Azure.MixedReality.RemoteRendering
             string id = default;
             ConversionSettings settings = default;
             Optional<ConversionOutput> output = default;
-            Error error = default;
+            ErrorDetails error = default;
             CreatedByType status = default;
             Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
@@ -51,7 +51,7 @@ namespace Azure.MixedReality.RemoteRendering
                         error = null;
                         continue;
                     }
-                    error = Error.DeserializeError(property.Value);
+                    error = ErrorDetails.DeserializeErrorDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"))

@@ -8,24 +8,24 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.MixedReality.RemoteRendering.Models
+namespace Azure.MixedReality.RemoteRendering
 {
     /// <summary> The Error. </summary>
-    public partial class Error
+    public partial class ErrorDetails
     {
-        /// <summary> Initializes a new instance of Error. </summary>
-        internal Error()
+        /// <summary> Initializes a new instance of ErrorDetails. </summary>
+        internal ErrorDetails()
         {
-            Details = new ChangeTrackingList<Error>();
+            Details = new ChangeTrackingList<ErrorDetails>();
         }
 
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Initializes a new instance of ErrorDetails. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal Error(string code, string message, IReadOnlyList<Error> details, string target, Error innererror)
+        internal ErrorDetails(string code, string message, IReadOnlyList<ErrorDetails> details, string target, ErrorDetails innererror)
         {
             Code = code;
             Message = message;
@@ -39,10 +39,10 @@ namespace Azure.MixedReality.RemoteRendering.Models
         /// <summary> A human-readable representation of the error. </summary>
         public string Message { get; }
         /// <summary> An array of details about specific errors that led to this reported error. </summary>
-        public IReadOnlyList<Error> Details { get; }
+        public IReadOnlyList<ErrorDetails> Details { get; }
         /// <summary> The target of the error. </summary>
         public string Target { get; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
-        public Error Innererror { get; }
+        public ErrorDetails Innererror { get; }
     }
 }

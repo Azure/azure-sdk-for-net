@@ -9,17 +9,17 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.MixedReality.RemoteRendering.Models
+namespace Azure.MixedReality.RemoteRendering
 {
-    public partial class Error
+    public partial class ErrorDetails
     {
-        internal static Error DeserializeError(JsonElement element)
+        internal static ErrorDetails DeserializeErrorDetails(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
-            Optional<IReadOnlyList<Error>> details = default;
+            Optional<IReadOnlyList<ErrorDetails>> details = default;
             Optional<string> target = default;
-            Optional<Error> innererror = default;
+            Optional<ErrorDetails> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -39,10 +39,10 @@ namespace Azure.MixedReality.RemoteRendering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Error> array = new List<Error>();
+                    List<ErrorDetails> array = new List<ErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeError(item));
+                        array.Add(DeserializeErrorDetails(item));
                     }
                     details = array;
                     continue;
@@ -59,11 +59,11 @@ namespace Azure.MixedReality.RemoteRendering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innererror = DeserializeError(property.Value);
+                    innererror = DeserializeErrorDetails(property.Value);
                     continue;
                 }
             }
-            return new Error(code.Value, message.Value, Optional.ToList(details), target.Value, innererror.Value);
+            return new ErrorDetails(code.Value, message.Value, Optional.ToList(details), target.Value, innererror.Value);
         }
     }
 }

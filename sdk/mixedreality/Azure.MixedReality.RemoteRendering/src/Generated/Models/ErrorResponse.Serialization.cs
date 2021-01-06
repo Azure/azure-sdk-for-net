@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.RemoteRendering;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
@@ -14,7 +15,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            Optional<Error> error = default;
+            Optional<ErrorDetails> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -24,7 +25,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = Error.DeserializeError(property.Value);
+                    error = ErrorDetails.DeserializeErrorDetails(property.Value);
                     continue;
                 }
             }

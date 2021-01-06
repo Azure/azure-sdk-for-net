@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.RemoteRendering;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
             Optional<SessionSize> size = default;
             Optional<SessionStatus> status = default;
             Optional<float> teraflops = default;
-            Optional<Error> error = default;
+            Optional<ErrorDetails> error = default;
             Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -115,7 +116,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
                         error = null;
                         continue;
                     }
-                    error = Error.DeserializeError(property.Value);
+                    error = ErrorDetails.DeserializeErrorDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("creationTime"))

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.MixedReality.RemoteRendering;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
         /// <param name="teraflops"> . </param>
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
         /// <param name="creationTime"> . </param>
-        internal SessionProperties(string id, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string hostname, int? maxLeaseTimeMinutes, SessionSize? size, SessionStatus? status, float? teraflops, Error error, DateTimeOffset? creationTime)
+        internal SessionProperties(string id, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string hostname, int? maxLeaseTimeMinutes, SessionSize? size, SessionStatus? status, float? teraflops, ErrorDetails error, DateTimeOffset? creationTime)
         {
             Id = id;
             ArrInspectorPort = arrInspectorPort;
@@ -55,7 +56,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
         public SessionStatus? Status { get; }
         public float? Teraflops { get; }
         /// <summary> The error object containing details about the rendering session startup failure. </summary>
-        public Error Error { get; }
+        public ErrorDetails Error { get; }
         public DateTimeOffset? CreationTime { get; }
     }
 }
