@@ -10,12 +10,6 @@ namespace Azure.Storage.Queues.Models
     /// <summary> the retention policy. </summary>
     public partial class QueueRetentionPolicy
     {
-        /// <summary> Initializes a new instance of QueueRetentionPolicy. </summary>
-        /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
-        public QueueRetentionPolicy(bool enabled)
-        {
-            Enabled = enabled;
-        }
 
         /// <summary> Initializes a new instance of QueueRetentionPolicy. </summary>
         /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>

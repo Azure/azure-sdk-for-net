@@ -15,5 +15,10 @@ namespace Azure.Storage.Queues.Models
         /// Constructor.
         /// </summary>
         public QueueRetentionPolicy() { }
+
+        internal QueueRetentionPolicy(bool enabled)
+        {
+            Enabled = enabled;
+        }
     }
 }

@@ -291,7 +291,6 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueRetentionPolicy
     {
         public QueueRetentionPolicy() { }
-        public QueueRetentionPolicy(bool enabled) { }
         public int? Days { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
     }
