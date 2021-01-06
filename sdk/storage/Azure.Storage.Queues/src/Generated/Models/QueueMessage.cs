@@ -12,17 +12,5 @@ namespace Azure.Storage.Queues.Models
     /// <summary> A Message object which can be stored in a Queue. </summary>
     public partial class QueueMessage
     {
-        /// <summary> Initializes a new instance of QueueMessage. </summary>
-        /// <param name="messageText"> The content of the message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageText"/> is null. </exception>
-        public QueueMessage(string messageText)
-        {
-            if (messageText == null)
-            {
-                throw new ArgumentNullException(nameof(messageText));
-            }
-
-            MessageText = messageText;
-        }
     }
 }

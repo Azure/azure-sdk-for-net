@@ -261,7 +261,7 @@ namespace Azure.Storage.Queues.Models
     }
     public partial class QueueMessage
     {
-        public QueueMessage(string messageText) { }
+        internal QueueMessage() { }
         public System.BinaryData Body { get { throw null; } }
         public long DequeueCount { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
