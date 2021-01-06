@@ -99,5 +99,29 @@ namespace Azure.Core.Tests
 
             return generated.ToString();
         }
+
+        private static readonly (string, string)[] s_staticValues = new (string, string)[]
+        {
+            ("foo", "Zm9v"),
+            ("<foo!>", "PGZvbyE-"),
+            ("<foo!?", "PGZvbyE_"),
+            ("<foo!?><<foo?>>", "PGZvbyE_Pjw8Zm9vPz4-"),
+            ("<foo!?><<foo?>>foo", "PGZvbyE_Pjw8Zm9vPz4-Zm9v")
+        };
+
+        [Test]
+        public void ValidateEncodeDecodeStringStaticValues()
+        {
+            foreach ((string, string) valuePair in s_staticValues)
+            {
+                var encoded = Base64Url.EncodeString(valuePair.Item1);
+
+                Assert.AreEqual(valuePair.Item2, encoded);
+
+                var decoded = Base64Url.DecodeString(valuePair.Item2);
+
+                Assert.AreEqual(valuePair.Item1, decoded);
+            }
+        }
     }
 }
