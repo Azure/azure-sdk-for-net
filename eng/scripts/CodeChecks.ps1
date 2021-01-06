@@ -6,7 +6,10 @@ param (
     [string] $ServiceDirectory,
 
     [Parameter()]
-    [string] $ProjectDirectory
+    [string] $ProjectDirectory,
+
+    [Parameter()]
+    [string] $SDKType = "client"
 )
 
 $ErrorActionPreference = 'Stop'
@@ -73,7 +76,7 @@ try {
 
         Write-Host "Re-generating clients"
         Invoke-Block {
-            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:ServiceDirectory=$ServiceDirectory
+            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
 
             # https://github.com/Azure/azure-sdk-for-net/issues/8584
             # & $repoRoot\storage\generate.ps1
@@ -87,7 +90,7 @@ try {
 
     Write-Host "Re-generating listings"
     Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory
+        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType
     }
 
     if (-not $ProjectDirectory)

@@ -8,14 +8,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/eventhub/
-    exclude:
-    - sdk/eventhub/Azure.Messaging.EventHubs
-    - sdk/eventhub/Azure.Messaging.EventHubs.Processor
-    - sdk/eventhub/Azure.Messaging.EventHubs.Shared
-    - sdk/eventhub/Azure.ResourceManager.EventHubs
-    - sdk/eventhub/Microsoft.Azure.Management.EventHub
-    - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
+    - sdk/eventhub/Microsoft.Azure.EventHubs
+    - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
+    - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
 
 pr:
   branches:
@@ -26,18 +21,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/eventhub/
-    exclude:
-    - sdk/eventhub/Azure.Messaging.EventHubs
-    - sdk/eventhub/Azure.Messaging.EventHubs.Processor
-    - sdk/eventhub/Azure.Messaging.EventHubs.Shared
-    - sdk/eventhub/Azure.ResourceManager.EventHubs
-    - sdk/eventhub/Microsoft.Azure.Management.EventHub
-    - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
+    - sdk/eventhub/Microsoft.Azure.EventHubs
+    - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
+    - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SdkType: data
     ServiceDirectory: eventhub
     ArtifactName: packages
     Artifacts:
