@@ -71,7 +71,8 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse> RunWithHttpMessagesAsync(string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new indexer or updates an indexer if it already exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
+        /// Create Indexer</see>.
         /// </summary>
         /// <param name='indexerName'>
         /// The name of the indexer to create or update.
@@ -178,7 +179,8 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse<IndexerListResult>> ListWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new indexer.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
+        /// Create Indexer</see>.
         /// </summary>
         /// <param name='indexer'>
         /// The definition of the indexer to create.

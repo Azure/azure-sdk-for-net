@@ -99,77 +99,79 @@ namespace Microsoft.Azure.Search
                 (await operations.RunWithHttpMessagesAsync(indexerName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Creates a new indexer or updates an indexer if it already exists.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='indexerName'>
-            /// The name of the indexer to create or update.
-            /// </param>
-            /// <param name='indexer'>
-            /// The definition of the indexer to create or update.
-            /// </param>
-            /// <param name='searchRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='accessCondition'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static Indexer CreateOrUpdate(this IIndexersOperations operations, string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
-            {
-                return operations.CreateOrUpdateAsync(indexerName, indexer, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
-            }
+        /// <summary>
+        /// Creates a new indexer or updates an indexer if it already exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
+        /// Create Indexer</see>.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='indexerName'>
+        /// The name of the indexer to create or update.
+        /// </param>
+        /// <param name='indexer'>
+        /// The definition of the indexer to create or update.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='accessCondition'>
+        /// Additional parameters for the operation
+        /// </param>
+        public static Indexer CreateOrUpdate(this IIndexersOperations operations, string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
+        {
+            return operations.CreateOrUpdateAsync(indexerName, indexer, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
+        }
 
-            /// <summary>
-            /// Creates a new indexer or updates an indexer if it already exists.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='indexerName'>
-            /// The name of the indexer to create or update.
-            /// </param>
-            /// <param name='indexer'>
-            /// The definition of the indexer to create or update.
-            /// </param>
-            /// <param name='searchRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='accessCondition'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Indexer> CreateOrUpdateAsync(this IIndexersOperations operations, string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// Creates a new indexer or updates an indexer if it already exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
+        /// Create Indexer</see>.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='indexerName'>
+        /// The name of the indexer to create or update.
+        /// </param>
+        /// <param name='indexer'>
+        /// The definition of the indexer to create or update.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='accessCondition'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<Indexer> CreateOrUpdateAsync(this IIndexersOperations operations, string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexerName, indexer, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexerName, indexer, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <summary>
-            /// Deletes an indexer.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Indexer" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='indexerName'>
-            /// The name of the indexer to delete.
-            /// </param>
-            /// <param name='searchRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='accessCondition'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static void Delete(this IIndexersOperations operations, string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
+        /// <summary>
+        /// Deletes an indexer.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Indexer" />
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='indexerName'>
+        /// The name of the indexer to delete.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='accessCondition'>
+        /// Additional parameters for the operation
+        /// </param>
+        public static void Delete(this IIndexersOperations operations, string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
                 operations.DeleteAsync(indexerName, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
             }
@@ -276,62 +278,64 @@ namespace Microsoft.Azure.Search
                 }
             }
 
-            /// <summary>
-            /// Creates a new indexer.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='indexer'>
-            /// The definition of the indexer to create.
-            /// </param>
-            /// <param name='searchRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static Indexer Create(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
-            {
-                return operations.CreateAsync(indexer, searchRequestOptions).GetAwaiter().GetResult();
-            }
+        /// <summary>
+        /// Creates a new indexer.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
+        /// Create Indexer</see>.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='indexer'>
+        /// The definition of the indexer to create.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        public static Indexer Create(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+        {
+            return operations.CreateAsync(indexer, searchRequestOptions).GetAwaiter().GetResult();
+        }
 
-            /// <summary>
-            /// Creates a new indexer.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='indexer'>
-            /// The definition of the indexer to create.
-            /// </param>
-            /// <param name='searchRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Indexer> CreateAsync(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// Creates a new indexer.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
+        /// Create Indexer</see>.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='indexer'>
+        /// The definition of the indexer to create.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<Indexer> CreateAsync(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.CreateWithHttpMessagesAsync(indexer, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(indexer, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <summary>
-            /// Returns the current status and execution history of an indexer.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Indexer-Status" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='indexerName'>
-            /// The name of the indexer for which to retrieve status.
-            /// </param>
-            /// <param name='searchRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static IndexerExecutionInfo GetStatus(this IIndexersOperations operations, string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+        /// <summary>
+        /// Returns the current status and execution history of an indexer.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Indexer-Status" />
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='indexerName'>
+        /// The name of the indexer for which to retrieve status.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        public static IndexerExecutionInfo GetStatus(this IIndexersOperations operations, string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             {
                 return operations.GetStatusAsync(indexerName, searchRequestOptions).GetAwaiter().GetResult();
             }

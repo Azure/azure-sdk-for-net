@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new indexer or updates an indexer if it already
         /// exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
+        /// Create Indexer</see>.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -44,7 +45,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new indexer or updates an indexer if it already
         /// exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
+        /// Create Indexer</see>.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
