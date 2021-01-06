@@ -70,10 +70,10 @@ namespace Azure.Storage.Queues
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("Content-Type", "application/xml");
             request.Headers.Add("Accept", "application/xml");
             if (queueMessage != null)
             {
+                request.Headers.Add("Content-Type", "application/xml");
                 var content = new XmlWriterContent();
                 content.XmlWriter.WriteObjectValue(queueMessage, "QueueMessage");
                 request.Content = content;
