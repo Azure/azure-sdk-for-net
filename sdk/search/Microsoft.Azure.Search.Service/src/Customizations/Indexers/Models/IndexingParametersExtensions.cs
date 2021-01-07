@@ -16,12 +16,13 @@ namespace Microsoft.Azure.Search.Models
     public static class IndexingParametersExtensions
     {
         private const string ParsingModeKey = "parsingMode";
- 
+
         /// <summary>
         /// Specifies that the indexer will index only the blobs with the file name extensions you specify. Each string is a file extensions with a
         /// leading dot. For example, ".pdf", ".docx", etc. If you pass the same file extension to this method and ExcludeFileNameExtensions, blobs
         /// with that extension will be excluded from indexing (that is, ExcludeFileNameExtensions takes precedence).
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage">
+        /// How to index documents in Azure Blob Storage with Azure Cognitive Search</see> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="extensions">File extensions to include in indexing.</param>
@@ -46,7 +47,8 @@ namespace Microsoft.Azure.Search.Models
         /// Specifies that the indexer will not index blobs with the file name extensions you specify. Each string is a file extensions with a
         /// leading dot. For example, ".pdf", ".docx", etc. If you pass the same file extension to this method and IndexFileNameExtensions, blobs
         /// with that extension will be excluded from indexing (that is, this method takes precedence).
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage">
+        /// How to index documents in Azure Blob Storage with Azure Cognitive Search</see> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="extensions">File extensions to exclude from indexing.</param>
@@ -72,7 +74,8 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <remarks>
         /// This option only applies to indexers that index Azure Blob Storage.
-        /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" />
+        /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage">
+        /// How to index documents in Azure Blob Storage with Azure Cognitive Search</see>.
         /// </remarks>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="extractionMode">A <see cref="BlobExtractionMode" /> value specifying what to index.</param>

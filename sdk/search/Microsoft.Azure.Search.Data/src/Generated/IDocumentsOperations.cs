@@ -49,7 +49,8 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse<long?>> CountWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings responseDeserializerSettings = null);
         /// <summary>
         /// Searches for documents in the index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents">
+        /// Search Documents</see>.
         /// </summary>
         /// <param name='searchText'>
         /// A full-text search query expression; Use "*" or omit this parameter
@@ -82,7 +83,8 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Searches for documents in the index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents">
+        /// Search Documents</see>
         /// </summary>
         /// <param name='searchRequest'>
         /// The definition of the Search request.
@@ -111,7 +113,8 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">
+        /// Lookup Document</see>.
         /// </summary>
         /// <param name='key'>
         /// The key of the document to retrieve.
@@ -142,7 +145,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Suggests documents in the index that match the given partial query
         /// text.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">
+        /// Suggestions</see>.
         /// </summary>
         /// <param name='searchText'>
         /// The search text to use to suggest documents. Must be at least 1
@@ -177,7 +181,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Suggests documents in the index that match the given partial query
         /// text.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">
+        /// Suggestions</see>.
         /// </summary>
         /// <param name='suggestRequest'>
         /// The Suggest request.
@@ -203,7 +208,8 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse<DocumentSuggestResult<T>>> SuggestPostWithHttpMessagesAsync<T>(SuggestRequest suggestRequest, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings responseDeserializerSettings = null);
         /// <summary>
         /// Sends a batch of document write actions to the index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">
+        /// Add, Update or Delete Documents</see>.
         /// </summary>
         /// <param name='batch'>
         /// The batch of index actions.
@@ -230,7 +236,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete">
+        /// Autocomplete</see>.
         /// </summary>
         /// <param name='searchText'>
         /// The incomplete term which should be auto-completed.
@@ -264,7 +271,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete">
+        /// Autocomplete</see>.
         /// </summary>
         /// <param name='autocompleteRequest'>
         /// The definition of the Autocomplete request.
