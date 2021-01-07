@@ -11,20 +11,20 @@ using Azure.Core;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Storage service properties. </summary>
-    public partial class StorageServiceProperties
+    public partial class ShareServiceProperties
     {
-        /// <summary> Initializes a new instance of StorageServiceProperties. </summary>
-        public StorageServiceProperties()
+        /// <summary> Initializes a new instance of ShareServiceProperties. </summary>
+        public ShareServiceProperties()
         {
             Cors = new ChangeTrackingList<CorsRule>();
         }
 
-        /// <summary> Initializes a new instance of StorageServiceProperties. </summary>
+        /// <summary> Initializes a new instance of ShareServiceProperties. </summary>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for files. </param>
         /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for files. </param>
         /// <param name="cors"> The set of CORS rules. </param>
         /// <param name="protocol"> Protocol settings. </param>
-        internal StorageServiceProperties(Metrics hourMetrics, Metrics minuteMetrics, IList<CorsRule> cors, ShareProtocolSettings protocol)
+        internal ShareServiceProperties(Metrics hourMetrics, Metrics minuteMetrics, IList<CorsRule> cors, ShareProtocolSettings protocol)
         {
             HourMetrics = hourMetrics;
             MinuteMetrics = minuteMetrics;

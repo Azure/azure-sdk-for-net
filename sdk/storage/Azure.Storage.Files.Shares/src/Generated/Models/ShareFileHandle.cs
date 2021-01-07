@@ -10,9 +10,9 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> A listed Azure Storage handle item. </summary>
-    public partial class HandleItem
+    public partial class ShareFileHandle
     {
-        /// <summary> Initializes a new instance of HandleItem. </summary>
+        /// <summary> Initializes a new instance of ShareFileHandle. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"> File or directory name including full path starting from share root. </param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="clientIp"> Client IP that opened the handle. </param>
         /// <param name="openTime"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="handleId"/>, <paramref name="path"/>, <paramref name="fileId"/>, <paramref name="sessionId"/>, or <paramref name="clientIp"/> is null. </exception>
-        internal HandleItem(string handleId, string path, string fileId, string sessionId, string clientIp, DateTimeOffset openTime)
+        internal ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, DateTimeOffset openTime)
         {
             if (handleId == null)
             {
@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.Shares.Models
             OpenTime = openTime;
         }
 
-        /// <summary> Initializes a new instance of HandleItem. </summary>
+        /// <summary> Initializes a new instance of ShareFileHandle. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"> File or directory name including full path starting from share root. </param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
@@ -60,7 +60,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="clientIp"> Client IP that opened the handle. </param>
         /// <param name="openTime"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
         /// <param name="lastReconnectTime"> Time handle was last connected to (UTC). </param>
-        internal HandleItem(string handleId, string path, string fileId, string parentId, string sessionId, string clientIp, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime)
+        internal ShareFileHandle(string handleId, string path, string fileId, string parentId, string sessionId, string clientIp, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime)
         {
             HandleId = handleId;
             Path = path;

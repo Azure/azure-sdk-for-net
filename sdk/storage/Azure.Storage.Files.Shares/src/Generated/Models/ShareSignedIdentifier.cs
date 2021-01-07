@@ -10,12 +10,12 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Signed identifier. </summary>
-    public partial class SignedIdentifier
+    public partial class ShareSignedIdentifier
     {
-        /// <summary> Initializes a new instance of SignedIdentifier. </summary>
+        /// <summary> Initializes a new instance of ShareSignedIdentifier. </summary>
         /// <param name="id"> A unique id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public SignedIdentifier(string id)
+        public ShareSignedIdentifier(string id)
         {
             if (id == null)
             {
@@ -25,10 +25,10 @@ namespace Azure.Storage.Files.Shares.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of SignedIdentifier. </summary>
+        /// <summary> Initializes a new instance of ShareSignedIdentifier. </summary>
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
-        internal SignedIdentifier(string id, AccessPolicy accessPolicy)
+        internal ShareSignedIdentifier(string id, AccessPolicy accessPolicy)
         {
             Id = id;
             AccessPolicy = accessPolicy;

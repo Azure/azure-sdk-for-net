@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class StorageServiceProperties : IXmlSerializable
+    public partial class ShareServiceProperties : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -41,7 +41,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static StorageServiceProperties DeserializeStorageServiceProperties(XElement element)
+        internal static ShareServiceProperties DeserializeShareServiceProperties(XElement element)
         {
             Metrics hourMetrics = default;
             Metrics minuteMetrics = default;
@@ -68,7 +68,7 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 cors = array;
             }
-            return new StorageServiceProperties(hourMetrics, minuteMetrics, cors, protocol);
+            return new ShareServiceProperties(hourMetrics, minuteMetrics, cors, protocol);
         }
     }
 }

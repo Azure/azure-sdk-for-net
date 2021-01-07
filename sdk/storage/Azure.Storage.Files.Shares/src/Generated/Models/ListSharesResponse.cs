@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> An enumeration of shares. </summary>
-    public partial class ListSharesResponse
+    internal partial class ListSharesResponse
     {
         /// <summary> Initializes a new instance of ListSharesResponse. </summary>
         /// <param name="serviceEndpoint"> . </param>

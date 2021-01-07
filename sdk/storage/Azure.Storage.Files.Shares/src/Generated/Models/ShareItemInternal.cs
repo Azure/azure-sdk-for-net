@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> A listed Azure Storage share item. </summary>
-    public partial class ShareItemInternal
+    internal partial class ShareItemInternal
     {
         /// <summary> Initializes a new instance of ShareItemInternal. </summary>
         /// <param name="name"> . </param>

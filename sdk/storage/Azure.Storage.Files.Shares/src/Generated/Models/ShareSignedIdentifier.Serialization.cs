@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class SignedIdentifier : IXmlSerializable
+    public partial class ShareSignedIdentifier : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static SignedIdentifier DeserializeSignedIdentifier(XElement element)
+        internal static ShareSignedIdentifier DeserializeShareSignedIdentifier(XElement element)
         {
             string id = default;
             AccessPolicy accessPolicy = default;
@@ -38,7 +38,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 accessPolicy = AccessPolicy.DeserializeAccessPolicy(accessPolicyElement);
             }
-            return new SignedIdentifier(id, accessPolicy);
+            return new ShareSignedIdentifier(id, accessPolicy);
         }
     }
 }

@@ -59,60 +59,65 @@ namespace Azure.Storage.Files.Shares.Models
         {
         }
 
-        internal FileSmbProperties(RawStorageFileInfo rawStorageFileInfo)
-        {
-            FileAttributes = ShareExtensions.ToFileAttributes(rawStorageFileInfo.FileAttributes);
-            FilePermissionKey = rawStorageFileInfo.FilePermissionKey;
-            FileCreatedOn = rawStorageFileInfo.FileCreationTime;
-            FileLastWrittenOn = rawStorageFileInfo.FileLastWriteTime;
-            FileChangedOn = rawStorageFileInfo.FileChangeTime;
-            FileId = rawStorageFileInfo.FileId;
-            ParentId = rawStorageFileInfo.FileParentId;
-        }
+        // TODO fix this.
+        //internal FileSmbProperties(RawStorageFileInfo rawStorageFileInfo)
+        //{
+        //    FileAttributes = ShareExtensions.ToFileAttributes(rawStorageFileInfo.FileAttributes);
+        //    FilePermissionKey = rawStorageFileInfo.FilePermissionKey;
+        //    FileCreatedOn = rawStorageFileInfo.FileCreationTime;
+        //    FileLastWrittenOn = rawStorageFileInfo.FileLastWriteTime;
+        //    FileChangedOn = rawStorageFileInfo.FileChangeTime;
+        //    FileId = rawStorageFileInfo.FileId;
+        //    ParentId = rawStorageFileInfo.FileParentId;
+        //}
 
-        internal FileSmbProperties(RawStorageFileProperties rawStorageFileProperties)
-        {
-            FileAttributes = ShareExtensions.ToFileAttributes(rawStorageFileProperties.FileAttributes);
-            FilePermissionKey = rawStorageFileProperties.FilePermissionKey;
-            FileCreatedOn = rawStorageFileProperties.FileCreationTime;
-            FileLastWrittenOn = rawStorageFileProperties.FileLastWriteTime;
-            FileChangedOn = rawStorageFileProperties.FileChangeTime;
-            FileId = rawStorageFileProperties.FileId;
-            ParentId = rawStorageFileProperties.FileParentId;
-        }
+        // TODO fix this.
+        //internal FileSmbProperties(RawStorageFileProperties rawStorageFileProperties)
+        //{
+        //    FileAttributes = ShareExtensions.ToFileAttributes(rawStorageFileProperties.FileAttributes);
+        //    FilePermissionKey = rawStorageFileProperties.FilePermissionKey;
+        //    FileCreatedOn = rawStorageFileProperties.FileCreationTime;
+        //    FileLastWrittenOn = rawStorageFileProperties.FileLastWriteTime;
+        //    FileChangedOn = rawStorageFileProperties.FileChangeTime;
+        //    FileId = rawStorageFileProperties.FileId;
+        //    ParentId = rawStorageFileProperties.FileParentId;
+        //}
 
-        internal FileSmbProperties(FlattenedStorageFileProperties flattenedStorageFileProperties)
-        {
-            FileAttributes = ShareExtensions.ToFileAttributes(flattenedStorageFileProperties.FileAttributes);
-            FilePermissionKey = flattenedStorageFileProperties.FilePermissionKey;
-            FileCreatedOn = flattenedStorageFileProperties.FileCreationTime;
-            FileLastWrittenOn = flattenedStorageFileProperties.FileLastWriteTime;
-            FileChangedOn = flattenedStorageFileProperties.FileChangeTime;
-            FileId = flattenedStorageFileProperties.FileId;
-            ParentId = flattenedStorageFileProperties.FileParentId;
-        }
+        // TODO fix this.
+        //internal FileSmbProperties(FlattenedStorageFileProperties flattenedStorageFileProperties)
+        //{
+        //    FileAttributes = ShareExtensions.ToFileAttributes(flattenedStorageFileProperties.FileAttributes);
+        //    FilePermissionKey = flattenedStorageFileProperties.FilePermissionKey;
+        //    FileCreatedOn = flattenedStorageFileProperties.FileCreationTime;
+        //    FileLastWrittenOn = flattenedStorageFileProperties.FileLastWriteTime;
+        //    FileChangedOn = flattenedStorageFileProperties.FileChangeTime;
+        //    FileId = flattenedStorageFileProperties.FileId;
+        //    ParentId = flattenedStorageFileProperties.FileParentId;
+        //}
 
-        internal FileSmbProperties(RawStorageDirectoryInfo rawStorageDirectoryInfo)
-        {
-            FileAttributes = ShareExtensions.ToFileAttributes(rawStorageDirectoryInfo.FileAttributes);
-            FilePermissionKey = rawStorageDirectoryInfo.FilePermissionKey;
-            FileCreatedOn = rawStorageDirectoryInfo.FileCreationTime;
-            FileLastWrittenOn = rawStorageDirectoryInfo.FileLastWriteTime;
-            FileChangedOn = rawStorageDirectoryInfo.FileChangeTime;
-            FileId = rawStorageDirectoryInfo.FileId;
-            ParentId = rawStorageDirectoryInfo.FileParentId;
-        }
+        // TODO fix this
+        //internal FileSmbProperties(RawStorageDirectoryInfo rawStorageDirectoryInfo)
+        //{
+        //    FileAttributes = ShareExtensions.ToFileAttributes(rawStorageDirectoryInfo.FileAttributes);
+        //    FilePermissionKey = rawStorageDirectoryInfo.FilePermissionKey;
+        //    FileCreatedOn = rawStorageDirectoryInfo.FileCreationTime;
+        //    FileLastWrittenOn = rawStorageDirectoryInfo.FileLastWriteTime;
+        //    FileChangedOn = rawStorageDirectoryInfo.FileChangeTime;
+        //    FileId = rawStorageDirectoryInfo.FileId;
+        //    ParentId = rawStorageDirectoryInfo.FileParentId;
+        //}
 
-        internal FileSmbProperties(RawStorageDirectoryProperties rawStorageDirectoryProperties)
-        {
-            FileAttributes = ShareExtensions.ToFileAttributes(rawStorageDirectoryProperties.FileAttributes);
-            FilePermissionKey = rawStorageDirectoryProperties.FilePermissionKey;
-            FileCreatedOn = rawStorageDirectoryProperties.FileCreationTime;
-            FileLastWrittenOn = rawStorageDirectoryProperties.FileLastWriteTime;
-            FileChangedOn = rawStorageDirectoryProperties.FileChangeTime;
-            FileId = rawStorageDirectoryProperties.FileId;
-            ParentId = rawStorageDirectoryProperties.FileParentId;
-        }
+        // TODO fix this
+        //internal FileSmbProperties(RawStorageDirectoryProperties rawStorageDirectoryProperties)
+        //{
+        //    FileAttributes = ShareExtensions.ToFileAttributes(rawStorageDirectoryProperties.FileAttributes);
+        //    FilePermissionKey = rawStorageDirectoryProperties.FilePermissionKey;
+        //    FileCreatedOn = rawStorageDirectoryProperties.FileCreationTime;
+        //    FileLastWrittenOn = rawStorageDirectoryProperties.FileLastWriteTime;
+        //    FileChangedOn = rawStorageDirectoryProperties.FileChangeTime;
+        //    FileId = rawStorageDirectoryProperties.FileId;
+        //    ParentId = rawStorageDirectoryProperties.FileParentId;
+        //}
 
         /// <summary>
         /// Checks if two FileSmbProperties are equal.

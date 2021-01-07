@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareItemInternal
+    internal partial class ShareItemInternal
     {
         internal static ShareItemInternal DeserializeShareItemInternal(XElement element)
         {

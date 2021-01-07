@@ -17,46 +17,31 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileDownloadInfo : IDisposable, IDownloadedContent
     {
         /// <summary>
-        /// Internal flattened property representation
-        /// </summary>
-        internal FlattenedStorageFileProperties _flattened;
-
-        /// <summary>
         /// The number of bytes present in the response body.
         /// </summary>
-        public long ContentLength => _flattened.ContentLength;
+        public long ContentLength { get; internal set; }
 
         /// <summary>
         /// Content
         /// </summary>
-        public Stream Content => _flattened.Content;
+        public Stream Content { get; internal set; }
 
         /// <summary>
         /// The content type specified for the file. The default content type is 'application/octet-stream'
         /// </summary>
-        public string ContentType => _flattened.ContentType;
+        public string ContentType { get; internal set; }
 
         /// <summary>
         /// If the file has an MD5 hash and this operation is to read the full content, this response header is returned so that the client can check for message content integrity.
         /// </summary>
 #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] ContentHash => _flattened.ContentHash;
+        public byte[] ContentHash { get; internal set; }
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
         /// Details returned when downloading a file
         /// </summary>
         public ShareFileDownloadDetails Details { get; private set; }
-
-        /// <summary>
-        /// Creates a new StorageFileDownloadInfo backed by FlattenedStorageFileProperties
-        /// </summary>
-        /// <param name="flattened">The FlattenedStorageFileProperties returned with the request</param>
-        internal ShareFileDownloadInfo(FlattenedStorageFileProperties flattened)
-        {
-            _flattened = flattened;
-            Details = new ShareFileDownloadDetails(flattened);
-        }
 
         /// <summary>
         /// Disposes the StorageFileDownloadInfo by calling Dispose on the underlying Content stream.

@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key. </summary>
-        public PermissionCopyModeType? FilePermissionCopyMode { get; set; }
+        public PermissionCopyMode? FilePermissionCopyMode { get; set; }
         /// <summary> Specifies the option to overwrite the target file if it already exists and has read-only attribute set. </summary>
         public bool? IgnoreReadOnly { get; set; }
         /// <summary> Specifies either the option to copy file attributes from a source file(source) to a target file or a list of attributes to set on a target file. </summary>

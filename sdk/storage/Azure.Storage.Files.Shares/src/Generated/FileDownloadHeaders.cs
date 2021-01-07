@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> URL up to 2KB in length that specifies the source file used in the last attempted Copy File operation where this file was the destination file. </summary>
         public string CopySource => _response.Headers.TryGetValue("x-ms-copy-source", out string value) ? value : null;
         /// <summary> State of the copy operation identified by &apos;x-ms-copy-id&apos;. </summary>
-        public CopyStatusType? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out CopyStatusType? value) ? value : null;
+        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out CopyStatus? value) ? value : null;
         /// <summary> If the file has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole file&apos;s MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range. </summary>
         public byte[] FileContentMD5 => _response.Headers.TryGetValue("x-ms-content-md5", out byte[] value) ? value : null;
         /// <summary> The value of this header is set to true if the file data and application metadata are completely encrypted using the specified algorithm. Otherwise, the value is set to false (when the file is unencrypted, or if only parts of the file/application metadata are encrypted). </summary>

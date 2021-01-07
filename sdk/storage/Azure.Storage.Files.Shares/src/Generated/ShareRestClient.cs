@@ -1196,7 +1196,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyList<SignedIdentifier>, ShareGetAccessPolicyHeaders>> GetAccessPolicyAsync(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders>> GetAccessPolicyAsync(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1210,14 +1210,14 @@ namespace Azure.Storage.Files.Shares
             {
                 case 200:
                     {
-                        IReadOnlyList<SignedIdentifier> value = default;
+                        IReadOnlyList<ShareSignedIdentifier> value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("SignedIdentifiers") is XElement signedIdentifiersElement)
                         {
-                            var array = new List<SignedIdentifier>();
+                            var array = new List<ShareSignedIdentifier>();
                             foreach (var e in signedIdentifiersElement.Elements("SignedIdentifier"))
                             {
-                                array.Add(SignedIdentifier.DeserializeSignedIdentifier(e));
+                                array.Add(ShareSignedIdentifier.DeserializeShareSignedIdentifier(e));
                             }
                             value = array;
                         }
@@ -1234,7 +1234,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyList<SignedIdentifier>, ShareGetAccessPolicyHeaders> GetAccessPolicy(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders> GetAccessPolicy(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1248,14 +1248,14 @@ namespace Azure.Storage.Files.Shares
             {
                 case 200:
                     {
-                        IReadOnlyList<SignedIdentifier> value = default;
+                        IReadOnlyList<ShareSignedIdentifier> value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("SignedIdentifiers") is XElement signedIdentifiersElement)
                         {
-                            var array = new List<SignedIdentifier>();
+                            var array = new List<ShareSignedIdentifier>();
                             foreach (var e in signedIdentifiersElement.Elements("SignedIdentifier"))
                             {
-                                array.Add(SignedIdentifier.DeserializeSignedIdentifier(e));
+                                array.Add(ShareSignedIdentifier.DeserializeShareSignedIdentifier(e));
                             }
                             value = array;
                         }
@@ -1266,7 +1266,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetAccessPolicyRequest(string shareName, int? timeout, IEnumerable<SignedIdentifier> shareAcl, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateSetAccessPolicyRequest(string shareName, int? timeout, IEnumerable<ShareSignedIdentifier> shareAcl, LeaseAccessConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1310,7 +1310,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareSetAccessPolicyHeaders>> SetAccessPolicyAsync(string shareName, int? timeout = null, IEnumerable<SignedIdentifier> shareAcl = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareSetAccessPolicyHeaders>> SetAccessPolicyAsync(string shareName, int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1336,7 +1336,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<ShareSetAccessPolicyHeaders> SetAccessPolicy(string shareName, int? timeout = null, IEnumerable<SignedIdentifier> shareAcl = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareSetAccessPolicyHeaders> SetAccessPolicy(string shareName, int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {

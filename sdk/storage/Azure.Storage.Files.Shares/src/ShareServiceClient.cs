@@ -66,6 +66,16 @@ namespace Azure.Storage.Files.Shares
         internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
+        /// ServiceRestClient.
+        /// </summary>
+        private readonly ServiceRestClient _serviceRestClient;
+
+        /// <summary>
+        /// ServiceRestClient.
+        /// </summary>
+        internal virtual ServiceRestClient ServiceRestClient => _serviceRestClient;
+
+        /// <summary>
         /// The Storage account name corresponding to the file service client.
         /// </summary>
         private string _accountName;

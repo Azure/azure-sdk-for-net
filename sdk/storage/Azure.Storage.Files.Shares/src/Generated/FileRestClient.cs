@@ -1215,7 +1215,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateUploadRangeRequest(string shareName, string directory, string fileName, string range, FileRangeWriteType fileRangeWrite, long contentLength, Stream optionalbody, int? timeout, byte[] contentMD5, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateUploadRangeRequest(string shareName, string directory, string fileName, string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, Stream optionalbody, int? timeout, byte[] contentMD5, LeaseAccessConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1265,7 +1265,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/>, <paramref name="directory"/>, <paramref name="fileName"/>, <paramref name="range"/>, or <paramref name="optionalbody"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileUploadRangeHeaders>> UploadRangeAsync(string shareName, string directory, string fileName, string range, FileRangeWriteType fileRangeWrite, long contentLength, Stream optionalbody, int? timeout = null, byte[] contentMD5 = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileUploadRangeHeaders>> UploadRangeAsync(string shareName, string directory, string fileName, string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, Stream optionalbody, int? timeout = null, byte[] contentMD5 = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1313,7 +1313,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/>, <paramref name="directory"/>, <paramref name="fileName"/>, <paramref name="range"/>, or <paramref name="optionalbody"/> is null. </exception>
-        public ResponseWithHeaders<FileUploadRangeHeaders> UploadRange(string shareName, string directory, string fileName, string range, FileRangeWriteType fileRangeWrite, long contentLength, Stream optionalbody, int? timeout = null, byte[] contentMD5 = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileUploadRangeHeaders> UploadRange(string shareName, string directory, string fileName, string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, Stream optionalbody, int? timeout = null, byte[] contentMD5 = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {

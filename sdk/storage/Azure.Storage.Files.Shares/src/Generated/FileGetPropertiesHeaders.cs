@@ -53,7 +53,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> URL up to 2KB in length that specifies the source file used in the last attempted Copy File operation where this file was the destination file. </summary>
         public string CopySource => _response.Headers.TryGetValue("x-ms-copy-source", out string value) ? value : null;
         /// <summary> State of the copy operation identified by &apos;x-ms-copy-id&apos;. </summary>
-        public CopyStatusType? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out CopyStatusType? value) ? value : null;
+        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out CopyStatus? value) ? value : null;
         /// <summary> The value of this header is set to true if the file data and application metadata are completely encrypted using the specified algorithm. Otherwise, the value is set to false (when the file is unencrypted, or if only parts of the file/application metadata are encrypted). </summary>
         public bool? IsServerEncrypted => _response.Headers.TryGetValue("x-ms-server-encrypted", out bool? value) ? value : null;
         /// <summary> Attributes set for the file. </summary>

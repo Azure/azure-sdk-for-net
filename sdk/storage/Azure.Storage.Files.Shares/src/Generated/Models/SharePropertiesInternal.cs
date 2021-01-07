@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Properties of a share. </summary>
-    internal partial class SharePropertiesInternal
+    public partial class SharePropertiesInternal
     {
         /// <summary> Initializes a new instance of SharePropertiesInternal. </summary>
         /// <param name="lastModified"> . </param>

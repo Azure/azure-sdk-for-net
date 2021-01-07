@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class HandleItem
+    public partial class ShareFileHandle
     {
-        internal static HandleItem DeserializeHandleItem(XElement element)
+        internal static ShareFileHandle DeserializeShareFileHandle(XElement element)
         {
             string handleId = default;
             string path = default;
@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 lastReconnectTime = lastReconnectTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, openTime, lastReconnectTime);
+            return new ShareFileHandle(handleId, path, fileId, parentId, sessionId, clientIp, openTime, lastReconnectTime);
         }
     }
 }

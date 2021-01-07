@@ -24,15 +24,16 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal static Response<ShareFileLease> ToLease(this Response<BrokenLease> response)
-            => Response.FromValue(
-                new ShareFileLease
-                {
-                    ETag = response.Value.ETag,
-                    LastModified = response.Value.LastModified,
-                    LeaseId = response.Value.LeaseId,
-                    LeaseTime = response.Value.LeaseTime
-                }, response.GetRawResponse());
+        // TODO fix this.
+        //internal static Response<ShareFileLease> ToLease(this Response<BrokenLease> response)
+        //    => Response.FromValue(
+        //        new ShareFileLease
+        //        {
+        //            ETag = response.Value.ETag,
+        //            LastModified = response.Value.LastModified,
+        //            LeaseId = response.Value.LeaseId,
+        //            LeaseTime = response.Value.LeaseTime
+        //        }, response.GetRawResponse());
 
         internal static string ToFileDateTimeString(this DateTimeOffset? dateTimeOffset)
             => dateTimeOffset.HasValue ? ToFileDateTimeString(dateTimeOffset.Value) : null;
@@ -55,7 +56,7 @@ namespace Azure.Storage.Files.Shares
                 };
         }
 
-        internal static ShareSnapshotsDeleteOptionInternal? ToShareSnapshotsDeleteOptionInternal(this ShareSnapshotsDeleteOption? option)
+        internal static DeleteSnapshotsOptionType? ToShareSnapshotsDeleteOptionInternal(this ShareSnapshotsDeleteOption? option)
         {
             if (option == null)
             {
@@ -63,8 +64,8 @@ namespace Azure.Storage.Files.Shares
             }
             return option switch
             {
-                ShareSnapshotsDeleteOption.Include => ShareSnapshotsDeleteOptionInternal.Include,
-                ShareSnapshotsDeleteOption.IncludeWithLeased => ShareSnapshotsDeleteOptionInternal.IncludeLeased,
+                ShareSnapshotsDeleteOption.Include => DeleteSnapshotsOptionType.Include,
+                ShareSnapshotsDeleteOption.IncludeWithLeased => DeleteSnapshotsOptionType.IncludeLeased,
                 _ => throw new ArgumentException($"Invalid {nameof(ShareSnapshotsDeleteOption)}: {option}"),
             };
         }
