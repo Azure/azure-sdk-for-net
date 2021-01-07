@@ -19,7 +19,7 @@ param (
   [string] $branchReplacementName = "",
   # flag to allow checking against azure sdk link guidance. Check link guidance here: https://aka.ms/azsdk/guideline/links
   [bool] $checkLinkGuidance = $false,
-  # UserAgent to be configured for web request. Default to PSUserAgent. 
+  # UserAgent to be configured for web request. Default to current Chrome version. 
   [string] $userAgent
 )
 
@@ -28,7 +28,7 @@ $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress d
 $locale = "/en-us/"
 $emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more information: https://aka.ms/azsdk/guideline/links"
 if (!$userAgent) {
-  $userAgent = "[Microsoft.PowerShell.Commands.PSUserAgent]::Chrome"
+  $userAgent = "Chrome/87.0.4280.88"
 }
 function NormalizeUrl([string]$url){
   if (Test-Path $url) {
