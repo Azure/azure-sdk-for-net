@@ -12,8 +12,8 @@ param (
   [String]$ServiceDirectory,
   [Parameter(Mandatory = $true)]
   [String]$PackageName,
-  [String]$Unreleased=$True,
-  [String]$ReplaceLatestEntryTitle = $False,
+  [String]$Unreleased = "true", #Argument is string becasue of the different ways the script is called in the various repos.
+  [String]$ReplaceLatestEntryTitle = "false",
   [String]$ReleaseDate
 )
 
@@ -23,7 +23,7 @@ param (
 . (Join-Path $PSScriptRoot common.ps1)
 
 if ($ReleaseDate -and $Unreleased) {
-    LogError "Do not pass 'ReleaseDate' arguement when 'Unreleased' is true"
+    LogError "Do not pass 'ReleaseDate' argument when 'Unreleased' is true"
     exit 1
 }
 
