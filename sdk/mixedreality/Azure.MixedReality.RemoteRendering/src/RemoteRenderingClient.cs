@@ -22,6 +22,7 @@ namespace Azure.MixedReality.RemoteRendering
 
         private readonly ClientDiagnostics _clientDiagnostics;
 
+        // TODO Don't think I need to own one of these, since the rest pipeline does already.
         private readonly HttpPipeline _pipeline;
 
         private readonly MixedRealityRemoteRenderingRestClient _restClient;
@@ -71,8 +72,8 @@ namespace Azure.MixedReality.RemoteRendering
         public virtual Response<ConversionInformation> CreateConversion(string conversionId, ConversionSettings settings, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateConversion)}");
-            // TODO Add some attributes?
-            //scope.AddAttribute(nameof(headerOptions.ClientRequestId), headerOptions.ClientRequestId);
+            scope.AddAttribute(nameof(conversionId), conversionId);
+            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -112,14 +113,85 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> or <paramref name="settings"/> is null. </exception>
         public virtual async Task<Response<ConversionInformation>> CreateConversionAsync(string conversionId, ConversionSettings settings, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateConversion)}");
-            // TODO Add some attributes?
-            //scope.AddAttribute(nameof(headerOptions.ClientRequestId), headerOptions.ClientRequestId);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateConversionAsync)}");
+            scope.AddAttribute(nameof(conversionId), conversionId);
+            // TODO Add some other attributes?
             scope.Start();
 
             try
             {
                 ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateConversionHeaders> response = await _restClient.CreateConversionAsync(_accountId, conversionId, new ConversionRequest(settings), cancellationToken).ConfigureAwait(false);
+
+                switch (response.Value)
+                {
+                    case ConversionInformation c:
+                        return ResponseWithHeaders.FromValue(c, response.Headers, response.GetRawResponse());
+                    case ErrorResponse e:
+                        // TODO e.Error.Details
+                        // TODO e.Error.InnerError
+                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                    case null:
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of a previously created asset conversion. </summary>
+        /// <param name="conversionId"> the conversion id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> is null. </exception>
+        public virtual Response<ConversionInformation> GetConversion(string conversionId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetConversion)}");
+            scope.AddAttribute(nameof(conversionId), conversionId);
+            // TODO Add some other attributes?
+            //scope.AddAttribute(nameof(headerOptions.ClientRequestId), headerOptions.ClientRequestId);
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<object, MixedRealityRemoteRenderingGetConversionHeaders> response = _restClient.GetConversion(_accountId, conversionId, cancellationToken);
+
+                switch (response.Value)
+                {
+                    case ConversionInformation c:
+                        return ResponseWithHeaders.FromValue(c, response.Headers, response.GetRawResponse());
+                    case ErrorResponse e:
+                        // TODO e.Error.Details
+                        // TODO e.Error.InnerError
+                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                    case null:
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of a previously created asset conversion. </summary>
+        /// <param name="conversionId"> the conversion id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> is null. </exception>
+        public virtual async Task<Response<ConversionInformation>> GetConversionAsync(string conversionId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetConversionAsync)}");
+            scope.AddAttribute(nameof(conversionId), conversionId);
+            // TODO Add some other attributes?
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<object, MixedRealityRemoteRenderingGetConversionHeaders> response = await _restClient.GetConversionAsync(_accountId, conversionId, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Value)
                 {
