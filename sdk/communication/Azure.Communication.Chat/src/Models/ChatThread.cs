@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Communication.Chat
 {
@@ -16,7 +14,7 @@ namespace Azure.Communication.Chat
             Topic = chatThreadInternal.Topic;
             CreatedOn = chatThreadInternal.CreatedOn;
             CreatedBy = new CommunicationUserIdentifier(chatThreadInternal.CreatedBy);
-            Members = chatThreadInternal.Members.Select(x => x.ToChatThreadMember()).ToList();
+            DeletedOn = chatThreadInternal.DeletedOn;
         }
 
         /// <summary> Chat thread id. </summary>
@@ -27,7 +25,7 @@ namespace Azure.Communication.Chat
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Id of the chat thread owner. </summary>
         public CommunicationUserIdentifier CreatedBy { get; }
-        /// <summary> Chat thread members. </summary>
-        public IReadOnlyList<ChatThreadMember> Members { get; }
+        /// <summary>The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
+        public DateTimeOffset? DeletedOn { get; }
     }
 }

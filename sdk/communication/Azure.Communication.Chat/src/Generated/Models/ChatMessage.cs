@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> The ChatMessage. </summary>
+    /// <summary> Chat message. </summary>
     public partial class ChatMessage
     {
         /// <summary> Initializes a new instance of ChatMessage. </summary>
@@ -43,11 +43,11 @@ namespace Azure.Communication.Chat
         public string Content { get; }
         /// <summary> The display name of the chat message sender. This property is used to populate sender name for push notifications. </summary>
         public string SenderDisplayName { get; }
-        /// <summary> The timestamp when the chat message arrived at the server. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
+        /// <summary> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The timestamp when the chat message was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
+        /// <summary> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
-        /// <summary> The timestamp when the chat message was edited. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
+        /// <summary> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? EditedOn { get; }
     }
 }

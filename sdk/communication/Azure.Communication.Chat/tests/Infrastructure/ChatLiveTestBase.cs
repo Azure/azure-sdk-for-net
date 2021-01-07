@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure.Communication.Administration;
-using Azure.Communication;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Chat.Tests
@@ -13,7 +10,7 @@ namespace Azure.Communication.Chat.Tests
     public class ChatLiveTestBase : RecordedTestBase<ChatTestEnvironment>
     {
         public ChatLiveTestBase(bool isAsync) : base(isAsync)
-           => Sanitizer = new ChatRecordedTestSanitizer();
+            => Sanitizer = new ChatRecordedTestSanitizer();
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
@@ -43,19 +40,9 @@ namespace Azure.Communication.Chat.Tests
                 InstrumentClientOptions(new ChatClientOptions())));
         }
 
-        protected ChatThreadClient CreateInstrumentedChatThreadClient(ChatClient chatClient, string topic, IEnumerable<ChatThreadMember> members)
-        {
-            return InstrumentClient(chatClient.CreateChatThread(topic, members));
-        }
-
         protected ChatThreadClient GetInstrumentedChatThreadClient(ChatClient chatClient, string threadId)
         {
             return InstrumentClient(chatClient.GetChatThreadClient(threadId));
-        }
-
-        protected async Task<ChatThreadClient> CreateInstrumentedChatThreadClientAsync(ChatClient chatClient, string topic, IEnumerable<ChatThreadMember> members)
-        {
-            return InstrumentClient(await chatClient.CreateChatThreadAsync(topic, members));
         }
     }
 }
