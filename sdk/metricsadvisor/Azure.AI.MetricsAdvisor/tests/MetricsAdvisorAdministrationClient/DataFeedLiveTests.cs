@@ -38,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string DataSourceTemplate = "template";
         private const string DataSourceUsername = "username";
 
-        public DataFeedLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        public DataFeedLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -1953,6 +1953,96 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        public async Task GetDataFeeds()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedCount = 0;
+
+            await foreach (DataFeed dataFeed in adminClient.GetDataFeedsAsync())
+            {
+                Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(dataFeed.Name, Is.Not.Null.And.Not.Empty);
+                Assert.That(dataFeed.Description, Is.Not.Null);
+                Assert.That(dataFeed.Status, Is.Not.Null);
+                Assert.That(dataFeed.Status, Is.Not.EqualTo(default(DataFeedStatus)));
+                Assert.That(dataFeed.AccessMode, Is.Not.Null);
+                Assert.That(dataFeed.AccessMode, Is.Not.EqualTo(default(DataFeedAccessMode)));
+                Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null);
+                Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+                Assert.That(dataFeed.Administrators, Is.Not.Null);
+                Assert.That(dataFeed.Viewers, Is.Not.Null);
+                Assert.That(dataFeed.IsAdministrator, Is.Not.Null);
+                Assert.That(dataFeed.CreatedTime, Is.Not.Null);
+                Assert.That(dataFeed.CreatedTime, Is.Not.EqualTo(default(DateTimeOffset)));
+
+                Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
+                Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.Not.Null);
+                Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.Not.EqualTo(default(DataFeedMissingDataPointFillType)));
+
+                if (dataFeed.MissingDataPointFillSettings.FillType == DataFeedMissingDataPointFillType.CustomValue)
+                {
+                    Assert.That(dataFeed.MissingDataPointFillSettings.CustomFillValue, Is.Not.Null);
+                }
+                else
+                {
+                    Assert.That(dataFeed.MissingDataPointFillSettings.CustomFillValue, Is.Null);
+                }
+
+                Assert.That(dataFeed.Granularity, Is.Not.Null);
+                Assert.That(dataFeed.Granularity.GranularityType, Is.Not.EqualTo(default(DataFeedGranularityType)));
+
+                if (dataFeed.Granularity.GranularityType == DataFeedGranularityType.Custom)
+                {
+                    Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.Not.Null);
+                }
+                else
+                {
+                    Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.Null);
+                }
+
+                Assert.That(dataFeed.Schema, Is.Not.Null);
+                Assert.That(dataFeed.Schema.MetricColumns, Is.Not.Null);
+
+                foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
+                {
+                    Assert.That(metric, Is.Not.Null);
+                    Assert.That(metric.MetricId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(metric.MetricName, Is.Not.Null.And.Not.Empty);
+                    Assert.That(metric.MetricDisplayName, Is.Not.Null.And.Not.Empty);
+                    Assert.That(metric.MetricDescription, Is.Not.Null);
+                }
+
+                Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null);
+
+                foreach (DataFeedDimension dimensionColumn in dataFeed.Schema.DimensionColumns)
+                {
+                    Assert.That(dimensionColumn, Is.Not.Null);
+                    Assert.That(dimensionColumn.DimensionName, Is.Not.Null.And.Not.Empty);
+                    Assert.That(dimensionColumn.DimensionDisplayName, Is.Not.Null.And.Not.Empty);
+                }
+
+                Assert.That(dataFeed.Schema.TimestampColumn, Is.Not.Null);
+
+                Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
+                Assert.That(dataFeed.IngestionSettings.IngestionStartTime, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.Not.Null);
+                Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.Not.Null);
+                Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.Not.Null);
+                Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.Not.Null);
+
+                ValidateGenericDataSource(dataFeed.DataSource, dataFeed.SourceType, dataFeed.IsAdministrator.Value);
+
+                if (++dataFeedCount >= MaximumSamplesCount)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(dataFeedCount, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
         public async Task DeleteDataFeed()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -2351,6 +2441,267 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataSource, Is.Not.Null);
             Assert.That(dataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
+        }
+
+        private void ValidateGenericDataSource(DataFeedSource dataSource, DataFeedSourceType sourceType, bool isAdmin)
+        {
+            if (sourceType == DataFeedSourceType.AzureApplicationInsights)
+            {
+                var specificDataSource = dataSource as AzureApplicationInsightsDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ApplicationId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.ApiKey, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.AzureCloud, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ApplicationId, Is.Null);
+                    Assert.That(specificDataSource.ApiKey, Is.Null);
+                    Assert.That(specificDataSource.AzureCloud, Is.Null);
+                    Assert.That(specificDataSource.Query, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.AzureBlob)
+            {
+                var specificDataSource = dataSource as AzureBlobDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Container, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.BlobTemplate, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Null);
+                    Assert.That(specificDataSource.Container, Is.Null);
+                    Assert.That(specificDataSource.BlobTemplate, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.AzureCosmosDb)
+            {
+                var specificDataSource = dataSource as AzureCosmosDbDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.SqlQuery, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Database, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.CollectionId, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Null);
+                    Assert.That(specificDataSource.SqlQuery, Is.Null);
+                    Assert.That(specificDataSource.Database, Is.Null);
+                    Assert.That(specificDataSource.CollectionId, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.AzureDataExplorer)
+            {
+                var specificDataSource = dataSource as AzureDataExplorerDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Null);
+                    Assert.That(specificDataSource.Query, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.AzureDataLakeStorageGen2)
+            {
+                var specificDataSource = dataSource as AzureDataLakeStorageGen2DataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.AccountName, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.AccountKey, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.FileSystemName, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.DirectoryTemplate, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.FileTemplate, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.AccountName, Is.Null);
+                    Assert.That(specificDataSource.AccountKey, Is.Null);
+                    Assert.That(specificDataSource.FileSystemName, Is.Null);
+                    Assert.That(specificDataSource.DirectoryTemplate, Is.Null);
+                    Assert.That(specificDataSource.FileTemplate, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.AzureTable)
+            {
+                var specificDataSource = dataSource as AzureTableDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Table, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Null);
+                    Assert.That(specificDataSource.Table, Is.Null);
+                    Assert.That(specificDataSource.Query, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.Elasticsearch)
+            {
+                var specificDataSource = dataSource as ElasticsearchDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.Host, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Port, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.AuthorizationHeader, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.Host, Is.Null);
+                    Assert.That(specificDataSource.Port, Is.Null);
+                    Assert.That(specificDataSource.AuthorizationHeader, Is.Null);
+                    Assert.That(specificDataSource.Query, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.HttpRequest)
+            {
+                var specificDataSource = dataSource as HttpRequestDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.Url, Is.Not.Null);
+                    Assert.That(specificDataSource.HttpHeader, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.HttpMethod, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Payload, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.Url, Is.Not.Null);
+                    Assert.That(specificDataSource.HttpHeader, Is.Null);
+                    Assert.That(specificDataSource.HttpMethod, Is.Null);
+                    Assert.That(specificDataSource.Payload, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.InfluxDb)
+            {
+                var specificDataSource = dataSource as InfluxDbDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Database, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Username, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Password, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Null);
+                    Assert.That(specificDataSource.Database, Is.Null);
+                    Assert.That(specificDataSource.Username, Is.Null);
+                    Assert.That(specificDataSource.Password, Is.Null);
+                    Assert.That(specificDataSource.Query, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.MongoDb)
+            {
+                var specificDataSource = dataSource as MongoDbDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Database, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Command, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Null);
+                    Assert.That(specificDataSource.Database, Is.Null);
+                    Assert.That(specificDataSource.Command, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.MySql)
+            {
+                var specificDataSource = dataSource as MySqlDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Null);
+                    Assert.That(specificDataSource.Query, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.PostgreSql)
+            {
+                var specificDataSource = dataSource as PostgreSqlDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Null);
+                    Assert.That(specificDataSource.Query, Is.Null);
+                }
+            }
+            else
+            {
+                Assert.That(sourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
+
+                var specificDataSource = dataSource as SqlServerDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Null);
+                    Assert.That(specificDataSource.Query, Is.Null);
+                }
+            }
         }
     }
 }
