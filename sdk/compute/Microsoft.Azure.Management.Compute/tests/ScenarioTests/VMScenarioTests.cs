@@ -345,6 +345,12 @@ namespace Compute.Tests
                         Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
                     }
 
+                    if(securityType != null && securityType.Equals("TrustedLaunch"))
+                    {
+                        Assert.True(inputVM.SecurityProfile.UefiSettings.VTpmEnabled);
+                        Assert.True(inputVM.SecurityProfile.UefiSettings.SecureBootEnabled);
+                    }
+
                     if(isPpgScenario)
                     {
                         ProximityPlacementGroup outProximityPlacementGroup = m_CrpClient.ProximityPlacementGroups.Get(rgName, ppgName);
