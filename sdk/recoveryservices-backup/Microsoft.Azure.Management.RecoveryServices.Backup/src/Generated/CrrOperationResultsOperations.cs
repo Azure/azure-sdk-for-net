@@ -215,5 +215,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             return _result;
         }
 
+        public Task<AzureOperationResponse> GetWithHttpMessagesAsync(string azureRegion, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
