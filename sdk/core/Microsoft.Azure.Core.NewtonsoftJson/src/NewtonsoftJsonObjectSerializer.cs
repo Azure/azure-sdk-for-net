@@ -42,7 +42,10 @@ namespace Azure.Core.Serialization
         public static JsonSerializerSettings CreateJsonSerializerSettings()
         {
             var settings = new JsonSerializerSettings();
+
+            // NOTE: Update the README when converters are added by default.
             settings.Converters.Add(new NewtonsoftJsonETagConverter());
+
             return settings;
         }
 
