@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Administration;
 using Azure.Communication.Administration.Models;
-using Azure.Communication.Identity;
+using Azure.Communication;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -18,9 +18,9 @@ namespace Azure.Communication.Chat.Tests.samples
         public async Task GetAddRemoveMembersAsync()
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
-            Response<CommunicationUser> threadMember1 = await communicationIdentityClient.CreateUserAsync();
-            Response<CommunicationUser> threadMember2 = await communicationIdentityClient.CreateUserAsync();
-            Response<CommunicationUser> threadMember3 = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationUserIdentifier> threadMember1 = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationUserIdentifier> threadMember2 = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationUserIdentifier> threadMember3 = await communicationIdentityClient.CreateUserAsync();
 
             CommunicationUserToken communicationUserToken1 = await communicationIdentityClient.IssueTokenAsync(threadMember1.Value, new[] { CommunicationTokenScope.Chat });
             CommunicationUserToken communicationUserToken2 = await communicationIdentityClient.IssueTokenAsync(threadMember2.Value, new[] { CommunicationTokenScope.Chat });
@@ -31,9 +31,9 @@ namespace Azure.Communication.Chat.Tests.samples
 
             ChatClient chatClient = new ChatClient(
                 new Uri(endpoint),
-                new CommunicationUserCredential(userToken));
+                new CommunicationTokenCredential(userToken));
 
-            var chatThreadMember = new ChatThreadMember(new CommunicationUser(theadCreatorMemberId))
+            var chatThreadMember = new ChatThreadMember(new CommunicationUserIdentifier(theadCreatorMemberId))
             {
                 DisplayName = "UserDisplayName",
                 ShareHistoryTime = DateTime.MinValue
@@ -56,20 +56,19 @@ namespace Azure.Communication.Chat.Tests.samples
             #region Snippet:Azure_Communication_Chat_Tests_Samples_AddMembers
             var members = new[]
             {
-                new ChatThreadMember(new CommunicationUser(memberId1)) { DisplayName ="display name member 1"},
-                new ChatThreadMember(new CommunicationUser(memberId2)) { DisplayName ="display name member 2"},
-                new ChatThreadMember(new CommunicationUser(memberId3)) { DisplayName ="display name member 3"}
+                new ChatThreadMember(new CommunicationUserIdentifier(memberId1)) { DisplayName ="display name member 1"},
+                new ChatThreadMember(new CommunicationUserIdentifier(memberId2)) { DisplayName ="display name member 2"},
+                new ChatThreadMember(new CommunicationUserIdentifier(memberId3)) { DisplayName ="display name member 3"}
             };
             await chatThreadClient.AddMembersAsync(members);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_AddMembers
 
             var memberId = memberId2;
             #region Snippet:Azure_Communication_Chat_Tests_Samples_RemoveMember
-            await chatThreadClient.RemoveMemberAsync(new CommunicationUser(memberId));
+            await chatThreadClient.RemoveMemberAsync(new CommunicationUserIdentifier(memberId));
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_RemoveMember
 
             await chatClient.DeleteChatThreadAsync(threadId);
-
         }
     }
 }

@@ -852,7 +852,6 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 TransportClient = transportClient;
                 SetTransportClient(transportClient);
-
             }
 
             public InjectableTransportClientMock(TransportClient transportClient,
@@ -888,7 +887,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 typeof(EventHubConnection)
                     .GetProperty("InnerClient", BindingFlags.Instance | BindingFlags.NonPublic)
                     .SetValue(this, transportClient);
-
         }
 
         /// <summary>

@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "fc99c4fd-4b09-e1d7-884a-dcf782691731",
         "x-ms-date": "Wed, 14 Oct 2020 23:18:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "fc99c4fd-4b09-e1d7-884a-dcf782691731",
         "x-ms-request-id": "820d1e90-101a-009b-0c80-a25087000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         "x-ms-client-request-id": "049abc80-d09c-1ca2-dd67-3455a3006a92",
         "x-ms-date": "Wed, 14 Oct 2020 23:18:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 409,
@@ -60,7 +60,7 @@
         "x-ms-client-request-id": "049abc80-d09c-1ca2-dd67-3455a3006a92",
         "x-ms-error-code": "ShareAlreadyExists",
         "x-ms-request-id": "820d1e93-101a-009b-0d80-a25087000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareAlreadyExists\u003C/Code\u003E\u003CMessage\u003EThe specified share already exists.\n",
@@ -82,7 +82,7 @@
         "x-ms-date": "Wed, 14 Oct 2020 23:18:40 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -95,7 +95,7 @@
         ],
         "x-ms-client-request-id": "c6770084-13ce-4c95-b893-069efd411f78",
         "x-ms-request-id": "820d1e94-101a-009b-0e80-a25087000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

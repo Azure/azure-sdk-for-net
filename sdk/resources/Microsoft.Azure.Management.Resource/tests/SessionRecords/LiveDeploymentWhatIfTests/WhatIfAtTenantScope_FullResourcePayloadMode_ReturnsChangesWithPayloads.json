@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Resources/deployments/csmd1779/whatIf?api-version=2020-06-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzbWQxNzc5L3doYXRJZj9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
+      "RequestUri": "/providers/Microsoft.Resources/deployments/csmd9273/whatIf?api-version=2020-10-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzbWQ5MjczL3doYXRJZj9hcGktdmVyc2lvbj0yMDIwLTEwLTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"whatIfSettings\": {\r\n      \"resultFormat\": \"FullResourcePayloads\"\r\n    },\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"managementGroupId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"gopremra-testmg\"\r\n        },\r\n        \"subscriptionId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"a93e8c5c-63cb-4635-933f-6d166ac25187\"\r\n        },\r\n        \"roleDefinitionId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"3e2c15b3-905c-4b0f-8313-c48ae01ccdde\"\r\n        }\r\n      },\r\n      \"variables\": {\r\n        \"managementGroupScope\": \"[concat('Microsoft.Management/managementGroups/', parameters('managementGroupId'))]\",\r\n        \"managementGroupFullyQualifiedId\": \"[concat('/providers/', variables('managementGroupScope'))]\"\r\n      },\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n          \"name\": \"[parameters('roleDefinitionId')]\",\r\n          \"apiVersion\": \"2018-07-01\",\r\n          \"properties\": {\r\n            \"roleName\": \"test-app\",\r\n            \"description\": \"something\",\r\n            \"type\": \"CustomRole\",\r\n            \"permissions\": [\r\n              {\r\n                \"actions\": [\r\n                  \"Microsoft.Storage/*/read\"\r\n                ],\r\n                \"notActions\": []\r\n              }\r\n            ],\r\n            \"assignableScopes\": [\r\n              \"[variables('managementGroupFullyQualifiedId')]\"\r\n            ]\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"mg-nested\",\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"location\": \"East US\",\r\n          \"scope\": \"[variables('managementGroupScope')]\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n                  \"name\": \"policy2\",\r\n                  \"apiVersion\": \"2016-12-01\",\r\n                  \"properties\": {\r\n                    \"policyType\": \"Custom\",\r\n                    \"parameters\": {},\r\n                    \"policyRule\": {\r\n                      \"if\": {\r\n                        \"field\": \"location\",\r\n                        \"equals\": \"northeurope\"\r\n                      },\r\n                      \"then\": {\r\n                        \"effect\": \"deny\"\r\n                      }\r\n                    }\r\n                  }\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"sub-nested\",\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"location\": \"East US\",\r\n          \"subscriptionId\": \"[parameters('subscriptionId')]\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n                  \"name\": \"sdk-testrg\",\r\n                  \"apiVersion\": \"2019-07-01\",\r\n                  \"location\": \"East US 2\",\r\n                  \"properties\": {}\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"whatIfSettings\": {\r\n      \"resultFormat\": \"FullResourcePayloads\"\r\n    },\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"managementGroupId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"gopremra-testmg\"\r\n        },\r\n        \"subscriptionId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"ce7f58b7-53c8-4806-ad09-18b516f85d4a\"\r\n        },\r\n        \"roleDefinitionId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"3e2c15b3-905c-4b0f-8313-c48ae01ccdde\"\r\n        }\r\n      },\r\n      \"variables\": {\r\n        \"managementGroupScope\": \"[concat('Microsoft.Management/managementGroups/', parameters('managementGroupId'))]\",\r\n        \"managementGroupFullyQualifiedId\": \"[concat('/providers/', variables('managementGroupScope'))]\"\r\n      },\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n          \"name\": \"[parameters('roleDefinitionId')]\",\r\n          \"apiVersion\": \"2018-07-01\",\r\n          \"properties\": {\r\n            \"roleName\": \"test-role\",\r\n            \"description\": \"something\",\r\n            \"type\": \"CustomRole\",\r\n            \"permissions\": [\r\n              {\r\n                \"actions\": [\r\n                  \"Microsoft.Storage/*/read\"\r\n                ],\r\n                \"notActions\": []\r\n              }\r\n            ],\r\n            \"assignableScopes\": [\r\n              \"[variables('managementGroupFullyQualifiedId')]\"\r\n            ]\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"mg-nested\",\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"location\": \"East US\",\r\n          \"scope\": \"[variables('managementGroupScope')]\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n                  \"name\": \"policy2\",\r\n                  \"apiVersion\": \"2016-12-01\",\r\n                  \"properties\": {\r\n                    \"policyType\": \"Custom\",\r\n                    \"parameters\": {},\r\n                    \"policyRule\": {\r\n                      \"if\": {\r\n                        \"field\": \"location\",\r\n                        \"equals\": \"northeurope\"\r\n                      },\r\n                      \"then\": {\r\n                        \"effect\": \"deny\"\r\n                      }\r\n                    }\r\n                  }\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"sub-nested\",\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"location\": \"East US\",\r\n          \"subscriptionId\": \"[parameters('subscriptionId')]\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n                  \"name\": \"sdk-testrg\",\r\n                  \"apiVersion\": \"2019-07-01\",\r\n                  \"location\": \"East US 2\",\r\n                  \"properties\": {}\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0fa74ccf-d314-49c0-adca-20e4aeb7cecb"
+          "b93395f4-f0bb-4837-9a5a-04e7e97bb6c0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "3861"
+          "3862"
         ]
       },
       "ResponseHeaders": {
@@ -33,7 +33,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItLUNTTUQxNzc5LTk5N0U5NjNEOjJENDBDOToyRDRCMUQ6MkQ4NkEyOjJEOEQ5OTQzMkEzMDU4Iiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-06-01"
+          "https://management.azure.com/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItLUNTTUQ5MjczLTY4NUE1OTlEOjJEQzY2MDoyRDRBM0E6MkQ4NUQ2OjJEMTMxNDY5RDU5NTA3Iiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-10-01"
         ],
         "Retry-After": [
           "15"
@@ -42,13 +42,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "997e963d-40c9-4b1d-86a2-8d99432a3058"
+          "685a599d-c660-4a3a-85d6-131469d59507"
         ],
         "x-ms-correlation-request-id": [
-          "997e963d-40c9-4b1d-86a2-8d99432a3058"
+          "685a599d-c660-4a3a-85d6-131469d59507"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20200711T002014Z:997e963d-40c9-4b1d-86a2-8d99432a3058"
+          "WESTCENTRALUS:20201120T215101Z:685a599d-c660-4a3a-85d6-131469d59507"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -57,7 +57,7 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 11 Jul 2020 00:20:13 GMT"
+          "Fri, 20 Nov 2020 21:51:00 GMT"
         ],
         "Expires": [
           "-1"
@@ -70,16 +70,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItLUNTTUQxNzc5LTk5N0U5NjNEOjJENDBDOToyRDRCMUQ6MkQ4NkEyOjJEOEQ5OTQzMkEzMDU4Iiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-06-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL29wZXJhdGlvblJlc3VsdHMvZXlKcWIySkpaQ0k2SWtSbGNHeHZlVzFsYm5SWGFHRjBTV1pLYjJJdExVTlRUVVF4TnpjNUxUazVOMFU1TmpORU9qSkVOREJET1RveVJEUkNNVVE2TWtRNE5rRXlPakpFT0VRNU9UUXpNa0V6TURVNElpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMC0wNi0wMQ==",
+      "RequestUri": "/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItLUNTTUQ5MjczLTY4NUE1OTlEOjJEQzY2MDoyRDRBM0E6MkQ4NUQ2OjJEMTMxNDY5RDU5NTA3Iiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-10-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL29wZXJhdGlvblJlc3VsdHMvZXlKcWIySkpaQ0k2SWtSbGNHeHZlVzFsYm5SWGFHRjBTV1pLYjJJdExVTlRUVVE1TWpjekxUWTROVUUxT1RsRU9qSkVRelkyTURveVJEUkJNMEU2TWtRNE5VUTJPakpFTVRNeE5EWTVSRFU1TlRBM0lpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMC0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -93,13 +93,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "1a7e6ca4-c5ad-47cc-ae81-670a2fab51c4"
+          "c077fe82-3218-4071-a4b8-60c205a135cc"
         ],
         "x-ms-correlation-request-id": [
-          "1a7e6ca4-c5ad-47cc-ae81-670a2fab51c4"
+          "c077fe82-3218-4071-a4b8-60c205a135cc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20200711T002029Z:1a7e6ca4-c5ad-47cc-ae81-670a2fab51c4"
+          "WESTCENTRALUS:20201120T215116Z:c077fe82-3218-4071-a4b8-60c205a135cc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -108,7 +108,7 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 11 Jul 2020 00:20:28 GMT"
+          "Fri, 20 Nov 2020 21:51:16 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -117,23 +117,23 @@
           "-1"
         ],
         "Content-Length": [
-          "1481"
+          "1537"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"changes\": [\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Authorization/roleDefinitions/3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2018-07-01\",\r\n          \"id\": \"/providers/Microsoft.Authorization/roleDefinitions/3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n          \"name\": \"3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n          \"properties\": {\r\n            \"assignableScopes\": [\r\n              \"/providers/Microsoft.Management/managementGroups/gopremra-testmg\"\r\n            ],\r\n            \"description\": \"something\",\r\n            \"permissions\": [\r\n              {\r\n                \"actions\": [\r\n                  \"Microsoft.Storage/*/read\"\r\n                ]\r\n              }\r\n            ],\r\n            \"roleName\": \"test-app\",\r\n            \"type\": \"CustomRole\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/roleDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/gopremra-testmg/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/gopremra-testmg/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n          \"name\": \"policy2\",\r\n          \"properties\": {\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"equals\": \"northeurope\",\r\n                \"field\": \"location\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            },\r\n            \"policyType\": \"Custom\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/sdk-testrg\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"id\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/sdk-testrg\",\r\n          \"location\": \"East US 2\",\r\n          \"name\": \"sdk-testrg\",\r\n          \"type\": \"Microsoft.Resources/resourceGroups\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"correlationId\": \"685a599d-c660-4a3a-85d6-131469d59507\",\r\n    \"changes\": [\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Authorization/roleDefinitions/3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2018-07-01\",\r\n          \"id\": \"/providers/Microsoft.Authorization/roleDefinitions/3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n          \"name\": \"3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n          \"properties\": {\r\n            \"assignableScopes\": [\r\n              \"/providers/Microsoft.Management/managementGroups/gopremra-testmg\"\r\n            ],\r\n            \"description\": \"something\",\r\n            \"permissions\": [\r\n              {\r\n                \"actions\": [\r\n                  \"Microsoft.Storage/*/read\"\r\n                ]\r\n              }\r\n            ],\r\n            \"roleName\": \"test-role\",\r\n            \"type\": \"CustomRole\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/roleDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/gopremra-testmg/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/gopremra-testmg/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n          \"name\": \"policy2\",\r\n          \"properties\": {\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"equals\": \"northeurope\",\r\n                \"field\": \"location\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            },\r\n            \"policyType\": \"Custom\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/ce7f58b7-53c8-4806-ad09-18b516f85d4a/resourceGroups/sdk-testrg\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"id\": \"/subscriptions/ce7f58b7-53c8-4806-ad09-18b516f85d4a/resourceGroups/sdk-testrg\",\r\n          \"location\": \"East US 2\",\r\n          \"name\": \"sdk-testrg\",\r\n          \"type\": \"Microsoft.Resources/resourceGroups\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItLUNTTUQxNzc5LTk5N0U5NjNEOjJENDBDOToyRDRCMUQ6MkQ4NkEyOjJEOEQ5OTQzMkEzMDU4Iiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-06-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL29wZXJhdGlvblJlc3VsdHMvZXlKcWIySkpaQ0k2SWtSbGNHeHZlVzFsYm5SWGFHRjBTV1pLYjJJdExVTlRUVVF4TnpjNUxUazVOMFU1TmpORU9qSkVOREJET1RveVJEUkNNVVE2TWtRNE5rRXlPakpFT0VRNU9UUXpNa0V6TURVNElpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMC0wNi0wMQ==",
+      "RequestUri": "/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItLUNTTUQ5MjczLTY4NUE1OTlEOjJEQzY2MDoyRDRBM0E6MkQ4NUQ2OjJEMTMxNDY5RDU5NTA3Iiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-10-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL29wZXJhdGlvblJlc3VsdHMvZXlKcWIySkpaQ0k2SWtSbGNHeHZlVzFsYm5SWGFHRjBTV1pLYjJJdExVTlRUVVE1TWpjekxUWTROVUUxT1RsRU9qSkVRelkyTURveVJEUkJNMEU2TWtRNE5VUTJPakpFTVRNeE5EWTVSRFU1TlRBM0lpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMC0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -147,13 +147,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "f20d6601-49f6-455c-bb5b-68c646a198c9"
+          "474a1896-b03f-4313-95ec-503202201c6e"
         ],
         "x-ms-correlation-request-id": [
-          "f20d6601-49f6-455c-bb5b-68c646a198c9"
+          "474a1896-b03f-4313-95ec-503202201c6e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20200711T002030Z:f20d6601-49f6-455c-bb5b-68c646a198c9"
+          "WESTCENTRALUS:20201120T215117Z:474a1896-b03f-4313-95ec-503202201c6e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -162,7 +162,7 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 11 Jul 2020 00:20:29 GMT"
+          "Fri, 20 Nov 2020 21:51:17 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -171,19 +171,19 @@
           "-1"
         ],
         "Content-Length": [
-          "1481"
+          "1537"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"changes\": [\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Authorization/roleDefinitions/3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2018-07-01\",\r\n          \"id\": \"/providers/Microsoft.Authorization/roleDefinitions/3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n          \"name\": \"3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n          \"properties\": {\r\n            \"assignableScopes\": [\r\n              \"/providers/Microsoft.Management/managementGroups/gopremra-testmg\"\r\n            ],\r\n            \"description\": \"something\",\r\n            \"permissions\": [\r\n              {\r\n                \"actions\": [\r\n                  \"Microsoft.Storage/*/read\"\r\n                ]\r\n              }\r\n            ],\r\n            \"roleName\": \"test-app\",\r\n            \"type\": \"CustomRole\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/roleDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/gopremra-testmg/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/gopremra-testmg/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n          \"name\": \"policy2\",\r\n          \"properties\": {\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"equals\": \"northeurope\",\r\n                \"field\": \"location\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            },\r\n            \"policyType\": \"Custom\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/sdk-testrg\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"id\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/sdk-testrg\",\r\n          \"location\": \"East US 2\",\r\n          \"name\": \"sdk-testrg\",\r\n          \"type\": \"Microsoft.Resources/resourceGroups\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"correlationId\": \"685a599d-c660-4a3a-85d6-131469d59507\",\r\n    \"changes\": [\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Authorization/roleDefinitions/3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2018-07-01\",\r\n          \"id\": \"/providers/Microsoft.Authorization/roleDefinitions/3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n          \"name\": \"3e2c15b3-905c-4b0f-8313-c48ae01ccdde\",\r\n          \"properties\": {\r\n            \"assignableScopes\": [\r\n              \"/providers/Microsoft.Management/managementGroups/gopremra-testmg\"\r\n            ],\r\n            \"description\": \"something\",\r\n            \"permissions\": [\r\n              {\r\n                \"actions\": [\r\n                  \"Microsoft.Storage/*/read\"\r\n                ]\r\n              }\r\n            ],\r\n            \"roleName\": \"test-role\",\r\n            \"type\": \"CustomRole\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/roleDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/gopremra-testmg/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/gopremra-testmg/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n          \"name\": \"policy2\",\r\n          \"properties\": {\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"equals\": \"northeurope\",\r\n                \"field\": \"location\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            },\r\n            \"policyType\": \"Custom\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/ce7f58b7-53c8-4806-ad09-18b516f85d4a/resourceGroups/sdk-testrg\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"id\": \"/subscriptions/ce7f58b7-53c8-4806-ad09-18b516f85d4a/resourceGroups/sdk-testrg\",\r\n          \"location\": \"East US 2\",\r\n          \"name\": \"sdk-testrg\",\r\n          \"type\": \"Microsoft.Resources/resourceGroups\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {
     "NewDeploymentName": [
-      "csmd1779"
+      "csmd9273"
     ]
   },
   "Variables": {
-    "SubscriptionId": "a93e8c5c-63cb-4635-933f-6d166ac25187"
+    "SubscriptionId": "ce7f58b7-53c8-4806-ad09-18b516f85d4a"
   }
 }

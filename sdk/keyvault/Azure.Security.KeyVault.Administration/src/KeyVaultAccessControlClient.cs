@@ -42,7 +42,6 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultAccessControlClient(Uri vaultUri, TokenCredential credential)
             : this(vaultUri, credential, null)
         {
-
         }
 
         /// <summary>
@@ -240,12 +239,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleScope">The scope of the role assignment to create.</param>
         /// <param name="roleDefinitionId">The role definition ID used in the role assignment.</param>
         /// <param name="principalId">The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group.</param>
-        /// <param name="name">Optional name used to create the role assignment. A new <see cref="Guid"/> will be generated if not specified.</param>
+        /// <param name="roleAssignmentName">Optional name used to create the role assignment. A new <see cref="Guid"/> will be generated if not specified.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is empty.</exception>
-        public virtual Response<KeyVaultRoleAssignment> CreateRoleAssignment(KeyVaultRoleScope roleScope, string roleDefinitionId, string principalId, Guid? name = null, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultRoleAssignment> CreateRoleAssignment(KeyVaultRoleScope roleScope, string roleDefinitionId, string principalId, Guid? roleAssignmentName = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNullOrEmpty(principalId, nameof(principalId));
@@ -254,7 +253,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                var _name = (name ?? Guid.NewGuid()).ToString();
+                var _name = (roleAssignmentName ?? Guid.NewGuid()).ToString();
                 var properties = new KeyVaultRoleAssignmentProperties(roleDefinitionId, principalId);
 
                 return _assignmentsRestClient.Create(VaultUri.AbsoluteUri, roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken);
@@ -272,12 +271,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleScope">The scope of the role assignment to create.</param>
         /// <param name="roleDefinitionId">The role definition ID used in the role assignment.</param>
         /// <param name="principalId">The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group.</param>
-        /// <param name="name">Optional name used to create the role assignment. A new <see cref="Guid"/> will be generated if not specified.</param>
+        /// <param name="roleAssignmentName">Optional name used to create the role assignment. A new <see cref="Guid"/> will be generated if not specified.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is empty.</exception>
-        public virtual async Task<Response<KeyVaultRoleAssignment>> CreateRoleAssignmentAsync(KeyVaultRoleScope roleScope, string roleDefinitionId, string principalId, Guid? name = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultRoleAssignment>> CreateRoleAssignmentAsync(KeyVaultRoleScope roleScope, string roleDefinitionId, string principalId, Guid? roleAssignmentName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNullOrEmpty(principalId, nameof(principalId));
@@ -286,7 +285,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                var _name = (name ?? Guid.NewGuid()).ToString();
+                var _name = (roleAssignmentName ?? Guid.NewGuid()).ToString();
                 var properties = new KeyVaultRoleAssignmentProperties(roleDefinitionId, principalId);
 
                 return await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken)

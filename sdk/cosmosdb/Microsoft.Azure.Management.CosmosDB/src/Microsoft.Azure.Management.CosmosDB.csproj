@@ -6,12 +6,18 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.CosmosDB</PackageId>
     <Description>Provides developers with libraries for the CosmosDB under Azure Resource manager to manage CosmosDB Account, Databases and child resources and their available management capabilities. Create, Delete, Update CosmosDB Account, Databases and child resources. Note: This client library is for CosmosDB under Azure Resource Manager.</Description>
-    <Version>1.3.2-preview</Version>
+    <Version>1.4.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.CosmosDB</AssemblyName>
     <PackageTags>management;cosmosdb;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Adding a fix for long running operations returning Unauthorized.
+        Adding new APIs for Point in Time Restore feature
+          Adding ApiType and RestorableLocations information in the response of the existing Restorable Database Account APIs
+          Introducing new Restorable APIs for SQL and MongoDB for the following:
+            - Get a list of all databases for a given SQL or MongoDB account
+            - Get a list of all collections/containers for a specific database
+            - Get a list of database/collection resources for a given region and timestamp
+          We provide these new APIs to help user find the corresponding events and timestamp before they perform the restore.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

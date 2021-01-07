@@ -193,7 +193,6 @@ namespace Azure.Storage.Sas
         /// </summary>
         public string ContentType => _contentType ?? string.Empty;
 
-
         /// <summary>
         /// Gets the Authorized AAD Object Id associated with the shared access signature.
         /// The AAD Object ID of a user authorized by the owner of the User Delegation Key

@@ -2,9 +2,11 @@
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents.  It includes the following capabilities:
 
 - Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
-- Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
-- Recognize Receipts - Recognize and extract common fields from receipts, using a pre-trained receipt model.
-- Recognize Business Card - Recognize and extract common fields from business cards, using a pre-trained business cards model.
+- Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in form documents, without the need to train a model.
+- Recognize Prebuilt models - Recognize data using the following prebuilt models:
+  - Receipts - Recognize and extract common fields from receipts, using a pre-trained receipt model.
+  - Business Cards - Recognize and extract common fields from business cards, using a pre-trained business cards model.
+  - Invoices - Recognize and extract common fields from invoices, using a pre-trained invoice model.
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
@@ -14,10 +16,8 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.FormRecognizer --version 3.0.0
+dotnet add package Azure.AI.FormRecognizer
 ``` 
-
-**Note:** This package version targets Azure Form Recognizer service API version v2.0.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -36,7 +36,7 @@ You can create either resource using:
 Below is an example of how you can create a Form Recognizer resource using the CLI:
 
 ```PowerShell
-# Create a new resource group to hold the form recognizer resource -
+# Create a new resource group to hold the form recognizer resource
 # if using an existing resource group, skip this step
 az group create --name <your-resource-name> --location <location>
 ```
@@ -101,10 +101,12 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 
 `FormRecognizerClient` provides operations for:
 
- - Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects. See example [Recognize Custom Forms](#recognize-custom-forms).
- - Recognizing form content, including tables, lines, words, and selection marks like radio buttons and check boxes without the need to train a model.  Form content is returned in a collection of `FormPage` objects. See example [Recognize Content](#recognize-content).
- - Recognizing common fields from receipts, using a pre-trained receipt model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizedForm` objects. See example [Recognize Receipts](#recognize-receipts).
-- Recognizing common fields from business cards, using a pre-trained business cards model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizedForm` objects. See example [Recognize Business Cards](#recognize-business-cards).
+- Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects. See example [Recognize Custom Forms](#recognize-custom-forms).
+- Recognizing form content, including tables, lines, words, and selection marks like radio buttons and check boxes without the need to train a model.  Form content is returned in a collection of `FormPage` objects. See example [Recognize Content](#recognize-content).
+- Recognizing common fields from the following form types using prebuilt models. These fields and meta-data are returned in a collection of `RecognizedForm` objects.
+  - Sales receipts. See example [Recognize Receipts](#recognize-receipts).
+  - Business cards. See example [Recognize Business Cards](#recognize-business-cards).
+  - Invoices. See example [Recognize Invoices](#recognize-invoices).
 
 ### FormTrainingClient
 
@@ -114,7 +116,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 - Training custom models to recognize specific fields and values you specify by labeling your custom forms.  A `CustomFormModel` is returned indicating the fields the model will extract, as well as the estimated accuracy for each field.
 - Managing models created in your account.
 - Copying a custom model from one Form Recognizer resource to another.
-- Creating a composed model from a collection of existing trained models with labels.
+- Creating a composed model from a collection of existing models trained with labels.
 
 See examples for [Train a Model](#train-a-model) and [Manage Custom Models](#manage-custom-models).
 
@@ -134,6 +136,7 @@ The following section provides several code snippets illustrating common pattern
 * [Recognize Custom Forms](#recognize-custom-forms)
 * [Recognize Receipts](#recognize-receipts)
 * [Recognize Business Cards](#recognize-business-cards)
+* [Recognize Invoices](#recognize-invoices)
 * [Train a Model](#train-a-model)
 * [Manage Custom Models](#manage-custom-models)
 
@@ -144,7 +147,11 @@ The following section provides several code snippets illustrating common pattern
 Recognize text, tables, and selection marks like radio buttons and check boxes data, along with their bounding box coordinates, from documents.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
-FormPageCollection formPages = await client.StartRecognizeContentFromUriAsync(invoiceUri).WaitForCompletionAsync();
+Uri formUri = <formUri>;
+
+Response<FormPageCollection> response = await client.StartRecognizeContentFromUriAsync(formUri).WaitForCompletionAsync();
+FormPageCollection formPages = response.Value;
+
 foreach (FormPage page in formPages)
 {
     Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
@@ -152,13 +159,19 @@ foreach (FormPage page in formPages)
     for (int i = 0; i < page.Lines.Count; i++)
     {
         FormLine line = page.Lines[i];
-        Console.WriteLine($"    Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
+        Console.WriteLine($"  Line {i} has {line.Words.Count} {(line.Words.Count == 1 ? "word" : "words")}, and text: '{line.Text}'.");
+
+        Console.WriteLine("    Its bounding box is:");
+        Console.WriteLine($"    Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
+        Console.WriteLine($"    Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
+        Console.WriteLine($"    Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
+        Console.WriteLine($"    Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
     }
 
     for (int i = 0; i < page.Tables.Count; i++)
     {
         FormTable table = page.Tables[i];
-        Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+        Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
         foreach (FormTableCell cell in table.Cells)
         {
             Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
@@ -168,23 +181,28 @@ foreach (FormPage page in formPages)
     for (int i = 0; i < page.SelectionMarks.Count; i++)
     {
         FormSelectionMark selectionMark = page.SelectionMarks[i];
-        Console.WriteLine($"Selection Mark {i} is {selectionMark.State.ToString()}.");
-        Console.WriteLine("        Its bounding box is:");
-        Console.WriteLine($"        Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
-        Console.WriteLine($"        Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
-        Console.WriteLine($"        Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
-        Console.WriteLine($"        Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+        Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
+        Console.WriteLine("    Its bounding box is:");
+        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
+        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
+        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
+        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
     }
 }
 ```
+For more information and samples see [here][recognize_content].
 
 ### Recognize Custom Forms
 Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
 
 ```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 string modelId = "<modelId>";
+Uri formUri = <formUri>;
 
-RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri).WaitForCompletionAsync();
+RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri);
+Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+RecognizedFormCollection forms = operationResponse.Value;
+
 foreach (RecognizedForm form in forms)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
@@ -193,180 +211,227 @@ foreach (RecognizedForm form in forms)
     Console.WriteLine($"Form was analyzed with model with ID: {form.ModelId}");
     foreach (FormField field in form.Fields.Values)
     {
-        Console.WriteLine($"Field '{field.Name}: ");
+        Console.WriteLine($"Field '{field.Name}': ");
 
         if (field.LabelData != null)
         {
-            Console.WriteLine($"    Label: '{field.LabelData.Text}");
+            Console.WriteLine($"  Label: '{field.LabelData.Text}'");
         }
 
-        Console.WriteLine($"    Value: '{field.ValueData.Text}");
-        Console.WriteLine($"    Confidence: '{field.Confidence}");
+        Console.WriteLine($"  Value: '{field.ValueData.Text}'");
+        Console.WriteLine($"  Confidence: '{field.Confidence}'");
     }
 }
 ```
+For more information and samples see [here][recognize_custom_forms].
 
 ### Recognize Receipts
 Recognize data from sales receipts using a prebuilt model. Receipt fields recognized by the service can be found [here][service_recognize_receipt_fields].
 
 ```C# Snippet:FormRecognizerSampleRecognizeReceiptFileStream
-using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
+string receiptPath = "<receiptPath>";
+
+using var stream = new FileStream(receiptPath, FileMode.Open);
+var options = new RecognizeReceiptsOptions() { Locale = "en-US" };
+
+RecognizeReceiptsOperation operation = await client.StartRecognizeReceiptsAsync(stream, options);
+Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+RecognizedFormCollection receipts = operationResponse.Value;
+
+// To see the list of the supported fields returned by service and its corresponding types, consult:
+// https://aka.ms/formrecognizer/receiptfields
+
+foreach (RecognizedForm receipt in receipts)
 {
-    var options = new RecognizeReceiptsOptions() { Locale = "en-US" };
-    RecognizedFormCollection receipts = await client.StartRecognizeReceiptsAsync(stream, options).WaitForCompletionAsync();
-
-    // To see the list of the supported fields returned by service and its corresponding types, consult:
-    // https://aka.ms/formrecognizer/receiptfields
-
-    foreach (RecognizedForm receipt in receipts)
+    if (receipt.Fields.TryGetValue("MerchantName", out FormField merchantNameField))
     {
-        FormField merchantNameField;
-        if (receipt.Fields.TryGetValue("MerchantName", out merchantNameField))
+        if (merchantNameField.Value.ValueType == FieldValueType.String)
         {
-            if (merchantNameField.Value.ValueType == FieldValueType.String)
-            {
-                string merchantName = merchantNameField.Value.AsString();
+            string merchantName = merchantNameField.Value.AsString();
 
-                Console.WriteLine($"Merchant Name: '{merchantName}', with confidence {merchantNameField.Confidence}");
-            }
+            Console.WriteLine($"Merchant Name: '{merchantName}', with confidence {merchantNameField.Confidence}");
         }
+    }
 
-        FormField transactionDateField;
-        if (receipt.Fields.TryGetValue("TransactionDate", out transactionDateField))
+    if (receipt.Fields.TryGetValue("TransactionDate", out FormField transactionDateField))
+    {
+        if (transactionDateField.Value.ValueType == FieldValueType.Date)
         {
-            if (transactionDateField.Value.ValueType == FieldValueType.Date)
-            {
-                DateTime transactionDate = transactionDateField.Value.AsDate();
+            DateTime transactionDate = transactionDateField.Value.AsDate();
 
-                Console.WriteLine($"Transaction Date: '{transactionDate}', with confidence {transactionDateField.Confidence}");
-            }
+            Console.WriteLine($"Transaction Date: '{transactionDate}', with confidence {transactionDateField.Confidence}");
         }
+    }
 
-        FormField itemsField;
-        if (receipt.Fields.TryGetValue("Items", out itemsField))
+    if (receipt.Fields.TryGetValue("Items", out FormField itemsField))
+    {
+        if (itemsField.Value.ValueType == FieldValueType.List)
         {
-            if (itemsField.Value.ValueType == FieldValueType.List)
+            foreach (FormField itemField in itemsField.Value.AsList())
             {
-                foreach (FormField itemField in itemsField.Value.AsList())
+                Console.WriteLine("Item:");
+
+                if (itemField.Value.ValueType == FieldValueType.Dictionary)
                 {
-                    Console.WriteLine("Item:");
+                    IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
 
-                    if (itemField.Value.ValueType == FieldValueType.Dictionary)
+                    if (itemFields.TryGetValue("Name", out FormField itemNameField))
                     {
-                        IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
-
-                        FormField itemNameField;
-                        if (itemFields.TryGetValue("Name", out itemNameField))
+                        if (itemNameField.Value.ValueType == FieldValueType.String)
                         {
-                            if (itemNameField.Value.ValueType == FieldValueType.String)
-                            {
-                                string itemName = itemNameField.Value.AsString();
+                            string itemName = itemNameField.Value.AsString();
 
-                                Console.WriteLine($"    Name: '{itemName}', with confidence {itemNameField.Confidence}");
-                            }
+                            Console.WriteLine($"  Name: '{itemName}', with confidence {itemNameField.Confidence}");
                         }
+                    }
 
-                        FormField itemTotalPriceField;
-                        if (itemFields.TryGetValue("TotalPrice", out itemTotalPriceField))
+                    if (itemFields.TryGetValue("TotalPrice", out FormField itemTotalPriceField))
+                    {
+                        if (itemTotalPriceField.Value.ValueType == FieldValueType.Float)
                         {
-                            if (itemTotalPriceField.Value.ValueType == FieldValueType.Float)
-                            {
-                                float itemTotalPrice = itemTotalPriceField.Value.AsFloat();
+                            float itemTotalPrice = itemTotalPriceField.Value.AsFloat();
 
-                                Console.WriteLine($"    Total Price: '{itemTotalPrice}', with confidence {itemTotalPriceField.Confidence}");
-                            }
+                            Console.WriteLine($"  Total Price: '{itemTotalPrice}', with confidence {itemTotalPriceField.Confidence}");
                         }
                     }
                 }
             }
         }
+    }
 
-        FormField totalField;
-        if (receipt.Fields.TryGetValue("Total", out totalField))
+    if (receipt.Fields.TryGetValue("Total", out FormField totalField))
+    {
+        if (totalField.Value.ValueType == FieldValueType.Float)
         {
-            if (totalField.Value.ValueType == FieldValueType.Float)
-            {
-                float total = totalField.Value.AsFloat();
+            float total = totalField.Value.AsFloat();
 
-                Console.WriteLine($"Total: '{total}', with confidence '{totalField.Confidence}'");
-            }
+            Console.WriteLine($"Total: '{total}', with confidence '{totalField.Confidence}'");
         }
     }
 }
 ```
+For more information and samples see [here][recognize_receipts].
 
 ### Recognize Business Cards
 Recognize data from business cards using a prebuilt model. Business card fields recognized by the service can be found [here][service_recognize_business_cards_fields].
 
 ```C# Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
-using (FileStream stream = new FileStream(busienssCardsPath, FileMode.Open))
+string businessCardsPath = "<businessCardsPath>";
+
+using var stream = new FileStream(businessCardsPath, FileMode.Open);
+var options = new RecognizeBusinessCardsOptions() { Locale = "en-US" };
+
+RecognizeBusinessCardsOperation operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
+Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+RecognizedFormCollection businessCards = operationResponse.Value;
+
+// To see the list of the supported fields returned by service and its corresponding types, consult:
+// https://aka.ms/formrecognizer/businesscardfields
+
+foreach (RecognizedForm businessCard in businessCards)
 {
-    var options = new RecognizeBusinessCardsOptions() { Locale = "en-US" };
-    RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsAsync(stream, options).WaitForCompletionAsync();
-
-    // To see the list of the supported fields returned by service and its corresponding types, consult:
-    // https://aka.ms/formrecognizer/businesscardfields
-
-    foreach (RecognizedForm businessCard in businessCards)
+    if (businessCard.Fields.TryGetValue("ContactNames", out FormField contactNamesField))
     {
-        FormField ContactNamesField;
-        if (businessCard.Fields.TryGetValue("ContactNames", out ContactNamesField))
+        if (contactNamesField.Value.ValueType == FieldValueType.List)
         {
-            if (ContactNamesField.Value.ValueType == FieldValueType.List)
+            foreach (FormField contactNameField in contactNamesField.Value.AsList())
             {
-                foreach (FormField contactNameField in ContactNamesField.Value.AsList())
+                Console.WriteLine($"Contact Name: {contactNameField.ValueData.Text}");
+
+                if (contactNameField.Value.ValueType == FieldValueType.Dictionary)
                 {
-                    Console.WriteLine($"Contact Name: {contactNameField.ValueData.Text}");
+                    IReadOnlyDictionary<string, FormField> contactNameFields = contactNameField.Value.AsDictionary();
 
-                    if (contactNameField.Value.ValueType == FieldValueType.Dictionary)
+                    if (contactNameFields.TryGetValue("FirstName", out FormField firstNameField))
                     {
-                        IReadOnlyDictionary<string, FormField> contactNameFields = contactNameField.Value.AsDictionary();
-
-                        FormField firstNameField;
-                        if (contactNameFields.TryGetValue("FirstName", out firstNameField))
+                        if (firstNameField.Value.ValueType == FieldValueType.String)
                         {
-                            if (firstNameField.Value.ValueType == FieldValueType.String)
-                            {
-                                string firstName = firstNameField.Value.AsString();
+                            string firstName = firstNameField.Value.AsString();
 
-                                Console.WriteLine($"    First Name: '{firstName}', with confidence {firstNameField.Confidence}");
-                            }
+                            Console.WriteLine($"  First Name: '{firstName}', with confidence {firstNameField.Confidence}");
                         }
+                    }
 
-                        FormField lastNameField;
-                        if (contactNameFields.TryGetValue("LastName", out lastNameField))
+                    if (contactNameFields.TryGetValue("LastName", out FormField lastNameField))
+                    {
+                        if (lastNameField.Value.ValueType == FieldValueType.String)
                         {
-                            if (lastNameField.Value.ValueType == FieldValueType.String)
-                            {
-                                string lastName = lastNameField.Value.AsString();
+                            string lastName = lastNameField.Value.AsString();
 
-                                Console.WriteLine($"    Last Name: '{lastName}', with confidence {lastNameField.Confidence}");
-                            }
+                            Console.WriteLine($"  Last Name: '{lastName}', with confidence {lastNameField.Confidence}");
                         }
                     }
                 }
             }
         }
+    }
 
-        FormField emailFields;
-        if (businessCard.Fields.TryGetValue("Emails", out emailFields))
+    if (businessCard.Fields.TryGetValue("Emails", out FormField emailFields))
+    {
+        if (emailFields.Value.ValueType == FieldValueType.List)
         {
-            if (emailFields.Value.ValueType == FieldValueType.List)
+            foreach (FormField emailField in emailFields.Value.AsList())
             {
-                foreach (FormField emailField in emailFields.Value.AsList())
+                if (emailField.Value.ValueType == FieldValueType.String)
                 {
-                    if (emailField.Value.ValueType == FieldValueType.String)
-                    {
-                        string email = emailField.Value.AsString();
+                    string email = emailField.Value.AsString();
 
-                        Console.WriteLine($"  Email: '{email}', with confidence {emailField.Confidence}");
-                    }
+                    Console.WriteLine($"Email: '{email}', with confidence {emailField.Confidence}");
                 }
             }
         }
     }
 }
 ```
+For more information and samples see [here][recognize_business_cards].
+
+### Recognize Invoices
+Recognize data from invoices using a prebuilt model. Invoices fields recognized by the service can be found [here][service_recognize_invoices_fields].
+
+```C# Snippet:FormRecognizerSampleRecognizeInvoicesFileStream
+string invoicePath = "<invoicePath>";
+
+using var stream = new FileStream(invoicePath, FileMode.Open);
+var options = new RecognizeInvoicesOptions() { Locale = "en-US" };
+
+RecognizeInvoicesOperation operation = await client.StartRecognizeInvoicesAsync(stream, options);
+Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+RecognizedFormCollection invoices = operationResponse.Value;
+
+// To see the list of the supported fields returned by service and its corresponding types, consult:
+// https://aka.ms/formrecognizer/invoicefields
+
+RecognizedForm invoice = invoices.Single();
+
+if (invoice.Fields.TryGetValue("VendorName", out FormField vendorNameField))
+{
+    if (vendorNameField.Value.ValueType == FieldValueType.String)
+    {
+        string vendorName = vendorNameField.Value.AsString();
+        Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
+    }
+}
+
+if (invoice.Fields.TryGetValue("CustomerName", out FormField customerNameField))
+{
+    if (customerNameField.Value.ValueType == FieldValueType.String)
+    {
+        string customerName = customerNameField.Value.AsString();
+        Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
+    }
+}
+
+if (invoice.Fields.TryGetValue("InvoiceTotal", out FormField invoiceTotalField))
+{
+    if (invoiceTotalField.Value.ValueType == FieldValueType.Float)
+    {
+        float invoiceTotal = invoiceTotalField.Value.AsFloat();
+        Console.WriteLine($"Invoice Total: '{invoiceTotal}', with confidence {invoiceTotalField.Confidence}");
+    }
+}
+```
+For more information and samples see [here][recognize_invoices].
+
 
 ### Train a Model
 Train a machine-learned model on your own form types. The resulting model will be able to recognize values from the types of forms it was trained on.
@@ -377,23 +442,27 @@ Train a machine-learned model on your own form types. The resulting model will b
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
+Uri trainingFileUri = <trainingFileUri>;
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My Model").WaitForCompletionAsync();
+
+TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My Model");
+Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+CustomFormModel model = operationResponse.Value;
 
 Console.WriteLine($"Custom Model Info:");
-Console.WriteLine($"    Model Id: {model.ModelId}");
-Console.WriteLine($"    Model name: {model.ModelName}");
-Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Is composed model: {model.Properties.IsComposedModel}");
-Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
-Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
+Console.WriteLine($"  Model Id: {model.ModelId}");
+Console.WriteLine($"  Model name: {model.ModelName}");
+Console.WriteLine($"  Model Status: {model.Status}");
+Console.WriteLine($"  Is composed model: {model.Properties.IsComposedModel}");
+Console.WriteLine($"  Training model started on: {model.TrainingStartedOn}");
+Console.WriteLine($"  Training model completed on: {model.TrainingCompletedOn}");
 
 foreach (CustomFormSubmodel submodel in model.Submodels)
 {
     Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
     foreach (CustomFormModelField field in submodel.Fields.Values)
     {
-        Console.Write($"    FieldName: {field.Name}");
+        Console.Write($"  FieldName: {field.Name}");
         if (field.Label != null)
         {
             Console.Write($", FieldLabel: {field.Label}");
@@ -402,6 +471,7 @@ foreach (CustomFormSubmodel submodel in model.Submodels)
     }
 }
 ```
+For more information and samples see [here][train_a_model].
 
 ### Manage Custom Models
 Manage the custom models stored in your account.
@@ -420,16 +490,19 @@ AsyncPageable<CustomFormModelInfo> models = client.GetCustomModelsAsync();
 await foreach (CustomFormModelInfo modelInfo in models)
 {
     Console.WriteLine($"Custom Model Info:");
-    Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-    Console.WriteLine($"    Model name: {modelInfo.ModelName}");
-    Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
-    Console.WriteLine($"    Model Status: {modelInfo.Status}");
-    Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
-    Console.WriteLine($"    Training model completed on: : {modelInfo.TrainingCompletedOn}");
+    Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
+    Console.WriteLine($"  Model name: {modelInfo.ModelName}");
+    Console.WriteLine($"  Is composed model: {modelInfo.Properties.IsComposedModel}");
+    Console.WriteLine($"  Model Status: {modelInfo.Status}");
+    Console.WriteLine($"  Training model started on: {modelInfo.TrainingStartedOn}");
+    Console.WriteLine($"  Training model completed on: : {modelInfo.TrainingCompletedOn}");
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My new model").WaitForCompletionAsync();
+Uri trainingFileUri = <trainingFileUri>;
+TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My new model");
+Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+CustomFormModel model = operationResponse.Value;
 
 // Get the model that was just created
 CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
@@ -441,7 +514,7 @@ foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
     Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
     foreach (CustomFormModelField field in submodel.Fields.Values)
     {
-        Console.Write($"    FieldName: {field.Name}");
+        Console.Write($"  FieldName: {field.Name}");
         if (field.Label != null)
         {
             Console.Write($", FieldLabel: {field.Label}");
@@ -453,6 +526,7 @@ foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 // Delete the model from the account.
 await client.DeleteModelAsync(model.ModelId);
 ```
+For more information and samples see [here][manage_custom_models].
 
 ### Manage Custom Models Synchronously
 Manage the custom models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` for training, since this method does not have a synchronous counterpart. For more information on long-running operations, see [Long-Running Operations](#long-running-operations).
@@ -471,16 +545,20 @@ Pageable<CustomFormModelInfo> models = client.GetCustomModels();
 foreach (CustomFormModelInfo modelInfo in models.Take(10))
 {
     Console.WriteLine($"Custom Model Info:");
-    Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-    Console.WriteLine($"    Model name: {modelInfo.ModelName}");
-    Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
-    Console.WriteLine($"    Model Status: {modelInfo.Status}");
-    Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
-    Console.WriteLine($"    Training model completed on: {modelInfo.TrainingCompletedOn}");
+    Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
+    Console.WriteLine($"  Model name: {modelInfo.ModelName}");
+    Console.WriteLine($"  Is composed model: {modelInfo.Properties.IsComposedModel}");
+    Console.WriteLine($"  Model Status: {modelInfo.Status}");
+    Console.WriteLine($"  Training model started on: {modelInfo.TrainingStartedOn}");
+    Console.WriteLine($"  Training model completed on: {modelInfo.TrainingCompletedOn}");
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false, "My new model").WaitForCompletionAsync();
+
+Uri trainingFileUri = <trainingFileUri>;
+TrainingOperation operation = client.StartTraining(trainingFileUri, useTrainingLabels: false, "My new model");
+Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+CustomFormModel model = operationResponse.Value;
 
 // Get the model that was just created
 CustomFormModel modelCopy = client.GetCustomModel(model.ModelId);
@@ -492,7 +570,7 @@ foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
     Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
     foreach (CustomFormModelField field in submodel.Fields.Values)
     {
-        Console.Write($"    FieldName: {field.Name}");
+        Console.Write($"  FieldName: {field.Name}");
         if (field.Label != null)
         {
             Console.Write($", FieldLabel: {field.Label}");
@@ -562,6 +640,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Recognize custom forms][recognize_custom_forms]
 - [Recognize receipts][recognize_receipts]
 - [Recognize business cards][recognize_business_cards]
+- [Recognize invoices][recognize_invoices]
 - [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]
@@ -602,6 +681,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 [service_recognize_receipt_fields]: https://aka.ms/formrecognizer/receiptfields
 [service_recognize_business_cards_fields]: https://aka.ms/formrecognizer/businesscardfields
+[service_recognize_invoices_fields]: https://aka.ms/formrecognizer/invoicefields
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/samples/Diagnostics.md
@@ -610,6 +690,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [recognize_custom_forms]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample2_RecognizeCustomForms.md
 [recognize_receipts]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample3_RecognizeReceipts.md
 [recognize_business_cards]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample9_RecognizeBusinessCards.md
+[recognize_invoices]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample10_RecognizeInvoices.md
 [train_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample5_TrainModel.md
 [manage_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample6_ManageCustomModels.md
 [copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample7_CopyCustomModel.md

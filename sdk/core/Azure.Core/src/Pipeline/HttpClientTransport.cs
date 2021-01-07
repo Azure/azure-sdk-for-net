@@ -58,33 +58,64 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
+#if NET5_0
+            ProcessAsync(message, false).EnsureCompleted();
+#else
             // Intentionally blocking here
-            ProcessAsync(message).GetAwaiter().GetResult();
+            ProcessAsync(message).AsTask().GetAwaiter().GetResult();
+#endif
         }
 
         /// <inheritdoc />
         public sealed override async ValueTask ProcessAsync(HttpMessage message)
         {
-            using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
+            await ProcessAsync(message, true).ConfigureAwait(false);
+        }
+
+#pragma warning disable CA1801 // async parameter unused on netstandard
+        private async Task ProcessAsync(HttpMessage message, bool async)
+#pragma warning restore CA1801
+        {
+            using HttpRequestMessage httpRequest = BuildRequestMessage(message);
+            HttpResponseMessage responseMessage;
+            Stream? contentStream = null;
+            try
             {
-                HttpResponseMessage responseMessage;
-                Stream? contentStream = null;
-                try
+#if NET5_0
+                if (!async)
+                {
+                    responseMessage = _client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
+                }
+                else
+#endif
                 {
                     responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
                         .ConfigureAwait(false);
-                    if (responseMessage.Content != null)
-                    {
-                        contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                    }
-                }
-                catch (HttpRequestException e)
-                {
-                    throw new RequestFailedException(e.Message, e);
                 }
 
-                message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
+                if (responseMessage.Content != null)
+                {
+#if NET5_0
+                    if (async)
+                    {
+                        contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
+                    }
+#else
+                    contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#endif
+
+                }
             }
+            catch (HttpRequestException e)
+            {
+                throw new RequestFailedException(e.Message, e);
+            }
+
+            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
         }
 
         private static HttpClient CreateDefaultClient()
@@ -125,7 +156,9 @@ namespace Azure.Core.Pipeline
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
-            return headers.TryGetValues(name, out values) || content?.Headers.TryGetValues(name, out values) == true;
+            return headers.TryGetValues(name, out values) ||
+                   content != null &&
+                   content.Headers.TryGetValues(name, out values);
         }
 
         internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent? content)
@@ -184,7 +217,7 @@ namespace Azure.Core.Pipeline
 
         private sealed class PipelineRequest : Request
         {
-            private bool _wasSent = false;
+            private bool _wasSent;
             private readonly HttpRequestMessage _requestMessage;
 
             private PipelineContentAdapter? _requestContent;
@@ -254,7 +287,6 @@ namespace Azure.Core.Pipeline
 
                 currentRequest.RequestUri = Uri.ToUri();
 
-
                 if (Content != null)
                 {
                     PipelineContentAdapter currentContent;
@@ -280,6 +312,7 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 Content?.Dispose();
+                _requestContent?.Dispose();
                 _requestMessage.Dispose();
             }
 
@@ -345,7 +378,7 @@ namespace Azure.Core.Pipeline
 
                 public CancellationToken CancellationToken { get; set; }
 
-                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
+                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
                 {
                     Debug.Assert(PipelineContent != null);
                     await PipelineContent!.WriteToAsync(stream, CancellationToken).ConfigureAwait(false);
@@ -357,6 +390,20 @@ namespace Azure.Core.Pipeline
 
                     return PipelineContent!.TryComputeLength(out length);
                 }
+
+#if NET5_0
+                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+                {
+                    Debug.Assert(PipelineContent != null);
+                    await PipelineContent!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+                }
+
+                protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+                {
+                    Debug.Assert(PipelineContent != null);
+                    PipelineContent.WriteTo(stream, cancellationToken);
+                }
+#endif
             }
         }
 
@@ -366,7 +413,9 @@ namespace Azure.Core.Pipeline
 
             private readonly HttpContent _responseContent;
 
+#pragma warning disable CA2213 // Content stream is intentionally not disposed
             private Stream? _contentStream;
+#pragma warning restore CA2213
 
             public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
             {
@@ -378,7 +427,7 @@ namespace Azure.Core.Pipeline
 
             public override int Status => (int)_responseMessage.StatusCode;
 
-            public override string ReasonPhrase => _responseMessage.ReasonPhrase;
+            public override string ReasonPhrase => _responseMessage.ReasonPhrase ?? string.Empty;
 
             public override Stream? ContentStream
             {

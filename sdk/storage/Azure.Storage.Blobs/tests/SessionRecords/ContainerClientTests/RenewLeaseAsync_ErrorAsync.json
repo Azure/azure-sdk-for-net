@@ -15,7 +15,7 @@
         "x-ms-lease-action": "release",
         "x-ms-lease-id": "8ff8f47a-1f55-344d-2de3-7d972ca3a7a2",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -30,7 +30,7 @@
         "x-ms-client-request-id": "917d7d70-eb5c-c4fd-5c26-b22af688b322",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "aa33b08a-001e-004b-324b-09b1f3000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",

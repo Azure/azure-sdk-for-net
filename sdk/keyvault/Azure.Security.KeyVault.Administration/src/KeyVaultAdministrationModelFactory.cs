@@ -77,13 +77,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of a <see cref="BackupResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="backupFolderUri">The location of the backup.</param>
+        /// <param name="folderUri">The location of the backup.</param>
         /// <param name="startTime">The start time of the backup operation.</param>
         /// <param name="endTime">The end time of the backup operation.</param>
         /// <returns>A new <see cref="BackupResult"/> instance.</returns>
-        public static BackupResult BackupResult(Uri backupFolderUri, DateTimeOffset startTime, DateTimeOffset endTime) =>
-            new BackupResult(backupFolderUri, startTime, endTime);
-
+        public static BackupResult BackupResult(Uri folderUri, DateTimeOffset startTime, DateTimeOffset endTime) =>
+            new BackupResult(folderUri, startTime, endTime);
 
         /// <summary>
         /// Initializes a new instance of a <see cref="RestoreResult"/> for mocking purposes.
@@ -92,6 +91,15 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="endTime">The end time of the restore operation.</param>
         /// <returns>A new <see cref="BackupResult"/> instance.</returns>
         public static RestoreResult RestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
+            new RestoreResult(startTime, endTime);
+
+        /// <summary>
+        /// Initializes a new instance of a <see cref="SelectiveKeyRestoreResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="startTime">The start time of the restore operation.</param>
+        /// <param name="endTime">The end time of the restore operation.</param>
+        /// <returns>A new <see cref="BackupResult"/> instance.</returns>
+        public static RestoreResult SelectiveKeyRestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
             new RestoreResult(startTime, endTime);
     }
 }

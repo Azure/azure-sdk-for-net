@@ -7,12 +7,12 @@ namespace Azure.Communication.Administration.Tests
 {
     public class CommunicationIdentityClientTestEnvironment: TestEnvironment
     {
-        public CommunicationIdentityClientTestEnvironment() : base("communication")
-        {
-        }
-
         internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
 
         public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
+
+        internal const string EndpointStringEnvironmentVariableName = "COMMUNICATION_ENDPOINT_STRING";
+
+        public string EndpointString => GetRecordedVariable(EndpointStringEnvironmentVariableName);
     }
 }
