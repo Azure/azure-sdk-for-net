@@ -1,0 +1,195 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/dataFeeds/9860df01-e740-40ec-94a2-6351813552ba/ingestionStatus/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "69",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210106.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "72be21812f91031a3516279fe75e2cc3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "startTime": "2020-10-01T00:00:00Z",
+        "endTime": "2020-10-31T00:00:00Z"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "60f9a1df-99a3-433a-93bc-3a986605315d",
+        "Content-Length": "2158",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 07 Jan 2021 20:34:13 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "308",
+        "x-request-id": "60f9a1df-99a3-433a-93bc-3a986605315d"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "timestamp": "2020-10-30T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-29T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-28T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-27T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-26T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-25T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-24T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-23T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-22T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-21T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-20T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-19T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-18T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-17T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-16T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-15T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-14T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-13T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-12T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-11T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-10T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-09T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-08T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-07T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-06T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-05T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-04T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-03T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-02T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          },
+          {
+            "timestamp": "2020-10-01T00:00:00Z",
+            "status": "Succeeded",
+            "message": ""
+          }
+        ],
+        "@nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "1492286745"
+  }
+}
