@@ -20,8 +20,9 @@ namespace Microsoft.Azure.Search.Models
     /// Construct bigrams for frequently occurring terms while indexing. Single
     /// terms are still indexed too, with bigrams overlaid. This token filter
     /// is implemented using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/commongrams/CommonGramsFilter.html">
-    /// CommonGramsFilter (Lucene API)</see>.
+    /// <see
+    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/commongrams/CommonGramsFilter.html"
+    /// />
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.CommonGramTokenFilter")]
     public partial class CommonGramTokenFilter : TokenFilter

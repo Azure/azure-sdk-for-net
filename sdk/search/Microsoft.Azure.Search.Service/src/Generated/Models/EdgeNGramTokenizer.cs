@@ -19,8 +19,9 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Tokenizes the input from an edge into n-grams of the given size(s).
     /// This tokenizer is implemented using Apache Lucene.
-    /// <see href="https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenizer.html">
-    /// EdgeNGramTokenizer (Lucene API)</see>.
+    /// <see
+    /// href="https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenizer.html"
+    /// />
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.EdgeNGramTokenizer")]
     public partial class EdgeNGramTokenizer : Tokenizer

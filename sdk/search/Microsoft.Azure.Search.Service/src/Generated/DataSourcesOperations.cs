@@ -52,8 +52,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Creates a new datasource or updates a datasource if it already exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source">
-        /// Update Data Source</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source" />
         /// </summary>
         /// <param name='dataSourceName'>
         /// The name of the datasource to create or update.

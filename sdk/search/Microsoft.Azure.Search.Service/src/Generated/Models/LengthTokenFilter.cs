@@ -17,8 +17,9 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Removes words that are too long or too short. This token filter is
     /// implemented using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/LengthFilter.html">
-    /// LengthFilter (Lucene API)</see>.
+    /// <see
+    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/LengthFilter.html"
+    /// />
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.LengthTokenFilter")]
     public partial class LengthTokenFilter : TokenFilter

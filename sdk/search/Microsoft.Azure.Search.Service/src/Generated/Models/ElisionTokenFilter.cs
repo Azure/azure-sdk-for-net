@@ -19,8 +19,9 @@ namespace Microsoft.Azure.Search.Models
     /// Removes elisions. For example, "l'avion" (the plane) will be converted
     /// to "avion" (plane). This token filter is implemented using Apache
     /// Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html">
-    /// ElisionFilter (Lucene API)</see>.
+    /// <see
+    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html"
+    /// />
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.ElisionTokenFilter")]
     public partial class ElisionTokenFilter : TokenFilter

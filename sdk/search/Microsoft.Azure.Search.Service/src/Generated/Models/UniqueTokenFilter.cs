@@ -16,8 +16,9 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Filters out tokens with same text as the previous token. This token
     /// filter is implemented using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/RemoveDuplicatesTokenFilter.html">
-    /// RemoveDuplicatesTokenFilter (Lucene API)</see>
+    /// <see
+    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/RemoveDuplicatesTokenFilter.html"
+    /// />
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.UniqueTokenFilter")]
     public partial class UniqueTokenFilter : TokenFilter

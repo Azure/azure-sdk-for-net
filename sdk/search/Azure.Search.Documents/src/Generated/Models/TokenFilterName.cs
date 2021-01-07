@@ -57,71 +57,71 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string UppercaseValue = "uppercase";
         private const string WordDelimiterValue = "word_delimiter";
 
-        /// <summary> A token filter that applies the Arabic normalizer to normalize the orthography. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ar/ArabicNormalizationFilter.html">ArabicNormalizationFilter (Lucene API)</see>. </summary>
+        /// <summary> A token filter that applies the Arabic normalizer to normalize the orthography. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ar/ArabicNormalizationFilter.html. </summary>
         public static TokenFilterName ArabicNormalization { get; } = new TokenFilterName(ArabicNormalizationValue);
-        /// <summary> Strips all characters after an apostrophe (including the apostrophe itself). See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/tr/ApostropheFilter.html">ApostropheFilter (Lucene API)</see>.. </summary>
+        /// <summary> Strips all characters after an apostrophe (including the apostrophe itself). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/tr/ApostropheFilter.html. </summary>
         public static TokenFilterName Apostrophe { get; } = new TokenFilterName(ApostropheValue);
-        /// <summary> Converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127 ASCII characters (the &quot;Basic Latin&quot; Unicode block) into their ASCII equivalents, if such equivalents exist. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html">ASCIIFoldingFilter (Lucene API)</see>. </summary>
+        /// <summary> Converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127 ASCII characters (the &quot;Basic Latin&quot; Unicode block) into their ASCII equivalents, if such equivalents exist. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html. </summary>
         public static TokenFilterName AsciiFolding { get; } = new TokenFilterName(AsciiFoldingValue);
-        /// <summary> Forms bigrams of CJK terms that are generated from the standard tokenizer. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKBigramFilter.html">CJKBigramFilter (Lucene API)</see>. </summary>
+        /// <summary> Forms bigrams of CJK terms that are generated from the standard tokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKBigramFilter.html. </summary>
         public static TokenFilterName CjkBigram { get; } = new TokenFilterName(CjkBigramValue);
-        /// <summary> Normalizes CJK width differences. Folds fullwidth ASCII variants into the equivalent basic Latin, and half-width Katakana variants into the equivalent Kana. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKWidthFilter.html">CJKWidthFilter (Lucene API)</see>. </summary>
+        /// <summary> Normalizes CJK width differences. Folds fullwidth ASCII variants into the equivalent basic Latin, and half-width Katakana variants into the equivalent Kana. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKWidthFilter.html. </summary>
         public static TokenFilterName CjkWidth { get; } = new TokenFilterName(CjkWidthValue);
-        /// <summary> Removes English possessives, and dots from acronyms. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/ClassicFilter.html">ClassicFilter (Lucene API)</see>. </summary>
+        /// <summary> Removes English possessives, and dots from acronyms. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/ClassicFilter.html. </summary>
         public static TokenFilterName Classic { get; } = new TokenFilterName(ClassicValue);
-        /// <summary> Construct bigrams for frequently occurring terms while indexing. Single terms are still indexed too, with bigrams overlaid. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/commongrams/CommonGramsFilter.html">CommonGramsFilter (Lucene API)</see>. </summary>
+        /// <summary> Construct bigrams for frequently occurring terms while indexing. Single terms are still indexed too, with bigrams overlaid. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/commongrams/CommonGramsFilter.html. </summary>
         public static TokenFilterName CommonGram { get; } = new TokenFilterName(CommonGramValue);
-        /// <summary> Generates n-grams of the given size(s) starting from the front or the back of an input token. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenFilter.html">EdgeNGramTokenFilter (Lucene API)</see>. </summary>
+        /// <summary> Generates n-grams of the given size(s) starting from the front or the back of an input token. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenFilter.html. </summary>
         public static TokenFilterName EdgeNGram { get; } = new TokenFilterName(EdgeNGramValue);
-        /// <summary> Removes elisions. For example, &quot;l&apos;avion&quot; (the plane) will be converted to &quot;avion&quot; (plane). See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html">ElisionFilter (Lucene API)</see>. </summary>
+        /// <summary> Removes elisions. For example, &quot;l&apos;avion&quot; (the plane) will be converted to &quot;avion&quot; (plane). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html. </summary>
         public static TokenFilterName Elision { get; } = new TokenFilterName(ElisionValue);
-        /// <summary> Normalizes German characters according to the heuristics of the German2 snowball algorithm. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/de/GermanNormalizationFilter.html">GermanNormalizationFilter (Lucene API)</see>. </summary>
+        /// <summary> Normalizes German characters according to the heuristics of the German2 snowball algorithm. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/de/GermanNormalizationFilter.html. </summary>
         public static TokenFilterName GermanNormalization { get; } = new TokenFilterName(GermanNormalizationValue);
-        /// <summary> Normalizes text in Hindi to remove some differences in spelling variations. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/hi/HindiNormalizationFilter.html">HindiNormalizationFilter (Lucene API)</see>. </summary>
+        /// <summary> Normalizes text in Hindi to remove some differences in spelling variations. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/hi/HindiNormalizationFilter.html. </summary>
         public static TokenFilterName HindiNormalization { get; } = new TokenFilterName(HindiNormalizationValue);
-        /// <summary> Normalizes the Unicode representation of text in Indian languages. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/in/IndicNormalizationFilter.html">IndicNormalizationFilter (Lucene API)</see>. </summary>
+        /// <summary> Normalizes the Unicode representation of text in Indian languages. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/in/IndicNormalizationFilter.html. </summary>
         public static TokenFilterName IndicNormalization { get; } = new TokenFilterName(IndicNormalizationValue);
-        /// <summary> Emits each incoming token twice, once as keyword and once as non-keyword. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/KeywordRepeatFilter.html">KeywordRepeatFilter (Lucene API)</see>. </summary>
+        /// <summary> Emits each incoming token twice, once as keyword and once as non-keyword. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/KeywordRepeatFilter.html. </summary>
         public static TokenFilterName KeywordRepeat { get; } = new TokenFilterName(KeywordRepeatValue);
-        /// <summary> A high-performance kstem filter for English. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/en/KStemFilter.html">KStemFilter (Lucene API)</see>. </summary>
+        /// <summary> A high-performance kstem filter for English. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/en/KStemFilter.html. </summary>
         public static TokenFilterName KStem { get; } = new TokenFilterName(KStemValue);
-        /// <summary> Removes words that are too long or too short. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/LengthFilter.html">LengthFilter (Lucene API)</see>. </summary>
+        /// <summary> Removes words that are too long or too short. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/LengthFilter.html. </summary>
         public static TokenFilterName Length { get; } = new TokenFilterName(LengthValue);
-        /// <summary> Limits the number of tokens while indexing. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/LimitTokenCountFilter.html">LimitTokenCountFilter (Lucene API)</see>. </summary>
+        /// <summary> Limits the number of tokens while indexing. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/LimitTokenCountFilter.html. </summary>
         public static TokenFilterName Limit { get; } = new TokenFilterName(LimitValue);
-        /// <summary> Normalizes token text to lower case. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LowerCaseFilter.html">LowerCaseFilter (Lucene API)</see>. </summary>
+        /// <summary> Normalizes token text to lower case. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LowerCaseFilter.htm. </summary>
         public static TokenFilterName Lowercase { get; } = new TokenFilterName(LowercaseValue);
-        /// <summary> Generates n-grams of the given size(s). See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenFilter.html">NGramTokenFilter (Lucene API)</see>. </summary>
+        /// <summary> Generates n-grams of the given size(s). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenFilter.html. </summary>
         public static TokenFilterName NGram { get; } = new TokenFilterName(NGramValue);
-        /// <summary> Applies normalization for Persian. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/fa/PersianNormalizationFilter.html">PersianNormalizationFilter (Lucene API)</see>. </summary>
+        /// <summary> Applies normalization for Persian. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/fa/PersianNormalizationFilter.html. </summary>
         public static TokenFilterName PersianNormalization { get; } = new TokenFilterName(PersianNormalizationValue);
-        /// <summary> Create tokens for phonetic matches. See <see href="https://lucene.apache.org/core/4_10_3/analyzers-phonetic/org/apache/lucene/analysis/phonetic/package-tree.html">Hierarchy For Package org.apache.lucene.analysis.phonetic (Lucene API)</see>. </summary>
+        /// <summary> Create tokens for phonetic matches. See https://lucene.apache.org/core/4_10_3/analyzers-phonetic/org/apache/lucene/analysis/phonetic/package-tree.html. </summary>
         public static TokenFilterName Phonetic { get; } = new TokenFilterName(PhoneticValue);
-        /// <summary> Uses the Porter stemming algorithm to transform the token stream. See <see href="http://tartarus.org/~martin/PorterStemmer/">The Porter Stemming Algorithm</see>. </summary>
+        /// <summary> Uses the Porter stemming algorithm to transform the token stream. See http://tartarus.org/~martin/PorterStemmer. </summary>
         public static TokenFilterName PorterStem { get; } = new TokenFilterName(PorterStemValue);
-        /// <summary> Reverses the token string. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/reverse/ReverseStringFilter.html">ReverseStringFilter (Lucene API)</see>. </summary>
+        /// <summary> Reverses the token string. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/reverse/ReverseStringFilter.html. </summary>
         public static TokenFilterName Reverse { get; } = new TokenFilterName(ReverseValue);
-        /// <summary> Normalizes use of the interchangeable Scandinavian characters. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ScandinavianNormalizationFilter.html">ScandinavianNormalizationFilter (Lucene API)</see>. </summary>
+        /// <summary> Normalizes use of the interchangeable Scandinavian characters. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ScandinavianNormalizationFilter.html. </summary>
         public static TokenFilterName ScandinavianNormalization { get; } = new TokenFilterName(ScandinavianNormalizationValue);
-        /// <summary> Folds Scandinavian characters åÅäæÄÆ-&amp;gt;a and öÖøØ-&amp;gt;o. It also discriminates against use of double vowels aa, ae, ao, oe and oo, leaving just the first one. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ScandinavianFoldingFilter.html">ScandinavianFoldingFilter (Lucene API)</see>. </summary>
+        /// <summary> Folds Scandinavian characters åÅäæÄÆ-&amp;gt;a and öÖøØ-&amp;gt;o. It also discriminates against use of double vowels aa, ae, ao, oe and oo, leaving just the first one. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ScandinavianFoldingFilter.html. </summary>
         public static TokenFilterName ScandinavianFoldingNormalization { get; } = new TokenFilterName(ScandinavianFoldingNormalizationValue);
-        /// <summary> Creates combinations of tokens as a single token. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/shingle/ShingleFilter.html">ShingleFilter (Lucene API)</see>. </summary>
+        /// <summary> Creates combinations of tokens as a single token. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/shingle/ShingleFilter.html. </summary>
         public static TokenFilterName Shingle { get; } = new TokenFilterName(ShingleValue);
-        /// <summary> A filter that stems words using a Snowball-generated stemmer. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/snowball/SnowballFilter.html">SnowballFilter (Lucene API)</see>. </summary>
+        /// <summary> A filter that stems words using a Snowball-generated stemmer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/snowball/SnowballFilter.html. </summary>
         public static TokenFilterName Snowball { get; } = new TokenFilterName(SnowballValue);
-        /// <summary> Normalizes the Unicode representation of Sorani text. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ckb/SoraniNormalizationFilter.html">SoraniNormalizationFilter (Lucene API)</see>. </summary>
+        /// <summary> Normalizes the Unicode representation of Sorani text. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ckb/SoraniNormalizationFilter.html. </summary>
         public static TokenFilterName SoraniNormalization { get; } = new TokenFilterName(SoraniNormalizationValue);
-        /// <summary> Language specific stemming filter. See <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#TokenFilters">Token Filters Reference</see>. </summary>
+        /// <summary> Language specific stemming filter. See https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#TokenFilters. </summary>
         public static TokenFilterName Stemmer { get; } = new TokenFilterName(StemmerValue);
-        /// <summary> Removes stop words from a token stream. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopFilter.html">StopFilter (Lucene API)</see>. </summary>
+        /// <summary> Removes stop words from a token stream. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopFilter.html. </summary>
         public static TokenFilterName Stopwords { get; } = new TokenFilterName(StopwordsValue);
-        /// <summary> Trims leading and trailing whitespace from tokens. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/TrimFilter.html">TrimFilter (Lucene API)</see>. </summary>
+        /// <summary> Trims leading and trailing whitespace from tokens. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/TrimFilter.html. </summary>
         public static TokenFilterName Trim { get; } = new TokenFilterName(TrimValue);
-        /// <summary> Truncates the terms to a specific length. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/TruncateTokenFilter.html">TruncateTokenFilter (Lucene API)</see>. </summary>
+        /// <summary> Truncates the terms to a specific length. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/TruncateTokenFilter.html. </summary>
         public static TokenFilterName Truncate { get; } = new TokenFilterName(TruncateValue);
-        /// <summary> Filters out tokens with same text as the previous token. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/RemoveDuplicatesTokenFilter.html">RemoveDuplicatesTokenFilter (Lucene API)</see>. </summary>
+        /// <summary> Filters out tokens with same text as the previous token. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/RemoveDuplicatesTokenFilter.html. </summary>
         public static TokenFilterName Unique { get; } = new TokenFilterName(UniqueValue);
-        /// <summary> Normalizes token text to upper case. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/UpperCaseFilter.html">UpperCaseFilter (Lucene API)</see>. </summary>
+        /// <summary> Normalizes token text to upper case. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/UpperCaseFilter.html. </summary>
         public static TokenFilterName Uppercase { get; } = new TokenFilterName(UppercaseValue);
         /// <summary> Splits words into subwords and performs optional transformations on subword groups. </summary>
         public static TokenFilterName WordDelimiter { get; } = new TokenFilterName(WordDelimiterValue);
