@@ -15,12 +15,12 @@ parameters:
 - name: ArtifactName
   type: string
   default: packages
+- name: SDKType
+  type: string
+  default: client
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: ExcludeProjects
-  type: object
-  default: []
 - name: ServiceToTest
   type: string
   default: ''
@@ -45,9 +45,9 @@ stages:
     jobs:
     - template: ../jobs/archetype-sdk-client.yml
       parameters:
+        SDKType: ${{ parameters.SDKType }}
         ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        ExcludeProjects: ${{ parameters.ExcludeProjects }}
         Artifacts: ${{ parameters.Artifacts }}
         TestPipeline: ${{ parameters.TestPipeline }}
         ArtifactName: packages
@@ -59,6 +59,7 @@ stages:
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
     - template: archetype-net-release.yml
       parameters:
+        SDKType: ${{ parameters.SDKType }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         DependsOn: Build
         Artifacts: ${{ parameters.Artifacts }}

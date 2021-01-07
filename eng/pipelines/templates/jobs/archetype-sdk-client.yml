@@ -8,6 +8,9 @@ parameters:
 - name: ArtifactName
   type: string
   default: packages
+- name: SDKType
+  type: string
+  default: client
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -23,9 +26,6 @@ parameters:
 - name: LinuxPool
   type: string
   default: azsdk-pool-mms-ubuntu-1804-general
-- name: ExcludeProjects
-  type: object
-  default: []
 
 jobs:
   - job: Build
@@ -66,9 +66,9 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: >-
           dotnet pack eng/service.proj -warnaserror
+          /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeTests=false
-          /p:ExcludeProjects="${{ join('|', parameters.ExcludeProjects) }}"
           /p:PublicSign=false $(VersioningProperties)
           /p:Configuration=$(BuildConfiguration)
           /p:CommitSHA=$(Build.SourceVersion)
@@ -134,8 +134,8 @@ jobs:
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
           arguments: >
-            -ServiceDirectory ${{parameters.ServiceToTest}} 
-            -ExcludeProjects "${{ join('|', parameters.ExcludeProjects) }}"
+           -ServiceDirectory ${{ parameters.ServiceToTest }}
+           -SDKType ${{ parameters.SDKType }}
           pwsh: true
           failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
@@ -195,11 +195,11 @@ jobs:
       - script: >-
           dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToTest}}
+          /p:SDKType=${{ parameters.SDKType }}
+          /p:ServiceDirectory=${{ parameters.ServiceToTest }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
-          /p:ExcludeProjects="${{ join('|', parameters.ExcludeProjects) }}"
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
-          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{parameters.ServiceDirectory}}
+          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{ parameters.ServiceDirectory }}
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
