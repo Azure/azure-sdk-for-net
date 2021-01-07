@@ -64,7 +64,7 @@ namespace Compute.Tests
             string vmssSkuTier = "Standard",
             string vmssASMin = "1", 
             string vmssASMax = "100",
-            string vmssSize = VirtualMachineSizeTypes.StandardA1,
+            string vmssSize = VirtualMachineSizeTypes.StandardA1V2,
             bool hasManagedDisks = false,
             bool hasSPG = true,
             int vmssSkuCapacity = 2,
@@ -84,7 +84,7 @@ namespace Compute.Tests
             bool passed = false;
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
                 EnsureClientsInitialized(context);
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 

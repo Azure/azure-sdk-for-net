@@ -92,7 +92,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(context, vmSize: VirtualMachineSizeTypes.StandardDS5V2, hasManagedDisks: true,
@@ -293,7 +293,7 @@ namespace Compute.Tests
         public void TestVMScaleSetScenarioOperations_AutomaticRepairsPolicyTest()
         {
             string environmentVariable = "AZURE_VM_TEST_LOCATION";
-            string region = "centraluseuap";
+            string region = "eastus";
             string originalTestLocation = Environment.GetEnvironmentVariable(environmentVariable);
 
             try
@@ -399,7 +399,7 @@ namespace Compute.Tests
         public void TestVMScaleSetScenarioOperations_OrchestrationService()
         {
             string environmentVariable = "AZURE_VM_TEST_LOCATION";
-            string region = "northeurope";
+            string region = "eastus";
             string originalTestLocation = Environment.GetEnvironmentVariable(environmentVariable);
 
             try

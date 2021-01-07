@@ -57,7 +57,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks", vmSize: VirtualMachineSizeTypes.StandardM64s, hasManagedDisks: true,
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks", vmSize: VirtualMachineSizeTypes.StandardM64sv2, hasManagedDisks: true,
                     osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, dataDiskStorageAccountType: StorageAccountTypes.PremiumLRS, writeAcceleratorEnabled: true);
             }
             finally
@@ -199,16 +199,19 @@ namespace Compute.Tests
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 // This test was recorded in WestUSValidation, where the platform image typically used for recording is not available.
                 // Hence the following custom image was used.
-                ImageReference imageReference = new ImageReference
-                {
-                    Publisher = "AzureRT.PIRCore.TestWAStage",
-                    Offer = "TestUbuntuServer",
-                    Sku = "16.04",
-                    Version = "latest"
-                };
+                //ImageReference imageReference = new ImageReference
+                //{
+                //    Publisher = "AzureRT.PIRCore.TestWAStage",
+                //    Offer = "TestUbuntuServer",
+                //    Sku = "16.04",
+                //    Version = "latest"
+                //};
+                //TestVMScenarioOperationsInternal("TestVMScenarioOperations_AutomaticPlacementOnDedicatedHostGroup",
+                //    hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3, isAutomaticPlacementOnDedicatedHostGroupScenario: true,
+                //    imageReference: imageReference, validateListAvailableSize: false);
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_AutomaticPlacementOnDedicatedHostGroup",
                     hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3, isAutomaticPlacementOnDedicatedHostGroupScenario: true,
-                    imageReference: imageReference, validateListAvailableSize: false);
+                    validateListAvailableSize: false);
             }
             finally
             {

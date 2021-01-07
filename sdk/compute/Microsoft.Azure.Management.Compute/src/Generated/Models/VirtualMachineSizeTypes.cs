@@ -157,6 +157,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string StandardL32s = "Standard_L32s";
         public const string StandardM64s = "Standard_M64s";
         public const string StandardM64sv2 = "Standard_M64s_v2";
+        public const string StandardM32msv2 = "Standard_M64ms_v2";
         public const string StandardM64ms = "Standard_M64ms";
         public const string StandardM128s = "Standard_M128s";
         public const string StandardM128ms = "Standard_M128ms";
