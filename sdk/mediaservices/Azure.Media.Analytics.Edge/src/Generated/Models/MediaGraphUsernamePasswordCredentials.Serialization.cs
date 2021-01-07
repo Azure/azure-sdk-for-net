@@ -17,11 +17,8 @@ namespace Azure.Media.Analytics.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("username");
             writer.WriteStringValue(Username);
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password");
-                writer.WriteStringValue(Password);
-            }
+            writer.WritePropertyName("password");
+            writer.WriteStringValue(Password);
             writer.WritePropertyName("@type");
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
@@ -30,7 +27,7 @@ namespace Azure.Media.Analytics.Edge.Models
         internal static MediaGraphUsernamePasswordCredentials DeserializeMediaGraphUsernamePasswordCredentials(JsonElement element)
         {
             string username = default;
-            Optional<string> password = default;
+            string password = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +47,7 @@ namespace Azure.Media.Analytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphUsernamePasswordCredentials(type, username, password.Value);
+            return new MediaGraphUsernamePasswordCredentials(type, username, password);
         }
     }
 }

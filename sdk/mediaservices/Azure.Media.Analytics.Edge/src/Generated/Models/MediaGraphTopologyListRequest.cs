@@ -7,7 +7,7 @@
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    /// <summary> The MediaGraphTopologyListRequest. </summary>
+    /// <summary> Represents the MediaGraphTopologyListRequest. </summary>
     public partial class MediaGraphTopologyListRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of MediaGraphTopologyListRequest. </summary>

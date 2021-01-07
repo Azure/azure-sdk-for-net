@@ -39,7 +39,7 @@ namespace Azure.Media.Analytics.Edge.Models
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state");
-                writer.WriteStringValue(State.Value.ToSerialString());
+                writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -84,7 +84,7 @@ namespace Azure.Media.Analytics.Edge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = property.Value.GetString().ToMediaGraphInstanceState();
+                    state = new MediaGraphInstanceState(property.Value.GetString());
                     continue;
                 }
             }

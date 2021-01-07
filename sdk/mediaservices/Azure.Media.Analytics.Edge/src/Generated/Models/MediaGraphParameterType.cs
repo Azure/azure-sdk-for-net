@@ -5,20 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Media.Analytics.Edge.Models
 {
     /// <summary> The type of the parameter. </summary>
-    public enum MediaGraphParameterType
+    public readonly partial struct MediaGraphParameterType : IEquatable<MediaGraphParameterType>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="MediaGraphParameterType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MediaGraphParameterType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string StringValue = "String";
+        private const string SecretStringValue = "SecretString";
+        private const string IntValue = "Int";
+        private const string DoubleValue = "Double";
+        private const string BoolValue = "Bool";
+
         /// <summary> A string parameter value. </summary>
-        String,
+        public static MediaGraphParameterType String { get; } = new MediaGraphParameterType(StringValue);
         /// <summary> A string to hold sensitive information as parameter value. </summary>
-        SecretString,
+        public static MediaGraphParameterType SecretString { get; } = new MediaGraphParameterType(SecretStringValue);
         /// <summary> A 32-bit signed integer as parameter value. </summary>
-        Int,
+        public static MediaGraphParameterType Int { get; } = new MediaGraphParameterType(IntValue);
         /// <summary> A 64-bit double-precision floating point type as parameter value. </summary>
-        Double,
+        public static MediaGraphParameterType Double { get; } = new MediaGraphParameterType(DoubleValue);
         /// <summary> A boolean value that is either true or false. </summary>
-        Bool
+        public static MediaGraphParameterType Bool { get; } = new MediaGraphParameterType(BoolValue);
+        /// <summary> Determines if two <see cref="MediaGraphParameterType"/> values are the same. </summary>
+        public static bool operator ==(MediaGraphParameterType left, MediaGraphParameterType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="MediaGraphParameterType"/> values are not the same. </summary>
+        public static bool operator !=(MediaGraphParameterType left, MediaGraphParameterType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="MediaGraphParameterType"/>. </summary>
+        public static implicit operator MediaGraphParameterType(string value) => new MediaGraphParameterType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is MediaGraphParameterType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(MediaGraphParameterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

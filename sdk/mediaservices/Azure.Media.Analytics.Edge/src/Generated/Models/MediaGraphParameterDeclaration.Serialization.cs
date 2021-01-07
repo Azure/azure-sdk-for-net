@@ -18,7 +18,7 @@ namespace Azure.Media.Analytics.Edge.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
@@ -47,7 +47,7 @@ namespace Azure.Media.Analytics.Edge.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString().ToMediaGraphParameterType();
+                    type = new MediaGraphParameterType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

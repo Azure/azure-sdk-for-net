@@ -11,21 +11,24 @@ namespace Azure.Media.Analytics.Edge.Models
     public partial class MethodRequest
     {
         /// <summary>
-        /// Method name
+        /// Gets or Sets The Method name.
         /// </summary>
         public string MethodName { get; set; }
 
         /// <summary>
         /// GetPayloadAsJSON function.
         /// </summary>
-        /// <returns>
-        /// Method payload as Json string.
-        /// </returns>
+        /// <returns>A string representing the Json Payload.</returns>
         public virtual string GetPayloadAsJson()
         {
             return SerializeItemRequestInternal(this);
         }
 
+        /// <summary>
+        /// GetPayloadAsJSON function.
+        /// </summary>
+        /// <param name="serializable">The UTF8 serializer.</param>
+        /// <returns>A string representing the Json Payload.</returns>
         internal static string SerializeItemRequestInternal(IUtf8JsonSerializable serializable)
         {
             using var memoryStream = new MemoryStream();

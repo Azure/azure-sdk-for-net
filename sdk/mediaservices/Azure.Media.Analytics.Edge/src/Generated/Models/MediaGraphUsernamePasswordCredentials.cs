@@ -14,15 +14,21 @@ namespace Azure.Media.Analytics.Edge.Models
     {
         /// <summary> Initializes a new instance of MediaGraphUsernamePasswordCredentials. </summary>
         /// <param name="username"> Username for a username/password pair. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public MediaGraphUsernamePasswordCredentials(string username)
+        /// <param name="password"> Password for a username/password pair. Please use a parameter so that the actual value is not returned on PUT or GET requests. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="password"/> is null. </exception>
+        public MediaGraphUsernamePasswordCredentials(string username, string password)
         {
             if (username == null)
             {
                 throw new ArgumentNullException(nameof(username));
             }
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
 
             Username = username;
+            Password = password;
             Type = "#Microsoft.Media.MediaGraphUsernamePasswordCredentials";
         }
 

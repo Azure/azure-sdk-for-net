@@ -16,11 +16,8 @@ namespace Azure.Media.Analytics.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NodeName))
-            {
-                writer.WritePropertyName("nodeName");
-                writer.WriteStringValue(NodeName);
-            }
+            writer.WritePropertyName("nodeName");
+            writer.WriteStringValue(NodeName);
             if (Optional.IsCollectionDefined(OutputSelectors))
             {
                 writer.WritePropertyName("outputSelectors");
@@ -36,7 +33,7 @@ namespace Azure.Media.Analytics.Edge.Models
 
         internal static MediaGraphNodeInput DeserializeMediaGraphNodeInput(JsonElement element)
         {
-            Optional<string> nodeName = default;
+            string nodeName = default;
             Optional<IList<MediaGraphOutputSelector>> outputSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +58,7 @@ namespace Azure.Media.Analytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphNodeInput(nodeName.Value, Optional.ToList(outputSelectors));
+            return new MediaGraphNodeInput(nodeName, Optional.ToList(outputSelectors));
         }
     }
 }
