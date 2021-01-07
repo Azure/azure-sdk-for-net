@@ -2,7 +2,8 @@ namespace Azure.Storage.Queues
 {
     public partial class InvalidQueueMessageEventArgs : System.EventArgs
     {
-        public InvalidQueueMessageEventArgs(Azure.Storage.Queues.QueueClient sender, object message, System.Threading.CancellationToken cancellationToken) { }
+        public InvalidQueueMessageEventArgs(Azure.Storage.Queues.QueueClient sender, Azure.Storage.Queues.Models.PeekedMessage message, System.Threading.CancellationToken cancellationToken) { }
+        public InvalidQueueMessageEventArgs(Azure.Storage.Queues.QueueClient sender, Azure.Storage.Queues.Models.QueueMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public object Message { get { throw null; } }
         public Azure.Storage.Queues.QueueClient Sender { get { throw null; } }

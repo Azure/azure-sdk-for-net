@@ -126,7 +126,17 @@ namespace Azure.Storage.Queues
         internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
 
         /// <summary>
-        /// TODO (kasobol-msft) add doc.
+        /// Optional. Performs the tasks needed when an invalid message is received or peaked from the queue.
+        ///
+        /// <para>Invalid message can be received or peaked when <see cref="QueueClient"/> is expecting certain <see cref="QueueMessageEncoding"/>
+        /// but there's another producer that is not encoding messages in expected way. I.e. the queue contains messages with different encoding.</para>
+        ///
+        /// <para><see cref="InvalidQueueMessageEventArgs"/> contains <see cref="QueueClient"/> that has received invalid message as well as the message
+        /// which can be either <see cref="QueueMessage"/> or <see cref="PeekedMessage"/> with raw body, i.e. no decoding will be attempted so that
+        /// body can be inspected as has been received from the queue.</para>
+        ///
+        /// <para>The <see cref="QueueClient"/> won't attempt to remove invalid message from the queue. Therefore such handling should be included into
+        /// the event handler itself.</para>
         /// </summary>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning disable AZC0003 // DO make service methods virtual.
