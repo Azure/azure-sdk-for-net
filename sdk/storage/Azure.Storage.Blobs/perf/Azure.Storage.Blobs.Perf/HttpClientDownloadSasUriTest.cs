@@ -12,11 +12,11 @@ using System.Net.Http;
 
 namespace Azure.Storage.Blobs.Perf
 {
-    public class HttpClientDownloadSasUriTest : SasUriTest<SizeOptions>
+    public class HttpClientDownloadSasUriTest : SasUriTest<BufferOptions>
     {
         private static readonly HttpClient _httpClient = new HttpClient();
 
-        public HttpClientDownloadSasUriTest(SizeOptions options) : base(options)
+        public HttpClientDownloadSasUriTest(BufferOptions options) : base(options)
         {
         }
 
@@ -27,7 +27,12 @@ namespace Azure.Storage.Blobs.Perf
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            var response = await _httpClient.GetAsync(SasUri, cancellationToken);
+            using var response = await _httpClient.GetAsync(
+                SasUri,
+                Options.Buffer ? HttpCompletionOption.ResponseContentRead : HttpCompletionOption.ResponseHeadersRead,
+                cancellationToken
+                );
+
 #pragma warning disable CA2016 // Forward the 'CancellationToken' parameter to methods that take one
             await response.Content.CopyToAsync(Stream.Null);
 #pragma warning restore CA2016 // Forward the 'CancellationToken' parameter to methods that take one
