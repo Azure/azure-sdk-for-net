@@ -16,9 +16,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Limits the number of tokens while indexing. This token filter is
     /// implemented using Apache Lucene.
-    /// <see
-    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/LimitTokenCountFilter.html"
-    /// />
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/LimitTokenCountFilter.html">
+    /// LimitTokenCountFilter (Lucene API)</see>.
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.LimitTokenFilter")]
     public partial class LimitTokenFilter : TokenFilter

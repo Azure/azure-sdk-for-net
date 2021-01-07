@@ -460,7 +460,8 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Standard ASCII Folding Lucene analyzer.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers" /> 
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers"> 
+        /// Add custom analyzers to string fields in an Azure Cognitive Search index</see>.
         /// </summary>
         public static readonly AnalyzerName StandardAsciiFoldingLucene =
             new AnalyzerName(AsString.StandardAsciiFoldingLucene);
@@ -468,31 +469,36 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Treats the entire content of a field as a single token. This is useful
         /// for data like zip codes, ids, and some product names.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html">
+        /// KeywordAnalyzer (Lucene API)</see>.
         /// </summary>
         public static readonly AnalyzerName Keyword = new AnalyzerName(AsString.Keyword);
 
         /// <summary>
         /// Flexibly separates text into terms via a regular expression pattern.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html">
+        /// PatternAnalyzer (Lucene API)</see>.
         /// </summary>
         public static readonly AnalyzerName Pattern = new AnalyzerName(AsString.Pattern);
 
         /// <summary>
         /// Divides text at non-letters and converts them to lower case.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/SimpleAnalyzer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/SimpleAnalyzer.html">
+        /// SimpleAnalyzer (Lucene API)</see>.
         /// </summary>
         public static readonly AnalyzerName Simple = new AnalyzerName(AsString.Simple);
 
         /// <summary>
         /// Divides text at non-letters; Applies the lowercase and stopword token filters.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html">
+        /// StopAnalyzer (Lucene API)</see>.
         /// </summary>
         public static readonly AnalyzerName Stop = new AnalyzerName(AsString.Stop);
 
         /// <summary>
         /// An analyzer that uses the whitespace tokenizer.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html">
+        /// WhitespaceAnalyzer (Lucene API)</see>.
         /// </summary>
         public static readonly AnalyzerName Whitespace = new AnalyzerName(AsString.Whitespace);
 
@@ -943,38 +949,44 @@ namespace Microsoft.Azure.Search.Models
 
             /// <summary>
             /// Standard ASCII Folding Lucene analyzer.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers" /> 
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers"> 
+            /// Add custom analyzers to string fields in an Azure Cognitive Search index</see>.
             /// </summary>
             public const string StandardAsciiFoldingLucene = "standardasciifolding.lucene";
 
             /// <summary>
             /// Treats the entire content of a field as a single token. This is useful
             /// for data like zip codes, ids, and some product names.
-            /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html" />
+            /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html">
+            /// KeywordAnalyzer (Lucene API)</see>.
             /// </summary>
             public const string Keyword = "keyword";
 
             /// <summary>
             /// Flexibly separates text into terms via a regular expression pattern.
-            /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html" />
+            /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html">
+            /// PatternAnalyzer (Lucene API)</see>.
             /// </summary>
             public const string Pattern = "pattern";
 
             /// <summary>
             /// Divides text at non-letters and converts them to lower case.
-            /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/SimpleAnalyzer.html" />
+            /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/SimpleAnalyzer.html">
+            /// SimpleAnalyzer (Lucene API)</see>.
             /// </summary>
             public const string Simple = "simple";
 
             /// <summary>
             /// Divides text at non-letters; Applies the lowercase and stopword token filters.
-            /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html" />
+            /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html">
+            /// StopAnalyzer (Lucene API)</see>.
             /// </summary>
             public const string Stop = "stop";
 
             /// <summary>
             /// An analyzer that uses the whitespace tokenizer.
-            /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html" />
+            /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html">
+            /// WhitespaceAnalyzer (Lucene API)</see>.
             /// </summary>
             public const string Whitespace = "whitespace";
         }

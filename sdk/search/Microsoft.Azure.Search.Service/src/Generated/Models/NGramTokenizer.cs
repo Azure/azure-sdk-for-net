@@ -19,9 +19,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Tokenizes the input into n-grams of the given size(s). This tokenizer
     /// is implemented using Apache Lucene.
-    /// <see
-    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenizer.html"
-    /// />
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenizer.html">
+    /// NGramTokenizer (Lucene API)</see>.
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.NGramTokenizer")]
     public partial class NGramTokenizer : Tokenizer

@@ -16,9 +16,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Create tokens for phonetic matches. This token filter is implemented
     /// using Apache Lucene.
-    /// <see
-    /// href="https://lucene.apache.org/core/4_10_3/analyzers-phonetic/org/apache/lucene/analysis/phonetic/package-tree.html"
-    /// />
+    /// <see href="https://lucene.apache.org/core/4_10_3/analyzers-phonetic/org/apache/lucene/analysis/phonetic/package-tree.html">
+    /// Hierarchy For Package org.apache.lucene.analysis.phonetic (Lucene API)</see>
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.PhoneticTokenFilter")]
     public partial class PhoneticTokenFilter : TokenFilter

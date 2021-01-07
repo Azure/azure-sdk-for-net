@@ -16,9 +16,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Tokenizer that uses regex pattern matching to construct distinct
     /// tokens. This tokenizer is implemented using Apache Lucene.
-    /// <see
-    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternTokenizer.html"
-    /// />
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternTokenizer.html">
+    /// PatternTokenizer (Lucene API)</see>.
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.PatternTokenizer")]
     public partial class PatternTokenizer : Tokenizer

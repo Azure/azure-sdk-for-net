@@ -18,9 +18,8 @@ namespace Microsoft.Azure.Search.Models
     /// not in the first 127 ASCII characters (the "Basic Latin" Unicode block)
     /// into their ASCII equivalents, if such equivalents exist. This token
     /// filter is implemented using Apache Lucene.
-    /// <see
-    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html"
-    /// />
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html">
+    /// ASCIIFoldingFilter (Lucene API)</see>.
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.AsciiFoldingTokenFilter")]
     public partial class AsciiFoldingTokenFilter : TokenFilter

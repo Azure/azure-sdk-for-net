@@ -16,9 +16,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// A filter that stems words using a Snowball-generated stemmer. This
     /// token filter is implemented using Apache Lucene.
-    /// <see
-    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/snowball/SnowballFilter.html"
-    /// />
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/snowball/SnowballFilter.html">
+    /// SnowballFilter (Lucene API)</see>
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.SnowballTokenFilter")]
     public partial class SnowballTokenFilter : TokenFilter

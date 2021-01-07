@@ -24,7 +24,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         private const string HtmlStripValue = "html_strip";
 
-        /// <summary> A character filter that attempts to strip out HTML constructs. See https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/charfilter/HTMLStripCharFilter.html. </summary>
+        /// <summary> A character filter that attempts to strip out HTML constructs. See 
+        /// <see href="https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/charfilter/HTMLStripCharFilter.html">
+        /// HTMLStripCharFilter (Lucene API)</see>.</summary>
         public static CharFilterName HtmlStrip { get; } = new CharFilterName(HtmlStripValue);
         /// <summary> Determines if two <see cref="CharFilterName"/> values are the same. </summary>
         public static bool operator ==(CharFilterName left, CharFilterName right) => left.Equals(right);

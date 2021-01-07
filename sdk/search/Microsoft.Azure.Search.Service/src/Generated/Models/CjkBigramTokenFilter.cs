@@ -18,9 +18,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Forms bigrams of CJK terms that are generated from StandardTokenizer.
     /// This token filter is implemented using Apache Lucene.
-    /// <see
-    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKBigramFilter.html"
-    /// />
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKBigramFilter.html">
+    /// CJKBigramFilter (Lucene API)</see>.
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.CjkBigramTokenFilter")]
     public partial class CjkBigramTokenFilter : TokenFilter

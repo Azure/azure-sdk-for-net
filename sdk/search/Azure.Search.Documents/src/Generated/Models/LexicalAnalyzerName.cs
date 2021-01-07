@@ -290,17 +290,17 @@ namespace Azure.Search.Documents.Indexes.Models
         public static LexicalAnalyzerName ViMicrosoft { get; } = new LexicalAnalyzerName(ViMicrosoftValue);
         /// <summary> Standard Lucene analyzer. </summary>
         public static LexicalAnalyzerName StandardLucene { get; } = new LexicalAnalyzerName(StandardLuceneValue);
-        /// <summary> Standard ASCII Folding Lucene analyzer. See https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers. </summary>
+        /// <summary> Standard ASCII Folding Lucene analyzer. See <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers">Add custom analyzers to string fields in an Azure Cognitive Search index</see>. </summary>
         public static LexicalAnalyzerName StandardAsciiFoldingLucene { get; } = new LexicalAnalyzerName(StandardAsciiFoldingLuceneValue);
-        /// <summary> Treats the entire content of a field as a single token. This is useful for data like zip codes, ids, and some product names. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html. </summary>
+        /// <summary> Treats the entire content of a field as a single token. This is useful for data like zip codes, ids, and some product names. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html">KeywordAnalyzer (Lucene API)</see>. </summary>
         public static LexicalAnalyzerName Keyword { get; } = new LexicalAnalyzerName(KeywordValue);
-        /// <summary> Flexibly separates text into terms via a regular expression pattern. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html. </summary>
+        /// <summary> Flexibly separates text into terms via a regular expression pattern. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html">PatternAnalyzer (Lucene API)</see>. </summary>
         public static LexicalAnalyzerName Pattern { get; } = new LexicalAnalyzerName(PatternValue);
-        /// <summary> Divides text at non-letters and converts them to lower case. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/SimpleAnalyzer.html. </summary>
+        /// <summary> Divides text at non-letters and converts them to lower case. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/SimpleAnalyzer.html">SimpleAnalyzer (Lucene API)</see>. </summary>
         public static LexicalAnalyzerName Simple { get; } = new LexicalAnalyzerName(SimpleValue);
-        /// <summary> Divides text at non-letters; Applies the lowercase and stopword token filters. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html. </summary>
+        /// <summary> Divides text at non-letters; Applies the lowercase and stopword token filters. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html">StopAnalyzer (Lucene API)</see>. </summary>
         public static LexicalAnalyzerName Stop { get; } = new LexicalAnalyzerName(StopValue);
-        /// <summary> An analyzer that uses the whitespace tokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html. </summary>
+        /// <summary> An analyzer that uses the whitespace tokenizer. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html">WhitespaceAnalyzer (Lucene API)</see>. </summary>
         public static LexicalAnalyzerName Whitespace { get; } = new LexicalAnalyzerName(WhitespaceValue);
         /// <summary> Determines if two <see cref="LexicalAnalyzerName"/> values are the same. </summary>
         public static bool operator ==(LexicalAnalyzerName left, LexicalAnalyzerName right) => left.Equals(right);

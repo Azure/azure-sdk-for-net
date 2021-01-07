@@ -24,31 +24,36 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Grammar-based tokenizer that is suitable for processing most
         /// European-language documents.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/ClassicTokenizer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/ClassicTokenizer.html">
+        /// ClassicTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName Classic = new TokenizerName("classic");
 
         /// <summary>
         /// Tokenizes the input from an edge into n-grams of the given size(s).
-        /// <see href="https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenizer.html" />
+        /// <see href="https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenizer.html">
+        /// EdgeNGramTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName EdgeNGram = new TokenizerName("edgeNGram");
 
         /// <summary>
         /// Emits the entire input as a single token.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html">
+        /// KeywordTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName Keyword = new TokenizerName("keyword_v2");
 
         /// <summary>
         /// Divides text at non-letters.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LetterTokenizer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LetterTokenizer.html">
+        /// LetterTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName Letter = new TokenizerName("letter");
 
         /// <summary>
         /// Divides text at non-letters and converts them to lower case.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LowerCaseTokenizer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LowerCaseTokenizer.html">
+        /// LowerCaseTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName Lowercase = new TokenizerName("lowercase");
 
@@ -64,38 +69,44 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Tokenizes the input into n-grams of the given size(s).
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenizer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenizer.html">
+        /// NGramTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName NGram = new TokenizerName("nGram");
 
         /// <summary>
         /// Tokenizer for path-like hierarchies.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/path/PathHierarchyTokenizer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/path/PathHierarchyTokenizer.html">
+        /// PathHierarchyTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName PathHierarchy = new TokenizerName("path_hierarchy_v2");
 
         /// <summary>
         /// Tokenizer that uses regex pattern matching to construct distinct tokens.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternTokenizer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternTokenizer.html">
+        /// PatternTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName Pattern = new TokenizerName("pattern");
 
         /// <summary>
         /// Standard Lucene analyzer; Composed of the standard tokenizer,
         /// lowercase filter and stop filter.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html">
+        /// StandardTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName Standard = new TokenizerName("standard_v2");
 
         /// <summary>
         /// Tokenizes urls and emails as one token.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/UAX29URLEmailTokenizer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/UAX29URLEmailTokenizer.html">
+        /// UAX29URLEmailTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName UaxUrlEmail = new TokenizerName("uax_url_email");
 
         /// <summary>
         /// Divides text at whitespace.
-        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceTokenizer.html" />
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceTokenizer.html">
+        /// WhitespaceTokenizer (Lucene API)</see>.
         /// </summary>
         public static readonly TokenizerName Whitespace = new TokenizerName("whitespace");
 

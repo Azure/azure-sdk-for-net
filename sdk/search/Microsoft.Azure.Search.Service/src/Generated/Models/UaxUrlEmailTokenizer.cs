@@ -17,9 +17,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Tokenizes urls and emails as one token. This tokenizer is implemented
     /// using Apache Lucene.
-    /// <see
-    /// href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/UAX29URLEmailTokenizer.html"
-    /// />
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/UAX29URLEmailTokenizer.html">
+    /// UAX29URLEmailTokenizer (Lucene API)</see>
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Azure.Search.UaxUrlEmailTokenizer")]
     public partial class UaxUrlEmailTokenizer : Tokenizer
