@@ -1,10 +1,11 @@
 namespace Azure.Storage.Queues
 {
-    public abstract partial class InvalidQueueMessageHandler
+    public partial class InvalidQueueMessageEventArgs : System.EventArgs
     {
-        protected InvalidQueueMessageHandler() { }
-        public abstract void OnInvalidMessage(Azure.Storage.Queues.QueueClient queueClient, object rawMessage, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task OnInvalidMessageAsync(Azure.Storage.Queues.QueueClient queueClient, object rawMessage, System.Threading.CancellationToken cancellationToken);
+        public InvalidQueueMessageEventArgs(Azure.Storage.Queues.QueueClient sender, object message, System.Threading.CancellationToken cancellationToken) { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        public object Message { get { throw null; } }
+        public Azure.Storage.Queues.QueueClient Sender { get { throw null; } }
     }
     public partial class QueueClient
     {
@@ -21,6 +22,7 @@ namespace Azure.Storage.Queues
         protected virtual System.Uri MessagesUri { get { throw null; } }
         public virtual string Name { get { throw null; } }
         public virtual System.Uri Uri { get { throw null; } }
+        public event System.Func<Azure.Storage.Queues.InvalidQueueMessageEventArgs, System.Threading.Tasks.Task> InvalidQueueMessageAsync { add { } remove { } }
         public virtual Azure.Response ClearMessages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ClearMessagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Create(System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -75,7 +77,6 @@ namespace Azure.Storage.Queues
     {
         public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2020_04_08) { }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
-        public Azure.Storage.Queues.InvalidQueueMessageHandler InvalidQueueMessageHandler { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueMessageEncoding MessageEncoding { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion

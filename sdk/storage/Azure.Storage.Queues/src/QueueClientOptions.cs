@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Queues.Models;
-using Azure.Storage.Queues.Specialized;
 
 namespace Azure.Storage.Queues
 {
@@ -112,11 +112,6 @@ namespace Azure.Storage.Queues
         /// The default is <see cref="QueueMessageEncoding.None"/>.
         /// </summary>
         public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.None;
-
-        /// <summary>
-        /// TODO (kasobol-msft) add doc.
-        /// </summary>
-        public InvalidQueueMessageHandler InvalidQueueMessageHandler { get; set; }
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;

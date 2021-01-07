@@ -780,9 +780,16 @@ namespace Azure.Storage.Queues.Test
         public async Task CanHandleInvalidPeekedMessageAndReturnValid()
         {
             // Arrange
-            Mock<InvalidQueueMessageHandler> invalidQueueMessageHandlerMock = new Mock<InvalidQueueMessageHandler>();
             await using DisposingQueue test = await GetTestQueueAsync();
-            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64, invalidQueueMessageHandlerMock.Object);
+            object badMessage = null;
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    badMessage = arg.Message;
+                    return Task.CompletedTask;
+                });
             var nonEncodedContent = "test_content";
 
             await test.Queue.SendMessageAsync(nonEncodedContent);
@@ -793,16 +800,13 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Assert.AreEqual(1, peekedMessages.Count());
-            if (IsAsync)
-            {
-                invalidQueueMessageHandlerMock.Verify(
-                    m => m.OnInvalidMessageAsync(It.IsAny<QueueClient>(), It.Is<object>(m => ((PeekedMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
-            }
-            else
-            {
-                invalidQueueMessageHandlerMock.Verify(
-                    m => m.OnInvalidMessage(It.IsAny<QueueClient>(), It.Is<object>(m => ((PeekedMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
-            }
+            await WaitForCondition(() => badMessage != null);
+            Assert.AreEqual(nonEncodedContent, ((PeekedMessage)badMessage).Body.ToString());
+        }
+
+        private Task EncodingClient_InvalidQueueMessageAsync(InvalidQueueMessageEventArgs arg)
+        {
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -849,9 +853,16 @@ namespace Azure.Storage.Queues.Test
         public async Task CanHandleInvalidMessageAndReturnValid()
         {
             // Arrange
-            Mock<InvalidQueueMessageHandler> invalidQueueMessageHandlerMock = new Mock<InvalidQueueMessageHandler>();
             await using DisposingQueue test = await GetTestQueueAsync();
-            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64, invalidQueueMessageHandlerMock.Object);
+            object badMessage = null;
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    badMessage = arg.Message;
+                    return Task.CompletedTask;
+                });
             var nonEncodedContent = "test_content";
 
             await test.Queue.SendMessageAsync(nonEncodedContent);
@@ -862,16 +873,8 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Assert.AreEqual(1, queueMessages.Count());
-            if (IsAsync)
-            {
-                invalidQueueMessageHandlerMock.Verify(
-                    m => m.OnInvalidMessageAsync(It.IsAny<QueueClient>(), It.Is<object>(m => ((QueueMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
-            }
-            else
-            {
-                invalidQueueMessageHandlerMock.Verify(
-                    m => m.OnInvalidMessage(It.IsAny<QueueClient>(), It.Is<object>(m => ((QueueMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
-            }
+            await WaitForCondition(() => badMessage != null);
+            Assert.AreEqual(nonEncodedContent, ((QueueMessage)badMessage).Body.ToString());
         }
 
         [Test]

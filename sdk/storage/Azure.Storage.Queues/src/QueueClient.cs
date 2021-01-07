@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -126,9 +125,18 @@ namespace Azure.Storage.Queues
 
         internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
 
-        private InvalidQueueMessageHandler _invalidQueueMessageHandler;
-
-        internal virtual InvalidQueueMessageHandler InvalidQueueMessageHandler => _invalidQueueMessageHandler;
+        /// <summary>
+        /// TODO (kasobol-msft) add doc.
+        /// </summary>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+#pragma warning disable AZC0003 // DO make service methods virtual.
+#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public event Func<InvalidQueueMessageEventArgs, Task> InvalidQueueMessageAsync;
+#pragma warning restore AZC0015 // Unexpected client method return type.
+#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
+#pragma warning restore AZC0003 // DO make service methods virtual.
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 
         /// <summary>
         /// Gets the name of the queue.
@@ -225,7 +233,6 @@ namespace Azure.Storage.Queues
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             _messageEncoding = options.MessageEncoding;
-            _invalidQueueMessageHandler = options.InvalidQueueMessageHandler;
             AssertEncodingForEncryption();
         }
 
@@ -328,7 +335,6 @@ namespace Azure.Storage.Queues
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _messageEncoding = options.MessageEncoding;
-            _invalidQueueMessageHandler = options.InvalidQueueMessageHandler;
             AssertEncodingForEncryption();
         }
 
@@ -360,9 +366,6 @@ namespace Azure.Storage.Queues
         /// <param name="messageEncoding">
         /// The encoding of the message sent over the wire.
         /// </param>
-        /// <param name="invalidQueueMessageHandler">
-        /// TODO (kasobol-msft) add doc.
-        /// </param>
         internal QueueClient(
             Uri queueUri,
             HttpPipeline pipeline,
@@ -370,8 +373,7 @@ namespace Azure.Storage.Queues
             QueueClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             ClientSideEncryptionOptions encryptionOptions,
-            QueueMessageEncoding messageEncoding,
-            InvalidQueueMessageHandler invalidQueueMessageHandler)
+            QueueMessageEncoding messageEncoding)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
@@ -381,7 +383,6 @@ namespace Azure.Storage.Queues
             _clientDiagnostics = clientDiagnostics;
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(encryptionOptions);
             _messageEncoding = messageEncoding;
-            _invalidQueueMessageHandler = invalidQueueMessageHandler;
             AssertEncodingForEncryption();
         }
         #endregion ctors
@@ -414,8 +415,7 @@ namespace Azure.Storage.Queues
                 Version,
                 ClientDiagnostics,
                 clientSideEncryptionOptions,
-                MessageEncoding,
-                InvalidQueueMessageHandler);
+                MessageEncoding);
         }
 
         #region Create
@@ -2052,9 +2052,9 @@ namespace Azure.Storage.Queues
                     } else
                     {
                         QueueMessage[] queueMessages;
-                        if (_invalidQueueMessageHandler != null)
+                        if (InvalidQueueMessageAsync != null)
                         {
-                            queueMessages = await ToQueueMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
+                            queueMessages = ToQueueMessagesWithInvalidMessageHandling(response.Value, cancellationToken);
                         } else
                         {
                             queueMessages = response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray();
@@ -2087,9 +2087,8 @@ namespace Azure.Storage.Queues
             }
         }
 
-        private async Task<QueueMessage[]> ToQueueMessagesWithInvalidMessageHandling(
+        private QueueMessage[] ToQueueMessagesWithInvalidMessageHandling(
             IEnumerable<DequeuedMessageItem> dequeuedMessageItems,
-            bool async,
             CancellationToken cancellationToken)
         {
             List<QueueMessage> queueMessages = new List<QueueMessage>();
@@ -2102,19 +2101,11 @@ namespace Azure.Storage.Queues
                 }
                 catch (FormatException)
                 {
-                    if (async)
-                    {
-                        await _invalidQueueMessageHandler.OnInvalidMessageAsync(
+                    _ = Task.Run(() => InvalidQueueMessageAsync.Invoke(
+                        new InvalidQueueMessageEventArgs(
                             this,
                             QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
-                            cancellationToken).ConfigureAwait(false);
-                    } else
-                    {
-                        _invalidQueueMessageHandler.OnInvalidMessage(
-                            this,
-                            QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
-                            cancellationToken);
-                    }
+                            cancellationToken)), cancellationToken);
                 }
             }
 
@@ -2394,9 +2385,9 @@ namespace Azure.Storage.Queues
                     else
                     {
                         PeekedMessage[] peekedMessages;
-                        if (_invalidQueueMessageHandler != null)
+                        if (InvalidQueueMessageAsync != null)
                         {
-                            peekedMessages = await ToPeekedMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
+                            peekedMessages = ToPeekedMessagesWithInvalidMessageHandling(response.Value, cancellationToken);
                         }
                         else
                         {
@@ -2430,9 +2421,8 @@ namespace Azure.Storage.Queues
             }
         }
 
-        private async Task<PeekedMessage[]> ToPeekedMessagesWithInvalidMessageHandling(
+        private PeekedMessage[] ToPeekedMessagesWithInvalidMessageHandling(
             IEnumerable<PeekedMessageItem> peekedMessageItems,
-            bool async,
             CancellationToken cancellationToken)
         {
             List<PeekedMessage> peekedMessages = new List<PeekedMessage>();
@@ -2445,20 +2435,11 @@ namespace Azure.Storage.Queues
                 }
                 catch (FormatException)
                 {
-                    if (async)
-                    {
-                        await _invalidQueueMessageHandler.OnInvalidMessageAsync(
+                    _ = Task.Run(() => InvalidQueueMessageAsync.Invoke(
+                        new InvalidQueueMessageEventArgs(
                             this,
                             PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
-                            cancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        _invalidQueueMessageHandler.OnInvalidMessage(
-                            this,
-                            PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
-                            cancellationToken);
-                    }
+                            cancellationToken)), cancellationToken);
                 }
             }
 

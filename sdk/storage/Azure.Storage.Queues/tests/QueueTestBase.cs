@@ -56,13 +56,15 @@ namespace Azure.Storage.Queues.Tests
         }
 
         public QueueServiceClient GetServiceClient_SharedKey(QueueClientOptions options = default)
-            => InstrumentClient(
-                new QueueServiceClient(
+            => InstrumentClient(GetServiceClient_SharedKey_UnInstrumented(options));
+
+        private QueueServiceClient GetServiceClient_SharedKey_UnInstrumented(QueueClientOptions options = default)
+            => new QueueServiceClient(
                     new Uri(TestConfigDefault.QueueServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
-                    options ?? GetOptions()));
+                    options ?? GetOptions());
 
         public QueueServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
@@ -154,13 +156,14 @@ namespace Azure.Storage.Queues.Tests
         public QueueClient GetEncodingClient(
             string queueName,
             QueueMessageEncoding encoding,
-            InvalidQueueMessageHandler invalidQueueMessageHandler = default)
+            Func<InvalidQueueMessageEventArgs,Task> invalidMessageHandler = default)
         {
             var options = GetOptions();
             options.MessageEncoding = encoding;
-            options.InvalidQueueMessageHandler = invalidQueueMessageHandler;
-            var service = GetServiceClient_SharedKey(options);
-            return InstrumentClient(service.GetQueueClient(queueName));
+            var service = GetServiceClient_SharedKey_UnInstrumented(options);
+            var queueClient = service.GetQueueClient(queueName);
+            queueClient.InvalidQueueMessageAsync += invalidMessageHandler;
+            return InstrumentClient(queueClient);
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()

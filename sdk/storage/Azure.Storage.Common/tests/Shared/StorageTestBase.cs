@@ -362,6 +362,28 @@ namespace Azure.Storage.Test.Shared
             Assert.Warn("Progress notifications never completed!");
         }
 
+        protected async Task WaitForCondition(Func<bool> predicate, int tries = 5, TimeSpan delay = default)
+        {
+            if (delay == default)
+            {
+                delay = TimeSpan.FromSeconds(2);
+            }
+
+            for (int i = 0; i < tries; i++)
+            {
+                if (predicate())
+                {
+                    return;
+                }
+                else
+                {
+                    await Task.Delay(delay);
+                }
+            }
+
+            throw new Exception("Condition not reached");
+        }
+
         protected void AssertSecondaryStorageFirstRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
         {
             Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
