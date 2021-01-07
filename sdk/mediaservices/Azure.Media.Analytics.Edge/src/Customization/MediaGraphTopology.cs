@@ -14,7 +14,7 @@ namespace Azure.Media.Analytics.Edge.Models
         ///  Deserialize MediaGraphTopology.
         /// </summary>
         /// <param name="json">The json to be deserialized.</param>
-        /// <returns>A MediaGraphTopology.</returns>
+        /// <returns>A Json string representation of a MediaGraphTopology.</returns>
         public static MediaGraphTopology Deserialize(string json)
         {
             using JsonDocument doc = JsonDocument.Parse(json);
