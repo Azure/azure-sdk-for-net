@@ -99,7 +99,6 @@ All User token service operations will throw a RequestFailedException on failure
 // Get a connection string to our Azure Communication resource.
 var connectionString = "<connection_string>";
 var client = new CommunicationIdentityClient(connectionString);
-client = CreateInstrumentedCommunicationIdentityClient();
 
 try
 {
