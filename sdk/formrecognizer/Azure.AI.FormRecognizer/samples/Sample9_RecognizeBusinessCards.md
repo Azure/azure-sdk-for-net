@@ -22,15 +22,18 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 To recognize business cards from a URI, use the `StartRecognizeBusinessCardsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
 ```C# Snippet:FormRecognizerSampleRecognizeBusinessCardsFromUri
-RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsFromUriAsync(businessCardUri).WaitForCompletionAsync();
+Uri businessCardUri = <businessCardUri>;
+
+RecognizeBusinessCardsOperation operation = await client.StartRecognizeBusinessCardsFromUriAsync(businessCardUri);
+Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+RecognizedFormCollection businessCards = operationResponse.Value;
 
 // To see the list of the supported fields returned by service and its corresponding types, consult:
 // https://aka.ms/formrecognizer/businesscardfields
 
 foreach (RecognizedForm businessCard in businessCards)
 {
-    FormField ContactNamesField;
-    if (businessCard.Fields.TryGetValue("ContactNames", out ContactNamesField))
+    if (businessCard.Fields.TryGetValue("ContactNames", out FormField ContactNamesField))
     {
         if (ContactNamesField.Value.ValueType == FieldValueType.List)
         {
@@ -42,25 +45,23 @@ foreach (RecognizedForm businessCard in businessCards)
                 {
                     IReadOnlyDictionary<string, FormField> contactNameFields = contactNameField.Value.AsDictionary();
 
-                    FormField firstNameField;
-                    if (contactNameFields.TryGetValue("FirstName", out firstNameField))
+                    if (contactNameFields.TryGetValue("FirstName", out FormField firstNameField))
                     {
                         if (firstNameField.Value.ValueType == FieldValueType.String)
                         {
                             string firstName = firstNameField.Value.AsString();
 
-                            Console.WriteLine($"    First Name: '{firstName}', with confidence {firstNameField.Confidence}");
+                            Console.WriteLine($"  First Name: '{firstName}', with confidence {firstNameField.Confidence}");
                         }
                     }
 
-                    FormField lastNameField;
-                    if (contactNameFields.TryGetValue("LastName", out lastNameField))
+                    if (contactNameFields.TryGetValue("LastName", out FormField lastNameField))
                     {
                         if (lastNameField.Value.ValueType == FieldValueType.String)
                         {
                             string lastName = lastNameField.Value.AsString();
 
-                            Console.WriteLine($"    Last Name: '{lastName}', with confidence {lastNameField.Confidence}");
+                            Console.WriteLine($"  Last Name: '{lastName}', with confidence {lastNameField.Confidence}");
                         }
                     }
                 }
@@ -68,8 +69,7 @@ foreach (RecognizedForm businessCard in businessCards)
         }
     }
 
-    FormField jobTitlesFields;
-    if (businessCard.Fields.TryGetValue("JobTitles", out jobTitlesFields))
+    if (businessCard.Fields.TryGetValue("JobTitles", out FormField jobTitlesFields))
     {
         if (jobTitlesFields.Value.ValueType == FieldValueType.List)
         {
@@ -79,14 +79,13 @@ foreach (RecognizedForm businessCard in businessCards)
                 {
                     string jobTitle = jobTitleField.Value.AsString();
 
-                    Console.WriteLine($"  Job Title: '{jobTitle}', with confidence {jobTitleField.Confidence}");
+                    Console.WriteLine($"Job Title: '{jobTitle}', with confidence {jobTitleField.Confidence}");
                 }
             }
         }
     }
 
-    FormField departmentFields;
-    if (businessCard.Fields.TryGetValue("Departments", out departmentFields))
+    if (businessCard.Fields.TryGetValue("Departments", out FormField departmentFields))
     {
         if (departmentFields.Value.ValueType == FieldValueType.List)
         {
@@ -96,14 +95,13 @@ foreach (RecognizedForm businessCard in businessCards)
                 {
                     string department = departmentField.Value.AsString();
 
-                    Console.WriteLine($"  Department: '{department}', with confidence {departmentField.Confidence}");
+                    Console.WriteLine($"Department: '{department}', with confidence {departmentField.Confidence}");
                 }
             }
         }
     }
 
-    FormField emailFields;
-    if (businessCard.Fields.TryGetValue("Emails", out emailFields))
+    if (businessCard.Fields.TryGetValue("Emails", out FormField emailFields))
     {
         if (emailFields.Value.ValueType == FieldValueType.List)
         {
@@ -113,14 +111,13 @@ foreach (RecognizedForm businessCard in businessCards)
                 {
                     string email = emailField.Value.AsString();
 
-                    Console.WriteLine($"  Email: '{email}', with confidence {emailField.Confidence}");
+                    Console.WriteLine($"Email: '{email}', with confidence {emailField.Confidence}");
                 }
             }
         }
     }
 
-    FormField websiteFields;
-    if (businessCard.Fields.TryGetValue("Websites", out websiteFields))
+    if (businessCard.Fields.TryGetValue("Websites", out FormField websiteFields))
     {
         if (websiteFields.Value.ValueType == FieldValueType.List)
         {
@@ -130,14 +127,13 @@ foreach (RecognizedForm businessCard in businessCards)
                 {
                     string website = websiteField.Value.AsString();
 
-                    Console.WriteLine($"  Website: '{website}', with confidence {websiteField.Confidence}");
+                    Console.WriteLine($"Website: '{website}', with confidence {websiteField.Confidence}");
                 }
             }
         }
     }
 
-    FormField mobilePhonesFields;
-    if (businessCard.Fields.TryGetValue("MobilePhones", out mobilePhonesFields))
+    if (businessCard.Fields.TryGetValue("MobilePhones", out FormField mobilePhonesFields))
     {
         if (mobilePhonesFields.Value.ValueType == FieldValueType.List)
         {
@@ -147,14 +143,13 @@ foreach (RecognizedForm businessCard in businessCards)
                 {
                     string mobilePhone = mobilePhoneField.Value.AsPhoneNumber();
 
-                    Console.WriteLine($"  Mobile phone number: '{mobilePhone}', with confidence {mobilePhoneField.Confidence}");
+                    Console.WriteLine($"Mobile phone number: '{mobilePhone}', with confidence {mobilePhoneField.Confidence}");
                 }
             }
         }
     }
 
-    FormField otherPhonesFields;
-    if (businessCard.Fields.TryGetValue("OtherPhones", out otherPhonesFields))
+    if (businessCard.Fields.TryGetValue("OtherPhones", out FormField otherPhonesFields))
     {
         if (otherPhonesFields.Value.ValueType == FieldValueType.List)
         {
@@ -164,14 +159,13 @@ foreach (RecognizedForm businessCard in businessCards)
                 {
                     string otherPhone = otherPhoneField.Value.AsPhoneNumber();
 
-                    Console.WriteLine($"  Other phone number: '{otherPhone}', with confidence {otherPhoneField.Confidence}");
+                    Console.WriteLine($"Other phone number: '{otherPhone}', with confidence {otherPhoneField.Confidence}");
                 }
             }
         }
     }
 
-    FormField faxesFields;
-    if (businessCard.Fields.TryGetValue("Faxes", out faxesFields))
+    if (businessCard.Fields.TryGetValue("Faxes", out FormField faxesFields))
     {
         if (faxesFields.Value.ValueType == FieldValueType.List)
         {
@@ -181,14 +175,13 @@ foreach (RecognizedForm businessCard in businessCards)
                 {
                     string fax = faxField.Value.AsPhoneNumber();
 
-                    Console.WriteLine($"  Fax phone number: '{fax}', with confidence {faxField.Confidence}");
+                    Console.WriteLine($"Fax phone number: '{fax}', with confidence {faxField.Confidence}");
                 }
             }
         }
     }
 
-    FormField addressesFields;
-    if (businessCard.Fields.TryGetValue("Addresses", out addressesFields))
+    if (businessCard.Fields.TryGetValue("Addresses", out FormField addressesFields))
     {
         if (addressesFields.Value.ValueType == FieldValueType.List)
         {
@@ -198,14 +191,13 @@ foreach (RecognizedForm businessCard in businessCards)
                 {
                     string address = addressField.Value.AsString();
 
-                    Console.WriteLine($"  Address: '{address}', with confidence {addressField.Confidence}");
+                    Console.WriteLine($"Address: '{address}', with confidence {addressField.Confidence}");
                 }
             }
         }
     }
 
-    FormField companyNamesFields;
-    if (businessCard.Fields.TryGetValue("CompanyNames", out companyNamesFields))
+    if (businessCard.Fields.TryGetValue("CompanyNames", out FormField companyNamesFields))
     {
         if (companyNamesFields.Value.ValueType == FieldValueType.List)
         {
@@ -215,7 +207,7 @@ foreach (RecognizedForm businessCard in businessCards)
                 {
                     string companyName = companyNameField.Value.AsString();
 
-                    Console.WriteLine($"  Company name: '{companyName}', with confidence {companyNameField.Confidence}");
+                    Console.WriteLine($"Company name: '{companyName}', with confidence {companyNameField.Confidence}");
                 }
             }
         }
@@ -227,13 +219,72 @@ foreach (RecognizedForm businessCard in businessCards)
 
 To recognize business cards from a given file, use the `StartRecognizeBusinessCards` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
-```C# Snippet:FormRecognizerRecognizeBusinessCardsFromFile
-using (FileStream stream = new FileStream(businessCardsPath, FileMode.Open))
+```C# Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
+string businessCardsPath = "<businessCardsPath>";
+
+using var stream = new FileStream(businessCardsPath, FileMode.Open);
+var options = new RecognizeBusinessCardsOptions() { Locale = "en-US" };
+
+RecognizeBusinessCardsOperation operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
+Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+RecognizedFormCollection businessCards = operationResponse.Value;
+
+// To see the list of the supported fields returned by service and its corresponding types, consult:
+// https://aka.ms/formrecognizer/businesscardfields
+
+foreach (RecognizedForm businessCard in businessCards)
 {
-    RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsAsync(stream).WaitForCompletionAsync();
-    /*
-     *
-     */
+    if (businessCard.Fields.TryGetValue("ContactNames", out FormField contactNamesField))
+    {
+        if (contactNamesField.Value.ValueType == FieldValueType.List)
+        {
+            foreach (FormField contactNameField in contactNamesField.Value.AsList())
+            {
+                Console.WriteLine($"Contact Name: {contactNameField.ValueData.Text}");
+
+                if (contactNameField.Value.ValueType == FieldValueType.Dictionary)
+                {
+                    IReadOnlyDictionary<string, FormField> contactNameFields = contactNameField.Value.AsDictionary();
+
+                    if (contactNameFields.TryGetValue("FirstName", out FormField firstNameField))
+                    {
+                        if (firstNameField.Value.ValueType == FieldValueType.String)
+                        {
+                            string firstName = firstNameField.Value.AsString();
+
+                            Console.WriteLine($"  First Name: '{firstName}', with confidence {firstNameField.Confidence}");
+                        }
+                    }
+
+                    if (contactNameFields.TryGetValue("LastName", out FormField lastNameField))
+                    {
+                        if (lastNameField.Value.ValueType == FieldValueType.String)
+                        {
+                            string lastName = lastNameField.Value.AsString();
+
+                            Console.WriteLine($"  Last Name: '{lastName}', with confidence {lastNameField.Confidence}");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (businessCard.Fields.TryGetValue("Emails", out FormField emailFields))
+    {
+        if (emailFields.Value.ValueType == FieldValueType.List)
+        {
+            foreach (FormField emailField in emailFields.Value.AsList())
+            {
+                if (emailField.Value.ValueType == FieldValueType.String)
+                {
+                    string email = emailField.Value.AsString();
+
+                    Console.WriteLine($"Email: '{email}', with confidence {emailField.Confidence}");
+                }
+            }
+        }
+    }
 }
 ```
 

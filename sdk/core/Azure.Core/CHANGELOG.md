@@ -1,6 +1,15 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.9.0-beta.1 (Unreleased)
+
+
+## 1.8.0 (2020-01-06)
+
+### Added
+- `AzureSasCredential` and its respective policy.
+
+### Key Bug Fixes
+- Avoid a causing and ignoring an exception when setting network stream timeout on .NET Core 
 
 ## 1.7.0 (2020-12-14)
 
