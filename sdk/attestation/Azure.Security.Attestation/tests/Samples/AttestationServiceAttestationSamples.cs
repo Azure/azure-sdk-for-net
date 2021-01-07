@@ -105,7 +105,7 @@ namespace Azure.Security.Attestation.Tests.Samples
     "dOd2FRR1RjZHBhMEVDCklRQ1V0OFNHdnhLbWpwY00vejBXUDlEdm84aDJrNWR1MWlXRGRCa0FuKzBpaUE9" +
     "PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCgA";
 
-        [RecordedTest]
+        [Test]
         public async Task AttestingAnSgxEnclave()
         {
             var endpoint = TestEnvironment.SharedEusTest;
@@ -140,7 +140,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             var result = policyResult.Value.AttestationPolicy;
         }
 
-        [RecordedTest]
+        [Test]
         public async Task SettingAttestationPolicy()
         {
             var endpoint = TestEnvironment.SharedEusTest;
