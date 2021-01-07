@@ -212,5 +212,77 @@ namespace Azure.MixedReality.RemoteRendering
                 throw;
             }
         }
+
+        /// <summary> Creates a new rendering session. </summary>
+        /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
+        /// <param name="body"> Settings of the session to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
+        public virtual Response<SessionProperties> CreateSession(string sessionId, CreateSessionBody body, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateSession)}");
+            scope.AddAttribute(nameof(sessionId), sessionId);
+            // TODO Add some other attributes?
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateSessionHeaders> response = _restClient.CreateSession(_accountId, sessionId, body, cancellationToken);
+
+                switch (response.Value)
+                {
+                    case SessionProperties p:
+                        return ResponseWithHeaders.FromValue(p, response.Headers, response.GetRawResponse());
+                    case ErrorResponse e:
+                        // TODO e.Error.Details
+                        // TODO e.Error.InnerError
+                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                    case null:
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a new rendering session. </summary>
+        /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
+        /// <param name="body"> Settings of the session to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<SessionProperties>> CreateSessionAsync(string sessionId, CreateSessionBody body, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateSessionAsync)}");
+            scope.AddAttribute(nameof(sessionId), sessionId);
+            // TODO Add some other attributes?
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateSessionHeaders> response = await _restClient.CreateSessionAsync(_accountId, sessionId, body, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Value)
+                {
+                    case SessionProperties p:
+                        return ResponseWithHeaders.FromValue(p, response.Headers, response.GetRawResponse());
+                    case ErrorResponse e:
+                        // TODO e.Error.Details
+                        // TODO e.Error.InnerError
+                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                    case null:
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }
