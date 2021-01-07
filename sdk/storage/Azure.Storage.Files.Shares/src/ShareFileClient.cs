@@ -1839,74 +1839,75 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        /// <summary>
-        /// The <see cref="StartDownloadAsync"/> operation starts to read or downloads a file from the system, including its metadata and properties.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
-        /// Get File</see>.
-        /// </summary>
-        /// <param name="range">
-        /// Optional. Only download the bytes of the file in the specified
-        /// range.  If not provided, download the entire file.
-        /// </param>
-        /// <param name="rangeGetContentHash">
-        /// When set to true and specified together with the <paramref name="range"/>,
-        /// the service returns the MD5 hash for the range, as long as the
-        /// range is less than or equal to 4 MB in size.  If this value is
-        /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
-        /// is thrown.
-        /// </param>
-        /// <param name="startOffset">
-        /// Optional. Starting offset to request - in the event of a retry.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
-        /// on creating the file.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{FlattenedStorageFileProperties}"/> describing the
-        /// downloaded file.  <see cref="FlattenedStorageFileProperties.Content"/> contains
-        /// the file's data.
-        /// </returns>
-        private async Task<(Response<FlattenedStorageFileProperties>, Stream)> StartDownloadAsync(
-            HttpRange range = default,
-            bool rangeGetContentHash = default,
-            long startOffset = 0,
-            ShareFileRequestConditions conditions = default,
-            bool async = true,
-            CancellationToken cancellationToken = default)
-        {
-            var pageRange = new HttpRange(
-                range.Offset + startOffset,
-                range.Length.HasValue ?
-                    range.Length.Value - startOffset :
-                    (long?)null);
-            Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
-            (Response<FlattenedStorageFileProperties> response, Stream stream) =
-                await FileRestClient.File.DownloadAsync(
-                    ClientDiagnostics,
-                    Pipeline,
-                    Uri,
-                    version: Version.ToVersionString(),
-                    range: pageRange.ToString(),
-                    rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
-                    leaseId: conditions?.LeaseId,
-                    async: async,
-                    cancellationToken: cancellationToken,
-                    operationName: $"{nameof(ShareFileClient)}.{nameof(Download)}")
-                    .ConfigureAwait(false);
-            Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
-            return (response, stream);
-        }
+        // TODO fix this.
+        ///// <summary>
+        ///// The <see cref="StartDownloadAsync"/> operation starts to read or downloads a file from the system, including its metadata and properties.
+        /////
+        ///// For more information, see
+        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        ///// Get File</see>.
+        ///// </summary>
+        ///// <param name="range">
+        ///// Optional. Only download the bytes of the file in the specified
+        ///// range.  If not provided, download the entire file.
+        ///// </param>
+        ///// <param name="rangeGetContentHash">
+        ///// When set to true and specified together with the <paramref name="range"/>,
+        ///// the service returns the MD5 hash for the range, as long as the
+        ///// range is less than or equal to 4 MB in size.  If this value is
+        ///// specified without <paramref name="range"/> or set to true when the
+        ///// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
+        ///// is thrown.
+        ///// </param>
+        ///// <param name="startOffset">
+        ///// Optional. Starting offset to request - in the event of a retry.
+        ///// </param>
+        ///// <param name="conditions">
+        ///// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        ///// on creating the file.
+        ///// </param>
+        ///// <param name="async">
+        ///// Whether to invoke the operation asynchronously.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{FlattenedStorageFileProperties}"/> describing the
+        ///// downloaded file.  <see cref="FlattenedStorageFileProperties.Content"/> contains
+        ///// the file's data.
+        ///// </returns>
+        //private async Task<(Response<FlattenedStorageFileProperties>, Stream)> StartDownloadAsync(
+        //    HttpRange range = default,
+        //    bool rangeGetContentHash = default,
+        //    long startOffset = 0,
+        //    ShareFileRequestConditions conditions = default,
+        //    bool async = true,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    var pageRange = new HttpRange(
+        //        range.Offset + startOffset,
+        //        range.Length.HasValue ?
+        //            range.Length.Value - startOffset :
+        //            (long?)null);
+        //    Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
+        //    (Response<FlattenedStorageFileProperties> response, Stream stream) =
+        //        await FileRestClient.File.DownloadAsync(
+        //            ClientDiagnostics,
+        //            Pipeline,
+        //            Uri,
+        //            version: Version.ToVersionString(),
+        //            range: pageRange.ToString(),
+        //            rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
+        //            leaseId: conditions?.LeaseId,
+        //            async: async,
+        //            cancellationToken: cancellationToken,
+        //            operationName: $"{nameof(ShareFileClient)}.{nameof(Download)}")
+        //            .ConfigureAwait(false);
+        //    Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
+        //    return (response, stream);
+        //}
         #endregion Download
 
         #region OpenRead
