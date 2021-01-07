@@ -8,8 +8,8 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/servicebus/ci.yml
-    - sdk/servicebus/Azure.Messaging.ServiceBus
+    - sdk/servicebus/ci.data.yml
+    - sdk/servicebus/Microsoft.Azure.ServiceBus
 
 pr:
   branches:
@@ -20,15 +20,15 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/servicebus/ci.yml
-    - sdk/servicebus/Azure.Messaging.ServiceBus
+    - sdk/servicebus/ci.data.yml
+    - sdk/servicebus/Microsoft.Azure.ServiceBus
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: client
+    SdkType: data
     ServiceDirectory: servicebus
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Messaging.ServiceBus
-      safeName: AzureMessagingServiceBus
+    - name: Microsoft.Azure.ServiceBus
+      safeName: MicrosoftAzureServiceBus
