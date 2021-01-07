@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
@@ -24,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private readonly BlobsOptions _blobsOptions;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly IContextSetter<IBlobWrittenWatcher> _blobWrittenWatcherSetter;
-        private readonly SharedQueueWatcher _messageEnqueuedWatcherSetter;
+        private readonly BlobTriggerQueueWriterFactory _blobTriggerQueueWriterFactory;
         private readonly ISharedContextProvider _sharedContextProvider;
         private readonly FunctionDescriptor _functionDescriptor;
         private readonly ILoggerFactory _loggerFactory;
@@ -34,6 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private readonly QueueServiceClient _dataQueueServiceClient;
         private readonly BlobContainerClient _container;
         private readonly IBlobPathSource _input;
+        private readonly BlobTriggerSource _blobTriggerSource;
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly IHostSingletonManager _singletonManager;
 
@@ -41,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             BlobsOptions blobsOptions,
             IWebJobsExceptionHandler exceptionHandler,
             IContextSetter<IBlobWrittenWatcher> blobWrittenWatcherSetter,
-            SharedQueueWatcher messageEnqueuedWatcherSetter,
+            BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             ISharedContextProvider sharedContextProvider,
             ILoggerFactory loggerFactory,
             FunctionDescriptor functionDescriptor,
@@ -51,14 +53,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             QueueServiceClient dataQueueServiceClient,
             BlobContainerClient container,
             IBlobPathSource input,
+            BlobTriggerSource triggerKind,
             ITriggeredFunctionExecutor executor,
             IHostSingletonManager singletonManager)
         {
             _hostIdProvider = hostIdProvider ?? throw new ArgumentNullException(nameof(hostIdProvider));
+            _blobTriggerQueueWriterFactory = blobTriggerQueueWriterFactory ?? throw new ArgumentNullException(nameof(blobTriggerQueueWriterFactory));
             _blobsOptions = blobsOptions ?? throw new ArgumentNullException(nameof(blobsOptions));
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             _blobWrittenWatcherSetter = blobWrittenWatcherSetter ?? throw new ArgumentNullException(nameof(blobWrittenWatcherSetter));
-            _messageEnqueuedWatcherSetter = messageEnqueuedWatcherSetter ?? throw new ArgumentNullException(nameof(messageEnqueuedWatcherSetter));
             _sharedContextProvider = sharedContextProvider ?? throw new ArgumentNullException(nameof(sharedContextProvider));
             _functionDescriptor = functionDescriptor ?? throw new ArgumentNullException(nameof(functionDescriptor));
             _loggerFactory = loggerFactory;
@@ -68,6 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _dataQueueServiceClient = dataQueueServiceClient ?? throw new ArgumentNullException(nameof(dataQueueServiceClient));
             _container = container ?? throw new ArgumentNullException(nameof(container));
             _input = input ?? throw new ArgumentNullException(nameof(input));
+            _blobTriggerSource = triggerKind;
             _executor = executor ?? throw new ArgumentNullException(nameof(executor));
             _singletonManager = singletonManager ?? throw new ArgumentNullException(nameof(singletonManager));
         }
@@ -76,7 +80,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             // Note that these clients are intentionally for the storage account rather than for the dashboard account.
             // We use the storage, not dashboard, account for the blob receipt container and blob trigger queues.
-            var primaryQueueClient = _hostQueueServiceClient;
             var primaryBlobClient = _hostBlobServiceClient;
 
             // Important: We're using the storage account of the function target here, which is the account that the
@@ -85,24 +88,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var targetBlobClient = _dataBlobServiceClient;
             var targetQueueClient = _dataQueueServiceClient;
 
+            BlobTriggerQueueWriter blobTriggerQueueWriter = await _blobTriggerQueueWriterFactory.CreateAsync(cancellationToken).ConfigureAwait(false);
+
             string hostId = await _hostIdProvider.GetHostIdAsync(cancellationToken).ConfigureAwait(false);
-            string hostBlobTriggerQueueName = HostQueueNames.GetHostBlobTriggerQueueName(hostId);
-            var hostBlobTriggerQueue = primaryQueueClient.GetQueueClient(hostBlobTriggerQueueName);
 
-            SharedQueueWatcher sharedQueueWatcher = _messageEnqueuedWatcherSetter;
+            SharedBlobListener sharedBlobListener = null;
+            // we do not need to create SharedBlobListener for EventGrid blob trigger
+            if (_blobTriggerSource == BlobTriggerSource.LogsAndContainerScan)
+            {
+                sharedBlobListener = _sharedContextProvider.GetOrCreateInstance<SharedBlobListener>(
+                    new SharedBlobListenerFactory(hostId, _hostBlobServiceClient, _exceptionHandler, _blobWrittenWatcherSetter, _loggerFactory.CreateLogger<BlobListener>()));
 
-            SharedBlobListener sharedBlobListener = _sharedContextProvider.GetOrCreateInstance<SharedBlobListener>(
-                new SharedBlobListenerFactory(hostId, _hostBlobServiceClient, _exceptionHandler, _blobWrittenWatcherSetter, _loggerFactory.CreateLogger<BlobListener>()));
-
-            // Register the blob container we wish to monitor with the shared blob listener.
-            await RegisterWithSharedBlobListenerAsync(hostId, sharedBlobListener, primaryBlobClient,
-                hostBlobTriggerQueue, sharedQueueWatcher, cancellationToken).ConfigureAwait(false);
+                // Register the blob container we wish to monitor with the shared blob listener.
+                await RegisterWithSharedBlobListenerAsync(hostId, sharedBlobListener, primaryBlobClient,
+                    blobTriggerQueueWriter, cancellationToken).ConfigureAwait(false);
+            }
 
             // Create a "bridge" listener that will monitor the blob
             // notification queue and dispatch to the target job function.
             SharedBlobQueueListener sharedBlobQueueListener = _sharedContextProvider.GetOrCreateInstance<SharedBlobQueueListener>(
-                new SharedBlobQueueListenerFactory(_hostQueueServiceClient, sharedQueueWatcher, hostBlobTriggerQueue,
-                    _blobsOptions, _exceptionHandler, _loggerFactory, sharedBlobListener.BlobWritterWatcher, _functionDescriptor));
+                new SharedBlobQueueListenerFactory(_hostQueueServiceClient, blobTriggerQueueWriter.SharedQueueWatcher, blobTriggerQueueWriter.QueueClient,
+                     _blobsOptions, _exceptionHandler, _loggerFactory, sharedBlobListener?.BlobWritterWatcher, _functionDescriptor, _blobTriggerSource));
             var queueListener = new BlobListener(sharedBlobQueueListener);
 
             // the client to use for the poison queue
@@ -113,10 +119,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // Register our function with the shared blob queue listener
             RegisterWithSharedBlobQueueListenerAsync(sharedBlobQueueListener, targetBlobClient, poisonQueueClient);
 
-            // check a flag in the shared context to see if we've created the singleton
-            // shared blob listener in this host instance
+            // Check a flag in the shared context to see if we've created the singleton
+            // shared blob listener in this host instance.
+            // We do not need SharedBlobListener for EventGrid blob trigger.
             object singletonListenerCreated = false;
-            if (!_sharedContextProvider.TryGetValue(SingletonBlobListenerScopeId, out singletonListenerCreated))
+            if (_blobTriggerSource == BlobTriggerSource.LogsAndContainerScan
+                && !_sharedContextProvider.TryGetValue(SingletonBlobListenerScopeId, out singletonListenerCreated))
             {
                 // Create a singleton shared blob listener, since we only
                 // want a single instance of the blob poll/scan logic to be running
@@ -141,12 +149,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             string hostId,
             SharedBlobListener sharedBlobListener,
             BlobServiceClient blobClient,
-            QueueClient hostBlobTriggerQueue,
-            IMessageEnqueuedWatcher messageEnqueuedWatcher,
+            BlobTriggerQueueWriter blobTriggerQueueWriter,
             CancellationToken cancellationToken)
         {
             BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(hostId, _functionDescriptor, _input, new BlobReceiptManager(blobClient),
-                new BlobTriggerQueueWriter(hostBlobTriggerQueue, messageEnqueuedWatcher), _loggerFactory.CreateLogger<BlobListener>());
+                blobTriggerQueueWriter, _loggerFactory.CreateLogger<BlobListener>());
 
             await sharedBlobListener.RegisterAsync(blobClient, _container, triggerExecutor, cancellationToken).ConfigureAwait(false);
         }
@@ -164,6 +171,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             };
 
             sharedBlobQueueListener.Register(_functionDescriptor.Id, registration);
+            sharedBlobQueueListener.Register(_functionDescriptor.ShortName, registration);
         }
     }
 }

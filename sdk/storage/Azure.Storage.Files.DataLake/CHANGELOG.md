@@ -4,6 +4,7 @@
 - Fixed bug where the Stream returned by DataLakeFileClient.OpenRead() would return a different Length after calls to Seek().
 - Added constructors taking connection string to DataLakeServiceClient, DataLakeFileSystemClient, DataLakeDirectoryClient, and DataLakeFileClient.
 - Fixed bug where DataLakePathClient.SetPermissions(), DataLakeFileClient.SetPermissions(), and DataLakeDirectoryClient.SetPermissions() could not just set Owner or Group.
+- Fixed bug where DataLakeDirectoryClient initialized with a Uri would throw a null exception when GetPaths() was called.
 
 ## 12.6.0-beta.1 (2020-12-07)
 - Added support for service version 2020-04-08.

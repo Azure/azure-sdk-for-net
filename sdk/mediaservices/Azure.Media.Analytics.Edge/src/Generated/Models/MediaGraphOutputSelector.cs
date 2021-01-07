@@ -13,14 +13,13 @@ namespace Azure.Media.Analytics.Edge.Models
         /// <summary> Initializes a new instance of MediaGraphOutputSelector. </summary>
         public MediaGraphOutputSelector()
         {
-            Property = "mediaType";
         }
 
         /// <summary> Initializes a new instance of MediaGraphOutputSelector. </summary>
         /// <param name="property"> The stream property to compare with. </param>
         /// <param name="operator"> The operator to compare streams by. </param>
         /// <param name="value"> Value to compare against. </param>
-        internal MediaGraphOutputSelector(string property, MediaGraphOutputSelectorOperator? @operator, string value)
+        internal MediaGraphOutputSelector(MediaGraphOutputSelectorProperty? property, MediaGraphOutputSelectorOperator? @operator, string value)
         {
             Property = property;
             Operator = @operator;
@@ -28,7 +27,7 @@ namespace Azure.Media.Analytics.Edge.Models
         }
 
         /// <summary> The stream property to compare with. </summary>
-        public string Property { get; set; }
+        public MediaGraphOutputSelectorProperty? Property { get; set; }
         /// <summary> The operator to compare streams by. </summary>
         public MediaGraphOutputSelectorOperator? Operator { get; set; }
         /// <summary> Value to compare against. </summary>

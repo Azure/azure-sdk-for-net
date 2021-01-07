@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class RestoreOperation : Operation<RestoreResult>
     {
-        private readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult> _operationInternal;
+        internal readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult, RestoreDetailsInternal> _operationInternal;
 
         /// <summary>
         /// Creates an instance of a RestoreOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
         public RestoreOperation(KeyVaultBackupClient client, string id)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult>(client, id);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult, RestoreDetailsInternal>(client, id);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
         internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders> response)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult>(client, response);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult, RestoreDetailsInternal>(client, response);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="value"/> or <paramref name="response"/> or <paramref name="client"/> is null.</exception>
         internal RestoreOperation(RestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult>(value, response, client);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult, RestoreDetailsInternal>(value, response, client);
         }
 
         /// <summary>
