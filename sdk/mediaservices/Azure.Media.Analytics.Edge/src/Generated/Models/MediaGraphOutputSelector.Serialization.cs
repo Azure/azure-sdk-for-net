@@ -18,12 +18,12 @@ namespace Azure.Media.Analytics.Edge.Models
             if (Optional.IsDefined(Property))
             {
                 writer.WritePropertyName("property");
-                writer.WriteStringValue(Property);
+                writer.WriteStringValue(Property.Value.ToString());
             }
             if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator");
-                writer.WriteStringValue(Operator.Value.ToSerialString());
+                writer.WriteStringValue(Operator.Value.ToString());
             }
             if (Optional.IsDefined(Value))
             {
@@ -35,14 +35,19 @@ namespace Azure.Media.Analytics.Edge.Models
 
         internal static MediaGraphOutputSelector DeserializeMediaGraphOutputSelector(JsonElement element)
         {
-            Optional<string> property = default;
+            Optional<MediaGraphOutputSelectorProperty> property = default;
             Optional<MediaGraphOutputSelectorOperator> @operator = default;
             Optional<string> value = default;
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("property"))
                 {
-                    property = property0.Value.GetString();
+                    if (property0.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property0.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    property = new MediaGraphOutputSelectorProperty(property0.Value.GetString());
                     continue;
                 }
                 if (property0.NameEquals("operator"))
@@ -52,7 +57,7 @@ namespace Azure.Media.Analytics.Edge.Models
                         property0.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    @operator = property0.Value.GetString().ToMediaGraphOutputSelectorOperator();
+                    @operator = new MediaGraphOutputSelectorOperator(property0.Value.GetString());
                     continue;
                 }
                 if (property0.NameEquals("value"))
@@ -61,7 +66,7 @@ namespace Azure.Media.Analytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphOutputSelector(property.Value, Optional.ToNullable(@operator), value.Value);
+            return new MediaGraphOutputSelector(Optional.ToNullable(property), Optional.ToNullable(@operator), value.Value);
         }
     }
 }
