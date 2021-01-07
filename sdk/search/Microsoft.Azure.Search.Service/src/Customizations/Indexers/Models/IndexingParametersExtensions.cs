@@ -138,7 +138,8 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Tells the indexer to assume that all blobs are delimited text files. Currently only comma-separated value (CSV) text files are supported.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-csv-blobs" /> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-csv-blobs">
+        /// How to index CSV blobs using delimitedText parsing mode and Blob indexers in Azure Cognitive Search</see> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="headers">
