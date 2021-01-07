@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Administration;
 using Azure.Communication.Administration.Models;
-using Azure.Communication;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -13,7 +12,7 @@ namespace Azure.Communication.Chat.Tests.samples
 {
     public partial class Sample1_ThreadOperations : SamplesBase<ChatTestEnvironment>
     {
-        // This sample demonstrates the operations that can be performed on a thread: create, get, getThreads, update and delete
+        // This sample demonstrates the operations that can be performed on a thread: create, get, getThreads, update and delete.
         [Test]
         public async Task CreateGetUpdateDeleteThreadAsync()
         {
@@ -30,13 +29,15 @@ namespace Azure.Communication.Chat.Tests.samples
                 new CommunicationTokenCredential(userToken));
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 
+            var threadCreator = new CommunicationUserIdentifier(threadCreatorId);
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-            var chatThreadMember = new ChatThreadMember(new CommunicationUserIdentifier(threadCreatorId))
+            var chatParticipant = new ChatParticipant(threadCreator)
             {
                 DisplayName = "UserDisplayName"
             };
-            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", members: new[] { chatThreadMember });
-            string threadId = chatThreadClient.Id;
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+            string threadId = createChatThreadResult.ChatThread.Id;
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetThread
@@ -53,18 +54,18 @@ namespace Azure.Communication.Chat.Tests.samples
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
             var topic = "new topic";
-            await chatThreadClient.UpdateThreadAsync(topic);
+            await chatThreadClient.UpdateTopicAsync(topic);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread
             await chatClient.DeleteChatThreadAsync(threadId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread
 
+            var josh = new ChatParticipant(new CommunicationUserIdentifier("invalid user"));
             #region Snippet:Azure_Communication_Chat_Tests_Samples_Troubleshooting
             try
             {
-                /*@@*/ chatThreadMember = new ChatThreadMember(new CommunicationUserIdentifier("invalid user"));
-                ChatThreadClient chatThreadClient_ = await chatClient.CreateChatThreadAsync(topic: "Hello world!", members: new[] { chatThreadMember });
+                CreateChatThreadResult createChatThreadErrorResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { josh });
             }
             catch (RequestFailedException ex)
             {

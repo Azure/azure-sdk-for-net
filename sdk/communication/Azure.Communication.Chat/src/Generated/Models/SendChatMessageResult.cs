@@ -8,7 +8,7 @@
 namespace Azure.Communication.Chat
 {
     /// <summary> Result of the send message operation. </summary>
-    public partial class SendChatMessageResult
+    internal partial class SendChatMessageResult
     {
         /// <summary> Initializes a new instance of SendChatMessageResult. </summary>
         internal SendChatMessageResult()
