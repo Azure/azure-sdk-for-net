@@ -44,7 +44,9 @@ function Find-Mapping([string]$path) {
 }
 
 try {
+    Write-Output "======== Start Code Validation ========"
     # Get RP Mapping
+    Write-Output "Start RP mapping "
     $RPMapping = [ordered]@{ }
     $readmePath = ''
     git clone https://github.com/Azure/azure-rest-api-specs.git ../azure-rest-api-specs
@@ -67,6 +69,7 @@ try {
     }
 
     # Get Metadata file path
+    Write-Output "Get changed RP metadata file path"
     $Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
     $changeList = $Response.Content | ConvertFrom-Json
     if ($Response.RelationLink.Count -ne 0) {
@@ -95,10 +98,12 @@ try {
             }
         }
     }
+    Write-Output "Changed RP list"
     foreach ($item in $folderName) {
         $rpName = $RPMapping.Get_Item($item)
         if ($rpName) {
             If ($rpIndex -notcontains $rpName) {
+                Write-Output $rpName
                 $rpIndex += $rpName
             }
         }
@@ -120,6 +125,7 @@ try {
     }
 
     # Invoke AutoRest
+    Write-Output "Start code-gen"
     foreach ($metaData in $mataPath) {
         $metaDataContent = ''
         try {
@@ -158,6 +164,7 @@ try {
     }
     
     # prevent warning related to EOL differences which triggers an exception for some reason
+    Write-Output "Start git diff"
     & git add -A
     $diffResult = @()
     $diffResult += git -c core.safecrlf=false diff HEAD --name-only --ignore-space-at-eol
