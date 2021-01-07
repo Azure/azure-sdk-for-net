@@ -5,7 +5,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
 using Azure.Communication.Administration.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
@@ -17,7 +19,7 @@ namespace Azure.Communication.Administration.Samples
     /// </summary>
     public partial class Sample1_CommunicationIdentityClient : CommunicationIdentityClientLiveTestBase
     {
-        public Sample1_CommunicationIdentityClient(bool isAsync): base(isAsync)
+        public Sample1_CommunicationIdentityClient(bool isAsync) : base(isAsync)
             => Matcher.IgnoredHeaders.Add("x-ms-content-sha256");
 
         [Test]
@@ -95,6 +97,28 @@ namespace Azure.Communication.Administration.Samples
             #region Snippet:DeleteACommunicationUser
             Response deleteResponse = client.DeleteUser(user);
             #endregion Snippet:DeleteACommunicationUser
+        }
+
+        [Test]
+        public async Task CreateIdentityWithToken()
+        {
+            var endpoint = TestEnvironment.EndpointString;
+            #region Snippet:CreateCommunicationIdentityFromToken
+            //@@var endpoint = "<endpoint_url>";
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            var client = new CommunicationIdentityClient(new Uri(endpoint), tokenCredential);
+            #endregion Snippet:CreateCommunicationIdentityFromToken
+
+            tokenCredential = (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential();
+            client = CreateInstrumentedCommunicationIdentityClientWithToken(tokenCredential);
+            try
+            {
+                Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
         }
 
         [Test]
