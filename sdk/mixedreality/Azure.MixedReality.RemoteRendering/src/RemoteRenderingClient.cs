@@ -354,5 +354,77 @@ namespace Azure.MixedReality.RemoteRendering
                 throw;
             }
         }
+
+        /// <summary> Updates a particular rendering session. </summary>
+        /// <param name="sessionId"> ID of a previously created session. </param>
+        /// <param name="body"> Settings of the session to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
+        public virtual Response<SessionProperties> UpdateSession(string sessionId, UpdateSessionBody body, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSession)}");
+            scope.AddAttribute(nameof(sessionId), sessionId);
+            // TODO Add some other attributes?
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<object, MixedRealityRemoteRenderingUpdateSessionHeaders> response = _restClient.UpdateSession(_accountId, sessionId, body, cancellationToken);
+
+                switch (response.Value)
+                {
+                    case SessionProperties p:
+                        return ResponseWithHeaders.FromValue(p, response.Headers, response.GetRawResponse());
+                    case ErrorResponse e:
+                        // TODO e.Error.Details
+                        // TODO e.Error.InnerError
+                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                    case null:
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Updates a particular rendering session. </summary>
+        /// <param name="sessionId"> ID of a previously created session. </param>
+        /// <param name="body"> Settings of the session to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<SessionProperties>> UpdateSessionAsync(string sessionId, UpdateSessionBody body, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSessionAsync)}");
+            scope.AddAttribute(nameof(sessionId), sessionId);
+            // TODO Add some other attributes?
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<object, MixedRealityRemoteRenderingUpdateSessionHeaders> response = await _restClient.UpdateSessionAsync(_accountId, sessionId, body, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Value)
+                {
+                    case SessionProperties p:
+                        return ResponseWithHeaders.FromValue(p, response.Headers, response.GetRawResponse());
+                    case ErrorResponse e:
+                        // TODO e.Error.Details
+                        // TODO e.Error.InnerError
+                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                    case null:
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }
