@@ -2,6 +2,8 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <!-- Include an explicit Microsoft.Bcl.AsyncInterfaces reference in case a -->
+    <PackageReference Condition="'$(TargetFramework)' != 'net5.0'" Include="Microsoft.Bcl.AsyncInterfaces" />
   </ItemGroup>
 
   <!-- Nullability -->
