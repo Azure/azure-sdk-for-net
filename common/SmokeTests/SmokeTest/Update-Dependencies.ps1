@@ -1,5 +1,6 @@
 param(
     [string]$ProjectFile = './SmokeTest.csproj',
+    [string]$ArtifactsPath,
     [switch]$SkipVersionValidation,
     [switch]$CI,
     [switch]$Daily
@@ -46,6 +47,26 @@ function GetLatestPackage([array]$packageList, [string]$packageName) {
     return $sorted | Select-Object -First 1
 }
 
+function GetPackageVersion([array]$packageList, [string]$packageName) {
+    if ($Daily -or -not $ArtifactsPath) {
+        return GetLatestPackage $packageList $packageName
+    }
+
+    if (-not (Test-Path "$ArtifactsPath/$packageName")) {
+      Write-Host "No build artifact directory for smoke test dependency $packageName. Using latest upstream version."
+      return GetLatestPackage $packageList $packageName
+    }
+
+    $pkg = Get-ChildItem "$ArtifactsPath/$packageName/*.nupkg" | Select-Object -First 1
+    if ($pkg -match "$packageName\.(.*)\.nupkg") {
+        $version = $matches[1]
+        Write-Host "Found build artifact for $packageName with version $version. Using artifact version."
+        return $version
+    } else {
+      throw "No build artifact packages found for smoke test dependency $packageName."
+    }
+}
+
 function SetLatestPackageVersions([xml]$csproj) {
     # For each PackageReference in the csproj, find the latest version of that
     # package from the dev feed which is not in the excluded list.
@@ -53,12 +74,12 @@ function SetLatestPackageVersions([xml]$csproj) {
     $csproj |
         Select-XML $PACKAGE_REFERENCE_XPATH |
         Where-Object { $_.Node.HasAttribute('Version') } |
-        Where-Object { -not $_.Node.HasAttribute('DoNotUpdate') }
+        Where-Object { $Daily -and -not $_.Node.HasAttribute('OverrideDailyVersion') }
         ForEach-Object {
             # Resolve package version:
             $packageName = $_.Node.Include
 
-            $targetVersion = GetLatestPackage $allPackages $packageName
+            $targetVersion = GetPackageVersion $allPackages $packageName
 
             if ($null -eq $targetVersion) {
                 return
