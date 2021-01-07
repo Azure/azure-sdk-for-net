@@ -56,7 +56,10 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="resourceState">Resource status of the policy.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public WebApplicationFirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), CustomRuleList customRules = default(CustomRuleList), ManagedRuleSetList managedRules = default(ManagedRuleSetList), IList<FrontendEndpointLink> frontendEndpointLinks = default(IList<FrontendEndpointLink>), IList<RoutingRuleLink> routingRuleLinks = default(IList<RoutingRuleLink>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
+        /// <param name="sku">The pricing tier of web application firewall
+        /// policy. Defaults to Classic_AzureFrontDoor if not
+        /// specified.</param>
+        public WebApplicationFirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), CustomRuleList customRules = default(CustomRuleList), ManagedRuleSetList managedRules = default(ManagedRuleSetList), IList<FrontendEndpointLink> frontendEndpointLinks = default(IList<FrontendEndpointLink>), IList<RoutingRuleLink> routingRuleLinks = default(IList<RoutingRuleLink>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string), Sku sku = default(Sku))
             : base(id, name, type, location, tags)
         {
             PolicySettings = policySettings;
@@ -67,6 +70,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             Etag = etag;
+            Sku = sku;
             CustomInit();
         }
 
@@ -129,6 +133,13 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pricing tier of web application firewall policy.
+        /// Defaults to Classic_AzureFrontDoor if not specified.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
         /// <summary>
         /// Validate the object.
