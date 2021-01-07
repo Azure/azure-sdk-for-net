@@ -16,7 +16,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary> Initializes a new instance of ConversionInformation. </summary>
         /// <param name="id"> . </param>
         /// <param name="settings"> Settings for where to retrieve input files from and where to write output files. </param>
-        /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
+        /// <param name="error"> The error object containing details about the conversion failure. </param>
         /// <param name="status"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="settings"/> is null. </exception>
         internal ConversionInformation(string id, ConversionSettings settings, ErrorDetails error, CreatedByType status)
@@ -40,7 +40,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="id"> . </param>
         /// <param name="settings"> Settings for where to retrieve input files from and where to write output files. </param>
         /// <param name="output"> . </param>
-        /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
+        /// <param name="error"> The error object containing details about the conversion failure. </param>
         /// <param name="status"> . </param>
         /// <param name="creationTime"> . </param>
         internal ConversionInformation(string id, ConversionSettings settings, ConversionOutput output, ErrorDetails error, CreatedByType status, DateTimeOffset? creationTime)
@@ -57,7 +57,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary> Settings for where to retrieve input files from and where to write output files. </summary>
         public ConversionSettings Settings { get; }
         public ConversionOutput Output { get; }
-        /// <summary> The error object containing details about the rendering session startup failure. </summary>
+        /// <summary> The error object containing details about the conversion failure. </summary>
         public ErrorDetails Error { get; }
         public CreatedByType Status { get; }
         public DateTimeOffset? CreationTime { get; }

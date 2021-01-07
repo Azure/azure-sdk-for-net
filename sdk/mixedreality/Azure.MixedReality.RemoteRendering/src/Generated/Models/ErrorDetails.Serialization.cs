@@ -19,7 +19,7 @@ namespace Azure.MixedReality.RemoteRendering
             Optional<string> message = default;
             Optional<IReadOnlyList<ErrorDetails>> details = default;
             Optional<string> target = default;
-            Optional<ErrorDetails> innererror = default;
+            Optional<ErrorDetails> innerError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -52,18 +52,18 @@ namespace Azure.MixedReality.RemoteRendering
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("innererror"))
+                if (property.NameEquals("innerError"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innererror = DeserializeErrorDetails(property.Value);
+                    innerError = DeserializeErrorDetails(property.Value);
                     continue;
                 }
             }
-            return new ErrorDetails(code.Value, message.Value, Optional.ToList(details), target.Value, innererror.Value);
+            return new ErrorDetails(code.Value, message.Value, Optional.ToList(details), target.Value, innerError.Value);
         }
     }
 }

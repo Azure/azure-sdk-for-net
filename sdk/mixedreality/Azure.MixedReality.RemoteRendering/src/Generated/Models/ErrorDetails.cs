@@ -24,14 +24,14 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="target"> The target of the error. </param>
-        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal ErrorDetails(string code, string message, IReadOnlyList<ErrorDetails> details, string target, ErrorDetails innererror)
+        /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
+        internal ErrorDetails(string code, string message, IReadOnlyList<ErrorDetails> details, string target, ErrorDetails innerError)
         {
             Code = code;
             Message = message;
             Details = details;
             Target = target;
-            Innererror = innererror;
+            InnerError = innerError;
         }
 
         /// <summary> Error code. </summary>
@@ -43,6 +43,6 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary> The target of the error. </summary>
         public string Target { get; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
-        public ErrorDetails Innererror { get; }
+        public ErrorDetails InnerError { get; }
     }
 }
