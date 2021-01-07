@@ -63,7 +63,7 @@ function GetPackageVersion([array]$packageList, [string]$packageName) {
         Write-Host "Found build artifact for $packageName with version $version. Using artifact version."
         return $version
     } else {
-      throw "No build artifact packages found for smoke test dependency $packageName."
+      throw "No build artifact packages found for smoke test dependency '$packageName'."
     }
 }
 
@@ -72,10 +72,10 @@ function SetLatestPackageVersions([xml]$csproj) {
     # package from the dev feed which is not in the excluded list.
     $allPackages = GetAllPackages
     $csproj |
-        Select-XML $PACKAGE_REFERENCE_XPATH |
-        Where-Object { $_.Node.HasAttribute('Version') } |
-        Where-Object { $Daily -and -not $_.Node.HasAttribute('OverrideDailyVersion') }
-        ForEach-Object {
+        Select-XML $PACKAGE_REFERENCE_XPATH
+        | Where-Object { $_.Node.HasAttribute('Version') }
+        | Where-Object { -not ($Daily -and $_.Node.HasAttribute('OverrideDailyVersion')) }
+        | ForEach-Object {
             # Resolve package version:
             $packageName = $_.Node.Include
 
