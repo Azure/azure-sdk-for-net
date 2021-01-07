@@ -426,5 +426,83 @@ namespace Azure.MixedReality.RemoteRendering
                 throw;
             }
         }
+
+        /// <summary> Stops a particular rendering session. </summary>
+        /// <param name="sessionId"> ID of the session to stop. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
+        public virtual Response StopSession(string sessionId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StopSession)}");
+            scope.AddAttribute(nameof(sessionId), sessionId);
+            // TODO Add some other attributes?
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<ErrorResponse, MixedRealityRemoteRenderingStopSessionHeaders> response = _restClient.StopSession(_accountId, sessionId, cancellationToken);
+
+                if (response.GetRawResponse().Status == 206)
+                {
+                    // Success.
+                    return response;
+                }
+
+                switch (response.Value)
+                {
+                    case ErrorResponse e:
+                        // TODO e.Error.Details
+                        // TODO e.Error.InnerError
+                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                    case null:
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Stops a particular rendering session. </summary>
+        /// <param name="sessionId"> ID of the session to stop. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
+        public virtual async Task<Response> StopSessionAsync(string sessionId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StopSessionAsync)}");
+            scope.AddAttribute(nameof(sessionId), sessionId);
+            // TODO Add some other attributes?
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<ErrorResponse, MixedRealityRemoteRenderingStopSessionHeaders> response = await _restClient.StopSessionAsync(_accountId, sessionId, cancellationToken).ConfigureAwait(false);
+
+                if (response.GetRawResponse().Status == 206)
+                {
+                    // Success.
+                    return response;
+                }
+
+                switch (response.Value)
+                {
+                    case ErrorResponse e:
+                        // TODO e.Error.Details
+                        // TODO e.Error.InnerError
+                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                    case null:
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }
