@@ -1,10 +1,10 @@
 # Release History
 
-## 1.0.0-preview.2 (2020-11-10)
+## 1.0.0 (2021-01-06)
 
 ### Added
-- `Newtonsoft.Json.JsonConverter` implementation for the `ETag`
 
+- `Newtonsoft.Json.JsonConverter` implementation for the `ETag`
 
 ## 1.0.0-preview.1 (2020-08-07)
 
