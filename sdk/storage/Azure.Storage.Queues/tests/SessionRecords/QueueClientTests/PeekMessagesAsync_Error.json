@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-187cc466-3b56-9976-7806-da468e1cf290/messages",
+      "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-187cc466-3b56-9976-7806-da468e1cf290/messages?peekonly=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-59dd35c706ddc845afa636e93bf5d389-19a184a7e4f35c48-00",
+        "traceparent": "00-c7d062afea1b94489dfa833537c423e1-6ee06fdaff0d3d46-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.6.0-alpha.20210105.1",
+          "azsdk-net-Storage.Queues/12.6.0-alpha.20210107.1",
           "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "b0c91c3a-f894-723a-9bc3-de6d892940fe",
-        "x-ms-date": "Wed, 06 Jan 2021 02:03:39 GMT",
+        "x-ms-date": "Thu, 07 Jan 2021 19:23:36 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -21,20 +21,20 @@
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
-        "Date": "Wed, 06 Jan 2021 02:03:39 GMT",
+        "Date": "Thu, 07 Jan 2021 19:23:35 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Vary": "Origin",
         "x-ms-error-code": "QueueNotFound",
-        "x-ms-request-id": "bab0a261-0003-0000-6fd0-e30a0a000000",
+        "x-ms-request-id": "d9127012-7003-002d-642a-e589ca000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EQueueNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified queue does not exist.\n",
-        "RequestId:bab0a261-0003-0000-6fd0-e30a0a000000\n",
-        "Time:2021-01-06T02:03:40.2095815Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:d9127012-7003-002d-642a-e589ca000000\n",
+        "Time:2021-01-07T19:23:36.1421617Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],

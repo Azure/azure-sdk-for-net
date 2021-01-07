@@ -19,7 +19,6 @@ namespace Azure.Storage.Queues
     internal partial class QueueRestClient
     {
         private string url;
-        private string queueName;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -28,18 +27,13 @@ namespace Azure.Storage.Queues
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, queue or message that is the targe of the desired operation. </param>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="queueName"/>, or <paramref name="version"/> is null. </exception>
-        public QueueRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string queueName, string version = "2018-03-28")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        public QueueRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-03-28")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
-            }
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
             }
             if (version == null)
             {
@@ -47,13 +41,12 @@ namespace Azure.Storage.Queues
             }
 
             this.url = url;
-            this.queueName = queueName;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata)
+        internal HttpMessage CreateCreateRequest(string queueName, int? timeout, IDictionary<string, string> metadata)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -77,12 +70,19 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> creates a new queue under the given account. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue&apos;s metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueueCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public async Task<ResponseWithHeaders<QueueCreateHeaders>> CreateAsync(string queueName, int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateCreateRequest(queueName, timeout, metadata);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueueCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -96,12 +96,19 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> creates a new queue under the given account. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue&apos;s metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueueCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public ResponseWithHeaders<QueueCreateHeaders> Create(string queueName, int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateCreateRequest(queueName, timeout, metadata);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueueCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -114,7 +121,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(int? timeout)
+        internal HttpMessage CreateDeleteRequest(string queueName, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -134,11 +141,18 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> operation permanently deletes the specified queue. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueueDeleteHeaders>> DeleteAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public async Task<ResponseWithHeaders<QueueDeleteHeaders>> DeleteAsync(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateDeleteRequest(queueName, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueueDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -151,11 +165,18 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> operation permanently deletes the specified queue. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueueDeleteHeaders> Delete(int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public ResponseWithHeaders<QueueDeleteHeaders> Delete(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateDeleteRequest(queueName, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueueDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -167,7 +188,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout)
+        internal HttpMessage CreateGetPropertiesRequest(string queueName, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -188,11 +209,18 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Retrieves user-defined metadata and queue properties on the specified queue. Metadata is associated with the queue as name-values pairs. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueueGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public async Task<ResponseWithHeaders<QueueGetPropertiesHeaders>> GetPropertiesAsync(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateGetPropertiesRequest(queueName, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueueGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -205,11 +233,18 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Retrieves user-defined metadata and queue properties on the specified queue. Metadata is associated with the queue as name-values pairs. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueueGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public ResponseWithHeaders<QueueGetPropertiesHeaders> GetProperties(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateGetPropertiesRequest(queueName, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueueGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -221,7 +256,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata)
+        internal HttpMessage CreateSetMetadataRequest(string queueName, int? timeout, IDictionary<string, string> metadata)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -246,12 +281,19 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue&apos;s metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueueSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public async Task<ResponseWithHeaders<QueueSetMetadataHeaders>> SetMetadataAsync(string queueName, int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateSetMetadataRequest(queueName, timeout, metadata);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueueSetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -264,12 +306,19 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue&apos;s metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueueSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public ResponseWithHeaders<QueueSetMetadataHeaders> SetMetadata(string queueName, int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateSetMetadataRequest(queueName, timeout, metadata);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueueSetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -281,7 +330,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateGetAccessPolicyRequest(int? timeout)
+        internal HttpMessage CreateGetAccessPolicyRequest(string queueName, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -302,11 +351,18 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> returns details about any stored access policies specified on the queue that may be used with Shared Access Signatures. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders>> GetAccessPolicyAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public async Task<ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders>> GetAccessPolicyAsync(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccessPolicyRequest(timeout);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateGetAccessPolicyRequest(queueName, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueueGetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -332,11 +388,18 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> returns details about any stored access policies specified on the queue that may be used with Shared Access Signatures. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders> GetAccessPolicy(int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders> GetAccessPolicy(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccessPolicyRequest(timeout);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateGetAccessPolicyRequest(queueName, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueueGetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -361,7 +424,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateSetAccessPolicyRequest(int? timeout, IEnumerable<QueueSignedIdentifier> queueAcl)
+        internal HttpMessage CreateSetAccessPolicyRequest(string queueName, int? timeout, IEnumerable<QueueSignedIdentifier> queueAcl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -394,12 +457,19 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> sets stored access policies for the queue that may be used with Shared Access Signatures. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="queueAcl"> the acls for the queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueueSetAccessPolicyHeaders>> SetAccessPolicyAsync(int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public async Task<ResponseWithHeaders<QueueSetAccessPolicyHeaders>> SetAccessPolicyAsync(string queueName, int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetAccessPolicyRequest(timeout, queueAcl);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateSetAccessPolicyRequest(queueName, timeout, queueAcl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueueSetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -412,12 +482,19 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> sets stored access policies for the queue that may be used with Shared Access Signatures. </summary>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="queueAcl"> the acls for the queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueueSetAccessPolicyHeaders> SetAccessPolicy(int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public ResponseWithHeaders<QueueSetAccessPolicyHeaders> SetAccessPolicy(string queueName, int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetAccessPolicyRequest(timeout, queueAcl);
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+
+            using var message = CreateSetAccessPolicyRequest(queueName, timeout, queueAcl);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueueSetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)

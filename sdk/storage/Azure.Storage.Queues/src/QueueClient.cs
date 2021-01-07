@@ -259,19 +259,16 @@ namespace Azure.Storage.Queues
                 _clientDiagnostics,
                 _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                _name,
                 _version.ToVersionString());
             _messagesRestClient = new MessagesRestClient(
                 _clientDiagnostics,
                 _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                _name,
                 _version.ToVersionString());
             _messageIdRestClient = new MessageIdRestClient(
                 _clientDiagnostics,
                 _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                _name,
                 _version.ToVersionString());
             AssertEncodingForEncryption();
         }
@@ -384,19 +381,16 @@ namespace Azure.Storage.Queues
                 _clientDiagnostics,
                 _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                _name,
                 _version.ToVersionString());
             _messagesRestClient = new MessagesRestClient(
                 _clientDiagnostics,
                 _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                _name,
                 _version.ToVersionString());
             _messageIdRestClient = new MessageIdRestClient(
                 _clientDiagnostics,
                 _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                _name,
                 _version.ToVersionString());
             AssertEncodingForEncryption();
         }
@@ -455,19 +449,16 @@ namespace Azure.Storage.Queues
                 _clientDiagnostics,
                 _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                _name,
                 _version.ToVersionString());
             _messagesRestClient = new MessagesRestClient(
                 _clientDiagnostics,
                 _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                _name,
                 _version.ToVersionString());
             _messageIdRestClient = new MessageIdRestClient(
                 _clientDiagnostics,
                 _pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                _name,
                 _version.ToVersionString());
             AssertEncodingForEncryption();
         }
@@ -599,6 +590,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         reponse = await _queueRestClient.CreateAsync(
+                            _name,
                             timeout: null,
                             metadata,
                             cancellationToken)
@@ -607,6 +599,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         reponse = _queueRestClient.Create(
+                            _name,
                             timeout: null,
                             metadata,
                             cancellationToken);
@@ -1064,6 +1057,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _queueRestClient.DeleteAsync(
+                            _name,
                             timeout: null,
                             cancellationToken)
                             .ConfigureAwait(false);
@@ -1071,6 +1065,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _queueRestClient.Delete(
+                            _name,
                             timeout: null,
                             cancellationToken);
                     }
@@ -1175,6 +1170,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _queueRestClient.GetPropertiesAsync(
+                            _name,
                             timeout: null,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1182,6 +1178,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _queueRestClient.GetProperties(
+                            _name,
                             timeout: null,
                             cancellationToken: cancellationToken);
                     }
@@ -1303,6 +1300,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _queueRestClient.SetMetadataAsync(
+                            _name,
                             timeout: default,
                             metadata,
                             cancellationToken)
@@ -1311,6 +1309,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _queueRestClient.SetMetadata(
+                            _name,
                             timeout: default,
                             metadata,
                             cancellationToken);
@@ -1413,6 +1412,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _queueRestClient.GetAccessPolicyAsync(
+                            _name,
                             timeout: null,
                             cancellationToken)
                             .ConfigureAwait(false);
@@ -1420,6 +1420,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _queueRestClient.GetAccessPolicy(
+                            _name,
                             timeout: null,
                             cancellationToken);
                     }
@@ -1536,6 +1537,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _queueRestClient.SetAccessPolicyAsync(
+                            _name,
                             timeout: null,
                             permissions,
                             cancellationToken)
@@ -1544,6 +1546,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _queueRestClient.SetAccessPolicy(
+                            _name,
                             timeout: null,
                             permissions,
                             cancellationToken);
@@ -1643,6 +1646,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messagesRestClient.ClearAsync(
+                            _name,
                             timeout: null,
                             cancellationToken)
                             .ConfigureAwait(false);
@@ -1650,6 +1654,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _messagesRestClient.Clear(
+                            _name,
                             timeout: null,
                             cancellationToken);
                     }
@@ -2046,6 +2051,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messagesRestClient.EnqueueAsync(
+                            _name,
                             new QueueMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, _messageEncoding) },
                             (int?)visibilityTimeout?.TotalSeconds,
                             (int?)timeToLive?.TotalSeconds,
@@ -2056,6 +2062,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _messagesRestClient.Enqueue(
+                            _name,
                             new QueueMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, _messageEncoding) },
                             (int?)visibilityTimeout?.TotalSeconds,
                             (int?)timeToLive?.TotalSeconds,
@@ -2264,6 +2271,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messagesRestClient.DequeueAsync(
+                            _name,
                             maxMessages,
                             (int?)visibilityTimeout?.TotalSeconds,
                             timeout: null,
@@ -2273,6 +2281,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _messagesRestClient.Dequeue(
+                            _name,
                             maxMessages,
                             (int?)visibilityTimeout?.TotalSeconds,
                             timeout: null,
@@ -2398,6 +2407,7 @@ namespace Azure.Storage.Queues
                 if (async)
                 {
                     response = await _messagesRestClient.DequeueAsync(
+                        _name,
                         numberOfMessages: 1,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         timeout: null,
@@ -2407,6 +2417,7 @@ namespace Azure.Storage.Queues
                 else
                 {
                     response = _messagesRestClient.Dequeue(
+                        _name,
                         numberOfMessages: 1,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         timeout: null,
@@ -2601,6 +2612,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messagesRestClient.PeekAsync(
+                            _name,
                             maxMessages,
                             timeout: null,
                             cancellationToken)
@@ -2609,6 +2621,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _messagesRestClient.Peek(
+                            _name,
                             maxMessages,
                             timeout: null,
                             cancellationToken);
@@ -2756,6 +2769,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messageIdRestClient.DeleteAsync(
+                            _name,
                             messageId,
                             popReceipt,
                             timeout: null,
@@ -2765,6 +2779,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _messageIdRestClient.Delete(
+                            _name,
                             messageId,
                             popReceipt,
                             timeout: null,
@@ -3066,6 +3081,7 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messageIdRestClient.UpdateAsync(
+                            _name,
                             messageId,
                             popReceipt,
                             (int)visibilityTimeout.TotalSeconds,
@@ -3077,6 +3093,7 @@ namespace Azure.Storage.Queues
                     else
                     {
                         response = _messageIdRestClient.Update(
+                            _name,
                             messageId,
                             popReceipt,
                             (int)visibilityTimeout.TotalSeconds,

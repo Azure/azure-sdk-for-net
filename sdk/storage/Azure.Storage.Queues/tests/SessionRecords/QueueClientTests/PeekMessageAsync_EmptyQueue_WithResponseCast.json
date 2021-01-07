@@ -6,13 +6,13 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-8bc7f5a7e33bce45bd18b49e82d15c1d-1d07d129088a0d42-00",
+        "traceparent": "00-6ee0d2cd81ccd7479dc3f0dd812f9076-316ca87e546ced4f-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.6.0-alpha.20210105.1",
+          "azsdk-net-Storage.Queues/12.6.0-alpha.20210107.1",
           "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "35cf3591-0840-09e1-cb2e-cd3d34ec2d38",
-        "x-ms-date": "Wed, 06 Jan 2021 02:03:37 GMT",
+        "x-ms-date": "Thu, 07 Jan 2021 19:23:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -20,29 +20,29 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 06 Jan 2021 02:03:38 GMT",
+        "Date": "Thu, 07 Jan 2021 19:23:33 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "23b83a89-b003-0056-04d0-e3e27a000000",
+        "x-ms-request-id": "45f22b66-0003-0022-5f2a-e5643c000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-c8b05769-4be0-7c7e-5515-d99af9d7a00b/messages?numofmessages=1",
+      "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-c8b05769-4be0-7c7e-5515-d99af9d7a00b/messages?peekonly=true\u0026numofmessages=1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-e8965f0d08803a41b182e3bdbbad4d6b-4de6979c78e15b4b-00",
+        "traceparent": "00-08028a43872cef4ca8dd7a404aa0dbfb-b2fbbcad434a834b-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.6.0-alpha.20210105.1",
+          "azsdk-net-Storage.Queues/12.6.0-alpha.20210107.1",
           "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "c308bd0e-6a08-3bcb-c7e8-b8648a4a720c",
-        "x-ms-date": "Wed, 06 Jan 2021 02:03:38 GMT",
+        "x-ms-date": "Thu, 07 Jan 2021 19:23:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -51,14 +51,14 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/xml",
-        "Date": "Wed, 06 Jan 2021 02:03:38 GMT",
+        "Date": "Thu, 07 Jan 2021 19:23:34 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "Vary": "Origin",
-        "x-ms-request-id": "23b83a94-b003-0056-0cd0-e3e27a000000",
+        "x-ms-request-id": "45f22b6f-0003-0022-642a-e5643c000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList /\u003E"
@@ -69,13 +69,13 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-c4b9de6417b3f74e90cf0acc1ddcb203-82d180503cdf1748-00",
+        "traceparent": "00-816c37a3eaa36d44bfb3092c908684db-ad8012e97dfbf14b-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.6.0-alpha.20210105.1",
+          "azsdk-net-Storage.Queues/12.6.0-alpha.20210107.1",
           "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "772e7461-6ae3-b42f-81f8-c366f12d8785",
-        "x-ms-date": "Wed, 06 Jan 2021 02:03:38 GMT",
+        "x-ms-date": "Thu, 07 Jan 2021 19:23:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -83,12 +83,12 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 06 Jan 2021 02:03:38 GMT",
+        "Date": "Thu, 07 Jan 2021 19:23:34 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "23b83aa0-b003-0056-17d0-e3e27a000000",
+        "x-ms-request-id": "45f22b7c-0003-0022-702a-e5643c000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
