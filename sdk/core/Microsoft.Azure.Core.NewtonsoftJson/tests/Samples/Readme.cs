@@ -7,8 +7,6 @@ using Azure;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents;
-using Azure.Search.Documents.Indexes;
-using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
