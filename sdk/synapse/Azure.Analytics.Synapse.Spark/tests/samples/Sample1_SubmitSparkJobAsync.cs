@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:GetSparkBatchJobAsync
-            SparkBatchOperation getOperation = await client.StartGetSparkBatchJobAsync (jobCreated.Id);
+            SparkBatchOperation getOperation = await client.StartGetSparkBatchJobAsync(jobCreated.Id);
             SparkBatchJob retrievedJob = await getOperation.WaitForCompletionAsync();
 
             Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
