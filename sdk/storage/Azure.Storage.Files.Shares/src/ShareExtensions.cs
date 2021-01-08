@@ -163,5 +163,41 @@ namespace Azure.Storage.Files.Shares
 
             return (ShareProtocols)result;
         }
+
+        // TODO
+        internal static ShareDirectoryInfo ToShareDirectoryInfo(this DirectoryCreateHeaders directoryCreateHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareDirectoryProperties ToShareDirectoryProperties(this DirectoryGetPropertiesHeaders directoryGetPropertiesHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareDirectoryInfo ToShareDirectoryInfo(this DirectorySetPropertiesHeaders directorySetPropertiesHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareDirectoryInfo ToShareDirectoryInfo(this DirectorySetMetadataHeaders directorySetMetadataHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static StorageHandlesSegment ToStorageHandlesSegment(this ListHandlesResponse listHandlesResponse)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this DirectoryForceCloseHandlesHeaders directoryForceCloseHandlesHeaders)
+        {
+            return null;
+        }
     }
 }
