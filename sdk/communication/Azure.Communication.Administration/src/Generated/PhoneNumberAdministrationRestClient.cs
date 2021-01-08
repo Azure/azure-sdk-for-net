@@ -1025,7 +1025,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
-        public async Task<Response<PhoneNumberReleaseResponse>> ReleasePhoneNumbersAsync(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
+        public async Task<Response<ReleaseResponse>> ReleasePhoneNumbersAsync(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
         {
             if (phoneNumbers == null)
             {
@@ -1038,9 +1038,9 @@ namespace Azure.Communication.Administration
             {
                 case 200:
                     {
-                        PhoneNumberReleaseResponse value = default;
+                        ReleaseResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PhoneNumberReleaseResponse.DeserializePhoneNumberReleaseResponse(document.RootElement);
+                        value = ReleaseResponse.DeserializeReleaseResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1052,7 +1052,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
-        public Response<PhoneNumberReleaseResponse> ReleasePhoneNumbers(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
+        public Response<ReleaseResponse> ReleasePhoneNumbers(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
         {
             if (phoneNumbers == null)
             {
@@ -1065,9 +1065,9 @@ namespace Azure.Communication.Administration
             {
                 case 200:
                     {
-                        PhoneNumberReleaseResponse value = default;
+                        ReleaseResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PhoneNumberReleaseResponse.DeserializePhoneNumberReleaseResponse(document.RootElement);
+                        value = ReleaseResponse.DeserializeReleaseResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1234,19 +1234,16 @@ namespace Azure.Communication.Administration
         /// <summary> Creates a phone number search. </summary>
         /// <param name="body"> Defines the search options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CreateReservationResponse>> CreateSearchAsync(CreateReservationOptions body = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PhoneNumberAdministrationCreateSearchHeaders>> CreateSearchAsync(CreateReservationOptions body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateSearchRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new PhoneNumberAdministrationCreateSearchHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
-                    {
-                        CreateReservationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateReservationResponse.DeserializeCreateReservationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -1255,19 +1252,16 @@ namespace Azure.Communication.Administration
         /// <summary> Creates a phone number search. </summary>
         /// <param name="body"> Defines the search options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CreateReservationResponse> CreateSearch(CreateReservationOptions body = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PhoneNumberAdministrationCreateSearchHeaders> CreateSearch(CreateReservationOptions body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateSearchRequest(body);
             _pipeline.Send(message, cancellationToken);
+            var headers = new PhoneNumberAdministrationCreateSearchHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
-                    {
-                        CreateReservationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateReservationResponse.DeserializeCreateReservationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

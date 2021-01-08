@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    internal partial class CreateReservationResponse
+    public partial class ReleaseResponse
     {
-        internal static CreateReservationResponse DeserializeCreateReservationResponse(JsonElement element)
+        internal static ReleaseResponse DeserializeReleaseResponse(JsonElement element)
         {
-            string searchId = default;
+            string releaseId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("searchId"))
+                if (property.NameEquals("releaseId"))
                 {
-                    searchId = property.Value.GetString();
+                    releaseId = property.Value.GetString();
                     continue;
                 }
             }
-            return new CreateReservationResponse(searchId);
+            return new ReleaseResponse(releaseId);
         }
     }
 }

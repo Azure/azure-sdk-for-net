@@ -51,15 +51,6 @@ namespace Azure.Communication.Administration.Models
             => new CommunicationUserToken(id, token, expiresOn);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberReservationOperation"/> class.
-        /// </summary>
-        /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>
-        /// <param name="reservationId"> The reservation id that was created. </param>
-        /// <returns>A new <see cref="PhoneNumberReservationOperation"/> instance for mocking.</returns>
-        public static PhoneNumberReservationOperation PhoneNumberReservationOperation(PhoneNumberAdministrationClient client, string reservationId)
-            => new PhoneNumberReservationOperation(client, reservationId);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="LocationOptions"/> class.
         /// </summary>
         /// <param name="labelId"> The label id of the location. </param>
@@ -207,24 +198,6 @@ namespace Azure.Communication.Administration.Models
         /// <returns>A new <see cref="RateInformation"/> instance for mocking.</returns>
         public static RateInformation RateInformation(double? monthlyRate, CurrencyType? currencyType, string rateErrorMessage)
             => new RateInformation(monthlyRate, currencyType, rateErrorMessage);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReleasePhoneNumberOperation"/> class.
-        /// </summary>
-        /// <param name="releaseId"> The release id of a created release. </param>
-        /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>
-        /// <returns>A new <see cref="ReleasePhoneNumberOperation"/> instance for mocking.</returns>
-        public static ReleasePhoneNumberOperation ReleasePhoneNumberOperation(PhoneNumberAdministrationClient client, string releaseId)
-            => new ReleasePhoneNumberOperation(client, releaseId);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberReservationPurchaseOperation"/> class.
-        /// </summary>
-        /// <param name="reservationId"> The reservation id of a created reservation. </param>
-        /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>
-        /// <returns>A new <see cref="PhoneNumberReservationPurchaseOperation"/> instance for mocking.</returns>
-        public static PhoneNumberReservationPurchaseOperation PhoneNumberReservationPurchaseOperation(PhoneNumberAdministrationClient client, string reservationId)
-            => new PhoneNumberReservationPurchaseOperation(client, reservationId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateNumberCapabilitiesResponse"/> class.
