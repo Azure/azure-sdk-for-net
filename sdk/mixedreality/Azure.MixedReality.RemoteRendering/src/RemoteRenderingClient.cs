@@ -73,7 +73,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateConversion)}");
             scope.AddAttribute(nameof(conversionId), conversionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -115,7 +114,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateConversionAsync)}");
             scope.AddAttribute(nameof(conversionId), conversionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -150,8 +148,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetConversion)}");
             scope.AddAttribute(nameof(conversionId), conversionId);
-            // TODO Add some other attributes?
-            //scope.AddAttribute(nameof(headerOptions.ClientRequestId), headerOptions.ClientRequestId);
             scope.Start();
 
             try
@@ -186,7 +182,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetConversionAsync)}");
             scope.AddAttribute(nameof(conversionId), conversionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -219,7 +214,7 @@ namespace Azure.MixedReality.RemoteRendering
         {
             Page<ConversionInformation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListConversions");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(ListConversions)}");
                 scope.Start();
                 try
                 {
@@ -246,7 +241,7 @@ namespace Azure.MixedReality.RemoteRendering
             }
             Page<ConversionInformation> NextPageFunc(string? nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListConversions");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(ListConversions)}");
                 scope.Start();
                 try
                 {
@@ -280,7 +275,7 @@ namespace Azure.MixedReality.RemoteRendering
         {
             async Task<Page<ConversionInformation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListConversions");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(ListConversionsAsync)}");
                 scope.Start();
                 try
                 {
@@ -306,7 +301,7 @@ namespace Azure.MixedReality.RemoteRendering
             }
             async Task<Page<ConversionInformation>> NextPageFunc(string? nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListConversions");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(ListConversionsAsync)}");
                 scope.Start();
                 try
                 {
@@ -343,7 +338,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -379,7 +373,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateSessionAsync)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -414,7 +407,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -449,7 +441,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetSessionAsync)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -485,7 +476,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -521,7 +511,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSessionAsync)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -556,7 +545,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StopSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -595,7 +583,6 @@ namespace Azure.MixedReality.RemoteRendering
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StopSessionAsync)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
-            // TODO Add some other attributes?
             scope.Start();
 
             try
@@ -632,7 +619,7 @@ namespace Azure.MixedReality.RemoteRendering
         {
             Page<SessionProperties> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListConversions");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(ListSessions)}");
                 scope.Start();
                 try
                 {
@@ -659,7 +646,7 @@ namespace Azure.MixedReality.RemoteRendering
             }
             Page<SessionProperties> NextPageFunc(string? nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListConversions");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(ListSessions)}");
                 scope.Start();
                 try
                 {
@@ -693,7 +680,7 @@ namespace Azure.MixedReality.RemoteRendering
         {
             async Task<Page<SessionProperties>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListSessions");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(ListSessionsAsync)}");
                 scope.Start();
                 try
                 {
@@ -720,7 +707,7 @@ namespace Azure.MixedReality.RemoteRendering
             }
             async Task<Page<SessionProperties>> NextPageFunc(string? nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListSessions");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(ListSessionsAsync)}");
                 scope.Start();
                 try
                 {
