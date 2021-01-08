@@ -585,7 +585,7 @@ namespace DataBox.Tests.Tests
             Assert.Equal(StageName.DeviceOrdered, getJob.Status);
             Assert.True(!string.IsNullOrEmpty(getJob.Identity.UserAssignedIdentities[uaiId].ClientId));
             Assert.True(!string.IsNullOrEmpty(getJob.Identity.UserAssignedIdentities[uaiId].PrincipalId));
-            Assert.True(getJob.Details.KeyEncryptionKey.KekType==KekType.CustomerManaged);
+            Assert.Equal(KekType.CustomerManaged, getJob.Details.KeyEncryptionKey.KekType);
         }
 
         [Fact]
