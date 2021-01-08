@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -538,7 +538,7 @@ namespace Azure.Storage
         /// <returns>Tokenized collection.</returns>
         private static IDictionary<string, string> ParseStringIntoSettings(string connectionString, Action<string> error)
         {
-            IDictionary<string, string> settings = new Dictionary<string, string>();
+            IDictionary<string, string> settings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             var splitted = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var nameValue in splitted)
@@ -572,7 +572,7 @@ namespace Azure.Storage
         private static AccountSetting Setting(string name, params string[] validValues) =>
             new AccountSetting(
                 name,
-                (settingValue) => validValues.Length == 0 ? true : validValues.Contains(settingValue)
+                (settingValue) => validValues.Length == 0 ? true : validValues.Contains(settingValue, StringComparer.OrdinalIgnoreCase)
                 );
 
         /// <summary>
@@ -624,7 +624,7 @@ namespace Azure.Storage
         private static ConnectionStringFilter AllRequired(params AccountSetting[] requiredSettings) =>
             (settings) =>
             {
-                IDictionary<string, string> result = new Dictionary<string, string>(settings);
+                IDictionary<string, string> result = new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
 
                 foreach (AccountSetting requirement in requiredSettings)
                 {
@@ -649,7 +649,7 @@ namespace Azure.Storage
         private static ConnectionStringFilter Optional(params AccountSetting[] optionalSettings) =>
             (settings) =>
             {
-                IDictionary<string, string> result = new Dictionary<string, string>(settings);
+                IDictionary<string, string> result = new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
 
                 foreach (AccountSetting requirement in optionalSettings)
                 {
@@ -671,7 +671,7 @@ namespace Azure.Storage
         private static ConnectionStringFilter AtLeastOne(params AccountSetting[] atLeastOneSettings) =>
             (settings) =>
             {
-                IDictionary<string, string> result = new Dictionary<string, string>(settings);
+                IDictionary<string, string> result = new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
                 var foundOne = false;
 
                 foreach (AccountSetting requirement in atLeastOneSettings)
@@ -695,7 +695,7 @@ namespace Azure.Storage
         private static ConnectionStringFilter None(params AccountSetting[] atLeastOneSettings) =>
             (settings) =>
             {
-                IDictionary<string, string> result = new Dictionary<string, string>(settings);
+                IDictionary<string, string> result = new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
                 var foundOne = false;
 
                 foreach (AccountSetting requirement in atLeastOneSettings)
@@ -717,7 +717,7 @@ namespace Azure.Storage
         private static ConnectionStringFilter MatchesAll(params ConnectionStringFilter[] filters) =>
             (settings) =>
             {
-                IDictionary<string, string> result = new Dictionary<string, string>(settings);
+                IDictionary<string, string> result = new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
 
                 foreach (ConnectionStringFilter filter in filters)
                 {
