@@ -1,7 +1,10 @@
 # Release History
 
-## 12.6.0-beta.1 (Unreleased)
-- Fixed bug where QueueServiceClient.GetQueueClient() and QueueClient.WithClientSideEncryptionOptions() created clients that could not generate a SAS from clients that could generate a SAS
+## 12.6.0-beta.2 (Unreleased)
+
+
+## 12.6.0-beta.1 (2020-12-07)
+- Fixed bug where QueueServiceClient.GetQueueClient() and QueueClient.WithClientSideEncryptionOptions() created clients that could not generate a SAS from clients that could generate a SAS.
 
 ## 12.5.0 (2020-11-10)
 - Includes all features from 12.5.0-preview.1

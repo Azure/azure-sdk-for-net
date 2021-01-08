@@ -18,23 +18,33 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
+            string document = @"Anthony runs his own personal training business so
+                              thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
 
-            KeyPhraseCollection keyPhrases = client.ExtractKeyPhrases(document);
-
-            if (keyPhrases.Warnings.Count > 0)
+            try
             {
-                Console.WriteLine("**Warnings:**");
-                foreach (TextAnalyticsWarning warning in keyPhrases.Warnings)
+                Response<KeyPhraseCollection> response = client.ExtractKeyPhrases(document);
+                KeyPhraseCollection keyPhrases = response.Value;
+
+                if (keyPhrases.Warnings.Count > 0)
                 {
-                    Console.WriteLine($"    Warning: Code: {warning.WarningCode}, Message: {warning.Message}");
+                    Console.WriteLine("**Warnings:**");
+                    foreach (TextAnalyticsWarning warning in keyPhrases.Warnings)
+                    {
+                        Console.WriteLine($"  Warning: Code: {warning.WarningCode}, Message: {warning.Message}");
+                    }
+                }
+
+                Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
+                foreach (string keyPhrase in keyPhrases)
+                {
+                    Console.WriteLine($"  {keyPhrase}");
                 }
             }
-
-            Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
-            foreach (string keyPhrase in keyPhrases)
+            catch (RequestFailedException exception)
             {
-                Console.WriteLine(keyPhrase);
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
             }
         }
     }

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         public string Owner => ProcessorHost.Identifier;
         public string EventHubPath => ProcessorHost.EventHubName;
-        public LeaseInfo Lease => ProcessorHost.GetLeaseInfo(PartitionId);
+        public CheckpointInfo? Checkpoint { get; set; }
 
         public LastEnqueuedEventProperties? LastEnqueuedEventProperties
         {
@@ -47,6 +47,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         public async Task CheckpointAsync(EventData checkpointEvent)
         {
             await ProcessorHost.CheckpointAsync(PartitionId, checkpointEvent).ConfigureAwait(false);
+            Checkpoint = new CheckpointInfo(checkpointEvent.Offset, checkpointEvent.SequenceNumber);
         }
     }
 }

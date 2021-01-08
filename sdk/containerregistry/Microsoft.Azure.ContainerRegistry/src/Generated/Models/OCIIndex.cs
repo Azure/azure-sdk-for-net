@@ -33,9 +33,10 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         /// <param name="schemaVersion">Schema version</param>
         /// <param name="manifests">List of OCI image layer information</param>
-        public OCIIndex(int? schemaVersion = default(int?), IList<ManifestListAttributes> manifests = default(IList<ManifestListAttributes>), Annotations annotations = default(Annotations))
+        public OCIIndex(int? schemaVersion = default(int?), string mediaType = default(string), IList<ManifestListAttributes> manifests = default(IList<ManifestListAttributes>), Annotations annotations = default(Annotations))
             : base(schemaVersion)
         {
+            MediaType = mediaType;
             Manifests = manifests;
             Annotations = annotations;
             CustomInit();
@@ -56,6 +57,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "annotations")]
         public Annotations Annotations { get; set; }
+
+        /// <summary>
+        /// Gets or sets media type for this Manifest
+        /// </summary>
+        [JsonProperty(PropertyName = "mediaType")]
+        public string MediaType { get; set; }
 
     }
 }

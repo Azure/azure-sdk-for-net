@@ -46,7 +46,6 @@ namespace Azure.Identity.Tests
             }
         }
 
-
         [NonParallelizable]
         [Test]
         public void ValidateUserAssignedIdentity()

@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "2d70efdd-3804-10b7-1792-432879cb2123",
         "x-ms-date": "Tue, 28 Apr 2020 19:33:10 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "2d70efdd-3804-10b7-1792-432879cb2123",
         "x-ms-request-id": "17afc63a-201e-003e-7293-1ddadf000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-date": "Tue, 28 Apr 2020 19:33:11 GMT",
         "x-ms-requires-sync": "true",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -63,7 +63,7 @@
         "x-ms-client-request-id": "375409c1-5308-b14d-efaa-54513c40ad4f",
         "x-ms-error-code": "CannotVerifyCopySource",
         "x-ms-request-id": "17afc63e-201e-003e-7493-1ddadf000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ECannotVerifyCopySource\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "74dc41d6-c33f-2d2f-16f9-b05ff773c2cf",
         "x-ms-date": "Tue, 28 Apr 2020 19:33:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,7 +97,7 @@
         ],
         "x-ms-client-request-id": "74dc41d6-c33f-2d2f-16f9-b05ff773c2cf",
         "x-ms-request-id": "17afc645-201e-003e-7893-1ddadf000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

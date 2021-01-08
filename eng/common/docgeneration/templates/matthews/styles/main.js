@@ -5,7 +5,6 @@ containers.addClass("container-fluid");
 
 WINDOW_CONTENTS = window.location.href.split('/')
 var SELECTED_LANGUAGE = ''
-var INDEX_HTML = ''
 var PACKAGE_REGEX = ''
 var PACKAGE_REPLACEMENT = ''
 
@@ -77,7 +76,7 @@ $(function () {
     // Add text to empty links
     $("p > a").each(function () {
         var link = $(this).attr('href')
-        if ($(this).text() === "") {
+        if ($(this).text() === "" && $(this).children().attr("src") === "") {
             $(this).html(link)
         }
     });
@@ -198,7 +197,7 @@ function populateIndexList(selector, packageName) {
 }
 
 function getPackageUrl(language, package, version) {
-    return "https://azuresdkdocs.blob.core.windows.net/$web/" + language + "/" + package + "/" + version + "/" + INDEX_HTML
+    return "https://azuresdkdocs.blob.core.windows.net/$web/" + language + "/" + package + "/" + version + "/index.html"
 }
 
 // Populate Versions

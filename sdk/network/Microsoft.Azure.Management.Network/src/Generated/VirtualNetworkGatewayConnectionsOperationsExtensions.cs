@@ -483,6 +483,48 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Lists IKE Security Associations for the virtual network gateway connection
+            /// in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway Connection.
+            /// </param>
+            public static string GetIkeSas(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName)
+            {
+                return operations.GetIkeSasAsync(resourceGroupName, virtualNetworkGatewayConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists IKE Security Associations for the virtual network gateway connection
+            /// in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway Connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> GetIkeSasAsync(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetIkeSasWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates a virtual network gateway connection in the specified
             /// resource group.
             /// </summary>
@@ -818,6 +860,48 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<string> BeginStopPacketCaptureAsync(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginStopPacketCaptureWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists IKE Security Associations for the virtual network gateway connection
+            /// in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway Connection.
+            /// </param>
+            public static string BeginGetIkeSas(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName)
+            {
+                return operations.BeginGetIkeSasAsync(resourceGroupName, virtualNetworkGatewayConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists IKE Security Associations for the virtual network gateway connection
+            /// in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway Connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> BeginGetIkeSasAsync(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGetIkeSasWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayConnectionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

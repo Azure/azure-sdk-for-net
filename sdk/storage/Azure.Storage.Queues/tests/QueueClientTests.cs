@@ -232,7 +232,6 @@ namespace Azure.Storage.Queues.Test
                 // Act
                 Response result = await queue.CreateAsync();
 
-
                 // Assert
                 Assert.Fail("CreateAsync unexpected success: queue service SAS should not be usable to create queue");
             }
@@ -1349,29 +1348,29 @@ namespace Azure.Storage.Queues.Test
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - QueueClient(string connectionString, string blobContainerName)
-            QueueClient container = new QueueClient(
+            QueueClient container = InstrumentClient(new QueueClient(
                 connectionString,
-                GetNewQueueName());
+                GetNewQueueName()));
             Assert.IsTrue(container.CanGenerateSasUri);
 
             // Act - QueueClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            QueueClient container2 = new QueueClient(
+            QueueClient container2 = InstrumentClient(new QueueClient(
                 connectionString,
                 GetNewQueueName(),
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(container2.CanGenerateSasUri);
 
             // Act - QueueClient(Uri blobContainerUri, BlobClientOptions options = default)
-            QueueClient container3 = new QueueClient(
+            QueueClient container3 = InstrumentClient(new QueueClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(container3.CanGenerateSasUri);
 
             // Act - QueueClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            QueueClient container4 = new QueueClient(
+            QueueClient container4 = InstrumentClient(new QueueClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(container4.CanGenerateSasUri);
         }
 
@@ -1387,7 +1386,7 @@ namespace Azure.Storage.Queues.Test
             string queueName = GetNewQueueName();
             QueueSasPermissions permissions = QueueSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            QueueClient queueClient = new QueueClient(connectionString, queueName, GetOptions());
+            QueueClient queueClient = InstrumentClient(new QueueClient(connectionString, queueName, GetOptions()));
 
             // Act
             Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn);
@@ -1417,7 +1416,7 @@ namespace Azure.Storage.Queues.Test
             QueueSasPermissions permissions = QueueSasPermissions.Read;
             DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            QueueClient queueClient = new QueueClient(connectionString, queueName, GetOptions());
+            QueueClient queueClient = InstrumentClient(new QueueClient(connectionString, queueName, GetOptions()));
 
             QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
             {
@@ -1452,10 +1451,10 @@ namespace Azure.Storage.Queues.Test
             blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewQueueName();
             QueueSasPermissions permissions = QueueSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            QueueClient queueClient = new QueueClient(
+            QueueClient queueClient = InstrumentClient(new QueueClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
             {

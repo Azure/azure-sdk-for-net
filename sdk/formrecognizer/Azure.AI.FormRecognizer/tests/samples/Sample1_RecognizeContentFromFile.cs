@@ -21,49 +21,54 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string invoiceFilePath = FormRecognizerTestEnvironment.CreatePath("Invoice_1.pdf");
+            string filePath = FormRecognizerTestEnvironment.CreatePath("Invoice_1.pdf");
 
-            using (FileStream stream = new FileStream(invoiceFilePath, FileMode.Open))
+            #region Snippet:FormRecognizerRecognizeFormContentFromFile
+            //@@ string filePath = "filePath";
+            using var stream = new FileStream(filePath, FileMode.Open);
+
+            Response<FormPageCollection> response = await client.StartRecognizeContentAsync(stream).WaitForCompletionAsync();
+            FormPageCollection formPages = response.Value;
+
+            foreach (FormPage page in formPages)
             {
-                FormPageCollection formPages = await client.StartRecognizeContentAsync(stream).WaitForCompletionAsync();
-                foreach (FormPage page in formPages)
+                Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
+
+                for (int i = 0; i < page.Lines.Count; i++)
                 {
-                    Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
+                    FormLine line = page.Lines[i];
+                    Console.WriteLine($"  Line {i} has {line.Words.Count} {(line.Words.Count == 1 ? "word" : "words")}, and text: '{line.Text}'.");
 
-                    for (int i = 0; i < page.Lines.Count; i++)
+                    Console.WriteLine("    Its bounding box is:");
+                    Console.WriteLine($"    Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
+                    Console.WriteLine($"    Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
+                    Console.WriteLine($"    Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
+                    Console.WriteLine($"    Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+                }
+
+                for (int i = 0; i < page.Tables.Count; i++)
+                {
+                    FormTable table = page.Tables[i];
+                    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+                    foreach (FormTableCell cell in table.Cells)
                     {
-                        FormLine line = page.Lines[i];
-                        Console.WriteLine($"    Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
-
-                        Console.WriteLine("        Its bounding box is:");
-                        Console.WriteLine($"        Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
-                        Console.WriteLine($"        Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
-                        Console.WriteLine($"        Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
-                        Console.WriteLine($"        Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
-                    }
-
-                    for (int i = 0; i < page.Tables.Count; i++)
-                    {
-                        FormTable table = page.Tables[i];
-                        Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
-                        foreach (FormTableCell cell in table.Cells)
-                        {
-                            Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
-                        }
-                    }
-
-                    for (int i = 0; i < page.SelectionMarks.Count; i++)
-                    {
-                        FormSelectionMark selectionMark = page.SelectionMarks[i];
-                        Console.WriteLine($"Selection Mark {i} is {selectionMark.State}.");
-                        Console.WriteLine("        Its bounding box is:");
-                        Console.WriteLine($"        Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
-                        Console.WriteLine($"        Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
-                        Console.WriteLine($"        Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
-                        Console.WriteLine($"        Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+                        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
                     }
                 }
+
+                for (int i = 0; i < page.SelectionMarks.Count; i++)
+                {
+                    FormSelectionMark selectionMark = page.SelectionMarks[i];
+                    Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
+                    Console.WriteLine("    Its bounding box is:");
+                    Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
+                    Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
+                    Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
+                    Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+                }
             }
+
+            #endregion
         }
     }
 }

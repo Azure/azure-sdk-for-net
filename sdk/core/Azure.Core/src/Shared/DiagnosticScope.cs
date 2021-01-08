@@ -104,7 +104,6 @@ namespace Azure.Core.Pipeline
             }
 
             _source?.Write(_activity.OperationName + ".Exception", e);
-
         }
 
         private class DiagnosticActivity : Activity

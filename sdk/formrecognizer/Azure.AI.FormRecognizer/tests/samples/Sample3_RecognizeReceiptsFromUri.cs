@@ -24,15 +24,18 @@ namespace Azure.AI.FormRecognizer.Samples
             Uri receiptUri = FormRecognizerTestEnvironment.CreateUri("contoso-receipt.jpg");
 
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
-            RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUriAsync(receiptUri).WaitForCompletionAsync();
+            //@@ Uri receiptUri = <receiptUri>;
+
+            RecognizeReceiptsOperation operation = await client.StartRecognizeReceiptsFromUriAsync(receiptUri);
+            Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection receipts = operationResponse.Value;
 
             // To see the list of the supported fields returned by service and its corresponding types, consult:
             // https://aka.ms/formrecognizer/receiptfields
 
             foreach (RecognizedForm receipt in receipts)
             {
-                FormField merchantNameField;
-                if (receipt.Fields.TryGetValue("MerchantName", out merchantNameField))
+                if (receipt.Fields.TryGetValue("MerchantName", out FormField merchantNameField))
                 {
                     if (merchantNameField.Value.ValueType == FieldValueType.String)
                     {
@@ -42,8 +45,7 @@ namespace Azure.AI.FormRecognizer.Samples
                     }
                 }
 
-                FormField transactionDateField;
-                if (receipt.Fields.TryGetValue("TransactionDate", out transactionDateField))
+                if (receipt.Fields.TryGetValue("TransactionDate", out FormField transactionDateField))
                 {
                     if (transactionDateField.Value.ValueType == FieldValueType.Date)
                     {
@@ -53,8 +55,7 @@ namespace Azure.AI.FormRecognizer.Samples
                     }
                 }
 
-                FormField itemsField;
-                if (receipt.Fields.TryGetValue("Items", out itemsField))
+                if (receipt.Fields.TryGetValue("Items", out FormField itemsField))
                 {
                     if (itemsField.Value.ValueType == FieldValueType.List)
                     {
@@ -66,25 +67,23 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
 
-                                FormField itemNameField;
-                                if (itemFields.TryGetValue("Name", out itemNameField))
+                                if (itemFields.TryGetValue("Name", out FormField itemNameField))
                                 {
                                     if (itemNameField.Value.ValueType == FieldValueType.String)
                                     {
                                         string itemName = itemNameField.Value.AsString();
 
-                                        Console.WriteLine($"    Name: '{itemName}', with confidence {itemNameField.Confidence}");
+                                        Console.WriteLine($"  Name: '{itemName}', with confidence {itemNameField.Confidence}");
                                     }
                                 }
 
-                                FormField itemTotalPriceField;
-                                if (itemFields.TryGetValue("TotalPrice", out itemTotalPriceField))
+                                if (itemFields.TryGetValue("TotalPrice", out FormField itemTotalPriceField))
                                 {
                                     if (itemTotalPriceField.Value.ValueType == FieldValueType.Float)
                                     {
                                         float itemTotalPrice = itemTotalPriceField.Value.AsFloat();
 
-                                        Console.WriteLine($"    Total Price: '{itemTotalPrice}', with confidence {itemTotalPriceField.Confidence}");
+                                        Console.WriteLine($"  Total Price: '{itemTotalPrice}', with confidence {itemTotalPriceField.Confidence}");
                                     }
                                 }
                             }
@@ -92,8 +91,7 @@ namespace Azure.AI.FormRecognizer.Samples
                     }
                 }
 
-                FormField totalField;
-                if (receipt.Fields.TryGetValue("Total", out totalField))
+                if (receipt.Fields.TryGetValue("Total", out FormField totalField))
                 {
                     if (totalField.Value.ValueType == FieldValueType.Float)
                     {

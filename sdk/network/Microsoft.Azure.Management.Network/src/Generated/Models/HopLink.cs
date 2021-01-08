@@ -119,38 +119,29 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (RoundTripTimeMin != null)
+            if (RoundTripTimeMin > 4294967295)
             {
-                if (RoundTripTimeMin > 4294967295)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "RoundTripTimeMin", 4294967295);
-                }
-                if (RoundTripTimeMin < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "RoundTripTimeMin", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RoundTripTimeMin", 4294967295);
             }
-            if (RoundTripTimeAvg != null)
+            if (RoundTripTimeMin < 0)
             {
-                if (RoundTripTimeAvg > 4294967295)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "RoundTripTimeAvg", 4294967295);
-                }
-                if (RoundTripTimeAvg < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "RoundTripTimeAvg", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RoundTripTimeMin", 0);
             }
-            if (RoundTripTimeMax != null)
+            if (RoundTripTimeAvg > 4294967295)
             {
-                if (RoundTripTimeMax > 4294967295)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "RoundTripTimeMax", 4294967295);
-                }
-                if (RoundTripTimeMax < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "RoundTripTimeMax", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RoundTripTimeAvg", 4294967295);
+            }
+            if (RoundTripTimeAvg < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RoundTripTimeAvg", 0);
+            }
+            if (RoundTripTimeMax > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RoundTripTimeMax", 4294967295);
+            }
+            if (RoundTripTimeMax < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RoundTripTimeMax", 0);
             }
         }
     }

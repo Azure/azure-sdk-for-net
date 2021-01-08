@@ -29,5 +29,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// Optional.  Specifies the access tier of the share.
         /// </summary>
         public ShareAccessTier? AccessTier { get; set; }
+
+        /// <summary>
+        /// The protocols to enable for the share.
+        /// </summary>
+        public ShareProtocols? Protocols { get; set; }
+
+        /// <summary>
+        /// The root squash to set for the share.  Only valid for NFS shares.
+        /// </summary>
+        public ShareRootSquash? RootSquash { get; set; }
     }
 }

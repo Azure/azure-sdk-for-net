@@ -54,7 +54,6 @@ namespace Azure.Core.TestFramework
 
         public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
         {
-
             var suitePermutations = GeneratePermutations();
 
             foreach (var (fixture, isAsync, serviceVersion, parameter) in suitePermutations)

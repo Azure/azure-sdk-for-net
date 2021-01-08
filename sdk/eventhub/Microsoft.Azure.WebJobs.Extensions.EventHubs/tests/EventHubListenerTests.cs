@@ -4,14 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -39,7 +36,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 BatchCheckpointFrequency = batchCheckpointFrequency
             };
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
-            processor.Setup(p => p.GetLeaseInfo(partitionContext.PartitionId)).Returns((LeaseInfo)null);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Callback(() =>
             {
                 checkpoints++;
@@ -74,7 +70,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             };
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
-            processor.Setup(p => p.GetLeaseInfo(partitionContext.PartitionId)).Returns((LeaseInfo)null);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
             partitionContext.ProcessorHost = processor.Object;
 
@@ -106,7 +101,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var options = new EventHubOptions();
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
-            processor.Setup(p => p.GetLeaseInfo(partitionContext.PartitionId)).Returns((LeaseInfo)null);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
             partitionContext.ProcessorHost = processor.Object;
 
@@ -145,7 +139,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var options = new EventHubOptions();
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
-            processor.Setup(p => p.GetLeaseInfo(partitionContext.PartitionId)).Returns((LeaseInfo)null);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
             partitionContext.ProcessorHost = processor.Object;
 
@@ -229,7 +222,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                                     Mock.Of<ITriggeredFunctionExecutor>(),
                                     host,
                                     false,
-                                    () => consumerClientMock.Object,
+                                    consumerClientMock.Object,
                                     Mock.Of<BlobsCheckpointStore>(),
                                     new EventHubOptions(),
                                     testLogger);
