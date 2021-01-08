@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
     <!-- Remove data plane tests from nightly live runs: https://github.com/Azure/azure-sdk-for-net/issues/10437 -->
-    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.Attestation\**\*.csproj" Condition="'$(AZURE_SEARCH_TEST_MODE)' == 'Live'" />
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.Attestation\tests\**\*.csproj" />
   </ItemGroup>
 </Project>
