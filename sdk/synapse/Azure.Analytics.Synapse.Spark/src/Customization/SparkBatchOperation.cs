@@ -29,8 +29,9 @@ namespace Azure.Analytics.Synapse.Spark
         private readonly SparkBatchJob _value;
         private Response<SparkBatchJob> _response;
         private bool _completed;
+        private RequestFailedException _requestFailedException;
 
-        private static List<string> SessionSubmissionFinalStates = new List<string>
+        private static HashSet<string> SessionSubmissionFinalStates = new HashSet<string>
         {
             "error",
             "dead",
@@ -57,13 +58,31 @@ namespace Azure.Analytics.Synapse.Spark
         /// <remarks>
         /// Azure Synapse will return a <see cref="SparkBatchJob"/> immediately but may take time to the session to be ready.
         /// </remarks>
-        public override SparkBatchJob Value => _value;
+        public override SparkBatchJob Value
+        {
+            get
+            {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                if (!HasCompleted)
+                {
+                    throw new InvalidOperationException("The operation is not complete.");
+                }
+                if (_requestFailedException != null)
+                {
+                    throw _requestFailedException;
+                }
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                return _value;
+            }
+        }
 
         /// <inheritdoc/>
         public override bool HasCompleted => _completed;
 
         /// <inheritdoc/>
-        public override bool HasValue => true;
+        public override bool HasValue => !ResponseHasError && HasCompleted;
+
+        private bool ResponseHasError => StringComparer.OrdinalIgnoreCase.Equals ("error", _response?.Value?.State);
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response.GetRawResponse();
@@ -101,10 +120,23 @@ namespace Azure.Analytics.Synapse.Spark
                     }
                     _completed = !IsJobRunning(_response.Value.Result.ToString(), _response.Value.State);
                 }
-                catch (Exception e)
+                catch (RequestFailedException e)
                 {
+                    _requestFailedException = e;
                     scope.Failed(e);
                     throw;
+                }
+                catch (Exception e)
+                {
+                    _requestFailedException = new RequestFailedException("Unexpected failure", e);
+                    scope.Failed(e);
+                    throw _requestFailedException;
+                }
+                if (ResponseHasError)
+                {
+                    _requestFailedException = new RequestFailedException("SparkBatchOperation ended in state error");
+                    scope.Failed(_requestFailedException);
+                    throw _requestFailedException;
                 }
             }
 
