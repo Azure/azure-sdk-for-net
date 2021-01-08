@@ -39,6 +39,7 @@ $targets = ($Configs | ConvertFrom-Json).targets
 # mode:
 # monikerid:
 # content_folder:
+# suffix:
 #}
 
 $apiUrl = "https://api.github.com/repos/$repoId"
