@@ -39,7 +39,7 @@ namespace Compute.Tests.DiskRPTests
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
                 disk.EncryptionSettingsCollection = GetDiskEncryptionSettings(testVaultId, encryptionKeyUri, secretUri, encryptionSettingsVersion: encryptionSettingsVersion);
-                disk.Location = DiskRPLocation;
+                disk.Location = "eastus2";
 
                 try
                 {

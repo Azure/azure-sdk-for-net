@@ -60,11 +60,10 @@ namespace Compute.Tests.DiskRPTests
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateBaseDisk(DiskCreateOption.FromImage);
-                disk.Location = DiskRPLocation;
+                disk.Location = "eastus2";
                 disk.CreationData.GalleryImageReference = new ImageDiskReference
                 {
-                    Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/galleries/GalleryForTest/images/TestImage2",
-
+                    Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/galleries/GalleryForTest/images/ImageforTest/versions/1.0.0",
                     Lun = 0
                 };
                 try
