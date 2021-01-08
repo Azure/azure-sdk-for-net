@@ -505,7 +505,7 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
-        /// <summary> Gets a list of all conversions. Returns a batch of conversions- if more conversions are available the @nextLink property contains the a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </summary>
+        /// <summary> Gets a list of all conversions.</summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<ConversionInformation> ListConversions(CancellationToken cancellationToken = default)
         {
@@ -564,6 +564,66 @@ namespace Azure.MixedReality.RemoteRendering
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets a list of all conversions.</summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ConversionInformation> ListConversionsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ConversionInformation>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListConversions");
+                scope.Start();
+                try
+                {
+                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListConversionsHeaders> response = await _restClient.ListConversionsAsync(_accountId, cancellationToken).ConfigureAwait(false);
+                    switch (response.Value)
+                    {
+                        case ConversionList cl:
+                            return Page.FromValues(cl.Conversions, cl.NextLink, response.GetRawResponse());
+                        case ErrorResponse e:
+                            // TODO e.Error.Details
+                            // TODO e.Error.InnerError
+                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                        case null:
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(response);
+                    }
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ConversionInformation>> NextPageFunc(string? nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListConversions");
+                scope.Start();
+                try
+                {
+                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListConversionsHeaders> response = await _restClient.ListConversionsNextPageAsync(nextLink, _accountId, cancellationToken).ConfigureAwait(false);
+
+                    switch (response.Value)
+                    {
+                        case ConversionList cl:
+                            return Page.FromValues(cl.Conversions, cl.NextLink, response.GetRawResponse());
+                        case ErrorResponse e:
+                            // TODO e.Error.Details
+                            // TODO e.Error.InnerError
+                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                        case null:
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(response);
+                    }
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get a list of all rendering sessions. </summary>
@@ -625,6 +685,67 @@ namespace Azure.MixedReality.RemoteRendering
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Get a list of all rendering sessions. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<SessionProperties> ListSessionsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<SessionProperties>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListSessions");
+                scope.Start();
+                try
+                {
+                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListSessionsHeaders> response = await _restClient.ListSessionsAsync(_accountId, cancellationToken).ConfigureAwait(false);
+
+                    switch (response.Value)
+                    {
+                        case SessionsList sl:
+                            return Page.FromValues(sl.Sessions, sl.NextLink, response.GetRawResponse());
+                        case ErrorResponse e:
+                            // TODO e.Error.Details
+                            // TODO e.Error.InnerError
+                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                        case null:
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(response);
+                    }
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SessionProperties>> NextPageFunc(string? nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("MixedRealityRemoteRenderingOperations.ListSessions");
+                scope.Start();
+                try
+                {
+                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListSessionsHeaders> response = await _restClient.ListSessionsNextPageAsync(nextLink, _accountId, cancellationToken).ConfigureAwait(false);
+
+                    switch (response.Value)
+                    {
+                        case SessionsList sl:
+                            return Page.FromValues(sl.Sessions, sl.NextLink, response.GetRawResponse());
+                        case ErrorResponse e:
+                            // TODO e.Error.Details
+                            // TODO e.Error.InnerError
+                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
+                        case null:
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(response);
+                    }
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }
