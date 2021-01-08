@@ -152,6 +152,109 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
+        /// Creates or updates a role definition.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="roleScope">The scope of the <see cref="KeyVaultRoleDefinition"/> to create. The default value is <see cref="KeyVaultRoleScope.Global"/>.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<Response<KeyVaultRoleDefinition>> UpsertRoleDefinitionAsync(UpsertRoleDefinitionOptions options, KeyVaultRoleScope roleScope = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(UpsertRoleDefinition)}");
+            scope.Start();
+            try
+            {
+                var parameters = new RoleDefinitionCreateParameters(options);
+
+                return await _definitionsRestClient.CreateOrUpdateAsync(
+                    vaultBaseUrl: VaultUri.AbsoluteUri,
+                    scope: roleScope == default ? roleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
+                    roleDefinitionName: options.RoleName,
+                    parameters: parameters,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates a role definition.
+        /// </summary>
+        /// <param name="options">The options for creating or updating a role definition.</param>
+        /// <param name="roleScope">The scope of the <see cref="KeyVaultRoleDefinition"/> to create. The default value is <see cref="KeyVaultRoleScope.Global"/>.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        public virtual Response<KeyVaultRoleDefinition> UpsertRoleDefinition(UpsertRoleDefinitionOptions options, KeyVaultRoleScope roleScope = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(UpsertRoleDefinition)}");
+            scope.Start();
+            try
+            {
+                var parameters = new RoleDefinitionCreateParameters(options);
+
+                return _definitionsRestClient.CreateOrUpdate(
+                    vaultBaseUrl: VaultUri.AbsoluteUri,
+                    scope: roleScope == default ? roleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
+                    roleDefinitionName: options.RoleName,
+                    parameters: parameters,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a role definition.
+        /// </summary>
+        /// <param name="roleScope"></param>
+        /// <param name="roleDefinitionName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<Response<KeyVaultRoleDefinition>> DeleteRoleDefinitionAsync(KeyVaultRoleScope roleScope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleDefinition)}");
+            scope.Start();
+            try
+            {
+                return await _definitionsRestClient.DeleteAsync(vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a role definition.
+        /// </summary>
+        /// <param name="roleScope"></param>
+        /// <param name="roleDefinitionName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual Response<KeyVaultRoleDefinition> DeleteRoleDefinition(KeyVaultRoleScope roleScope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleDefinition)}");
+            scope.Start();
+            try
+            {
+                return _definitionsRestClient.Delete(vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the <see cref="KeyVaultRoleAssignment"/>s for a scope.
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignments. </param>
