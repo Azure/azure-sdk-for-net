@@ -14,7 +14,7 @@
       <![CDATA[
                 Changes:
                 
-                1) Version update to inform users that properties of default error response i.e ApiErrorException has been changed from 1.2.0 and later versions.
+                1) Updating users that properties of default error response i.e ApiErrorException has been changed from 1.2.0 and later versions.
                 
                 2) Ensuring support of customer managed key with user assigned identities during job creation.
             
