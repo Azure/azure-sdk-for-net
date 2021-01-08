@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
@@ -487,6 +488,51 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position
+            };
+        }
+
+        internal static PathSegment ToPathSegment(this FileSystemBlobListPathsResult fileSystemBlobListPathsResult)
+        {
+            if (fileSystemBlobListPathsResult == null)
+            {
+                return null;
+            }
+
+            IEnumerable<PathItem> pathItems = null;
+
+            if (fileSystemBlobListPathsResult.Body.Segment.BlobItems == null)
+            {
+                pathItems = fileSystemBlobListPathsResult.Body.Segment.BlobItems.ToList().Select(r => r.ToPathItem());
+            }
+
+            return new PathSegment
+            {
+                Continuation = fileSystemBlobListPathsResult.Body.Marker,
+                Paths = pathItems
+            };
+        }
+
+        internal static PathItem ToPathItem(this BlobItemInternal blobItemInternal)
+        {
+            if (blobItemInternal == null)
+            {
+                return null;
+            }
+
+            return new PathItem
+            {
+                Name = blobItemInternal.Name,
+                // TODO fix this.
+                IsDirectory = null,
+                LastModified = blobItemInternal.Properties.LastModified,
+                ETag = blobItemInternal.Properties.Etag,
+                ContentLength = blobItemInternal.Properties.ContentLength,
+                // TODO fix this.
+                Owner = null,
+                // TODO fix this.
+                Group = null,
+                // TODO fix this.
+                Permissions = null
             };
         }
     }

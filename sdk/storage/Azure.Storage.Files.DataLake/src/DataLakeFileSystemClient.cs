@@ -1464,8 +1464,12 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         internal async Task<Response<PathSegment>> GetPathsInternal(
             string path,
+#pragma warning disable CA1801 // Review unused parameters
             bool recursive,
+#pragma warning restore CA1801 // Review unused parameters
+#pragma warning disable CA1801 // Review unused parameters
             bool userPrincipalName,
+#pragma warning restore CA1801 // Review unused parameters
             string continuation,
             int? maxResults,
             string operationName,
@@ -1482,38 +1486,24 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(maxResults)}: {maxResults})");
                 try
                 {
-                    Response<FileSystemListPathsResult> response = await DataLakeRestClient.FileSystem.ListPathsAsync(
-                        clientDiagnostics: _clientDiagnostics,
+                    Response<FileSystemBlobListPathsResult> response = await DataLakeRestClient.FileSystem.BlobListPathsAsync(
+                        clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
-                        resourceUri: _dfsUri,
+                        resourceUri: _blobUri,
+                        // TODO figure this out
+                        delimiter: null,
                         version: Version.ToVersionString(),
-                        continuation: continuation,
-                        recursive: recursive,
+                        prefix: path,
+                        marker: continuation,
                         maxResults: maxResults,
-                        upn: userPrincipalName,
-                        path: path,
                         async: async,
                         operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    string jsonString;
-                    using (var reader = new System.IO.StreamReader(response.Value.Body))
-                    {
-                        jsonString = reader.ReadToEnd();
-                    }
-
-                    Dictionary<string, List<Dictionary<string, string>>> pathDictionary
-                        = JsonSerializer.Deserialize<Dictionary<string, List<Dictionary<string, string>>>>(jsonString);
-
                     return Response.FromValue(
-                        new PathSegment()
-                        {
-                            Continuation = response.Value.Continuation,
-                            Paths = pathDictionary["paths"].Select(path => path.ToPathItem())
-                        },
+                        response.Value.ToPathSegment(),
                         response.GetRawResponse());
-                    ;
                 }
                 catch (Exception ex)
                 {
