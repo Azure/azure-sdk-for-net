@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Samples
             Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
             #endregion
 
-            #region Snippet:DeleteSparkBatchJob
+            #region Snippet:CancelSparkBatchJob
             Response operation = client.CancelSparkBatchJob(jobCreated.Id);
             #endregion
         }

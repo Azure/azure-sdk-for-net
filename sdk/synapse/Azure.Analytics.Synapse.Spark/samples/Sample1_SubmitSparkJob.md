@@ -73,6 +73,6 @@ foreach (SparkBatchJob job in jobs.Value.Sessions)
 
 To cancel a submitted Spark job call `CancelSparkBatchJob`, passing in the Spark job ID.
 
-```C# Snippet:DeleteSparkBatchJob
+```C# Snippet:CancelSparkBatchJob
 Response operation = client.CancelSparkBatchJob(jobCreated.Id);
 ```

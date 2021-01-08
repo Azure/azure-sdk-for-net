@@ -101,7 +101,7 @@ SparkBatchJob jobCreated = createOperation.Value;
 ### Cancel spark batch job
 Cancel a Spark batch job with Spark batch id under specific workspace and Spark pool.
 
-```C# Snippet:DeleteSparkBatchJob
+```C# Snippet:CancelSparkBatchJob
 Response operation = client.CancelSparkBatchJob(jobCreated.Id);
 ```
        
