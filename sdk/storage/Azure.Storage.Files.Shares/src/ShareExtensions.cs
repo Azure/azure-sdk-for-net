@@ -253,5 +253,58 @@ namespace Azure.Storage.Files.Shares
         {
             return null;
         }
+
+        // TODO
+        internal static ShareFileLease ToShareFileLease(this FileAcquireLeaseHeaders fileAcquireLeaseHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileLease ToShareFileLease(this ShareAcquireLeaseHeaders shareAcquireLeaseHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this FileReleaseLeaseHeaders fileReleaseLeaseHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this ShareReleaseLeaseHeaders shareReleaseLeaseHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileLease ToShareFileLease(this FileChangeLeaseHeaders fileChangeLeaseHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileLease ToShareFileLease(this ShareChangeLeaseHeaders shareChangeLeaseHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileLease ToShareFileLease(this FileBreakLeaseHeaders fileBreakLeaseHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileLease ToShareFileLease(this ShareBreakLeaseHeaders fileBreakLeaseHeaders)
+        {
+            return null;
+        }
+
+        internal static ShareFileLease ToShareFileLease(this FileReleaseLeaseHeaders fileReleaseLeaseHeaders)
+        {
+            return null;
+        }
     }
 }
