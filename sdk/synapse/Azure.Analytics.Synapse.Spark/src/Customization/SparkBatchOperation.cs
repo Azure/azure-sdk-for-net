@@ -133,7 +133,7 @@ namespace Azure.Analytics.Synapse.Spark
                 }
                 if (ResponseHasError)
                 {
-                    _requestFailedException = new RequestFailedException("SparkBatchOperation ended in state error");
+                    _requestFailedException = new RequestFailedException("SparkBatchOperation ended in state: 'error'");
                     scope.Failed(_requestFailedException);
                     throw _requestFailedException;
                 }
