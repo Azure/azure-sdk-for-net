@@ -44,7 +44,6 @@ namespace Azure.Analytics.Synapse.Spark
             _client = client;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
             _response = response;
-            _completed = false;
             _diagnostics = diagnostics;
         }
 
