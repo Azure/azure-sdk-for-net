@@ -455,6 +455,16 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 AutoscaleConfiguration.Validate();
             }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element3 in PrivateEndpointConnections)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
+                    }
+                }
+            }
         }
     }
 }

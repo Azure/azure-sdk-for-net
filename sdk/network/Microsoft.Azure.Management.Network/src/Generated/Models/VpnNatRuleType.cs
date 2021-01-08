@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for VirtualNetworkPeeringLevel.
+    /// Defines values for VpnNatRuleType.
     /// </summary>
-    public static class VirtualNetworkPeeringLevel
+    public static class VpnNatRuleType
     {
-        public const string FullySynced = "FullySynced";
-        public const string RemoteUnsynced = "RemoteUnsynced";
-        public const string LocalUnsynced = "LocalUnsynced";
-        public const string LocalAndRemoteUnsynced = "LocalAndRemoteUnsynced";
+        public const string Static = "Static";
+        public const string Dynamic = "Dynamic";
     }
 }
