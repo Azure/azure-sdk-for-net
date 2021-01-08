@@ -52,7 +52,7 @@ function GetPackageVersion([array]$packageList, [string]$packageName) {
         return GetLatestPackage $packageList $packageName
     }
 
-    if (-not (Test-Path "$ArtifactsPath/$packageName")) {
+    if (-not (Test-Path (Join-Path $ArtifactsPath $packageName))) {
       Write-Host "No build artifact directory for smoke test dependency $packageName. Using latest upstream version."
       return GetLatestPackage $packageList $packageName
     }
