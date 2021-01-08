@@ -199,5 +199,59 @@ namespace Azure.Storage.Files.Shares
         {
             return null;
         }
+
+        // TODO
+        internal static ShareFileInfo ToShareFileInfo(this FileCreateHeaders fileCreateHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileCopyInfo ToShareFileCopyInfo(this FileStartCopyHeaders fileStartCopyHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileProperties ToShareFileProperties(this FileGetPropertiesHeaders fileGetPropertiesHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileInfo ToShareFileInfo(this FileSetHttpHeadersHeaders fileSetHttpHeadersHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileInfo ToShareFileInfo(this FileSetMetadataHeaders fileSetMetadataHeaders)
+        {
+            return null;
+        }
+
+        // TODOs
+        internal static ShareFileUploadInfo ToShareFileUploadInfo(this FileUploadRangeHeaders fileUploadRangeHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileUploadInfo ToShareFileUploadInfo(this FileUploadRangeFromURLHeaders fileUploadRangeFromURLHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileRangeInfo ToShareFileRangeInfo(this ShareFileRangeList shareFileRangeList)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this FileForceCloseHandlesHeaders fileForceCloseHandlesHeaders)
+        {
+            return null;
+        }
     }
 }
