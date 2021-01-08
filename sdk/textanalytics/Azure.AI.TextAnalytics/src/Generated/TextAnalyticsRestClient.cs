@@ -49,10 +49,10 @@ namespace Azure.AI.TextAnalytics
             uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/analyze", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json, text/json");
             if (body != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(body);
                 request.Content = content;
@@ -323,8 +323,8 @@ namespace Azure.AI.TextAnalytics
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
@@ -403,8 +403,8 @@ namespace Azure.AI.TextAnalytics
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
@@ -497,8 +497,8 @@ namespace Azure.AI.TextAnalytics
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
@@ -595,8 +595,8 @@ namespace Azure.AI.TextAnalytics
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
@@ -681,8 +681,8 @@ namespace Azure.AI.TextAnalytics
                 uri.AppendQuery("showStats", showStats.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
@@ -765,8 +765,8 @@ namespace Azure.AI.TextAnalytics
                 uri.AppendQuery("showStats", showStats.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
@@ -857,8 +857,8 @@ namespace Azure.AI.TextAnalytics
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;

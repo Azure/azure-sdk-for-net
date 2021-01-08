@@ -551,6 +551,11 @@ namespace Microsoft.Azure.Management.Network
         IVpnLinkConnectionsOperations VpnLinkConnections { get; }
 
         /// <summary>
+        /// Gets the INatRulesOperations.
+        /// </summary>
+        INatRulesOperations NatRules { get; }
+
+        /// <summary>
         /// Gets the IP2sVpnGatewaysOperations.
         /// </summary>
         IP2sVpnGatewaysOperations P2sVpnGateways { get; }

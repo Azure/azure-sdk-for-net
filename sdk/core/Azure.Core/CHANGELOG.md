@@ -1,11 +1,23 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.9.0-beta.1 (Unreleased)
+
+
+## 1.8.0 (2020-01-06)
 
 ### Added
-- `System.Text.Json.JsonConverter` implementation for the `ETag`
+- `AzureSasCredential` and its respective policy.
 
-### Fixes
+### Key Bug Fixes
+- Avoid a causing and ignoring an exception when setting network stream timeout on .NET Core 
+
+## 1.7.0 (2020-12-14)
+
+### New Features
+- `System.Text.Json.JsonConverter` implementation for the `ETag`
+- Synchronous `HttpClient` support on .NET 5.
+
+### Key Bug Fixes
 - System proxy settings are correctly applied on .NET Framework
 
 ## 1.6.0 (2020-10-28)

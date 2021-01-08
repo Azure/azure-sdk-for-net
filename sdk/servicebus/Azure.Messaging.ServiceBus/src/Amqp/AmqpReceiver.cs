@@ -142,7 +142,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
-                        isSessionReceiver: isSessionReceiver),
+                        isSessionReceiver: isSessionReceiver,
+                        identifier: identifier),
                 link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
@@ -166,13 +167,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             uint prefetchCount,
             ServiceBusReceiveMode receiveMode,
-            bool isSessionReceiver)
+            bool isSessionReceiver,
+            string identifier)
         {
             ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
 
             try
             {
                 ReceivingAmqpLink link = await _connectionScope.OpenReceiverLinkAsync(
+                    identifier: identifier,
                     entityPath: _entityPath,
                     timeout: timeout,
                     prefetchCount: prefetchCount,

@@ -26,8 +26,8 @@ function Log($Message) {
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
 }
 
-# Wait 30 seconds before build/test phase.
-Log "Waiting 30 seconds to allow for permissions to propagate before build/test phase."
-Start-Sleep -s 30
+# Wait 5 minutes before build/test phase.
+Log "Waiting 5 minutes to allow for permissions to propagate before build/test phase."
+Start-Sleep -s 300
 
 Log "Finished waiting for permission propagation."

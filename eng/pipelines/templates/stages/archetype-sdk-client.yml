@@ -15,6 +15,9 @@ parameters:
 - name: ArtifactName
   type: string
   default: packages
+- name: SDKType
+  type: string
+  default: client
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -30,27 +33,37 @@ parameters:
 - name: TestSetupSteps
   type: stepList
   default: []
+- name: WindowsPool
+  type: string
+  default: azsdk-pool-mms-win-2019-general
+- name: LinuxPool
+  type: string
+  default: azsdk-pool-mms-ubuntu-1804-general
 
 stages:
   - stage: Build
     jobs:
     - template: ../jobs/archetype-sdk-client.yml
       parameters:
+        SDKType: ${{ parameters.SDKType }}
         ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         Artifacts: ${{ parameters.Artifacts }}
         TestPipeline: ${{ parameters.TestPipeline }}
         ArtifactName: packages
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
+        WindowsPool: ${{ parameters.WindowsPool }}
+        LinuxPool: ${{ parameters.LinuxPool }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
     - template: archetype-net-release.yml
       parameters:
+        SDKType: ${{ parameters.SDKType }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         DependsOn: Build
         Artifacts: ${{ parameters.Artifacts }}
         TestPipeline: ${{ parameters.TestPipeline }}
         ArtifactName: packages
         TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
-        TargetDocRepoName: ${{ parameters.TargetDocRepoName }} 
+        TargetDocRepoName: ${{ parameters.TargetDocRepoName }}

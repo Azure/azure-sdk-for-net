@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// machines or virtual machine scale sets can be placed automatically
         /// on the dedicated host group. Automatic placement means resources
         /// are allocated on dedicated hosts, that are chosen by Azure, under
-        /// the dedicated host group. The value is defaulted to 'true' when not
-        /// provided. &lt;br&gt;&lt;br&gt;Minimum api-version:
+        /// the dedicated host group. The value is defaulted to 'false' when
+        /// not provided. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2020-06-01.</param>
         /// <param name="zones">Availability Zone to use for this host group.
         /// Only single zone is supported. The zone can be assigned only during
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// scale sets can be placed automatically on the dedicated host group.
         /// Automatic placement means resources are allocated on dedicated
         /// hosts, that are chosen by Azure, under the dedicated host group.
-        /// The value is defaulted to 'true' when not provided.
+        /// The value is defaulted to 'false' when not provided.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
         /// 2020-06-01.
         /// </summary>

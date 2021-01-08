@@ -56,8 +56,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/createDataFlowDebugSession", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
-            request0.Headers.Add("Content-Type", "application/json");
             request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -176,8 +176,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/addDataFlowToDebugSession", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
-            request0.Headers.Add("Content-Type", "application/json");
             request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -248,8 +248,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/deleteDataFlowDebugSession", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
-            request0.Headers.Add("Content-Type", "application/json");
             request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -310,8 +310,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/executeDataFlowDebugCommand", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
-            request0.Headers.Add("Content-Type", "application/json");
             request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;

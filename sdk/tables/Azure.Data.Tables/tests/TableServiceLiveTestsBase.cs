@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Data.Tables.Tests
 {
@@ -51,6 +52,15 @@ namespace Azure.Data.Tables.Tests
         protected string AccountName;
         protected string AccountKey;
         protected string ConnectionString;
+        private readonly Dictionary<string, string> _cosmosIgnoreTests = new Dictionary<string, string>
+        {
+            {"CustomEntityMergeRespectsEtag", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
+            {"EntityMergeRespectsEtag", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
+            {"EntityMergeDoesPartialPropertyUpdates", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
+            {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},
+            {"GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints."},
+            {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."}
+        };
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
@@ -59,6 +69,12 @@ namespace Azure.Data.Tables.Tests
         [SetUp]
         public async Task TablesTestSetup()
         {
+            // Bail out before attempting the setup if this test is in the CosmosIgnoreTests set.
+            if (_endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason))
+            {
+                Assert.Ignore(ignoreReason);
+            }
+
             ServiceUri = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.StorageUri,
@@ -97,7 +113,10 @@ namespace Azure.Data.Tables.Tests
         {
             try
             {
-                await service.DeleteTableAsync(tableName);
+                if (service != null)
+                {
+                    await service.DeleteTableAsync(tableName);
+                }
             }
             catch { }
         }
@@ -124,7 +143,7 @@ namespace Azure.Data.Tables.Tests
                         {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
                         {Int64TypePropertyName, long.Parse(number)},
                         {DoubleTypePropertyName, double.Parse($"{number}.0")},
-                        {DoubleDecimalTypePropertyName, n + 0.1},
+                        {DoubleDecimalTypePropertyName, n + 0.5},
                         {IntTypePropertyName, n},
                     };
             }).ToList();
@@ -152,7 +171,7 @@ namespace Azure.Data.Tables.Tests
                         {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
                         {Int64TypePropertyName, long.Parse(number)},
                         {DoubleTypePropertyName, (double)n},
-                        {DoubleDecimalTypePropertyName, n + 0.1},
+                        {DoubleDecimalTypePropertyName, n + 0.5},
                         {IntTypePropertyName, n},
                     });
             }).ToList();
@@ -209,11 +228,11 @@ namespace Azure.Data.Tables.Tests
                     DateTimeAsString = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n).ToString("o"),
                     DateTimeN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                     DateTimeOffsetN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
-                    Double = n + ((double)n / 100),
+                    Double = n + 0.5,
                     DoubleInteger = double.Parse($"{n.ToString()}.0"),
-                    DoubleN = n + ((double)n / 100),
-                    DoublePrimitive = n + ((double)n / 100),
-                    DoublePrimitiveN = n + ((double)n / 100),
+                    DoubleN = n + 0.5,
+                    DoublePrimitive = n + 0.5,
+                    DoublePrimitiveN = n + 0.5,
                     Guid = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
                     GuidN = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
                     Int32 = n,

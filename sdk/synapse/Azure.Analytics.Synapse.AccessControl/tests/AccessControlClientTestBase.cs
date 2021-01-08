@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
         internal AccessControlClient CreateAccessControlClient()
         {
             return InstrumentClient(new AccessControlClient(
-                new Uri(TestEnvironment.WorkspaceUrl),
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new AccessControlClientOptions())));
         }

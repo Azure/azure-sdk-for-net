@@ -89,12 +89,13 @@ var result = policyResult.Value.AttestationPolicy;
 
 ### Set an attestation policy for a specified attestation type.
 ```C# Snippet:SetPolicy
-string attestationPolicy = "version=1.0; authorizationrules{=> allow();}; issuancerules{};";
+string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
 
 var policyTokenSigner = TestEnvironment.PolicyCertificate0;
 
 AttestationToken policySetToken = new SecuredAttestationToken(
     new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(attestationPolicy), },
+    TestEnvironment.PolicySigningKey0,
     policyTokenSigner);
 
 var setResult = client.SetPolicy(AttestationType.SgxEnclave, policySetToken);

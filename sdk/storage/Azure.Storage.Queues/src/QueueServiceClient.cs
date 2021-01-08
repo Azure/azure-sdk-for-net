@@ -408,6 +408,7 @@ namespace Azure.Storage.Queues
                         maxresults: pageSizeHint,
                         include: includeTypes.Any() ? includeTypes : null,
                         async: async,
+                        operationName: $"{nameof(QueueServiceClient)}.{nameof(GetQueues)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     if ((traits & QueueTraits.Metadata) != QueueTraits.Metadata)

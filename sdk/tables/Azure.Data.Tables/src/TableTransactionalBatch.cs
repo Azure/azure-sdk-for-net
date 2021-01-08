@@ -16,7 +16,10 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
-    public partial class TableTransactionalBatch
+    /// <summary>
+    /// Provides synchronous and asynchronous methods for creating and submitting table transactional batch requests.
+    /// </summary>
+    public class TableTransactionalBatch
     {
         private readonly TableRestClient _tableOperations;
         private readonly TableRestClient _batchOperations;

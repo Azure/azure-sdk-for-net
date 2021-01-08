@@ -213,10 +213,6 @@ namespace Azure.Core.Tests
 
         private class MockTestEnvironment : TestEnvironment
         {
-            public MockTestEnvironment() : base("core")
-            {
-            }
-
             public static MockTestEnvironment Instance { get; } = new MockTestEnvironment();
             public string RecordedValue => GetRecordedVariable("RECORDED");
             public string NotRecordedValue => GetVariable("NOTRECORDED");
