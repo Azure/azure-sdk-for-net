@@ -19,8 +19,8 @@ namespace Compute.Tests
             //
             // Prerequisite: in order to record this test, first create a user identity in resource group 'identitytest' and set the value of identity here.
             // 
-            const string rgName = "identitytest";
-            const string identity = "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/resourcegroups/identitytest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userid";
+            string rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+            const string identity = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourcegroups/RGforSDKtestResources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/UserIdentityforTest";
 
             using (MockContext context = MockContext.Start(this.GetType()))
             {
