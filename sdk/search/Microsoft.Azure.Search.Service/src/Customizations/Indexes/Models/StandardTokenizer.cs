@@ -19,8 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Breaks text following the Unicode Text Segmentation rules. This
     /// tokenizer is implemented using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html">
-    /// StandardTokenizer (Lucene API)</see>.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StandardTokenizer")]
     [Obsolete("This type is obsolete. Please use StandardTokenizerV2 instead.")]

@@ -19,8 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Generates n-grams of the given size(s). This token filter is
     /// implemented using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenFilter.html">
-    /// NGramTokenFilter (Lucene API)</see>
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.NGramTokenFilter")]
     [Obsolete("This type is obsolete. Please use NGramTokenFilterV2 instead.")]

@@ -11,8 +11,7 @@ namespace Microsoft.Azure.Search.Models
 {
     /// <summary>
     /// Defines which parts of a blob will be indexed by the blob storage indexer. 
-    /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage">
-    /// How to index documents in Azure Blob Storage with Azure Cognitive Search</see>.
+    /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" />
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<BlobExtractionMode>))]
     public struct BlobExtractionMode : IEquatable<BlobExtractionMode>

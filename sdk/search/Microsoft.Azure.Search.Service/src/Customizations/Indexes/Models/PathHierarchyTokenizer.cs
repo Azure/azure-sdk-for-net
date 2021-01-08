@@ -10,8 +10,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Tokenizer for path-like hierarchies. This tokenizer is implemented
     /// using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/path/PathHierarchyTokenizer.html">
-    /// PathHierarchyTokenizer (Lucene API)</see>
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/path/PathHierarchyTokenizer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PathHierarchyTokenizer")]
     [Obsolete("This type is obsolete. Please use PathHierarchyTokenizerV2 instead.")]

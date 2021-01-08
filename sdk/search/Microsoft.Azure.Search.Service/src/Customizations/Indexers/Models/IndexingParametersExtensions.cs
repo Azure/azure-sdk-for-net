@@ -16,13 +16,12 @@ namespace Microsoft.Azure.Search.Models
     public static class IndexingParametersExtensions
     {
         private const string ParsingModeKey = "parsingMode";
-
+ 
         /// <summary>
         /// Specifies that the indexer will index only the blobs with the file name extensions you specify. Each string is a file extensions with a
         /// leading dot. For example, ".pdf", ".docx", etc. If you pass the same file extension to this method and ExcludeFileNameExtensions, blobs
         /// with that extension will be excluded from indexing (that is, ExcludeFileNameExtensions takes precedence).
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage">
-        /// How to index documents in Azure Blob Storage with Azure Cognitive Search</see> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="extensions">File extensions to include in indexing.</param>
@@ -47,8 +46,7 @@ namespace Microsoft.Azure.Search.Models
         /// Specifies that the indexer will not index blobs with the file name extensions you specify. Each string is a file extensions with a
         /// leading dot. For example, ".pdf", ".docx", etc. If you pass the same file extension to this method and IndexFileNameExtensions, blobs
         /// with that extension will be excluded from indexing (that is, this method takes precedence).
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage">
-        /// How to index documents in Azure Blob Storage with Azure Cognitive Search</see> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="extensions">File extensions to exclude from indexing.</param>
@@ -74,8 +72,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <remarks>
         /// This option only applies to indexers that index Azure Blob Storage.
-        /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage">
-        /// How to index documents in Azure Blob Storage with Azure Cognitive Search</see>.
+        /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" />
         /// </remarks>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="extractionMode">A <see cref="BlobExtractionMode" /> value specifying what to index.</param>
@@ -86,8 +83,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Tells the indexer to assume that all blobs contain JSON, which it will then parse such that each blob's JSON will map to a single
         /// document in the search index.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs">
-        /// How to index JSON blobs using a Blob indexer in Azure Cognitive Search</see> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs/" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <remarks>
@@ -100,8 +96,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Tells the indexer to assume that all blobs contain new-line separated JSON, which it will then parse such that individual JSON entities in each blob
         /// will map to a single document in the search index.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs">
-        /// How to index JSON blobs using a Blob indexer in Azure Cognitive Search</see> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs/" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <remarks>
@@ -114,8 +109,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Tells the indexer to assume that all blobs contain JSON arrays, which it will then parse such that each JSON object in each array will
         /// map to a single document in the search index.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs">
-        /// How to index JSON blobs using a Blob indexer in Azure Cognitive Search</see> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="documentRoot">
@@ -141,8 +135,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Tells the indexer to assume that all blobs are delimited text files. Currently only comma-separated value (CSV) text files are supported.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-csv-blobs">
-        /// How to index CSV blobs using delimitedText parsing mode and Blob indexers in Azure Cognitive Search</see> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-csv-blobs" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="headers">

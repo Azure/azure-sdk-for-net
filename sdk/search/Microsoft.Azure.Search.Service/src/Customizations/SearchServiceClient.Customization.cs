@@ -16,8 +16,7 @@ namespace Microsoft.Azure.Search
         /// </summary>
         /// <param name='searchServiceName'>Required. The name of the search service.</param>
         /// <param name='credentials'>Required. The credentials used to authenticate to a search service.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/">
-        /// Azure Cognitive Search Service REST</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/" />
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -40,8 +39,7 @@ namespace Microsoft.Azure.Search
         /// </summary>
         /// <param name='searchServiceName'>Required. The name of the search service.</param>
         /// <param name='credentials'>Required. The credentials used to authenticate to a search service.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/">
-        /// Azure Cognitive Search Service REST</see>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/" />
         /// </param>
         public SearchServiceClient(string searchServiceName, SearchCredentials credentials)
             : this()

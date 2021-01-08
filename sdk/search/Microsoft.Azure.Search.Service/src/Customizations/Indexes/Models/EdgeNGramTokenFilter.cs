@@ -20,8 +20,7 @@ namespace Microsoft.Azure.Search.Models
     /// Generates n-grams of the given size(s) starting from the front or the
     /// back of an input token. This token filter is implemented using Apache
     /// Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenFilter.html">
-    /// EdgeNGramTokenFilter (Lucene API)</see>.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.EdgeNGramTokenFilter")]
     [Obsolete("This type is obsolete. Please use EdgeNGramTokenFilterV2 instead.")]

@@ -19,8 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Emits the entire input as a single token. This tokenizer is
     /// implemented using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html">
-    /// KeywordTokenizer (Lucene API)</see>.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KeywordTokenizer")]
     [Obsolete("This type is obsolete. Please use KeywordTokenizerV2 instead.")]

@@ -15,8 +15,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new indexer or updates an indexer if it already
         /// exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
-        /// Create Indexer</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
         /// </summary>
         /// <param name='indexer'>
         /// The definition of the indexer to create or update.

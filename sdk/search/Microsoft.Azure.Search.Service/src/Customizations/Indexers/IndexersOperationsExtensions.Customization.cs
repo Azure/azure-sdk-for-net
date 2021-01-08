@@ -11,16 +11,14 @@ namespace Microsoft.Azure.Search
 
     /// <summary>
     /// Operations for managing indexers. 
-    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Indexer-operations">
-    /// Indexer operations</see>.
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Indexer-operations" />
     /// </summary>
     public static partial class IndexersOperationsExtensions
     {
         /// <summary>
         /// Creates a new indexer or updates an indexer if it already
         /// exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
-        /// Create Indexer</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -45,8 +43,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new indexer or updates an indexer if it already
         /// exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer">
-        /// Create Indexer</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.

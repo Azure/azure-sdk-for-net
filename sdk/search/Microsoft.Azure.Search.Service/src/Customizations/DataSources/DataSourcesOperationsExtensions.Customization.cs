@@ -11,16 +11,14 @@ namespace Microsoft.Azure.Search
 
     /// <summary>
     /// Operations for managing datasources. 
-    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Indexer-operations">
-    /// Indexer operations</see>.
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Indexer-operations" />
     /// </summary>
     public static partial class DataSourcesOperationsExtensions
     {
         /// <summary>
         /// Creates a new datasource or updates a datasource if it already
         /// exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source">
-        /// Update Data Source</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source" />
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -45,8 +43,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new datasource or updates a datasource if it already
         /// exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source">
-        /// Update Data Source</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source" />
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
