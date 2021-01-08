@@ -566,7 +566,7 @@ namespace Azure.MixedReality.RemoteRendering
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of all conversions. Returns a batch of conversions- if more conversions are available the @nextLink property contains the a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </summary>
+        /// <summary> Get a list of all rendering sessions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<SessionProperties> ListSessions(CancellationToken cancellationToken = default)
         {
