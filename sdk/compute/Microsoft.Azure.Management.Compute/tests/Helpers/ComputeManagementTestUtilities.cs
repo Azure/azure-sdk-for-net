@@ -4,6 +4,7 @@
 using System;
 using System.Net;
 using Microsoft.Azure.Management.Compute;
+using Microsoft.Azure.Management.ManagedServiceIdentity;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
@@ -46,6 +47,13 @@ namespace Compute.Tests
         {
             handler.IsPassThrough = true;
             var client = context.GetServiceClient<StorageManagementClient>(handlers: handler);
+            return client;
+        }
+
+        public static ManagedServiceIdentityClient GetManagedServiceIdentityClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<ManagedServiceIdentityClient>(handlers: handler);
             return client;
         }
 
