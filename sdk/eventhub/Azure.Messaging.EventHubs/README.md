@@ -241,11 +241,12 @@ An `EventHubsException` is triggered when an operation specific to Event Hubs ha
   - **Quota Exceeded** : This typically indicates that there are too many active read operations for a single consumer group.  This limit depends on the tier of the Event Hubs namespace, and moving to a higher tier may be desired.  An alternative would be to create additional consumer groups and ensure that the number of consumer client reads for any group is within the limit.  Please see [Azure Event Hubs quotas and limits](https://docs.microsoft.com/azure/event-hubs/event-hubs-quotas) for more information.
 
   - **Message Size Exceeded** : Event data as a maximum size allowed for both an individual event and a batch of events.  This includes the data of the event, as well as any associated metadata and system overhead.  The best approach for resolving this error is to reduce the number of events being sent in a batch or the size of data included in the message.  Because size limits are subject to change, please refer to [Azure Event Hubs quotas and limits](https://docs.microsoft.com/azure/event-hubs/event-hubs-quotas) for specifics.  
+  
   - **Consumer Disconnected** : A consumer client was disconnected by the Event Hub service from the Event Hub instance.  This typically occurs when a consumer with a higher owner level asserts ownership over a partition and consumer group pairing.
   
   - **Resource Not Found**: An Event Hubs resource, such as an Event Hub, consumer group, or partition, could not be found by the Event Hubs service.  This may indicate that it has been deleted from the service or that there is an issue with the Event Hubs service itself.
   
-Reacting to a specific failure reason for the `EventHubException` can be accomplished in several ways, such as by applying an exception filter clause as part of the `catch` block:
+Reacting to a specific failure reason for the `EventHubsException` can be accomplished in several ways, such as by applying an exception filter clause as part of the `catch` block:
 
 ```C# Snippet:EventHubs_ReadMe_ExceptionFilter
 try
