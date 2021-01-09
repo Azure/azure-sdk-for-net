@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="requestContent"> The JSON-encoded representation of either a single event or an array or events, encoded in the EventGridEvent schema. </param>
         /// <returns> A list of <see cref="EventGridEvent"/>. </returns>
         public static EventGridEvent[] Parse(BinaryData requestContent)
-                => Parse(requestContent.ToString());
+            => Parse(requestContent.ToString());
 
         /// <summary>
         /// Given JSON-encoded events, parses the event envelope and returns an array of EventGridEvents.
