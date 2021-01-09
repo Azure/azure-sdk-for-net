@@ -197,24 +197,37 @@ Below is an example calling `GetData()` using Event Grid events. Calling `GetDat
 ```C# Snippet:DeserializePayloadUsingNonGenericGetData
 foreach (EventGridEvent egEvent in egEvents)
 {
-    // If the event is a system event, GetData() should return the correct system event type
-    switch (egEvent.GetData())
+    // If the event is a system event, AsSystemEventData() should return the correct system event type
+    if (egEvent.IsSystemEvent)
     {
-        case SubscriptionValidationEventData subscriptionValidated:
-            Console.WriteLine(subscriptionValidated.ValidationCode);
-            break;
-        case StorageBlobCreatedEventData blobCreated:
-            Console.WriteLine(blobCreated.BlobType);
-            break;
-        case BinaryData unknownType:
-            // An unrecognized event type - GetData() returns BinaryData with the serialized JSON payload
-            if (egEvent.EventType == "MyApp.Models.CustomEventType")
-            {
+        switch (egEvent.AsSystemEventData())
+        {
+            case SubscriptionValidationEventData subscriptionValidated:
+                Console.WriteLine(subscriptionValidated.ValidationCode);
+                break;
+            case StorageBlobCreatedEventData blobCreated:
+                Console.WriteLine(blobCreated.BlobType);
+                break;
+            // Handle any other system event type
+            default:
+                Console.WriteLine(egEvent.EventType);
+                break;
+        }
+    }
+    else
+    {
+        switch (egEvent.EventType)
+        {
+            case "MyApp.Models.CustomEventType":
                 // You can use BinaryData methods to deserialize the payload
-                TestPayload deserializedEventData = unknownType.ToObjectFromJson<TestPayload>();
+                TestPayload deserializedEventData = egEvent.GetData().ToObjectFromJson<TestPayload>();
                 Console.WriteLine(deserializedEventData.Name);
-            }
-            break;
+                break;
+            // Handle any other custom event type
+            default:
+                Console.Write(egEvent.EventType);
+                break;
+        }
     }
 }
 ```
