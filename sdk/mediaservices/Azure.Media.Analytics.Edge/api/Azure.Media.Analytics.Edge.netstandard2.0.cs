@@ -401,7 +401,7 @@ namespace Azure.Media.Analytics.Edge.Models
     }
     public partial class MediaGraphSignalGateProcessor : Azure.Media.Analytics.Edge.Models.MediaGraphProcessor
     {
-        public MediaGraphSignalGateProcessor(string name, System.Collections.Generic.IEnumerable<Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput> inputs, string activationSignalOffset, string minimumActivationTime, string maximumActivationTime) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput>)) { }
+        public MediaGraphSignalGateProcessor(string name, System.Collections.Generic.IEnumerable<Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput> inputs) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput>)) { }
         public string ActivationEvaluationWindow { get { throw null; } set { } }
         public string ActivationSignalOffset { get { throw null; } set { } }
         public string MaximumActivationTime { get { throw null; } set { } }

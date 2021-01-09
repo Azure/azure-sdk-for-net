@@ -10,7 +10,7 @@ directive:
     $["x-csharp-usage"] = "model,input,output";
     $["x-csharp-formats"] = "json";
 
-require: https://github.com/Azure/azure-rest-api-specs/blob/297b7526f051e08f3a430b50daadd356ba74c6e2/specification/mediaservices/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/14732a2d9802c98cb8fea52800853874529c5f8e/specification/mediaservices/data-plane/readme.md
 
 ```
 
