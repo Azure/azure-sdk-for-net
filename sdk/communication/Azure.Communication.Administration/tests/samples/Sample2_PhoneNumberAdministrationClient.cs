@@ -10,7 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
 using Azure.Communication.Administration.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.Administration.Samples
@@ -25,6 +27,32 @@ namespace Azure.Communication.Administration.Samples
         }
 
         [Test]
+        public async Task CreatePhoneNumberWithTokenCredential()
+        {
+            var endpoint = TestEnvironment.EndpointString;
+            #region Snippet:CreatePhoneNumberWithTokenCredential
+            //@@var endpoint = "<endpoint_url>";
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            var client = new PhoneNumberAdministrationClient(new Uri(endpoint), tokenCredential);
+            #endregion Snippet:CreatePhoneNumberWithTokenCredential
+
+            tokenCredential = (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential();
+            client = CreateClientWithTokenCredential(tokenCredential);
+            try
+            {
+                // Smoke test to ensure that client generated from token is able to work as expected.
+                var numbersPagable = client.GetAllPhoneNumbersAsync();
+                var numbers = await numbersPagable.ToEnumerableAsync();
+
+                Assert.IsNotNull(numbers);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
         [AsyncOnly]
         public async Task PurchaseAndReleaseAsync()
         {
@@ -33,7 +61,12 @@ namespace Azure.Communication.Administration.Samples
 
             const string locale = "en-US";
             var connectionString = TestEnvironment.ConnectionString;
-            var client = CreateClient(false);
+            #region Snippet:CreatePhoneNumberWithConnectionString
+            // Get a connection string to our Azure Communication resource.
+            //@@var connectionString = "<connection_string>";
+            var client = new PhoneNumberAdministrationClient(connectionString);
+            #endregion Snippet:CreatePhoneNumberWithConnectionString
+            client = CreateClient(false);
 
             const string countryCode = "US";
 

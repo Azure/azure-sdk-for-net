@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Communication.Pipeline;
+using Azure.Core;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Administration.Tests
@@ -24,6 +25,21 @@ namespace Azure.Communication.Administration.Tests
         {
             var client = new PhoneNumberAdministrationClient(
                     TestEnvironment.ConnectionString,
+                    InstrumentClientOptions(new PhoneNumberAdministrationClientOptions()));
+
+            return isInstrumented ? InstrumentClient(client) : client;
+        }
+
+        /// <summary>
+        /// Creates a <see cref="PhoneNumberAdministrationClient" /> with the token credential
+        /// and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="PhoneNumberAdministrationClient" />.</returns>
+        protected PhoneNumberAdministrationClient CreateClientWithTokenCredential(TokenCredential token, bool isInstrumented = true)
+        {
+            var client = new PhoneNumberAdministrationClient(
+                    new Uri(TestEnvironment.EndpointString),
+                    token,
                     InstrumentClientOptions(new PhoneNumberAdministrationClientOptions()));
 
             return isInstrumented ? InstrumentClient(client) : client;

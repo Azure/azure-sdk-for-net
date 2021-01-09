@@ -4,6 +4,8 @@
 
 ### Added
 - Added support to create CommunicationIdentityClient with TokenCredential
+- Added support to create PhoneNumberAdministrationClient with TokenCredential
+
 ### Fixed
 - Issue with paging results not pulling next pages
 

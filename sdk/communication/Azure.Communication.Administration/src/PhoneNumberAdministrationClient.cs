@@ -22,14 +22,7 @@ namespace Azure.Communication.Administration
         internal PhoneNumberAdministrationRestClient RestClient { get; }
 
         /// <summary>
-        /// Initializes a phone number administration client with an Azure resource connection string.
-        /// </summary>
-        public PhoneNumberAdministrationClient(string connectionString)
-            : this(new PhoneNumberAdministrationClientOptions(), ConnectionString.Parse(connectionString))
-        { }
-
-        /// <summary>
-        /// Initializes a phone number administration client with an Azure resource connection string and client options.
+        /// Initializes a phone number administration client with an Azure resource connection string and optional client options.
         /// </summary>
         public PhoneNumberAdministrationClient(string connectionString, PhoneNumberAdministrationClientOptions? options = default)
             : this(
@@ -37,14 +30,37 @@ namespace Azure.Communication.Administration
                   ConnectionString.Parse(connectionString))
         { }
 
-        internal PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
+        /// <summary>
+        /// Initializes a phone number administration client with a token credential.
+        /// </summary>
+        public PhoneNumberAdministrationClient(Uri endpoint, TokenCredential tokenCredential, PhoneNumberAdministrationClientOptions? options = default)
+            : this(
+                  endpoint,
+                  options ?? new PhoneNumberAdministrationClientOptions(),
+                  tokenCredential)
+        { }
+
+        private PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
             : this(new ClientDiagnostics(options), options.BuildHttpPipeline(connectionString), connectionString.GetRequired("endpoint"))
         { }
 
-        internal PhoneNumberAdministrationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
+        private PhoneNumberAdministrationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
         {
+            Argument.AssertNotNullOrEmpty(endpointUrl, nameof(endpointUrl));
             RestClient = new PhoneNumberAdministrationRestClient(clientDiagnostics, pipeline, endpointUrl);
             ClientDiagnostics = clientDiagnostics;
+        }
+
+        private PhoneNumberAdministrationClient(Uri endpoint, PhoneNumberAdministrationClientOptions options, TokenCredential tokenCredential)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
+            ClientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new PhoneNumberAdministrationRestClient(
+                ClientDiagnostics,
+                options.BuildHttpPipeline(tokenCredential),
+                endpoint.AbsoluteUri);
         }
 
         /// <summary>Initializes a new instance of <see cref="PhoneNumberAdministrationClient"/> for mocking.</summary>
