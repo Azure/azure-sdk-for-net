@@ -61,12 +61,7 @@ namespace Azure.Communication.Administration.Samples
 
             const string locale = "en-US";
             var connectionString = TestEnvironment.ConnectionString;
-            #region Snippet:CreatePhoneNumberWithConnectionString
-            // Get a connection string to our Azure Communication resource.
-            //@@var connectionString = "<connection_string>";
-            var client = new PhoneNumberAdministrationClient(connectionString);
-            #endregion Snippet:CreatePhoneNumberWithConnectionString
-            client = CreateClient(false);
+            var client = CreateClient(false);
 
             const string countryCode = "US";
 

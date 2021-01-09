@@ -120,7 +120,7 @@ All geographic phone plans within the same country are grouped into a phone plan
 
 Phone Number Administration clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
 
-```C# Snippet:CreatePhoneNumberWithConnectionString
+```C# Snippet:CreatePhoneNumberAdministrationClient
 // Get a connection string to our Azure Communication resource.
 var connectionString = "<connection_string>";
 var client = new PhoneNumberAdministrationClient(connectionString);
