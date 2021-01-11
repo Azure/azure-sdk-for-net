@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         internal BlobChangeFeedEventData() { }
         public Azure.Storage.Blobs.ChangeFeed.BlobOperationName BlobOperationName { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } }
-        public System.Guid ClientRequestId { get { throw null; } }
+        public string ClientRequestId { get { throw null; } }
         public long ContentLength { get { throw null; } }
         public long? ContentOffset { get { throw null; } }
         public string ContentType { get { throw null; } }
@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
     public static partial class BlobChangeFeedModelFactory
     {
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent BlobChangeFeedEvent(string topic, string subject, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType eventType, System.DateTimeOffset eventTime, System.Guid id, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventData eventData, long dataVersion, string metadataVersion) { throw null; }
-        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventData BlobChangeFeedEventData(string api, System.Guid clientRequestId, System.Guid requestId, Azure.ETag eTag, string contentType, long contentLength, Azure.Storage.Blobs.Models.BlobType blobType, long contentOffset, System.Uri destinationUri, System.Uri sourceUri, System.Uri uri, bool recursive, string sequencer) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventData BlobChangeFeedEventData(string api, string clientRequestId, System.Guid requestId, Azure.ETag eTag, string contentType, long contentLength, Azure.Storage.Blobs.Models.BlobType blobType, long contentOffset, System.Uri destinationUri, System.Uri sourceUri, System.Uri uri, bool recursive, string sequencer) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlobOperationName : System.IEquatable<Azure.Storage.Blobs.ChangeFeed.BlobOperationName>

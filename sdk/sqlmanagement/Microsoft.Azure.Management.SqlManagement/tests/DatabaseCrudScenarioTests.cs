@@ -123,6 +123,17 @@ namespace Sql.Tests
                 Assert.NotNull(db8);
                 SqlManagementTestUtilities.ValidateDatabase(db8Input, db8, dbName);
 
+                dbName = SqlManagementTestUtilities.GenerateName();
+                var db9Input = new Database()
+                {
+                    Location = server.Location,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.P1),
+                    MaintenanceConfigurationId = SqlManagementTestUtilities.GetTestMaintenanceConfigurationId(sqlClient.SubscriptionId),
+                };
+                var db9 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db9Input);
+                Assert.NotNull(db9);
+                SqlManagementTestUtilities.ValidateDatabase(db9Input, db9, dbName);
+
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db1.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db2.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db4.Name);
@@ -130,6 +141,7 @@ namespace Sql.Tests
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db6.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db7.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db8.Name);
+                sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db9.Name);
             }
         }
 
@@ -278,6 +290,14 @@ namespace Sql.Tests
             updateTags.Tags = new Dictionary<string, string> { { "asdf", "zxcv" } };
             var db7 = updateFunc(resourceGroup.Name, server.Name, dbName, updateTags);
             SqlManagementTestUtilities.ValidateDatabase(updateTags, db7, dbName);
+
+            // Update maintenance
+            //
+            dynamic updateMaintnenace = createModelFunc();
+            updateMaintnenace.Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S2, "Standard");
+            updateMaintnenace.MaintenanceConfigurationId = SqlManagementTestUtilities.GetTestMaintenanceConfigurationId(sqlClient.SubscriptionId);
+            var db9 = updateFunc(resourceGroup.Name, server.Name, dbName, updateMaintnenace);
+            SqlManagementTestUtilities.ValidateDatabase(updateMaintnenace, db9, dbName);
         }
 
         [Fact]

@@ -18,7 +18,6 @@ namespace Azure.Data.Tables.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16964")]
     public class TableClientQueryableLiveTests : TableServiceLiveTestsBase
     {
         public TableClientQueryableLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)

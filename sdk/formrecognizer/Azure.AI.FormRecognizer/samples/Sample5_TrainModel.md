@@ -29,23 +29,27 @@ Train custom models to recognize all fields and values found in your custom form
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
+Uri trainingFileUri = <trainingFileUri>;
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My Model").WaitForCompletionAsync();
+
+TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My Model");
+Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+CustomFormModel model = operationResponse.Value;
 
 Console.WriteLine($"Custom Model Info:");
-Console.WriteLine($"    Model Id: {model.ModelId}");
-Console.WriteLine($"    Model name: {model.ModelName}");
-Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Is composed model: {model.Properties.IsComposedModel}");
-Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
-Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
+Console.WriteLine($"  Model Id: {model.ModelId}");
+Console.WriteLine($"  Model name: {model.ModelName}");
+Console.WriteLine($"  Model Status: {model.Status}");
+Console.WriteLine($"  Is composed model: {model.Properties.IsComposedModel}");
+Console.WriteLine($"  Training model started on: {model.TrainingStartedOn}");
+Console.WriteLine($"  Training model completed on: {model.TrainingCompletedOn}");
 
 foreach (CustomFormSubmodel submodel in model.Submodels)
 {
     Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
     foreach (CustomFormModelField field in submodel.Fields.Values)
     {
-        Console.Write($"    FieldName: {field.Name}");
+        Console.Write($"  FieldName: {field.Name}");
         if (field.Label != null)
         {
             Console.Write($", FieldLabel: {field.Label}");
@@ -68,23 +72,28 @@ Train custom models to recognize specific fields and values you specify by label
 // For instructions to create a label file for your training forms, please see:
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 
+Uri trainingFileUri = <trainingFileUri>;
+string modelName = "My Model with labels";
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true, "My Model with labels").WaitForCompletionAsync();
+
+TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: true, modelName);
+Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+CustomFormModel model = operationResponse.Value;
 
 Console.WriteLine($"Custom Model Info:");
-Console.WriteLine($"    Model Id: {model.ModelId}");
-Console.WriteLine($"    Model name: {model.ModelName}");
-Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Is composed model: {model.Properties.IsComposedModel}");
-Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
-Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
+Console.WriteLine($"  Model Id: {model.ModelId}");
+Console.WriteLine($"  Model name: {model.ModelName}");
+Console.WriteLine($"  Model Status: {model.Status}");
+Console.WriteLine($"  Is composed model: {model.Properties.IsComposedModel}");
+Console.WriteLine($"  Training model started on: {model.TrainingStartedOn}");
+Console.WriteLine($"  Training model completed on: {model.TrainingCompletedOn}");
 
 foreach (CustomFormSubmodel submodel in model.Submodels)
 {
     Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
     foreach (CustomFormModelField field in submodel.Fields.Values)
     {
-        Console.Write($"    FieldName: {field.Name}");
+        Console.Write($"  FieldName: {field.Name}");
         if (field.Accuracy != null)
         {
             Console.Write($", Accuracy: {field.Accuracy}");

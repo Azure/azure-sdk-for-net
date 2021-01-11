@@ -164,6 +164,36 @@ namespace Microsoft.Azure.Management.CosmosDB
         INotebookWorkspacesOperations NotebookWorkspaces { get; }
 
         /// <summary>
+        /// Gets the IRestorableSqlDatabasesOperations.
+        /// </summary>
+        IRestorableSqlDatabasesOperations RestorableSqlDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlContainersOperations.
+        /// </summary>
+        IRestorableSqlContainersOperations RestorableSqlContainers { get; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlResourcesOperations.
+        /// </summary>
+        IRestorableSqlResourcesOperations RestorableSqlResources { get; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbDatabasesOperations.
+        /// </summary>
+        IRestorableMongodbDatabasesOperations RestorableMongodbDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbCollectionsOperations.
+        /// </summary>
+        IRestorableMongodbCollectionsOperations RestorableMongodbCollections { get; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbResourcesOperations.
+        /// </summary>
+        IRestorableMongodbResourcesOperations RestorableMongodbResources { get; }
+
+        /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }

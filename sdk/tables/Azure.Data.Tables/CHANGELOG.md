@@ -2,6 +2,9 @@
 
 ## 3.0.0-beta.5 (Unreleased)
 
+### Fixed
+
+- Fixed an issue which transposed the values used for EndPartitionKey and StartRowKey in the generated Sas token Uri
 
 ## 3.0.0-beta.4 (2020-12-10)
 

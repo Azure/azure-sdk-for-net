@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
@@ -202,7 +203,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                         { "AzureWebJobs:extensions:EventHubs:EventProcessorOptions:PrefetchCount", "200" },
                         { "AzureWebJobs:extensions:EventHubs:BatchCheckpointFrequency", "5" },
                         { "AzureWebJobs:extensions:EventHubs:PartitionManagerOptions:LeaseDuration", "00:00:31" },
-                        { "AzureWebJobs:extensions:EventHubs:PartitionManagerOptions:RenewInterval", "00:00:21" }
+                        { "AzureWebJobs:extensions:EventHubs:PartitionManagerOptions:RenewInterval", "00:00:21" },
+                        { "AzureWebJobs:extensions:EventHubs:InitialOffsetOptions:Type", "FromEnd" },
                     });
                 })
                 .Build();
@@ -217,6 +219,85 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(100, options.MaxBatchSize);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
+            Assert.AreEqual(EventPosition.Latest, eventProcessorOptions.DefaultStartingPosition);
+        }
+
+        [Test]
+        public void InitializeFromCodeRespectsFinalOffsetOptions_FromStart()
+        {
+            IHost host = new HostBuilder()
+                .ConfigureDefaultTestHost(builder =>
+                {
+                    builder.AddEventHubs(options => options.InitialOffsetOptions.Type = "FromEnd");
+                })
+                .ConfigureServices(services =>
+                    {
+                        services.Configure<EventHubOptions>(options =>
+                        {
+                            options.InitialOffsetOptions.Type = "FromStart";
+                        });
+                    })
+                .Build();
+
+            // Force the ExtensionRegistryFactory to run, which will initialize the EventHubConfiguration.
+            var extensionRegistry = host.Services.GetService<IExtensionRegistry>();
+            var options = host.Services.GetService<IOptions<EventHubOptions>>().Value;
+
+            var eventProcessorOptions = options.EventProcessorOptions;
+            Assert.AreEqual(EventPosition.Earliest, eventProcessorOptions.DefaultStartingPosition);
+        }
+
+        [Test]
+        public void InitializeFromCodeRespectsFinalOffsetOptions_FromEnd()
+        {
+            var host = new HostBuilder()
+                 .ConfigureDefaultTestHost(builder =>
+                 {
+                     builder.AddEventHubs(options => options.InitialOffsetOptions.Type = "FromStart");
+                 })
+                 .ConfigureServices(services =>
+                 {
+                     services.Configure<EventHubOptions>(options =>
+                     {
+                         options.InitialOffsetOptions.Type = "FromEnd";
+                     });
+                 })
+                 .Build();
+
+            // Force the ExtensionRegistryFactory to run, which will initialize the EventHubConfiguration.
+            var extensionRegistry = host.Services.GetService<IExtensionRegistry>();
+            var options = host.Services.GetService<IOptions<EventHubOptions>>().Value;
+
+            var eventProcessorOptions = options.EventProcessorOptions;
+            Assert.AreEqual(EventPosition.Latest, eventProcessorOptions.DefaultStartingPosition);
+        }
+
+        [Test]
+        public void InitializeFromCodeRespectsFinalOffsetOptions_FromEnqueuedTime()
+        {
+            var host = new HostBuilder()
+                 .ConfigureDefaultTestHost(builder =>
+                 {
+                     builder.AddEventHubs(options => options.InitialOffsetOptions.Type = "FromStart");
+                 })
+                 .ConfigureServices(services =>
+                 {
+                     services.Configure<EventHubOptions>(options =>
+                     {
+                         options.InitialOffsetOptions.Type = "FromEnqueuedTime";
+                         options.InitialOffsetOptions.EnqueuedTimeUTC = DateTimeOffset.UtcNow.ToString();
+                     });
+                 })
+                 .Build();
+
+            // Force the ExtensionRegistryFactory to run, which will initialize the EventHubConfiguration.
+            var extensionRegistry = host.Services.GetService<IExtensionRegistry>();
+            var options = host.Services.GetService<IOptions<EventHubOptions>>().Value;
+
+            var eventProcessorOptions = options.EventProcessorOptions;
+            Assert.AreEqual(
+                EventPosition.FromEnqueuedTime(DateTime.Parse(options.InitialOffsetOptions.EnqueuedTimeUTC,
+                CultureInfo.InvariantCulture).ToUniversalTime()), eventProcessorOptions.DefaultStartingPosition);
         }
 
         internal static EventProcessorHostPartition GetPartitionContext(string partitionId = "0", string eventHubPath = "path",

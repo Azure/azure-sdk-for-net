@@ -56,7 +56,11 @@ public Receipt(RecognizedForm recognizedForm)
 Here we illustrate how to use the `Receipt` wrapper class described above.
 
 ```C# Snippet:FormRecognizerSampleStronglyTypingARecognizedForm
-RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUriAsync(receiptUri).WaitForCompletionAsync();
+Uri receiptUri = <receiptUri>;
+
+RecognizeReceiptsOperation operation = await client.StartRecognizeReceiptsFromUriAsync(receiptUri);
+Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+RecognizedFormCollection recognizedForms = operationResponse.Value;
 
 foreach (RecognizedForm recognizedForm in recognizedForms)
 {
@@ -81,13 +85,13 @@ foreach (RecognizedForm recognizedForm in recognizedForms)
         if (item.Name != null)
         {
             string name = item.Name;
-            Console.WriteLine($"    Name: '{name}', with confidence {item.Name.Confidence}");
+            Console.WriteLine($"  Name: '{name}', with confidence {item.Name.Confidence}");
         }
 
         if (item.TotalPrice != null)
         {
             float totalPrice = item.TotalPrice;
-            Console.WriteLine($"    Total Price: '{totalPrice}', with confidence {item.TotalPrice.Confidence}");
+            Console.WriteLine($"  Total Price: '{totalPrice}', with confidence {item.TotalPrice.Confidence}");
         }
     }
 

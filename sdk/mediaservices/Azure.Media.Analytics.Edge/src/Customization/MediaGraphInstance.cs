@@ -13,13 +13,12 @@ namespace Azure.Media.Analytics.Edge.Models
         /// <summary>
         ///  Deserialize MediaGraphInstance.
         /// </summary>
-        /// <param name="json"></param>
-        /// <returns>
-        /// Deserialized Graph Instance.
-        /// </returns>
+        /// <param name="json">The json to be deserialized.</param>
+        /// <returns>A MediaGraphInstance.</returns>
         public static MediaGraphInstance Deserialize(string json)
         {
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using JsonDocument doc = JsonDocument.Parse(json);
+            JsonElement element = doc.RootElement;
             return DeserializeMediaGraphInstance(element);
         }
     }
