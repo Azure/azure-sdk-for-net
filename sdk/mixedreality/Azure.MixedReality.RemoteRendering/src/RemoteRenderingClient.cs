@@ -58,6 +58,8 @@ namespace Azure.MixedReality.RemoteRendering
 
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
+        #region Conversions
+
         /// <summary>
         /// Creates a conversion using an asset stored in an Azure Blob Storage account.
         /// If the remote rendering account has been linked with the storage account no Shared Access Signatures (storageContainerReadListSas, storageContainerWriteSas) for storage access need to be provided.
@@ -77,20 +79,8 @@ namespace Azure.MixedReality.RemoteRendering
 
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateConversionHeaders> response = _restClient.CreateConversion(_accountId, conversionId, new ConversionRequest(settings), cancellationToken);
-
-                switch (response.Value)
-                {
-                    case ConversionInformation c:
-                        return ResponseWithHeaders.FromValue(c, response.Headers, response.GetRawResponse());
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                var response = _restClient.CreateConversion(_accountId, conversionId, new ConversionRequest(settings), cancellationToken);
+                return GetResponseOfType<ConversionInformation>(response.Value, response);
             }
             catch (Exception ex)
             {
@@ -118,20 +108,8 @@ namespace Azure.MixedReality.RemoteRendering
 
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateConversionHeaders> response = await _restClient.CreateConversionAsync(_accountId, conversionId, new ConversionRequest(settings), cancellationToken).ConfigureAwait(false);
-
-                switch (response.Value)
-                {
-                    case ConversionInformation c:
-                        return ResponseWithHeaders.FromValue(c, response.Headers, response.GetRawResponse());
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                var response = await _restClient.CreateConversionAsync(_accountId, conversionId, new ConversionRequest(settings), cancellationToken).ConfigureAwait(false);
+                return GetResponseOfType<ConversionInformation>(response.Value, response);
             }
             catch (Exception ex)
             {
@@ -152,20 +130,8 @@ namespace Azure.MixedReality.RemoteRendering
 
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingGetConversionHeaders> response = _restClient.GetConversion(_accountId, conversionId, cancellationToken);
-
-                switch (response.Value)
-                {
-                    case ConversionInformation c:
-                        return ResponseWithHeaders.FromValue(c, response.Headers, response.GetRawResponse());
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                var response = _restClient.GetConversion(_accountId, conversionId, cancellationToken);
+                return GetResponseOfType<ConversionInformation>(response.Value, response);
             }
             catch (Exception ex)
             {
@@ -328,6 +294,9 @@ namespace Azure.MixedReality.RemoteRendering
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        #endregion
+        #region Sessions
 
         /// <summary> Creates a new rendering session. </summary>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
@@ -734,5 +703,32 @@ namespace Azure.MixedReality.RemoteRendering
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        #endregion
+        #region Internal methods
+
+        internal RequestFailedException CreateExceptionFromResponseCarryingErrorResponse(Response response, ErrorResponse errorResponse)
+        {
+            // TODO
+            // TODO e.Error.Details
+            // TODO e.Error.InnerError
+            return _clientDiagnostics.CreateRequestFailedException(response, errorResponse.Error.Message, errorResponse.Error.Code);
+        }
+
+        internal Response<T> GetResponseOfType<T>(object? obj, Response response)
+        {
+            switch (obj)
+            {
+                case T t:
+                    return ResponseWithHeaders.FromValue(t, response.Headers, response);
+                case ErrorResponse e:
+                    throw CreateExceptionFromResponseCarryingErrorResponse(response, e);
+                case null:
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(response);
+            }
+        }
+
+        #endregion
     }
 }
