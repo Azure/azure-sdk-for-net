@@ -22,12 +22,12 @@ namespace Azure.Communication.Chat
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NormalValue = "Normal";
-        private const string HighValue = "High";
+        private const string NormalValue = "normal";
+        private const string HighValue = "high";
 
-        /// <summary> Normal. </summary>
+        /// <summary> normal. </summary>
         public static ChatMessagePriority Normal { get; } = new ChatMessagePriority(NormalValue);
-        /// <summary> High. </summary>
+        /// <summary> high. </summary>
         public static ChatMessagePriority High { get; } = new ChatMessagePriority(HighValue);
         /// <summary> Determines if two <see cref="ChatMessagePriority"/> values are the same. </summary>
         public static bool operator ==(ChatMessagePriority left, ChatMessagePriority right) => left.Equals(right);

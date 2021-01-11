@@ -31,5 +31,7 @@ namespace Azure.Communication.Chat
         public string Content { get; }
         /// <summary> The display name of the chat message sender. This property is used to populate sender name for push notifications. </summary>
         public string SenderDisplayName { get; set; }
+        /// <summary> The chat message type. </summary>
+        public ChatMessageType? Type { get; set; }
     }
 }

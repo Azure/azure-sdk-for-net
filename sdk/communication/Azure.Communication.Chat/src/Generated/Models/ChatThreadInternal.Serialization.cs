@@ -15,10 +15,10 @@ namespace Azure.Communication.Chat
     {
         internal static ChatThreadInternal DeserializeChatThreadInternal(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> topic = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<string> createdBy = default;
+            string id = default;
+            string topic = default;
+            DateTimeOffset createdOn = default;
+            string createdBy = default;
             Optional<DateTimeOffset> deletedOn = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,11 +34,6 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("createdOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -58,7 +53,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatThreadInternal(id.Value, topic.Value, Optional.ToNullable(createdOn), createdBy.Value, Optional.ToNullable(deletedOn));
+            return new ChatThreadInternal(id, topic, createdOn, createdBy, Optional.ToNullable(deletedOn));
         }
     }
 }

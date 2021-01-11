@@ -17,6 +17,7 @@ namespace Azure.Communication.Chat
         /// <param name="id"> The id of the chat message. </param>
         /// <param name="type"> The chat message priority. </param>
         /// <param name="priority"> The chat message priority. </param>
+        /// <param name="sequenceId"> The sequenceId of the chat message. </param>
         /// <param name="version"> Version of the chat message. </param>
         /// <param name="content"> Content of the chat message. </param>
         /// <param name="senderDisplayName"> The display name of the chat message sender. </param>
@@ -26,8 +27,8 @@ namespace Azure.Communication.Chat
         /// <param name="editedOn"> The timestamp when the chat message was edited. </param>
         /// <returns>A new <see cref="ChatMessage"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChatMessage ChatMessage(string id, string type, ChatMessagePriority? priority, string version, string content, string senderDisplayName, DateTimeOffset? createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
-            => new ChatMessage(id, type, priority, version, content, senderDisplayName, createdOn, senderId, deletedOn, editedOn);
+        public static ChatMessage ChatMessage(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
+            => new ChatMessage(id, type, priority, sequenceId, version, content, senderDisplayName, createdOn, senderId, deletedOn, editedOn);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatThreadInfo"/> class.
@@ -49,7 +50,7 @@ namespace Azure.Communication.Chat
         /// <param name="readOn"> Read receipt timestamp. </param>
         /// <returns>A new <see cref="ChatMessageReadReceipt"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChatMessageReadReceipt ChatMessageReadReceipt(string senderId, string chatMessageId, DateTimeOffset? readOn)
+        public static ChatMessageReadReceipt ChatMessageReadReceipt(string senderId, string chatMessageId, DateTimeOffset readOn)
             => new ChatMessageReadReceipt(senderId, chatMessageId, readOn);
     }
 }
