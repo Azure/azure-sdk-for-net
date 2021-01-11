@@ -146,6 +146,7 @@ namespace Azure.Storage.Files.Shares.Models
             string copySource,
             CopyStatus copyStatus,
             bool isServerEncrypted,
+#pragma warning disable CA1801 // Review unused parameters
             string fileAttributes,
             DateTimeOffset fileCreationTime,
             DateTimeOffset fileLastWriteTime,
@@ -153,7 +154,8 @@ namespace Azure.Storage.Files.Shares.Models
             string filePermissionKey,
             string fileId,
             string fileParentId
-            ) => new ShareFileProperties(new RawStorageFileProperties()
+#pragma warning restore CA1801 // Review unused parameters
+            ) => new ShareFileProperties
             {
                 LastModified = lastModified,
                 Metadata = metadata,
@@ -165,20 +167,22 @@ namespace Azure.Storage.Files.Shares.Models
                 CacheControl = cacheControl,
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
-                CopyCompletionTime = copyCompletedOn,
+                CopyCompletedOn = copyCompletedOn,
                 CopyStatusDescription = copyStatusDescription,
                 CopyId = copyId,
                 CopyProgress = copyProgress,
                 CopySource = copySource,
                 CopyStatus = copyStatus,
                 IsServerEncrypted = isServerEncrypted,
-                FileAttributes = fileAttributes,
-                FilePermissionKey = filePermissionKey,
-                FileCreationTime = fileCreationTime,
-                FileLastWriteTime = fileLastWriteTime,
-                FileChangeTime = fileChangeTime,
-                FileId = fileId,
-                FileParentId = fileParentId
-            });
+
+                // TODO fix this
+                //FileAttributes = fileAttributes,
+                //FilePermissionKey = filePermissionKey,
+                //FileCreationTime = fileCreationTime,
+                //FileLastWriteTime = fileLastWriteTime,
+                //FileChangeTime = fileChangeTime,
+                //FileId = fileId,
+                //FileParentId = fileParentId
+            };
     }
 }

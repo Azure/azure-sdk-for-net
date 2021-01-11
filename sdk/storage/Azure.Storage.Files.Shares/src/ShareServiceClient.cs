@@ -165,6 +165,13 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+
+            _serviceRestClient = new ServiceRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                // TODO this might now work.
+                _uri.ToString(),
+                _version.ToVersionString());
         }
 
         /// <summary>
@@ -234,6 +241,13 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
+
+            _serviceRestClient = new ServiceRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                // TODO this might now work.
+                _uri.ToString(),
+                _version.ToVersionString());
         }
         #endregion ctors
 
@@ -332,109 +346,136 @@ namespace Azure.Storage.Files.Shares
             new GetSharesAsyncCollection(this, traits, states, prefix).ToAsyncCollection(cancellationToken);
 
         // TODO fix this
-        ///// <summary>
-        ///// The <see cref="GetSharesInternal"/> operation returns a
-        ///// single segment of shares in the storage account, starting
-        ///// from the specified <paramref name="marker"/>.  Use an empty
-        ///// <paramref name="marker"/> to start enumeration from the beginning
-        ///// and the <see cref="SharesSegment.NextMarker"/> if it's not
-        ///// empty to make subsequent calls to <see cref="GetSharesAsync"/>
-        ///// to continue enumerating the shares segment by segment.
-        /////
-        ///// For more information, see
-        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/list-shares">
-        ///// List Shares</see>.
-        ///// </summary>
-        ///// <param name="marker">
-        ///// An optional string value that identifies the segment of the list
-        ///// of shares to be returned with the next listing operation.  The
-        ///// operation returns a non-empty <see cref="SharesSegment.NextMarker"/>
-        ///// if the listing operation did not return all shares remaining
-        ///// to be listed with the current segment.  The NextMarker value can
-        ///// be used as the value for the <paramref name="marker"/> parameter
-        ///// in a subsequent call to request the next segment of list items.
-        ///// </param>
-        ///// <param name="traits">
-        ///// Specifies traits to include in the <see cref="ShareItem"/>s.
-        ///// </param>
-        ///// <param name="states">
-        ///// Specifies states to include when listing shares.
-        ///// </param>
-        ///// <param name="prefix">
-        ///// String that filters the results to return only shares whose name
-        ///// begins with the specified prefix.
-        ///// </param>
-        ///// <param name="pageSizeHint">
-        ///// Gets or sets a value indicating the size of the page that should be
-        ///// requested.
-        ///// </param>
-        ///// <param name="async">
-        ///// Whether to invoke the operation asynchronously.
-        ///// </param>
-        ///// <param name="cancellationToken">
-        ///// Optional <see cref="CancellationToken"/> to propagate
-        ///// notifications that the operation should be cancelled.
-        ///// </param>
-        ///// <returns>
-        ///// A <see cref="Response{SharesSegment}"/> describing a
-        ///// segment of the shares in the storage account.
-        ///// </returns>
-        ///// <remarks>
-        ///// A <see cref="RequestFailedException"/> will be thrown if
-        ///// a failure occurs.
-        ///// </remarks>
-        //internal async Task<Response<SharesSegment>> GetSharesInternal(
-        //    string marker,
-        //    ShareTraits traits,
-        //    ShareStates states,
-        //    string prefix,
-        //    int? pageSizeHint,
-        //    bool async,
-        //    CancellationToken cancellationToken)
-        //{
-        //    using (Pipeline.BeginLoggingScope(nameof(ShareServiceClient)))
-        //    {
-        //        Pipeline.LogMethodEnter(
-        //            nameof(ShareServiceClient),
-        //            message:
-        //            $"{nameof(Uri)}: {Uri}\n" +
-        //            $"{nameof(marker)}: {marker}");
-        //        try
-        //        {
-        //            Response<SharesSegment> response = await FileRestClient.Service.ListSharesSegmentAsync(
-        //                ClientDiagnostics,
-        //                Pipeline,
-        //                Uri,
-        //                version: Version.ToVersionString(),
-        //                marker: marker,
-        //                prefix: prefix,
-        //                maxresults: pageSizeHint,
-        //                include: ShareExtensions.AsIncludeItems(traits, states),
-        //                async: async,
-        //                operationName: $"{nameof(ShareServiceClient)}.{nameof(GetShares)}",
-        //                cancellationToken: cancellationToken)
-        //                .ConfigureAwait(false);
-        //            if ((traits & ShareTraits.Metadata) != ShareTraits.Metadata)
-        //            {
-        //                IEnumerable<ShareItemInternal> shareItemInternals = response.Value.ShareItems;
-        //                foreach (ShareItemInternal shareItemInternal in shareItemInternals)
-        //                {
-        //                    shareItemInternal.Properties.Metadata = null;
-        //                }
-        //            }
-        //            return response;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Pipeline.LogException(ex);
-        //            throw;
-        //        }
-        //        finally
-        //        {
-        //            Pipeline.LogMethodExit(nameof(ShareServiceClient));
-        //        }
-        //    }
-        //}
+        /// <summary>
+        /// The <see cref="GetSharesInternal"/> operation returns a
+        /// single segment of shares in the storage account, starting
+        /// from the specified <paramref name="marker"/>.  Use an empty
+        /// <paramref name="marker"/> to start enumeration from the beginning
+        /// and the <see cref="ListSharesResponse.NextMarker"/> if it's not
+        /// empty to make subsequent calls to <see cref="GetSharesAsync"/>
+        /// to continue enumerating the shares segment by segment.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-shares">
+        /// List Shares</see>.
+        /// </summary>
+        /// <param name="marker">
+        /// An optional string value that identifies the segment of the list
+        /// of shares to be returned with the next listing operation.  The
+        /// operation returns a non-empty <see cref="ListSharesResponse.NextMarker"/>
+        /// if the listing operation did not return all shares remaining
+        /// to be listed with the current segment.  The NextMarker value can
+        /// be used as the value for the <paramref name="marker"/> parameter
+        /// in a subsequent call to request the next segment of list items.
+        /// </param>
+        /// <param name="traits">
+        /// Specifies traits to include in the <see cref="ShareItem"/>s.
+        /// </param>
+        /// <param name="states">
+        /// Specifies states to include when listing shares.
+        /// </param>
+        /// <param name="prefix">
+        /// String that filters the results to return only shares whose name
+        /// begins with the specified prefix.
+        /// </param>
+        /// <param name="pageSizeHint">
+        /// Gets or sets a value indicating the size of the page that should be
+        /// requested.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{SharesSegment}"/> describing a
+        /// segment of the shares in the storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<ListSharesResponse>> GetSharesInternal(
+            string marker,
+            ShareTraits traits,
+            ShareStates states,
+            string prefix,
+            int? pageSizeHint,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareServiceClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareServiceClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(marker)}: {marker}");
+                try
+                {
+                    ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _serviceRestClient.ListSharesSegmentAsync(
+                            prefix: prefix,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            include: ShareExtensions.AsIncludeItems(traits, states),
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _serviceRestClient.ListSharesSegment(
+                            prefix: prefix,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            include: ShareExtensions.AsIncludeItems(traits, states),
+                            cancellationToken: cancellationToken);
+                    }
+
+                    // TODO remove this.
+                    //Response<SharesSegment> response = await FileRestClient.Service.ListSharesSegmentAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    marker: marker,
+                    //    prefix: prefix,
+                    //    maxresults: pageSizeHint,
+                    //    include: ShareExtensions.AsIncludeItems(traits, states),
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareServiceClient)}.{nameof(GetShares)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
+
+                    if ((traits & ShareTraits.Metadata) != ShareTraits.Metadata)
+                    {
+                        IEnumerable<ShareItemInternal> shareItemInternals = response.Value.ShareItems;
+                        foreach (ShareItemInternal shareItemInternal in shareItemInternals)
+                        {
+                            // TODO fix this
+                            //shareItemInternal.Metadata = null;
+                        }
+                    }
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareServiceClient));
+                }
+            }
+        }
         #endregion GetShares
 
         #region GetProperties
@@ -529,15 +570,34 @@ namespace Azure.Storage.Files.Shares
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.Service.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(ShareServiceClient)}.{nameof(GetProperties)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _serviceRestClient.GetPropertiesAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _serviceRestClient.GetProperties(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+
+                    // TODO remove this.
+                    //return await FileRestClient.Service.GetPropertiesAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareServiceClient)}.{nameof(GetProperties)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -658,16 +718,35 @@ namespace Azure.Storage.Files.Shares
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.Service.SetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        properties: properties,
-                        async: async,
-                        operationName: $"{nameof(ShareServiceClient)}.{nameof(SetProperties)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ServiceSetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _serviceRestClient.SetPropertiesAsync(
+                            storageServiceProperties: properties,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _serviceRestClient.SetProperties(
+                            storageServiceProperties: properties,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
+
+                    // TODO remove this.
+                    //return await FileRestClient.Service.SetPropertiesAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    properties: properties,
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareServiceClient)}.{nameof(SetProperties)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -1165,17 +1244,47 @@ namespace Azure.Storage.Files.Shares
                 {
                     ShareClient shareClient = GetShareClient(deletedShareName);
 
-                    Response<ShareInfo> response = await FileRestClient.Share.RestoreAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        shareClient.Uri,
-                        Version.ToVersionString(),
-                        deletedShareName: deletedShareName,
-                        deletedShareVersion: deletedShareVersion,
-                        async: async,
-                        operationName: $"{nameof(ShareServiceClient)}.{nameof(UndeleteShare)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ShareRestClient shareRestClient = new ShareRestClient(
+                        _clientDiagnostics,
+                        _pipeline,
+                        // TODO this probably won't work
+                        shareClient.Uri.ToString(),
+                        version: _version.ToVersionString(),
+                        // TODO
+                        sharesnapshot: null);
+
+                    ResponseWithHeaders<ShareRestoreHeaders> response;
+
+                    if (async)
+                    {
+                        response = await shareRestClient.RestoreAsync(
+                            shareName: deletedShareName,
+                            deletedShareName: deletedShareName,
+                            deletedShareVersion: deletedShareVersion,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = shareRestClient.Restore(
+                            shareName: deletedShareName,
+                            deletedShareName: deletedShareName,
+                            deletedShareVersion: deletedShareVersion,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    // TODO remove this.
+                    //Response<ShareInfo> response = await FileRestClient.Share.RestoreAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    shareClient.Uri,
+                    //    Version.ToVersionString(),
+                    //    deletedShareName: deletedShareName,
+                    //    deletedShareVersion: deletedShareVersion,
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareServiceClient)}.{nameof(UndeleteShare)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
 
                     return Response.FromValue(shareClient, response.GetRawResponse());
                 }

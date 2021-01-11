@@ -71,68 +71,6 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        internal static IEnumerable<ShareItem> ToShareItems(this IEnumerable<ShareItemInternal> shareItemInternals)
-        {
-            if (shareItemInternals == null)
-            {
-                return null;
-            }
-
-            List<ShareItem> result = new List<ShareItem>();
-            foreach (ShareItemInternal shareItemInternal in shareItemInternals)
-            {
-                result.Add(shareItemInternal.ToShareItem());
-            }
-            return result;
-        }
-
-        internal static ShareItem ToShareItem(this ShareItemInternal shareItemInternal)
-        {
-            if (shareItemInternal == null)
-            {
-                return null;
-            }
-
-            return new ShareItem
-            {
-                Name = shareItemInternal.Name,
-                Snapshot = shareItemInternal.Snapshot,
-                IsDeleted = shareItemInternal.IsDeleted,
-                VersionId = shareItemInternal.VersionId,
-                Properties = shareItemInternal.Properties.ToShareProperties()
-            };
-        }
-
-        internal static ShareProperties ToShareProperties(this SharePropertiesInternal sharePropertiesInternal)
-        {
-            if (sharePropertiesInternal == null)
-            {
-                return null;
-            }
-
-            return new ShareProperties
-            {
-                LastModified = sharePropertiesInternal.LastModified,
-                ETag = sharePropertiesInternal.ETag,
-                ProvisionedIops = sharePropertiesInternal.ProvisionedIops,
-                ProvisionedIngressMBps = sharePropertiesInternal.ProvisionedIngressMBps,
-                ProvisionedEgressMBps = sharePropertiesInternal.ProvisionedEgressMBps,
-                NextAllowedQuotaDowngradeTime = sharePropertiesInternal.NextAllowedQuotaDowngradeTime,
-                DeletedOn = sharePropertiesInternal.DeletedOn,
-                RemainingRetentionDays = sharePropertiesInternal.RemainingRetentionDays,
-                AccessTier = sharePropertiesInternal.AccessTier,
-                AccessTierChangeTime = sharePropertiesInternal.AccessTierChangeTime,
-                AccessTierTransitionState = sharePropertiesInternal.AccessTierTransitionState,
-                LeaseStatus = sharePropertiesInternal.LeaseStatus,
-                LeaseState = sharePropertiesInternal.LeaseState,
-                LeaseDuration = sharePropertiesInternal.LeaseDuration,
-                Protocols = ToShareEnabledProtocols(sharePropertiesInternal.EnabledProtocols),
-                RootSquash = sharePropertiesInternal.RootSquash,
-                QuotaInGB = sharePropertiesInternal.QuotaInGB,
-                Metadata = sharePropertiesInternal.Metadata
-            };
-        }
-
         internal static ShareProtocols? ToShareEnabledProtocols(string rawProtocols)
         {
             if (rawProtocols == null)
@@ -347,6 +285,18 @@ namespace Azure.Storage.Files.Shares
 
         // TODO
         internal static PermissionInfo ToPermissionInfo(this ShareCreatePermissionHeaders shareCreatePermissionHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareItem[] ToShareItems(this IReadOnlyList<ShareItemInternal> shareItemInternals)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareFileDownloadInfo ToShareFileDownloadInfo(this FileDownloadHeaders fileDownloadHeaders)
         {
             return null;
         }

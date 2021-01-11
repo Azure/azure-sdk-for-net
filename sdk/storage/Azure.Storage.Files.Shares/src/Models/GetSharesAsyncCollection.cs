@@ -36,7 +36,7 @@ namespace Azure.Storage.Files.Shares.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<SharesSegment> response = await _client.GetSharesInternal(
+            Response<ListSharesResponse> response = await _client.GetSharesInternal(
                 continuationToken,
                 _traits,
                 _states,
@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares.Models
                 cancellationToken).ConfigureAwait(false);
 
             return Page<ShareItem>.FromValues(
-                response.Value.ShareItems.ToShareItems().ToArray(),
+                response.Value.ShareItems.ToShareItems(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

