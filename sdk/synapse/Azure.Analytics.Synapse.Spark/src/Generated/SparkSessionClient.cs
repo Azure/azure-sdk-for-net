@@ -85,6 +85,44 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
+        /// <summary> Gets a single spark session. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SparkSession>> GetSparkSessionAsync(int sessionId, bool? detailed = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkSession");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetSparkSessionAsync(sessionId, detailed, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single spark session. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SparkSession> GetSparkSession(int sessionId, bool? detailed = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkSession");
+            scope.Start();
+            try
+            {
+                return RestClient.GetSparkSession(sessionId, detailed, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Cancels a running spark session. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,6 +223,44 @@ namespace Azure.Analytics.Synapse.Spark
             try
             {
                 return RestClient.GetSparkStatements(sessionId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single statement within a spark session. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="statementId"> Identifier for the statement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SparkStatement>> GetSparkStatementAsync(int sessionId, int statementId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkStatement");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetSparkStatementAsync(sessionId, statementId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single statement within a spark session. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="statementId"> Identifier for the statement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SparkStatement> GetSparkStatement(int sessionId, int statementId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkStatement");
+            scope.Start();
+            try
+            {
+                return RestClient.GetSparkStatement(sessionId, statementId, cancellationToken);
             }
             catch (Exception e)
             {

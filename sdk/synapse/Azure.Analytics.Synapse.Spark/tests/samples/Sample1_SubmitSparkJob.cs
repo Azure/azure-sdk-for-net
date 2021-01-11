@@ -71,14 +71,7 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:GetSparkBatchJob
-            SparkBatchOperation getOperation = client.StartGetSparkBatchJob (jobCreated.Id);
-            while (!getOperation.HasCompleted)
-            {
-                System.Threading.Thread.Sleep(2000);
-                getOperation.UpdateStatus();
-            }
-            SparkBatchJob retrievedJob = getOperation.Value;
-
+            SparkBatchJob retrievedJob = client.GetSparkBatchJob (jobCreated.Id);
             Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
             #endregion
 

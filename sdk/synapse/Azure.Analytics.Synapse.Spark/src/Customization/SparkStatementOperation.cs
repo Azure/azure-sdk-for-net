@@ -16,8 +16,6 @@ namespace Azure.Analytics.Synapse.Spark
     /// A long-running operation for:
     /// <see cref="SparkSessionClient.StartCreateSparkStatementAsync(int, SparkStatementOptions, CancellationToken)"/>,
     /// <see cref="SparkSessionClient.StartCreateSparkStatement(int, SparkStatementOptions, CancellationToken)"/>,
-    /// <see cref="SparkSessionClient.StartGetSparkStatementAsync(int, int, CancellationToken)"/>,
-    /// <see cref="SparkSessionClient.StartGetSparkStatement(int, int, CancellationToken)"/>
     /// </summary>
     public class SparkStatementOperation : Operation<SparkStatement>
     {

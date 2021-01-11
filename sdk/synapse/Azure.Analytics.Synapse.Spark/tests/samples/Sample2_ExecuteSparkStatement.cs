@@ -49,13 +49,7 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:GetSparkSession
-            SparkSessionOperation getOperation = client.StartGetSparkSession(sessionCreated.Id);
-            while (!getOperation.HasCompleted)
-            {
-                System.Threading.Thread.Sleep(2000);
-                getOperation.UpdateStatus();
-            }
-            SparkSession session = getOperation.Value;
+            SparkSession session = client.GetSparkSession(sessionCreated.Id);
             Debug.WriteLine($"Session is returned with name {session.Name} and state {session.State}");
             #endregion
 
@@ -76,13 +70,7 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:GetSparkStatement
-            SparkStatementOperation getStatementOperation = client.StartGetSparkStatement(sessionCreated.Id, statementCreated.Id);
-            while (!getStatementOperation.HasCompleted)
-            {
-                System.Threading.Thread.Sleep(2000);
-                getStatementOperation.UpdateStatus();
-            }
-            SparkStatement statement = getStatementOperation.Value;
+            SparkStatement statement = client.GetSparkStatement(sessionCreated.Id, statementCreated.Id);
             Debug.WriteLine($"Statement is returned with id {statement.Id} and state {statement.State}");
             #endregion
 

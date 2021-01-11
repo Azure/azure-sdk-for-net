@@ -12,8 +12,6 @@ namespace Azure.Analytics.Synapse.Spark
 {
     [CodeGenSuppress("CreateSparkBatchJob", typeof(SparkBatchJobOptions), typeof(bool?), typeof(CancellationToken))]
     [CodeGenSuppress("CreateSparkBatchJobAsync", typeof(SparkBatchJobOptions), typeof(bool?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetSparkBatchJob", typeof(int), typeof(bool?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetSparkBatchJobAsync", typeof(int), typeof(bool?), typeof(CancellationToken))]
     public partial class SparkBatchClient
     {
         /// <summary>
@@ -56,36 +54,6 @@ namespace Azure.Analytics.Synapse.Spark
                 else
                 {
                     batchSession = RestClient.CreateSparkBatchJob(sparkBatchJobOptions, detailed, cancellationToken);
-                }
-                return new SparkBatchOperation(this, _clientDiagnostics, batchSession);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        public virtual async Task<SparkBatchOperation> StartGetSparkBatchJobAsync(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
-            => await StartGetSparkBatchJobInternal (true, batchId, detailed, cancellationToken).ConfigureAwait(false);
-
-        public virtual SparkBatchOperation StartGetSparkBatchJob(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
-            => StartGetSparkBatchJobInternal (false, batchId, detailed, cancellationToken).EnsureCompleted();
-
-        private async Task<SparkBatchOperation> StartGetSparkBatchJobInternal (bool async, int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkBatchClient)}.{nameof(StartGetSparkBatchJob)}");
-            scope.Start();
-            try
-            {
-                Response<SparkBatchJob> batchSession;
-                if (async)
-                {
-                    batchSession = await RestClient.GetSparkBatchJobAsync(batchId, detailed, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    batchSession = RestClient.GetSparkBatchJob(batchId, detailed, cancellationToken);
                 }
                 return new SparkBatchOperation(this, _clientDiagnostics, batchSession);
             }

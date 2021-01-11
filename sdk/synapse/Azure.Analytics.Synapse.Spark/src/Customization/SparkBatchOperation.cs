@@ -16,8 +16,6 @@ namespace Azure.Analytics.Synapse.Spark
     /// A long-running operation for:
     /// <see cref="SparkBatchClient.StartCreateSparkBatchJobAsync(SparkBatchJobOptions, bool?, CancellationToken)"/>,
     /// <see cref="SparkBatchClient.StartCreateSparkBatchJob(SparkBatchJobOptions, bool?, CancellationToken)"/>,
-    /// <see cref="SparkBatchClient.StartGetSparkBatchJobAsync(int, bool?, CancellationToken)"/>,
-    /// <see cref="SparkBatchClient.StartGetSparkBatchJob(int, bool?, CancellationToken)"/>
     /// </summary>
     public class SparkBatchOperation : Operation<SparkBatchJob>
     {

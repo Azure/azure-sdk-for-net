@@ -45,8 +45,7 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:GetSparkSessionAsync
-            SparkSessionOperation getOperation = await client.StartGetSparkSessionAsync(sessionCreated.Id);
-            SparkSession session = await getOperation.WaitForCompletionAsync();
+            SparkSession session = await client.GetSparkSessionAsync(sessionCreated.Id);
             Debug.WriteLine($"Session is returned with name {session.Name} and state {session.State}");
             #endregion
 
@@ -62,8 +61,7 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:GetSparkStatementAsync
-            SparkStatementOperation getStatementOperation = await client.StartGetSparkStatementAsync(sessionCreated.Id, statementCreated.Id);
-            SparkStatement statement = await getStatementOperation.WaitForCompletionAsync();
+            SparkStatement statement = await client.GetSparkStatementAsync(sessionCreated.Id, statementCreated.Id);
             Debug.WriteLine($"Statement is returned with id {statement.Id} and state {statement.State}");
             #endregion
 

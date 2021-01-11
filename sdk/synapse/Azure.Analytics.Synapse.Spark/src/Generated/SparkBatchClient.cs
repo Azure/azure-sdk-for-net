@@ -85,6 +85,44 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
+        /// <summary> Gets a single spark batch job. </summary>
+        /// <param name="batchId"> Identifier for the batch job. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SparkBatchJob>> GetSparkBatchJobAsync(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.GetSparkBatchJob");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetSparkBatchJobAsync(batchId, detailed, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single spark batch job. </summary>
+        /// <param name="batchId"> Identifier for the batch job. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SparkBatchJob> GetSparkBatchJob(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.GetSparkBatchJob");
+            scope.Start();
+            try
+            {
+                return RestClient.GetSparkBatchJob(batchId, detailed, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Cancels a running spark batch job. </summary>
         /// <param name="batchId"> Identifier for the batch job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
