@@ -371,7 +371,7 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridPublisherClient sasTokenClient = InstrumentClient(
                 new EventGridPublisherClient(
                     new Uri(TestEnvironment.TopicHost),
-                    new EventGridSharedAccessSignatureCredential(sasToken),
+                    new AzureSasCredential(sasToken),
                     InstrumentClientOptions(new EventGridPublisherClientOptions())));
             await sasTokenClient.SendEventsAsync(GetEventsList());
         }

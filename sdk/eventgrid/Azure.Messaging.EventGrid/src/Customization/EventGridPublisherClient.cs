@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
         /// <param name="credential">The Shared Access Signature credential used to authenticate with the service.This signature
         /// can be constructed using <see cref="BuildSharedAccessSignature"/>.</param>
-        public EventGridPublisherClient(Uri endpoint, EventGridSharedAccessSignatureCredential credential)
+        public EventGridPublisherClient(Uri endpoint, AzureSasCredential credential)
             : this(endpoint, credential, new EventGridPublisherClientOptions())
         {
         }
@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="credential">The Shared Access Signature credential used to connect to Azure. This signature
         /// can be constructed using <see cref="BuildSharedAccessSignature"/>.</param>
         /// <param name="options">The set of options to use for configuring the client.</param>
-        public EventGridPublisherClient(Uri endpoint, EventGridSharedAccessSignatureCredential credential, EventGridPublisherClientOptions options)
+        public EventGridPublisherClient(Uri endpoint, AzureSasCredential credential, EventGridPublisherClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();

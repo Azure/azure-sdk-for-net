@@ -24,12 +24,12 @@ namespace Microsoft.Extensions.Azure
             builder.RegisterClientFactory<EventGridPublisherClient, EventGridPublisherClientOptions>(options => new EventGridPublisherClient(endpoint, credential, options));
 
         /// <summary>
-        ///   Registers a <see cref="EventGridPublisherClient "/> instance with the provided <see cref="Uri"/> and <see cref="EventGridSharedAccessSignatureCredential"/>./>.
+        ///   Registers a <see cref="EventGridPublisherClient "/> instance with the provided <see cref="Uri"/> and <see cref="AzureSasCredential"/>./>.
         /// </summary>
         public static IAzureClientBuilder<EventGridPublisherClient, EventGridPublisherClientOptions> AddEventGridPublisherClient<TBuilder>(
             this TBuilder builder,
             Uri endpoint,
-            EventGridSharedAccessSignatureCredential credential)
+            AzureSasCredential credential)
             where TBuilder : IAzureClientFactoryBuilder =>
             builder.RegisterClientFactory<EventGridPublisherClient, EventGridPublisherClientOptions>(options => new EventGridPublisherClient(endpoint, credential, options));
 
