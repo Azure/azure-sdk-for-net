@@ -4,27 +4,27 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System.Xml;
 using Azure.Core.TestFramework;
 using Azure.MixedReality.RemoteRendering.Models;
 using Azure.MixedReality.RemoteRendering.Tests;
 
 namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 {
-    public class RemoteRenderingCreateConversionSample : SamplesBase<RemoteRenderingTestEnvironment>
+    public class RemoteRenderingConvertAssetSample : SamplesBase<RemoteRenderingTestEnvironment>
     {
         private readonly string _accountDomain;
         private readonly string _accountId;
         private readonly string _accountKey;
 
-        public RemoteRenderingCreateConversionSample()
+        public RemoteRenderingConvertAssetSample()
         {
             _accountDomain = TestEnvironment.AccountDomain;
             _accountId = TestEnvironment.AccountId;
             _accountKey = TestEnvironment.AccountKey;
         }
 
-        public void CreateConversion()
+        public void ConvertAsset()
         {
             RemoteRenderingClient client = new RemoteRenderingClient(_accountId);
 
@@ -33,7 +33,11 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             ConversionOutputSettings output = new ConversionOutputSettings("foobar.arrAsset");
             ConversionSettings settings = new ConversionSettings(input, output);
 
-            Response<Conversion> conversion = client.CreateConversion("MyConversionId", settings);
+            string conversionId = "MyConversionId";
+
+            ConversionInformation conversion = client.CreateConversion(conversionId, settings).Value;
+
+            ConversionInformation conversion2 = client.GetConversion(conversionId).Value;
         }
     }
 }

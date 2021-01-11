@@ -7,6 +7,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests
 {
     public class RemoteRenderingTestEnvironment : TestEnvironment
     {
+        // TODO Review for secrets.
+
         /// <summary>
         /// Gets the account domain.
         /// </summary>
