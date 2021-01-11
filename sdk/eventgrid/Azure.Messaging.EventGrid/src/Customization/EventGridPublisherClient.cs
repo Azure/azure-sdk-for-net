@@ -200,12 +200,12 @@ namespace Azure.Messaging.EventGrid
                     }
 
                     EventGridEventInternal newEGEvent = new EventGridEventInternal(
-                            egEvent.Id,
-                            egEvent.Subject,
-                            data.RootElement,
-                            egEvent.EventType,
-                            egEvent.EventTime,
-                            egEvent.DataVersion)
+                        egEvent.Id,
+                        egEvent.Subject,
+                        data.RootElement,
+                        egEvent.EventType,
+                        egEvent.EventTime,
+                        egEvent.DataVersion)
                     {
                         Topic = egEvent.Topic
                     };
