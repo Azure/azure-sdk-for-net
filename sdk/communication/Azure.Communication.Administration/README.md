@@ -33,7 +33,7 @@ Here's an example using the Azure CLI:
 ```
 -->
 
-### Authenticate the Identity client
+### Authenticate the client
 
 Administration clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
 
@@ -116,7 +116,7 @@ Phone plans come in two types; Geographic and Toll-Free. Geographic phone plans 
 
 All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
 
-### Authenticating the Phone Number Administration client
+### Authenticate the Phone Number Administration client
 
 Phone Number Administration clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
 
