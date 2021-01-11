@@ -498,11 +498,15 @@ namespace Azure.Storage.Files.DataLake
                 return null;
             }
 
-            IEnumerable<PathItem> pathItems = null;
+            List<PathItem> pathItems = new List<PathItem>();
 
-            if (fileSystemBlobListPathsResult.Body.Segment.BlobItems == null)
+            if (fileSystemBlobListPathsResult.Body.Segment.BlobItems != null)
             {
-                pathItems = fileSystemBlobListPathsResult.Body.Segment.BlobItems.ToList().Select(r => r.ToPathItem());
+                pathItems.AddRange(fileSystemBlobListPathsResult.Body.Segment.BlobItems.ToList().Select(r => r.ToPathItem()));
+            }
+            if (fileSystemBlobListPathsResult.Body.Segment.BlobPrefixes != null)
+            {
+                pathItems.AddRange(fileSystemBlobListPathsResult.Body.Segment.BlobPrefixes.ToList().Select(r => r.ToPathItem()));
             }
 
             return new PathSegment
@@ -519,17 +523,45 @@ namespace Azure.Storage.Files.DataLake
                 return null;
             }
 
+            bool isDirectory = false;
+
+            if (blobItemInternal.Metadata.TryGetValue(Constants.DataLake.IsDirectoryKey, out string isDirectoryString)
+                && isDirectoryString == Constants.TrueName)
+            {
+                isDirectory = true;
+            }
+
             return new PathItem
             {
                 Name = blobItemInternal.Name,
-                // TODO fix this.
-                IsDirectory = null,
+                IsDirectory = isDirectory,
                 LastModified = blobItemInternal.Properties.LastModified,
                 ETag = blobItemInternal.Properties.Etag,
                 ContentLength = blobItemInternal.Properties.ContentLength,
                 Owner = blobItemInternal.Properties.Owner,
                 Group = blobItemInternal.Properties.Group,
                 Permissions = blobItemInternal.Properties.Permissions
+            };
+        }
+
+        internal static PathItem ToPathItem(this BlobPrefix blobPrefix)
+        {
+            if (blobPrefix == null)
+            {
+                return null;
+            }
+
+            return new PathItem
+            {
+                Name = blobPrefix.Name.Substring(0, blobPrefix.Name.Length - 1),
+                // TODO figure this out.
+                IsDirectory = true,
+                LastModified = blobPrefix.Properties.LastModified,
+                ETag = blobPrefix.Properties.Etag,
+                ContentLength = blobPrefix.Properties.ContentLength,
+                Owner = blobPrefix.Properties.Owner,
+                Group = blobPrefix.Properties.Group,
+                Permissions = blobPrefix.Properties.Permissions
             };
         }
     }

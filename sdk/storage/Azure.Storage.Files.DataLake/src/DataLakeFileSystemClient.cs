@@ -1464,12 +1464,8 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         internal async Task<Response<PathSegment>> GetPathsInternal(
             string path,
-#pragma warning disable CA1801 // Review unused parameters
             bool recursive,
-#pragma warning restore CA1801 // Review unused parameters
-#pragma warning disable CA1801 // Review unused parameters
             bool userPrincipalName,
-#pragma warning restore CA1801 // Review unused parameters
             string continuation,
             int? maxResults,
             string operationName,
@@ -1486,16 +1482,23 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(maxResults)}: {maxResults})");
                 try
                 {
+                    List<ListPathsIncludeItem> listPathsInclude = new List<ListPathsIncludeItem>
+                    {
+                        ListPathsIncludeItem.Metadata,
+                        ListPathsIncludeItem.Permissions
+                    };
+
                     Response<FileSystemBlobListPathsResult> response = await DataLakeRestClient.FileSystem.BlobListPathsAsync(
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: _blobUri,
-                        // TODO figure this out
-                        delimiter: null,
+                        include: listPathsInclude,
+                        delimiter: recursive ? null : Constants.DataLake.Delimiter,
                         version: Version.ToVersionString(),
                         prefix: path,
                         marker: continuation,
                         maxResults: maxResults,
+                        includeUpn: userPrincipalName,
                         async: async,
                         operationName: operationName,
                         cancellationToken: cancellationToken)

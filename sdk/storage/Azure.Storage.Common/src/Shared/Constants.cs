@@ -320,6 +320,8 @@ namespace Azure.Storage
             public const string IsDirectoryKey = "hdi_isFolder";
 
             public const string FileSystemName = "FileSystem";
+
+            public const string Delimiter = "/";
         }
 
         /// <summary>

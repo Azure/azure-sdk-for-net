@@ -1070,11 +1070,13 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="prefix">Filters results to filesystems within the specified prefix.</param>
             /// <param name="delimiter">When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.</param>
             /// <param name="marker">A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.</param>
             /// <param name="maxResults">An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items.</param>
+            /// <param name="includeUpn">Optional. Valid only when Hierarchical Namespace is enabled for the account. If true, the user identity values returned in the owner and group fields of each list entry will be transformed from Azure Active Directory Object IDs to User Principal Names. If false, the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
@@ -1085,11 +1087,13 @@ namespace Azure.Storage.Files.DataLake
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.ListPathsIncludeItem> include,
                 string version,
                 string prefix = default,
                 string delimiter = default,
                 string marker = default,
                 int? maxResults = default,
+                bool? includeUpn = default,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
@@ -1104,11 +1108,13 @@ namespace Azure.Storage.Files.DataLake
                     using (Azure.Core.HttpMessage _message = BlobListPathsAsync_CreateMessage(
                         pipeline,
                         resourceUri,
+                        include,
                         version,
                         prefix,
                         delimiter,
                         marker,
                         maxResults,
+                        includeUpn,
                         timeout,
                         requestId))
                     {
@@ -1144,22 +1150,26 @@ namespace Azure.Storage.Files.DataLake
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="prefix">Filters results to filesystems within the specified prefix.</param>
             /// <param name="delimiter">When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.</param>
             /// <param name="marker">A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.</param>
             /// <param name="maxResults">An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items.</param>
+            /// <param name="includeUpn">Optional. Valid only when Hierarchical Namespace is enabled for the account. If true, the user identity values returned in the owner and group fields of each list entry will be transformed from Azure Active Directory Object IDs to User Principal Names. If false, the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The FileSystem.BlobListPathsAsync Message.</returns>
             internal static Azure.Core.HttpMessage BlobListPathsAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.ListPathsIncludeItem> include,
                 string version,
                 string prefix = default,
                 string delimiter = default,
                 string marker = default,
                 int? maxResults = default,
+                bool? includeUpn = default,
                 int? timeout = default,
                 string requestId = default)
             {
@@ -1167,6 +1177,10 @@ namespace Azure.Storage.Files.DataLake
                 if (resourceUri == null)
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (include == null)
+                {
+                    throw new System.ArgumentNullException(nameof(include));
                 }
                 if (version == null)
                 {
@@ -1182,7 +1196,7 @@ namespace Azure.Storage.Files.DataLake
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "container", escapeValue: false);
                 _request.Uri.AppendQuery("comp", "list", escapeValue: false);
-                _request.Uri.AppendQuery("include", "permissions", escapeValue: false);
+                _request.Uri.AppendQuery("include", string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(item))));
                 if (prefix != null) { _request.Uri.AppendQuery("prefix", prefix); }
                 if (delimiter != null) { _request.Uri.AppendQuery("delimiter", delimiter); }
                 if (marker != null) { _request.Uri.AppendQuery("marker", marker); }
@@ -1191,6 +1205,11 @@ namespace Azure.Storage.Files.DataLake
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
+                if (includeUpn != null) {
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                _request.Headers.SetValue("x-ms-upn", includeUpn.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+                }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 return _message;
@@ -4217,6 +4236,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal Properties { get; internal set; }
 
         /// <summary>
+        /// Metadata
+        /// </summary>
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
         /// Creates a new BlobItemInternal instance
         /// </summary>
         internal BlobItemInternal()
@@ -4233,6 +4257,7 @@ namespace Azure.Storage.Files.DataLake.Models
             if (!skipInitialization)
             {
                 Properties = new Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal();
+                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -4256,6 +4281,15 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 _value.Properties = Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal.FromXml(_child);
             }
+            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
+            if (_child != null)
+            {
+                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
+                {
+                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
+                }
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -4273,12 +4307,14 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public static BlobItemInternal BlobItemInternal(
             string name = default,
-            Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal properties = default)
+            Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal properties = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
             return new BlobItemInternal()
             {
                 Name = name,
                 Properties = properties,
+                Metadata = metadata,
             };
         }
     }
@@ -4299,10 +4335,29 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Name { get; internal set; }
 
         /// <summary>
-        /// Prevent direct instantiation of BlobPrefix instances.
-        /// You can use DataLakeModelFactory.BlobPrefix instead.
+        /// Properties of a blob
         /// </summary>
-        internal BlobPrefix() { }
+        public Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal Properties { get; internal set; }
+
+        /// <summary>
+        /// Creates a new BlobPrefix instance
+        /// </summary>
+        internal BlobPrefix()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobPrefix instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobPrefix(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Properties = new Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal();
+            }
+        }
 
         /// <summary>
         /// Deserializes XML into a new BlobPrefix instance.
@@ -4313,11 +4368,16 @@ namespace Azure.Storage.Files.DataLake.Models
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.DataLake.Models.BlobPrefix _value = new Azure.Storage.Files.DataLake.Models.BlobPrefix();
+            Azure.Storage.Files.DataLake.Models.BlobPrefix _value = new Azure.Storage.Files.DataLake.Models.BlobPrefix(true);
             _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
             if (_child != null)
             {
                 _value.Name = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
+            if (_child != null)
+            {
+                _value.Properties = Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -4335,11 +4395,13 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Creates a new BlobPrefix instance for mocking.
         /// </summary>
         public static BlobPrefix BlobPrefix(
-            string name)
+            string name,
+            Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal properties = default)
         {
             return new BlobPrefix()
             {
                 Name = name,
+                Properties = properties,
             };
         }
     }
@@ -4945,6 +5007,56 @@ namespace Azure.Storage.Files.DataLake.Models
     }
 }
 #endregion class ListBlobsHierarchySegmentResponse
+
+#region enum ListPathsIncludeItem
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// ListPathsIncludeItem values
+    /// </summary>
+    public enum ListPathsIncludeItem
+    {
+        /// <summary>
+        /// metadata
+        /// </summary>
+        Metadata,
+
+        /// <summary>
+        /// permissions
+        /// </summary>
+        Permissions
+    }
+}
+
+namespace Azure.Storage.Files.DataLake
+{
+    internal static partial class DataLakeRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Files.DataLake.Models.ListPathsIncludeItem value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Files.DataLake.Models.ListPathsIncludeItem.Metadata => "metadata",
+                    Azure.Storage.Files.DataLake.Models.ListPathsIncludeItem.Permissions => "permissions",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.ListPathsIncludeItem value.")
+                };
+            }
+
+            public static Azure.Storage.Files.DataLake.Models.ListPathsIncludeItem ParseListPathsIncludeItem(string value)
+            {
+                return value switch
+                {
+                    "metadata" => Azure.Storage.Files.DataLake.Models.ListPathsIncludeItem.Metadata,
+                    "permissions" => Azure.Storage.Files.DataLake.Models.ListPathsIncludeItem.Permissions,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.ListPathsIncludeItem value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum ListPathsIncludeItem
 
 #region class Path
 namespace Azure.Storage.Files.DataLake.Models
