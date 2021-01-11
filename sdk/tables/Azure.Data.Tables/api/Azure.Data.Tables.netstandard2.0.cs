@@ -316,6 +316,7 @@ namespace Azure.Data.Tables.Sas
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public static Azure.Data.Tables.Sas.TableSasBuilder Parse(System.Uri uri) { throw null; }
         public void SetPermissions(Azure.Data.Tables.Sas.TableSasPermissions permissions) { }
         public void SetPermissions(string rawPermissions) { }
         public string Sign(Azure.Data.Tables.TableSharedKeyCredential sharedKeyCredential) { throw null; }
@@ -365,5 +366,18 @@ namespace Azure.Data.Tables.Sas
         public string StartPartitionKey { get { throw null; } set { } }
         public string StartRowKey { get { throw null; } set { } }
         public override string ToString() { throw null; }
+    }
+    public partial class TableUriBuilder
+    {
+        public TableUriBuilder(System.Uri uri) { }
+        public string AccountName { get { throw null; } set { } }
+        public string Host { get { throw null; } set { } }
+        public int Port { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public Azure.Data.Tables.Sas.TableSasQueryParameters Sas { get { throw null; } set { } }
+        public string Scheme { get { throw null; } set { } }
+        public string Tablename { get { throw null; } set { } }
+        public override string ToString() { throw null; }
+        public System.Uri ToUri() { throw null; }
     }
 }

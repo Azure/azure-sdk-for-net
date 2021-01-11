@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.RegularExpressions;
 using Azure.Core;
 using AccountSetting = System.Collections.Generic.KeyValuePair<string, System.Func<string, bool>>;
 using ConnectionStringFilter = System.Func<System.Collections.Generic.IDictionary<string, string>, System.Collections.Generic.IDictionary<string, string>>;
@@ -269,6 +271,84 @@ namespace Azure.Data.Tables
             return false;
         }
 
+        private const string TableNameGroup = "tableName";
+        private static readonly Regex s_tableUriTableNameRegex = new Regex(@$"(Tables\('(?<{TableNameGroup}>\w+)'\))");
+
+        /// <summary>
+        /// Returns the table name given the <paramref name="uri"/>.
+        /// </summary>
+        /// <param name="uri">The primary endpoint Uri.</param>
+        /// <returns></returns>
+        internal static string GetTableNameFromUri(Uri uri)
+        {
+            var segments = uri.Segments;
+            var lastSegment = segments[segments.Length - 1];
+
+            Match match = s_tableUriTableNameRegex.Match(lastSegment);
+
+            if (match.Success)
+            {
+                return match.Groups[TableNameGroup].Value;
+            }
+            else
+            {
+                UriHostNameType hostNameType = Uri.CheckHostName(uri.Host);
+                int expectedSegments = hostNameType switch
+                {
+                    // This is a dns name such as contoso.core.windows.net/tableName
+                    UriHostNameType.Dns => 2,
+                    // This is most likely Azurite, which looks like this: https://126.0.0.1:10002/contoso/tableName
+                    UriHostNameType.IPv4 => 3,
+                    _ when uri.IsLoopback => 3,
+                    _ => 0
+                };
+
+                if (segments.Length < expectedSegments)
+                {
+                    return string.Empty;
+                }
+
+                return lastSegment.EndsWith("/", StringComparison.OrdinalIgnoreCase) ?
+                lastSegment.Substring(0, lastSegment.Length - 1) :
+                lastSegment;
+            }
+        }
+
+        /// <summary>
+        /// Returns the account name given the <paramref name="uri"/>.
+        /// </summary>
+        /// <param name="uri">The primary endpoint Uri.</param>
+        /// <returns></returns>
+        internal static string GetAccountNameFromUri(Uri uri)
+        {
+            string accountName = null;
+            var indexOfDot = uri.Host.IndexOf('.');
+            UriHostNameType hostNameType = Uri.CheckHostName(uri.Host);
+
+            if (indexOfDot >= 0 && hostNameType == UriHostNameType.Dns)
+            {
+                // This is a dns name such as contoso.core.windows.net
+                accountName = uri.Host.Substring(0, indexOfDot);
+            }
+            else if (uri.IsLoopback || hostNameType == UriHostNameType.IPv4)
+            {
+                // This is most likely Azurite, which looks like this: https://127.0.0.1:10002/contoso/
+                var segments = uri.Segments;
+
+                accountName = segments[1].EndsWith("/", StringComparison.OrdinalIgnoreCase) ?
+                    segments[1].Substring(0, segments[1].Length - 1) :
+                    segments[1];
+            }
+
+            return accountName;
+        }
+
+        /// <summary>
+        /// Generates the secondary endpoint Uri given the <paramref name="primaryUri"/>.
+        /// </summary>
+        /// <param name="primaryUri">The primary endpoint Uri.</param>
+        /// <param name="accountName">The account name.</param>
+        /// <returns></returns>
         internal static Uri GetSecondaryUriFromPrimary(Uri primaryUri, string accountName = null)
         {
             var secondaryUriBuilder = new UriBuilder(primaryUri);
@@ -282,13 +362,15 @@ namespace Azure.Data.Tables
             }
 
             var indexOfDot = secondaryUriBuilder.Host.IndexOf('.');
-            if (indexOfDot >= 0 && Uri.CheckHostName(primaryUri.Host) == UriHostNameType.Dns)
+            UriHostNameType hostNameType = Uri.CheckHostName(secondaryUriBuilder.Host);
+
+            if (indexOfDot >= 0 && hostNameType == UriHostNameType.Dns)
             {
                 // This is a dns name such as contoso.core.windows.net
                 // Insert the '-secondary' suffix after the first part of the host name
                 secondaryUriBuilder.Host = secondaryUriBuilder.Host.Insert(indexOfDot, TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix);
             }
-            else if (primaryUri.IsLoopback)
+            else if (primaryUri.IsLoopback || hostNameType == UriHostNameType.IPv4)
             {
                 // This is most likely Azurite, which looks like this: https://127.0.0.1:10002/contoso/
                 // Insert the '-secondary' suffix after the 2nd segment (the first segment is '/')
