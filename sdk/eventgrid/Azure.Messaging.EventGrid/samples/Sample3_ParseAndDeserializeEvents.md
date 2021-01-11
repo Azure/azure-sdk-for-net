@@ -55,7 +55,7 @@ foreach (CloudEvent cloudEvent in cloudEvents)
 ### Using `GetData()`
 If expecting mostly system events, it may be cleaner to switch on object `GetData()` and use pattern matching to deserialize events. In the case where there are unrecognized event types, one can use the returned `BinaryData` to deserialize the custom event data.
 
-```C# Snippet:DeserializePayloadUsingNonGenericGetData
+```C# Snippet:DeserializePayloadUsingAsSystemEventData
 foreach (EventGridEvent egEvent in egEvents)
 {
     // If the event is a system event, AsSystemEventData() should return the correct system event type
@@ -72,6 +72,8 @@ foreach (EventGridEvent egEvent in egEvents)
             // Handle any other system event type
             default:
                 Console.WriteLine(egEvent.EventType);
+                // we can get the raw Json for the event using GetData()
+                Console.WriteLine(egEvent.GetData().ToString());
                 break;
         }
     }
@@ -80,13 +82,13 @@ foreach (EventGridEvent egEvent in egEvents)
         switch (egEvent.EventType)
         {
             case "MyApp.Models.CustomEventType":
-                // You can use BinaryData methods to deserialize the payload
-                TestPayload deserializedEventData = egEvent.GetData().ToObjectFromJson<TestPayload>();
+                TestPayload deserializedEventData = egEvent.GetData<TestPayload>();
                 Console.WriteLine(deserializedEventData.Name);
                 break;
             // Handle any other custom event type
             default:
                 Console.Write(egEvent.EventType);
+                Console.WriteLine(egEvent.GetData().ToString());
                 break;
         }
     }
