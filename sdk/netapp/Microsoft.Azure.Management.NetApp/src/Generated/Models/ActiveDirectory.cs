@@ -70,7 +70,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// enabled for SMB communication.</param>
         /// <param name="ldapSigning">Specifies whether or not the LDAP traffic
         /// needs to be signed.</param>
-        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string statusDetails = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>), string kdcIP = default(string), string adName = default(string), string serverRootCACertificate = default(string), bool? aesEncryption = default(bool?), bool? ldapSigning = default(bool?))
+        /// <param name="securityOperators">Domain Users in the Active
+        /// directory to be given SeSecurityPrivilege privilege (Needed for SMB
+        /// Continuously available shares for SQL). A list of unique usernames
+        /// without domain specifier</param>
+        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string statusDetails = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>), string kdcIP = default(string), string adName = default(string), string serverRootCACertificate = default(string), bool? aesEncryption = default(bool?), bool? ldapSigning = default(bool?), IList<string> securityOperators = default(IList<string>))
         {
             ActiveDirectoryId = activeDirectoryId;
             Username = username;
@@ -88,6 +92,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ServerRootCACertificate = serverRootCACertificate;
             AesEncryption = aesEncryption;
             LdapSigning = ldapSigning;
+            SecurityOperators = securityOperators;
             CustomInit();
         }
 
@@ -208,6 +213,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "ldapSigning")]
         public bool? LdapSigning { get; set; }
+
+        /// <summary>
+        /// Gets or sets domain Users in the Active directory to be given
+        /// SeSecurityPrivilege privilege (Needed for SMB Continuously
+        /// available shares for SQL). A list of unique usernames without
+        /// domain specifier
+        /// </summary>
+        [JsonProperty(PropertyName = "securityOperators")]
+        public IList<string> SecurityOperators { get; set; }
 
         /// <summary>
         /// Validate the object.
