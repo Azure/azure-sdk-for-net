@@ -147,8 +147,8 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
-            request.Headers.Add("Content-Type", "application/json;odata=nometadata");
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json;odata=nometadata");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(tableProperties);
             request.Content = content;
@@ -546,10 +546,10 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (tableEntityProperties != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
@@ -666,10 +666,10 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (tableEntityProperties != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
@@ -891,10 +891,10 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
-            request.Headers.Add("Content-Type", "application/json;odata=nometadata");
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             if (tableEntityProperties != null)
             {
+                request.Headers.Add("Content-Type", "application/json;odata=nometadata");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
@@ -1096,10 +1096,10 @@ namespace Azure.Data.Tables
             uri.AppendQuery("comp", "acl", true);
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("Content-Type", "application/xml");
             request.Headers.Add("Accept", "application/xml");
             if (tableAcl != null)
             {
+                request.Headers.Add("Content-Type", "application/xml");
                 var content = new XmlWriterContent();
                 content.XmlWriter.WriteStartElement("SignedIdentifiers");
                 foreach (var item in tableAcl)

@@ -12,24 +12,6 @@ namespace Azure.Media.Analytics.Edge.Models
     /// <summary> A key-value pair. A media graph topology allows certain values to be parameterized. When an instance is created, the parameters are supplied with arguments specific to that instance. This allows the same graph topology to be used as a blueprint for multiple graph instances with different values for the parameters. </summary>
     public partial class MediaGraphParameterDefinition
     {
-        /// <summary> Initializes a new instance of MediaGraphParameterDefinition. </summary>
-        /// <param name="name"> The name of the parameter defined in the media graph topology. </param>
-        /// <param name="value"> The value to supply for the named parameter defined in the media graph topology. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
-        public MediaGraphParameterDefinition(string name, string value)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            Name = name;
-            Value = value;
-        }
 
         /// <summary> The name of the parameter defined in the media graph topology. </summary>
         public string Name { get; set; }

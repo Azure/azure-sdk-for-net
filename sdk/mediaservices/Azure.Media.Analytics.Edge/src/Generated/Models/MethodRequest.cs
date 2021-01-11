@@ -7,7 +7,7 @@
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    /// <summary> The MethodRequest. </summary>
+    /// <summary> Base Class for Method Requests. </summary>
     public partial class MethodRequest
     {
         /// <summary> Initializes a new instance of MethodRequest. </summary>

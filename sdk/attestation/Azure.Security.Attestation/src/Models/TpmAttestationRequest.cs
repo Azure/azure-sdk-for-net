@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Security.Attestation.Common;
 
 namespace Azure.Security.Attestation.Models
 {

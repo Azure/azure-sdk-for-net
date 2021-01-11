@@ -27,23 +27,12 @@ namespace Azure.Communication
 
             try
             {
-                return JsonSerializer.Deserialize<JwtPayload>(ConvertFromBase64Url(tokenParts[1]));
+                return JsonSerializer.Deserialize<JwtPayload>(Base64Url.DecodeString(tokenParts[1]));
             }
             catch (JsonException ex)
             {
                 throw new FormatException(TokenNotFormattedCorrectly, ex);
             }
-        }
-
-        private static string ConvertFromBase64Url(string base64Url)
-        {
-            var base64String = new StringBuilder(base64Url)
-                .Replace('-', '+')
-                .Replace('_', '-')
-                .Append(new string('=', (4 - (base64Url.Length % 4)) % 4))
-                .ToString();
-
-            return Encoding.UTF8.GetString(Convert.FromBase64String(base64String));
         }
 
         internal class JwtPayload

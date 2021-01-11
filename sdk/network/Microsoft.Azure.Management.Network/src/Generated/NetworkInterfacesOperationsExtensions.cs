@@ -612,7 +612,7 @@ namespace Microsoft.Azure.Management.Network
 
             /// <summary>
             /// Gets information about all network interfaces in a role instance in a cloud
-            /// service
+            /// service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -633,7 +633,7 @@ namespace Microsoft.Azure.Management.Network
 
             /// <summary>
             /// Gets information about all network interfaces in a role instance in a cloud
-            /// service
+            /// service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -711,7 +711,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the cloud service.
             /// </param>
             /// <param name='roleInstanceName'>
-            /// The name of role instance
+            /// The name of role instance.
             /// </param>
             /// <param name='networkInterfaceName'>
             /// The name of the network interface.
@@ -737,7 +737,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the cloud service.
             /// </param>
             /// <param name='roleInstanceName'>
-            /// The name of role instance
+            /// The name of role instance.
             /// </param>
             /// <param name='networkInterfaceName'>
             /// The name of the network interface.
@@ -1095,7 +1095,7 @@ namespace Microsoft.Azure.Management.Network
 
             /// <summary>
             /// Gets information about all network interfaces in a role instance in a cloud
-            /// service
+            /// service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1110,7 +1110,7 @@ namespace Microsoft.Azure.Management.Network
 
             /// <summary>
             /// Gets information about all network interfaces in a role instance in a cloud
-            /// service
+            /// service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

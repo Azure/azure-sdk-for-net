@@ -13,10 +13,6 @@ namespace Azure.Identity.Tests
         {
             return typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as ClientSecretCredential;
         }
-        public static void _client(this ClientSecretCredential credential, AadIdentityClient client)
-        {
-            typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
-        }
 
         public static SecureString ToSecureString(this string plainString)
         {
