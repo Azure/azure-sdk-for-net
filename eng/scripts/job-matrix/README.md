@@ -28,11 +28,11 @@ for a job matrix definition](https://docs.microsoft.com/en-us/azure/devops/pipel
 
 In order to use these scripts in a pipeline, you must provide a config file and call the matrix creation script within a powershell job.
 
-For a single matrix, you can include the `eng/pipelines/templates/jobs/test-matrix.yml` template in a pipeline:
+For a single matrix, you can include the `eng/pipelines/templates/jobs/job-matrix.yml` template in a pipeline:
 
 ```
 jobs:
-- template: /eng/pipelines/templates/jobs/test-matrix.yml
+- template: /eng/pipelines/templates/jobs/job-matrix.yml
   parameters:
     MatrixConfigs:
       - Name: base_product_matrix
@@ -242,7 +242,7 @@ $ Invoke-Pester
 
 Starting discovery in 1 files.
 Discovery finished in 384ms.
-[+] /home/ben/sdk/azure-sdk-for-net/eng/scripts/test-matrix/test-matrix-functions.tests.ps1 4.09s (1.52s|2.22s)
+[+] /home/ben/sdk/azure-sdk-for-net/eng/scripts/job-matrix/job-matrix-functions.tests.ps1 4.09s (1.52s|2.22s)
 Tests completed in 4.12s
 Tests Passed: 120, Failed: 0, Skipped: 4 NotRun: 0
 ```
