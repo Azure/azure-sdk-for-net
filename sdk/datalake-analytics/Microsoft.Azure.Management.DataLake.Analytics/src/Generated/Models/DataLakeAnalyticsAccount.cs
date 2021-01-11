@@ -61,6 +61,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// accounts associated with this account.</param>
         /// <param name="computePolicies">The list of compute policies
         /// associated with this account.</param>
+        /// <param name="hiveMetastores">The list of hiveMetastores associated
+        /// with this account.</param>
+        /// <param name="virtualNetworkRules">The list of virtualNetwork rules
+        /// associated with this account.</param>
         /// <param name="firewallRules">The list of firewall rules associated
         /// with this account.</param>
         /// <param name="firewallState">The current state of the IP address
@@ -100,7 +104,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// job for this account.</param>
         /// <param name="queryStoreRetention">The number of days that job
         /// metadata is retained.</param>
-        public DataLakeAnalyticsAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? accountId = default(System.Guid?), DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), string defaultDataLakeStoreAccount = default(string), IList<DataLakeStoreAccountInformation> dataLakeStoreAccounts = default(IList<DataLakeStoreAccountInformation>), IList<StorageAccountInformation> storageAccounts = default(IList<StorageAccountInformation>), IList<ComputePolicy> computePolicies = default(IList<ComputePolicy>), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), TierType? newTier = default(TierType?), TierType? currentTier = default(TierType?), int? maxJobCount = default(int?), int? systemMaxJobCount = default(int?), int? maxDegreeOfParallelism = default(int?), int? systemMaxDegreeOfParallelism = default(int?), int? maxDegreeOfParallelismPerJob = default(int?), int? minPriorityPerJob = default(int?), int? queryStoreRetention = default(int?))
+        /// <param name="debugDataAccessLevel">The current state of the
+        /// DebugDataAccessLevel for this account. Possible values include:
+        /// 'All', 'Customer', 'None'</param>
+        public DataLakeAnalyticsAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? accountId = default(System.Guid?), DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), string defaultDataLakeStoreAccount = default(string), IList<DataLakeStoreAccountInformation> dataLakeStoreAccounts = default(IList<DataLakeStoreAccountInformation>), IList<StorageAccountInformation> storageAccounts = default(IList<StorageAccountInformation>), IList<ComputePolicy> computePolicies = default(IList<ComputePolicy>), IList<HiveMetastore> hiveMetastores = default(IList<HiveMetastore>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), TierType? newTier = default(TierType?), TierType? currentTier = default(TierType?), int? maxJobCount = default(int?), int? systemMaxJobCount = default(int?), int? maxDegreeOfParallelism = default(int?), int? systemMaxDegreeOfParallelism = default(int?), int? maxDegreeOfParallelismPerJob = default(int?), int? minPriorityPerJob = default(int?), int? queryStoreRetention = default(int?), DebugDataAccessLevel? debugDataAccessLevel = default(DebugDataAccessLevel?))
             : base(id, name, type, location, tags)
         {
             AccountId = accountId;
@@ -113,6 +120,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             DataLakeStoreAccounts = dataLakeStoreAccounts;
             StorageAccounts = storageAccounts;
             ComputePolicies = computePolicies;
+            HiveMetastores = hiveMetastores;
+            VirtualNetworkRules = virtualNetworkRules;
             FirewallRules = firewallRules;
             FirewallState = firewallState;
             FirewallAllowAzureIps = firewallAllowAzureIps;
@@ -125,6 +134,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             MaxDegreeOfParallelismPerJob = maxDegreeOfParallelismPerJob;
             MinPriorityPerJob = minPriorityPerJob;
             QueryStoreRetention = queryStoreRetention;
+            DebugDataAccessLevel = debugDataAccessLevel;
             CustomInit();
         }
 
@@ -202,6 +212,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public IList<ComputePolicy> ComputePolicies { get; private set; }
 
         /// <summary>
+        /// Gets the list of hiveMetastores associated with this account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hiveMetastores")]
+        public IList<HiveMetastore> HiveMetastores { get; private set; }
+
+        /// <summary>
+        /// Gets the list of virtualNetwork rules associated with this account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNetworkRules")]
+        public IList<VirtualNetworkRule> VirtualNetworkRules { get; private set; }
+
+        /// <summary>
         /// Gets the list of firewall rules associated with this account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewallRules")]
@@ -246,11 +268,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public TierType? CurrentTier { get; private set; }
 
         /// <summary>
-        /// Gets the maximum supported jobs running under the account at the
-        /// same time.
+        /// Gets or sets the maximum supported jobs running under the account
+        /// at the same time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxJobCount")]
-        public int? MaxJobCount { get; private set; }
+        public int? MaxJobCount { get; set; }
 
         /// <summary>
         /// Gets the system defined maximum supported jobs running under the
@@ -261,10 +283,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public int? SystemMaxJobCount { get; private set; }
 
         /// <summary>
-        /// Gets the maximum supported degree of parallelism for this account.
+        /// Gets or sets the maximum supported degree of parallelism for this
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxDegreeOfParallelism")]
-        public int? MaxDegreeOfParallelism { get; private set; }
+        public int? MaxDegreeOfParallelism { get; set; }
 
         /// <summary>
         /// Gets the system defined maximum supported degree of parallelism for
@@ -288,10 +311,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public int? MinPriorityPerJob { get; private set; }
 
         /// <summary>
-        /// Gets the number of days that job metadata is retained.
+        /// Gets or sets the number of days that job metadata is retained.
         /// </summary>
         [JsonProperty(PropertyName = "properties.queryStoreRetention")]
-        public int? QueryStoreRetention { get; private set; }
+        public int? QueryStoreRetention { get; set; }
+
+        /// <summary>
+        /// Gets the current state of the DebugDataAccessLevel for this
+        /// account. Possible values include: 'All', 'Customer', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.debugDataAccessLevel")]
+        public DebugDataAccessLevel? DebugDataAccessLevel { get; private set; }
 
         /// <summary>
         /// Validate the object.
