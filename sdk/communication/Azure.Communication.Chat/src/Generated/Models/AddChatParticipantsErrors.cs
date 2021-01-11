@@ -5,8 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.Communication.Chat
 {
@@ -14,9 +15,16 @@ namespace Azure.Communication.Chat
     public partial class AddChatParticipantsErrors
     {
         /// <summary> Initializes a new instance of AddChatParticipantsErrors. </summary>
-        internal AddChatParticipantsErrors()
+        /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="invalidParticipants"/> is null. </exception>
+        internal AddChatParticipantsErrors(IEnumerable<ChatError> invalidParticipants)
         {
-            InvalidParticipants = new ChangeTrackingList<ChatError>();
+            if (invalidParticipants == null)
+            {
+                throw new ArgumentNullException(nameof(invalidParticipants));
+            }
+
+            InvalidParticipants = invalidParticipants.ToList();
         }
 
         /// <summary> Initializes a new instance of AddChatParticipantsErrors. </summary>

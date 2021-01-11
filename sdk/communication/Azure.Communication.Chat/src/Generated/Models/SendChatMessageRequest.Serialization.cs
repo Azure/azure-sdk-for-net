@@ -27,6 +27,11 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("senderDisplayName");
                 writer.WriteStringValue(SenderDisplayName);
             }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(Type.Value.ToString());
+            }
             writer.WriteEndObject();
         }
     }

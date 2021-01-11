@@ -93,9 +93,9 @@ namespace Azure.Communication.Chat
 
         #region Message Operations
         /// <summary> Sends a message to a thread asynchronously. </summary>
-        /// <param name="content"> Message content. </param>
-        /// <param name="priority"> Message priority. </param>
-        /// <param name="senderDisplayName"> The display name of the message sender. This property is used to populate sender name for push notifications. </param>
+        /// <param name="content"> Chat message content. </param>
+        /// <param name="priority"> The chat message priority. </param>
+        /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<string>> SendMessageAsync(string content, ChatMessagePriority? priority = null, string? senderDisplayName = null, CancellationToken cancellationToken = default)
@@ -104,7 +104,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                Response<SendChatMessageResult> sendChatMessageResult = await _chatThreadRestClient.SendChatMessageAsync(Id, content, priority, senderDisplayName, cancellationToken).ConfigureAwait(false);
+                Response<SendChatMessageResult> sendChatMessageResult = await _chatThreadRestClient.SendChatMessageAsync(Id, content, priority, senderDisplayName, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(sendChatMessageResult.Value.Id, sendChatMessageResult.GetRawResponse());
             }
             catch (Exception ex)
@@ -126,7 +126,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                Response<SendChatMessageResult> sendChatMessageResult = _chatThreadRestClient.SendChatMessage(Id, content, priority, senderDisplayName, cancellationToken);
+                Response<SendChatMessageResult> sendChatMessageResult = _chatThreadRestClient.SendChatMessage(Id, content, priority, senderDisplayName, null, cancellationToken);
                 return Response.FromValue(sendChatMessageResult.Value.Id, sendChatMessageResult.GetRawResponse());
             }
             catch (Exception ex)
@@ -146,7 +146,8 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.GetChatMessageAsync(Id, messageId, cancellationToken).ConfigureAwait(false);
+                Response<ChatMessageInternal> chatMessageInternal = await _chatThreadRestClient.GetChatMessageAsync(Id, messageId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ChatMessage(chatMessageInternal.Value), chatMessageInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -165,7 +166,8 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.GetChatMessage(Id, messageId, cancellationToken);
+                Response<ChatMessageInternal> chatMessageInternal = _chatThreadRestClient.GetChatMessage(Id, messageId, cancellationToken);
+                return Response.FromValue(new ChatMessage(chatMessageInternal.Value), chatMessageInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -188,7 +190,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatMessagesCollection> response = await _chatThreadRestClient.ListChatMessagesAsync(Id, pageSizeHint, startTime, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatMessage(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -205,7 +207,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatMessagesCollection> response = await _chatThreadRestClient.ListChatMessagesNextPageAsync(nextLink, Id, pageSizeHint, startTime, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatMessage(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,7 +232,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatMessagesCollection> response = _chatThreadRestClient.ListChatMessages(Id, pageSizeHint, startTime, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatMessage(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,7 +249,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatMessagesCollection> response = _chatThreadRestClient.ListChatMessagesNextPage(nextLink, Id, pageSizeHint, startTime, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatMessage(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -428,7 +430,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatParticipantsCollection> response = await _chatThreadRestClient.ListChatParticipantsAsync(Id, pageSizeHint, skip, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(x => x.ToChatParticipant()), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatParticipant(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -445,7 +447,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatParticipantsCollection> response = await _chatThreadRestClient.ListChatParticipantsNextPageAsync(nextLink, Id, pageSizeHint, skip, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(x => x.ToChatParticipant()), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatParticipant(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -470,7 +472,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatParticipantsCollection> response = _chatThreadRestClient.ListChatParticipants(Id, pageSizeHint, skip, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(x => x.ToChatParticipant()), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatParticipant(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -487,7 +489,7 @@ namespace Azure.Communication.Chat
                 try
                 {
                     Response<ChatParticipantsCollection> response = _chatThreadRestClient.ListChatParticipantsNextPage(nextLink, Id, pageSizeHint, skip, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(x => x.ToChatParticipant()), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new ChatParticipant(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

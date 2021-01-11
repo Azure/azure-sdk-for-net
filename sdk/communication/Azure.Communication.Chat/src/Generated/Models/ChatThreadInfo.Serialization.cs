@@ -15,8 +15,8 @@ namespace Azure.Communication.Chat
     {
         internal static ChatThreadInfo DeserializeChatThreadInfo(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> topic = default;
+            string id = default;
+            string topic = default;
             Optional<DateTimeOffset> deletedOn = default;
             Optional<DateTimeOffset> lastMessageReceivedOn = default;
             foreach (var property in element.EnumerateObject())
@@ -52,7 +52,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatThreadInfo(id.Value, topic.Value, Optional.ToNullable(deletedOn), Optional.ToNullable(lastMessageReceivedOn));
+            return new ChatThreadInfo(id, topic, Optional.ToNullable(deletedOn), Optional.ToNullable(lastMessageReceivedOn));
         }
     }
 }

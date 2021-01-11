@@ -9,7 +9,7 @@ namespace Azure.Communication.Chat
     [CodeGenModel("ChatMessageReadReceipt")]
     public partial class ChatMessageReadReceipt
     {
-        internal ChatMessageReadReceipt(string senderId, string chatMessageId, DateTimeOffset? readOn)
+        internal ChatMessageReadReceipt(string senderId, string chatMessageId, DateTimeOffset readOn)
         {
             SenderId = senderId;
             Sender = new CommunicationUserIdentifier(senderId);

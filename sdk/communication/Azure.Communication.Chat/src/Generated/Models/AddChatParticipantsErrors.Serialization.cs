@@ -15,16 +15,11 @@ namespace Azure.Communication.Chat
     {
         internal static AddChatParticipantsErrors DeserializeAddChatParticipantsErrors(JsonElement element)
         {
-            Optional<IReadOnlyList<ChatError>> invalidParticipants = default;
+            IReadOnlyList<ChatError> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("invalidParticipants"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<ChatError> array = new List<ChatError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -34,7 +29,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new AddChatParticipantsErrors(Optional.ToList(invalidParticipants));
+            return new AddChatParticipantsErrors(invalidParticipants);
         }
     }
 }

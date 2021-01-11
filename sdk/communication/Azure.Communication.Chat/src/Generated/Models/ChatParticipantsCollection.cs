@@ -5,8 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.Communication.Chat
 {
@@ -14,9 +15,16 @@ namespace Azure.Communication.Chat
     internal partial class ChatParticipantsCollection
     {
         /// <summary> Initializes a new instance of ChatParticipantsCollection. </summary>
-        internal ChatParticipantsCollection()
+        /// <param name="value"> Chat participants. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ChatParticipantsCollection(IEnumerable<ChatParticipantInternal> value)
         {
-            Value = new ChangeTrackingList<ChatParticipantInternal>();
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of ChatParticipantsCollection. </summary>

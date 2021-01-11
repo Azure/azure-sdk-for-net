@@ -203,7 +203,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateSendChatMessageRequest(string chatThreadId, string content, ChatMessagePriority? priority, string senderDisplayName)
+        internal HttpMessage CreateSendChatMessageRequest(string chatThreadId, string content, ChatMessagePriority? priority, string senderDisplayName, ChatMessageType? type)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -220,7 +220,8 @@ namespace Azure.Communication.Chat
             var model = new SendChatMessageRequest(content)
             {
                 Priority = priority,
-                SenderDisplayName = senderDisplayName
+                SenderDisplayName = senderDisplayName,
+                Type = type
             };
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(model);
@@ -233,9 +234,10 @@ namespace Azure.Communication.Chat
         /// <param name="content"> Chat message content. </param>
         /// <param name="priority"> The chat message priority. </param>
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
+        /// <param name="type"> The chat message type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="content"/> is null. </exception>
-        public async Task<Response<SendChatMessageResult>> SendChatMessageAsync(string chatThreadId, string content, ChatMessagePriority? priority = null, string senderDisplayName = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SendChatMessageResult>> SendChatMessageAsync(string chatThreadId, string content, ChatMessagePriority? priority = null, string senderDisplayName = null, ChatMessageType? type = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -246,7 +248,7 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateSendChatMessageRequest(chatThreadId, content, priority, senderDisplayName);
+            using var message = CreateSendChatMessageRequest(chatThreadId, content, priority, senderDisplayName, type);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -267,9 +269,10 @@ namespace Azure.Communication.Chat
         /// <param name="content"> Chat message content. </param>
         /// <param name="priority"> The chat message priority. </param>
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
+        /// <param name="type"> The chat message type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="content"/> is null. </exception>
-        public Response<SendChatMessageResult> SendChatMessage(string chatThreadId, string content, ChatMessagePriority? priority = null, string senderDisplayName = null, CancellationToken cancellationToken = default)
+        public Response<SendChatMessageResult> SendChatMessage(string chatThreadId, string content, ChatMessagePriority? priority = null, string senderDisplayName = null, ChatMessageType? type = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -280,7 +283,7 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateSendChatMessageRequest(chatThreadId, content, priority, senderDisplayName);
+            using var message = CreateSendChatMessageRequest(chatThreadId, content, priority, senderDisplayName, type);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -400,7 +403,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> The message id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
-        public async Task<Response<ChatMessage>> GetChatMessageAsync(string chatThreadId, string chatMessageId, CancellationToken cancellationToken = default)
+        public async Task<Response<ChatMessageInternal>> GetChatMessageAsync(string chatThreadId, string chatMessageId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -417,9 +420,9 @@ namespace Azure.Communication.Chat
             {
                 case 200:
                     {
-                        ChatMessage value = default;
+                        ChatMessageInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ChatMessage.DeserializeChatMessage(document.RootElement);
+                        value = ChatMessageInternal.DeserializeChatMessageInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -432,7 +435,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> The message id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
-        public Response<ChatMessage> GetChatMessage(string chatThreadId, string chatMessageId, CancellationToken cancellationToken = default)
+        public Response<ChatMessageInternal> GetChatMessage(string chatThreadId, string chatMessageId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -449,9 +452,9 @@ namespace Azure.Communication.Chat
             {
                 case 200:
                     {
-                        ChatMessage value = default;
+                        ChatMessageInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ChatMessage.DeserializeChatMessage(document.RootElement);
+                        value = ChatMessageInternal.DeserializeChatMessageInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -175,16 +175,16 @@ namespace Azure.Communication.Chat.Tests
             //assert
             Assert.AreEqual(updatedTopic, chatThread.Topic);
             Assert.AreEqual(3, chatParticipantsOnCreationCount);
-            Assert.AreEqual(messageContent, message.Content);
-            Assert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content);
+            Assert.AreEqual(messageContent, message.Content.Message);
+            Assert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content.Message);
             Assert.AreEqual(ChatMessagePriority.Normal, message.Priority);
 
-            Assert.AreEqual(messageContent2, message2.Content);
+            Assert.AreEqual(messageContent2, message2.Content.Message);
             Assert.AreEqual(displayNameMessage, message2.SenderDisplayName);
-            Assert.AreEqual(messageContent3, message3.Content);
-            Assert.AreEqual(messageContent4, message4.Content);
-            Assert.AreEqual(messageContent5, message5.Content);
-            Assert.AreEqual(messageContent6, message6.Content);
+            Assert.AreEqual(messageContent3, message3.Content.Message);
+            Assert.AreEqual(messageContent4, message4.Content.Message);
+            Assert.AreEqual(messageContent5, message5.Content.Message);
+            Assert.AreEqual(messageContent6, message6.Content.Message);
 
             Assert.AreEqual(2, threadsCount);
             Assert.AreEqual(8, getMessagesCount); //Including all types : 5 text message, 3 control messages
@@ -359,16 +359,16 @@ namespace Azure.Communication.Chat.Tests
             //assert
             Assert.AreEqual(updatedTopic, chatThread.Topic);
             Assert.AreEqual(3, chatParticipantsOnCreationCount);
-            Assert.AreEqual(messageContent, message.Content);
+            Assert.AreEqual(messageContent, message.Content.Message);
             Assert.AreEqual(displayNameMessage, message.SenderDisplayName);
-            Assert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content);
+            Assert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content.Message);
             Assert.AreEqual(ChatMessagePriority.High, message.Priority);
 
-            Assert.AreEqual(messageContent2, message2.Content);
-            Assert.AreEqual(messageContent3, message3.Content);
-            Assert.AreEqual(messageContent4, message4.Content);
-            Assert.AreEqual(messageContent5, message5.Content);
-            Assert.AreEqual(messageContent6, message6.Content);
+            Assert.AreEqual(messageContent2, message2.Content.Message);
+            Assert.AreEqual(messageContent3, message3.Content.Message);
+            Assert.AreEqual(messageContent4, message4.Content.Message);
+            Assert.AreEqual(messageContent5, message5.Content.Message);
+            Assert.AreEqual(messageContent6, message6.Content.Message);
 
             Assert.AreEqual(2, threadsCount);
             Assert.AreEqual(8, getMessagesCount); //Including all types : 5 text message, 3 control messages

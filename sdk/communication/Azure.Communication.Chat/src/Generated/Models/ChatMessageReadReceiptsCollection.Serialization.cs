@@ -15,17 +15,12 @@ namespace Azure.Communication.Chat
     {
         internal static ChatMessageReadReceiptsCollection DeserializeChatMessageReadReceiptsCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ChatMessageReadReceipt>> value = default;
+            IReadOnlyList<ChatMessageReadReceipt> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<ChatMessageReadReceipt> array = new List<ChatMessageReadReceipt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +35,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageReadReceiptsCollection(Optional.ToList(value), nextLink.Value);
+            return new ChatMessageReadReceiptsCollection(value, nextLink.Value);
         }
     }
 }

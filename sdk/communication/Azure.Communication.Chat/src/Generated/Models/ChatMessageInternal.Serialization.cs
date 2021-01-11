@@ -11,18 +11,19 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class ChatMessage
+    internal partial class ChatMessageInternal
     {
-        internal static ChatMessage DeserializeChatMessage(JsonElement element)
+        internal static ChatMessageInternal DeserializeChatMessageInternal(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> type = default;
-            Optional<ChatMessagePriority> priority = default;
-            Optional<string> version = default;
-            Optional<string> content = default;
+            string id = default;
+            ChatMessageType type = default;
+            ChatMessagePriority priority = default;
+            string sequenceId = default;
+            string version = default;
+            Optional<ChatMessageContentInternal> content = default;
             Optional<string> senderDisplayName = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<string> senderId = default;
+            DateTimeOffset createdOn = default;
+            string senderId = default;
             Optional<DateTimeOffset> deletedOn = default;
             Optional<DateTimeOffset> editedOn = default;
             foreach (var property in element.EnumerateObject())
@@ -34,17 +35,17 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ChatMessageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("priority"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     priority = new ChatMessagePriority(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sequenceId"))
+                {
+                    sequenceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("version"))
@@ -54,7 +55,12 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("content"))
                 {
-                    content = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    content = ChatMessageContentInternal.DeserializeChatMessageContentInternal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("senderDisplayName"))
@@ -64,11 +70,6 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("createdOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -98,7 +99,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessage(id.Value, type.Value, Optional.ToNullable(priority), version.Value, content.Value, senderDisplayName.Value, Optional.ToNullable(createdOn), senderId.Value, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn));
+            return new ChatMessageInternal(id, type, priority, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, senderId, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn));
         }
     }
 }

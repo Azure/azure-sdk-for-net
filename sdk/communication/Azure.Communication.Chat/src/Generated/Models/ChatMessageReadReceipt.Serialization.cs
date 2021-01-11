@@ -15,9 +15,9 @@ namespace Azure.Communication.Chat
     {
         internal static ChatMessageReadReceipt DeserializeChatMessageReadReceipt(JsonElement element)
         {
-            Optional<string> senderId = default;
-            Optional<string> chatMessageId = default;
-            Optional<DateTimeOffset> readOn = default;
+            string senderId = default;
+            string chatMessageId = default;
+            DateTimeOffset readOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("senderId"))
@@ -32,16 +32,11 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("readOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     readOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new ChatMessageReadReceipt(senderId.Value, chatMessageId.Value, Optional.ToNullable(readOn));
+            return new ChatMessageReadReceipt(senderId, chatMessageId, readOn);
         }
     }
 }

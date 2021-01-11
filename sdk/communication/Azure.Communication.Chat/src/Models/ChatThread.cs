@@ -22,8 +22,8 @@ namespace Azure.Communication.Chat
         /// <summary> Chat thread topic. </summary>
         public string Topic { get; }
         /// <summary> The timestamp when the chat thread was created. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Id of the chat thread owner. </summary>
+        public DateTimeOffset CreatedOn { get; }
+        /// <summary> Identifier of the chat thread owner. </summary>
         public CommunicationUserIdentifier CreatedBy { get; }
         /// <summary>The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }

@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    [CodeGenModel("ChatParticipant")]
-    internal partial class ChatParticipantInternal
+    [CodeGenModel("ChatMessage")]
+    internal partial class ChatMessageInternal
     {
     }
 }

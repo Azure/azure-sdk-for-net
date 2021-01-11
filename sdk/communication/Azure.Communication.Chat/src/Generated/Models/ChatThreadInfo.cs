@@ -13,8 +13,22 @@ namespace Azure.Communication.Chat
     public partial class ChatThreadInfo
     {
         /// <summary> Initializes a new instance of ChatThreadInfo. </summary>
-        internal ChatThreadInfo()
+        /// <param name="id"> Chat thread id. </param>
+        /// <param name="topic"> Chat thread topic. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="topic"/> is null. </exception>
+        internal ChatThreadInfo(string id, string topic)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (topic == null)
+            {
+                throw new ArgumentNullException(nameof(topic));
+            }
+
+            Id = id;
+            Topic = topic;
         }
 
         /// <summary> Initializes a new instance of ChatThreadInfo. </summary>
