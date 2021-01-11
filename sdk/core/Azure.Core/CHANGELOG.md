@@ -1,7 +1,10 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.8.1 (2020-01-11)
 
+### Key Bug Fixes
+
+- Include `Microsoft.Bcl.AsyncInterfaces` dependency on .NET 5 to avoid build issues in applications targeting .NET 5.
 
 ## 1.8.0 (2020-01-06)
 
