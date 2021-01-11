@@ -309,6 +309,20 @@ Describe "Platform Matrix Generation" -Tag "generate" {
         $element.name | Should -Be "windows2019_withFoo_netcoreapp21"
     }
 
+    It "Should enforce valid display name format" {
+        $config.displayNames["net461"] = '_123.Some.456.Invalid_format-name$(foo)'
+        $config.displayNames["netcoreapp2.1"] = (New-Object string[] 150) -join "a"
+        $matrix, $dimensions = GenerateFullMatrix $config.matrix $config.displayNames
+
+        $element = GetNdMatrixElement @(0, 0, 0) $matrix $dimensions
+        $element.name | Should -Be "macOS1015_some456invalid_formatnamefoo"
+
+        $element = GetNdMatrixElement @(1, 1, 1) $matrix $dimensions
+        $element.name.Length | Should -Be 100
+        $element.name | Should -BeLike "ubuntu1804_withFoo_aaaaaaaaaaaaaaaaa*"
+    }
+
+
     It "Should initialize an N-dimensional matrix from all parameter permutations" {
         $matrix, $dimensions = GenerateFullMatrix $config.matrix $config.displayNames
         $matrix.Count | Should -Be 12

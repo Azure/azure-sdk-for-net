@@ -1,16 +1,22 @@
 Set-StrictMode -Version "4.0"
 
-function CreateDisplayName([string]$parameter, [hashtable]$displayNames) {
+function CreateDisplayName([string]$parameter, [hashtable]$displayNames)
+{
     $name = $parameter
 
-    if ($displayNames[$parameter]) {
+    if ($displayNames.ContainsKey($parameter)) {
         $name = $displayNames[$parameter]
     }
 
-    return $name -replace "[\-\._]", ""
+    # Matrix naming restrictions:
+    # https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml#multi-job-configuration
+    $name = $name -replace "^[^A-Za-z]*", ""  # strip leading digits
+    $name = $name -replace "[^A-Za-z0-9_]", ""
+    return $name
 }
 
-function GenerateMatrix([HashTable]$config, [string]$selectFromMatrixType) {
+function GenerateMatrix([HashTable]$config, [string]$selectFromMatrixType)
+{
     if ($selectFromMatrixType -eq "sparse") {
         [Array]$dimensions = GetMatrixDimensions $config.matrix
         $size = $dimensions[0]
@@ -18,7 +24,7 @@ function GenerateMatrix([HashTable]$config, [string]$selectFromMatrixType) {
     } elseif ($selectFromMatrixType -eq "all") {
         [Array]$matrix, $_ = GenerateFullMatrix $config.matrix $config.displayNames
     } else {
-        throw "Matrix generator not implemented for selectFromMatrix: $($platform.selectFromMatrix)"
+        throw "Matrix generator not implemented for selectFromMatrixType: $($platform.selectFromMatrixType)"
     }
 
     if ($config["exclude"]) {
@@ -31,7 +37,8 @@ function GenerateMatrix([HashTable]$config, [string]$selectFromMatrixType) {
     return $matrix | Sort-Object -Property name
 }
 
-function ProcessExcludes([Array]$matrix, [Array]$excludes) {
+function ProcessExcludes([Array]$matrix, [Array]$excludes)
+{
     $deleteKey = "%DELETE%"
     $exclusionMatrix = @()
 
@@ -53,7 +60,8 @@ function ProcessExcludes([Array]$matrix, [Array]$excludes) {
     return $matrix | Where-Object { !$_.parameters.Contains($deleteKey) }
 }
 
-function ProcessIncludes([Array]$matrix, [Array]$includes, [HashTable]$displayNames) {
+function ProcessIncludes([Array]$matrix, [Array]$includes, [HashTable]$displayNames)
+{
     foreach ($inclusion in $includes) {
         $converted = ConvertToMatrixArrayFormat $inclusion
         $full, $_ = GenerateFullMatrix $converted $displayNames
@@ -63,7 +71,8 @@ function ProcessIncludes([Array]$matrix, [Array]$includes, [HashTable]$displayNa
     return $matrix
 }
 
-function MatrixElementMatch([HashTable]$source, [HashTable]$target) {
+function MatrixElementMatch([HashTable]$source, [HashTable]$target)
+{
     if ($target.Count -eq 0) {
         return $false
     }
@@ -77,7 +86,8 @@ function MatrixElementMatch([HashTable]$source, [HashTable]$target) {
     return $true
 }
 
-function ConvertToMatrixArrayFormat([HashTable]$matrix) {
+function ConvertToMatrixArrayFormat([HashTable]$matrix)
+{
     $converted = @{}
 
     foreach ($key in $matrix.Keys) {
@@ -91,7 +101,8 @@ function ConvertToMatrixArrayFormat([HashTable]$matrix) {
     return $converted
 }
 
-function SerializePipelineMatrix([Array]$matrix) {
+function SerializePipelineMatrix([Array]$matrix)
+{
     $matrix = $matrix | Sort-Object -Property name
     $pipelineMatrix = [ordered]@{}
     foreach ($entry in $matrix) {
@@ -107,7 +118,8 @@ function SerializePipelineMatrix([Array]$matrix) {
     }
 }
 
-function GenerateSparseMatrix([HashTable]$parameters, [HashTable]$displayNames, [int]$count) {
+function GenerateSparseMatrix([HashTable]$parameters, [HashTable]$displayNames, [int]$count)
+{
     [Array]$matrix, [Array]$dimensions = GenerateFullMatrix $parameters $displayNames
     $sparseMatrix = @()
 
@@ -128,7 +140,8 @@ function GenerateSparseMatrix([HashTable]$parameters, [HashTable]$displayNames, 
     return $sparseMatrix
 }
 
-function GenerateFullMatrix([HashTable]$parameters, [HashTable]$displayNames = @{}) {
+function GenerateFullMatrix([HashTable]$parameters, [HashTable]$displayNames = @{})
+{
     $sortedParameters = SortMatrix $parameters
 
     $matrix = [System.Collections.ArrayList]::new()
@@ -148,7 +161,8 @@ function GenerateFullMatrix([HashTable]$parameters, [HashTable]$displayNames = @
 #
 # Additionally, parameter value arrays should be sorted, so that the azure pipelines
 # matrix yaml gets generated consistently.
-function SortMatrix([HashTable]$parameters) {
+function SortMatrix([HashTable]$parameters)
+{
     $sortedParameters = $parameters.GetEnumerator() `
         | Sort-Object -Property `
             @{ Expression = { $_.Value.Length }; Descending=$true }, `
@@ -161,7 +175,8 @@ function SortMatrix([HashTable]$parameters) {
     return $sortedParameters
 }
 
-function CreateMatrixEntry([System.Collections.Specialized.OrderedDictionary]$permutation, [HashTable]$displayNames = @{}) {
+function CreateMatrixEntry([System.Collections.Specialized.OrderedDictionary]$permutation, [HashTable]$displayNames = @{})
+{
     $names = @()
     foreach ($key in $permutation.Keys) {
         $nameSegment = CreateDisplayName $permutation[$key] $displayNames
@@ -169,13 +184,19 @@ function CreateMatrixEntry([System.Collections.Specialized.OrderedDictionary]$pe
             $names += $nameSegment
         }
     }
+    # The maximum allowed matrix name length is 100 characters
+    $name = $names -join "_"
+    if ($name.Length -gt 100) {
+        $name = $name[0..99] -join ""
+    }
     return @{
-        name = $names -join "_"
+        name = $name
         parameters = $permutation
     }
 }
 
-function InitializeMatrix {
+function InitializeMatrix
+{
     param(
         [Array]$parameters,
         [HashTable]$displayNames,
@@ -200,16 +221,18 @@ function InitializeMatrix {
     }
 }
 
-function GetMatrixDimensions([HashTable]$parameters) {
+function GetMatrixDimensions([HashTable]$parameters)
+{
     $dimensions = @()
-    foreach ($param in $parameters.GetEnumerator()) {
-        $dimensions += $param.Value.Length
+    foreach ($val in $parameters.Values) {
+        $dimensions += $val.Length
     }
 
     return $dimensions | Sort-Object -Descending
 }
 
-function SetNdMatrixElement {
+function SetNdMatrixElement
+{
     param(
         $element,
         [ValidateNotNullOrEmpty()]
@@ -228,7 +251,8 @@ function SetNdMatrixElement {
     $matrix[$arrayIndex] = $element
 }
 
-function GetNdMatrixArrayIndex {
+function GetNdMatrixArrayIndex
+{
     param(
         [ValidateNotNullOrEmpty()]
         [Array]$idx,
@@ -255,7 +279,8 @@ function GetNdMatrixArrayIndex {
     return $index
 }
 
-function GetNdMatrixElement {
+function GetNdMatrixElement
+{
     param(
         [ValidateNotNullOrEmpty()]
         [Array]$idx,
@@ -269,7 +294,8 @@ function GetNdMatrixElement {
     return $matrix[$arrayIndex]
 }
 
-function GetNdMatrixIndex {
+function GetNdMatrixIndex
+{
     param(
         [int]$index,
         [ValidateNotNullOrEmpty()]
@@ -294,7 +320,8 @@ function GetNdMatrixIndex {
 # The below functions are non-dynamic examples that   #
 # help explain the above N-dimensional algorithm      #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-function Get4dMatrixElement([Array]$idx, [Array]$matrix, [Array]$dimensions) {
+function Get4dMatrixElement([Array]$idx, [Array]$matrix, [Array]$dimensions)
+{
     $stride1 = $idx[0] * $dimensions[1] * $dimensions[2] * $dimensions[3]
     $stride2 = $idx[1] * $dimensions[2] * $dimensions[3]
     $stride3 = $idx[2] * $dimensions[3]
@@ -303,7 +330,8 @@ function Get4dMatrixElement([Array]$idx, [Array]$matrix, [Array]$dimensions) {
     return $matrix[$stride1 + $stride2 + $stride3 + $stride4]
 }
 
-function Get4dMatrixIndex([int]$index, [Array]$dimensions) {
+function Get4dMatrixIndex([int]$index, [Array]$dimensions)
+{
     $stride1 = $dimensions[3]
     $stride2 = $dimensions[2]
     $stride3 = $dimensions[1]

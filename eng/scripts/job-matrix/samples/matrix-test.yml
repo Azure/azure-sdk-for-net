@@ -1,31 +1,15 @@
-parameters:
-  - name: ProductMatrix
-    type: string
-    default: 'matrix.json'
-  - name: MatrixSelection
-    type: string
-    default: sparse
-    values:
-      - sparse
-      - all
-
 jobs:
-  - job: generate_matrix
+  - template: /eng/pipelines/templates/jobs/job-matrix.yml
+    parameters:
+      MatrixConfigs:
+        - Name: base_product_matrix
+          Path: /eng/pipelines/matrix.json
+          Selection: sparse
+        - Name: sdk_specific_matrix
+          Path: /sdk/foobar/matrix.json
+          Selection: all
     steps:
-    - pwsh: |
-        eng/scripts/matrix/Create-JobMatrix.ps1 `
-          -ConfigPath ${{ parameters.ProductMatrix }} `
-          -Selection ${{ parameters.MatrixSelection }}
-      name: generate_job_matrix
-      displayName: Generate Job Matrix
-
-  - job:
-    dependsOn: generate_matrix
-    strategy:
-      maxParallel: 0
-      matrix: $[ dependencies.generate_matrix.outputs['generate_job_matrix.matrix'] ]
-    steps:
-      - pwsh: |
+      - pwsh:
           Write-Output "SPARSE MATRIX JOB PARAMETERS"
           Write-Output $(Agent.JobName)
           Write-Output "-----------------"
