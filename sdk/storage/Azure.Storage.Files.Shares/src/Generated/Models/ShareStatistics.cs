@@ -8,16 +8,13 @@
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Stats for the share. </summary>
-    public partial class ShareStats
+    public partial class ShareStatistics
     {
-        /// <summary> Initializes a new instance of ShareStats. </summary>
+        /// <summary> Initializes a new instance of ShareStatistics. </summary>
         /// <param name="shareUsageBytes"> The approximate size of the data stored in bytes. Note that this value may not include all recently created or recently resized files. </param>
-        internal ShareStats(int shareUsageBytes)
+        internal ShareStatistics(int shareUsageBytes)
         {
             ShareUsageBytes = shareUsageBytes;
         }
-
-        /// <summary> The approximate size of the data stored in bytes. Note that this value may not include all recently created or recently resized files. </summary>
-        public int ShareUsageBytes { get; }
     }
 }

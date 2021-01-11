@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Storage.Files.Shares.Models;
 
@@ -302,7 +303,50 @@ namespace Azure.Storage.Files.Shares
             return null;
         }
 
+        // TODO
         internal static ShareFileLease ToShareFileLease(this FileReleaseLeaseHeaders fileReleaseLeaseHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareInfo ToShareInfo(this ShareCreateHeaders shareCreateHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareSnapshotInfo ToShareSnapshotInfo(this ShareCreateSnapshotHeaders shareCreateSnapshotHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareProperties ToShareProperties(this ShareGetPropertiesHeaders shareGetPropertiesHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareInfo ToShareInfo(this ShareSetPropertiesHeaders shareSetPropertiesHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareInfo ToShareInfo(this ShareSetMetadataHeaders shareSetMetadataHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ShareInfo ToShareInfo(this ShareSetAccessPolicyHeaders shareSetAccessPolicyHeaders)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PermissionInfo ToPermissionInfo(this ShareCreatePermissionHeaders shareCreatePermissionHeaders)
         {
             return null;
         }

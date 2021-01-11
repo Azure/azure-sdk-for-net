@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -66,6 +67,16 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </summary>
         internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
+        /// ShareRestClient.
+        /// </summary>
+        private readonly ShareRestClient _shareRestClient;
+
+        /// <summary>
+        /// ShareRestClient.
+        /// </summary>
+        internal virtual ShareRestClient ShareRestClient => _shareRestClient;
 
         /// <summary>
         /// The Storage account name corresponding to the share client.
@@ -178,6 +189,15 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+
+            _shareRestClient = new ShareRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                // TODO
+                _uri.ToString(),
+                _version.ToVersionString(),
+                // TODO
+                sharesnapshot: null);
         }
 
         /// <summary>
@@ -250,6 +270,15 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
+
+            _shareRestClient = new ShareRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                // TODO
+                _uri.ToString(),
+                _version.ToVersionString(),
+                // TODO
+                sharesnapshot: null);
         }
 
         /// <summary>
@@ -285,6 +314,15 @@ namespace Azure.Storage.Files.Shares
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
+
+            _shareRestClient = new ShareRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                // TODO
+                _uri.ToString(),
+                _version.ToVersionString(),
+                // TODO
+                sharesnapshot: null);
         }
         #endregion ctors
 
@@ -565,7 +603,9 @@ namespace Azure.Storage.Files.Shares
             ShareRootSquash? rootSquash,
             bool async,
             CancellationToken cancellationToken,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
+#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -576,20 +616,51 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(quotaInGB)}: {quotaInGB}");
                 try
                 {
-                    return await FileRestClient.Share.CreateAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        quotaInGB: quotaInGB,
-                        accessTier: accessTier,
-                        enabledProtocols: enabledProtocols.ToShareEnableProtocolsString(),
-                        rootSquash: rootSquash,
-                        async: async,
-                        operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Create)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ShareCreateHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _shareRestClient.CreateAsync(
+                            shareName: _name,
+                            metadata: metadata,
+                            quota: quotaInGB,
+                            accessTier: accessTier,
+                            enabledProtocols: enabledProtocols.ToShareEnableProtocolsString(),
+                            rootSquash: rootSquash,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _shareRestClient.Create(
+                            shareName: _name,
+                            metadata: metadata,
+                            quota: quotaInGB,
+                            accessTier: accessTier,
+                            enabledProtocols: enabledProtocols.ToShareEnableProtocolsString(),
+                            rootSquash: rootSquash,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Headers.ToShareInfo(),
+                        response.GetRawResponse());
+
+                    // TODO remove
+                    //return await FileRestClient.Share.CreateAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    metadata: metadata,
+                    //    quotaInGB: quotaInGB,
+                    //    accessTier: accessTier,
+                    //    enabledProtocols: enabledProtocols.ToShareEnableProtocolsString(),
+                    //    rootSquash: rootSquash,
+                    //    async: async,
+                    //    operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Create)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -923,13 +994,9 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    Response<SharePropertiesInternal> response = await FileRestClient.Share.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
+                    Response<ShareProperties> response = await GetPropertiesInternal(
+                        conditions: null,
                         async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(Exists)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1261,16 +1328,39 @@ namespace Azure.Storage.Files.Shares
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.Share.CreateSnapshotAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(CreateSnapshot)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ShareCreateSnapshotHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _shareRestClient.CreateSnapshotAsync(
+                            shareName: _name,
+                            metadata: metadata,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _shareRestClient.CreateSnapshot(
+                            shareName: _name,
+                            metadata: metadata,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Headers.ToShareSnapshotInfo(),
+                        response.GetRawResponse());
+
+                    // TODO remove this
+                    //return await FileRestClient.Share.CreateSnapshotAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    metadata: metadata,
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareClient)}.{nameof(CreateSnapshot)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -1460,10 +1550,14 @@ namespace Azure.Storage.Files.Shares
         internal async Task<Response> DeleteInternal(
             bool? includeSnapshots,
             ShareSnapshotsDeleteOption? shareSnapshotsDeleteOption,
+#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
+#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
+#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -1484,17 +1578,42 @@ namespace Azure.Storage.Files.Shares
                         shareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.Include;
                     }
 
-                    return await FileRestClient.Share.DeleteAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        leaseId: conditions?.LeaseId,
-                        deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
-                        async: async,
-                        operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Delete)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ShareDeleteHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _shareRestClient.DeleteAsync(
+                            shareName: _name,
+                            deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _shareRestClient.Delete(
+                            shareName: _name,
+                            deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
+
+                    // TODO remove
+                    //return await FileRestClient.Share.DeleteAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    leaseId: conditions?.LeaseId,
+                    //    deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
+                    //    async: async,
+                    //    operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Delete)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -1671,7 +1790,9 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareProperties>> GetPropertiesInternal(
+#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
+#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1683,19 +1804,40 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    Response<SharePropertiesInternal> response = await FileRestClient.Share.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(GetProperties)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ShareGetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _shareRestClient.GetPropertiesAsync(
+                            shareName: _name,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _shareRestClient.GetProperties(
+                            shareName: _name,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    // TODO remove this
+                    //Response<SharePropertiesInternal> response = await FileRestClient.Share.GetPropertiesAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    leaseId: conditions?.LeaseId,
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareClient)}.{nameof(GetProperties)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
 
                     return Response.FromValue(
-                        response.Value.ToShareProperties(),
+                        response.Headers.ToShareProperties(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -1839,19 +1981,49 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(accessTier)}: {accessTier}");
                 try
                 {
-                    return await FileRestClient.Share.SetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        quotaInGB: quotaInGB,
-                        accessTier: accessTier,
-                        rootSquash: rootSquash,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: operationName,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ShareSetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _shareRestClient.SetPropertiesAsync(
+                            shareName: _name,
+                            quota: quotaInGB,
+                            accessTier: accessTier,
+                            rootSquash: rootSquash,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _shareRestClient.SetProperties(
+                            shareName: _name,
+                            quota: quotaInGB,
+                            accessTier: accessTier,
+                            rootSquash: rootSquash,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Headers.ToShareInfo(),
+                        response.GetRawResponse());
+
+                    //return await FileRestClient.Share.SetPropertiesAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    quotaInGB: quotaInGB,
+                    //    accessTier: accessTier,
+                    //    rootSquash: rootSquash,
+                    //    leaseId: conditions?.LeaseId,
+                    //    async: async,
+                    //    operationName: operationName,
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -2213,7 +2385,9 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareInfo>> SetMetadataInternal(
             Metadata metadata,
+#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
+#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2224,17 +2398,44 @@ namespace Azure.Storage.Files.Shares
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.Share.SetMetadataAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(SetMetadata)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ShareSetMetadataHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _shareRestClient.SetMetadataAsync(
+                            shareName: _name,
+                            metadata: metadata,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _shareRestClient.SetMetadata(
+                            shareName: _name,
+                            metadata: metadata,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Headers.ToShareInfo(),
+                        response.GetRawResponse());
+
+                    // TODO remove this
+                    //return await FileRestClient.Share.SetMetadataAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    metadata: metadata,
+                    //    leaseId: conditions?.LeaseId,
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareClient)}.{nameof(SetMetadata)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -2411,7 +2612,9 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<IEnumerable<ShareSignedIdentifier>>> GetAccessPolicyInternal(
+#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
+#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2422,16 +2625,43 @@ namespace Azure.Storage.Files.Shares
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.Share.GetAccessPolicyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(GetAccessPolicy)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _shareRestClient.GetAccessPolicyAsync(
+                            shareName: _name,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _shareRestClient.GetAccessPolicy(
+                            shareName: _name,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    IEnumerable<ShareSignedIdentifier> shareSignedIdentifiers = response.Value.ToList();
+
+                    return Response.FromValue(
+                        shareSignedIdentifiers,
+                        response.GetRawResponse());
+
+                    // TODO remove this.
+                    //return await FileRestClient.Share.GetAccessPolicyAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    leaseId: conditions?.LeaseId,
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareClient)}.{nameof(GetAccessPolicy)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -2639,7 +2869,9 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareInfo>> SetAccessPolicyInternal(
             IEnumerable<ShareSignedIdentifier> permissions,
+#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
+#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2650,17 +2882,44 @@ namespace Azure.Storage.Files.Shares
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.Share.SetAccessPolicyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        permissions: permissions,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(SetAccessPolicy)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ShareSetAccessPolicyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _shareRestClient.SetAccessPolicyAsync(
+                            shareName: _name,
+                            shareAcl: permissions,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _shareRestClient.SetAccessPolicy(
+                            shareName: _name,
+                            shareAcl: permissions,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Headers.ToShareInfo(),
+                        response.GetRawResponse());
+
+                    // TODO remove this.
+                    //return await FileRestClient.Share.SetAccessPolicyAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    permissions: permissions,
+                    //    leaseId: conditions?.LeaseId,
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareClient)}.{nameof(SetAccessPolicy)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -2827,7 +3086,9 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareStatistics>> GetStatisticsInternal(
+#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
+#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2838,16 +3099,41 @@ namespace Azure.Storage.Files.Shares
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.Share.GetStatisticsAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(GetStatistics)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _shareRestClient.GetStatisticsAsync(
+                            shareName: _name,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _shareRestClient.GetStatistics(
+                            shareName: _name,
+                            // TODO
+                            leaseAccessConditions: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+
+                    // TODO remove this
+                    //return await FileRestClient.Share.GetStatisticsAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    leaseId: conditions?.LeaseId,
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareClient)}.{nameof(GetStatistics)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -2919,38 +3205,62 @@ namespace Azure.Storage.Files.Shares
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    // Get the permission as a JSON object
-                    Response<string> jsonResponse =
-                        await FileRestClient.Share.GetPermissionAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
+                    ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _shareRestClient.GetPermissionAsync(
+                            shareName: _name,
                             filePermissionKey: filePermissionKey,
-                            version: Version.ToVersionString(),
-                            async: async,
-                            operationName: $"{nameof(ShareClient)}.{nameof(GetPermission)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
-
-                    // Return an exploding Response on 304
-                    if (jsonResponse.IsUnavailable())
+                    }
+                    else
                     {
-                        return jsonResponse;
+                        response = _shareRestClient.GetPermission(
+                            shareName: _name,
+                            filePermissionKey: filePermissionKey,
+                            cancellationToken: cancellationToken);
                     }
 
-                    // Parse the JSON object
-                    using var doc = JsonDocument.Parse(jsonResponse.Value);
-                    if (doc.RootElement.ValueKind != JsonValueKind.Object ||
-                        !doc.RootElement.TryGetProperty("permission", out JsonElement permissionProperty) ||
-                        permissionProperty.ValueKind != JsonValueKind.String)
-                    {
-                        throw ShareErrors.InvalidPermissionJson(jsonResponse.Value);
-                    }
-                    var permission = permissionProperty.GetString();
-
-                    // Return the Permission string
-                    return Response.FromValue(permission, jsonResponse.GetRawResponse());
+                    // TODO this won't work.
+                    return Response.FromValue(
+                        response.Value.Permission,
+                        response.GetRawResponse());
                 }
+                // TODO remove this
+                //    // Get the permission as a JSON object
+                //    Response<string> jsonResponse =
+                //        await FileRestClient.Share.GetPermissionAsync(
+                //            ClientDiagnostics,
+                //            Pipeline,
+                //            Uri,
+                //            filePermissionKey: filePermissionKey,
+                //            version: Version.ToVersionString(),
+                //            async: async,
+                //            operationName: $"{nameof(ShareClient)}.{nameof(GetPermission)}",
+                //            cancellationToken: cancellationToken)
+                //            .ConfigureAwait(false);
+
+                //    // Return an exploding Response on 304
+                //    if (jsonResponse.IsUnavailable())
+                //    {
+                //        return jsonResponse;
+                //    }
+
+                //    // Parse the JSON object
+                //    using var doc = JsonDocument.Parse(jsonResponse.Value);
+                //    if (doc.RootElement.ValueKind != JsonValueKind.Object ||
+                //        !doc.RootElement.TryGetProperty("permission", out JsonElement permissionProperty) ||
+                //        permissionProperty.ValueKind != JsonValueKind.String)
+                //    {
+                //        throw ShareErrors.InvalidPermissionJson(jsonResponse.Value);
+                //    }
+                //    var permission = permissionProperty.GetString();
+
+                //    // Return the Permission string
+                //    return Response.FromValue(permission, jsonResponse.GetRawResponse());
+                //}
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
@@ -3027,32 +3337,57 @@ namespace Azure.Storage.Files.Shares
                     message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    // Serialize the permission as a JSON object
-                    using var stream = new MemoryStream();
-                    using var writer = new Utf8JsonWriter(stream);
-                    writer.WriteStartObject();
-                    writer.WriteString("permission", permission);
-                    writer.WriteEndObject();
+                    ResponseWithHeaders<ShareCreatePermissionHeaders> response;
+
+                    SharePermission sharePermission = new SharePermission(permission);
+
                     if (async)
                     {
-                        await writer.FlushAsync(cancellationToken).ConfigureAwait(false);
+                        response = await _shareRestClient.CreatePermissionAsync(
+                            shareName: _name,
+                            sharePermission: sharePermission,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
                     }
                     else
                     {
-                        writer.Flush();
+                        response = _shareRestClient.CreatePermission(
+                            shareName: _name,
+                            sharePermission: sharePermission,
+                            cancellationToken: cancellationToken);
                     }
-                    var json = Encoding.UTF8.GetString(stream.ToArray());
 
-                    return await FileRestClient.Share.CreatePermissionAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        sharePermissionJson: json,
-                        async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(CreatePermission)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    return Response.FromValue(
+                        response.Headers.ToPermissionInfo(),
+                        response.GetRawResponse());
+
+                    // TODO remove this
+                    //// Serialize the permission as a JSON object
+                    //using var stream = new MemoryStream();
+                    //using var writer = new Utf8JsonWriter(stream);
+                    //writer.WriteStartObject();
+                    //writer.WriteString("permission", permission);
+                    //writer.WriteEndObject();
+                    //if (async)
+                    //{
+                    //    await writer.FlushAsync(cancellationToken).ConfigureAwait(false);
+                    //}
+                    //else
+                    //{
+                    //    writer.Flush();
+                    //}
+                    //var json = Encoding.UTF8.GetString(stream.ToArray());
+
+                    //return await FileRestClient.Share.CreatePermissionAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    sharePermissionJson: json,
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareClient)}.{nameof(CreatePermission)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

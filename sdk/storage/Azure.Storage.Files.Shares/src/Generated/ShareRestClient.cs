@@ -1386,7 +1386,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareStats, ShareGetStatisticsHeaders>> GetStatisticsAsync(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders>> GetStatisticsAsync(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1400,11 +1400,11 @@ namespace Azure.Storage.Files.Shares
             {
                 case 200:
                     {
-                        ShareStats value = default;
+                        ShareStatistics value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("ShareStats") is XElement shareStatsElement)
                         {
-                            value = ShareStats.DeserializeShareStats(shareStatsElement);
+                            value = ShareStatistics.DeserializeShareStatistics(shareStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -1419,7 +1419,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<ShareStats, ShareGetStatisticsHeaders> GetStatistics(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders> GetStatistics(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1433,11 +1433,11 @@ namespace Azure.Storage.Files.Shares
             {
                 case 200:
                     {
-                        ShareStats value = default;
+                        ShareStatistics value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("ShareStats") is XElement shareStatsElement)
                         {
-                            value = ShareStats.DeserializeShareStats(shareStatsElement);
+                            value = ShareStatistics.DeserializeShareStatistics(shareStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

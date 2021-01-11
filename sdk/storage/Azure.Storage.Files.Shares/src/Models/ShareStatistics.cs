@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Azure.Core;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -13,6 +14,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// Stats for the share.
     /// </summary>
+    [CodeGenModel("ShareStats")]
     public partial class ShareStatistics
     {
         /// <summary>

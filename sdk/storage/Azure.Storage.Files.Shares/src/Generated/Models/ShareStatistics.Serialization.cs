@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareStats
+    public partial class ShareStatistics
     {
-        internal static ShareStats DeserializeShareStats(XElement element)
+        internal static ShareStatistics DeserializeShareStatistics(XElement element)
         {
             int shareUsageBytes = default;
             if (element.Element("ShareUsageBytes") is XElement shareUsageBytesElement)
             {
                 shareUsageBytes = (int)shareUsageBytesElement;
             }
-            return new ShareStats(shareUsageBytes);
+            return new ShareStatistics(shareUsageBytes);
         }
     }
 }
