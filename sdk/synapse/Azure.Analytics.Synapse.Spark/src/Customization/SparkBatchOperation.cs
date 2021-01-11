@@ -24,20 +24,11 @@ namespace Azure.Analytics.Synapse.Spark
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(5);
 
         private readonly ClientDiagnostics _diagnostics;
-
         private readonly SparkBatchClient _client;
         private readonly SparkBatchJob _value;
         private Response<SparkBatchJob> _response;
         private bool _completed;
         private RequestFailedException _requestFailedException;
-
-        private static HashSet<string> SessionSubmissionFinalStates = new HashSet<string>
-        {
-            "error",
-            "dead",
-            "success",
-            "killed"
-        };
 
         internal SparkBatchOperation(SparkBatchClient client, ClientDiagnostics diagnostics, Response<SparkBatchJob> response)
         {
@@ -117,7 +108,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         _response = _client.RestClient.GetSparkBatchJob(_value.Id, true, cancellationToken);
                     }
-                    _completed = !IsJobRunning(_response.Value.Result.ToString(), _response.Value.State);
+                    _completed = IsJobComplete(_response.Value.Result.ToString(), _response.Value.State);
                 }
                 catch (RequestFailedException e)
                 {
@@ -142,16 +133,26 @@ namespace Azure.Analytics.Synapse.Spark
             return GetRawResponse();
         }
 
-        private static bool IsJobRunning(string jobState, string livyState)
+        private static bool IsJobComplete(string jobState, string livyState)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals ("Succeeded", jobState) ||
-                StringComparer.OrdinalIgnoreCase.Equals ("Failed", jobState) ||
-                StringComparer.OrdinalIgnoreCase.Equals ("Cancelled", jobState))
+            switch (jobState)
             {
-                return false;
+                case "succeeded":
+                case "failed":
+                case "cancelled":
+                    return true;
             }
 
-            return !SessionSubmissionFinalStates.Contains(livyState);
+            switch (livyState)
+            {
+                case "error":
+                case "dead":
+                case "success":
+                case "killed":
+                    return true;
+            }
+
+            return false;
         }
     }
 }

@@ -31,15 +31,6 @@ namespace Azure.Analytics.Synapse.Spark
         private bool _completed;
         private RequestFailedException _requestFailedException;
 
-        private static HashSet<string> SessionSubmissionFinalStates = new HashSet<string>
-        {
-            "idle",
-            "error",
-            "dead",
-            "success",
-            "killed"
-        };
-
         internal SparkSessionOperation(SparkSessionClient client, ClientDiagnostics diagnostics, Response<SparkSession> response)
         {
             _client = client;
@@ -118,7 +109,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         _response = _client.RestClient.GetSparkSession(_value.Id, true, cancellationToken);
                     }
-                    _completed = !IsJobRunning(_response.Value.Result.ToString(), _response.Value.State);
+                    _completed = IsJobComplete(_response.Value.Result.ToString(), _response.Value.State);
                 }
                 catch (RequestFailedException e)
                 {
@@ -143,16 +134,27 @@ namespace Azure.Analytics.Synapse.Spark
             return GetRawResponse();
         }
 
-        private static bool IsJobRunning(string jobState, string livyState)
+        private static bool IsJobComplete(string jobState, string livyState)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals ("Succeeded", jobState) ||
-                StringComparer.OrdinalIgnoreCase.Equals ("Failed", jobState) ||
-                StringComparer.OrdinalIgnoreCase.Equals ("Cancelled", jobState))
+            switch (jobState)
             {
-                return false;
+                case "succeeded":
+                case "failed":
+                case "cancelled":
+                    return true;
             }
 
-            return !SessionSubmissionFinalStates.Contains(livyState);
+            switch (livyState)
+            {
+                case "error":
+                case "dead":
+                case "success":
+                case "killed":
+                case "idle":
+                    return true;
+            }
+
+            return false;
         }
     }
 }

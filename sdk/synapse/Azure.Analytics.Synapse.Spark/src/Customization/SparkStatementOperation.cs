@@ -32,14 +32,6 @@ namespace Azure.Analytics.Synapse.Spark
         private bool _completed;
         private RequestFailedException _requestFailedException;
 
-        private static HashSet<string> ExecutingStates = new HashSet<string>
-        {
-            "starting",
-            "waiting",
-            "running",
-            "cancelling"
-        };
-
         internal SparkStatementOperation(SparkSessionClient client, ClientDiagnostics diagnostics, Response<SparkStatement> response, int sessionId)
         {
             _client = client;
@@ -119,7 +111,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         _response = _client.RestClient.GetSparkStatement(_sessionId, _value.Id, cancellationToken);
                     }
-                    _completed = !IsJobRunning(_response.Value.State);
+                    _completed = IsJobComplete(_response.Value.State);
                 }
                 catch (RequestFailedException e)
                 {
@@ -144,9 +136,17 @@ namespace Azure.Analytics.Synapse.Spark
             return GetRawResponse();
         }
 
-        private static bool IsJobRunning(string livyState)
+        private static bool IsJobComplete(string livyState)
         {
-            return ExecutingStates.Contains(livyState);
+            switch (livyState)
+            {
+                case "starting":
+                case "waiting":
+                case "running":
+                case "cancelling":
+                    return false;
+            };
+            return true;
         }
     }
 }
