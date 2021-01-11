@@ -243,7 +243,7 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-        private static MemoryStream SerializePayloadToStream(object payload, CancellationToken cancellationToken = default)
+        private static MemoryStream SerializePayloadToStream(JsonElement payload, CancellationToken cancellationToken = default)
         {
             MemoryStream dataStream = new MemoryStream();
             s_jsonSerializer.Serialize(dataStream, payload, payload.GetType(), cancellationToken);
