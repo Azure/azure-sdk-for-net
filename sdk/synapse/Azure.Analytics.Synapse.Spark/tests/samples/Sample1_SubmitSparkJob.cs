@@ -18,19 +18,20 @@ namespace Azure.Analytics.Synapse.Samples
         [Test]
         public void SubmitSparkJobSync()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string endpoint = TestEnvironment.EndpointUrl;
-
-            // Environment variable with the Synapse Spark pool name.
-            string sparkPoolName = TestEnvironment.SparkPoolName;
-
-            // Environment variable with the ADLS Gen2 storage account associated with the Synapse workspace.
-            string storageAccount = TestEnvironment.StorageAccountName;
-
-            // Environment variable with the file system of ADLS Gen2 storage account associated with the Synapse workspace.
-            string fileSystem = TestEnvironment.StorageFileSystemName;
-
             #region Snippet:CreateSparkBatchClient
+            // Replace the strings below with the spark, endpoint, and file system information
+            string sparkPoolName = "<my-spark-pool-name>";
+            /*@@*/sparkPoolName = TestEnvironment.SparkPoolName;
+
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+
+            string storageAccount = "<my-storage-account-name>";
+            /*@@*/storageAccount = TestEnvironment.StorageAccountName;
+
+            string fileSystem = "<my-storage-filesystem-name>";
+            /*@@*/fileSystem = TestEnvironment.StorageFileSystemName;
+
             SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
             #endregion
 

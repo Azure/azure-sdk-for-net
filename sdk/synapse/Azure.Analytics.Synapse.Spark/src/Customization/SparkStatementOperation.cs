@@ -73,9 +73,9 @@ namespace Azure.Analytics.Synapse.Spark
         public override bool HasCompleted => _completed;
 
         /// <inheritdoc/>
-        public override bool HasValue => !ResponseHasError && HasCompleted;
+        public override bool HasValue => !_responseHasError && HasCompleted;
 
-        private bool ResponseHasError => StringComparer.OrdinalIgnoreCase.Equals ("error", _response?.Value?.State);
+        private bool _responseHasError => StringComparer.OrdinalIgnoreCase.Equals ("error", _response?.Value?.State);
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response.GetRawResponse();
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Synapse.Spark
                     scope.Failed(e);
                     throw _requestFailedException;
                 }
-                if (ResponseHasError)
+                if (_responseHasError)
                 {
                     _requestFailedException = new RequestFailedException("SparkBatchOperation ended in state error");
                     scope.Failed(_requestFailedException);
