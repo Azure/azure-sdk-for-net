@@ -7,6 +7,11 @@ This sample demonstrates basic operations with three core classes in this librar
 To submit statements to Spark running on Azure Synapse, you need to instantiate a `SparkSessionClient`. It requires an endpoint URL and a `TokenCredential`.
 
 ```C# Snippet:CreateSparkSessionClient
+// Replace the strings below with the spark and endpoint information
+string sparkPoolName = "<my-spark-pool-name>";
+
+string endpoint = "<my-endpoint-url>";
+
 SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
 ```
 

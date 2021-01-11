@@ -7,6 +7,15 @@ This sample demonstrates basic operations with two core classes in this library:
 To interact with Spark jobs running on Azure Synapse, you need to instantiate a `SparkBatchClient`. It requires an endpoint URL and a `TokenCredential`.
 
 ```C# Snippet:CreateSparkBatchClient
+// Replace the strings below with the spark, endpoint, and file system information
+string sparkPoolName = "<my-spark-pool-name>";
+
+string endpoint = "<my-endpoint-url>";
+
+string storageAccount = "<my-storage-account-name>";
+
+string fileSystem = "<my-storage-filesystem-name>";
+
 SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
 ```
 
