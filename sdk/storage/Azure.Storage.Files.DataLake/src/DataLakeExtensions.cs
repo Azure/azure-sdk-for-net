@@ -527,12 +527,9 @@ namespace Azure.Storage.Files.DataLake
                 LastModified = blobItemInternal.Properties.LastModified,
                 ETag = blobItemInternal.Properties.Etag,
                 ContentLength = blobItemInternal.Properties.ContentLength,
-                // TODO fix this.
-                Owner = null,
-                // TODO fix this.
-                Group = null,
-                // TODO fix this.
-                Permissions = null
+                Owner = blobItemInternal.Properties.Owner,
+                Group = blobItemInternal.Properties.Group,
+                Permissions = blobItemInternal.Properties.Permissions
             };
         }
     }

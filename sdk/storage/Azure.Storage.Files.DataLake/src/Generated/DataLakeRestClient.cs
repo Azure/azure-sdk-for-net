@@ -1182,6 +1182,7 @@ namespace Azure.Storage.Files.DataLake
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("restype", "container", escapeValue: false);
                 _request.Uri.AppendQuery("comp", "list", escapeValue: false);
+                _request.Uri.AppendQuery("include", "permissions", escapeValue: false);
                 if (prefix != null) { _request.Uri.AppendQuery("prefix", prefix); }
                 if (delimiter != null) { _request.Uri.AppendQuery("delimiter", delimiter); }
                 if (marker != null) { _request.Uri.AppendQuery("marker", marker); }
@@ -4374,6 +4375,21 @@ namespace Azure.Storage.Files.DataLake.Models
         public long? ContentLength { get; internal set; }
 
         /// <summary>
+        /// Owner
+        /// </summary>
+        public string Owner { get; internal set; }
+
+        /// <summary>
+        /// Group
+        /// </summary>
+        public string Group { get; internal set; }
+
+        /// <summary>
+        /// Permissions
+        /// </summary>
+        public string Permissions { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of BlobPropertiesInternal instances.
         /// You can use DataLakeModelFactory.BlobPropertiesInternal instead.
         /// </summary>
@@ -4409,6 +4425,21 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 _value.ContentLength = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("Owner", ""));
+            if (_child != null)
+            {
+                _value.Owner = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Group", ""));
+            if (_child != null)
+            {
+                _value.Group = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Permissions", ""));
+            if (_child != null)
+            {
+                _value.Permissions = _child.Value;
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -4428,7 +4459,10 @@ namespace Azure.Storage.Files.DataLake.Models
             System.DateTimeOffset lastModified,
             Azure.ETag etag,
             System.DateTimeOffset? creationTime = default,
-            long? contentLength = default)
+            long? contentLength = default,
+            string owner = default,
+            string group = default,
+            string permissions = default)
         {
             return new BlobPropertiesInternal()
             {
@@ -4436,6 +4470,9 @@ namespace Azure.Storage.Files.DataLake.Models
                 Etag = etag,
                 CreationTime = creationTime,
                 ContentLength = contentLength,
+                Owner = owner,
+                Group = group,
+                Permissions = permissions,
             };
         }
     }
