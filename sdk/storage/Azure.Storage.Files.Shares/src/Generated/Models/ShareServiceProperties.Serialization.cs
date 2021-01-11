@@ -43,17 +43,17 @@ namespace Azure.Storage.Files.Shares.Models
 
         internal static ShareServiceProperties DeserializeShareServiceProperties(XElement element)
         {
-            Metrics hourMetrics = default;
-            Metrics minuteMetrics = default;
+            ShareMetrics hourMetrics = default;
+            ShareMetrics minuteMetrics = default;
             ShareProtocolSettings protocol = default;
             IList<CorsRule> cors = default;
             if (element.Element("HourMetrics") is XElement hourMetricsElement)
             {
-                hourMetrics = Metrics.DeserializeMetrics(hourMetricsElement);
+                hourMetrics = ShareMetrics.DeserializeShareMetrics(hourMetricsElement);
             }
             if (element.Element("MinuteMetrics") is XElement minuteMetricsElement)
             {
-                minuteMetrics = Metrics.DeserializeMetrics(minuteMetricsElement);
+                minuteMetrics = ShareMetrics.DeserializeShareMetrics(minuteMetricsElement);
             }
             if (element.Element("Protocol") is XElement protocolElement)
             {

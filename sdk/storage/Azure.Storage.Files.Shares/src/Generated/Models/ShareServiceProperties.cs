@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for files. </param>
         /// <param name="cors"> The set of CORS rules. </param>
         /// <param name="protocol"> Protocol settings. </param>
-        internal ShareServiceProperties(Metrics hourMetrics, Metrics minuteMetrics, IList<CorsRule> cors, ShareProtocolSettings protocol)
+        internal ShareServiceProperties(ShareMetrics hourMetrics, ShareMetrics minuteMetrics, IList<CorsRule> cors, ShareProtocolSettings protocol)
         {
             HourMetrics = hourMetrics;
             MinuteMetrics = minuteMetrics;
@@ -33,9 +33,9 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> A summary of request statistics grouped by API in hourly aggregates for files. </summary>
-        public Metrics HourMetrics { get; set; }
+        public ShareMetrics HourMetrics { get; set; }
         /// <summary> A summary of request statistics grouped by API in minute aggregates for files. </summary>
-        public Metrics MinuteMetrics { get; set; }
+        public ShareMetrics MinuteMetrics { get; set; }
         /// <summary> The set of CORS rules. </summary>
         public IList<CorsRule> Cors { get; }
         /// <summary> Protocol settings. </summary>

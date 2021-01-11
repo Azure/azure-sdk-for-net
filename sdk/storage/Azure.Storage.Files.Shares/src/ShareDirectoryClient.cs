@@ -229,6 +229,15 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+
+            _directoryRestClient = new DirectoryRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                // TODO
+                _uri.ToString(),
+                _version.ToString(),
+                // TODO
+                sharesnapshot: null);
         }
 
         /// <summary>
@@ -304,6 +313,15 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
+
+            _directoryRestClient = new DirectoryRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                // TODO
+                _uri.ToString(),
+                _version.ToString(),
+                // TODO
+                sharesnapshot: null);
         }
 
         /// <summary>
@@ -340,6 +358,15 @@ namespace Azure.Storage.Files.Shares
             _version = version;
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _clientDiagnostics = clientDiagnostics;
+
+            _directoryRestClient = new DirectoryRestClient(
+                _clientDiagnostics,
+                _pipeline,
+                // TODO
+                _uri.ToString(),
+                _version.ToString(),
+                // TODO
+                sharesnapshot: null);
         }
         #endregion ctors
 

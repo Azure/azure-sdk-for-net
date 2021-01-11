@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class Metrics : IXmlSerializable
+    public partial class ShareMetrics : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -35,7 +35,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static Metrics DeserializeMetrics(XElement element)
+        internal static ShareMetrics DeserializeShareMetrics(XElement element)
         {
             string version = default;
             bool enabled = default;
@@ -57,7 +57,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
             }
-            return new Metrics(version, enabled, includeAPIs, retentionPolicy);
+            return new ShareMetrics(version, enabled, includeAPIs, retentionPolicy);
         }
     }
 }

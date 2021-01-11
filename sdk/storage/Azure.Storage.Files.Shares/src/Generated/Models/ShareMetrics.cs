@@ -10,13 +10,13 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Storage Analytics metrics for file service. </summary>
-    public partial class Metrics
+    public partial class ShareMetrics
     {
-        /// <summary> Initializes a new instance of Metrics. </summary>
+        /// <summary> Initializes a new instance of ShareMetrics. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the File service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public Metrics(string version, bool enabled)
+        public ShareMetrics(string version, bool enabled)
         {
             if (version == null)
             {
@@ -27,12 +27,12 @@ namespace Azure.Storage.Files.Shares.Models
             Enabled = enabled;
         }
 
-        /// <summary> Initializes a new instance of Metrics. </summary>
+        /// <summary> Initializes a new instance of ShareMetrics. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the File service. </param>
         /// <param name="includeAPIs"> Indicates whether metrics should generate summary statistics for called API operations. </param>
         /// <param name="retentionPolicy"> The retention policy. </param>
-        internal Metrics(string version, bool enabled, bool? includeAPIs, RetentionPolicy retentionPolicy)
+        internal ShareMetrics(string version, bool enabled, bool? includeAPIs, RetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;
