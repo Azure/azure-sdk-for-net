@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+  </ItemGroup>
+</Project>
