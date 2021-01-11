@@ -32,12 +32,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="name">The name of the operation.</param>
         /// <param name="display">The display information for the
         /// operation.</param>
+        /// <param name="properties">The OperationMetaPropertyInfo for the
+        /// operation.</param>
         /// <param name="origin">The intended executor of the operation.
         /// Possible values include: 'user', 'system', 'user,system'</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string))
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), OperationMetaPropertyInfo properties = default(OperationMetaPropertyInfo), string origin = default(string))
         {
             Name = name;
             Display = display;
+            Properties = properties;
             Origin = origin;
             CustomInit();
         }
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; private set; }
+
+        /// <summary>
+        /// Gets the OperationMetaPropertyInfo for the operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public OperationMetaPropertyInfo Properties { get; private set; }
 
         /// <summary>
         /// Gets the intended executor of the operation. Possible values
