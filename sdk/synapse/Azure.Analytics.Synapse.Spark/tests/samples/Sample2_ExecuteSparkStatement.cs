@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Samples
 
             #region Snippet:CancelSparkStatement
             SparkStatementCancellationResult cancellationResult = client.CancelSparkStatement(sessionCreated.Id, statementCreated.Id);
-            Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Msg}");
+            Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Message}");
             #endregion
 
             #region Snippet:CancelSparkSession
