@@ -14,11 +14,14 @@ namespace Azure.Messaging.EventGrid
         public string DataSchema { get { throw null; } set { } }
         public System.Collections.Generic.Dictionary<string, object> ExtensionAttributes { get { throw null; } }
         public string Id { get { throw null; } set { } }
+        public bool IsSystemEvent { get { throw null; } }
         public string Source { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
-        public object GetData() { throw null; }
+        public object AsSystemEventData() { throw null; }
+        public System.BinaryData GetData() { throw null; }
+        public System.Threading.Tasks.Task<System.BinaryData> GetDataAsync() { throw null; }
         public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -32,9 +35,12 @@ namespace Azure.Messaging.EventGrid
         public System.DateTimeOffset EventTime { get { throw null; } set { } }
         public string EventType { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+        public bool IsSystemEvent { get { throw null; } }
         public string Subject { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
-        public object GetData() { throw null; }
+        public object AsSystemEventData() { throw null; }
+        public System.BinaryData GetData() { throw null; }
+        public System.Threading.Tasks.Task<System.BinaryData> GetDataAsync() { throw null; }
         public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

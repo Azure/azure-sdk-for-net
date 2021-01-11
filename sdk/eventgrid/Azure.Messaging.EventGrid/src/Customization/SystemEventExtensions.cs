@@ -8,8 +8,20 @@ using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid
 {
-    internal class SystemEventTypeMappings
+    internal class SystemEventExtensions
     {
+        public static object AsSystemEventData(string eventType, JsonElement data)
+        {
+            if (SystemEventDeserializers.TryGetValue(eventType, out Func<JsonElement, object> systemDeserializationFunction))
+            {
+                return systemDeserializationFunction(data);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public static readonly IReadOnlyDictionary<string, Func<JsonElement, object>> SystemEventDeserializers = new Dictionary<string, Func<JsonElement, object>>(StringComparer.OrdinalIgnoreCase)
         {
             // KEEP THIS SORTED BY THE NAME OF THE PUBLISHING SERVICE
