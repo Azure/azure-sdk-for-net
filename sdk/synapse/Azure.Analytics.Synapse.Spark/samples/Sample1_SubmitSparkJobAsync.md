@@ -50,9 +50,7 @@ SparkBatchJob jobCreated = await createOperation.WaitForCompletionAsync();
 To retrieve the details of a Spark job call `StartGetSparkBatchJobAsync`, passing in the Spark job ID.
 
 ```C# Snippet:GetSparkBatchJobAsync
-SparkBatchOperation getOperation = await client.StartGetSparkBatchJobAsync(jobCreated.Id);
-SparkBatchJob retrievedJob = await getOperation.WaitForCompletionAsync();
-
+SparkBatchJob retrievedJob = await client.GetSparkBatchJobAsync (jobCreated.Id);
 Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
 ```
 
