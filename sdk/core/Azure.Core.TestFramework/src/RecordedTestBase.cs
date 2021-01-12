@@ -56,7 +56,7 @@ namespace Azure.Core.TestFramework
             }
         }
         private bool _saveDebugRecordingsOnFailure;
-        private bool _validateClientInstrumentation;
+        protected bool ValidateClientInstrumentation { get; set; }
 
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
@@ -145,7 +145,7 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
-            _validateClientInstrumentation = Recording.HasRequests;
+            ValidateClientInstrumentation = Recording.HasRequests;
         }
 
         [TearDown]
@@ -153,7 +153,7 @@ namespace Azure.Core.TestFramework
         {
             bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
 
-            if (_validateClientInstrumentation && testPassed)
+            if (ValidateClientInstrumentation && testPassed)
             {
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please use call InstrumentClient for the client being recorded.");
             }
@@ -167,7 +167,7 @@ namespace Azure.Core.TestFramework
 
         protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
         {
-            _validateClientInstrumentation = false;
+            ValidateClientInstrumentation = false;
             return base.InstrumentClient(clientType, client, preInterceptors);
         }
     }
