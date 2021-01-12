@@ -82,7 +82,7 @@ To cancel a submitted statement call `CancelSparkStatement`, passing in both the
 
 ```C# Snippet:CancelSparkStatement
 SparkStatementCancellationResult cancellationResult = client.CancelSparkStatement(sessionCreated.Id, statementCreated.Id);
-Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Msg}");
+Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Message}");
 ```
 
 ## Cancel a session
