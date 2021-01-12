@@ -11,6 +11,27 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     public class PartitionPublishingProperties
     {
+        /// <summary>An empty set of properties.</summary>
+        private static PartitionPublishingProperties s_emptyInstance;
+
+        /// <summary>
+        ///   Returns a set of properties that represents an empty set of properties
+        ///   suitable for use when partitions are not inherently stateful.
+        /// </summary>
+        ///
+        internal static PartitionPublishingProperties Empty
+        {
+            get
+            {
+                // The race condition here is benign; because the resulting properties
+                // are not mutable, there is not impact to having the reference updated after
+                // initial creation.
+
+                s_emptyInstance ??= new PartitionPublishingProperties(false, null, null, null);
+                return s_emptyInstance;
+            }
+        }
+
         /// <summary>
         ///   Indicates whether or not idempotent publishing is enabled for the producer and, by extension, the associated partition.
         /// </summary>
@@ -35,6 +56,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The sequence number assigned to the event that was most recently published to the associated partition
         ///   successfully.
         /// </summary>
+        ///
+        /// <value>
+        ///   The sequence number will be in the range of <c>0</c> - <see cref="int.MaxValue"/> (inclusive) and will
+        ///   increase as events are published.  When more than <see cref="int.MaxValue" /> events have been published,
+        ///   the sequence number will roll over to <c>0</c>.
+        /// </value>
         ///
         public int? LastPublishedSequenceNumber { get; }
 
