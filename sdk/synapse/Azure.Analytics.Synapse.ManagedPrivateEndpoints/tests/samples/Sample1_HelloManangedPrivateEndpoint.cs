@@ -13,6 +13,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Samples
 {
     public partial class Sample1_HelloManangedPrivateEndpoint : SampleFixture
     {
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
         public void TestManagedPrivateEndpoint()
         {

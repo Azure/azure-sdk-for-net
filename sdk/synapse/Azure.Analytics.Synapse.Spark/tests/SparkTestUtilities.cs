@@ -54,20 +54,6 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             };
         }
 
-        /// <summary>
-        /// Wait for the specified number of milliseconds unless we are in mock playback mode.
-        /// </summary>
-        /// <param name="milliseconds">The number of milliseconds to wait.</param>
-        internal static void Wait(this SparkClientTestBase test, int milliseconds)
-        {
-            test.Recording.Wait(TimeSpan.FromMilliseconds(milliseconds));
-        }
-
-        internal static bool IsJobRunning(string livyState, IList<string> livyStates, bool isFinalState = true)
-        {
-            return isFinalState ? !livyStates.Contains(livyState) : livyStates.Contains(livyState);
-        }
-
         internal static async Task<List<SparkBatchJob>> ListSparkBatchJobsAsync(this SparkClientTestBase test, bool detailed = true)
         {
             List<SparkBatchJob> batches = new List<SparkBatchJob>();
@@ -82,21 +68,6 @@ namespace Azure.Analytics.Synapse.Spark.Tests
                 batches.AddRange(page.Sessions);
             } while (currentPageSize == pageSize);
             return batches;
-        }
-
-        internal static async Task<SparkBatchJob> PollSparkBatchJobSubmissionAsync(this SparkClientTestBase test, SparkBatchJob batch)
-        {
-            return await test.PollAsync(
-               batch,
-               b => b.State,
-               b => test.SparkBatchClient.GetSparkBatchJobAsync(b.Id),
-                new List<string>
-               {
-                   "error",
-                   "dead",
-                   "success",
-                   "killed"
-               });
         }
 
         internal static async Task<List<SparkSession>> ListSparkSessionsAsync(this SparkClientTestBase test, bool detailed = true)
@@ -114,72 +85,6 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             } while (currentPageSize == pageSize);
 
             return sessions;
-        }
-
-        internal static async Task<SparkSession> PollSparkSessionAsync(this SparkClientTestBase test, SparkSession session)
-        {
-            return await test.PollAsync(
-                session,
-                s => s.State,
-                s => test.SparkSessionClient.GetSparkSessionAsync(s.Id),
-                new List<string>
-                {
-                    "idle",
-                    "error",
-                    "dead",
-                    "success",
-                    "killed"
-                });
-        }
-
-        internal static async Task<SparkStatement> PollSparkSessionStatementAsync(this SparkClientTestBase test, int sessionId, SparkStatement statement)
-        {
-            return await test.PollAsync(
-                statement,
-                s => s.State,
-                s => test.SparkSessionClient.GetSparkStatementAsync(sessionId, s.Id),
-                new List<string>
-                {
-                    "starting",
-                    "waiting",
-                    "running",
-                    "cancelling"
-                },
-                isFinalState:false);
-        }
-
-        private static async Task<T> PollAsync<T>(
-            this SparkClientTestBase test,
-            T job,
-            Func<T, string> getLivyState,
-            Func<T, Task<Response<T>>> refresh,
-            IList<string> livyReadyStates,
-            bool isFinalState = true,
-            int pollingInMilliseconds = default,
-            int timeoutInMilliseconds = default,
-            Action<T> writeLog = null)
-        {
-            int timeWaitedInMilliSeconds = 0;
-            if (pollingInMilliseconds == default)
-            {
-                pollingInMilliseconds = 5000;
-            }
-
-            while (IsJobRunning(getLivyState(job), livyReadyStates, isFinalState))
-            {
-                if (timeoutInMilliseconds > 0 && timeWaitedInMilliSeconds >= timeoutInMilliseconds)
-                {
-                    throw new TimeoutException();
-                }
-
-                writeLog?.Invoke(job);
-                test.Wait(pollingInMilliseconds);
-                timeWaitedInMilliSeconds += pollingInMilliseconds;
-
-                job = await refresh(job);
-            }
-
-            return job;
         }
     }
 }
