@@ -614,14 +614,25 @@ namespace Azure.Messaging.EventHubs.Processor
                     switch (jsonReader.GetString())
                     {
                         case "Offset":
-                            if (!jsonReader.Read() ||
-                                jsonReader.GetString() is not string offsetString ||
-                                !long.TryParse(offsetString, out long offsetValue))
+
+                            if (!jsonReader.Read())
                             {
                                 return;
                             }
 
-                            offset = offsetValue;
+                            var offsetString = jsonReader.GetString();
+                            if (offsetString != null)
+                            {
+                                if (long.TryParse(offsetString, out long offsetValue))
+                                {
+                                    offset = offsetValue;
+                                }
+                                else
+                                {
+                                    return;
+                                }
+                            }
+
                             break;
                         case "SequenceNumber":
                             if (!jsonReader.Read() ||
