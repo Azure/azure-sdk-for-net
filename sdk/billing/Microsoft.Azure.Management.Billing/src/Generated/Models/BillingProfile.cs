@@ -40,7 +40,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="displayName">The name of the billing profile.</param>
         /// <param name="poNumber">The purchase order name that will appear on
         /// the invoices generated for the billing profile.</param>
+        /// <param name="billingRelationshipType">Identifies which services and
+        /// purchases are paid by a billing profile. Possible values include:
+        /// 'Direct', 'IndirectCustomer', 'IndirectPartner',
+        /// 'CSPPartner'</param>
         /// <param name="billTo">Billing address.</param>
+        /// <param name="indirectRelationshipInfo">Identifies the billing
+        /// profile that is linked to another billing profile in indirect
+        /// purchase motion.</param>
         /// <param name="invoiceEmailOptIn">Flag controlling whether the
         /// invoices for the billing profile are sent through email.</param>
         /// <param name="invoiceDay">The day of the month when the invoice for
@@ -63,12 +70,18 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// 'SpendingLimitReached', 'SpendingLimitExpired'</param>
         /// <param name="spendingLimit">The billing profile spending limit.
         /// Possible values include: 'Off', 'On'</param>
-        public BillingProfile(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string poNumber = default(string), AddressDetails billTo = default(AddressDetails), bool? invoiceEmailOptIn = default(bool?), int? invoiceDay = default(int?), string currency = default(string), IList<AzurePlan> enabledAzurePlans = default(IList<AzurePlan>), InvoiceSectionsOnExpand invoiceSections = default(InvoiceSectionsOnExpand), bool? hasReadAccess = default(bool?), string systemId = default(string), string status = default(string), string statusReasonCode = default(string), string spendingLimit = default(string))
+        /// <param name="targetClouds">Identifies the cloud environments that
+        /// are associated with a billing profile. This is a system managed
+        /// optional field and gets updated as the billing profile gets
+        /// associated with accounts in various clouds.</param>
+        public BillingProfile(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string poNumber = default(string), string billingRelationshipType = default(string), AddressDetails billTo = default(AddressDetails), IndirectRelationshipInfo indirectRelationshipInfo = default(IndirectRelationshipInfo), bool? invoiceEmailOptIn = default(bool?), int? invoiceDay = default(int?), string currency = default(string), IList<AzurePlan> enabledAzurePlans = default(IList<AzurePlan>), InvoiceSectionsOnExpand invoiceSections = default(InvoiceSectionsOnExpand), bool? hasReadAccess = default(bool?), string systemId = default(string), string status = default(string), string statusReasonCode = default(string), string spendingLimit = default(string), IList<string> targetClouds = default(IList<string>))
             : base(id, name, type)
         {
             DisplayName = displayName;
             PoNumber = poNumber;
+            BillingRelationshipType = billingRelationshipType;
             BillTo = billTo;
+            IndirectRelationshipInfo = indirectRelationshipInfo;
             InvoiceEmailOptIn = invoiceEmailOptIn;
             InvoiceDay = invoiceDay;
             Currency = currency;
@@ -79,6 +92,7 @@ namespace Microsoft.Azure.Management.Billing.Models
             Status = status;
             StatusReasonCode = statusReasonCode;
             SpendingLimit = spendingLimit;
+            TargetClouds = targetClouds;
             CustomInit();
         }
 
@@ -101,10 +115,25 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string PoNumber { get; set; }
 
         /// <summary>
+        /// Gets identifies which services and purchases are paid by a billing
+        /// profile. Possible values include: 'Direct', 'IndirectCustomer',
+        /// 'IndirectPartner', 'CSPPartner'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billingRelationshipType")]
+        public string BillingRelationshipType { get; private set; }
+
+        /// <summary>
         /// Gets or sets billing address.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billTo")]
         public AddressDetails BillTo { get; set; }
+
+        /// <summary>
+        /// Gets identifies the billing profile that is linked to another
+        /// billing profile in indirect purchase motion.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.indirectRelationshipInfo")]
+        public IndirectRelationshipInfo IndirectRelationshipInfo { get; private set; }
 
         /// <summary>
         /// Gets or sets flag controlling whether the invoices for the billing
@@ -174,6 +203,15 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.spendingLimit")]
         public string SpendingLimit { get; private set; }
+
+        /// <summary>
+        /// Gets identifies the cloud environments that are associated with a
+        /// billing profile. This is a system managed optional field and gets
+        /// updated as the billing profile gets associated with accounts in
+        /// various clouds.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetClouds")]
+        public IList<string> TargetClouds { get; private set; }
 
         /// <summary>
         /// Validate the object.
