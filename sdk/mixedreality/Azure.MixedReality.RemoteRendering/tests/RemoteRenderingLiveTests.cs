@@ -43,6 +43,39 @@ namespace Azure.MixedReality.RemoteRendering.Tests
             Assert.AreEqual(conversion2.Settings, settings);
         }
 
+        //[RecordedTest]
+        public async void TestSimpleSession()
+        {
+            var client = GetClient();
+
+            CreateSessionBody settings = new CreateSessionBody(10, SessionSize.Standard);
+
+            string sessionId = "MySessionId";
+
+            SessionProperties session = await client.CreateSessionAsync(sessionId, settings);
+            Assert.AreEqual(session.MaxLeaseTimeMinutes, settings.MaxLeaseTimeMinutes);
+            Assert.AreEqual(session.Size, settings.Size);
+
+            SessionProperties session2 = await client.GetSessionAsync(sessionId);
+            Assert.AreEqual(session2, session);
+
+            UpdateSessionBody updateSettings = new UpdateSessionBody(15);
+
+            SessionProperties session3 = await client.UpdateSessionAsync(sessionId, updateSettings);
+            Assert.AreEqual(session3.MaxLeaseTimeMinutes, 15);
+
+            var sessionList = client.ListSessions();
+            int sessionCount = 0;
+            foreach (var s in sessionList)
+            {
+                ++sessionCount;
+                Assert.AreEqual(session3, s);
+            }
+            Assert.AreEqual(sessionCount, 1);
+
+            await client.StopSessionAsync(sessionId);
+        }
+
         private RemoteRenderingClient GetClient()
         {
             var options = InstrumentClientOptions(new RemoteRenderingClientOptions());
