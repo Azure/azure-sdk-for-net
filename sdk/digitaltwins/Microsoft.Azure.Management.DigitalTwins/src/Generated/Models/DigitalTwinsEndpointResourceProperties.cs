@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
     /// <summary>
     /// Properties related to Digital Twins Endpoint
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DigitalTwinsEndpointResourceProperties")]
     public partial class DigitalTwinsEndpointResourceProperties
     {
         /// <summary>
@@ -38,13 +37,20 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
-        /// <param name="deadLetterSecret">Dead letter storage secret. Will be
-        /// obfuscated during read.</param>
-        public DigitalTwinsEndpointResourceProperties(string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string deadLetterSecret = default(string))
+        /// <param name="authenticationType">Specifies the authentication type
+        /// being used for connecting to the endpoint. Possible values include:
+        /// 'KeyBased', 'IdentityBased'</param>
+        /// <param name="deadLetterSecret">Dead letter storage secret for
+        /// key-based authentication. Will be obfuscated during read.</param>
+        /// <param name="deadLetterUri">Dead letter storage URL for
+        /// identity-based authentication.</param>
+        public DigitalTwinsEndpointResourceProperties(string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string authenticationType = default(string), string deadLetterSecret = default(string), string deadLetterUri = default(string))
         {
             ProvisioningState = provisioningState;
             CreatedTime = createdTime;
+            AuthenticationType = authenticationType;
             DeadLetterSecret = deadLetterSecret;
+            DeadLetterUri = deadLetterUri;
             CustomInit();
         }
 
@@ -69,11 +75,26 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         public System.DateTime? CreatedTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets dead letter storage secret. Will be obfuscated during
-        /// read.
+        /// Gets or sets specifies the authentication type being used for
+        /// connecting to the endpoint. Possible values include: 'KeyBased',
+        /// 'IdentityBased'
+        /// </summary>
+        [JsonProperty(PropertyName = "authenticationType")]
+        public string AuthenticationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets dead letter storage secret for key-based
+        /// authentication. Will be obfuscated during read.
         /// </summary>
         [JsonProperty(PropertyName = "deadLetterSecret")]
         public string DeadLetterSecret { get; set; }
+
+        /// <summary>
+        /// Gets or sets dead letter storage URL for identity-based
+        /// authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "deadLetterUri")]
+        public string DeadLetterUri { get; set; }
 
     }
 }
