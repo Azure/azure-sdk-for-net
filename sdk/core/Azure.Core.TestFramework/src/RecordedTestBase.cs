@@ -151,11 +151,14 @@ namespace Azure.Core.TestFramework
         [TearDown]
         public virtual void StopTestRecording()
         {
-            if (_validateClientInstrumentation)
+            bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
+
+            if (_validateClientInstrumentation && testPassed)
             {
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please use call InstrumentClient for the client being recorded.");
             }
-            bool save = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
+
+            bool save = testPassed;
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
