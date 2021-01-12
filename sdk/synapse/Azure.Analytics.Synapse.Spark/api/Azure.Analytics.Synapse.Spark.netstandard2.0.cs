@@ -364,7 +364,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SparkStatementLanguageType(string value) { throw null; }
-        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType DotnetSpark { get { throw null; } }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType DotNetSpark { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType PySpark { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Spark { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Sql { get { throw null; } }
