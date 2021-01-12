@@ -1,6 +1,7 @@
 # Release History
 
-## 12.6.0-beta.2 (Unreleased)
+## 12.6.0 (2021-01-12)
+- Includes all features from 12.6.0-beta.1.
 - Added support for AzureSasCredential. That allows SAS rotation for long living clients.
 
 ## 12.6.0-beta.1 (2020-12-07)
