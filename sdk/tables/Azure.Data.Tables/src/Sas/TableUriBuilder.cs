@@ -200,9 +200,6 @@ namespace Azure.Data.Tables.Sas
             }
 
             // Use RequestUriBuilder, which has slightly nicer formatting
-            if (query.Length > 0)
-            {
-            }
             return new RequestUriBuilder
             {
                 Scheme = Scheme,
