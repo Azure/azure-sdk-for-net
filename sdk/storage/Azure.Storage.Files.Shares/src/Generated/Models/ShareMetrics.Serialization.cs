@@ -22,10 +22,10 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IncludeAPIs))
+            if (Optional.IsDefined(IncludeApis))
             {
                 writer.WriteStartElement("IncludeAPIs");
-                writer.WriteValue(IncludeAPIs.Value);
+                writer.WriteValue(IncludeApis.Value);
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(RetentionPolicy))
@@ -39,8 +39,8 @@ namespace Azure.Storage.Files.Shares.Models
         {
             string version = default;
             bool enabled = default;
-            bool? includeAPIs = default;
-            RetentionPolicy retentionPolicy = default;
+            bool? includeApis = default;
+            ShareRetentionPolicy retentionPolicy = default;
             if (element.Element("Version") is XElement versionElement)
             {
                 version = (string)versionElement;
@@ -51,13 +51,13 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("IncludeAPIs") is XElement includeAPIsElement)
             {
-                includeAPIs = (bool?)includeAPIsElement;
+                includeApis = (bool?)includeAPIsElement;
             }
             if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
             {
-                retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
+                retentionPolicy = ShareRetentionPolicy.DeserializeShareRetentionPolicy(retentionPolicyElement);
             }
-            return new ShareMetrics(version, enabled, includeAPIs, retentionPolicy);
+            return new ShareMetrics(version, enabled, includeApis, retentionPolicy);
         }
     }
 }

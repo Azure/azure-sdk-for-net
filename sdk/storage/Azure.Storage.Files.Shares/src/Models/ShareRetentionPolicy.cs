@@ -6,14 +6,14 @@ using Azure.Core;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// ShareSignedIdentifier.
+    /// ShareRetentionPolicy.
     /// </summary>
-    [CodeGenModel("SignedIdentifier")]
-    public partial class ShareSignedIdentifier
+    [CodeGenModel("RetentionPolicy")]
+    public partial class ShareRetentionPolicy
     {
         /// <summary>
-        /// Constructor.
+        /// Creates a new ShareRetentionPolicy instance.
         /// </summary>
-        public ShareSignedIdentifier() { }
+        public ShareRetentionPolicy() { }
     }
 }

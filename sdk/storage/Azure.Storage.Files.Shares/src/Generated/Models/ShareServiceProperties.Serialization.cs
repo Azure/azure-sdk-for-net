@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares.Models
             ShareMetrics hourMetrics = default;
             ShareMetrics minuteMetrics = default;
             ShareProtocolSettings protocol = default;
-            IList<CorsRule> cors = default;
+            IList<ShareCorsRule> cors = default;
             if (element.Element("HourMetrics") is XElement hourMetricsElement)
             {
                 hourMetrics = ShareMetrics.DeserializeShareMetrics(hourMetricsElement);
@@ -61,10 +61,10 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("Cors") is XElement corsElement)
             {
-                var array = new List<CorsRule>();
+                var array = new List<ShareCorsRule>();
                 foreach (var e in corsElement.Elements("CorsRule"))
                 {
-                    array.Add(CorsRule.DeserializeCorsRule(e));
+                    array.Add(ShareCorsRule.DeserializeShareCorsRule(e));
                 }
                 cors = array;
             }

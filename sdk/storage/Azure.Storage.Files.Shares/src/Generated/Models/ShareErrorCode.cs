@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Error codes returned by the service. </summary>
-    internal readonly partial struct ShareErrorCode : IEquatable<ShareErrorCode>
+    public readonly partial struct ShareErrorCode : IEquatable<ShareErrorCode>
     {
         private readonly string _value;
 

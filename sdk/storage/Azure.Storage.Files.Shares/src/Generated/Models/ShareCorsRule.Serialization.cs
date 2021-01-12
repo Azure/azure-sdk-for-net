@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class CorsRule : IXmlSerializable
+    public partial class ShareCorsRule : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -34,7 +34,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static CorsRule DeserializeCorsRule(XElement element)
+        internal static ShareCorsRule DeserializeShareCorsRule(XElement element)
         {
             string allowedOrigins = default;
             string allowedMethods = default;
@@ -61,7 +61,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 maxAgeInSeconds = (int)maxAgeInSecondsElement;
             }
-            return new CorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
+            return new ShareCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
         }
     }
 }

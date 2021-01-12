@@ -18,21 +18,14 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Initializes a new instance of ShareAccessPolicy. </summary>
-        /// <param name="start"> The date-time the policy is active. </param>
-        /// <param name="expiry"> The date-time the policy expires. </param>
-        /// <param name="permission"> The permissions for the ACL policy. </param>
-        internal ShareAccessPolicy(DateTimeOffset? start, DateTimeOffset? expiry, string permission)
+        /// <param name="policyStartsOn"> The date-time the policy is active. </param>
+        /// <param name="policyExpiresOn"> The date-time the policy expires. </param>
+        /// <param name="permissions"> The permissions for the ACL policy. </param>
+        internal ShareAccessPolicy(DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, string permissions)
         {
-            Start = start;
-            Expiry = expiry;
-            Permission = permission;
+            PolicyStartsOn = policyStartsOn;
+            PolicyExpiresOn = policyExpiresOn;
+            Permissions = permissions;
         }
-
-        /// <summary> The date-time the policy is active. </summary>
-        public DateTimeOffset? Start { get; set; }
-        /// <summary> The date-time the policy expires. </summary>
-        public DateTimeOffset? Expiry { get; set; }
-        /// <summary> The permissions for the ACL policy. </summary>
-        public string Permission { get; set; }
     }
 }

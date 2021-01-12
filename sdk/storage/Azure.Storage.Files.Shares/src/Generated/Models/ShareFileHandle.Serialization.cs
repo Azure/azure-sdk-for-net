@@ -21,8 +21,8 @@ namespace Azure.Storage.Files.Shares.Models
             string parentId = default;
             string sessionId = default;
             string clientIp = default;
-            DateTimeOffset openTime = default;
-            DateTimeOffset? lastReconnectTime = default;
+            DateTimeOffset? openedOn = default;
+            DateTimeOffset? lastReconnectedOn = default;
             if (element.Element("HandleId") is XElement handleIdElement)
             {
                 handleId = (string)handleIdElement;
@@ -49,13 +49,13 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("OpenTime") is XElement openTimeElement)
             {
-                openTime = openTimeElement.GetDateTimeOffsetValue("R");
+                openedOn = openTimeElement.GetDateTimeOffsetValue("R");
             }
             if (element.Element("LastReconnectTime") is XElement lastReconnectTimeElement)
             {
-                lastReconnectTime = lastReconnectTimeElement.GetDateTimeOffsetValue("R");
+                lastReconnectedOn = lastReconnectTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new ShareFileHandle(handleId, path, fileId, parentId, sessionId, clientIp, openTime, lastReconnectTime);
+            return new ShareFileHandle(handleId, path, fileId, parentId, sessionId, clientIp, openedOn, lastReconnectedOn);
         }
     }
 }

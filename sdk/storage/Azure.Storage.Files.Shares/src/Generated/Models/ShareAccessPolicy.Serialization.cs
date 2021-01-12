@@ -17,22 +17,22 @@ namespace Azure.Storage.Files.Shares.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
-            if (Optional.IsDefined(Start))
+            if (Optional.IsDefined(PolicyStartsOn))
             {
                 writer.WriteStartElement("Start");
-                writer.WriteValue(Start.Value, "O");
+                writer.WriteValue(PolicyStartsOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Expiry))
+            if (Optional.IsDefined(PolicyExpiresOn))
             {
                 writer.WriteStartElement("Expiry");
-                writer.WriteValue(Expiry.Value, "O");
+                writer.WriteValue(PolicyExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Permission))
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WriteStartElement("Permission");
-                writer.WriteValue(Permission);
+                writer.WriteValue(Permissions);
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
@@ -40,22 +40,22 @@ namespace Azure.Storage.Files.Shares.Models
 
         internal static ShareAccessPolicy DeserializeShareAccessPolicy(XElement element)
         {
-            DateTimeOffset? start = default;
-            DateTimeOffset? expiry = default;
-            string permission = default;
+            DateTimeOffset? policyStartsOn = default;
+            DateTimeOffset? policyExpiresOn = default;
+            string permissions = default;
             if (element.Element("Start") is XElement startElement)
             {
-                start = startElement.GetDateTimeOffsetValue("O");
+                policyStartsOn = startElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Expiry") is XElement expiryElement)
             {
-                expiry = expiryElement.GetDateTimeOffsetValue("O");
+                policyExpiresOn = expiryElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Permission") is XElement permissionElement)
             {
-                permission = (string)permissionElement;
+                permissions = (string)permissionElement;
             }
-            return new ShareAccessPolicy(start, expiry, permission);
+            return new ShareAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
         }
     }
 }

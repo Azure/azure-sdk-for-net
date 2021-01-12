@@ -6,53 +6,33 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// A listed Azure Storage handle item.
+    /// ShareFileCopyInfo.
     /// </summary>
     public class ShareFileCopyInfo
     {
         /// <summary>
-        /// XSMB service handle ID
+        /// If the copy is completed, contains the ETag of the destination file. If the copy is not complete, contains the ETag of the empty file created at the start of the copy.
         /// </summary>
-        public string HandleId { get; internal set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
-        /// File or directory name including full path starting from share root
+        /// Returns the date/time that the copy operation to the destination file completed.
         /// </summary>
-        public string Path { get; internal set; }
+        public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// FileId uniquely identifies the file or directory.
+        /// String identifier for this copy operation. Use with Get File or Get File Properties to check the status of this copy operation, or pass to Abort Copy File to abort a pending copy.
         /// </summary>
-        public string FileId { get; internal set; }
+        public string CopyId { get; internal set; }
 
         /// <summary>
-        /// ParentId uniquely identifies the parent directory of the object.
+        /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
-        public string ParentId { get; internal set; }
+        public CopyStatus CopyStatus { get; internal set; }
 
         /// <summary>
-        /// SMB session ID in context of which the file handle was opened
-        /// </summary>
-        public string SessionId { get; internal set; }
-
-        /// <summary>
-        /// Client IP that opened the handle
-        /// </summary>
-        public string ClientIp { get; internal set; }
-
-        /// <summary>
-        /// Time when the session that previously opened the handle has last been reconnected. (UTC)
-        /// </summary>
-        public DateTimeOffset? OpenedOn { get; internal set; }
-
-        /// <summary>
-        /// Time handle was last connected to (UTC)
-        /// </summary>
-        public DateTimeOffset? LastReconnectedOn { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of ShareFileHandle instances.
-        /// You can use ShareModelFactory.ShareFileHandle instead.
+        /// Prevent direct instantiation of ShareFileCopyInfo instances.
+        /// You can use ShareModelFactory.ShareFileCopyInfo instead.
         /// </summary>
         internal ShareFileCopyInfo() { }
     }

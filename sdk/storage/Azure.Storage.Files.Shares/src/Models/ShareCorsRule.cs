@@ -6,14 +6,14 @@ using Azure.Core;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// ShareSignedIdentifier.
+    /// ShareCorsRule.
     /// </summary>
-    [CodeGenModel("SignedIdentifier")]
-    public partial class ShareSignedIdentifier
+    [CodeGenModel("CorsRule")]
+    public partial class ShareCorsRule
     {
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ShareSignedIdentifier() { }
+        public ShareCorsRule() { }
     }
 }

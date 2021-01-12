@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class RetentionPolicy : IXmlSerializable
+    public partial class ShareRetentionPolicy : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static RetentionPolicy DeserializeRetentionPolicy(XElement element)
+        internal static ShareRetentionPolicy DeserializeShareRetentionPolicy(XElement element)
         {
             bool enabled = default;
             int? days = default;
@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 days = (int?)daysElement;
             }
-            return new RetentionPolicy(enabled, days);
+            return new ShareRetentionPolicy(enabled, days);
         }
     }
 }

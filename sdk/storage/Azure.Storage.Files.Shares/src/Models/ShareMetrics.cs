@@ -9,5 +9,17 @@ namespace Azure.Storage.Files.Shares.Models
     /// ShareMetrics.
     /// </summary>
     [CodeGenModel("Metrics")]
-    public partial class ShareMetrics {}
+    public partial class ShareMetrics
+    {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public ShareMetrics() { }
+
+        /// <summary>
+        /// Indicates whether metrics should generate summary statistics for called API operations.
+        /// </summary>
+        [CodeGenMember("IncludeAPIs")]
+        public bool? IncludeApis { get; set; }
+    }
 }

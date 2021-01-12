@@ -15,47 +15,60 @@ namespace Azure.Storage.Files.Shares.Models
     [CodeGenModel("AccessPolicy")]
     public partial class ShareAccessPolicy
     {
-        // TODO fix this.
-//        /// <summary>
-//        /// The date-time the policy is active.
-//        /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.
-//        /// </summary>
-//        [EditorBrowsable(EditorBrowsableState.Never)]
-//#pragma warning disable CA1822 // Mark members as static
-//        public System.DateTimeOffset StartsOn
-//#pragma warning restore CA1822 // Mark members as static
-//        {
-//            get
-//            {
-//                return PolicyStartsOn == default ?
-//                    new DateTimeOffset() :
-//                    PolicyStartsOn.Value;
-//            }
-//            set
-//            {
-//                PolicyStartsOn = value;
-//            }
-//        }
+        /// <summary>
+        /// The date-time the policy is active.
+        /// </summary>
+        [CodeGenMember("Start")]
+        public DateTimeOffset? PolicyStartsOn { get; set; }
 
-//        /// <summary>
-//        /// The date-time the policy expires.
-//        /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.
-//        /// </summary>
-//        [EditorBrowsable(EditorBrowsableState.Never)]
-//#pragma warning disable CA1822 // Mark members as static
-//        public System.DateTimeOffset ExpiresOn
-//#pragma warning restore CA1822 // Mark members as static
-//        {
-//            get
-//            {
-//                return PolicyExpiresOn == default ?
-//                    new DateTimeOffset() :
-//                    PolicyExpiresOn.Value;
-//            }
-//            set
-//            {
-//                PolicyExpiresOn = value;
-//            }
-//        }
+        /// <summary>
+        /// The date-time the policy expires.
+        /// </summary>
+        [CodeGenMember("Expiry")]
+        public DateTimeOffset? PolicyExpiresOn { get; set; }
+
+        /// <summary>
+        /// The permissions for the ACL policy.
+        /// </summary>
+        [CodeGenMember("Permission")]
+        public string Permissions { get; set; }
+
+        /// <summary>
+        /// The date-time the policy is active.
+        /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DateTimeOffset StartsOn
+        {
+            get
+            {
+                return PolicyStartsOn == default ?
+                    new DateTimeOffset() :
+                    PolicyStartsOn.Value;
+            }
+            set
+            {
+                PolicyStartsOn = value;
+            }
+        }
+
+        /// <summary>
+        /// The date-time the policy expires.
+        /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DateTimeOffset ExpiresOn
+        {
+            get
+            {
+                return PolicyExpiresOn == default ?
+                    new DateTimeOffset() :
+                    PolicyExpiresOn.Value;
+            }
+            set
+            {
+                PolicyExpiresOn = value;
+            }
+        }
     }
 }
