@@ -67,7 +67,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="body"> Request body configuring the settings for an asset conversion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateConversionHeaders>> CreateConversionAsync(Guid accountId, string conversionId, ConversionRequest body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConversionInformation, MixedRealityRemoteRenderingCreateConversionHeaders>> CreateConversionAsync(Guid accountId, string conversionId, ConversionRequest body, CancellationToken cancellationToken = default)
         {
             if (conversionId == null)
             {
@@ -89,21 +89,12 @@ namespace Azure.MixedReality.RemoteRendering
                         ConversionInformation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = ConversionInformation.DeserializeConversionInformation(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateConversionHeaders>(value, headers, message.Response);
-                    }
-                case 400:
-                case 409:
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateConversionHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateConversionHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<ConversionInformation, MixedRealityRemoteRenderingCreateConversionHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -122,7 +113,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="body"> Request body configuring the settings for an asset conversion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateConversionHeaders> CreateConversion(Guid accountId, string conversionId, ConversionRequest body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConversionInformation, MixedRealityRemoteRenderingCreateConversionHeaders> CreateConversion(Guid accountId, string conversionId, ConversionRequest body, CancellationToken cancellationToken = default)
         {
             if (conversionId == null)
             {
@@ -144,21 +135,12 @@ namespace Azure.MixedReality.RemoteRendering
                         ConversionInformation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ConversionInformation.DeserializeConversionInformation(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateConversionHeaders>(value, headers, message.Response);
-                    }
-                case 400:
-                case 409:
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateConversionHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateConversionHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<ConversionInformation, MixedRealityRemoteRenderingCreateConversionHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -185,7 +167,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="conversionId"> the conversion id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<object, MixedRealityRemoteRenderingGetConversionHeaders>> GetConversionAsync(Guid accountId, string conversionId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConversionInformation, MixedRealityRemoteRenderingGetConversionHeaders>> GetConversionAsync(Guid accountId, string conversionId, CancellationToken cancellationToken = default)
         {
             if (conversionId == null)
             {
@@ -202,20 +184,13 @@ namespace Azure.MixedReality.RemoteRendering
                         ConversionInformation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = ConversionInformation.DeserializeConversionInformation(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetConversionHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 404:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetConversionHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetConversionHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<ConversionInformation, MixedRealityRemoteRenderingGetConversionHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -226,7 +201,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="conversionId"> the conversion id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> is null. </exception>
-        public ResponseWithHeaders<object, MixedRealityRemoteRenderingGetConversionHeaders> GetConversion(Guid accountId, string conversionId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConversionInformation, MixedRealityRemoteRenderingGetConversionHeaders> GetConversion(Guid accountId, string conversionId, CancellationToken cancellationToken = default)
         {
             if (conversionId == null)
             {
@@ -243,20 +218,13 @@ namespace Azure.MixedReality.RemoteRendering
                         ConversionInformation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ConversionInformation.DeserializeConversionInformation(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetConversionHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 404:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetConversionHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetConversionHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<ConversionInformation, MixedRealityRemoteRenderingGetConversionHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -280,7 +248,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary> Gets a list of all conversions. Returns a batch of conversions- if more conversions are available the @nextLink property contains the a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </summary>
         /// <param name="accountId"> the Azure Remote Rendering account id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<object, MixedRealityRemoteRenderingListConversionsHeaders>> ListConversionsAsync(Guid accountId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders>> ListConversionsAsync(Guid accountId, CancellationToken cancellationToken = default)
         {
             using var message = CreateListConversionsRequest(accountId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -292,19 +260,12 @@ namespace Azure.MixedReality.RemoteRendering
                         ConversionList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = ConversionList.DeserializeConversionList(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -313,7 +274,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary> Gets a list of all conversions. Returns a batch of conversions- if more conversions are available the @nextLink property contains the a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </summary>
         /// <param name="accountId"> the Azure Remote Rendering account id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<object, MixedRealityRemoteRenderingListConversionsHeaders> ListConversions(Guid accountId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders> ListConversions(Guid accountId, CancellationToken cancellationToken = default)
         {
             using var message = CreateListConversionsRequest(accountId);
             _pipeline.Send(message, cancellationToken);
@@ -325,19 +286,12 @@ namespace Azure.MixedReality.RemoteRendering
                         ConversionList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ConversionList.DeserializeConversionList(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -369,7 +323,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="body"> Settings of the session to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateSessionHeaders>> CreateSessionAsync(Guid accountId, string sessionId, CreateSessionBody body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SessionProperties, MixedRealityRemoteRenderingCreateSessionHeaders>> CreateSessionAsync(Guid accountId, string sessionId, CreateSessionBody body, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -391,21 +345,12 @@ namespace Azure.MixedReality.RemoteRendering
                         SessionProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SessionProperties.DeserializeSessionProperties(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateSessionHeaders>(value, headers, message.Response);
-                    }
-                case 400:
-                case 409:
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateSessionHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateSessionHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<SessionProperties, MixedRealityRemoteRenderingCreateSessionHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -417,7 +362,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="body"> Settings of the session to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateSessionHeaders> CreateSession(Guid accountId, string sessionId, CreateSessionBody body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SessionProperties, MixedRealityRemoteRenderingCreateSessionHeaders> CreateSession(Guid accountId, string sessionId, CreateSessionBody body, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -439,21 +384,12 @@ namespace Azure.MixedReality.RemoteRendering
                         SessionProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SessionProperties.DeserializeSessionProperties(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateSessionHeaders>(value, headers, message.Response);
-                    }
-                case 400:
-                case 409:
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateSessionHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingCreateSessionHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<SessionProperties, MixedRealityRemoteRenderingCreateSessionHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -480,7 +416,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="sessionId"> ID of a previously created session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<object, MixedRealityRemoteRenderingGetSessionHeaders>> GetSessionAsync(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SessionProperties, MixedRealityRemoteRenderingGetSessionHeaders>> GetSessionAsync(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -497,20 +433,13 @@ namespace Azure.MixedReality.RemoteRendering
                         SessionProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SessionProperties.DeserializeSessionProperties(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetSessionHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 404:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetSessionHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetSessionHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<SessionProperties, MixedRealityRemoteRenderingGetSessionHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -521,7 +450,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="sessionId"> ID of a previously created session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        public ResponseWithHeaders<object, MixedRealityRemoteRenderingGetSessionHeaders> GetSession(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SessionProperties, MixedRealityRemoteRenderingGetSessionHeaders> GetSession(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -538,20 +467,13 @@ namespace Azure.MixedReality.RemoteRendering
                         SessionProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SessionProperties.DeserializeSessionProperties(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetSessionHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 404:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetSessionHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingGetSessionHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<SessionProperties, MixedRealityRemoteRenderingGetSessionHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -583,7 +505,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="body"> Settings of the session to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<object, MixedRealityRemoteRenderingUpdateSessionHeaders>> UpdateSessionAsync(Guid accountId, string sessionId, UpdateSessionBody body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SessionProperties, MixedRealityRemoteRenderingUpdateSessionHeaders>> UpdateSessionAsync(Guid accountId, string sessionId, UpdateSessionBody body, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -604,21 +526,13 @@ namespace Azure.MixedReality.RemoteRendering
                         SessionProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SessionProperties.DeserializeSessionProperties(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingUpdateSessionHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 404:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingUpdateSessionHeaders>(null, headers, message.Response);
-                case 422:
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingUpdateSessionHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<SessionProperties, MixedRealityRemoteRenderingUpdateSessionHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -630,7 +544,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="body"> Settings of the session to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<object, MixedRealityRemoteRenderingUpdateSessionHeaders> UpdateSession(Guid accountId, string sessionId, UpdateSessionBody body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SessionProperties, MixedRealityRemoteRenderingUpdateSessionHeaders> UpdateSession(Guid accountId, string sessionId, UpdateSessionBody body, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -651,21 +565,13 @@ namespace Azure.MixedReality.RemoteRendering
                         SessionProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SessionProperties.DeserializeSessionProperties(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingUpdateSessionHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 404:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingUpdateSessionHeaders>(null, headers, message.Response);
-                case 422:
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingUpdateSessionHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<SessionProperties, MixedRealityRemoteRenderingUpdateSessionHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -693,7 +599,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="sessionId"> ID of the session to stop. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ErrorResponse, MixedRealityRemoteRenderingStopSessionHeaders>> StopSessionAsync(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MixedRealityRemoteRenderingStopSessionHeaders>> StopSessionAsync(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -710,14 +616,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 403:
                 case 404:
                 case 429:
-                    return ResponseWithHeaders.FromValue<ErrorResponse, MixedRealityRemoteRenderingStopSessionHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -728,7 +627,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="sessionId"> ID of the session to stop. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        public ResponseWithHeaders<ErrorResponse, MixedRealityRemoteRenderingStopSessionHeaders> StopSession(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MixedRealityRemoteRenderingStopSessionHeaders> StopSession(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -745,14 +644,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 403:
                 case 404:
                 case 429:
-                    return ResponseWithHeaders.FromValue<ErrorResponse, MixedRealityRemoteRenderingStopSessionHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -776,7 +668,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary> Get a list of all rendering sessions. </summary>
         /// <param name="accountId"> the Azure Remote Rendering account id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<object, MixedRealityRemoteRenderingListSessionsHeaders>> ListSessionsAsync(Guid accountId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SessionsList, MixedRealityRemoteRenderingListSessionsHeaders>> ListSessionsAsync(Guid accountId, CancellationToken cancellationToken = default)
         {
             using var message = CreateListSessionsRequest(accountId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -788,19 +680,12 @@ namespace Azure.MixedReality.RemoteRendering
                         SessionsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SessionsList.DeserializeSessionsList(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<SessionsList, MixedRealityRemoteRenderingListSessionsHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -809,7 +694,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary> Get a list of all rendering sessions. </summary>
         /// <param name="accountId"> the Azure Remote Rendering account id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<object, MixedRealityRemoteRenderingListSessionsHeaders> ListSessions(Guid accountId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SessionsList, MixedRealityRemoteRenderingListSessionsHeaders> ListSessions(Guid accountId, CancellationToken cancellationToken = default)
         {
             using var message = CreateListSessionsRequest(accountId);
             _pipeline.Send(message, cancellationToken);
@@ -821,19 +706,12 @@ namespace Azure.MixedReality.RemoteRendering
                         SessionsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SessionsList.DeserializeSessionsList(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<SessionsList, MixedRealityRemoteRenderingListSessionsHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -857,7 +735,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="accountId"> the Azure Remote Rendering account id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<object, MixedRealityRemoteRenderingListConversionsHeaders>> ListConversionsNextPageAsync(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders>> ListConversionsNextPageAsync(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -874,19 +752,12 @@ namespace Azure.MixedReality.RemoteRendering
                         ConversionList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = ConversionList.DeserializeConversionList(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -897,7 +768,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="accountId"> the Azure Remote Rendering account id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<object, MixedRealityRemoteRenderingListConversionsHeaders> ListConversionsNextPage(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders> ListConversionsNextPage(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -914,19 +785,12 @@ namespace Azure.MixedReality.RemoteRendering
                         ConversionList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ConversionList.DeserializeConversionList(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListConversionsHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -950,7 +814,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="accountId"> the Azure Remote Rendering account id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<object, MixedRealityRemoteRenderingListSessionsHeaders>> ListSessionsNextPageAsync(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SessionsList, MixedRealityRemoteRenderingListSessionsHeaders>> ListSessionsNextPageAsync(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -967,19 +831,12 @@ namespace Azure.MixedReality.RemoteRendering
                         SessionsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SessionsList.DeserializeSessionsList(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<SessionsList, MixedRealityRemoteRenderingListSessionsHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -990,7 +847,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="accountId"> the Azure Remote Rendering account id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<object, MixedRealityRemoteRenderingListSessionsHeaders> ListSessionsNextPage(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SessionsList, MixedRealityRemoteRenderingListSessionsHeaders> ListSessionsNextPage(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1007,19 +864,12 @@ namespace Azure.MixedReality.RemoteRendering
                         SessionsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SessionsList.DeserializeSessionsList(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 401:
                 case 403:
                 case 429:
-                    return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(null, headers, message.Response);
-                case 500:
-                    {
-                        ErrorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ErrorResponse.DeserializeErrorResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, MixedRealityRemoteRenderingListSessionsHeaders>(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue<SessionsList, MixedRealityRemoteRenderingListSessionsHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

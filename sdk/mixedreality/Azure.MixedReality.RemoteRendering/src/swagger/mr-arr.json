@@ -88,7 +88,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -122,7 +123,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too Many Requests. In case the rate limit has been exceeded. Retry the request after the duration given in the Retry-After header.",
@@ -149,7 +151,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     }
                 },
                 "tags": [
@@ -288,7 +291,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     }
                 },
                 "tags": [
@@ -436,7 +440,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     }
                 },
                 "tags": [
@@ -536,7 +541,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -564,7 +570,8 @@
                         "description": "Conflict. A rendering session with the ID already exists for the remote rendering account.",
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     },
                     "429": {
                         "description": "In case the rate limit has been exceeded.",
@@ -597,7 +604,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     }
                 },
                 "tags": [
@@ -718,7 +726,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     }
                 },
                 "tags": [
@@ -843,7 +852,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     },
                     "500": {
                         "description": "InternalError",
@@ -863,7 +873,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     }
                 },
                 "tags": [
@@ -966,7 +977,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     }
                 },
                 "tags": [
@@ -1083,7 +1095,8 @@
                         },
                         "schema": {
                             "$ref": "#/definitions/error_response"
-                        }
+                        },
+                        "x-ms-error-response": true
                     }
                 },
                 "tags": [

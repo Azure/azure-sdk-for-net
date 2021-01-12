@@ -10,7 +10,7 @@ using Azure.MixedReality.RemoteRendering;
 namespace Azure.MixedReality.RemoteRendering.Models
 {
     /// <summary> The ErrorResponse. </summary>
-    public partial class ErrorResponse
+    internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         internal ErrorResponse()

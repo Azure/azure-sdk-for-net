@@ -76,11 +76,10 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateConversion)}");
             scope.AddAttribute(nameof(conversionId), conversionId);
             scope.Start();
-
             try
             {
-                var response = _restClient.CreateConversion(_accountId, conversionId, new ConversionRequest(settings), cancellationToken);
-                return GetResponseOfType<ConversionInformation>(response.Value, response);
+                var result = _restClient.CreateConversion(_accountId, conversionId, new ConversionRequest(settings), cancellationToken);
+                return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -105,11 +104,10 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateConversionAsync)}");
             scope.AddAttribute(nameof(conversionId), conversionId);
             scope.Start();
-
             try
             {
-                var response = await _restClient.CreateConversionAsync(_accountId, conversionId, new ConversionRequest(settings), cancellationToken).ConfigureAwait(false);
-                return GetResponseOfType<ConversionInformation>(response.Value, response);
+                var result = await _restClient.CreateConversionAsync(_accountId, conversionId, new ConversionRequest(settings), cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -127,11 +125,10 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetConversion)}");
             scope.AddAttribute(nameof(conversionId), conversionId);
             scope.Start();
-
             try
             {
-                var response = _restClient.GetConversion(_accountId, conversionId, cancellationToken);
-                return GetResponseOfType<ConversionInformation>(response.Value, response);
+                var result = _restClient.GetConversion(_accountId, conversionId, cancellationToken);
+                return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -149,23 +146,10 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetConversionAsync)}");
             scope.AddAttribute(nameof(conversionId), conversionId);
             scope.Start();
-
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingGetConversionHeaders> response = await _restClient.GetConversionAsync(_accountId, conversionId, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Value)
-                {
-                    case ConversionInformation c:
-                        return ResponseWithHeaders.FromValue(c, response.Headers, response.GetRawResponse());
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                var result = await _restClient.GetConversionAsync(_accountId, conversionId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -184,20 +168,8 @@ namespace Azure.MixedReality.RemoteRendering
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListConversionsHeaders> response = _restClient.ListConversions(_accountId, cancellationToken);
-
-                    switch (response.Value)
-                    {
-                        case ConversionList cl:
-                            return Page.FromValues(cl.Conversions, cl.NextLink, response.GetRawResponse());
-                        case ErrorResponse e:
-                            // TODO e.Error.Details
-                            // TODO e.Error.InnerError
-                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                        case null:
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(response);
-                    }
+                    var result = _restClient.ListConversions(_accountId, cancellationToken);
+                    return Page.FromValues(result.Value.Conversions, result.Value.NextLink, result.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,20 +183,8 @@ namespace Azure.MixedReality.RemoteRendering
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListConversionsHeaders> response = _restClient.ListConversionsNextPage(nextLink, _accountId, cancellationToken);
-
-                    switch (response.Value)
-                    {
-                        case ConversionList cl:
-                            return Page.FromValues(cl.Conversions, cl.NextLink, response.GetRawResponse());
-                        case ErrorResponse e:
-                            // TODO e.Error.Details
-                            // TODO e.Error.InnerError
-                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                        case null:
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(response);
-                    }
+                    var result = _restClient.ListConversionsNextPage(nextLink, _accountId, cancellationToken);
+                    return Page.FromValues(result.Value.Conversions, result.Value.NextLink, result.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,19 +205,8 @@ namespace Azure.MixedReality.RemoteRendering
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListConversionsHeaders> response = await _restClient.ListConversionsAsync(_accountId, cancellationToken).ConfigureAwait(false);
-                    switch (response.Value)
-                    {
-                        case ConversionList cl:
-                            return Page.FromValues(cl.Conversions, cl.NextLink, response.GetRawResponse());
-                        case ErrorResponse e:
-                            // TODO e.Error.Details
-                            // TODO e.Error.InnerError
-                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                        case null:
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(response);
-                    }
+                    var result = await _restClient.ListConversionsAsync(_accountId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(result.Value.Conversions, result.Value.NextLink, result.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,20 +220,8 @@ namespace Azure.MixedReality.RemoteRendering
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListConversionsHeaders> response = await _restClient.ListConversionsNextPageAsync(nextLink, _accountId, cancellationToken).ConfigureAwait(false);
-
-                    switch (response.Value)
-                    {
-                        case ConversionList cl:
-                            return Page.FromValues(cl.Conversions, cl.NextLink, response.GetRawResponse());
-                        case ErrorResponse e:
-                            // TODO e.Error.Details
-                            // TODO e.Error.InnerError
-                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                        case null:
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(response);
-                    }
+                    var result = await _restClient.ListConversionsNextPageAsync(nextLink, _accountId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(result.Value.Conversions, result.Value.NextLink, result.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,23 +245,10 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
-
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateSessionHeaders> response = _restClient.CreateSession(_accountId, sessionId, body, cancellationToken);
-
-                switch (response.Value)
-                {
-                    case SessionProperties p:
-                        return ResponseWithHeaders.FromValue(p, response.Headers, response.GetRawResponse());
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                var result = _restClient.CreateSession(_accountId, sessionId, body, cancellationToken);
+                return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -343,23 +267,10 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateSessionAsync)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
-
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingCreateSessionHeaders> response = await _restClient.CreateSessionAsync(_accountId, sessionId, body, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Value)
-                {
-                    case SessionProperties p:
-                        return ResponseWithHeaders.FromValue(p, response.Headers, response.GetRawResponse());
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                var result = await _restClient.CreateSessionAsync(_accountId, sessionId, body, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -377,23 +288,10 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
-
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingGetSessionHeaders> response = _restClient.GetSession(_accountId, sessionId, cancellationToken);
-
-                switch (response.Value)
-                {
-                    case SessionProperties p:
-                        return ResponseWithHeaders.FromValue(p, response.Headers, response.GetRawResponse());
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                var result = _restClient.GetSession(_accountId, sessionId, cancellationToken);
+                return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -411,23 +309,10 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetSessionAsync)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
-
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingGetSessionHeaders> response = await _restClient.GetSessionAsync(_accountId, sessionId, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Value)
-                {
-                    case SessionProperties p:
-                        return ResponseWithHeaders.FromValue(p, response.Headers, response.GetRawResponse());
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                var result = await _restClient.GetSessionAsync(_accountId, sessionId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -446,23 +331,10 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
-
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingUpdateSessionHeaders> response = _restClient.UpdateSession(_accountId, sessionId, body, cancellationToken);
-
-                switch (response.Value)
-                {
-                    case SessionProperties p:
-                        return ResponseWithHeaders.FromValue(p, response.Headers, response.GetRawResponse());
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                var result = _restClient.UpdateSession(_accountId, sessionId, body, cancellationToken);
+                return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -481,23 +353,10 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSessionAsync)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
-
             try
             {
-                ResponseWithHeaders<object, MixedRealityRemoteRenderingUpdateSessionHeaders> response = await _restClient.UpdateSessionAsync(_accountId, sessionId, body, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Value)
-                {
-                    case SessionProperties p:
-                        return ResponseWithHeaders.FromValue(p, response.Headers, response.GetRawResponse());
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                var result = await _restClient.UpdateSessionAsync(_accountId, sessionId, body, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -515,27 +374,9 @@ namespace Azure.MixedReality.RemoteRendering
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StopSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
-
             try
             {
-                ResponseWithHeaders<ErrorResponse, MixedRealityRemoteRenderingStopSessionHeaders> response = _restClient.StopSession(_accountId, sessionId, cancellationToken);
-
-                if (response.GetRawResponse().Status == 206)
-                {
-                    // Success.
-                    return response;
-                }
-
-                switch (response.Value)
-                {
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                return _restClient.StopSession(_accountId, sessionId, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -556,24 +397,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             try
             {
-                ResponseWithHeaders<ErrorResponse, MixedRealityRemoteRenderingStopSessionHeaders> response = await _restClient.StopSessionAsync(_accountId, sessionId, cancellationToken).ConfigureAwait(false);
-
-                if (response.GetRawResponse().Status == 206)
-                {
-                    // Success.
-                    return response;
-                }
-
-                switch (response.Value)
-                {
-                    case ErrorResponse e:
-                        // TODO e.Error.Details
-                        // TODO e.Error.InnerError
-                        throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                    case null:
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                return await _restClient.StopSessionAsync(_accountId, sessionId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -592,20 +416,8 @@ namespace Azure.MixedReality.RemoteRendering
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListSessionsHeaders> response = _restClient.ListSessions(_accountId, cancellationToken);
-
-                    switch (response.Value)
-                    {
-                        case SessionsList sl:
-                            return Page.FromValues(sl.Sessions, sl.NextLink, response.GetRawResponse());
-                        case ErrorResponse e:
-                            // TODO e.Error.Details
-                            // TODO e.Error.InnerError
-                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                        case null:
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(response);
-                    }
+                    var result = _restClient.ListSessions(_accountId, cancellationToken);
+                    return Page.FromValues(result.Value.Sessions, result.Value.NextLink, result.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -619,20 +431,8 @@ namespace Azure.MixedReality.RemoteRendering
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListSessionsHeaders> response = _restClient.ListSessionsNextPage(nextLink, _accountId, cancellationToken);
-
-                    switch (response.Value)
-                    {
-                        case SessionsList sl:
-                            return Page.FromValues(sl.Sessions, sl.NextLink, response.GetRawResponse());
-                        case ErrorResponse e:
-                            // TODO e.Error.Details
-                            // TODO e.Error.InnerError
-                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                        case null:
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(response);
-                    }
+                    var result = _restClient.ListSessionsNextPage(nextLink, _accountId, cancellationToken);
+                    return Page.FromValues(result.Value.Sessions, result.Value.NextLink, result.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -653,20 +453,8 @@ namespace Azure.MixedReality.RemoteRendering
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListSessionsHeaders> response = await _restClient.ListSessionsAsync(_accountId, cancellationToken).ConfigureAwait(false);
-
-                    switch (response.Value)
-                    {
-                        case SessionsList sl:
-                            return Page.FromValues(sl.Sessions, sl.NextLink, response.GetRawResponse());
-                        case ErrorResponse e:
-                            // TODO e.Error.Details
-                            // TODO e.Error.InnerError
-                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                        case null:
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(response);
-                    }
+                    var result = await _restClient.ListSessionsAsync(_accountId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(result.Value.Sessions, result.Value.NextLink, result.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -680,20 +468,8 @@ namespace Azure.MixedReality.RemoteRendering
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<object, MixedRealityRemoteRenderingListSessionsHeaders> response = await _restClient.ListSessionsNextPageAsync(nextLink, _accountId, cancellationToken).ConfigureAwait(false);
-
-                    switch (response.Value)
-                    {
-                        case SessionsList sl:
-                            return Page.FromValues(sl.Sessions, sl.NextLink, response.GetRawResponse());
-                        case ErrorResponse e:
-                            // TODO e.Error.Details
-                            // TODO e.Error.InnerError
-                            throw _clientDiagnostics.CreateRequestFailedException(response, e.Error.Message, e.Error.Code);
-                        case null:
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(response);
-                    }
+                    var result = await _restClient.ListSessionsNextPageAsync(nextLink, _accountId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(result.Value.Sessions, result.Value.NextLink, result.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -702,31 +478,6 @@ namespace Azure.MixedReality.RemoteRendering
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        #endregion
-        #region Internal methods
-
-        internal RequestFailedException CreateExceptionFromResponseCarryingErrorResponse(Response response, ErrorResponse errorResponse)
-        {
-            // TODO
-            // TODO e.Error.Details
-            // TODO e.Error.InnerError
-            return _clientDiagnostics.CreateRequestFailedException(response, errorResponse.Error.Message, errorResponse.Error.Code);
-        }
-
-        internal Response<T> GetResponseOfType<T>(object? obj, Response response)
-        {
-            switch (obj)
-            {
-                case T t:
-                    return ResponseWithHeaders.FromValue(t, response.Headers, response);
-                case ErrorResponse e:
-                    throw CreateExceptionFromResponseCarryingErrorResponse(response, e);
-                case null:
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(response);
-            }
         }
 
         #endregion
