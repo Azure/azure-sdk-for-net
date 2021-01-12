@@ -183,18 +183,20 @@ namespace Azure.Storage.Files.Shares
         {
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder = new ShareUriBuilder(conn.FileEndpoint) { ShareName = shareName };
-            _uri = builder.ToUri();
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(conn.FileEndpoint) { ShareName = shareName };
+            _uri = uriBuilder.ToUri();
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            _name = uriBuilder.ShareName;
+
+            uriBuilder.ShareName = null;
 
             _shareRestClient = new ShareRestClient(
                 _clientDiagnostics,
                 _pipeline,
-                // TODO
-                _uri.ToString(),
+                uriBuilder.ToUri().ToString(),
                 _version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
@@ -271,11 +273,14 @@ namespace Azure.Storage.Files.Shares
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
 
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(shareUri);
+            _name = uriBuilder.ShareName;
+            uriBuilder.ShareName = null;
+
             _shareRestClient = new ShareRestClient(
                 _clientDiagnostics,
                 _pipeline,
-                // TODO
-                _uri.ToString(),
+                uriBuilder.ToUri().ToString(),
                 _version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
@@ -315,11 +320,14 @@ namespace Azure.Storage.Files.Shares
             _version = version;
             _clientDiagnostics = clientDiagnostics;
 
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(shareUri);
+            _name = uriBuilder.ShareName;
+            uriBuilder.ShareName = null;
+
             _shareRestClient = new ShareRestClient(
                 _clientDiagnostics,
                 _pipeline,
-                // TODO
-                _uri.ToString(),
+                uriBuilder.ToUri().ToString(),
                 _version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
@@ -603,9 +611,7 @@ namespace Azure.Storage.Files.Shares
             ShareRootSquash? rootSquash,
             bool async,
             CancellationToken cancellationToken,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
-#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -614,8 +620,13 @@ namespace Azure.Storage.Files.Shares
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(quotaInGB)}: {quotaInGB}");
+
+                operationName ??= $"{nameof(ShareClient)}.{nameof(Create)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<ShareCreateHeaders> response;
 
                     if (async)
@@ -645,31 +656,17 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(
                         response.Headers.ToShareInfo(),
                         response.GetRawResponse());
-
-                    // TODO remove
-                    //return await FileRestClient.Share.CreateAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    metadata: metadata,
-                    //    quotaInGB: quotaInGB,
-                    //    accessTier: accessTier,
-                    //    enabledProtocols: enabledProtocols.ToShareEnableProtocolsString(),
-                    //    rootSquash: rootSquash,
-                    //    async: async,
-                    //    operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Create)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -895,7 +892,7 @@ namespace Azure.Storage.Files.Shares
                         squashRoot,
                         async,
                         cancellationToken,
-                        $"{nameof(ShareClient)}.{nameof(CreateIfNotExists)}")
+                        operationName: $"{nameof(ShareClient)}.{nameof(CreateIfNotExists)}")
                         .ConfigureAwait(false);
                 }
                 catch (RequestFailedException storageRequestFailedException)
@@ -997,7 +994,8 @@ namespace Azure.Storage.Files.Shares
                     Response<ShareProperties> response = await GetPropertiesInternal(
                         conditions: null,
                         async: async,
-                        cancellationToken: cancellationToken)
+                        cancellationToken: cancellationToken,
+                        operationName: $"{nameof(ShareClient)}.{nameof(Exists)}")
                         .ConfigureAwait(false);
 
                     return Response.FromValue(true, response.GetRawResponse());
@@ -1206,7 +1204,7 @@ namespace Azure.Storage.Files.Shares
                         conditions,
                         async,
                         cancellationToken,
-                        $"{nameof(ShareClient)}.{nameof(DeleteIfExists)}")
+                        operationName: $"{nameof(ShareClient)}.{nameof(DeleteIfExists)}")
                         .ConfigureAwait(false);
                     return Response.FromValue(true, response);
                 }
@@ -1326,9 +1324,14 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(CreateSnapshot)}");
+
                 try
                 {
                     ResponseWithHeaders<ShareCreateSnapshotHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -1365,11 +1368,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1555,9 +1560,7 @@ namespace Azure.Storage.Files.Shares
 #pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
-#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -1565,8 +1568,14 @@ namespace Azure.Storage.Files.Shares
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareClient)}.{nameof(Delete)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
+
                     // DeleteSnapshotsOptionType.Include is not valid when deleting a Snapshot Share.
                     if (Uri.GetQueryParameters().ContainsKey(Constants.ShareSnapshotParameterName))
                     {
@@ -1601,28 +1610,17 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return response.GetRawResponse();
-
-                    // TODO remove
-                    //return await FileRestClient.Share.DeleteAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    leaseId: conditions?.LeaseId,
-                    //    deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
-                    //    async: async,
-                    //    operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Delete)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1781,6 +1779,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// Operation name.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{ShareProperties}"/> describing the
         /// share's properties.
@@ -1794,7 +1795,8 @@ namespace Azure.Storage.Files.Shares
             ShareFileRequestConditions conditions,
 #pragma warning restore CA1801 // Review unused parameters
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -1802,9 +1804,14 @@ namespace Azure.Storage.Files.Shares
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareClient)}.{nameof(GetProperties)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
                     ResponseWithHeaders<ShareGetPropertiesHeaders> response;
+                    scope.Start();
 
                     if (async)
                     {
@@ -1824,18 +1831,6 @@ namespace Azure.Storage.Files.Shares
                             cancellationToken: cancellationToken);
                     }
 
-                    // TODO remove this
-                    //Response<SharePropertiesInternal> response = await FileRestClient.Share.GetPropertiesAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    leaseId: conditions?.LeaseId,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareClient)}.{nameof(GetProperties)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
-
                     return Response.FromValue(
                         response.Headers.ToShareProperties(),
                         response.GetRawResponse());
@@ -1843,11 +1838,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1979,9 +1976,14 @@ namespace Azure.Storage.Files.Shares
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessTier)}: {accessTier}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(SetProperties)}");
+
                 try
                 {
                     ResponseWithHeaders<ShareSetPropertiesHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -2028,11 +2030,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2396,9 +2400,14 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(SetMetadata)}");
+
                 try
                 {
                     ResponseWithHeaders<ShareSetMetadataHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -2423,28 +2432,17 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(
                         response.Headers.ToShareInfo(),
                         response.GetRawResponse());
-
-                    // TODO remove this
-                    //return await FileRestClient.Share.SetMetadataAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    metadata: metadata,
-                    //    leaseId: conditions?.LeaseId,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareClient)}.{nameof(SetMetadata)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2623,9 +2621,13 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(GetAccessPolicy)}");
+
                 try
                 {
                     ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders> response;
+                    scope.Start();
 
                     if (async)
                     {
@@ -2650,27 +2652,17 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(
                         shareSignedIdentifiers,
                         response.GetRawResponse());
-
-                    // TODO remove this.
-                    //return await FileRestClient.Share.GetAccessPolicyAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    leaseId: conditions?.LeaseId,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareClient)}.{nameof(GetAccessPolicy)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2880,9 +2872,13 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(SetAccessPolicy)}");
+
                 try
                 {
                     ResponseWithHeaders<ShareSetAccessPolicyHeaders> response;
+                    scope.Start();
 
                     if (async)
                     {
@@ -2907,28 +2903,17 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(
                         response.Headers.ToShareInfo(),
                         response.GetRawResponse());
-
-                    // TODO remove this.
-                    //return await FileRestClient.Share.SetAccessPolicyAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    permissions: permissions,
-                    //    leaseId: conditions?.LeaseId,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareClient)}.{nameof(SetAccessPolicy)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3097,9 +3082,14 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(GetStatistics)}");
+
                 try
                 {
                     ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -3122,27 +3112,17 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(
                         response.Value,
                         response.GetRawResponse());
-
-                    // TODO remove this
-                    //return await FileRestClient.Share.GetStatisticsAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    leaseId: conditions?.LeaseId,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareClient)}.{nameof(GetStatistics)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3203,9 +3183,14 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(GetPermission)}");
+
                 try
                 {
                     ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -3264,11 +3249,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3335,9 +3322,14 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(CreatePermission)}");
+
                 try
                 {
                     ResponseWithHeaders<ShareCreatePermissionHeaders> response;
+
+                    scope.Start();
 
                     SharePermission sharePermission = new SharePermission(permission);
 
@@ -3392,11 +3384,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareClient));
+                    scope.Dispose();
                 }
             }
         }

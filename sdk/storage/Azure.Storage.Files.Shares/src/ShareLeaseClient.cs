@@ -151,6 +151,11 @@ namespace Azure.Storage.Files.Shares.Specialized
             _share = client ?? throw Errors.ArgumentNull(nameof(client));
             LeaseId = leaseId ?? CreateUniqueLeaseId();
 
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(client.Uri)
+            {
+                ShareName = null
+            };
+
             _fileRestClient = new FileRestClient(
                 ClientDiagnostics,
                 Pipeline,
@@ -163,8 +168,7 @@ namespace Azure.Storage.Files.Shares.Specialized
             _shareRestClient = new ShareRestClient(
                 ClientDiagnostics,
                 Pipeline,
-                // TODO
-                Uri.ToString(),
+                uriBuilder.ToUri().ToString(),
                 Version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
@@ -373,8 +377,12 @@ namespace Azure.Storage.Files.Shares.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Acquire)}");
+
                 try
                 {
+                    scope.Start();
                     if (FileClient != null)
                     {
                         ResponseWithHeaders<FileAcquireLeaseHeaders> response;
@@ -406,24 +414,10 @@ namespace Azure.Storage.Files.Shares.Specialized
                         return Response.FromValue(
                             response.Headers.ToShareFileLease(),
                             response.GetRawResponse());
-
-                        // TODO remove this.
-                        //return await FileRestClient.File.AcquireLeaseAsync(
-                        //    ClientDiagnostics,
-                        //    Pipeline,
-                        //    Uri,
-                        //    Version.ToVersionString(),
-                        //    duration: Constants.File.Lease.InfiniteLeaseDuration,
-                        //    proposedLeaseId: LeaseId,
-                        //    async: async,
-                        //    operationName: $"{nameof(ShareLeaseClient)}.{nameof(Acquire)}",
-                        //    cancellationToken: cancellationToken)
-                        //    .ConfigureAwait(false);
                     }
                     else
                     {
                         // Int64 is an overflow safe cast relative to TimeSpan.MaxValue
-
                         long serviceDuration;
 
                         if (duration.HasValue && duration.Value >= TimeSpan.Zero)
@@ -458,29 +452,18 @@ namespace Azure.Storage.Files.Shares.Specialized
                         return Response.FromValue(
                             response.Headers.ToShareFileLease(),
                             response.GetRawResponse());
-
-                        // TODO remove this.
-                        //return await FileRestClient.Share.AcquireLeaseAsync(
-                        //    ClientDiagnostics,
-                        //    Pipeline,
-                        //    Uri,
-                        //    Version.ToVersionString(),
-                        //    duration: serviceDuration,
-                        //    proposedLeaseId: LeaseId,
-                        //    async: async,
-                        //    operationName: $"{nameof(ShareLeaseClient)}.{nameof(Acquire)}",
-                        //    cancellationToken: cancellationToken)
-                        //    .ConfigureAwait(false);
                     }
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    scope.Dispose();
                 }
             }
         }

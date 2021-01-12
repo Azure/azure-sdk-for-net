@@ -262,7 +262,36 @@ namespace Azure.Storage.Files.Shares
         // TODO
         internal static ShareProperties ToShareProperties(this ShareGetPropertiesHeaders shareGetPropertiesHeaders)
         {
-            return null;
+            if (shareGetPropertiesHeaders == null)
+            {
+                return null;
+            }
+
+            return new ShareProperties
+            {
+                LastModified = shareGetPropertiesHeaders.LastModified,
+                // TODO fix this.
+                ETag = new ETag(""),
+                ProvisionedIops = shareGetPropertiesHeaders.ProvisionedIops,
+                ProvisionedIngressMBps = shareGetPropertiesHeaders.ProvisionedIngressMBps,
+                ProvisionedEgressMBps = shareGetPropertiesHeaders.ProvisionedEgressMBps,
+                NextAllowedQuotaDowngradeTime = shareGetPropertiesHeaders.NextAllowedQuotaDowngradeTime,
+                // TODO fix this.
+                DeletedOn = null,
+                // TODO fix this.
+                RemainingRetentionDays = null,
+                AccessTier = shareGetPropertiesHeaders.AccessTier,
+                AccessTierChangeTime = shareGetPropertiesHeaders.AccessTierChangeTime,
+                AccessTierTransitionState = shareGetPropertiesHeaders.AccessTierTransitionState,
+                // TODO fix this
+                //LeaseStatus = shareGetPropertiesHeaders.LeaseStatus,
+                //LeaseState = shareGetPropertiesHeaders.LeaseState,
+                //LeaseDuration = shareGetPropertiesHeaders.LeaseDuration,
+                //Protocols = shareGetPropertiesHeaders.EnabledProtocols,
+                RootSquash = shareGetPropertiesHeaders.RootSquash,
+                QuotaInGB = shareGetPropertiesHeaders.Quota,
+                Metadata = shareGetPropertiesHeaders.Metadata
+            };
         }
 
         // TODO
