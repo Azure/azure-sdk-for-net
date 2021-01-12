@@ -155,7 +155,7 @@ namespace Azure.Core.TestFramework
 
             if (ValidateClientInstrumentation && testPassed)
             {
-                throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please use call InstrumentClient for the client being recorded.");
+                throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
             }
 
             bool save = testPassed;
