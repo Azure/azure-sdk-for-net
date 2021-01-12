@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
-            var credential = new ClientSecretCredential(tenantId, clientId, secret, options);
+            var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
 
@@ -64,7 +64,7 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
-            var credential = new ClientSecretCredential(tenantId, clientId, secret, options);
+            var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
 
