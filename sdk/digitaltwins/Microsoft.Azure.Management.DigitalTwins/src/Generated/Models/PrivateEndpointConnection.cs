@@ -13,41 +13,33 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The common properties of a DigitalTwinsInstance.
+    /// The private endpoint connection of a Digital Twin.
     /// </summary>
-    public partial class DigitalTwinsResource : IResource
+    public partial class PrivateEndpointConnection : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the DigitalTwinsResource class.
+        /// Initializes a new instance of the PrivateEndpointConnection class.
         /// </summary>
-        public DigitalTwinsResource()
+        public PrivateEndpointConnection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DigitalTwinsResource class.
+        /// Initializes a new instance of the PrivateEndpointConnection class.
         /// </summary>
-        /// <param name="location">The resource location.</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
-        /// <param name="tags">The resource tags.</param>
-        /// <param name="identity">The managed identity for the
-        /// DigitalTwinsInstance.</param>
-        public DigitalTwinsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DigitalTwinsIdentity identity = default(DigitalTwinsIdentity))
+        public PrivateEndpointConnection(PrivateEndpointConnectionProperties properties, string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
-            Location = location;
-            Tags = tags;
-            Identity = identity;
+            Properties = properties;
             CustomInit();
         }
 
@@ -75,22 +67,9 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource location.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the resource tags.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets the managed identity for the DigitalTwinsInstance.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public DigitalTwinsIdentity Identity { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public PrivateEndpointConnectionProperties Properties { get; set; }
 
     }
 }
