@@ -568,9 +568,14 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareServiceClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareServiceClient)}.{nameof(GetProperties)}");
+
                 try
                 {
                     ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -602,11 +607,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareServiceClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -716,9 +723,14 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareServiceClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareServiceClient)}.{nameof(SetProperties)}");
+
                 try
                 {
                     ResponseWithHeaders<ServiceSetPropertiesHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -751,11 +763,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareServiceClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1240,8 +1254,11 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(deletedShareName)}: {deletedShareName}\n" +
                     $"{nameof(deletedShareVersion)}: {deletedShareVersion}");
 
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareServiceClient)}.{nameof(UndeleteShare)}");
+
                 try
                 {
+                    scope.Start();
                     ShareClient shareClient = GetShareClient(deletedShareName);
 
                     ShareRestClient shareRestClient = new ShareRestClient(
@@ -1291,11 +1308,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareServiceClient));
+                    scope.Dispose();
                 }
             }
         }

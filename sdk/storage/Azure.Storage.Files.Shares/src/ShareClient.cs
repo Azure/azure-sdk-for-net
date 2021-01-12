@@ -2389,9 +2389,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareInfo>> SetMetadataInternal(
             Metadata metadata,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2414,8 +2412,7 @@ namespace Azure.Storage.Files.Shares
                         response = await _shareRestClient.SetMetadataAsync(
                             shareName: _name,
                             metadata: metadata,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2424,8 +2421,7 @@ namespace Azure.Storage.Files.Shares
                         response = _shareRestClient.SetMetadata(
                             shareName: _name,
                             metadata: metadata,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2610,9 +2606,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<IEnumerable<ShareSignedIdentifier>>> GetAccessPolicyInternal(
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2633,8 +2627,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await _shareRestClient.GetAccessPolicyAsync(
                             shareName: _name,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2642,8 +2635,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = _shareRestClient.GetAccessPolicy(
                             shareName: _name,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2861,9 +2853,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareInfo>> SetAccessPolicyInternal(
             IEnumerable<ShareSignedIdentifier> permissions,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2885,8 +2875,7 @@ namespace Azure.Storage.Files.Shares
                         response = await _shareRestClient.SetAccessPolicyAsync(
                             shareName: _name,
                             shareAcl: permissions,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2895,8 +2884,7 @@ namespace Azure.Storage.Files.Shares
                         response = _shareRestClient.SetAccessPolicy(
                             shareName: _name,
                             shareAcl: permissions,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3071,9 +3059,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareStatistics>> GetStatisticsInternal(
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3095,8 +3081,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await _shareRestClient.GetStatisticsAsync(
                             shareName: _name,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3104,8 +3089,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = _shareRestClient.GetStatistics(
                             shareName: _name,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 

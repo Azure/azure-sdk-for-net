@@ -710,9 +710,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken,
 #pragma warning disable CA1801 // Review unused parameters
@@ -759,8 +757,7 @@ namespace Azure.Storage.Files.Shares
                             filePermissionKey: smbProps.FilePermissionKey,
                             // TODO
                             fileHttpHeaders: null,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -783,8 +780,7 @@ namespace Azure.Storage.Files.Shares
                             filePermissionKey: smbProps.FilePermissionKey,
                             // TODO
                             fileHttpHeaders: null,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1373,9 +1369,7 @@ namespace Azure.Storage.Files.Shares
 #pragma warning disable CA1801 // Review unused parameters
             bool? setArchiveAttribute,
 #pragma warning restore CA1801 // Review unused parameters
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1403,8 +1397,7 @@ namespace Azure.Storage.Files.Shares
                             filePermissionKey: smbProperties?.FilePermissionKey,
                             // TODO
                             copyFileSmbInfo: null,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1421,8 +1414,7 @@ namespace Azure.Storage.Files.Shares
                             filePermissionKey: smbProperties?.FilePermissionKey,
                             // TODO
                             copyFileSmbInfo: null,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1638,9 +1630,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response> AbortCopyInternal(
             string copyId,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1663,8 +1653,7 @@ namespace Azure.Storage.Files.Shares
                             directory: null,
                             fileName: _name,
                             copyId: copyId,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1676,8 +1665,7 @@ namespace Azure.Storage.Files.Shares
                             directory: null,
                             fileName: _name,
                             copyId: copyId,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2051,9 +2039,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange range = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions = default,
-#pragma warning restore CA1801 // Review unused parameters
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -2076,8 +2062,7 @@ namespace Azure.Storage.Files.Shares
                     // TODO this might not work
                     range: range.ToString(),
                     rangeGetContentMD5: rangeGetContentHash,
-                    // TODO fix this
-                    leaseAccessConditions: null,
+                    leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -2091,8 +2076,7 @@ namespace Azure.Storage.Files.Shares
                     // TODO this might not work
                     range: range.ToString(),
                     rangeGetContentMD5: rangeGetContentHash,
-                    // TODO fix this
-                    leaseAccessConditions: null,
+                    leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken);
             }
 
@@ -2564,9 +2548,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> DeleteInternal(
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken,
 #pragma warning disable CA1801 // Review unused parameters
@@ -2589,8 +2571,7 @@ namespace Azure.Storage.Files.Shares
                             // TODO
                             directory: null,
                             fileName: _name,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2601,8 +2582,7 @@ namespace Azure.Storage.Files.Shares
                             // TODO
                             directory: null,
                             fileName: _name,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2802,9 +2782,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareFileProperties>> GetPropertiesInternal(
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken,
 #pragma warning disable CA1801 // Review unused parameters
@@ -2828,8 +2806,7 @@ namespace Azure.Storage.Files.Shares
                             // TODO fix this.
                             directory: null,
                             fileName: _name,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2840,8 +2817,7 @@ namespace Azure.Storage.Files.Shares
                             // TODO fix this.
                             directory: null,
                             fileName: _name,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3149,9 +3125,7 @@ namespace Azure.Storage.Files.Shares
             ShareFileHttpHeaders httpHeaders,
             FileSmbProperties smbProperties,
             string filePermission,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3194,8 +3168,7 @@ namespace Azure.Storage.Files.Shares
                             filePermissionKey: smbProps.FilePermissionKey,
                             // TODO
                             fileHttpHeaders: null,
-                            // TODO fix
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3218,8 +3191,7 @@ namespace Azure.Storage.Files.Shares
                             filePermissionKey: smbProps.FilePermissionKey,
                             // TODO
                             fileHttpHeaders: null,
-                            // TODO fix
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3444,9 +3416,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileInfo>> SetMetadataInternal(
             Metadata metadata,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3467,8 +3437,7 @@ namespace Azure.Storage.Files.Shares
                             directory: null,
                             fileName: _name,
                             metadata: metadata,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3480,8 +3449,7 @@ namespace Azure.Storage.Files.Shares
                             directory: null,
                             fileName: _name,
                             metadata: metadata,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3624,9 +3592,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileUploadInfo>> ClearRangeInternal(
             HttpRange range,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3655,8 +3621,7 @@ namespace Azure.Storage.Files.Shares
                             fileRangeWrite: ShareFileRangeWriteType.Clear,
                             contentLength: 0,
                             optionalbody: null,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3671,8 +3636,7 @@ namespace Azure.Storage.Files.Shares
                             fileRangeWrite: ShareFileRangeWriteType.Clear,
                             contentLength: 0,
                             optionalbody: null,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3999,9 +3963,7 @@ namespace Azure.Storage.Files.Shares
             Stream content,
             byte[] transactionalContentHash,
             IProgress<long> progressHandler,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -4030,8 +3992,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             optionalbody: content,
                             contentMD5: transactionalContentHash,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -4306,9 +4267,7 @@ namespace Azure.Storage.Files.Shares
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -4336,8 +4295,7 @@ namespace Azure.Storage.Files.Shares
                             sourceRange: sourceRange.ToString(),
                             // TODO
                             sourceModifiedAccessConditions: null,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -4977,9 +4935,7 @@ namespace Azure.Storage.Files.Shares
             string snapshot,
 #pragma warning restore CA1801 // Review unused parameters
             string previousSnapshot,
-#pragma warning disable CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
 #pragma warning disable CA1801 // Review unused parameters
             string operationName,
 #pragma warning restore CA1801 // Review unused parameters
@@ -5005,8 +4961,7 @@ namespace Azure.Storage.Files.Shares
                             fileName: _name,
                             prevsharesnapshot: previousSnapshot,
                             range: range?.ToString(),
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -5019,8 +4974,7 @@ namespace Azure.Storage.Files.Shares
                             fileName: _name,
                             prevsharesnapshot: previousSnapshot,
                             range: range?.ToString(),
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 

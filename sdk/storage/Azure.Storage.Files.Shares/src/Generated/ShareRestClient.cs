@@ -148,7 +148,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string shareName, int? timeout, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateGetPropertiesRequest(string shareName, int? timeout, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -182,7 +182,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareGetPropertiesHeaders>> GetPropertiesAsync(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareGetPropertiesHeaders>> GetPropertiesAsync(string shareName, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -207,7 +207,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<ShareGetPropertiesHeaders> GetProperties(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareGetPropertiesHeaders> GetProperties(string shareName, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -226,7 +226,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string shareName, int? timeout, DeleteSnapshotsOptionType? deleteSnapshots, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateDeleteRequest(string shareName, int? timeout, DeleteSnapshotsOptionType? deleteSnapshots, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -265,7 +265,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareDeleteHeaders>> DeleteAsync(string shareName, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareDeleteHeaders>> DeleteAsync(string shareName, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -291,7 +291,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<ShareDeleteHeaders> Delete(string shareName, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareDeleteHeaders> Delete(string shareName, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -657,7 +657,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateBreakLeaseRequest(string shareName, int? timeout, int? breakPeriod, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateBreakLeaseRequest(string shareName, int? timeout, int? breakPeriod, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -698,7 +698,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareBreakLeaseHeaders>> BreakLeaseAsync(string shareName, int? timeout = null, int? breakPeriod = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareBreakLeaseHeaders>> BreakLeaseAsync(string shareName, int? timeout = null, int? breakPeriod = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -724,7 +724,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<ShareBreakLeaseHeaders> BreakLease(string shareName, int? timeout = null, int? breakPeriod = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareBreakLeaseHeaders> BreakLease(string shareName, int? timeout = null, int? breakPeriod = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -991,7 +991,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(string shareName, int? timeout, int? quota, ShareAccessTier? accessTier, ShareRootSquash? rootSquash, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateSetPropertiesRequest(string shareName, int? timeout, int? quota, ShareAccessTier? accessTier, ShareRootSquash? rootSquash, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1037,7 +1037,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareSetPropertiesHeaders>> SetPropertiesAsync(string shareName, int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareSetPropertiesHeaders>> SetPropertiesAsync(string shareName, int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1065,7 +1065,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<ShareSetPropertiesHeaders> SetProperties(string shareName, int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareSetPropertiesHeaders> SetProperties(string shareName, int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1084,7 +1084,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(string shareName, int? timeout, IDictionary<string, string> metadata, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateSetMetadataRequest(string shareName, int? timeout, IDictionary<string, string> metadata, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1120,7 +1120,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareSetMetadataHeaders>> SetMetadataAsync(string shareName, int? timeout = null, IDictionary<string, string> metadata = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareSetMetadataHeaders>> SetMetadataAsync(string shareName, int? timeout = null, IDictionary<string, string> metadata = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1146,7 +1146,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<ShareSetMetadataHeaders> SetMetadata(string shareName, int? timeout = null, IDictionary<string, string> metadata = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareSetMetadataHeaders> SetMetadata(string shareName, int? timeout = null, IDictionary<string, string> metadata = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1165,7 +1165,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateGetAccessPolicyRequest(string shareName, int? timeout, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateGetAccessPolicyRequest(string shareName, int? timeout, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1196,7 +1196,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders>> GetAccessPolicyAsync(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders>> GetAccessPolicyAsync(string shareName, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1234,7 +1234,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders> GetAccessPolicy(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders> GetAccessPolicy(string shareName, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1266,7 +1266,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetAccessPolicyRequest(string shareName, int? timeout, IEnumerable<ShareSignedIdentifier> shareAcl, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateSetAccessPolicyRequest(string shareName, int? timeout, IEnumerable<ShareSignedIdentifier> shareAcl, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1310,7 +1310,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareSetAccessPolicyHeaders>> SetAccessPolicyAsync(string shareName, int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareSetAccessPolicyHeaders>> SetAccessPolicyAsync(string shareName, int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1336,7 +1336,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<ShareSetAccessPolicyHeaders> SetAccessPolicy(string shareName, int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareSetAccessPolicyHeaders> SetAccessPolicy(string shareName, int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1355,7 +1355,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateGetStatisticsRequest(string shareName, int? timeout, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateGetStatisticsRequest(string shareName, int? timeout, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1386,7 +1386,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders>> GetStatisticsAsync(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders>> GetStatisticsAsync(string shareName, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
@@ -1419,7 +1419,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        public ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders> GetStatistics(string shareName, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders> GetStatistics(string shareName, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (shareName == null)
             {
