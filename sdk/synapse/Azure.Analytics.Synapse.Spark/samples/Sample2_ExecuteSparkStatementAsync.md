@@ -35,7 +35,7 @@ SparkSession sessionCreated = await createSessionOperation.WaitForCompletionAsyn
 
 ## Retrieve a Spark Session
 
-To retrieve an existing session call `StartGetSparkSessionAsync`, passing in the session ID and then wait for the operation to be complete.
+To retrieve an existing session call `StartGetSparkSessionAsync`, passing in the session ID.
 
 ```C# Snippet:GetSparkSessionAsync
 SparkSession session = await client.GetSparkSessionAsync(sessionCreated.Id);
@@ -59,7 +59,7 @@ SparkStatement statementCreated = await createStatementOperation.WaitForCompleti
 
 ## Retrieve a statement
 
-To retrieve an existing statement call `StartGetSparkStatementAsync`, passing in both the session ID and the ID of the statement and then wait for the operation to be complete.
+To retrieve an existing statement call `StartGetSparkStatementAsync`, passing in both the session ID and the ID of the statement.
 
 ```C# Snippet:GetSparkStatementAsync
 SparkStatement statement = await client.GetSparkStatementAsync(sessionCreated.Id, statementCreated.Id);
