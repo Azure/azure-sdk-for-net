@@ -152,7 +152,7 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual async Task<Response<T>> GetDigitalTwinAsync<T>(string digitalTwinId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetDigitalTwinAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetDigitalTwin)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.Start();
 
@@ -274,7 +274,7 @@ namespace Azure.DigitalTwins.Core
             ETag? ifNoneMatch = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceDigitalTwinAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceDigitalTwin)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.Start();
 
@@ -389,9 +389,9 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Deleted digital twin &apos;{digitalTwinId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteDigitalTwinAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteDigitalTwin)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.Start();
 
@@ -400,7 +400,7 @@ namespace Azure.DigitalTwins.Core
                 DeleteDigitalTwinOptions options = ifMatch != null ?
                     new DeleteDigitalTwinOptions { IfMatch = ifMatch.Value.ToString() } :
                     null;
-                return _dtRestClient.DeleteAsync(digitalTwinId, options, cancellationToken);
+                return await _dtRestClient.DeleteAsync(digitalTwinId, options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -467,9 +467,9 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatchDocument"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateDigitalTwinAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateDigitalTwin)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.Start();
 
@@ -479,7 +479,7 @@ namespace Azure.DigitalTwins.Core
                 UpdateDigitalTwinOptions options = ifMatch != null ?
                     new UpdateDigitalTwinOptions { IfMatch = ifMatch.Value.ToString() } :
                     null;
-                return _dtRestClient.UpdateAsync(digitalTwinId, jsonPatchDocument.ToString(), options, cancellationToken);
+                return await _dtRestClient.UpdateAsync(digitalTwinId, jsonPatchDocument.ToString(), options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -554,7 +554,7 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual async Task<Response<T>> GetComponentAsync<T>(string digitalTwinId, string componentName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetComponentAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetComponent)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.Start();
 
@@ -647,9 +647,9 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Updated component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> UpdateComponentAsync(string digitalTwinId, string componentName, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateComponentAsync(string digitalTwinId, string componentName, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateComponentAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateComponent)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.AddAttribute(nameof(componentName), componentName);
             scope.Start();
@@ -660,7 +660,13 @@ namespace Azure.DigitalTwins.Core
                 UpdateComponentOptions options = ifMatch != null ?
                     new UpdateComponentOptions { IfMatch = ifMatch.Value.ToString() } :
                     null;
-                return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentName, jsonPatchDocument.ToString(), options, cancellationToken);
+
+                return await _dtRestClient.UpdateComponentAsync(
+                    digitalTwinId,
+                    componentName,
+                    jsonPatchDocument.ToString(),
+                    options,
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -750,7 +756,7 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual AsyncPageable<T> GetRelationshipsAsync<T>(string digitalTwinId, string relationshipName = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationshipsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.AddAttribute(nameof(relationshipName), relationshipName);
             scope.Start();
@@ -911,7 +917,7 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual AsyncPageable<IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetIncomingRelationshipsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetIncomingRelationships)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.Start();
 
@@ -986,7 +992,7 @@ namespace Azure.DigitalTwins.Core
             {
                 Page<IncomingRelationship> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsGeneratedClient.ListIncomingRelationships");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetIncomingRelationships)}");
                     scope.Start();
                     try
                     {
@@ -1002,7 +1008,7 @@ namespace Azure.DigitalTwins.Core
 
                 Page<IncomingRelationship> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsGeneratedClient.ListIncomingRelationships");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetIncomingRelationships)}");
                     scope.Start();
                     try
                     {
@@ -1061,7 +1067,7 @@ namespace Azure.DigitalTwins.Core
             string relationshipId,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationshipAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationship)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.AddAttribute(nameof(relationshipId), relationshipId);
             scope.Start();
@@ -1147,9 +1153,9 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        public virtual Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteRelationshipAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteRelationship)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.AddAttribute(nameof(relationshipId), relationshipId);
             scope.Start();
@@ -1159,7 +1165,7 @@ namespace Azure.DigitalTwins.Core
                 DeleteRelationshipOptions options = ifMatch != null ?
                 new DeleteRelationshipOptions { IfMatch = ifMatch.Value.ToString() } :
                 null;
-                return _dtRestClient.DeleteRelationshipAsync(digitalTwinId, relationshipId, options, cancellationToken);
+                return await _dtRestClient.DeleteRelationshipAsync(digitalTwinId, relationshipId, options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1269,7 +1275,7 @@ namespace Azure.DigitalTwins.Core
             ETag? ifNoneMatch = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceRelationshipAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceRelationship)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.AddAttribute(nameof(relationshipId), relationshipId);
             scope.Start();
@@ -1389,9 +1395,9 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateRelationshipAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateRelationship)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.AddAttribute(nameof(relationshipId), relationshipId);
             scope.Start();
@@ -1402,7 +1408,12 @@ namespace Azure.DigitalTwins.Core
                 UpdateRelationshipOptions options = ifMatch != null ?
                     new UpdateRelationshipOptions { IfMatch = ifMatch.Value.ToString() } :
                     null;
-                return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, jsonPatchDocument.ToString(), options, cancellationToken);
+                return await _dtRestClient.UpdateRelationshipAsync(
+                    digitalTwinId,
+                    relationshipId,
+                    jsonPatchDocument.ToString(),
+                    options,
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1480,14 +1491,14 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual AsyncPageable<DigitalTwinsModelData> GetModelsAsync(GetModelsOptions options = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModelsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModels)}");
             scope.Start();
 
             try
             {
                 async Task<Page<DigitalTwinsModelData>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModels)}");
                     scope.Start();
                     try
                     {
@@ -1511,7 +1522,7 @@ namespace Azure.DigitalTwins.Core
 
                 async Task<Page<DigitalTwinsModelData>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModels)}");
                     scope.Start();
                     try
                     {
@@ -1566,7 +1577,7 @@ namespace Azure.DigitalTwins.Core
             {
                 Page<DigitalTwinsModelData> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModels)}");
                     scope.Start();
                     try
                     {
@@ -1582,7 +1593,7 @@ namespace Azure.DigitalTwins.Core
 
                 Page<DigitalTwinsModelData> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModels)}");
                     scope.Start();
                     try
                     {
@@ -1626,16 +1637,16 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Retrieved model &apos;{sampleModelResponse.Value.Id}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<DigitalTwinsModelData>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DigitalTwinsModelData>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModelAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModel)}");
             scope.AddAttribute(nameof(modelId), modelId);
             scope.Start();
 
             try
             {
                 // The GetModel API will include the model definition in its response by default.
-                return _dtModelsRestClient.GetByIdAsync(modelId, IncludeModelDefinition, null, cancellationToken);
+                return await _dtModelsRestClient.GetByIdAsync(modelId, IncludeModelDefinition, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1715,15 +1726,15 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual Task<Response> DecommissionModelAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DecommissionModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DecommissionModelAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DecommissionModel)}");
             scope.AddAttribute(nameof(modelId), modelId);
             scope.Start();
 
             try
             {
-                return _dtModelsRestClient.UpdateAsync(modelId, ModelsConstants.DecommissionModelOperationList, null, cancellationToken);
+                return await _dtModelsRestClient.UpdateAsync(modelId, ModelsConstants.DecommissionModelOperationList, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1803,7 +1814,7 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual async Task<Response<DigitalTwinsModelData[]>> CreateModelsAsync(IEnumerable<string> dtdlModels, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateModelsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateModels)}");
             int index = 1;
             foreach (var id in dtdlModels)
             {
@@ -1909,15 +1920,15 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteModelAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteModel)}");
             scope.AddAttribute(nameof(modelId), modelId);
             scope.Start();
 
             try
             {
-                return _dtModelsRestClient.DeleteAsync(modelId, null, cancellationToken);
+                return await _dtModelsRestClient.DeleteAsync(modelId, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2004,7 +2015,7 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual AsyncPageable<T> QueryAsync<T>(string query, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(QueryAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
             scope.AddAttribute(nameof(query), query);
             scope.Start();
 
@@ -2192,14 +2203,14 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual AsyncPageable<DigitalTwinsEventRoute> GetEventRoutesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoutesAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoutes)}");
             scope.Start();
 
             try
             {
                 async Task<Page<DigitalTwinsEventRoute>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoutes)}");
                     scope.Start();
                     try
                     {
@@ -2221,7 +2232,7 @@ namespace Azure.DigitalTwins.Core
 
                 async Task<Page<DigitalTwinsEventRoute>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoutes)}");
                     scope.Start();
                     try
                     {
@@ -2273,7 +2284,7 @@ namespace Azure.DigitalTwins.Core
             {
                 Page<DigitalTwinsEventRoute> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoutes)}");
                     scope.Start();
                     try
                     {
@@ -2295,7 +2306,7 @@ namespace Azure.DigitalTwins.Core
 
                 Page<DigitalTwinsEventRoute> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoutes)}");
                     scope.Start();
 
                     var options = new GetDigitalTwinsEventRoutesOptions
@@ -2340,15 +2351,15 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response<DigitalTwinsEventRoute>> GetEventRouteAsync(string eventRouteId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DigitalTwinsEventRoute>> GetEventRouteAsync(string eventRouteId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRouteAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoute)}");
             scope.AddAttribute(nameof(eventRouteId), eventRouteId);
             scope.Start();
 
             try
             {
-                return _eventRoutesRestClient.GetByIdAsync(eventRouteId, null, cancellationToken);
+                return await _eventRoutesRestClient.GetByIdAsync(eventRouteId, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2418,15 +2429,15 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> CreateOrReplaceEventRouteAsync(string eventRouteId, DigitalTwinsEventRoute eventRoute, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateOrReplaceEventRouteAsync(string eventRouteId, DigitalTwinsEventRoute eventRoute, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceEventRouteAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceEventRoute)}");
             scope.AddAttribute(nameof(eventRouteId), eventRouteId);
             scope.Start();
 
             try
             {
-                return _eventRoutesRestClient.AddAsync(eventRouteId, eventRoute, null, cancellationToken);
+                return await _eventRoutesRestClient.AddAsync(eventRouteId, eventRoute, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2493,15 +2504,15 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Deleted event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> DeleteEventRouteAsync(string eventRouteId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteEventRouteAsync(string eventRouteId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteEventRouteAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteEventRoute)}");
             scope.AddAttribute(nameof(eventRouteId), eventRouteId);
             scope.Start();
 
             try
             {
-                return _eventRoutesRestClient.DeleteAsync(eventRouteId, null, cancellationToken);
+                return await _eventRoutesRestClient.DeleteAsync(eventRouteId, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2572,14 +2583,14 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Published telemetry message to twin &apos;{twinId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> PublishTelemetryAsync(
+        public virtual async Task<Response> PublishTelemetryAsync(
             string digitalTwinId,
             string messageId,
             string payload,
             DateTimeOffset? timestamp = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(PublishTelemetryAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(PublishTelemetry)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.AddAttribute(nameof(messageId), messageId);
             scope.Start();
@@ -2598,7 +2609,7 @@ namespace Azure.DigitalTwins.Core
                     options.TimeStamp = timestamp.Value;
                 }
 
-                return _dtRestClient.SendTelemetryAsync(digitalTwinId, messageId, payload, options, cancellationToken);
+                return await _dtRestClient.SendTelemetryAsync(digitalTwinId, messageId, payload, options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2696,7 +2707,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Published component telemetry message to twin &apos;{twinId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> PublishComponentTelemetryAsync(
+        public virtual async Task<Response> PublishComponentTelemetryAsync(
             string digitalTwinId,
             string componentName,
             string messageId,
@@ -2704,7 +2715,7 @@ namespace Azure.DigitalTwins.Core
             DateTimeOffset? timestamp = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(PublishComponentTelemetryAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(PublishComponentTelemetry)}");
             scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
             scope.AddAttribute(nameof(componentName), componentName);
             scope.AddAttribute(nameof(messageId), messageId);
@@ -2724,8 +2735,8 @@ namespace Azure.DigitalTwins.Core
                     options.TimeStamp = timestamp.Value;
                 }
 
-                return _dtRestClient
-                    .SendComponentTelemetryAsync(digitalTwinId, componentName, messageId, payload, options, cancellationToken);
+                return await _dtRestClient
+                    .SendComponentTelemetryAsync(digitalTwinId, componentName, messageId, payload, options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
