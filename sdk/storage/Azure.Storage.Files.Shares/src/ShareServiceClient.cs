@@ -1242,20 +1242,19 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     ShareClient shareClient = GetShareClient(deletedShareName);
 
-                    ShareRestClient shareRestClient = new ShareRestClient(
-                        _clientDiagnostics,
-                        _pipeline,
-                        // TODO this probably won't work
-                        shareClient.Uri.ToString(),
-                        version: _version.ToVersionString(),
-                        // TODO
-                        sharesnapshot: null);
+                    //ShareRestClient shareRestClient = new ShareRestClient(
+                    //    _clientDiagnostics,
+                    //    _pipeline,
+                    //    _uri.ToString(),
+                    //    version: _version.ToVersionString(),
+                    //    // TODO
+                    //    sharesnapshot: null);
 
                     ResponseWithHeaders<ShareRestoreHeaders> response;
 
                     if (async)
                     {
-                        response = await shareRestClient.RestoreAsync(
+                        response = await shareClient.ShareRestClient.RestoreAsync(
                             shareName: deletedShareName,
                             deletedShareName: deletedShareName,
                             deletedShareVersion: deletedShareVersion,
@@ -1264,25 +1263,12 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = shareRestClient.Restore(
+                        response = shareClient.ShareRestClient.Restore(
                             shareName: deletedShareName,
                             deletedShareName: deletedShareName,
                             deletedShareVersion: deletedShareVersion,
                             cancellationToken: cancellationToken);
                     }
-
-                    // TODO remove this.
-                    //Response<ShareInfo> response = await FileRestClient.Share.RestoreAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    shareClient.Uri,
-                    //    Version.ToVersionString(),
-                    //    deletedShareName: deletedShareName,
-                    //    deletedShareVersion: deletedShareVersion,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareServiceClient)}.{nameof(UndeleteShare)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
 
                     return Response.FromValue(shareClient, response.GetRawResponse());
                 }
