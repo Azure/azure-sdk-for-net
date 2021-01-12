@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> A listed directory item. </summary>
-    public partial class DirectoryItem
+    internal partial class DirectoryItem
     {
         /// <summary> Initializes a new instance of DirectoryItem. </summary>
         /// <param name="name"> . </param>

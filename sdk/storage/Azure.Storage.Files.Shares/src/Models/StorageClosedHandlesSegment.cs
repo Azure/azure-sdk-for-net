@@ -3,6 +3,9 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
+    /// <summary>
+    /// StorageClosedHandlesSegment.
+    /// </summary>
     public class StorageClosedHandlesSegment
     {
         /// <summary>

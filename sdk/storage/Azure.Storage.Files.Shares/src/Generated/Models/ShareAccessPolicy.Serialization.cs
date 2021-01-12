@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class AccessPolicy : IXmlSerializable
+    public partial class ShareAccessPolicy : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -38,7 +38,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static AccessPolicy DeserializeAccessPolicy(XElement element)
+        internal static ShareAccessPolicy DeserializeShareAccessPolicy(XElement element)
         {
             DateTimeOffset? start = default;
             DateTimeOffset? expiry = default;
@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 permission = (string)permissionElement;
             }
-            return new AccessPolicy(start, expiry, permission);
+            return new ShareAccessPolicy(start, expiry, permission);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class FilesAndDirectoriesListSegment
+    internal partial class FilesAndDirectoriesListSegment
     {
         internal static FilesAndDirectoriesListSegment DeserializeFilesAndDirectoriesListSegment(XElement element)
         {

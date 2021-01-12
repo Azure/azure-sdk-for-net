@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class FileItem
+    internal partial class FileItem
     {
         internal static FileItem DeserializeFileItem(XElement element)
         {

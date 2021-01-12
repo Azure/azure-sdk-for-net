@@ -29,14 +29,14 @@ namespace Azure.Storage.Files.Shares.Models
         internal static ShareSignedIdentifier DeserializeShareSignedIdentifier(XElement element)
         {
             string id = default;
-            AccessPolicy accessPolicy = default;
+            ShareAccessPolicy accessPolicy = default;
             if (element.Element("Id") is XElement idElement)
             {
                 id = (string)idElement;
             }
             if (element.Element("AccessPolicy") is XElement accessPolicyElement)
             {
-                accessPolicy = AccessPolicy.DeserializeAccessPolicy(accessPolicyElement);
+                accessPolicy = ShareAccessPolicy.DeserializeShareAccessPolicy(accessPolicyElement);
             }
             return new ShareSignedIdentifier(id, accessPolicy);
         }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ShareItemInternal
+    internal partial class SharePropertiesInternal
     {
     }
 }

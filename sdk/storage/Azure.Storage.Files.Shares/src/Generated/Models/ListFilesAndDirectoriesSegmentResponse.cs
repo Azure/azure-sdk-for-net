@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> An enumeration of directories and files. </summary>
-    public partial class ListFilesAndDirectoriesSegmentResponse
+    internal partial class ListFilesAndDirectoriesSegmentResponse
     {
         /// <summary> Initializes a new instance of ListFilesAndDirectoriesSegmentResponse. </summary>
         /// <param name="serviceEndpoint"> . </param>

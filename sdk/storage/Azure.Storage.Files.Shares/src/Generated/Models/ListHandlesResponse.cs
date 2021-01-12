@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> An enumeration of handles. </summary>
-    public partial class ListHandlesResponse
+    internal partial class ListHandlesResponse
     {
         /// <summary> Initializes a new instance of ListHandlesResponse. </summary>
         /// <param name="nextMarker"> . </param>

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareFileRangeList
+    internal partial class ShareFileRangeList
     {
         internal static ShareFileRangeList DeserializeShareFileRangeList(XElement element)
         {

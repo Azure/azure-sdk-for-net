@@ -17,11 +17,14 @@ namespace Azure.Storage.Files.Shares.Models
     [CodeGenModel("ShareStats")]
     public partial class ShareStatistics
     {
+        internal ShareStatistics() { }
+
         /// <summary>
         /// Warning: ShareUsageBytes may exceed int.MaxValue.  Use ShareUsageInBytes instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int ShareUsageBytes {
+        public int ShareUsageBytes
+        {
             get
             {
                 if (ShareUsageInBytes > int.MaxValue)
@@ -34,6 +37,11 @@ namespace Azure.Storage.Files.Shares.Models
             }
             internal set { ShareUsageInBytes = value; }
         }
+
+        /// <summary>
+        /// The approximate size of the data stored in bytes, rounded up to the nearest gigabyte. Note that this value may not include all recently created or recently resized files.
+        /// </summary>
+        public long ShareUsageInBytes { get; internal set; }
     }
 
     /// <summary>

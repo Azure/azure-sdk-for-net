@@ -10,18 +10,18 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> An Access policy. </summary>
-    public partial class AccessPolicy
+    public partial class ShareAccessPolicy
     {
-        /// <summary> Initializes a new instance of AccessPolicy. </summary>
-        public AccessPolicy()
+        /// <summary> Initializes a new instance of ShareAccessPolicy. </summary>
+        public ShareAccessPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of AccessPolicy. </summary>
+        /// <summary> Initializes a new instance of ShareAccessPolicy. </summary>
         /// <param name="start"> The date-time the policy is active. </param>
         /// <param name="expiry"> The date-time the policy expires. </param>
         /// <param name="permission"> The permissions for the ACL policy. </param>
-        internal AccessPolicy(DateTimeOffset? start, DateTimeOffset? expiry, string permission)
+        internal ShareAccessPolicy(DateTimeOffset? start, DateTimeOffset? expiry, string permission)
         {
             Start = start;
             Expiry = expiry;

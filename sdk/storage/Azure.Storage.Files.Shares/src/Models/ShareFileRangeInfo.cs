@@ -51,20 +51,12 @@ namespace Azure.Storage.Files.Shares.Models
             Azure.ETag eTag,
             long fileContentLength,
             IEnumerable<HttpRange> ranges)
-        {
-            var shareFileRangeInfo =
-                new ShareFileRangeInfo(
-                    new ShareFileRangeInfoInternal()
-                    {
-                        LastModified = lastModified,
-                        ETag = eTag,
-                        FileContentLength = fileContentLength
-                    }
-                )
-                {
-                    Ranges = ranges
-                };
-            return shareFileRangeInfo;
-        }
+            => new ShareFileRangeInfo
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                FileContentLength = fileContentLength,
+                Ranges = ranges
+            };
     }
 }

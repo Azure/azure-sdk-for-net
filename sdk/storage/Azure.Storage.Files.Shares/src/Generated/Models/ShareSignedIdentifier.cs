@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of ShareSignedIdentifier. </summary>
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
-        internal ShareSignedIdentifier(string id, AccessPolicy accessPolicy)
+        internal ShareSignedIdentifier(string id, ShareAccessPolicy accessPolicy)
         {
             Id = id;
             AccessPolicy = accessPolicy;
@@ -37,6 +37,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> A unique id. </summary>
         public string Id { get; set; }
         /// <summary> The access policy. </summary>
-        public AccessPolicy AccessPolicy { get; set; }
+        public ShareAccessPolicy AccessPolicy { get; set; }
     }
 }

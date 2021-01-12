@@ -1743,89 +1743,119 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             new GetFilesAndDirectoriesAsyncCollection(this, prefix).ToAsyncCollection(cancellationToken);
 
-        // TODO fix this.
-        ///// <summary>
-        ///// The <see cref="GetFilesAndDirectoriesInternal"/> operation returns a
-        ///// single segment of files and subdirectories in this directory, starting
-        ///// from the specified <paramref name="marker"/>.
-        /////
-        ///// For more information, see
-        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">
-        ///// List Directories and Files</see>.
-        ///// </summary>
-        ///// <param name="marker">
-        ///// An optional string value that identifies the segment of the list
-        ///// of items to be returned with the next listing operation.  The
-        ///// operation returns a non-empty <see cref="FilesAndDirectoriesSegment.NextMarker"/>
-        ///// if the listing operation did not return all items remaining to be
-        ///// listed with the current segment.  The NextMarker value can
-        ///// be used as the value for the <paramref name="marker"/> parameter
-        ///// in a subsequent call to request the next segment of list items.
-        ///// </param>
-        ///// <param name="prefix">
-        ///// Optional string that filters the results to return only
-        ///// files and directories whose name begins with the specified prefix.
-        ///// </param>
-        ///// <param name="pageSizeHint">
-        ///// Gets or sets a value indicating the size of the page that should be
-        ///// requested.
-        ///// </param>
-        ///// <param name="async">
-        ///// Whether to invoke the operation asynchronously.
-        ///// </param>
-        ///// <param name="cancellationToken">
-        ///// Optional <see cref="CancellationToken"/> to propagate
-        ///// notifications that the operation should be cancelled.
-        ///// </param>
-        ///// <returns>
-        ///// A <see cref="Response{FilesAndDirectoriesSegment}"/> describing a
-        ///// segment of the items in the directory.
-        ///// </returns>
-        ///// <remarks>
-        ///// A <see cref="RequestFailedException"/> will be thrown if
-        ///// a failure occurs.
-        ///// </remarks>
-        //internal async Task<Response<FilesAndDirectoriesSegment>> GetFilesAndDirectoriesInternal(
-        //    string marker,
-        //    string prefix,
-        //    int? pageSizeHint,
-        //    bool async,
-        //    CancellationToken cancellationToken)
-        //{
-        //    using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
-        //    {
-        //        Pipeline.LogMethodEnter(
-        //            nameof(ShareDirectoryClient),
-        //            message:
-        //            $"{nameof(Uri)}: {Uri}\n" +
-        //            $"{nameof(marker)}: {marker}\n" +
-        //            $"{nameof(prefix)}: {prefix}");
-        //        try
-        //        {
-        //            return await FileRestClient.Directory.ListFilesAndDirectoriesSegmentAsync(
-        //                ClientDiagnostics,
-        //                Pipeline,
-        //                Uri,
-        //                version: Version.ToVersionString(),
-        //                marker: marker,
-        //                prefix: prefix,
-        //                maxresults: pageSizeHint,
-        //                async: async,
-        //                operationName: $"{nameof(ShareDirectoryClient)}.{nameof(GetFilesAndDirectories)}",
-        //                cancellationToken: cancellationToken)
-        //                .ConfigureAwait(false);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Pipeline.LogException(ex);
-        //            throw;
-        //        }
-        //        finally
-        //        {
-        //            Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
-        //        }
-        //    }
-        //}
+        /// <summary>
+        /// The <see cref="GetFilesAndDirectoriesInternal"/> operation returns a
+        /// single segment of files and subdirectories in this directory, starting
+        /// from the specified <paramref name="marker"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">
+        /// List Directories and Files</see>.
+        /// </summary>
+        /// <param name="marker">
+        /// An optional string value that identifies the segment of the list
+        /// of items to be returned with the next listing operation.  The
+        /// operation returns a non-empty <see cref="ListFilesAndDirectoriesSegmentResponse.NextMarker"/>
+        /// if the listing operation did not return all items remaining to be
+        /// listed with the current segment.  The NextMarker value can
+        /// be used as the value for the <paramref name="marker"/> parameter
+        /// in a subsequent call to request the next segment of list items.
+        /// </param>
+        /// <param name="prefix">
+        /// Optional string that filters the results to return only
+        /// files and directories whose name begins with the specified prefix.
+        /// </param>
+        /// <param name="pageSizeHint">
+        /// Gets or sets a value indicating the size of the page that should be
+        /// requested.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FilesAndDirectoriesSegment}"/> describing a
+        /// segment of the items in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<ListFilesAndDirectoriesSegmentResponse>> GetFilesAndDirectoriesInternal(
+            string marker,
+            string prefix,
+            int? pageSizeHint,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareDirectoryClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(marker)}: {marker}\n" +
+                    $"{nameof(prefix)}: {prefix}");
+                try
+                {
+                    ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _directoryRestClient.ListFilesAndDirectoriesSegmentAsync(
+                            shareName: _shareName,
+                            // TODO
+                            directory: null,
+                            prefix: prefix,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _directoryRestClient.ListFilesAndDirectoriesSegment(
+                            shareName: _shareName,
+                            // TODO
+                            directory: null,
+                            prefix: prefix,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+
+                    // TODO remove this.
+                    //return await FileRestClient.Directory.ListFilesAndDirectoriesSegmentAsync(
+                    //    ClientDiagnostics,
+                    //    Pipeline,
+                    //    Uri,
+                    //    version: Version.ToVersionString(),
+                    //    marker: marker,
+                    //    prefix: prefix,
+                    //    maxresults: pageSizeHint,
+                    //    async: async,
+                    //    operationName: $"{nameof(ShareDirectoryClient)}.{nameof(GetFilesAndDirectories)}",
+                    //    cancellationToken: cancellationToken)
+                    //    .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                }
+            }
+        }
         #endregion GetFilesAndDirectories
 
         #region GetHandles

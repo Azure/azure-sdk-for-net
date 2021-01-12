@@ -7,6 +7,9 @@ using System.Text;
 
 namespace Azure.Storage.Files.Shares.Models
 {
+    /// <summary>
+    /// ShareFileLease.
+    /// </summary>
     public partial class ShareFileLease
     {
         /// <summary>

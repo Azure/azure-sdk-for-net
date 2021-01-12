@@ -132,7 +132,9 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareFileDownloadDetails StorageFileDownloadProperties(
             DateTimeOffset lastModified,
             IDictionary<string, string> metadata,
+#pragma warning disable CA1801 // Review unused parameters
             string contentType,
+#pragma warning restore CA1801 // Review unused parameters
             string contentRange,
             ETag eTag,
             IEnumerable<string> contentEncoding,
@@ -140,7 +142,9 @@ namespace Azure.Storage.Files.Shares.Models
             string contentDisposition,
             IEnumerable<string> contentLanguage,
             string acceptRanges,
+#pragma warning disable CA1801 // Review unused parameters
             DateTimeOffset copyCompletedOn,
+#pragma warning restore CA1801 // Review unused parameters
             string copyStatusDescription,
             string copyId,
             string copyProgress,
@@ -149,11 +153,12 @@ namespace Azure.Storage.Files.Shares.Models
             byte[] fileContentHash,
             bool isServiceEncrypted)
         {
-            var flattened = new FlattenedStorageFileProperties()
+            return new ShareFileDownloadDetails
             {
                 LastModified = lastModified,
                 Metadata = metadata,
-                ContentType = contentType,
+                // TODO
+                //ContentType = contentType,
                 ContentRange = contentRange,
                 ETag = eTag,
                 ContentEncoding = contentEncoding,
@@ -161,7 +166,8 @@ namespace Azure.Storage.Files.Shares.Models
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
                 AcceptRanges = acceptRanges,
-                CopyCompletionTime = copyCompletedOn,
+                // TODO
+                //CopyCompletionTime = copyCompletedOn,
                 CopyStatusDescription = copyStatusDescription,
                 CopyId = copyId,
                 CopyProgress = copyProgress,
@@ -170,7 +176,6 @@ namespace Azure.Storage.Files.Shares.Models
                 FileContentHash = fileContentHash,
                 IsServerEncrypted = isServiceEncrypted
             };
-            return new ShareFileDownloadDetails(flattened);
         }
     }
 }

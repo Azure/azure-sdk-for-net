@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Abstract for entries that can be listed from Directory. </summary>
-    public partial class FilesAndDirectoriesListSegment
+    internal partial class FilesAndDirectoriesListSegment
     {
         /// <summary> Initializes a new instance of FilesAndDirectoriesListSegment. </summary>
         /// <param name="directoryItems"> . </param>

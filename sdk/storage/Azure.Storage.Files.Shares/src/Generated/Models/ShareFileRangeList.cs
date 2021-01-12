@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> The list of file ranges. </summary>
-    public partial class ShareFileRangeList
+    internal partial class ShareFileRangeList
     {
         /// <summary> Initializes a new instance of ShareFileRangeList. </summary>
         internal ShareFileRangeList()

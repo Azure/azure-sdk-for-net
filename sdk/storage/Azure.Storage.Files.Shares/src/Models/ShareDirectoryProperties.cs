@@ -55,6 +55,7 @@ namespace Azure.Storage.Files.Shares.Models
                 ETag eTag,
                 DateTimeOffset lastModified,
                 bool isServerEncrypted,
+#pragma warning disable CA1801 // Review unused parameters
                 string fileAttributes,
                 DateTimeOffset fileCreationTime,
                 DateTimeOffset fileLastWriteTime,
@@ -62,20 +63,22 @@ namespace Azure.Storage.Files.Shares.Models
                 string filePermissionKey,
                 string fileId,
                 string fileParentId
+#pragma warning restore CA1801 // Review unused parameters
             )
-            => new ShareDirectoryProperties(new RawStorageDirectoryProperties()
+            => new ShareDirectoryProperties
             {
                 Metadata = metadata,
                 ETag = eTag,
                 LastModified = lastModified,
                 IsServerEncrypted = isServerEncrypted,
-                FileAttributes = fileAttributes,
-                FileCreationTime = fileCreationTime,
-                FileLastWriteTime = fileLastWriteTime,
-                FileChangeTime = fileChangeTime,
-                FilePermissionKey = filePermissionKey,
-                FileId = fileId,
-                FileParentId = fileParentId
-            });
+                // TODO fix this.
+                //FileAttributes = fileAttributes,
+                //FileCreationTime = fileCreationTime,
+                //FileLastWriteTime = fileLastWriteTime,
+                //FileChangeTime = fileChangeTime,
+                //FilePermissionKey = filePermissionKey,
+                //FileId = fileId,
+                //FileParentId = fileParentId
+            };
     }
 }
