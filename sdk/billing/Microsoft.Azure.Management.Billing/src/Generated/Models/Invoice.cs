@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="invoiceDate">The date when the invoice was
         /// generated.</param>
         /// <param name="status">The current status of the invoice. Possible
-        /// values include: 'Due', 'OverDue', 'Paid'</param>
+        /// values include: 'Due', 'OverDue', 'Paid', 'Void'</param>
         /// <param name="amountDue">The amount due as of now.</param>
         /// <param name="azurePrepaymentApplied">The amount of Azure prepayment
         /// applied to the charges. This field is applicable to billing
@@ -83,9 +83,18 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="documents">List of documents available to download
         /// such as invoice and tax receipt.</param>
         /// <param name="payments">List of payments.</param>
+        /// <param name="rebillDetails">Rebill details for an invoice.</param>
+        /// <param name="documentType">The type of the document. Possible
+        /// values include: 'Invoice', 'CreditNote'</param>
+        /// <param name="billedDocumentId">The Id of the active invoice which
+        /// is originally billed after this invoice was voided. This field is
+        /// applicable to the void invoices only.</param>
+        /// <param name="creditForDocumentId">The Id of the invoice which got
+        /// voided and this credit note was issued as a result. This field is
+        /// applicable to the credit notes only.</param>
         /// <param name="subscriptionId">The ID of the subscription for which
         /// the invoice is generated.</param>
-        public Invoice(string id = default(string), string name = default(string), string type = default(string), System.DateTime? dueDate = default(System.DateTime?), System.DateTime? invoiceDate = default(System.DateTime?), string status = default(string), Amount amountDue = default(Amount), Amount azurePrepaymentApplied = default(Amount), Amount billedAmount = default(Amount), Amount creditAmount = default(Amount), Amount freeAzureCreditApplied = default(Amount), Amount subTotal = default(Amount), Amount taxAmount = default(Amount), Amount totalAmount = default(Amount), System.DateTime? invoicePeriodStartDate = default(System.DateTime?), System.DateTime? invoicePeriodEndDate = default(System.DateTime?), string invoiceType = default(string), bool? isMonthlyInvoice = default(bool?), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string purchaseOrderNumber = default(string), IList<Document> documents = default(IList<Document>), IList<PaymentProperties> payments = default(IList<PaymentProperties>), string subscriptionId = default(string))
+        public Invoice(string id = default(string), string name = default(string), string type = default(string), System.DateTime? dueDate = default(System.DateTime?), System.DateTime? invoiceDate = default(System.DateTime?), string status = default(string), Amount amountDue = default(Amount), Amount azurePrepaymentApplied = default(Amount), Amount billedAmount = default(Amount), Amount creditAmount = default(Amount), Amount freeAzureCreditApplied = default(Amount), Amount subTotal = default(Amount), Amount taxAmount = default(Amount), Amount totalAmount = default(Amount), System.DateTime? invoicePeriodStartDate = default(System.DateTime?), System.DateTime? invoicePeriodEndDate = default(System.DateTime?), string invoiceType = default(string), bool? isMonthlyInvoice = default(bool?), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string purchaseOrderNumber = default(string), IList<Document> documents = default(IList<Document>), IList<PaymentProperties> payments = default(IList<PaymentProperties>), IDictionary<string, RebillDetails> rebillDetails = default(IDictionary<string, RebillDetails>), string documentType = default(string), string billedDocumentId = default(string), string creditForDocumentId = default(string), string subscriptionId = default(string))
             : base(id, name, type)
         {
             DueDate = dueDate;
@@ -108,6 +117,10 @@ namespace Microsoft.Azure.Management.Billing.Models
             PurchaseOrderNumber = purchaseOrderNumber;
             Documents = documents;
             Payments = payments;
+            RebillDetails = rebillDetails;
+            DocumentType = documentType;
+            BilledDocumentId = billedDocumentId;
+            CreditForDocumentId = creditForDocumentId;
             SubscriptionId = subscriptionId;
             CustomInit();
         }
@@ -131,7 +144,7 @@ namespace Microsoft.Azure.Management.Billing.Models
 
         /// <summary>
         /// Gets the current status of the invoice. Possible values include:
-        /// 'Due', 'OverDue', 'Paid'
+        /// 'Due', 'OverDue', 'Paid', 'Void'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
@@ -256,6 +269,35 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.payments")]
         public IList<PaymentProperties> Payments { get; private set; }
+
+        /// <summary>
+        /// Gets rebill details for an invoice.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rebillDetails")]
+        public IDictionary<string, RebillDetails> RebillDetails { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the document. Possible values include: 'Invoice',
+        /// 'CreditNote'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.documentType")]
+        public string DocumentType { get; private set; }
+
+        /// <summary>
+        /// Gets the Id of the active invoice which is originally billed after
+        /// this invoice was voided. This field is applicable to the void
+        /// invoices only.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billedDocumentId")]
+        public string BilledDocumentId { get; private set; }
+
+        /// <summary>
+        /// Gets the Id of the invoice which got voided and this credit note
+        /// was issued as a result. This field is applicable to the credit
+        /// notes only.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.creditForDocumentId")]
+        public string CreditForDocumentId { get; private set; }
 
         /// <summary>
         /// Gets the ID of the subscription for which the invoice is generated.
