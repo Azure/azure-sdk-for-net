@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Xml;
+using System.Threading;
 using Azure.Core.TestFramework;
 using Azure.MixedReality.RemoteRendering.Models;
 using Azure.MixedReality.RemoteRendering.Tests;
@@ -35,9 +33,19 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
             string conversionId = "MyConversionId";
 
-            ConversionInformation conversion = client.CreateConversion(conversionId, settings).Value;
+            client.CreateConversion(conversionId, settings);
 
-            ConversionInformation conversion2 = client.GetConversion(conversionId).Value;
+            ConversionInformation conversion;
+            for (int i = 0; i < 10; ++i)
+            {
+                conversion = client.GetConversion(conversionId).Value;
+                if (conversion.Status == CreatedByType.Succeeded)
+                {
+                    Console.WriteLine($"Output written to {conversion.Settings.OutputLocation}");
+                    break;
+                }
+                Thread.Sleep(5000);
+            }
         }
     }
 }
