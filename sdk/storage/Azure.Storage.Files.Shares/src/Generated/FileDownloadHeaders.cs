@@ -75,10 +75,10 @@ namespace Azure.Storage.Files.Shares
         /// <summary> The parent fileId of the file. </summary>
         public string FileParentId => _response.Headers.TryGetValue("x-ms-file-parent-id", out string value) ? value : null;
         /// <summary> When a file is leased, specifies whether the lease is of infinite or fixed duration. </summary>
-        public LeaseDurationType? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out LeaseDurationType? value) ? value : null;
+        public ShareLeaseDuration? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out ShareLeaseDuration? value) ? value : null;
         /// <summary> Lease state of the file. </summary>
-        public LeaseStateType? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out LeaseStateType? value) ? value : null;
+        public ShareLeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out ShareLeaseState? value) ? value : null;
         /// <summary> The current lease status of the file. </summary>
-        public LeaseStatusType? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out LeaseStatusType? value) ? value : null;
+        public ShareLeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out ShareLeaseStatus? value) ? value : null;
     }
 }

@@ -413,9 +413,14 @@ namespace Azure.Storage.Files.Shares
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareServiceClient)}.{nameof(GetShares)}");
+
                 try
                 {
                     ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> response;
+
+                    scope.Start();
 
                     if (async)
                     {
@@ -437,21 +442,6 @@ namespace Azure.Storage.Files.Shares
                             cancellationToken: cancellationToken);
                     }
 
-                    // TODO remove this.
-                    //Response<SharesSegment> response = await FileRestClient.Service.ListSharesSegmentAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    marker: marker,
-                    //    prefix: prefix,
-                    //    maxresults: pageSizeHint,
-                    //    include: ShareExtensions.AsIncludeItems(traits, states),
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareServiceClient)}.{nameof(GetShares)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
-
                     if ((traits & ShareTraits.Metadata) != ShareTraits.Metadata)
                     {
                         IEnumerable<ShareItemInternal> shareItemInternals = response.Value.ShareItems;
@@ -468,11 +458,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareServiceClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -592,17 +584,6 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(
                         response.Value,
                         response.GetRawResponse());
-
-                    // TODO remove this.
-                    //return await FileRestClient.Service.GetPropertiesAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareServiceClient)}.{nameof(GetProperties)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

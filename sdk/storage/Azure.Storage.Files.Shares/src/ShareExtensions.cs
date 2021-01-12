@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Storage.Files.Shares.Models;
@@ -318,10 +319,70 @@ namespace Azure.Storage.Files.Shares
             return null;
         }
 
-        // TODO
-        internal static ShareItem[] ToShareItems(this IReadOnlyList<ShareItemInternal> shareItemInternals)
+        internal static IEnumerable<ShareItem> ToShareItems(this IReadOnlyList<ShareItemInternal> shareItemInternals)
         {
-            return null;
+            if (shareItemInternals == null)
+            {
+                return null;
+            }
+
+            return shareItemInternals.Select(r => r.ToShareItem());
+        }
+
+        internal static ShareItem ToShareItem(this ShareItemInternal shareItemInternal)
+        {
+            if (shareItemInternal == null)
+            {
+                return null;
+            }
+
+            return new ShareItem
+            {
+                Name = shareItemInternal.Name,
+                Snapshot = shareItemInternal.Snapshot,
+                IsDeleted = shareItemInternal.Deleted,
+                VersionId = shareItemInternal.Version,
+                Properties = ToShareProperties(shareItemInternal.Properties, shareItemInternal.Metadata),
+            };
+        }
+
+        internal static ShareProperties ToShareProperties(SharePropertiesInternal sharePropertiesInternal, IReadOnlyDictionary<string, string> rawMetadata)
+        {
+            if (sharePropertiesInternal == null)
+            {
+                return null;
+            }
+
+            // TODO there has to be a better way to do this.
+            IDictionary<string, string> metadata = null;
+
+            if (rawMetadata != null)
+            {
+                metadata = new Dictionary<string, string>();
+                rawMetadata.AsEnumerable().ToList().ForEach(r => metadata.Add(r));
+            }
+
+            return new ShareProperties
+            {
+                LastModified = sharePropertiesInternal.LastModified,
+                ETag = new ETag(sharePropertiesInternal.Etag),
+                ProvisionedIops = sharePropertiesInternal.ProvisionedIops,
+                ProvisionedIngressMBps = sharePropertiesInternal.ProvisionedIngressMBps,
+                ProvisionedEgressMBps = sharePropertiesInternal.ProvisionedEgressMBps,
+                NextAllowedQuotaDowngradeTime = sharePropertiesInternal.NextAllowedQuotaDowngradeTime,
+                DeletedOn = sharePropertiesInternal.DeletedTime,
+                RemainingRetentionDays = sharePropertiesInternal.RemainingRetentionDays,
+                AccessTier = sharePropertiesInternal.AccessTier,
+                AccessTierChangeTime = sharePropertiesInternal.AccessTierChangeTime,
+                AccessTierTransitionState = sharePropertiesInternal.AccessTierTransitionState,
+                LeaseStatus = sharePropertiesInternal.LeaseStatus,
+                LeaseState = sharePropertiesInternal.LeaseState,
+                LeaseDuration = sharePropertiesInternal.LeaseDuration,
+                Protocols = ToShareEnabledProtocols(sharePropertiesInternal.EnabledProtocols),
+                RootSquash = sharePropertiesInternal.RootSquash,
+                QuotaInGB = sharePropertiesInternal.Quota,
+                Metadata = metadata
+            };
         }
 
         // TODO

@@ -8,7 +8,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// When a share is leased, specifies whether the lease is of infinite or fixed duration.
     /// </summary>
-    [CodeGenModel("ShareLeaseDurationType")]
+    [CodeGenModel("LeaseDurationType")]
     public enum ShareLeaseDuration
     {
         /// <summary>

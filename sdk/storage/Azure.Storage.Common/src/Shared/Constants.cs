@@ -88,6 +88,9 @@ namespace Azure.Storage
         public const string FalseName = "false";
         public const string TrueName = "true";
 
+        public const string ErrorCode = "Code";
+        public const string ErrorMessage = "Message";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>

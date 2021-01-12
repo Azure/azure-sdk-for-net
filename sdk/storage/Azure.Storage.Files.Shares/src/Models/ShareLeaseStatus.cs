@@ -9,7 +9,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// The current lease status of the share.
     /// </summary>
 #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
-    [CodeGenModel("ShareLeaseStatusType")]
+    [CodeGenModel("LeaseStatusType")]
     public enum ShareLeaseStatus
 #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
     {

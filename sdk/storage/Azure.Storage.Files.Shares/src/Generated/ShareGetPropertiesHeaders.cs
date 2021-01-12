@@ -37,11 +37,11 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Returns the current share next allowed quota downgrade time. </summary>
         public DateTimeOffset? NextAllowedQuotaDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-quota-downgrade-time", out DateTimeOffset? value) ? value : null;
         /// <summary> When a share is leased, specifies whether the lease is of infinite or fixed duration. </summary>
-        public LeaseDurationType? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out LeaseDurationType? value) ? value : null;
+        public ShareLeaseDuration? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out ShareLeaseDuration? value) ? value : null;
         /// <summary> Lease state of the share. </summary>
-        public LeaseStateType? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out LeaseStateType? value) ? value : null;
+        public ShareLeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out ShareLeaseState? value) ? value : null;
         /// <summary> The current lease status of the share. </summary>
-        public LeaseStatusType? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out LeaseStatusType? value) ? value : null;
+        public ShareLeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out ShareLeaseStatus? value) ? value : null;
         /// <summary> Returns the access tier set on the share. </summary>
         public string AccessTier => _response.Headers.TryGetValue("x-ms-access-tier", out string value) ? value : null;
         /// <summary> Returns the last modified time (in UTC) of the access tier of the share. </summary>

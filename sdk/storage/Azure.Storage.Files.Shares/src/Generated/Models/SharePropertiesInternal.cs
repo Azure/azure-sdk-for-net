@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="leaseDuration"> When a share is leased, specifies whether the lease is of infinite or fixed duration. </param>
         /// <param name="enabledProtocols"> . </param>
         /// <param name="rootSquash"> . </param>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, LeaseStatusType? leaseStatus, LeaseStateType? leaseState, LeaseDurationType? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash)
+        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -81,11 +81,11 @@ namespace Azure.Storage.Files.Shares.Models
         public DateTimeOffset? AccessTierChangeTime { get; }
         public string AccessTierTransitionState { get; }
         /// <summary> The current lease status of the share. </summary>
-        public LeaseStatusType? LeaseStatus { get; }
+        public ShareLeaseStatus? LeaseStatus { get; }
         /// <summary> Lease state of the share. </summary>
-        public LeaseStateType? LeaseState { get; }
+        public ShareLeaseState? LeaseState { get; }
         /// <summary> When a share is leased, specifies whether the lease is of infinite or fixed duration. </summary>
-        public LeaseDurationType? LeaseDuration { get; }
+        public ShareLeaseDuration? LeaseDuration { get; }
         public string EnabledProtocols { get; }
         public ShareRootSquash? RootSquash { get; }
     }

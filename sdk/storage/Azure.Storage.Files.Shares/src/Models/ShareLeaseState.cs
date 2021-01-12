@@ -8,7 +8,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// Lease state of the share.
     /// </summary>
-    [CodeGenModel("ShareLeaseStateType")]
+    [CodeGenModel("LeaseStateType")]
     public enum ShareLeaseState
     {
         /// <summary>

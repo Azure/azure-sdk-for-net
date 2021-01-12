@@ -27,9 +27,9 @@ namespace Azure.Storage.Files.Shares.Models
             string accessTier = default;
             DateTimeOffset? accessTierChangeTime = default;
             string accessTierTransitionState = default;
-            LeaseStatusType? leaseStatus = default;
-            LeaseStateType? leaseState = default;
-            LeaseDurationType? leaseDuration = default;
+            ShareLeaseStatus? leaseStatus = default;
+            ShareLeaseState? leaseState = default;
+            ShareLeaseDuration? leaseDuration = default;
             string enabledProtocols = default;
             ShareRootSquash? rootSquash = default;
             if (element.Element("Last-Modified") is XElement lastModifiedElement)
@@ -82,15 +82,15 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("LeaseStatus") is XElement leaseStatusElement)
             {
-                leaseStatus = leaseStatusElement.Value.ToLeaseStatusType();
+                leaseStatus = leaseStatusElement.Value.ToShareLeaseStatus();
             }
             if (element.Element("LeaseState") is XElement leaseStateElement)
             {
-                leaseState = leaseStateElement.Value.ToLeaseStateType();
+                leaseState = leaseStateElement.Value.ToShareLeaseState();
             }
             if (element.Element("LeaseDuration") is XElement leaseDurationElement)
             {
-                leaseDuration = leaseDurationElement.Value.ToLeaseDurationType();
+                leaseDuration = leaseDurationElement.Value.ToShareLeaseDuration();
             }
             if (element.Element("EnabledProtocols") is XElement enabledProtocolsElement)
             {
