@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Perf
         {
             var blobClientOptions = new BlobClientOptions()
             {
-                Transport = PerfStressTransport.Create(options)
+                Transport = PerfTransport.Create(options)
             };
 
             BlobServiceClient = new BlobServiceClient(PerfTestEnvironment.Instance.BlobStorageConnectionString, blobClientOptions);

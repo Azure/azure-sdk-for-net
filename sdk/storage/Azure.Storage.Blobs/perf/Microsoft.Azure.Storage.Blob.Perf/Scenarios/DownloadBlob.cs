@@ -8,6 +8,10 @@ using Azure.Test.Perf;
 
 namespace Microsoft.Azure.Storage.Blob.Perf.Scenarios
 {
+    /// <summary>
+    /// The performance test scenario focused on downloading blobs from the Azure blobs storage.
+    /// </summary>
+    /// <seealso cref="Azure.Test.Perf.PerfTest{SizeOptions}" />
     public sealed class DownloadBlob : ContainerTest<SizeOptions>
     {
         private readonly CloudBlockBlob _cloudBlockBlob;
@@ -23,7 +27,7 @@ namespace Microsoft.Azure.Storage.Blob.Perf.Scenarios
 
             using Stream stream = RandomStream.Create(Options.Size);
 
-            // No need to delete file in GlobalCleanup(), since ContainerV11Test.GlobalCleanup() deletes the whole container
+            // No need to delete file in GlobalCleanup(), since ContainerTest.GlobalCleanup() deletes the whole container
             await _cloudBlockBlob.UploadFromStreamAsync(stream);
         }
 
