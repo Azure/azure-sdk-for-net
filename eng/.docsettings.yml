@@ -154,6 +154,7 @@ known_content_issues:
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#5499']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Blobs/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Blobs/perf/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Blobs.Batch/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Blobs.Cryptography/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Common/README.md','#11492']
