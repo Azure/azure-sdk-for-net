@@ -4830,10 +4830,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, paths.Count);
+            Assert.AreEqual(4, paths.Count);
             Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
             Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
-            Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
+            Assert.AreEqual($"{directoryName}/file", paths[2].Name);
+            Assert.AreEqual($"{directoryName}/foo", paths[3].Name);
         }
 
         [Test]
@@ -4858,9 +4859,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{directoryName}/baz/bar/foo", paths[3].Name);
             Assert.AreEqual($"{directoryName}/baz/foo", paths[4].Name);
             Assert.AreEqual($"{directoryName}/baz/foo/bar", paths[5].Name);
-            Assert.AreEqual($"{directoryName}/foo", paths[6].Name);
-            Assert.AreEqual($"{directoryName}/foo/bar", paths[7].Name);
-            Assert.AreEqual($"{directoryName}/foo/foo", paths[8].Name);
+            Assert.AreEqual($"{directoryName}/file", paths[6].Name);
+            Assert.AreEqual($"{directoryName}/foo", paths[7].Name);
+            Assert.AreEqual($"{directoryName}/foo/bar", paths[8].Name);
+            Assert.AreEqual($"{directoryName}/foo/foo", paths[9].Name);
         }
 
         [Test]
@@ -4878,13 +4880,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, paths.Count);
+            Assert.AreEqual(4, paths.Count);
             Assert.IsNotNull(paths[0].Group);
             Assert.IsNotNull(paths[0].Owner);
 
             Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
             Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
-            Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
+            Assert.AreEqual($"{directoryName}/file", paths[2].Name);
+            Assert.AreEqual($"{directoryName}/foo", paths[3].Name);
         }
 
         [Test]
@@ -4917,7 +4920,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.GetPathsAsync().ToListAsync(),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         private async Task SetUpDirectoryForListing(DataLakeDirectoryClient directoryClient)
