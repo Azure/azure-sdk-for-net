@@ -224,6 +224,10 @@ namespace Azure.Security.Attestation
             scope.Start();
             try
             {
+                if (authorizationToken == null)
+                {
+                    authorizationToken = new UnsecuredAttestationToken();
+                }
                 var result = _policyClient.Reset(attestationType, authorizationToken.ToString(), cancellationToken);
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.ValidateAttestationTokens)
@@ -252,6 +256,10 @@ namespace Azure.Security.Attestation
             scope.Start();
             try
             {
+                if (authorizationToken == null)
+                {
+                    authorizationToken = new UnsecuredAttestationToken();
+                }
                 var result = await _policyClient.ResetAsync(attestationType, authorizationToken.ToString(), cancellationToken).ConfigureAwait(false);
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.ValidateAttestationTokens)

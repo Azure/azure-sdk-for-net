@@ -42,6 +42,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
+            Assert.AreEqual("FromEnqueuedTime", options.InitialOffsetOptions.Type);
+            Assert.AreEqual("2020-09-13T12:00Z", options.InitialOffsetOptions.EnqueuedTimeUTC);
         }
 
         [Test]
@@ -53,14 +55,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             JObject iObj = JObject.Parse(format);
             EventHubOptions result = iObj.ToObject<EventHubOptions>();
 
-            Assert.AreEqual(123, options.MaxBatchSize);
-            Assert.AreEqual(result.BatchCheckpointFrequency, 5);
-            Assert.AreEqual(result.EventProcessorOptions.TrackLastEnqueuedEventProperties, true);
-            Assert.AreEqual(result.InvokeProcessorAfterReceiveTimeout, true);
-            Assert.AreEqual(result.EventProcessorOptions.PrefetchCount, 123);
-            Assert.AreEqual(result.EventProcessorOptions.MaximumWaitTime, TimeSpan.FromSeconds(33));
-            Assert.AreEqual(result.EventProcessorOptions.PartitionOwnershipExpirationInterval, TimeSpan.FromSeconds(31));
-            Assert.AreEqual(result.EventProcessorOptions.LoadBalancingUpdateInterval, TimeSpan.FromSeconds(21));
+            Assert.AreEqual(123, result.MaxBatchSize);
+            Assert.AreEqual(5, result.BatchCheckpointFrequency);
+            Assert.True(result.EventProcessorOptions.TrackLastEnqueuedEventProperties);
+            Assert.True(result.InvokeProcessorAfterReceiveTimeout);
+            Assert.AreEqual(123, result.EventProcessorOptions.PrefetchCount);
+            Assert.AreEqual(TimeSpan.FromSeconds(33), result.EventProcessorOptions.MaximumWaitTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(31), result.EventProcessorOptions.PartitionOwnershipExpirationInterval);
+            Assert.AreEqual(TimeSpan.FromSeconds(21), result.EventProcessorOptions.LoadBalancingUpdateInterval);
+            Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type);
+            Assert.AreEqual("2020-09-13T12:00Z", result.InitialOffsetOptions.EnqueuedTimeUTC);
         }
 
         private EventHubOptions CreateOptions()
@@ -76,6 +80,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },
                 { $"{extensionPath}:PartitionManagerOptions:LeaseDuration", "00:00:31" },
                 { $"{extensionPath}:PartitionManagerOptions:RenewInterval", "00:00:21" },
+                { $"{extensionPath}:InitialOffsetOptions:Type", "FromEnqueuedTime" },
+                { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13T12:00Z" },
             };
 
             return TestHelpers.GetConfiguredOptions<EventHubOptions>(b =>

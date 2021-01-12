@@ -244,6 +244,49 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeServiceClient(Uri serviceUri, AzureSasCredential credential)
+            : this(serviceUri, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeServiceClient(Uri serviceUri, AzureSasCredential credential, DataLakeClientOptions options)
+            : this(serviceUri, credential.AsPolicy<DataLakeUriBuilder>(serviceUri), options, null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -328,6 +371,7 @@ namespace Azure.Storage.Files.DataLake
             ClientDiagnostics clientDiagnostics,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             options ??= new DataLakeClientOptions();
             _pipeline = options.Build(authentication);
             _uri = serviceUri;
@@ -529,6 +573,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Pageable<FileSystemItem> GetFileSystems(
             FileSystemTraits traits = FileSystemTraits.None,
             string prefix = default,
@@ -564,6 +609,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<FileSystemItem> GetFileSystemsAsync(
             FileSystemTraits traits = FileSystemTraits.None,
             string prefix = default,

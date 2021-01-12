@@ -232,8 +232,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/token", false);
             uri.AppendQuery("api-version", "2020-07-20-preview2", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new CommunicationTokenRequest(scopes);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);

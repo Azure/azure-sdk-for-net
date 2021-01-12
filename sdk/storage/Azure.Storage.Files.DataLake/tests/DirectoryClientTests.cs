@@ -166,6 +166,39 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            var client = test.FileSystem.GetDirectoryClient(GetNewDirectoryName());
+            await client.CreateIfNotExistsAsync();
+            Uri uri = client.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new DataLakeDirectoryClient(uri, new AzureSasCredential(sas), GetOptions()));
+            PathProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            Uri uri = test.FileSystem.GetDirectoryClient(GetNewDirectoryName()).Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new DataLakeDirectoryClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
         public async Task CreateAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3229,6 +3262,30 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task SetPermissionsAsync_JustOwner_JustGroup()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            string owner = Recording.Random.NewGuid().ToString();
+            string group = Recording.Random.NewGuid().ToString();
+
+            Response<PathAccessControl> initalGetAccessControlResponse = await directory.GetAccessControlAsync();
+
+            // Act
+            Response<PathInfo> response = await directory.SetPermissionsAsync(owner: owner);
+
+            // Assert
+            AssertValidStoragePathInfo(response);
+
+            // Act
+            response = await directory.SetPermissionsAsync(group: group);
+
+            // Assert
+            await directory.GetAccessControlAsync();
+            AssertValidStoragePathInfo(response);
+        }
+
+        [Test]
         public async Task SetPermissionsAsync_RootDirectory()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4799,6 +4856,31 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
             string directoryName = GetNewDirectoryName();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            await SetUpDirectoryForListing(directory);
+
+            // Act
+            AsyncPageable<PathItem> response = directory.GetPathsAsync();
+            IList<PathItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, paths.Count);
+            Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
+            Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
+            Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
+        }
+
+        [Test]
+        public async Task GetPathsAsync_UriCtor()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
+            {
+                DirectoryOrFilePath = directoryName
+            };
+            DataLakeDirectoryClient directory = InstrumentClient(
+                new DataLakeDirectoryClient(uriBuilder.ToUri(), GetStorageSharedKeyCredentials(), GetOptions()));
             await SetUpDirectoryForListing(directory);
 
             // Act

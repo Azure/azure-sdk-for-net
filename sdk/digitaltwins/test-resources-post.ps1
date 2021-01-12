@@ -27,7 +27,7 @@ function Log($Message) {
 }
 
 # Wait 5 minutes before build/test phase.
-Log "Waiting 1 minutes to allow for permissions to propagate before build/test phase."
-Start-Sleep -s 60
+Log "Waiting 5 minutes to allow for permissions to propagate before build/test phase."
+Start-Sleep -s 300
 
 Log "Finished waiting for permission propagation."

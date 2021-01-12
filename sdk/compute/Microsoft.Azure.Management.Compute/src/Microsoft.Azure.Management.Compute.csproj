@@ -9,7 +9,7 @@
       Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.
       Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Compute" (https://www.nuget.org/packages/Azure.ResourceManager.Compute/). Please see the package changelog for more information.
     </Description>
-    <Version>41.0.0.0</Version>
+    <Version>42.0.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
@@ -22,6 +22,7 @@
         5. Remove EncryptionAtRestWithPlatformKey in diskEncryptionSetType
         6. Remove maximum for PlatformFaultDomainCount of DedicatedHostGroup
         7. New API: RunCommand resource for VM and VMSS instance
+        8. Update the description for DedicatedHostGroup.supportAutomaticPlacement to mention that the property defaults to true.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

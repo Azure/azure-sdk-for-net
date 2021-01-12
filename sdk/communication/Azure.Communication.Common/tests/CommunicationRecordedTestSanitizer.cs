@@ -25,6 +25,7 @@ namespace Azure.Communication.Pipeline
             JsonPathSanitizers.Add("$..phonePlanId");
             JsonPathSanitizers.Add("$..phonePlanGroupId");
             JsonPathSanitizers.Add("$..phonePlanIds[:]");
+            JsonPathSanitizers.Add("$..COMMUNICATION_ENDPOINT_STRING");
         }
 
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)

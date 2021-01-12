@@ -20,13 +20,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     {
         protected const string TestHubName = "%webjobstesthub%";
         protected const int Timeout = 30000;
-        protected static string _testId;
 
         /// <summary>The active Event Hub resource scope for the test fixture.</summary>
         protected EventHubScope _eventHubScope;
-
-        /// <summary>The active Blob storage resource scope for the test fixture.</summary>
-        protected StorageScope _storageScope;
 
         /// <summary>
         ///   Performs the tasks needed to initialize the test fixture.  This
@@ -37,8 +33,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task FixtureSetUp()
         {
             _eventHubScope = await EventHubScope.CreateAsync(2);
-            _storageScope = await StorageScope.CreateAsync();
-            _testId = Guid.NewGuid().ToString();
         }
 
         /// <summary>
@@ -49,11 +43,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [TearDown]
         public async Task FixtureTearDown()
         {
-            await Task.WhenAll
-            (
-                _eventHubScope.DisposeAsync().AsTask(),
-                _storageScope.DisposeAsync().AsTask()
-            );
+            await _eventHubScope.DisposeAsync();
         }
 
         protected void ConfigureTestEventHub(IHostBuilder builder)
@@ -72,7 +62,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             configurationDelegate ??= ConfigureTestEventHub;
 
-            var hostBuilder = new HostBuilder()
+            var hostBuilder = new HostBuilder();
+            hostBuilder
                 .ConfigureAppConfiguration(builder =>
                 {
                     builder.AddInMemoryCollection(new Dictionary<string, string>()
@@ -81,27 +72,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         {"AzureWebJobsStorage", StorageTestEnvironment.Instance.StorageConnectionString}
                     });
                 })
-                .ConfigureServices(services =>
-                {
-                    services.Configure<EventHubOptions>(options =>
-                    {
-                        options.CheckpointContainer = _storageScope.ContainerName;
-                        // Speedup shutdown
-                        options.EventProcessorOptions.MaximumWaitTime = TimeSpan.FromSeconds(5);
-                    });
-                })
                 .ConfigureDefaultTestHost<T>(b =>
                 {
                     b.AddEventHubs(options =>
                     {
                         options.EventProcessorOptions.TrackLastEnqueuedEventProperties = true;
+                        options.EventProcessorOptions.MaximumWaitTime = TimeSpan.FromSeconds(5);
+                        options.CheckpointContainer = Guid.NewGuid().ToString("D").Substring(0, 13);
                     });
                 })
                 .ConfigureLogging(b =>
                 {
                     b.SetMinimumLevel(LogLevel.Debug);
                 });
-
             configurationDelegate(hostBuilder);
             IHost host = hostBuilder.Build();
 

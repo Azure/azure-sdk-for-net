@@ -166,13 +166,15 @@ namespace Azure.Storage.Queues.Tests
                 TestConfigDefault.AccountName,
                 TestConfigDefault.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
+        public SasQueryParameters GetNewAccountSasCredentials(
+            StorageSharedKeyCredential sharedKeyCredentials = default,
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.Container)
         {
             var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Queues,
-                ResourceTypes = AccountSasResourceTypes.Container,
+                ResourceTypes = resourceTypes,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
@@ -185,7 +187,7 @@ namespace Azure.Storage.Queues.Tests
                 AccountSasPermissions.Add |
                 AccountSasPermissions.Delete |
                 AccountSasPermissions.List);
-            return builder.ToSasQueryParameters(sharedKeyCredentials);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         public SasQueryParameters GetNewQueueServiceSasCredentials(string queueName, StorageSharedKeyCredential sharedKeyCredentials = default)

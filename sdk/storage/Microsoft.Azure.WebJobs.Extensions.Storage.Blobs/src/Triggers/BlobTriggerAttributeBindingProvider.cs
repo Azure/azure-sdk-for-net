@@ -4,6 +4,8 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Host;
@@ -24,10 +26,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
         private readonly BlobsOptions _blobsOptions;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly IContextSetter<IBlobWrittenWatcher> _blobWrittenWatcherSetter;
-        private readonly SharedQueueWatcher _messageEnqueuedWatcherSetter;
+        private readonly BlobTriggerQueueWriterFactory _blobTriggerQueueWriterFactory;
         private readonly ISharedContextProvider _sharedContextProvider;
         private readonly IHostSingletonManager _singletonManager;
         private readonly ILoggerFactory _loggerFactory;
+        private readonly ILogger _logger;
 
         public BlobTriggerAttributeBindingProvider(
             INameResolver nameResolver,
@@ -37,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             IOptions<BlobsOptions> blobsOptions,
             IWebJobsExceptionHandler exceptionHandler,
             IContextSetter<IBlobWrittenWatcher> blobWrittenWatcherSetter,
-            SharedQueueWatcher messageEnqueuedWatcherSetter,
+            BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             ISharedContextProvider sharedContextProvider,
             IHostSingletonManager singletonManager,
             ILoggerFactory loggerFactory)
@@ -48,18 +51,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             _blobsOptions = (blobsOptions ?? throw new ArgumentNullException(nameof(blobsOptions))).Value;
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             _blobWrittenWatcherSetter = blobWrittenWatcherSetter ?? throw new ArgumentNullException(nameof(blobWrittenWatcherSetter));
-            _messageEnqueuedWatcherSetter = messageEnqueuedWatcherSetter ?? throw new ArgumentNullException(nameof(messageEnqueuedWatcherSetter));
+            _blobTriggerQueueWriterFactory = blobTriggerQueueWriterFactory ?? throw new ArgumentNullException(nameof(blobTriggerQueueWriterFactory));
             _sharedContextProvider = sharedContextProvider ?? throw new ArgumentNullException(nameof(sharedContextProvider));
             _singletonManager = singletonManager ?? throw new ArgumentNullException(nameof(singletonManager));
 
             _nameResolver = nameResolver;
             _loggerFactory = loggerFactory;
+            _logger = loggerFactory.CreateLogger<BlobTriggerAttributeBindingProvider>();
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
         {
             ParameterInfo parameter = context.Parameter;
             var blobTriggerAttribute = TypeUtility.GetResolvedAttribute<BlobTriggerAttribute>(context.Parameter);
+
+            if (parameter.ParameterType == typeof(PageBlobClient) && blobTriggerAttribute.Source == BlobTriggerSource.EventGrid)
+            {
+                _logger.LogError($"PageBlobClient is not supported with {nameof(BlobTriggerSource.EventGrid)}");
+                return Task.FromResult<ITriggerBinding>(null);
+            }
 
             if (blobTriggerAttribute == null)
             {
@@ -79,9 +89,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             // dataAccount.AssertTypeOneOf(StorageAccountType.GeneralPurpose, StorageAccountType.BlobOnly);
 
             ITriggerBinding binding = new BlobTriggerBinding(parameter, hostBlobServiceClient, hostQueueServiceClient,
-                dataBlobServiceClient, dataQueueServiceClient, path,
+                dataBlobServiceClient, dataQueueServiceClient, path, blobTriggerAttribute.Source,
                 _hostIdProvider, _blobsOptions, _exceptionHandler, _blobWrittenWatcherSetter,
-                _messageEnqueuedWatcherSetter, _sharedContextProvider, _singletonManager, _loggerFactory);
+                _blobTriggerQueueWriterFactory, _sharedContextProvider, _singletonManager, _loggerFactory);
 
             return Task.FromResult(binding);
         }

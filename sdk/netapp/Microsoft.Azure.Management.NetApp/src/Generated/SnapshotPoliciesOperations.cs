@@ -997,7 +997,7 @@ namespace Microsoft.Azure.Management.NetApp
         }
 
         /// <summary>
-        /// Get volumes associated with snapshot policy
+        /// Get volumes for snapshot policy
         /// </summary>
         /// <remarks>
         /// Get volumes associated with snapshot policy

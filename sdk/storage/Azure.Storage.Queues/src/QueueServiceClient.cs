@@ -216,6 +216,31 @@ namespace Azure.Storage.Queues
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the queue service.
         /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public QueueServiceClient(Uri serviceUri, AzureSasCredential credential, QueueClientOptions options = default)
+            : this(serviceUri, credential.AsPolicy<QueueUriBuilder>(serviceUri), options, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the queue service.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -256,6 +281,7 @@ namespace Azure.Storage.Queues
             QueueClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             _uri = serviceUri;
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
@@ -408,6 +434,7 @@ namespace Azure.Storage.Queues
                         maxresults: pageSizeHint,
                         include: includeTypes.Any() ? includeTypes : null,
                         async: async,
+                        operationName: $"{nameof(QueueServiceClient)}.{nameof(GetQueues)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     if ((traits & QueueTraits.Metadata) != QueueTraits.Metadata)
